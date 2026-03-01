@@ -2,166 +2,49 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ইবাদত - Ibadat</title>
     <style>
         * { box-sizing: border-box; }
-        body { font-family: 'Arial', sans-serif; background-color: #fdfaf1; margin: 0; padding: 15px; color: #333; }
-        
-        /* বিসমিল্লাহ হেডার (ডিপ গোল্ডেন কালার) */
-        .header-box { background: white; border: 2px solid #e0d0a0; border-radius: 15px; padding: 15px; text-align: center; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        
-        .arabic-text { 
-            font-size: 32px; 
-            font-weight: bold; 
-            margin: 0; 
-            /* ডিপ মেটালিক গোল্ড কালার */
-            color: #b8860b; 
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-        }
-        
-        .bengali-meaning { margin: 8px 0 0 0; font-size: 15px; color: #5d4037; font-weight: bold; }
-        
-        /* টাইম বোর্ড */
-        .main-info-board { display: flex; flex-direction: column; border: 2px solid #e0d0a0; border-radius: 15px; background: white; overflow: hidden; margin-bottom: 15px; }
-        .time-section { flex: 1; padding: 15px; text-align: center; display: flex; flex-direction: column; justify-content: center; }
-        .current-wakt-box { border-bottom: 2px solid #e0d0a0; }
-        
-        #live-clock { font-size: 45px; font-weight: bold; color: #2e7d32; margin: 5px 0; }
-        #countdown-timer { font-size: 35px; font-weight: bold; color: #d32f2f; margin: 5px 0; }
-        .wakt-label { font-size: 18px; font-weight: bold; }
-        
-        /* নামাজের সময়সূচী ও হিজরি তারিখ */
-        .prayer-schedule-card { background: #e8f5e9; border: 2px solid #e0d0a0; border-radius: 15px; padding: 15px; margin-bottom: 15px; cursor: pointer; }
-        .schedule-header { display: flex; justify-content: space-between; font-weight: bold; color: #2e7d32; margin-bottom: 10px; font-size: 14px; }
-        .schedule-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center; font-size: 13px; }
-        
-        /* মেনু বক্স ও সিম্বল */
-        .menu-container { display: flex; gap: 15px; margin-bottom: 15px; }
-        .menu-box { flex: 1; background: white; border: 2px solid #e0d0a0; border-radius: 20px; padding: 15px; text-align: center; font-weight: bold; cursor: pointer; }
-        .menu-icon { font-size: 40px; display: block; margin-bottom: 5px; }
-
-        /* ফুটার */
-        .footer-board { border: 2px solid #e0d0a0; border-radius: 15px; background: white; padding: 15px; text-align: center; font-size: 14px; color: #b71c1c; font-weight: bold; line-height: 1.5; }
-
-        /* আজান পেজ */
-        #azan-page { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fdfaf1; padding: 20px; z-index: 100; overflow-y: auto; }
-        .azan-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border: 1px solid #e0d0a0; border-radius: 10px; margin-bottom: 10px; background: white; }
-        .btn-green { background: #2e7d32; color: white; border: none; padding: 8px 12px; border-radius: 5px; font-weight: bold; }
-        .btn-back { width: 100%; background: #e0c090; padding: 15px; margin-top: 20px; border-radius: 10px; font-weight: bold; border: none; }
+        body { font-family: 'Times New Roman', Arial, sans-serif; background-color: #fdfaf1; margin: 0; padding: 10px; color: #333; overflow: hidden; height: 100vh; display: flex; flex-direction: column; justify-content: space-between; }
+        .top-info-bar { display: flex; justify-content: space-between; padding: 2px 10px 5px 10px; font-size: 18px; font-weight: 900; color: #2e7d32; border-bottom: 2.2px solid #e0d0a0; flex-shrink: 0; }
+        .box-style { background: #e8f5e9; border: 2.2px solid #e0d0a0; border-radius: 15px; text-align: center; flex-shrink: 0; }
+        .header-box { height: 110px; display: flex; flex-direction: column; justify-content: center; padding: 5px; }
+        .arabic-text { font-family: 'Traditional Arabic', serif; font-size: 34px; font-weight: 900; margin: 0; color: #b8860b; direction: rtl; }
+        .bengali-meaning { margin: 5px 0 0 0; font-size: 18px; color: #5d4037; font-weight: 900; }
+        .main-info-board { display: flex; flex-direction: column; overflow: hidden; height: 165px; }
+        .time-section { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2px; }
+        .current-wakt-box { border-bottom: 2.2px solid #e0d0a0; }
+        #live-clock, #countdown-timer { font-size: 42px; font-weight: 900; line-height: 1; color: #2e7d32; margin: 2px 0; }
+        #countdown-timer { color: #d32f2f; }
+        .wakt-label { font-size: 22px; font-weight: 900; }
+        .prayer-schedule-card { padding: 10px; height: 175px; display: flex; align-items: center; }
+        .schedule-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center; font-size: 21px; width: 100%; font-weight: 900; }
+        .schedule-grid b { font-size: 25px; color: #1b5e20; display: block; margin-top: 3px; }
+        .menu-container { display: flex; gap: 10px; flex-shrink: 0; }
+        .menu-box { flex: 1; height: 120px; display: flex; flex-direction: column; justify-content: center; font-size: 22px; padding: 5px; font-weight: 900; }
+        .menu-icon { font-size: 42px; display: block; margin-bottom: 5px; }
+        .bottom-frame { flex-shrink: 0; }
+        .footer-divider { border-top: 2.2px solid #e0d0a0; margin-bottom: 2px; }
+        .footer-message-area { overflow: hidden; white-space: nowrap; height: 45px; display: flex; align-items: center; padding: 0 10px; }
+        .moving-text { display: inline-block; font-size: 21px; color: #b71c1c; font-weight: 900; animation: marquee 20s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
     </style>
 </head>
 <body>
-
-    <div class="header-box">
-        <h2 class="arabic-text">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</h2>
-        <p class="bengali-meaning">"পরম করুণাময় অসীম দয়ালু আল্লাহর নামে"</p>
-    </div>
-
-    <div class="main-info-board">
-        <div class="time-section current-wakt-box">
-            <div class="wakt-label" id="wakt-now-title">বর্তমান ওয়াক্ত: লোড হচ্ছে...</div>
-            <div id="live-clock">০০:০০:০০</div>
-        </div>
-        <div class="time-section">
-            <div class="wakt-label" style="color: #ef6c00;">পরবর্তী ওয়াক্ত: <span id="wakt-next-name">--</span></div>
-            <div id="countdown-timer">০০:০০:০০</div>
-        </div>
-    </div>
-
-    <div class="prayer-schedule-card" onclick="openAzanSettings()">
-        <div class="schedule-header">
-            <span>📍 কলকাতা, ভারত</span>
-            <span id="hijri-date" style="color: #2e7d32;">লোড হচ্ছে...</span>
-        </div>
-        <div class="schedule-grid">
-            <div>ফজর<br><b>০৪:৪৪</b></div>
-            <div>সূর্যোদয়<br><b>০৫:৫৯</b></div>
-            <div>জোহর<br><b>১১:৪৯</b></div>
-            <div>আসর<br><b>১৫:০৯</b></div>
-            <div>মাগরিব<br><b>১৭:৩৯</b></div>
-            <div>এশা<br><b>১৮:৫৪</b></div>
-        </div>
-    </div>
-
-    <div class="menu-container">
-        <div class="menu-box">
-            <span class="menu-icon">🛐</span>
-            <div>নামাজ শিক্ষা</div>
-        </div>
-        <div class="menu-box">
-            <span class="menu-icon">📖</span>
-            <div>আল কুরআন</div>
-        </div>
-    </div>
-
-    <div class="footer-board">
-        "প্রকৃত শান্তি ও জীবনের সঠিক দিশা পেতে ইসলামের সুশীতল ছায়ায় আপনাকে স্বাগতম।"
-    </div>
-
-    <div id="azan-page">
-        <h2 style="text-align: center; color: #2e7d32;">আজান ভয়েস সেটিংস</h2>
-        <div id="azan-list"></div>
-        <button class="btn-back" onclick="closeAzanSettings()">হোম পেজে ফিরুন</button>
-    </div>
-
-    <audio id="azan-player"></audio>
-
+    <div class="top-info-bar"><span id="user-location">কলকাতা</span><span id="hijri-date">লোড হচ্ছে...</span></div>
+    <div class="header-box box-style"><h2 class="arabic-text">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</h2><p class="bengali-meaning">"পরম করুণাময় অসীম দয়ালু আল্লাহর নামে"</p></div>
+    <div class="main-info-board box-style"><div class="time-section current-wakt-box"><div class="wakt-label" id="wakt-now-title">বর্তমান ওয়াক্ত: ...</div><div id="live-clock">০০:০০:০০</div></div><div class="time-section"><div class="wakt-label" style="color: #ef6c00;">পরবর্তী ওয়াক্ত: <span id="wakt-next-name">--</span></div><div id="countdown-timer">০০:০০:০০</div></div></div>
+    <div class="prayer-schedule-card box-style"><div class="schedule-grid"><div>ফজর<br><b id="fajr">--:--</b></div><div>সূর্যোদয়<br><b id="sunrise">--:--</b></div><div>জোহর<br><b id="dhuhr">--:--</b></div><div>আসর<br><b id="asr">--:--</b></div><div>মাগরিব<br><b id="maghrib">--:--</b></div><div>এশা<br><b id="isha">--:--</b></div></div></div>
+    <div class="menu-container"><div class="menu-box box-style"><span class="menu-icon">🛐</span><div>নামাজ শিক্ষা</div></div><div class="menu-box box-style"><span class="menu-icon">📖</span><div>আল কুরআন</div></div></div>
+    <div class="bottom-frame"><div class="footer-divider"></div><div class="footer-message-area"><div class="moving-text">"প্রকৃত শান্তি ও জীবনের সঠিক দিশা পেতে ইসলামের সুশীতল ছায়ায় আপনাকে স্বাগতম।"</div></div></div>
     <script>
-        function toBengaliNum(num) {
-            const d = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-            return num.toString().split('').map(x => d[x] || x).join('');
-        }
-
-        // হিজরি তারিখ ঠিক করার ফাংশন
-        function updateHijri() {
-            try {
-                const options = { day: 'numeric', month: 'long', year: 'numeric', calendar: 'islamic-uma' };
-                let hijri = new Intl.DateTimeFormat('bn-BD-u-ca-islamic-uma', options).format(new Date());
-                document.getElementById('hijri-date').innerText = hijri;
-            } catch (e) {
-                document.getElementById('hijri-date').innerText = "তারিখ লোড হচ্ছে...";
-            }
-        }
-
-        const prayerData = { "ফজর":"04:44", "জোহর":"11:49", "আসর":"15:09", "মাগরিব":"17:39", "এশা":"18:54" };
-        const order = ["ফজর", "জোহর", "আসর", "মাগরিব", "এশা"];
-
-        function updateApp() {
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString('en-GB', { hour12: false });
-            document.getElementById('live-clock').innerText = toBengaliNum(timeStr);
-
-            const curMin = now.getHours() * 60 + now.getMinutes();
-            let curW = "এশা", nxtW = "ফজর", nxtT = prayerData["ফজর"];
-
-            for(let i=0; i<order.length; i++){
-                const [h, m] = prayerData[order[i]].split(':').map(Number);
-                if(curMin >= (h*60+m)){
-                    curW = order[i];
-                    nxtW = order[(i+1) % order.length];
-                    nxtT = prayerData[nxtW];
-                }
-            }
-            document.getElementById('wakt-now-title').innerText = "বর্তমান ওয়াক্ত: " + curW;
-            document.getElementById('wakt-next-name').innerText = nxtW;
-
-            let [th, tm] = nxtT.split(':').map(Number);
-            let target = new Date();
-            target.setHours(th, tm, 0);
-            if(target < now) target.setDate(target.getDate() + 1);
-            
-            let diff = target - now;
-            let h = Math.floor(diff/3600000), m = Math.floor((diff%3600000)/60000), s = Math.floor((diff%60000)/1000);
-            const countdownStr = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-            document.getElementById('countdown-timer').innerText = toBengaliNum(countdownStr);
-        }
-
-        function openAzanSettings() { document.getElementById('azan-page').style.display = 'block'; }
-        function closeAzanSettings() { document.getElementById('azan-page').style.display = 'none'; }
-
-        setInterval(updateApp, 1000);
-        window.onload = () => { updateApp(); updateHijri(); };
+        function toBengaliNum(num) { const d = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯']; return num.toString().split('').map(x => d[x] || x).join(''); }
+        function updateDate() { try { const options = { day: 'numeric', month: 'long', year: 'numeric', calendar: 'islamic-uma' }; let hijri = new Intl.DateTimeFormat('bn-BD-u-ca-islamic-uma', options).format(new Date()); document.getElementById('hijri-date').innerText = hijri; } catch (e) { document.getElementById('hijri-date').innerText = "১২ রমজান, ১৪৪৭"; } }
+        async function getPrayerTimes(lat = 22.5726, lon = 88.3639, locName = "কলকাতা") { try { const response = await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=1`); const data = await response.json(); const times = data.data.timings; const ids = ['fajr','sunrise','dhuhr','asr','maghrib','isha']; const keys = ['Fajr','Sunrise','Dhuhr','Asr','Maghrib','Isha']; ids.forEach((id, i) => document.getElementById(id).innerText = toBengaliNum(times[keys[i]])); document.getElementById('user-location').innerText = locName; startUpdates(times); } catch (e) { document.getElementById('user-location').innerText = "কলকাতা"; } }
+        function detectLocation() { if (navigator.geolocation) { navigator.geolocation.getCurrentPosition((p) => getPrayerTimes(p.coords.latitude, p.coords.longitude, "আপনার শহর"), () => getPrayerTimes()); } else { getPrayerTimes(); } }
+        function startUpdates(times) { const order = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"]; const bnNames = ["ফজর", "জোহর", "আসর", "মাগরিব", "এশা"]; setInterval(() => { const now = new Date(); document.getElementById('live-clock').innerText = toBengaliNum(now.toLocaleTimeString('en-GB')); const curMin = now.getHours() * 60 + now.getMinutes(); let curW = "এশা", nxtW = "ফজর", nxtT = times["Fajr"]; for(let i=0; i<order.length; i++){ const [h, m] = times[order[i]].split(':').map(Number); if(curMin >= (h*60+m)){ curW = bnNames[i]; nxtW = bnNames[(i+1) % 5]; nxtT = times[order[(i+1) % 5]]; } } document.getElementById('wakt-now-title').innerText = "বর্তমান ওয়াক্ত: " + curW; document.getElementById('wakt-next-name').innerText = nxtW; let [th, tm] = nxtT.split(':').map(Number); let target = new Date(); target.setHours(th, tm, 0); if(target < now) target.setDate(target.getDate() + 1); let diff = target - now; let h = Math.floor(diff/3600000), m = Math.floor((diff%3600000)/60000), s = Math.floor((diff%60000)/1000); document.getElementById('countdown-timer').innerText = toBengaliNum(`${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`); }, 1000); }
+        window.onload = () => { detectLocation(); updateDate(); };
     </script>
 </body>
 </html>
