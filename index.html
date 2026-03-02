@@ -5,170 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ইবাদত - Ibadat</title>
     <style>
-        :root {
-            --bg-color: #fcf9f0;
-            --card-bg: #f0f9ed;
-            --text-primary: #1b3d18;
-            --accent-red: #b71c1c;
-            --gold: #7a5e12;
-        }
-
-        /* স্ক্রিন ফিট করার মূল সেটিংস */
-        html, body {
-            height: 100vh;
-            margin: 0;
-            padding: 0;
-            overflow: hidden; /* কোনো স্ক্রল হবে না */
-            display: flex;
-            flex-direction: column;
-            background-color: var(--bg-color);
-            font-family: 'Segoe UI', Arial, sans-serif;
-        }
-
-        .header { 
-            height: 45px;
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
-            font-weight: 800;
-            font-size: 17px;
-            padding: 0 15px;
-            color: var(--text-primary);
-        }
-
-        .main-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding: 5px 12px;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.04);
-            border: 1.5px solid #d0e0d0;
-            width: 100%;
-            box-sizing: border-box;
-            flex: 1;
-        }
-
+        :root { --bg-color: #fcf9f0; --card-bg: #f0f9ed; --text-primary: #1b3d18; --accent-red: #b71c1c; --gold: #7a5e12; }
+        html, body { height: 100vh; margin: 0; padding: 0; overflow: hidden; display: flex; flex-direction: column; background-color: var(--bg-color); font-family: 'Segoe UI', Arial, sans-serif; }
+        .header { height: 50px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 19px; padding: 0 15px; color: var(--text-primary); }
+        .main-container { flex: 1; display: flex; flex-direction: column; padding: 8px 12px; gap: 12px; justify-content: space-around; }
+        .card { background: var(--card-bg); border-radius: 20px; padding: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 2px solid #d0e0d0; width: 100%; box-sizing: border-box; }
         .card-bismillah { flex: 0.7; }
-        .card-timer { flex: 2.2; }
-        .card-prayer { flex: 1.5; }
-        .card-buttons { flex: 0.8; border: none; background: transparent; box-shadow: none; padding: 0; }
-
-        .bismillah { font-size: 22px; font-weight: 900; color: var(--gold); }
-        .bismillah-p { font-size: 14px; font-weight: 800; margin-top: 4px; color: #444; }
-
-        .wakto-label { font-size: 17px; font-weight: 800; color: #111; }
-        
-        /* টাইমার দুটি একদম সমান সাইজের (45px) */
-        .timer-display { 
-            font-size: 45px; 
-            font-weight: 900; 
-            margin: 2px 0;
-            letter-spacing: 1px;
-        }
+        .card-timer { flex: 2.3; }
+        .card-prayer { flex: 1.6; }
+        .card-buttons { flex: 0.9; border: none; background: transparent; box-shadow: none; padding: 0; }
+        .bismillah { font-size: 26px; font-weight: 900; color: var(--gold); }
+        .bismillah-p { font-size: 15px; font-weight: 800; margin-top: 4px; color: #444; }
+        .wakto-label { font-size: 18px; font-weight: 800; color: #000; }
+        .timer-display { font-size: 50px; font-weight: 900; margin: 5px 0; letter-spacing: 1px; line-height: 1; }
         .timer-green { color: #1e7e34; }
         .timer-red { color: var(--accent-red); }
-
-        .next-wakto-label { color: var(--accent-red); font-weight: 800; font-size: 17px; margin-top: 5px; }
-
-        .prayer-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            width: 100%;
-        }
-        .prayer-item { 
-            padding: 5px; 
-            border-bottom: 2px solid #c0d0c0; 
-            font-size: 15px; 
-            font-weight: 800; 
-            text-align: center; 
-            color: #111;
-        }
-        .time-val { font-weight: 900; color: #222; display: block; font-size: 16px; margin-top: 2px; }
-
-        .features { display: flex; gap: 12px; width: 100%; height: 100%; }
-        .btn {
-            flex: 1;
-            background: #ffffff;
-            border-radius: 18px;
-            text-decoration: none;
-            color: var(--text-primary);
-            font-weight: 800;
-            font-size: 16px;
-            border: 2px solid #bccdbc;
-            display: flex;
-            flex-direction: column; /* আইকন উপরে লেখা নিচে */
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-        }
-
-        /* কুরআনের সঠিক আইকন সাইজ */
-        .quran-icon {
-            font-size: 24px;
-            margin-bottom: 2px;
-        }
-
-        .footer-marquee {
-            height: 40px;
-            background: #fff;
-            border-top: 1px solid #eee;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        .marquee-text {
-            white-space: nowrap;
-            animation: marquee 18s linear infinite;
-            color: var(--accent-red);
-            font-weight: 800;
-            font-size: 15px;
-            padding-left: 100%;
-        }
-
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-250%); }
-        }
+        .next-wakto-label { color: var(--accent-red); font-weight: 800; font-size: 18px; margin-top: 8px; }
+        .prayer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; }
+        .prayer-item { padding: 6px; border-bottom: 2px solid #c0d0c0; font-size: 17px; font-weight: 800; text-align: center; color: #000; }
+        .time-val { font-weight: 900; color: #222; display: block; font-size: 18px; margin-top: 4px; }
+        .features { display: flex; gap: 15px; width: 100%; height: 100%; }
+        .btn { flex: 1; background: #ffffff; border-radius: 20px; text-decoration: none; color: var(--text-primary); font-weight: 900; font-size: 18px; border: 2px solid #bccdbc; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
+        .btn-icon { font-size: 32px; }
+        .footer-marquee { height: 45px; background: #fff; border-top: 2px solid #eee; display: flex; align-items: center; overflow: hidden; }
+        .marquee-text { white-space: nowrap; animation: marquee 20s linear infinite; color: var(--accent-red); font-weight: 900; font-size: 17px; padding-left: 100%; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-250%); } }
     </style>
 </head>
 <body>
-
-    <audio id="azanAudio">
-        <source src="https://www.islamcan.com/audio/adhan/makkah.mp3" type="audio/mpeg">
-    </audio>
-
+    <audio id="azanAudio"><source src="https://www.islamcan.com/audio/adhan/makkah.mp3" type="audio/mpeg"></audio>
     <div class="header">
-        <span id="location-text">কলকাতা</span>
+        <span id="location-text">লোকেশন লোড হচ্ছে...</span>
         <span id="current-date">-- ---, ----</span>
     </div>
-
     <div class="main-container">
-        <div class="card card-bismillah">
-            <div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
-            <p class="bismillah-p">"পরম করুণাময় অসীম দয়ালু আল্লাহর নামে"</p>
-        </div>
-
+        <div class="card card-bismillah"><div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div><p class="bismillah-p">"আল্লাহর নামে শুরু করছি"</p></div>
         <div class="card card-timer">
             <div class="wakto-label">বর্তমান ওয়াক্ত: <span id="current-wakto-name">...</span></div>
             <div class="timer-display timer-green" id="live-clock">০০:০০:০০</div>
             <div class="next-wakto-label">পরবর্তী ওয়াক্ত: <span id="next-name">...</span></div>
             <div class="timer-display timer-red" id="countdown-timer">০০:০০:০০</div>
         </div>
-
         <div class="card card-prayer">
             <div class="prayer-grid">
                 <div class="prayer-item">ফজর<br><span class="time-val" id="Fajr">--:--</span></div>
@@ -179,35 +56,19 @@
                 <div class="prayer-item">এশা<br><span class="time-val" id="Isha">--:--</span></div>
             </div>
         </div>
-
         <div class="card card-buttons">
             <div class="features">
-                <a href="#" class="btn">
-                    <span style="font-size: 24px;">📖</span>
-                    <span>নামাজ শিক্ষা</span>
-                </a>
-                <a href="#" class="btn">
-                    <span class="quran-icon">🕌</span> <span>আল কুরআন</span>
-                </a>
+                <a href="#" class="btn"><span class="btn-icon">📖</span><span>নামাজ শিক্ষা</span></a>
+                <a href="#" class="btn"><span class="btn-icon">🕌</span><span>আল কুরআন</span></a>
             </div>
         </div>
     </div>
-
-    <div class="footer-marquee">
-        <div class="marquee-text">
-            "প্রকৃত শান্তি ও জীবনের সঠিক দিশা পেতে ইসলামের সুশীতল ছায়ায় আপনাকে স্বাগতম।"
-        </div>
-    </div>
-
+    <div class="footer-marquee"><div class="marquee-text">"হে আল্লাহ! আমাদের নামাজ ও ইবাদত কবুল করুন। আমীন।"</div></div>
     <script>
         let prayerTimes = {};
         const bnNumbers = {'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
         const bnNames = { "Fajr": "ফজর", "Dhuhr": "জোহর", "Asr": "আসর", "Maghrib": "মাগরিব", "Isha": "এশা", "Sunrise": "সূর্যোদয়" };
-
-        function getBnNum(num) {
-            return num.toString().split('').map(d => bnNumbers[d] || d).join('');
-        }
-
+        function getBnNum(num) { return num.toString().split('').map(d => bnNumbers[d] || d).join(''); }
         function updateClock() {
             const now = new Date();
             document.getElementById('current-date').innerText = now.toLocaleDateString('bn-BD', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -215,21 +76,25 @@
             document.getElementById('live-clock').innerText = getBnNum(timeStr);
             if (Object.keys(prayerTimes).length > 0) checkLogic();
         }
-
         async function fetchByLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(async (pos) => {
                     try {
-                        const res = await fetch(`https://api.aladhan.com/v1/timings?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&method=1`);
+                        const lat = pos.coords.latitude;
+                        const lon = pos.coords.longitude;
+                        const res = await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=1`);
                         const data = await res.json();
                         prayerTimes = data.data.timings;
-                        document.getElementById('location-text').innerText = "আপনার অবস্থান"; 
+                        // বাংলা লোকেশন নাম আনার জন্য আপডেট করা হয়েছে
+                        const geoRes = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=bn`);
+                        const geoData = await geoRes.json();
+                        const cityName = geoData.address.city || geoData.address.town || geoData.address.suburb || geoData.address.state || "আপনার এলাকা";
+                        document.getElementById('location-text').innerText = cityName; 
                         updateUI();
-                    } catch (err) { console.error("Error"); }
+                    } catch (err) { fetchByCity("Kolkata"); }
                 }, () => fetchByCity("Kolkata"));
             } else { fetchByCity("Kolkata"); }
         }
-
         async function fetchByCity(city) {
             try {
                 const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=India&method=1`);
@@ -239,36 +104,24 @@
                 updateUI();
             } catch (err) { console.error("Error"); }
         }
-
-        function updateUI() {
-            Object.keys(bnNames).forEach(id => {
-                if(document.getElementById(id)) document.getElementById(id).innerText = getBnNum(prayerTimes[id]);
-            });
-        }
-
+        function updateUI() { Object.keys(bnNames).forEach(id => { if(document.getElementById(id)) document.getElementById(id).innerText = getBnNum(prayerTimes[id]); }); }
         function checkLogic() {
             const now = new Date();
             const nowStr = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
             let current = "এশা", next = "Fajr";
-
             if (nowStr >= prayerTimes.Fajr && nowStr < prayerTimes.Dhuhr) { current = "ফজর"; next = "Dhuhr"; }
             else if (nowStr >= prayerTimes.Dhuhr && nowStr < prayerTimes.Asr) { current = "জোহর"; next = "Asr"; }
             else if (nowStr >= prayerTimes.Asr && nowStr < prayerTimes.Maghrib) { current = "আসর"; next = "Maghrib"; }
             else if (nowStr >= prayerTimes.Maghrib && nowStr < prayerTimes.Isha) { current = "মাগরিব"; next = "Isha"; }
-
             document.getElementById('current-wakto-name').innerText = current;
             document.getElementById('next-name').innerText = bnNames[next];
-
             const [h, m] = prayerTimes[next].split(':');
             let nDate = new Date(); nDate.setHours(h, m, 0);
             if (nDate < now) nDate.setDate(nDate.getDate() + 1);
             let diff = nDate - now;
             let dh = Math.floor(diff / 3600000), dm = Math.floor((diff % 3600000) / 60000), ds = Math.floor((diff % 60000) / 1000);
-            
-            if (dh === 0 && dm === 0 && ds === 0) document.getElementById("azanAudio").play();
             document.getElementById('countdown-timer').innerText = getBnNum(`${dh.toString().padStart(2,'0')}:${dm.toString().padStart(2,'0')}:${ds.toString().padStart(2,'0')}`);
         }
-
         setInterval(updateClock, 1000);
         fetchByLocation();
     </script>
