@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ইবাদত - ফাইনাল সংস্করণ</title>
+    <title>ইবাদত - ফাইনাল ব্যাক নেভিগেশন</title>
     <style>
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         body { font-family: 'Arial', sans-serif; background-color: #fdfaf1; margin: 0; padding: 0; text-align: center; color: #1a3300; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
@@ -37,14 +37,14 @@
         .prayer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px 0; }
         .prayer-item { padding: 5px 0; border-bottom: 1px solid #c2dec3; font-size: 15px; }
         
-        /* নিচের বাটনগুলোও এখন লাইট গ্রিন */
+        /* নিচের বাটনগুলোও লাইট গ্রিন */
         .footer-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .btn { background: #eaf7eb; border: 1px solid #d0e8d1; border-radius: 20px; padding: 42px 5px; font-weight: bold; font-size: 20px; display: flex; align-items: center; justify-content: center; color: #1a3300; box-shadow: 0 4px 8px rgba(0,0,0,0.06); }
 
         /* বটম বার - লাইট স্কাই ব্লু */
-        .marquee-box { background-color: #e0f7fa; color: #c62828; font-weight: bold; font-size: 19px; border-top: 1px solid #b2ebf2; height: 45px; display: flex; align-items: center; }
+        .marquee-box { background-color: #e0f7fa; color: #c62828; font-weight: bold; font-size: 18px; border-top: 1px solid #b2ebf2; height: 45px; display: flex; align-items: center; white-space: nowrap; overflow: hidden; }
 
-        /* মডাল স্ক্রিন */
+        /* মডাল স্ক্রিনসমূহ */
         #tools-screen, #adhan-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000; background: #fdfaf1; flex-direction: column; padding: 15px; }
         #adhan-modal { background: rgba(0,0,0,0.85); }
         .modal-content { background: #fdfaf1; margin: 10% auto; padding: 25px; width: 92%; border-radius: 30px; }
@@ -57,10 +57,10 @@
         input:checked + .slider:before { transform: translateX(26px); }
         .adhan-list-btn { background: #2e7d32; color: white; width: 100%; padding: 12px; margin: 8px 0; border: none; border-radius: 12px; font-size: 17px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
 
-        /* কিবলা কম্পাস ও তসবিহ ডিজাইন */
+        /* টুলস ডিজাইন */
         .tool-box { background: white; border-radius: 25px; padding: 20px; border: 1px solid #d0e8d1; margin-bottom: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .compass-ui { position: relative; width: 200px; height: 200px; border: 10px solid #2e7d32; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-        #needle { position: absolute; width: 5px; height: 85px; background: #c62828; transform-origin: bottom center; top: 15px; z-index: 10; transition: transform 0.2s; }
+        .compass-ui { position: relative; width: 190px; height: 190px; border: 10px solid #2e7d32; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        #needle { position: absolute; width: 5px; height: 80px; background: #c62828; transform-origin: bottom center; top: 15px; z-index: 10; transition: transform 0.2s; }
         .kaaba-box { width: 45px; height: 45px; background: #000; border: 2px solid #ffd700; z-index: 5; }
 
         .tasbih-num { font-size: 85px; font-weight: bold; color: #2e7d32; margin: 0; }
@@ -97,7 +97,7 @@
     </div>
 
     <div class="marquee-box">
-        <marquee scrollamount="6">"নামাজ পড়ুন, জীবন গড়ুন। আমীন।"</marquee>
+        <marquee scrollamount="5">"সালাত জান্নাতের চাবিকাঠি" — "আজকের ছোট্ট আমল: ৩ বার সূরা ইখলাস পড়ুন" — "তসবিহ অপশনটি ব্যবহার করে আপনার জিকির পূর্ণ করুন" — "প্রতিদিন অন্তত এক আয়াত বুঝে পড়ার চেষ্টা করি" — "হাসিমুখে কথা বলাও একটি সদকা"</marquee>
     </div>
 
     <div id="adhan-modal">
@@ -110,15 +110,13 @@
             <button class="adhan-list-btn" onclick="setAdhan('makkah', this)">মক্কা শরীফ <span>▶</span></button>
             <button class="adhan-list-btn" onclick="setAdhan('madina', this)">মদিনা শরীফ <span>▶</span></button>
             <button class="adhan-list-btn" onclick="setAdhan('egypt', this)">মিশরীয় আজান <span>▶</span></button>
-            <p style="font-size: 14px; color: #777;">(ব্যাক বাটন টিপুন)</p>
+            <p style="font-size: 14px; color: #777;">(ফিরে যেতে ফোনের ব্যাক বাটন টিপুন)</p>
         </div>
     </div>
 
     <div id="tools-screen">
         <div class="tool-box">
-            <div class="compass-ui">
-                <div id="needle"></div> <div class="kaaba-box"></div>
-            </div>
+            <div class="compass-ui"><div id="needle"></div><div class="kaaba-box"></div></div>
             <p style="color:#c62828; font-weight:bold; margin-top:10px;">কিবলার দিক নির্দেশিত</p>
         </div>
         <div class="tool-box">
@@ -143,6 +141,25 @@
 
         let selectedAdhan = 'bd';
         let adhanAudio = new Audio();
+
+        // ব্যাক বাটন হ্যান্ডলিং - এটি আপনার মূল সমস্যার সমাধান
+        function showTools() { 
+            window.history.pushState({view: 'tools'}, ""); 
+            document.getElementById('tools-screen').style.display = 'flex'; 
+            initCompass(); 
+        }
+
+        function showAdhan() { 
+            window.history.pushState({view: 'adhan'}, ""); 
+            document.getElementById('adhan-modal').style.display = 'block'; 
+        }
+
+        window.onpopstate = function(event) {
+            // ব্যাক টিপলে সব ওপেন থাকা স্ক্রিন বন্ধ হবে কিন্তু অ্যাপ বন্ধ হবে না
+            document.getElementById('adhan-modal').style.display = 'none';
+            document.getElementById('tools-screen').style.display = 'none';
+            adhanAudio.pause();
+        };
 
         function setAdhan(id, btn) {
             document.querySelectorAll('.adhan-list-btn').forEach(b => b.style.border = 'none');
@@ -199,15 +216,6 @@
         let tc = 0;
         function tapT() { tc++; document.getElementById('t-val').innerText = bn(tc); if(navigator.vibrate) navigator.vibrate(50); }
         function resetT() { tc = 0; document.getElementById('t-val').innerText = "০"; }
-
-        function showTools() { history.pushState({p:2}, ""); document.getElementById('tools-screen').style.display = 'flex'; initCompass(); }
-        function showAdhan() { history.pushState({p:1}, ""); document.getElementById('adhan-modal').style.display = 'block'; }
-        
-        window.onpopstate = function() {
-            document.getElementById('adhan-modal').style.display = 'none';
-            document.getElementById('tools-screen').style.display = 'none';
-            adhanAudio.pause();
-        };
 
         function initCompass() {
             if (window.DeviceOrientationEvent) {
