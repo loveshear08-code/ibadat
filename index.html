@@ -182,5 +182,14 @@
         update();
         loadSavedAdhan(); // অ্যাপ চালুর সময় সেভ করা আজান লোড করবে
     </script>
+<script>
+  (function() {
+      // এটি ফোনের ব্যাক বাটন চাপলে আগের পাতায় যাওয়ার নির্দেশ দেয়
+      history.pushState(null, null, location.href);
+      window.onpopstate = function() {
+          history.go(-1);
+      };
+  })();
+</script>
 </body>
 </html>
