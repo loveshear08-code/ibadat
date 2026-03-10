@@ -1,192 +1,39 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ইবাদত</title>
-    <style>
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        body { font-family: 'Arial', sans-serif; background-color: #fdfaf1; color: #1a3300; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
-        
-        .header { background-color: #e0f7fa; display: flex; justify-content: space-between; padding: 0 15px; font-weight: bold; font-size: 18px; border-bottom: 1px solid #b2ebf2; height: 45px; align-items: center; }
-        .content-area { flex: 1; display: flex; flex-direction: column; gap: 4px; padding: 4px; overflow: hidden; }
-        .card { background-color: #eaf7eb; border-radius: 15px; padding: 12px; border: 1px solid #d0e8d1; width: 100%; text-align: center; }
-        
-        .bismillah { 
-            font-size: 32px; direction: rtl; font-weight: bold; 
-            background: linear-gradient(90deg, #8e7300, #ffcc00, #ffd700, #8e7300);
-            background-size: 200% auto; -webkit-background-clip: text; color: transparent;
-            animation: shine 3s linear infinite; text-align: center;
-        }
-        @keyframes shine { to { background-position: 200% center; } }
 
-        .timer-board { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px 5px; }
-        .timer-display { font-size: 55px; color: #2e7d32; font-weight: bold; line-height: 1; margin: 4px 0; }
-        .countdown-display { font-size: 55px; color: #c62828; font-weight: bold; line-height: 1; margin: 4px 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        .prayer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
-        .prayer-item { padding: 5px 0; border-bottom: 1px solid #c2dec3; font-size: 15px; }
-        
-        .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex-grow: 1; margin-bottom: 2px; }
-        .btn { background: #eaf7eb; border: 1px solid #d0e8d1; border-radius: 15px; padding: 10px; font-weight: bold; font-size: 20px; color: #1a3300; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 4px 8px rgba(0,0,0,0.06); cursor: pointer; height: 100%; width: 100%; }
+<title>IBADAT</title>
 
-        .bottom-bar { background-color: #e0f7fa; color: #c62828; font-weight: bold; font-size: 16px; height: 45px; display: flex; align-items: center; border-top: 1px solid #b2ebf2; width: 100%; overflow: hidden; }
+<link rel="stylesheet" href="css/setup.css">
 
-        .sub-page { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000; background: #fdfaf1; flex-direction: column; padding: 15px; overflow-y: auto; }
-        .adhan-item { background: #eaf7eb; border: 1px solid #d0e8d1; border-radius: 12px; padding: 15px; margin-bottom: 8px; display: grid; grid-template-columns: 1fr 60px 60px; align-items: center; font-weight: bold; }
-        .status-check { color: #2e7d32; display: none; margin-left: 5px; }
-    </style>
 </head>
+
 <body>
 
-    <div class="header">
-        <span>কলকাতা</span>
-        <span id="h-date">...</span>
-    </div>
+<div class="setup-card">
 
-    <div class="content-area">
-        <div class="card" onclick="openPage('names-page')">
-            <div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
-        </div>
+<h1>IBADAT</h1>
 
-        <div class="card timer-board">
-            <div style="font-weight:bold; font-size: 18px;">বর্তমান ওয়াক্ত: <span id="cw">লোড হচ্ছে</span></div>
-            <div id="clock" class="timer-display">০০:০০:০০</div>
-            <div style="color:#c62828; font-weight:bold; font-size: 18px;">পরবর্তী ওয়াক্ত: <span id="nw">...</span></div>
-            <div id="timer" class="countdown-display">০০:০০:০০</div>
-        </div>
+<select id="language">
 
-        <div class="card prayer-grid" onclick="openPage('adhan-page')">
-            <div class="prayer-item"><b>ফজর</b><br>০৪:৪২</div><div class="prayer-item"><b>সূর্যোদয়</b><br>০৫:৫৬</div><div class="prayer-item"><b>জোহর</b><br>১১:৪৮</div>
-            <div class="prayer-item"><b>আসর</b><br>১৫:০৯</div><div class="prayer-item"><b>মাগরিব</b><br>১৭:৪১</div><div class="prayer-item"><b>এশা</b><br>১৮:৫৫</div>
-        </div>
+<option value="en">English</option>
+<option value="bn">বাংলা</option>
+<option value="hi">हिन्दी</option>
 
-        <div class="footer-grid">
-            <div class="btn" onclick="openPage('qibla-page')">🕋<br>কিবলা কম্পাস</div>
-            <div class="btn" onclick="openPage('tasbih-page')">📿<br>ডিজিটাল তসবিহ</div>
-            <div class="btn" onclick="openPage('namaz-page')">📚<br>নামাজ শিক্ষা</div>
-            <div class="btn" onclick="openPage('quran-page')">🕌<br>আল কুরআন</div>
-        </div>
-    </div>
+</select>
 
-    <div class="bottom-bar">
-        <marquee scrollamount="5">"দুনিয়া আপনাকে কাঁদাতে পারে, কিন্তু মনে রাখবেন সেজদাহ আপনার সব চোখের জল মুছে দেওয়ার ক্ষমতা রাখে।" &nbsp;&nbsp;&nbsp; "আল্লাহর ফয়সালা আপনার ইচ্ছার চেয়েও বেশি সুন্দর হতে পারে, শুধু একটু ধৈর্য ধরুন।"</marquee>
-    </div>
+<button onclick="getLocation()">Allow Location</button>
 
-    <div id="adhan-page" class="sub-page">
-        <h2 style="color:#2e7d32; margin-bottom:20px;">আজান সেটআপ</h2>
-        <div class="adhan-item" data-id="1">মক্কা শরীফ <span onclick="playA('https://www.islamcan.com/audio/adhan/azan2.mp3')">▶️</span> <span onclick="setA(this)">সেট<b class="status-check">✔</b></span></div>
-        <div class="adhan-item" data-id="2">মদিনা শরীফ <span onclick="playA('https://www.islamcan.com/audio/adhan/azan3.mp3')">▶️</span> <span onclick="setA(this)">সেট<b class="status-check">✔</b></span></div>
-        <div class="adhan-item" data-id="3">বাংলাদেশ <span onclick="playA('https://www.islamcan.com/audio/adhan/azan1.mp3')">▶️</span> <span onclick="setA(this)">সেট<b class="status-check">✔</b></span></div>
-        <div class="adhan-item" data-id="4">কুয়েত <span onclick="playA('https://www.islamcan.com/audio/adhan/azan14.mp3')">▶️</span> <span onclick="setA(this)">সেট<b class="status-check">✔</b></span></div>
-        <div class="adhan-item" data-id="5">আলাস্কা <span onclick="playA('https://www.islamcan.com/audio/adhan/azan9.mp3')">▶️</span> <span onclick="setA(this)">সেট<b class="status-check">✔</b></span></div>
-        <audio id="player"></audio>
-    </div>
+<button onclick="continueApp()">Continue</button>
 
-    <div id="names-page" class="sub-page">
-        <h2 style="color:#2e7d32; text-align:center;">আল্লাহর ৯৯টি নাম</h2>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; padding-top:15px;" id="names-list"></div>
-    </div>
+</div>
 
-    <div id="tasbih-page" class="sub-page">
-        <h2 style="color:#2e7d32; text-align:center;">ডিজিটাল তসবিহ</h2>
-        <div style="text-align:center; margin-top:50px;">
-            <div id="t-display" style="font-size:100px; font-weight:bold; color:#2e7d32;">০</div>
-            <button style="width:140px; height:140px; border-radius:50%; background:#2e7d32; color:white; border:none; font-size:28px;" onclick="countT()">গুনুন</button>
-            <br><br><button onclick="resetT()" style="background:red; color:white; border:none; padding:10px 20px; border-radius:10px;">রিসেট</button>
-        </div>
-    </div>
+<script src="js/setup.js"></script>
 
-    <div id="qibla-page" class="sub-page">
-        <h2 style="color:#2e7d32; text-align:center;">কিবলা কম্পাস</h2>
-        <div style="width:200px; height:200px; border:8px solid #2e7d32; border-radius:50%; margin:50px auto; position:relative;">
-            <div id="needle" style="position:absolute; width:4px; height:90px; background:red; top:10px; left:90px; transform-origin:bottom center;"></div>
-        </div>
-    </div>
-
-    <div id="namaz-page" class="sub-page"><h2>নামাজ শিক্ষা শীঘ্রই আসছে...</h2></div>
-    <div id="quran-page" class="sub-page"><h2>আল কুরআন শীঘ্রই আসছে...</h2></div>
-
-    <script>
-        const bn = s => s.toString().replace(/\d/g, d => "০১২৩৪৫৬৭৮৯"[d]);
-        const p = document.getElementById('player');
-
-        // --- ব্যাক বাটন ফিক্স (এটাই আসল সমাধান) ---
-        // অ্যাপ চালু হলে একটি ব্যাকআপ স্টেট তৈরি করে রাখা
-        window.history.pushState({}, "");
-
-        function openPage(id) { 
-            // নতুন পেজ খুললে হিস্ট্রিতে রেকর্ড যোগ করা
-            window.history.pushState({pageId: id}, ""); 
-            document.querySelectorAll('.sub-page').forEach(sp => sp.style.display = 'none'); 
-            document.getElementById(id).style.display = 'flex'; 
-        }
-
-        window.onpopstate = (event) => { 
-            p.pause(); p.currentTime = 0; 
-            // ব্যাক চাপলে সব সাব-পেজ বন্ধ করে মেইন স্ক্রিনে ফেরত আসা
-            document.querySelectorAll('.sub-page').forEach(sp => sp.style.display = 'none'); 
-            // পুনরায় স্টেট সেট করা যাতে পরবর্তী ব্যাকেও অ্যাপ থেকে না বের হয়
-            window.history.pushState({}, "");
-        };
-        // --------------------------------------
-
-        function update() {
-            const n = new Date();
-            document.getElementById('clock').innerText = bn(n.toLocaleTimeString('en-GB'));
-            document.getElementById('h-date').innerText = new Intl.DateTimeFormat('bn-BD-u-ca-islamic-uma', {day:'numeric', month:'long', year:'numeric'}).format(n);
-            
-            const pt = [{n:"ফজর",t:"04:42"},{n:"সূর্যোদয়",t:"05:56"},{n:"জোহর",t:"11:48"},{n:"আসর",t:"15:09"},{n:"মাগরিব",t:"17:41"},{n:"এশা",t:"18:55"}];
-            const ns = n.getHours()*3600 + n.getMinutes()*60 + n.getSeconds();
-            let cur = "এশা", nxt = pt[0], d = 0;
-            for(let i=0; i<pt.length; i++){
-                const [h,m] = pt[i].t.split(':').map(Number);
-                const ts = h*3600 + m*60;
-                if(ns < ts) { nxt=pt[i]; cur=i>0?pt[i-1].n:"এশা"; d=ts-ns; break; }
-            }
-            if(d===0) { const [h,m]=pt[0].t.split(':').map(Number); d=(86400-ns)+(h*3600+m*60); }
-            document.getElementById('cw').innerText = cur; document.getElementById('nw').innerText = nxt.n;
-            const hr=Math.floor(d/3600), mn=Math.floor((d%3600)/60), sc=d%60;
-            document.getElementById('timer').innerText = bn(`${hr.toString().padStart(2,'0')}:${mn.toString().padStart(2,'0')}:${sc.toString().padStart(2,'0')}`);
-        }
-
-        function playA(source) { p.src = source; p.play(); }
-
-        function setA(el) { 
-            document.querySelectorAll('.status-check').forEach(s => s.style.display = 'none');
-            el.querySelector('.status-check').style.display = 'inline';
-            localStorage.setItem('savedAdhanId', el.closest('.adhan-item').getAttribute('data-id'));
-        }
-
-        function loadSavedAdhan() {
-            const savedId = localStorage.getItem('savedAdhanId');
-            if (savedId) {
-                const target = document.querySelector(`.adhan-item[data-id="${savedId}"] .status-check`);
-                if (target) target.style.display = 'inline';
-            }
-        }
-
-        let count = 0;
-        function countT() { count++; document.getElementById('t-display').innerText = bn(count); }
-        function resetT() { count = 0; document.getElementById('t-display').innerText = "০"; }
-
-        const nArr = ["আল্লাহু (আল্লাহ)", "আর-রাহমানু (পরম দয়ালু)", "আর-রাহিমু (মেহেরবান)", "আল-মালিকু (অধিপতি)", "আল-কুদ্দুসু (অতি পবিত্র)", "আস-সালামু (শান্তি দাতা)", "আল-মু'মিনু (নিরাপত্তা দাতা)", "আল-মুহাইমিনু (রক্ষণাবেক্ষণকারী)", "আল-আজিজু (পরাক্রমশালী)", "আল-জাব্বারু (প্রতাপশালী)", "আল-মুতাকাব্বিরু (অহমিকা সম্পন্ন)", "আল-খালিকু (সৃষ্টিকর্তা)", "আল-বারিউ (সৃজনকারী)", "আল-মুসাব্বিরু (আকৃতিদানকারী)", "আল-গাফফারু (ক্ষমাশীল)", "আল-কাহহারু (দমনকারী)", "আল-ওয়াহহাবু (মহা দাতা)", "আর-রাজ্জাকু (রিজিক দাতা)", "আল-ফাত্তাহু (বিজয়দানকারী)", "আল-আলিমু (সর্বজ্ঞ)", "আল-কাবিদু (সংকোচনকারী)", "আল-বাসিতু (সম্প্রসারণকারী)", "আল-খাফিদু (অবনতকারী)", "আর-রাফিয়ু (উন্নতকারী)", "আল-মুইজ্জু (সম্মান দাতা)", "আল-মুজিলু (অপমানকারী)", "আস-সামিউ (সর্বশ্রোতা)", "আল-বাসিরু (সর্বদৃষ্টিমান)", "আল-হাকামু (বিচারক)", "আল-আদলু (ন্যায়পরায়ণ)", "আল-লাতিফু (সুক্ষ্মদর্শী)", "আল-খাবীরু (অবগত)", "আল-হালিমু (ধৈর্যশীল)", "আল-আজিমু (মহান)", "আল-গাফুরু (ক্ষমাশীল)", "আশ-শাকুরু (গুণগ্রাহী)", "আল-আলিয়্যু (উচ্চ)", "আল-কাবীরু (মহীয়ান)", "আল-হাফিজু (সংরক্ষণকারী)", "আল-মুক্বিতু (আহার্য দাতা)", "আল-হাসিবু (হিসাব গ্রহণকারী)", "আল-জালিলু (মহিমান্বিত)", "আল-কারিমু (দয়ালু)", "আর-রাকিবু (তত্ত্বাবধায়ক)", "আল-মুজীবু (কবুলকারী)", "আল-ওয়াসিউ (অসীম)", "আল-হাকিমু (প্রজ্ঞাময়)", "আল-ওয়াদুদু (প্রেমময়)", "আল-মাজিদu (গৌরবময়)", "আল-বাইসু (পুনরুত্থানকারী)", "আশ-শাহিদু (সাক্ষী)", "আল-হাক্কু (পরম সত্য)", "আল-ওয়াকিলু (তত্ত্বাবধায়ক)", "আল-ক্বউইউ (শক্তিশালী)", "আল-মাতিনু (সুদৃঢ়)", "আল-ওয়ালিয়্যু (অভিভাবক)", "আল-হামিদু (প্রশংসিত)", "আল-মুহসি (হিসাব রক্ষণকারী)", "আল-মubদিউ (প্রথমবার সৃষ্টিকারী)", "আল-মুইদু (পুনরায় সৃষ্টিকারী)", "আল-মুহয়ি (জীবন দানকারী)", "আল-মুমিতু (মৃত্যু দানকারী)", "আল-হাইয়্যু (চিরঞ্জীব)", "আল-কাইয়ুমু (চিরস্থায়ী)", "আল-ওয়াজিদু (প্রাপক)", "আল-মাজিদু (শ্রেষ্ঠত্বের অধিকারী)", "আল-ওয়াহিদু (এক ও অদ্বিতীয়)", "আস-সামাদু (অমুখাপেক্ষী)", "আল-কাদিরু (সর্বশক্তিমান)", "আল-মুক্তাদিরু (প্রবল শক্তিশালী)", "আল-মুকাদ্দিমু (অগ্রসরকারী)", "আল-মুয়াখখিরু (বিলম্বকারী)", "আল-আউয়ালু (অনাদি)", "আল-আখিরু (অনন্ত)", "আজ-জাহিরু (প্রকাশ্য)", "আল-বাতিনু (অপ্রকাশ্য)", "আল-ওয়ালি (অধিপতি)", "আল-মুতাআলি (সর্বোচ্চ মর্যাদাবান)", "আল-বাররু (কল্যাণকামী)", "আত-তাওয়াবু (তওবা কবুলকারী)", "আল-মুনতাকিমু (প্রতিশোধ গ্রহণকারী)", "আল-আফুউ (ক্ষমাশীল)", "আর-রাউফু (অতি দয়ালু)", "মালিকুল মুলকি (অধিপতি)", "জুল জালালি ওয়াল ইকরম (মহিমান্বিত ও দয়াবান)", "আল-মুকসিতু (ন্যায়পরায়ণ)", "আল-জামিযু (একত্রকারী)", "আল-গানিয়্যু (ঐশ্বর্যশালী)", "আল-মুগনি (অভাবমুক্তকারী)", "আল-মানিউ (প্রতিরোধকারী)", "আদ-দাররু (ক্ষতিসাধনকারী)", "আন-নাফিউ (কল্যাণকারী)", "আন-নূরু (জ্যোতি)", "আল-হাদি (পথপ্রদর্শক)", "আল-বাদিয়্যু (অপূর্ব সৃষ্টিকারী)", "আল-বাকিউ (চিরস্থায়ী)", "আল-ওয়ারিসু (উত্তরাধিকারী)", "আর-রাশিদু (পথপ্রদর্শক)", "আস-সাবুরু (ধৈর্যশীল)"];
-
-        nArr.forEach((name, i) => {
-            const div = document.createElement('div');
-            div.style = "background:#eaf7eb; padding:15px; border-radius:10px; border:1px solid #d0e8d1; font-weight:bold; text-align:center; font-size: 14px;";
-            div.innerHTML = `${bn(i+1)}. ${name}`;
-            document.getElementById('names-list').appendChild(div);
-        });
-
-        window.addEventListener('deviceorientation', e => {
-            const h = e.webkitCompassHeading || (360 - e.alpha);
-            document.getElementById('needle').style.transform = `rotate(${293 - h}deg)`;
-        });
-
-        setInterval(update, 1000); 
-        update();
-        loadSavedAdhan();
-    </script>
 </body>
+
 </html>
