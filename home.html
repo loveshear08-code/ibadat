@@ -8,7 +8,7 @@
 
 <title>IBADAT</title>
 
-<link rel="stylesheet" href="home.css">
+<link rel="stylesheet" href="css/home.css">
 
 </head>
 
@@ -17,10 +17,8 @@
 <!-- TOP BAR -->
 
 <div class="topbar">
-
-<span id="city">Location</span>
+<span id="city"></span>
 <span id="date"></span>
-
 </div>
 
 
@@ -31,7 +29,7 @@
 
 <!-- BISMILLAH -->
 
-<div class="card">
+<div class="card bismillah-card">
 
 <div class="bismillah-ar">
 بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
@@ -42,15 +40,23 @@
 </div>
 
 
-<!-- TIMER -->
 
-<div class="card prayer-timer">
+<!-- PRAYER STATUS -->
+
+<div class="card prayer-status">
+
+<div class="status-top">
+
+<span id="todayDay"></span>
+
+<span id="weather"></span>
+
+</div>
+
 
 <div class="timer-grid">
 
 <div class="current-side">
-
-<div id="currentLabel" class="label"></div>
 
 <div id="currentPrayerName" class="prayer-name"></div>
 
@@ -64,8 +70,6 @@
 
 <div class="next-side">
 
-<div id="nextLabel" class="label"></div>
-
 <div id="nextPrayerName" class="prayer-name"></div>
 
 <div id="countdown" class="countdown"></div>
@@ -74,54 +78,40 @@
 
 </div>
 
-<!-- WEATHER LINE -->
-
-<div id="weather" class="weather"></div>
-
 </div>
 
 
-<!-- PRAYER TIMES -->
+
+<!-- PRAYER TIMES GRID -->
 
 <div class="card prayer-grid" id="prayerGrid"></div>
-<div class="prayer">
-  <span id="fajrName"></span>
-  <span id="fajrTime"></span>
-</div>
 
-<div class="prayer">
-  <span id="dhuhrName"></span>
-  <span id="dhuhrTime"></span>
-</div>
 
-<div class="prayer">
-  <span id="asrName"></span>
-  <span id="asrTime"></span>
-</div>
-
-<div class="prayer">
-  <span id="maghribName"></span>
-  <span id="maghribTime"></span>
-</div>
-
-<div class="prayer">
-  <span id="ishaName"></span>
-  <span id="ishaTime"></span>
-</div>
-</div>
 
 <!-- FEATURES -->
 
 <div class="feature-grid">
 
-<div class="feature-box" id="qibla"></div>
-<div class="feature-box" id="tasbih"></div>
+<!-- ROW 1 -->
+
 <div class="feature-box" id="namaz"></div>
 <div class="feature-box" id="quran"></div>
 
-</div>
+<!-- ROW 2 -->
+
+<div class="feature-box" id="dua"></div>
+<div class="feature-box" id="hadith"></div>
+
+<!-- ROW 3 -->
+
+<div class="feature-box" id="qibla"></div>
+<div class="feature-box" id="tasbih"></div>
 
 </div>
+
+
+</div>
+
 
 
 <!-- BOTTOM BAR -->
@@ -133,8 +123,8 @@
 </div>
 
 
-<script src="home.js"></script>
+
+<script src="js/home.js"></script>
 
 </body>
-
 </html>
