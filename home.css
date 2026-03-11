@@ -2,7 +2,13 @@ body{
 margin:0;
 font-family:sans-serif;
 background:#e9f4ff;
+display:flex;
+flex-direction:column;
+height:100vh;
+overflow:hidden;
 }
+
+/* TOP BAR */
 
 .topbar{
 background:#2f6aa3;
@@ -14,29 +20,89 @@ font-size:16px;
 font-weight:bold;
 }
 
+/* BOTTOM BAR */
+
+.bottom-bar{
+background:#2f6aa3;
+color:white;
+padding:10px;
+text-align:center;
+font-weight:bold;
+}
+
+/* MAIN AREA */
+
 .main{
 flex:1;
 display:grid;
-gap:12px;
+grid-template-rows:auto auto auto auto;
+gap:10px;
 padding:10px;
+overflow:hidden;
 }
+
+/* CARD */
 
 .card{
 background:#bcdcff;
 border-radius:18px;
-padding:16px;
+padding:12px;
 text-align:center;
 box-shadow:0 4px 10px rgba(0,0,0,0.12);
+display:flex;
+flex-direction:column;
+justify-content:center;
 }
+
+/* BISMILLAH */
 
 .bismillah-ar{
 font-size:28px;
 font-weight:bold;
+text-align:center;
+
+background:linear-gradient(90deg,#caa520,#ffd700,#556b2f,#ffd700,#caa520);
+background-size:300%;
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+animation:bismillahGlow 5s linear infinite;
+}
+
+@keyframes bismillahGlow{
+
+0%{
+background-position:0%;
+text-shadow:0 0 8px #ffd700;
+}
+
+50%{
+background-position:100%;
+text-shadow:0 0 18px #b8860b;
+}
+
+100%{
+background-position:0%;
+text-shadow:0 0 8px #ffd700;
+}
+
 }
 
 .bismillah-meaning{
 font-size:15px;
 margin-top:5px;
+font-weight:bold;
+}
+
+/* PRAYER STATUS BOARD */
+
+.status-top{
+display:flex;
+justify-content:space-between;
+font-weight:bold;
+margin-bottom:6px;
+font-size:16px;
 }
 
 .timer-grid{
@@ -45,58 +111,63 @@ grid-template-columns:1fr auto 1fr;
 align-items:center;
 }
 
+.prayer-name{
+font-size:18px;
+font-weight:bold;
+}
+
 .timer{
-font-size:36px;
+font-size:34px;
 color:#2e7d32;
 font-weight:bold;
 }
 
 .countdown{
-font-size:36px;
+font-size:34px;
 color:#c62828;
 font-weight:bold;
 }
-.weather{
-font-size:14px;
-margin-top:6px;
-font-weight:600;
-color:#2f6aa3;
-}
+
 .divider{
-font-size:36px;
+font-size:30px;
 padding:0 10px;
 }
+
+/* PRAYER TIMES GRID */
 
 .prayer-grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:10px;
+gap:8px;
 }
 
 .prayer-box{
 background:#bcdcff;
-border-radius:16px;
-padding:12px;
+border-radius:12px;
+padding:8px;
 box-shadow:0 3px 8px rgba(0,0,0,0.12);
+font-size:14px;
+font-weight:bold;
 }
+
+/* FEATURE GRID */
 
 .feature-grid{
 display:grid;
 grid-template-columns:repeat(2,1fr);
+grid-template-rows:repeat(3,1fr);
 gap:10px;
 }
 
 .feature-box{
 background:#bcdcff;
 border-radius:16px;
-padding:16px;
+padding:10px;
 font-weight:bold;
 box-shadow:0 3px 8px rgba(0,0,0,0.12);
-}
-
-.bottom-bar{
-background:#2f6aa3;
-color:white;
-padding:10px;
+display:flex;
+align-items:center;
+justify-content:center;
 text-align:center;
+font-size:15px;
 }
