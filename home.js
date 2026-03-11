@@ -1,95 +1,117 @@
 const lang = localStorage.getItem("appLang") || "bn";
 
-const text = {
+/* LANGUAGE DATA */
+
+const text={
 
 bn:{
-current:"বর্তমান ওয়াক্ত",
-next:"পরবর্তী ওয়াক্ত",
+days:["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"],
+
 fajr:"ফজর",
 sunrise:"সূর্যোদয়",
 dhuhr:"জোহর",
 asr:"আসর",
 maghrib:"মাগরিব",
 isha:"এশা",
-qibla:"🕋 কিবলা কম্পাস",
-tasbih:"📿 ডিজিটাল তসবিহ",
+
 namaz:"📚 নামাজ শিক্ষা",
 quran:"🕌 আল কুরআন",
+dua:"🤲 দোয়া",
+hadith:"📖 হাদিস",
+qibla:"🕋 কিবলা কম্পাস",
+tasbih:"📿 ডিজিটাল তসবিহ",
+
+bismillah:"পরম করুণাময় অসীম দয়ালু আল্লাহর নামে",
+
+weather:{
+clear:"পরিষ্কার",
+cloud:"মেঘলা",
+rain:"বৃষ্টি",
+snow:"তুষার",
+storm:"ঝড়"
+},
+
 quotes:[
 "নামাজ জান্নাতের চাবি",
 "আল্লাহকে স্মরণ করো তিনি তোমাকে স্মরণ করবেন",
-"ধৈর্যশীলদের সাথে আল্লাহ আছেন",
-"তাওবা কারীদের আল্লাহ ভালোবাসেন"
+"ধৈর্যশীলদের সাথে আল্লাহ আছেন"
 ]
+
 },
 
 en:{
-current:"Current Prayer",
-next:"Next Prayer",
+days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+
 fajr:"Fajr",
 sunrise:"Sunrise",
 dhuhr:"Dhuhr",
 asr:"Asr",
 maghrib:"Maghrib",
 isha:"Isha",
-qibla:"🕋 Qibla Compass",
-tasbih:"📿 Digital Tasbih",
+
 namaz:"📚 Namaz Guide",
 quran:"🕌 Al Quran",
+dua:"🤲 Dua",
+hadith:"📖 Hadith",
+qibla:"🕋 Qibla Compass",
+tasbih:"📿 Digital Tasbih",
+
+bismillah:"In the name of Allah, the Most Merciful",
+
+weather:{
+clear:"Clear",
+cloud:"Cloudy",
+rain:"Rain",
+snow:"Snow",
+storm:"Storm"
+},
+
 quotes:[
 "Prayer is the key to Paradise",
 "Remember Allah and He will remember you",
-"Indeed Allah is with the patient",
-"Allah loves those who repent"
+"Indeed Allah is with the patient"
 ]
+
 },
 
 hi:{
-current:"वर्तमान नमाज़",
-next:"अगली नमाज़",
+days:["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"],
+
 fajr:"फ़ज्र",
 sunrise:"सूर्योदय",
 dhuhr:"ज़ुहर",
 asr:"असर",
 maghrib:"मगरिब",
 isha:"इशा",
+
+namaz:"📚 नमाज़ शिक्षा",
+quran:"🕌 अल कुरान",
+dua:"🤲 दुआ",
+hadith:"📖 हदीस",
 qibla:"🕋 क़िबला कम्पास",
 tasbih:"📿 डिजिटल तस्बीह",
-namaz:"📚 नमाज़ शिक्षा",
-quran:"🕌 अल कुरआन",
+
+bismillah:"अल्लाह के नाम से",
+
+weather:{
+clear:"साफ",
+cloud:"बादल",
+rain:"बारिश",
+snow:"बर्फ",
+storm:"तूफान"
+},
+
 quotes:[
 "नमाज़ जन्नत की कुंजी है",
-"अल्लाह को याद करो वह तुम्हें याद करेगा",
-"अल्लाह सब्र करने वालों के साथ है",
-"अल्लाह तौबा करने वालों से प्रेम करता है"
+"अल्लाह को याद करो",
+"अल्लाह सब्र करने वालों के साथ है"
 ]
+
 }
 
 };
 
-const T = text[lang];
-
-
-/* CITY LANGUAGE MAP */
-
-const cityNames = {
-Kolkata:{
-bn:"কলকাতা",
-en:"Kolkata",
-hi:"कोलकाता"
-}
-};
-
-
-/* LABELS */
-
-document.getElementById("currentLabel").innerText = T.current;
-document.getElementById("nextLabel").innerText = T.next;
-
-document.getElementById("qibla").innerText = T.qibla;
-document.getElementById("tasbih").innerText = T.tasbih;
-document.getElementById("namaz").innerText = T.namaz;
-document.getElementById("quran").innerText = T.quran;
+const T=text[lang];
 
 
 /* NUMBER CONVERT */
@@ -111,29 +133,38 @@ return str;
 }
 
 
+/* TEXT SET */
+
+document.getElementById("bismillahMeaning").innerText=T.bismillah;
+
+document.getElementById("namaz").innerText=T.namaz;
+document.getElementById("quran").innerText=T.quran;
+document.getElementById("dua").innerText=T.dua;
+document.getElementById("hadith").innerText=T.hadith;
+document.getElementById("qibla").innerText=T.qibla;
+document.getElementById("tasbih").innerText=T.tasbih;
+
+
 /* DATE */
 
-function updateDate(){
+let today=new Date();
 
-let today = new Date();
-
-document.getElementById("date").innerText =
+document.getElementById("date").innerText=
 convertNumber(today.toLocaleDateString("en-GB"));
 
-}
-
-updateDate();
+document.getElementById("todayDay").innerText=
+T.days[today.getDay()];
 
 
 /* CLOCK */
 
 function updateClock(){
 
-let now = new Date();
+let now=new Date();
 
-let time = now.toLocaleTimeString("en-GB");
+let time=now.toLocaleTimeString("en-GB",{hour12:false});
 
-document.getElementById("clock").innerText =
+document.getElementById("clock").innerText=
 convertNumber(time);
 
 }
@@ -142,11 +173,10 @@ setInterval(updateClock,1000);
 updateClock();
 
 
-/* PRAYER TIMES */
+/* PRAYER API */
 
-let prayerTimes = [];
-let nextTime = null;
-
+let prayerTimes=[];
+let nextTime=null;
 
 function loadPrayerTimes(lat,lon){
 
@@ -154,9 +184,9 @@ fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&metho
 .then(res=>res.json())
 .then(data=>{
 
-let t = data.data.timings;
+let t=data.data.timings;
 
-prayerTimes = [
+prayerTimes=[
 
 {name:T.fajr,time:t.Fajr},
 {name:T.sunrise,time:t.Sunrise},
@@ -168,7 +198,7 @@ prayerTimes = [
 ];
 
 renderPrayerGrid();
-updatePrayerStatus();
+updatePrayer();
 
 });
 
@@ -179,19 +209,19 @@ updatePrayerStatus();
 
 function renderPrayerGrid(){
 
-const grid = document.getElementById("prayerGrid");
+let grid=document.getElementById("prayerGrid");
 
-grid.innerHTML = "";
+grid.innerHTML="";
 
 prayerTimes.forEach(p=>{
 
-let div = document.createElement("div");
+let box=document.createElement("div");
 
-div.className="prayer-box";
+box.className="prayer-box";
 
-div.innerHTML = "<b>"+p.name+"</b><br>"+convertNumber(p.time);
+box.innerHTML="<b>"+p.name+"</b><br>"+convertNumber(p.time);
 
-grid.appendChild(div);
+grid.appendChild(box);
 
 });
 
@@ -200,56 +230,35 @@ grid.appendChild(div);
 
 /* CURRENT + NEXT PRAYER */
 
-function updatePrayerStatus(){
+function updatePrayer(){
 
-if(prayerTimes.length===0) return;
-
-let now = new Date();
-
-let current="";
-let next="";
+let now=new Date();
 
 for(let i=0;i<prayerTimes.length;i++){
 
-let [h,m] = prayerTimes[i].time.split(":");
+let [h,m]=prayerTimes[i].time.split(":");
 
-let pt = new Date();
+let pt=new Date();
 
 pt.setHours(h);
 pt.setMinutes(m);
 pt.setSeconds(0);
 
-if(now < pt){
+if(now<pt){
 
-next = prayerTimes[i].name;
-nextTime = pt;
+document.getElementById("currentPrayerName").innerText=
+i===0?prayerTimes[5].name:prayerTimes[i-1].name;
 
-current = i===0 ? prayerTimes[5].name : prayerTimes[i-1].name;
+document.getElementById("nextPrayerName").innerText=
+prayerTimes[i].name;
+
+nextTime=pt;
 
 break;
 
 }
 
 }
-
-if(next===""){
-
-current = prayerTimes[5].name;
-
-let [h,m] = prayerTimes[0].time.split(":");
-
-next = prayerTimes[0].name;
-
-nextTime = new Date();
-
-nextTime.setDate(nextTime.getDate()+1);
-nextTime.setHours(h);
-nextTime.setMinutes(m);
-
-}
-
-document.getElementById("currentPrayerName").innerText = current;
-document.getElementById("nextPrayerName").innerText = next;
 
 }
 
@@ -258,73 +267,93 @@ document.getElementById("nextPrayerName").innerText = next;
 
 function updateCountdown(){
 
-if(!nextTime) return;
+if(!nextTime)return;
 
-let diff = Math.floor((nextTime.getTime() - Date.now())/1000);
+let diff=Math.floor((nextTime-new Date())/1000);
 
-let h = Math.floor(diff/3600);
-let m = Math.floor((diff%3600)/60);
-let s = Math.floor(diff%60);
+let h=Math.floor(diff/3600);
+let m=Math.floor((diff%3600)/60);
+let s=Math.floor(diff%60);
 
-let time =
+let time=
 String(h).padStart(2,"0")+":"+
 String(m).padStart(2,"0")+":"+
 String(s).padStart(2,"0");
 
-document.getElementById("countdown").innerText =
+document.getElementById("countdown").innerText=
 convertNumber(time);
 
 }
 
-setInterval(updatePrayerStatus,30000);
+setInterval(updatePrayer,30000);
 setInterval(updateCountdown,1000);
+
+
+/* WEATHER API */
+
+function loadWeather(lat,lon){
+
+fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
+
+.then(res=>res.json())
+
+.then(data=>{
+
+let temp=data.current_weather.temperature;
+let code=data.current_weather.weathercode;
+
+let condition="clear";
+
+if([1,2,3].includes(code)) condition="cloud";
+if([45,48].includes(code)) condition="cloud";
+if([51,53,55,61,63,65].includes(code)) condition="rain";
+if([71,73,75].includes(code)) condition="snow";
+if([95,96,99].includes(code)) condition="storm";
+
+document.getElementById("weather").innerText=
+convertNumber(temp+"°C "+T.weather[condition]);
+
+});
+
+}
 
 
 /* LOCATION */
 
 navigator.geolocation.getCurrentPosition(
 
-function(pos){
+pos=>{
 
-let lat = pos.coords.latitude;
-let lon = pos.coords.longitude;
+let lat=pos.coords.latitude;
+let lon=pos.coords.longitude;
 
 loadPrayerTimes(lat,lon);
+loadWeather(lat,lon);
 
-fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
-.then(res=>res.json())
-.then(data=>{
-
-let city =
-data.address.city ||
-data.address.town ||
-data.address.village ||
+document.getElementById("city").innerText=
+lang==="bn"?"কলকাতা":
+lang==="hi"?"कोलकाता":
 "Kolkata";
-
-let cityText = cityNames[city]?.[lang] || city;
-
-document.getElementById("city").innerText = cityText;
-
-});
 
 },
 
-function(){
+()=>{
 
 loadPrayerTimes(22.5726,88.3639);
+loadWeather(22.5726,88.3639);
 
-document.getElementById("city").innerText =
-cityNames["Kolkata"][lang];
+document.getElementById("city").innerText=
+lang==="bn"?"কলকাতা":
+lang==="hi"?"कोलकाता":
+"Kolkata";
 
 }
 
 );
 
 
-/* BOTTOM QUOTE */
+/* QUOTE */
 
-let quotes = T.quotes;
+let q=T.quotes[Math.floor(Math.random()*T.quotes.length)];
 
-let randomQuote = quotes[Math.floor(Math.random()*quotes.length)];
-
-document.getElementById("bottomText").innerText = randomQuote;
+document.getElementById("bottomText").innerText=q;
