@@ -33,7 +33,7 @@ storm:"ঝড়"
 
 quotes:[
 "নামাজ জান্নাতের চাবি",
-"আল্লাহকে স্মরণ করো তিনি তোমাকে স্মরণ করবেন",
+"আল্লাহকে স্মরণ করো",
 "ধৈর্যশীলদের সাথে আল্লাহ আছেন"
 ]
 
@@ -68,8 +68,8 @@ storm:"Storm"
 
 quotes:[
 "Prayer is the key to Paradise",
-"Remember Allah and He will remember you",
-"Indeed Allah is with the patient"
+"Remember Allah",
+"Allah is with the patient"
 ]
 
 },
@@ -104,7 +104,7 @@ storm:"तूफान"
 quotes:[
 "नमाज़ जन्नत की कुंजी है",
 "अल्लाह को याद करो",
-"अल्लाह सब्र करने वालों के साथ है"
+"अल्लाह सब्र वालों के साथ है"
 ]
 
 }
@@ -112,7 +112,6 @@ quotes:[
 };
 
 const T=text[lang];
-
 
 /* NUMBER CONVERT */
 
@@ -132,7 +131,6 @@ return str;
 
 }
 
-
 /* TEXT SET */
 
 document.getElementById("bismillahMeaning").innerText=T.bismillah;
@@ -144,7 +142,6 @@ document.getElementById("hadith").innerText=T.hadith;
 document.getElementById("qibla").innerText=T.qibla;
 document.getElementById("tasbih").innerText=T.tasbih;
 
-
 /* DATE */
 
 let today=new Date();
@@ -155,13 +152,11 @@ convertNumber(today.toLocaleDateString("en-GB"));
 document.getElementById("todayDay").innerText=
 T.days[today.getDay()];
 
-
 /* CLOCK */
 
 function updateClock(){
 
 let now=new Date();
-
 let time=now.toLocaleTimeString("en-GB",{hour12:false});
 
 document.getElementById("clock").innerText=
@@ -171,7 +166,6 @@ convertNumber(time);
 
 setInterval(updateClock,1000);
 updateClock();
-
 
 /* PRAYER API */
 
@@ -204,29 +198,40 @@ updatePrayer();
 
 }
 
-
 /* PRAYER GRID */
 
 function renderPrayerGrid(){
 
 let grid=document.getElementById("prayerGrid");
-
 grid.innerHTML="";
 
 prayerTimes.forEach(p=>{
 
 let box=document.createElement("div");
-
 box.className="prayer-box";
 
 box.innerHTML="<b>"+p.name+"</b><br>"+convertNumber(p.time);
+
+box.onclick=()=>{
+
+if(p.name!==T.sunrise){
+
+localStorage.setItem("selectedPrayer",p.name);
+window.location.href="features/azan-setting.html";
+
+}else{
+
+window.location.href="features/sunrise.html";
+
+}
+
+};
 
 grid.appendChild(box);
 
 });
 
 }
-
 
 /* CURRENT + NEXT PRAYER */
 
@@ -239,7 +244,6 @@ for(let i=0;i<prayerTimes.length;i++){
 let [h,m]=prayerTimes[i].time.split(":");
 
 let pt=new Date();
-
 pt.setHours(h);
 pt.setMinutes(m);
 pt.setSeconds(0);
@@ -261,7 +265,6 @@ break;
 }
 
 }
-
 
 /* COUNTDOWN */
 
@@ -288,15 +291,12 @@ convertNumber(time);
 setInterval(updatePrayer,30000);
 setInterval(updateCountdown,1000);
 
-
-/* WEATHER API */
+/* WEATHER */
 
 function loadWeather(lat,lon){
 
 fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
-
 .then(res=>res.json())
-
 .then(data=>{
 
 let temp=data.current_weather.temperature;
@@ -305,7 +305,6 @@ let code=data.current_weather.weathercode;
 let condition="clear";
 
 if([1,2,3].includes(code)) condition="cloud";
-if([45,48].includes(code)) condition="cloud";
 if([51,53,55,61,63,65].includes(code)) condition="rain";
 if([71,73,75].includes(code)) condition="snow";
 if([95,96,99].includes(code)) condition="storm";
@@ -317,43 +316,119 @@ convertNumber(temp+"°C "+T.weather[condition]);
 
 }
 
-
 /* LOCATION */
+
+function loadCityName(lat,lon){
+
+fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=${lang}`)
+.then(res=>res.json())
+.then(data=>{
+
+let city =
+data.address.city ||
+data.address.town ||
+data.address.village ||
+data.address.state ||
+"";
+
+document.getElementById("city").innerText = city;
+
+})
+
+.catch(()=>{
+
+document.getElementById("city").innerText = "Location";
+
+});
+
+}
+
+/* GEOLOCATION */
+
+let savedLat = localStorage.getItem("lat");
+let savedLon = localStorage.getItem("lon");
+
+if(savedLat && savedLon){
+
+loadPrayerTimes(savedLat,savedLon);
+loadWeather(savedLat,savedLon);
+loadCityName(savedLat,savedLon);
+
+}else{
 
 navigator.geolocation.getCurrentPosition(
 
 pos=>{
 
-let lat=pos.coords.latitude;
-let lon=pos.coords.longitude;
+let lat = pos.coords.latitude;
+let lon = pos.coords.longitude;
+
+localStorage.setItem("lat",lat);
+localStorage.setItem("lon",lon);
 
 loadPrayerTimes(lat,lon);
 loadWeather(lat,lon);
-
-document.getElementById("city").innerText=
-lang==="bn"?"কলকাতা":
-lang==="hi"?"कोलकाता":
-"Kolkata";
+loadCityName(lat,lon);
 
 },
 
 ()=>{
 
-loadPrayerTimes(22.5726,88.3639);
-loadWeather(22.5726,88.3639);
+let lat = 22.5726;
+let lon = 88.3639;
 
-document.getElementById("city").innerText=
-lang==="bn"?"কলকাতা":
-lang==="hi"?"कोलकाता":
-"Kolkata";
+loadPrayerTimes(lat,lon);
+loadWeather(lat,lon);
+loadCityName(lat,lon);
 
 }
 
 );
 
+}
+
+/* FEATURES */
+
+document.getElementById("bismillahCard").onclick=()=>{
+window.location.href="features/allah-names.html";
+};
+
+document.getElementById("statusBoard").onclick=()=>{
+window.location.href="features/islamic-calendar.html";
+};
+
+document.getElementById("namaz").onclick=()=>{
+window.location.href="features/namaz-guide.html";
+};
+
+document.getElementById("quran").onclick=()=>{
+window.location.href="features/quran.html";
+};
+
+document.getElementById("dua").onclick=()=>{
+window.location.href="features/dua.html";
+};
+
+document.getElementById("hadith").onclick=()=>{
+window.location.href="features/hadith.html";
+};
+
+document.getElementById("qibla").onclick=()=>{
+window.location.href="features/qibla.html";
+};
+
+document.getElementById("tasbih").onclick=()=>{
+window.location.href="features/tasbih.html";
+};
 
 /* QUOTE */
 
-let q=T.quotes[Math.floor(Math.random()*T.quotes.length)];
+function updateQuote(){
 
+let q=T.quotes[Math.floor(Math.random()*T.quotes.length)];
 document.getElementById("bottomText").innerText=q;
+
+}
+
+updateQuote();
+setInterval(updateQuote,3600000);
