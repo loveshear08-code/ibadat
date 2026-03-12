@@ -17,8 +17,11 @@
 <!-- TOP BAR -->
 
 <div class="topbar">
+
 <span id="city"></span>
+
 <span id="date"></span>
+
 </div>
 
 
@@ -29,7 +32,7 @@
 
 <!-- BISMILLAH -->
 
-<div class="card bismillah-card">
+<div class="card bismillah-card" id="bismillahCard">
 
 <div class="bismillah-ar">
 بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
@@ -41,9 +44,9 @@
 
 
 
-<!-- PRAYER STATUS -->
+<!-- PRAYER STATUS BOARD -->
 
-<div class="card prayer-status">
+<div class="card prayer-status" id="statusBoard">
 
 <div class="status-top">
 
@@ -53,10 +56,11 @@
 
 </div>
 
-
 <div class="timer-grid">
 
-<div class="current-side">
+<!-- CURRENT PRAYER -->
+
+<div class="current-side" id="currentPrayerBox">
 
 <div id="currentPrayerName" class="prayer-name"></div>
 
@@ -64,11 +68,11 @@
 
 </div>
 
-
 <div class="divider">/</div>
 
+<!-- NEXT PRAYER -->
 
-<div class="next-side">
+<div class="next-side" id="nextPrayerBox">
 
 <div id="nextPrayerName" class="prayer-name"></div>
 
@@ -82,7 +86,7 @@
 
 
 
-<!-- PRAYER TIMES GRID -->
+<!-- PRAYER GRID -->
 
 <div class="card prayer-grid" id="prayerGrid"></div>
 
@@ -92,26 +96,18 @@
 
 <div class="feature-grid">
 
-<!-- ROW 1 -->
-
 <div class="feature-box" id="namaz"></div>
 <div class="feature-box" id="quran"></div>
 
-<!-- ROW 2 -->
-
 <div class="feature-box" id="dua"></div>
 <div class="feature-box" id="hadith"></div>
-
-<!-- ROW 3 -->
 
 <div class="feature-box" id="qibla"></div>
 <div class="feature-box" id="tasbih"></div>
 
 </div>
 
-
 </div>
-
 
 
 <!-- BOTTOM BAR -->
@@ -121,7 +117,6 @@
 <marquee id="bottomText"></marquee>
 
 </div>
-
 
 
 <script src="home.js"></script>
