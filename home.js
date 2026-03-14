@@ -217,11 +217,11 @@ box.onclick=()=>{
 if(p.name!==T.sunrise){
 
 localStorage.setItem("selectedPrayer",p.name);
-window.location.href="features/azan-setting.html";
+window.location.href="./azan-setting.html";
 
 }else{
 
-window.location.href="features/sunrise.html";
+window.location.href="./sunrise.html";
 
 }
 
@@ -238,6 +238,7 @@ grid.appendChild(box);
 function updatePrayer(){
 
 let now=new Date();
+let found=false;
 
 for(let i=0;i<prayerTimes.length;i++){
 
@@ -258,9 +259,31 @@ prayerTimes[i].name;
 
 nextTime=pt;
 
+found=true;
+
 break;
 
 }
+
+}
+
+if(!found){
+
+document.getElementById("currentPrayerName").innerText=
+prayerTimes[5].name;
+
+document.getElementById("nextPrayerName").innerText=
+prayerTimes[0].name;
+
+let [h,m]=prayerTimes[0].time.split(":");
+
+let tomorrow=new Date();
+tomorrow.setDate(tomorrow.getDate()+1);
+tomorrow.setHours(h);
+tomorrow.setMinutes(m);
+tomorrow.setSeconds(0);
+
+nextTime=tomorrow;
 
 }
 
@@ -390,35 +413,35 @@ loadCityName(lat,lon);
 /* FEATURES */
 
 document.getElementById("bismillahCard").onclick=()=>{
-window.location.href="features/allah-names.html";
+window.location.href="allah-names.html";
 };
 
 document.getElementById("statusBoard").onclick=()=>{
-window.location.href="features/islamic-calendar.html";
+window.location.href="calendar.html";
 };
 
 document.getElementById("namaz").onclick=()=>{
-window.location.href="features/namaz-guide.html";
+window.location.href="namaz-guide.html";
 };
 
 document.getElementById("quran").onclick=()=>{
-window.location.href="features/quran.html";
+window.location.href="quran.html";
 };
 
 document.getElementById("dua").onclick=()=>{
-window.location.href="features/dua.html";
+window.location.href="dua.html";
 };
 
 document.getElementById("hadith").onclick=()=>{
-window.location.href="features/hadith.html";
+window.location.href="hadith.html";
 };
 
 document.getElementById("qibla").onclick=()=>{
-window.location.href="features/qibla.html";
+window.location.href="qibla.html";
 };
 
 document.getElementById("tasbih").onclick=()=>{
-window.location.href="features/tasbih.html";
+window.location.href="tasbih.html";
 };
 
 /* QUOTE */
@@ -432,3 +455,71 @@ document.getElementById("bottomText").innerText=q;
 
 updateQuote();
 setInterval(updateQuote,3600000);
+/* AZAN SYSTEM */
+
+let lastAzanPlayed = null;
+
+/* permission */
+
+if ("Notification" in window) {
+  Notification.requestPermission();
+}
+
+/* play azan */
+
+function playAzan(prayerName) {
+
+  let azan = localStorage.getItem("azanSound") || "kuwait";
+
+  const audio = new Audio("../assets/" + azan + ".mp3");
+
+  audio.play().catch(() => {});
+
+  if ("Notification" in window && Notification.permission === "granted") {
+
+    new Notification("🕌 " + prayerName + " time", {
+      body: "Azan is starting",
+      icon: "../assets/icons/icon-192.png"
+    });
+
+  }
+
+}
+
+/* check prayer time */
+
+function checkAzan() {
+
+  if (!prayerTimes.length) return;
+
+  let now = new Date();
+
+  let current =
+    String(now.getHours()).padStart(2, "0") + ":" +
+    String(now.getMinutes()).padStart(2, "0");
+
+  prayerTimes.forEach(p => {
+
+    if (p.time === current && lastAzanPlayed !== p.name) {
+
+      playAzan(p.name);
+
+      lastAzanPlayed = p.name;
+
+    }
+
+  });
+
+}
+
+/* check every 30 seconds */
+
+setInterval(checkAzan, 30000);
+playAzan("Test");
+document.body.addEventListener("click", function(){
+
+const audio = new Audio("../assets/kuwait.mp3");
+
+audio.play();
+
+});
