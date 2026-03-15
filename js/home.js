@@ -500,14 +500,7 @@ function checkAzan() {
 
   prayerTimes.forEach(p => {
 
-    if (p.time === current && lastAzanPlayed !== p.name) {
-
-      playAzan(p.name);
-
-      lastAzanPlayed = p.name;
-
-    }
-
+    if (p.time === current && lastAzanPlayed !== p.name) 
   });
 
 }
@@ -515,11 +508,3 @@ function checkAzan() {
 /* check every 30 seconds */
 
 setInterval(checkAzan, 30000);
-playAzan("Test");
-document.body.addEventListener("click", function(){
-
-const audio = new Audio("../assets/kuwait.mp3");
-
-audio.play();
-
-});
