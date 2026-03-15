@@ -1,1 +1,68 @@
+body{
+margin:0;
+font-family:sans-serif;
+background:#eef3f8;
+}
 
+/* TOP BAR */
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px;
+background:#2f6aa3;
+color:white;
+font-weight:bold;
+font-size:16px;
+}
+
+/* BACK BUTTON */
+
+.back-btn{
+cursor:pointer;
+}
+
+/* GRID */
+
+.names-container{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:16px;
+padding:16px;
+}
+
+/* CARD */
+
+.name-card{
+background:#e8f5e9;
+border-radius:18px;
+padding:22px;
+text-align:center;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* ARABIC NAME */
+
+.arabic{
+font-size:26px;
+color:#2e7d32;
+font-weight:bold;
+margin-bottom:8px;
+}
+
+/* BANGLA / ENGLISH / HINDI */
+
+.pron{
+font-size:18px;
+font-weight:700;
+color:#1b4332;
+margin-bottom:6px;
+}
+
+/* MEANING */
+
+.meaning{
+font-size:14px;
+color:#52796f;
+}
