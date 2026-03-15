@@ -72,6 +72,41 @@ quotes:[
 "Allah is with the patient"
 ]
 
+},
+
+hi:{
+days:["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"],
+
+fajr:"फ़ज्र",
+sunrise:"सूर्योदय",
+dhuhr:"ज़ुहर",
+asr:"असर",
+maghrib:"मगरिब",
+isha:"इशा",
+
+namaz:"📚 नमाज़ शिक्षा",
+quran:"🕌 अल कुरान",
+dua:"🤲 दुआ",
+hadith:"📖 हदीस",
+qibla:"🕋 क़िबला कम्पास",
+tasbih:"📿 डिजिटल तस्बीह",
+
+bismillah:"अल्लाह के नाम से",
+
+weather:{
+clear:"साफ",
+cloud:"बादल",
+rain:"बारिश",
+snow:"बर्फ",
+storm:"तूफान"
+},
+
+quotes:[
+"नमाज़ जन्नत की कुंजी है",
+"अल्लाह को याद करो",
+"अल्लाह सब्र वालों के साथ है"
+]
+
 }
 
 };
@@ -85,6 +120,11 @@ function convertNumber(str){
 if(lang==="bn"){
 const bn=["০","১","২","৩","৪","৫","৬","৭","৮","৯"];
 return str.replace(/[0-9]/g,d=>bn[d]);
+}
+
+if(lang==="hi"){
+const hi=["०","१","२","३","४","५","६","७","८","९"];
+return str.replace(/[0-9]/g,d=>hi[d]);
 }
 
 return str;
@@ -134,7 +174,7 @@ let nextTime=null;
 
 function loadPrayerTimes(lat,lon){
 
-fetch("https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=2")
+fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=2`)
 .then(res=>res.json())
 .then(data=>{
 
@@ -171,6 +211,21 @@ let box=document.createElement("div");
 box.className="prayer-box";
 
 box.innerHTML="<b>"+p.name+"</b><br>"+convertNumber(p.time);
+
+box.onclick=()=>{
+
+if(p.name!==T.sunrise){
+
+localStorage.setItem("selectedPrayer",p.name);
+window.location.href="./azan-setting.html";
+
+}else{
+
+window.location.href="./sunrise.html";
+
+}
+
+};
 
 grid.appendChild(box);
 
@@ -220,6 +275,16 @@ prayerTimes[5].name;
 document.getElementById("nextPrayerName").innerText=
 prayerTimes[0].name;
 
+let [h,m]=prayerTimes[0].time.split(":");
+
+let tomorrow=new Date();
+tomorrow.setDate(tomorrow.getDate()+1);
+tomorrow.setHours(h);
+tomorrow.setMinutes(m);
+tomorrow.setSeconds(0);
+
+nextTime=tomorrow;
+
 }
 
 }
@@ -253,24 +318,32 @@ setInterval(updateCountdown,1000);
 
 function loadWeather(lat,lon){
 
-fetch("https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true")
+fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
 .then(res=>res.json())
 .then(data=>{
 
 let temp=data.current_weather.temperature;
+let code=data.current_weather.weathercode;
+
+let condition="clear";
+
+if([1,2,3].includes(code)) condition="cloud";
+if([51,53,55,61,63,65].includes(code)) condition="rain";
+if([71,73,75].includes(code)) condition="snow";
+if([95,96,99].includes(code)) condition="storm";
 
 document.getElementById("weather").innerText=
-convertNumber(temp+"°C");
+convertNumber(temp+"°C "+T.weather[condition]);
 
 });
 
 }
 
-/* CITY */
+/* LOCATION */
 
 function loadCityName(lat,lon){
 
-fetch("https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=${lang}")
+fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=${lang}`)
 .then(res=>res.json())
 .then(data=>{
 
@@ -295,30 +368,20 @@ document.getElementById("city").innerText = "Location";
 
 /* GEOLOCATION */
 
-/* GEOLOCATION FIX */
-
-function startApp(lat,lon){
-
-loadPrayerTimes(lat,lon);
-loadWeather(lat,lon);
-loadCityName(lat,lon);
-
-}
-
 let savedLat = localStorage.getItem("lat");
 let savedLon = localStorage.getItem("lon");
 
 if(savedLat && savedLon){
 
-startApp(savedLat,savedLon);
+loadPrayerTimes(savedLat,savedLon);
+loadWeather(savedLat,savedLon);
+loadCityName(savedLat,savedLon);
 
 }else{
 
-if(navigator.geolocation){
-
 navigator.geolocation.getCurrentPosition(
 
-function(pos){
+pos=>{
 
 let lat = pos.coords.latitude;
 let lon = pos.coords.longitude;
@@ -326,25 +389,24 @@ let lon = pos.coords.longitude;
 localStorage.setItem("lat",lat);
 localStorage.setItem("lon",lon);
 
-startApp(lat,lon);
+loadPrayerTimes(lat,lon);
+loadWeather(lat,lon);
+loadCityName(lat,lon);
 
 },
 
-function(){
+()=>{
 
-/* fallback Kolkata */
+let lat = 22.5726;
+let lon = 88.3639;
 
-startApp(22.5726,88.3639);
+loadPrayerTimes(lat,lon);
+loadWeather(lat,lon);
+loadCityName(lat,lon);
 
 }
 
 );
-
-}else{
-
-startApp(22.5726,88.3639);
-
-}
 
 }
 
@@ -393,47 +455,71 @@ document.getElementById("bottomText").innerText=q;
 
 updateQuote();
 setInterval(updateQuote,3600000);
-
 /* AZAN SYSTEM */
 
 let lastAzanPlayed = null;
 
+/* permission */
+
 if ("Notification" in window) {
-Notification.requestPermission();
+  Notification.requestPermission();
 }
+
+/* play azan */
 
 function playAzan(prayerName) {
 
-let azan = localStorage.getItem("azanSound") || "kuwait";
+  let azan = localStorage.getItem("azanSound") || "kuwait";
 
-const audio = new Audio("../assets/" + azan + ".mp3");
+  const audio = new Audio("../assets/" + azan + ".mp3");
 
-audio.play().catch(() => {});
+  audio.play().catch(() => {});
+
+  if ("Notification" in window && Notification.permission === "granted") {
+
+    new Notification("🕌 " + prayerName + " time", {
+      body: "Azan is starting",
+      icon: "../assets/icons/icon-192.png"
+    });
+
+  }
 
 }
+
+/* check prayer time */
 
 function checkAzan() {
 
-if (!prayerTimes.length) return;
+  if (!prayerTimes.length) return;
 
-let now = new Date();
+  let now = new Date();
 
-let current =
-String(now.getHours()).padStart(2, "0") + ":" +
-String(now.getMinutes()).padStart(2, "0");
+  let current =
+    String(now.getHours()).padStart(2, "0") + ":" +
+    String(now.getMinutes()).padStart(2, "0");
 
-prayerTimes.forEach(p => {
+  prayerTimes.forEach(p => {
 
-if (p.time === current && lastAzanPlayed !== p.name) {
+    if (p.time === current && lastAzanPlayed !== p.name) {
 
-playAzan(p.name);
+      playAzan(p.name);
 
-lastAzanPlayed = p.name;
+      lastAzanPlayed = p.name;
+
+    }
+
+  });
 
 }
 
-});
-
-}
+/* check every 30 seconds */
 
 setInterval(checkAzan, 30000);
+playAzan("Test");
+document.body.addEventListener("click", function(){
+
+const audio = new Audio("../assets/kuwait.mp3");
+
+audio.play();
+
+});
