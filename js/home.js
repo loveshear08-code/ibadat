@@ -295,37 +295,9 @@ document.getElementById("city").innerText = "Location";
 
 /* GEOLOCATION */
 
-let savedLat = localStorage.getItem("lat");
-let savedLon = localStorage.getItem("lon");
+/* GEOLOCATION FIX */
 
-if(savedLat && savedLon){
-
-loadPrayerTimes(savedLat,savedLon);
-loadWeather(savedLat,savedLon);
-loadCityName(savedLat,savedLon);
-
-}else{
-
-navigator.geolocation.getCurrentPosition(
-
-pos=>{
-
-let lat = pos.coords.latitude;
-let lon = pos.coords.longitude;
-
-localStorage.setItem("lat",lat);
-localStorage.setItem("lon",lon);
-
-loadPrayerTimes(lat,lon);
-loadWeather(lat,lon);
-loadCityName(lat,lon);
-
-},
-
-()=>{
-
-let lat = 22.5726;
-let lon = 88.3639;
+function startApp(lat,lon){
 
 loadPrayerTimes(lat,lon);
 loadWeather(lat,lon);
@@ -333,7 +305,46 @@ loadCityName(lat,lon);
 
 }
 
+let savedLat = localStorage.getItem("lat");
+let savedLon = localStorage.getItem("lon");
+
+if(savedLat && savedLon){
+
+startApp(savedLat,savedLon);
+
+}else{
+
+if(navigator.geolocation){
+
+navigator.geolocation.getCurrentPosition(
+
+function(pos){
+
+let lat = pos.coords.latitude;
+let lon = pos.coords.longitude;
+
+localStorage.setItem("lat",lat);
+localStorage.setItem("lon",lon);
+
+startApp(lat,lon);
+
+},
+
+function(){
+
+/* fallback Kolkata */
+
+startApp(22.5726,88.3639);
+
+}
+
 );
+
+}else{
+
+startApp(22.5726,88.3639);
+
+}
 
 }
 
