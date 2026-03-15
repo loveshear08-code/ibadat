@@ -455,6 +455,7 @@ document.getElementById("bottomText").innerText=q;
 
 updateQuote();
 setInterval(updateQuote,3600000);
+
 /* AZAN SYSTEM */
 
 let lastAzanPlayed = null;
@@ -469,7 +470,7 @@ if ("Notification" in window) {
 
 function playAzan(prayerName) {
 
-  let azan = localStorage.getItem("azanSound") || "kuwait";
+  let azan = localStorage.getItem("azanVoice") || "kuwait";
 
   const audio = new Audio("../assets/" + azan + ".mp3");
 
@@ -500,7 +501,14 @@ function checkAzan() {
 
   prayerTimes.forEach(p => {
 
-    if (p.time === current && lastAzanPlayed !== p.name) 
+    if (p.time === current && lastAzanPlayed !== p.name) {
+
+      playAzan(p.name);
+
+      lastAzanPlayed = p.name;
+
+    }
+
   });
 
 }
