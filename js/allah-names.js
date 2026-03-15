@@ -44,7 +44,7 @@ const names = [
 {ar:"الْكَبِير",bn:"আল-কবির",bn_mean:"মহানতম",en:"Al-Kabir",en_mean:"The Great",hi:"अल-कबीर",hi_mean:"महान"},
 {ar:"الْحَفِيظ",bn:"আল-হাফিজ",bn_mean:"রক্ষাকারী",en:"Al-Hafiz",en_mean:"The Preserver",hi:"अल-हफ़ीज़",hi_mean:"रक्षक"},
 {ar:"الْمُقِيت",bn:"আল-মুকিত",bn_mean:"জীবিকা দানকারী",en:"Al-Muqit",en_mean:"The Sustainer",hi:"अल-मुकीत",hi_mean:"पालन करने वाला"},
-{ar:"الْحَسِيب",bn:"আল-হাসিব",bn_mean:"হিসাব গ্রহণকারী",en:"Al-Hasib",en_mean:"The Reckoner",hi:"अल-हसीब",hi_mean:"हिसाब लेने वाला"}
+{ar:"الْحَسِيب",bn:"আল-হাসিব",bn_mean:"হিসাব গ্রহণকারী",en:"Al-Hasib",en_mean:"The Reckoner",hi:"अल-हसीब",hi_mean:"हिसाब लेने वाला"},
 {ar:"الْجَلِيل",bn:"আল-জালিল",bn_mean:"মহিমান্বিত",en:"Al-Jalil",en_mean:"The Majestic",hi:"अल-जलील",hi_mean:"महिमामय"},
 {ar:"الْكَرِيم",bn:"আল-করিম",bn_mean:"অত্যন্ত দানশীল",en:"Al-Karim",en_mean:"The Generous",hi:"अल-करीम",hi_mean:"उदार"},
 {ar:"الرَّقِيب",bn:"আর-রকিব",bn_mean:"সর্বদা পর্যবেক্ষণকারী",en:"Ar-Raqib",en_mean:"The Watchful",hi:"अर-रकीब",hi_mean:"निगरानी करने वाला"},
