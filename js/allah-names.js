@@ -104,7 +104,6 @@ const names = [
 {ar:"الرَّشِيد",bn:"আর-রশিদ",bn_mean:"সঠিক পথপ্রদর্শক",en:"Ar-Rashid",en_mean:"The Guide to Right Path",hi:"अर-रशीद",hi_mean:"सही मार्ग दिखाने वाला"},
 {ar:"الصَّبُور",bn:"আস-সবুর",bn_mean:"অত্যন্ত ধৈর্যশীল",en:"As-Sabur",en_mean:"The Patient",hi:"अस-सबूर",hi_mean:"अत्यंत धैर्यवान"}
 ];
-];
 
 /* RENDER SYSTEM */
 
