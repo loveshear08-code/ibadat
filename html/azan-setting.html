@@ -1,1 +1,128 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Azan Setting</title><style>
 
+body{
+font-family:Arial;
+background:#eef3f8;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
+}
+
+/* CARD */
+
+.card{
+background:#f7f1ff;
+padding:30px;
+border-radius:20px;
+width:90%;
+max-width:400px;
+box-shadow:0 8px 25px rgba(0,0,0,0.1);
+text-align:center;
+}
+
+/* TITLE */
+
+.title{
+font-size:24px;
+margin-bottom:20px;
+}
+
+/* SELECT */
+
+select{
+width:100%;
+padding:12px;
+border-radius:10px;
+border:none;
+font-size:16px;
+margin-top:10px;
+background:white;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* BUTTON AREA */
+
+.buttons{
+margin-top:20px;
+display:flex;
+gap:10px;
+justify-content:center;
+}
+
+/* BUTTON */
+
+button{
+flex:1;
+padding:12px;
+border:none;
+border-radius:10px;
+font-size:16px;
+background:#7a9cc6;
+color:white;
+cursor:pointer;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+button:hover{
+background:#5f84b2;
+}
+
+</style></head><body><div class="card"><div class="title">Azan Settings</div><label>Select Azan Sound</label>
+
+<select id="azanSelect"><option value="makkah">Makkah</option>
+<option value="madinah">Madinah</option>
+<option value="kuwait">Kuwait</option>
+<option value="bangladesh">Bangladesh</option>
+<option value="alaska">Alaska</option></select><div class="buttons"><button onclick="saveAzan()">Save</button>
+
+<button onclick="testAzan()">Test</button>
+
+</div></div><script>
+
+let audio=null;
+
+document.addEventListener("DOMContentLoaded",function(){
+
+let select=document.getElementById("azanSelect");
+
+let saved=localStorage.getItem("azanVoice");
+
+if(saved){
+select.value=saved;
+}
+
+});
+
+/* SAVE */
+
+function saveAzan(){
+
+let sound=document.getElementById("azanSelect").value;
+
+localStorage.setItem("azanVoice",sound);
+
+alert("Azan Saved");
+
+}
+
+/* TEST */
+
+function testAzan(){
+
+let sound=document.getElementById("azanSelect").value;
+
+if(audio){
+audio.pause();
+}
+
+audio=new Audio("../assets/"+sound+".mp3");
+
+audio.play();
+
+}
+
+</script></body>
+</html>
