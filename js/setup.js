@@ -1,26 +1,33 @@
-// Get Location
-function getLocation(){
+/* GET LOCATION */
 
-if(navigator.geolocation){
+function getLocation() {
 
-navigator.geolocation.getCurrentPosition(function(position){
+if (navigator.geolocation) {
 
-let lat = position.coords.latitude;
-let lon = position.coords.longitude;
+navigator.geolocation.getCurrentPosition(
 
-// save location
-localStorage.setItem("lat", lat);
-localStorage.setItem("lon", lon);
+  function (position) {
 
-alert("Location saved successfully");
+    let lat = position.coords.latitude;
+    let lon = position.coords.longitude;
 
-}, function(){
+    // Save location
+    localStorage.setItem("lat", lat);
+    localStorage.setItem("lon", lon);
 
-alert("Location permission denied");
+    alert("Location saved successfully");
 
-});
+  },
 
-}else{
+  function () {
+
+    alert("Location permission denied");
+
+  }
+
+);
+
+} else {
 
 alert("Geolocation not supported");
 
@@ -28,17 +35,17 @@ alert("Geolocation not supported");
 
 }
 
+/* CONTINUE BUTTON */
 
-// Continue Button
-function continueApp(){
+function continueApp() {
 
-// language value
+// Language value
 let lang = document.getElementById("language").value;
 
-// save language
+// Save language
 localStorage.setItem("appLang", lang);
 
-// go to home page
-window.location.href = "home.html";
+// Go to home page
+window.location.href = "html/home.html";
 
 }
