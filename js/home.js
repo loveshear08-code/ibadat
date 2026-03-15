@@ -1,15 +1,8 @@
-/* =========================
-IBADAT HOME SCRIPT
-FINAL STABLE VERSION
-========================= */
-
-/* LANGUAGE */
-
 const lang = localStorage.getItem("appLang") || "bn";
 
-/* TEXT DATA */
+/* LANGUAGE DATA */
 
-const text = {
+const text={
 
 bn:{
 days:["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"],
@@ -83,7 +76,7 @@ quotes:[
 
 };
 
-const T = text[lang];
+const T=text[lang];
 
 /* NUMBER CONVERT */
 
@@ -185,7 +178,7 @@ grid.appendChild(box);
 
 }
 
-/* CURRENT + NEXT */
+/* CURRENT + NEXT PRAYER */
 
 function updatePrayer(){
 
@@ -235,7 +228,7 @@ prayerTimes[0].name;
 
 function updateCountdown(){
 
-if(!nextTime) return;
+if(!nextTime)return;
 
 let diff=Math.floor((nextTime-new Date())/1000);
 
@@ -253,6 +246,7 @@ convertNumber(time);
 
 }
 
+setInterval(updatePrayer,30000);
 setInterval(updateCountdown,1000);
 
 /* WEATHER */
@@ -274,9 +268,9 @@ convertNumber(temp+"°C");
 
 /* CITY */
 
-function loadCity(lat,lon){
+function loadCityName(lat,lon){
 
-fetch("https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}")
+fetch("https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=${lang}")
 .then(res=>res.json())
 .then(data=>{
 
@@ -287,34 +281,28 @@ data.address.village ||
 data.address.state ||
 "";
 
-document.getElementById("city").innerText=city;
+document.getElementById("city").innerText = city;
 
 })
 
 .catch(()=>{
-document.getElementById("city").innerText="Location";
+
+document.getElementById("city").innerText = "Location";
+
 });
 
 }
 
-/* LOCATION */
-
-/* LOCATION */
+/* GEOLOCATION */
 
 let savedLat = localStorage.getItem("lat");
 let savedLon = localStorage.getItem("lon");
 
-function startApp(lat,lon){
-
-loadPrayerTimes(lat,lon);
-loadWeather(lat,lon);
-loadCity(lat,lon);
-
-}
-
 if(savedLat && savedLon){
 
-startApp(savedLat,savedLon);
+loadPrayerTimes(savedLat,savedLon);
+loadWeather(savedLat,savedLon);
+loadCityName(savedLat,savedLon);
 
 }else{
 
@@ -328,18 +316,20 @@ let lon = pos.coords.longitude;
 localStorage.setItem("lat",lat);
 localStorage.setItem("lon",lon);
 
-startApp(lat,lon);
+loadPrayerTimes(lat,lon);
+loadWeather(lat,lon);
+loadCityName(lat,lon);
 
 },
 
 ()=>{
 
-/* fallback location (Kolkata) */
-
 let lat = 22.5726;
 let lon = 88.3639;
 
-startApp(lat,lon);
+loadPrayerTimes(lat,lon);
+loadWeather(lat,lon);
+loadCityName(lat,lon);
 
 }
 
@@ -395,35 +385,39 @@ setInterval(updateQuote,3600000);
 
 /* AZAN SYSTEM */
 
-let lastAzan=null;
+let lastAzanPlayed = null;
 
-function playAzan(prayer){
+if ("Notification" in window) {
+Notification.requestPermission();
+}
 
-let azan=localStorage.getItem("azanSound") || "kuwait";
+function playAzan(prayerName) {
 
-const audio=new Audio("../assets/"+azan+".mp3");
+let azan = localStorage.getItem("azanSound") || "kuwait";
 
-audio.play().catch(()=>{});
+const audio = new Audio("../assets/" + azan + ".mp3");
+
+audio.play().catch(() => {});
 
 }
 
-function checkAzan(){
+function checkAzan() {
 
-if(!prayerTimes.length) return;
+if (!prayerTimes.length) return;
 
-let now=new Date();
+let now = new Date();
 
-let current=
-String(now.getHours()).padStart(2,"0")+":"+
-String(now.getMinutes()).padStart(2,"0");
+let current =
+String(now.getHours()).padStart(2, "0") + ":" +
+String(now.getMinutes()).padStart(2, "0");
 
-prayerTimes.forEach(p=>{
+prayerTimes.forEach(p => {
 
-if(p.time===current && lastAzan!==p.name){
+if (p.time === current && lastAzanPlayed !== p.name) {
 
 playAzan(p.name);
 
-lastAzan=p.name;
+lastAzanPlayed = p.name;
 
 }
 
@@ -431,4 +425,4 @@ lastAzan=p.name;
 
 }
 
-setInterval(checkAzan,30000);
+setInterval(checkAzan, 30000);
