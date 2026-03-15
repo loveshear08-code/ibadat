@@ -299,30 +299,51 @@ document.getElementById("city").innerText="Location";
 
 /* LOCATION */
 
-let lat=localStorage.getItem("lat");
-let lon=localStorage.getItem("lon");
+/* LOCATION */
 
-if(lat && lon){
+let savedLat = localStorage.getItem("lat");
+let savedLon = localStorage.getItem("lon");
+
+function startApp(lat,lon){
 
 loadPrayerTimes(lat,lon);
 loadWeather(lat,lon);
 loadCity(lat,lon);
 
+}
+
+if(savedLat && savedLon){
+
+startApp(savedLat,savedLon);
+
 }else{
 
-navigator.geolocation.getCurrentPosition(pos=>{
+navigator.geolocation.getCurrentPosition(
 
-lat=pos.coords.latitude;
-lon=pos.coords.longitude;
+pos=>{
+
+let lat = pos.coords.latitude;
+let lon = pos.coords.longitude;
 
 localStorage.setItem("lat",lat);
 localStorage.setItem("lon",lon);
 
-loadPrayerTimes(lat,lon);
-loadWeather(lat,lon);
-loadCity(lat,lon);
+startApp(lat,lon);
 
-});
+},
+
+()=>{
+
+/* fallback location (Kolkata) */
+
+let lat = 22.5726;
+let lon = 88.3639;
+
+startApp(lat,lon);
+
+}
+
+);
 
 }
 
