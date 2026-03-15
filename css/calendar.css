@@ -1,7 +1,7 @@
 body{
 margin:0;
 font-family:sans-serif;
-background:#eaf7ea;
+background:#e8f1e8;
 display:flex;
 justify-content:center;
 align-items:center;
@@ -9,20 +9,25 @@ min-height:100vh;
 }
 
 .calendar{
-width:100%;
+width:95%;
 max-width:500px;
-padding:20px;
 }
-
-/* header */
 
 .header{
-text-align:center;
-margin-bottom:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
 color:#2e7d32;
+margin-bottom:15px;
 }
 
-/* weekdays */
+.header button{
+background:#7edc7e;
+border:none;
+padding:6px 10px;
+border-radius:8px;
+font-size:16px;
+}
 
 .weekdays{
 display:grid;
@@ -33,48 +38,38 @@ margin-bottom:10px;
 color:#2e7d32;
 }
 
-/* calendar grid */
-
 .grid{
 display:grid;
 grid-template-columns:repeat(7,1fr);
 gap:10px;
 }
 
-/* day box */
-
 .day{
-background:#ffffff;
-border-radius:12px;
+background:white;
+border-radius:14px;
 padding:12px 0;
 text-align:center;
-box-shadow:0 3px 8px rgba(0,0,0,.08);
+box-shadow:0 4px 8px rgba(0,0,0,.08);
 }
 
-/* empty */
-
-.empty{
-visibility:hidden;
+.friday{
+background:#d6f5d6;
 }
 
-/* saturday */
-
-.day.sat{
-background:#d8f5d8;
-}
-
-/* today */
-
-.day.today{
-background:#7edc7e;
+.today{
+background:#6fcf6f;
 color:white;
 font-weight:bold;
 }
 
-/* small number */
+.ramadan{
+background:#ffe9b3;
+}
 
-.small{
-font-size:12px;
-color:#666;
-margin-top:4px;
+.eid{
+background:#ffd0d0;
+}
+
+.empty{
+visibility:hidden;
 }
