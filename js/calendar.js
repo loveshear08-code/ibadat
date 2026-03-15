@@ -1,4 +1,4 @@
-const LANG = {
+const LANG={
 
 bn:{
 days:["রবি","সোম","মঙ্গল","বুধ","বৃহ","শুক্র","শনি"],
@@ -17,51 +17,38 @@ numbers:["0","1","2","3","4","5","6","7","8","9"]
 
 };
 
-let currentLang = localStorage.getItem("appLang") || "bn";
+let currentLang=localStorage.getItem("appLang")||"bn";
 
-let today = new Date();
+let currentDate=new Date();
 
 /* number convert */
 
 function convertNumber(num){
 
-const n = LANG[currentLang].numbers;
+const n=LANG[currentLang].numbers;
 
 return num.toString().split("").map(d=>n[d]).join("");
 
 }
 
-/* hijri month name */
+/* hijri formatter */
 
-function getHijriMonth(date){
+function hijri(date,opt){
 
 return new Intl.DateTimeFormat(
-currentLang + "-u-ca-islamic",
-{month:"long",year:"numeric"}
+currentLang+"-u-ca-islamic",
+opt
 ).format(date);
 
 }
 
-/* hijri day */
-
-function getHijriDay(date){
-
-return new Intl.DateTimeFormat(
-currentLang + "-u-ca-islamic",
-{day:"numeric"}
-).format(date);
-
-}
-
-/* render calendar */
+/* render */
 
 function renderCalendar(){
 
-const title = document.getElementById("monthTitle");
-const weekdayRow = document.getElementById("weekdays");
-const grid = document.getElementById("calendarGrid");
-
-title.innerText = getHijriMonth(today);
+const title=document.getElementById("monthTitle");
+const weekdayRow=document.getElementById("weekdays");
+const grid=document.getElementById("calendarGrid");
 
 weekdayRow.innerHTML="";
 
@@ -71,33 +58,77 @@ el.innerText=d;
 weekdayRow.appendChild(el);
 });
 
+title.innerText=hijri(currentDate,{month:"long",year:"numeric"});
+
 grid.innerHTML="";
 
-/* start day */
+let firstDay=new Date(
+currentDate.getFullYear(),
+currentDate.getMonth(),
+1
+).getDay();
 
-let firstDay = new Date(today.getFullYear(),today.getMonth(),1).getDay();
+/* empty */
 
 for(let i=0;i<firstDay;i++){
-const empty=document.createElement("div");
-empty.className="empty";
-grid.appendChild(empty);
+
+const e=document.createElement("div");
+e.className="empty";
+grid.appendChild(e);
+
 }
 
 /* days */
 
-for(let i=0;i<30;i++){
+for(let i=1;i<=30;i++){
 
-let d=new Date(today);
+let d=new Date(
+currentDate.getFullYear(),
+currentDate.getMonth(),
+i
+);
 
-d.setDate(today.getDate()-today.getDate()+1+i);
+let hDay=hijri(d,{day:"numeric"});
 
 const el=document.createElement("div");
 
 el.className="day";
 
-let hijri=getHijriDay(d);
+el.innerHTML=convertNumber(hDay);
 
-el.innerHTML=`<div>${convertNumber(hijri)}</div>`;
+/* friday */
+
+if(d.getDay()==5){
+el.classList.add("friday");
+}
+
+/* today */
+
+let now=new Date();
+
+if(
+i===now.getDate() &&
+currentDate.getMonth()===now.getMonth()
+){
+el.classList.add("today");
+}
+
+/* ramadan */
+
+let hMonth=hijri(d,{month:"numeric"});
+
+if(hMonth==9){
+el.classList.add("ramadan");
+}
+
+/* eid */
+
+if(
+(hMonth==10 && hDay==1) ||
+(hMonth==12 && hDay==10)
+){
+el.classList.add("eid");
+}
 
 grid.appendChild(el);
 
@@ -105,4 +136,44 @@ grid.appendChild(el);
 
 }
 
-window.addEventListener("DOMContentLoaded",renderCalendar);
+renderCalendar();
+
+/* buttons */
+
+document.getElementById("prev").onclick=()=>{
+currentDate.setMonth(currentDate.getMonth()-1);
+renderCalendar();
+};
+
+document.getElementById("next").onclick=()=>{
+currentDate.setMonth(currentDate.getMonth()+1);
+renderCalendar();
+};
+
+/* swipe */
+
+let startX=0;
+
+document.addEventListener("touchstart",e=>{
+startX=e.touches[0].clientX;
+});
+
+document.addEventListener("touchend",e=>{
+
+let endX=e.changedTouches[0].clientX;
+
+if(endX-startX>50){
+
+currentDate.setMonth(currentDate.getMonth()-1);
+renderCalendar();
+
+}
+
+if(startX-endX>50){
+
+currentDate.setMonth(currentDate.getMonth()+1);
+renderCalendar();
+
+}
+
+});
