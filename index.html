@@ -1,53 +1,26 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>IBADAT</title>
-
-<link rel="stylesheet" href="setup.css">
-
-</head>
-
-<body>
-
-<div class="setup-card">
-
-<h1>IBADAT</h1>
-
-<select id="language">
-
-<option value="en">English</option>
-<option value="bn">বাংলা</option>
-<option value="hi">हिन्दी</option>
-
-</select>
-
-<button onclick="getLocation()">Allow Location</button>
-
-<button onclick="continueApp()">Continue</button>
-
-</div>
-
-<script src="setup.js"></script>
-
-<script>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>IBADAT</title><link rel="stylesheet" href="css/setup.css"><link rel="manifest" href="manifest.json"></head><body><div class="setup-card"><h1>IBADAT</h1><select id="language"><option value="en">English</option><option value="bn">বাংলা</option><option value="hi">हिन्दी</option></select><button onclick="getLocation()">
+Allow Location
+</button><button onclick="continueApp()">
+Continue
+</button></div><script src="js/setup.js"></script><script>
 
 /* LANGUAGE CHECK */
 
 const savedLang = localStorage.getItem("appLang");
 
-if(savedLang){
+if (savedLang) {
 
-window.location.href="home.html";
+window.location.href = "html/home.html";
 
 }
 
-</script>
 
-</body>
+/* SERVICE WORKER */
 
-</html>
+if ('serviceWorker' in navigator) {
+
+navigator.serviceWorker.register('service-worker.js');
+
+}
+
+</script></body></html>
