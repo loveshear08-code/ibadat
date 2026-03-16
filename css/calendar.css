@@ -4,33 +4,32 @@ background:#e7efe8;
 margin:0;
 }
 
-.calendar-container{
+.calendar{
 max-width:500px;
 margin:auto;
 padding:20px;
 }
 
-.calendar-header{
+.header{
 display:flex;
-align-items:center;
 justify-content:space-between;
+align-items:center;
 margin-bottom:20px;
 }
 
-.calendar-header button{
+.header button{
 background:#6dbf73;
 border:none;
 color:white;
-font-size:20px;
+font-size:18px;
 padding:10px 15px;
 border-radius:10px;
 }
 
 #monthTitle{
 font-size:22px;
-font-weight:700;
+font-weight:bold;
 color:#2f6b3a;
-text-align:center;
 }
 
 .grid{
@@ -41,9 +40,8 @@ gap:10px;
 
 .day{
 background:white;
-border-radius:14px;
-padding:14px 0;
+padding:12px;
+border-radius:10px;
 text-align:center;
-box-shadow:0 4px 8px rgba(0,0,0,.08);
-font-size:18px;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
 }
