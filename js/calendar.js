@@ -5,7 +5,7 @@ const monthTitle = document.getElementById("monthTitle");
 
 let currentDate = new Date();
 
-function renderCalendar() {
+function renderCalendar(){
 
 const year = currentDate.getFullYear();
 const month = currentDate.getMonth();
@@ -13,56 +13,45 @@ const month = currentDate.getMonth();
 const firstDay = new Date(year, month, 1).getDay();
 const totalDays = new Date(year, month + 1, 0).getDate();
 
-const monthNames = [
+const monthNames=[
 "January","February","March","April","May","June",
 "July","August","September","October","November","December"
 ];
 
 monthTitle.innerText = monthNames[month] + " " + year;
 
-calendar.innerHTML = "";
+calendar.innerHTML="";
 
-const grid = document.createElement("div");
+const grid=document.createElement("div");
+grid.className="grid";
 
-grid.style.display = "grid";
-grid.style.gridTemplateColumns = "repeat(7,1fr)";
-grid.style.gap = "6px";
-grid.style.padding = "10px";
-
-for (let i = 0; i < firstDay; i++) {
-const empty = document.createElement("div");
+for(let i=0;i<firstDay;i++){
+const empty=document.createElement("div");
 grid.appendChild(empty);
 }
 
-for (let day = 1; day <= totalDays; day++) {
+for(let day=1;day<=totalDays;day++){
 
-const cell = document.createElement("div");
-
-cell.innerText = day;
-
-cell.style.background = "white";
-cell.style.borderRadius = "8px";
-cell.style.padding = "10px";
-cell.style.textAlign = "center";
+const cell=document.createElement("div");
+cell.className="day";
+cell.innerText=day;
 
 grid.appendChild(cell);
+
 }
 
 calendar.appendChild(grid);
+
 }
 
-document.getElementById("prevMonth").onclick = function(){
-
-currentDate.setMonth(currentDate.getMonth() - 1);
+document.getElementById("prevMonth").onclick=function(){
+currentDate.setMonth(currentDate.getMonth()-1);
 renderCalendar();
-
 };
 
-document.getElementById("nextMonth").onclick = function(){
-
-currentDate.setMonth(currentDate.getMonth() + 1);
+document.getElementById("nextMonth").onclick=function(){
+currentDate.setMonth(currentDate.getMonth()+1);
 renderCalendar();
-
 };
 
 renderCalendar();
