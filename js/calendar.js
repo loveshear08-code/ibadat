@@ -1,3 +1,4 @@
+alert("Calendar JS Running");
 document.addEventListener("DOMContentLoaded", function () {
 
 const calendar = document.getElementById("calendar");
