@@ -1,128 +1,177 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Azan Setting</title><style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<title>Azan Settings</title>
+
+<style>
 body{
-font-family:Arial;
-background:#eef3f8;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-margin:0;
+    font-family: Arial;
+    background:#e6f7ee;
+    margin:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
 }
 
 /* CARD */
-
 .card{
-background:#f7f1ff;
-padding:30px;
-border-radius:20px;
-width:90%;
-max-width:400px;
-box-shadow:0 8px 25px rgba(0,0,0,0.1);
-text-align:center;
+    background:#ffffff;
+    padding:25px;
+    border-radius:20px;
+    width:90%;
+    max-width:400px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
+    text-align:center;
 }
 
 /* TITLE */
-
 .title{
-font-size:24px;
-margin-bottom:20px;
+    font-size:22px;
+    margin-bottom:10px;
 }
 
-/* SELECT */
-
-select{
-width:100%;
-padding:12px;
-border-radius:10px;
-border:none;
-font-size:16px;
-margin-top:10px;
-background:white;
-box-shadow:0 2px 8px rgba(0,0,0,0.1);
+/* LIST */
+.azan-list{
+    margin-top:20px;
+    text-align:left;
 }
 
-/* BUTTON AREA */
+.item{
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:8px;
+    background:#f1fbf5;
+    display:flex;
+    justify-content:space-between;
+    cursor:pointer;
+}
 
+.item.active{
+    background:#c8f2dc;
+}
+
+/* BUTTONS */
 .buttons{
-margin-top:20px;
-display:flex;
-gap:10px;
-justify-content:center;
+    margin-top:20px;
+    display:flex;
+    gap:10px;
 }
-
-/* BUTTON */
 
 button{
-flex:1;
-padding:12px;
-border:none;
-border-radius:10px;
-font-size:16px;
-background:#7a9cc6;
-color:white;
-cursor:pointer;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    flex:1;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    background:#4caf50;
+    color:white;
+    cursor:pointer;
 }
 
 button:hover{
-background:#5f84b2;
+    background:#3e9442;
 }
 
-</style></head><body><div class="card"><div class="title">Azan Settings</div><label>Select Azan Sound</label>
-
-<select id="azanSelect"><option value="makkah">Makkah</option>
-<option value="madinah">Madinah</option>
-<option value="kuwait">Kuwait</option>
-<option value="bangladesh">Bangladesh</option>
-<option value="alaska">Alaska</option></select><div class="buttons"><button onclick="saveAzan()">Save</button>
-
-<button onclick="testAzan()">Test</button>
-
-</div></div><script>
-
-let audio=null;
-
-document.addEventListener("DOMContentLoaded",function(){
-
-let select=document.getElementById("azanSelect");
-
-let saved=localStorage.getItem("azanVoice");
-
-if(saved){
-select.value=saved;
+/* STATUS */
+.status{
+    margin-top:10px;
+    font-size:14px;
+    color:green;
 }
+</style>
 
-});
+</head>
+
+<body>
+
+<div class="card">
+
+<h2 class="title" data-key="azanSettings">Azan Settings</h2>
+<p data-key="selectAzan">Select Azan Sound</p>
+
+<div class="azan-list" id="azanList"></div>
+
+<div class="buttons">
+<button onclick="saveAzan()" data-key="save">Save</button>
+<button onclick="testAzan()" data-key="test">Test</button>
+</div>
+
+<div class="status" id="status"></div>
+
+</div>
+
+<!-- LANGUAGE -->
+<script src="../js/lang.js"></script>
+
+<script>
+
+const azans = [
+    {name:"Makkah", file:"makkah.mp3"},
+    {name:"Madinah", file:"madinah.mp3"},
+    {name:"Kuwait", file:"kuwait.mp3"},
+    {name:"Bangladesh", file:"bangladesh.mp3"},
+    {name:"Alaska", file:"alaska.mp3"}
+];
+
+let selected = localStorage.getItem("azanVoice") || "makkah.mp3";
+let audio = null;
+
+/* LOAD LIST */
+function loadAzan(){
+    const list = document.getElementById("azanList");
+    list.innerHTML="";
+
+    azans.forEach(a=>{
+        const div=document.createElement("div");
+        div.className="item";
+
+        if(a.file===selected){
+            div.classList.add("active");
+        }
+
+        div.innerHTML = `
+            <span>${a.name}</span>
+            <span>${a.file===selected ? "✔" : ""}</span>
+        `;
+
+        div.onclick=()=>{
+            selected=a.file;
+            loadAzan();
+        }
+
+        list.appendChild(div);
+    });
+}
 
 /* SAVE */
-
 function saveAzan(){
+    localStorage.setItem("azanVoice",selected);
 
-let sound=document.getElementById("azanSelect").value;
-
-localStorage.setItem("azanVoice",sound);
-
-alert("Azan Saved");
-
+    document.getElementById("status").innerText="✔ Saved";
 }
 
 /* TEST */
-
 function testAzan(){
 
-let sound=document.getElementById("azanSelect").value;
+    if(audio){
+        audio.pause();
+    }
 
-if(audio){
-audio.pause();
+    audio=new Audio("../assets/"+selected);
+    audio.play();
 }
 
-audio=new Audio("/ibadat/assets/"+sound+".mp3");
+/* INIT */
+document.addEventListener("DOMContentLoaded",()=>{
+    loadAzan();
+    applyLang();
+});
 
-audio.play();
+</script>
 
-}
-
-</script></body>
+</body>
 </html>
