@@ -516,3 +516,64 @@ function checkAzan() {
 /* check every 30 seconds */
 
 setInterval(checkAzan, 30000);
+/* =========================
+   🔥 NEW ADDITION START
+========================= */
+
+/* CLEAN TIME (remove timezone like IST) */
+function cleanTime(t){
+    return t.split(" ")[0];
+}
+
+/* STORE CLEAN TIMES FOR GLOBAL USE */
+function storeAzanTimes(){
+
+    if(!prayerTimes.length) return;
+
+    const cleanTimes = prayerTimes.map(p => cleanTime(p.time));
+
+    localStorage.setItem("azanTimes", JSON.stringify(cleanTimes));
+}
+
+/* CALL AFTER LOAD */
+setTimeout(storeAzanTimes, 3000);
+
+
+/* BETTER AZAN CONTROL (avoid repeat bug) */
+let lastPlayedTime = null;
+
+function improvedCheckAzan(){
+
+    if (!prayerTimes.length) return;
+
+    let now = new Date();
+
+    let current =
+        String(now.getHours()).padStart(2, "0") + ":" +
+        String(now.getMinutes()).padStart(2, "0");
+
+    if(current === lastPlayedTime) return;
+
+    prayerTimes.forEach(p => {
+
+        let time = cleanTime(p.time);
+
+        if (time === current) {
+
+            playAzan(p.name);
+
+            lastPlayedTime = current;
+
+        }
+
+    });
+
+}
+
+/* RUN IMPROVED SYSTEM */
+setInterval(improvedCheckAzan, 30000);
+
+
+/* =========================
+   🔥 NEW ADDITION END
+========================= */
