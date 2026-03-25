@@ -1,7 +1,7 @@
 const lang = localStorage.getItem("appLang") || "bn";
 
-/* LANGUAGE */
-const text={
+/* LANGUAGE DATA */
+const text = {
 
 bn:{
 days:["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"],
@@ -35,7 +35,7 @@ quotes:["नमाज़ जन्नत की कुंजी है","अल�
 
 };
 
-const T=text[lang];
+const T = text[lang];
 
 /* NUMBER */
 function convertNumber(str){
@@ -67,13 +67,15 @@ document.getElementById("tasbih").innerText=T.tasbih;
 /* DATE */
 let today=new Date();
 document.getElementById("todayDay").innerText=T.days[today.getDay()];
-document.getElementById("date").innerText=convertNumber(today.toLocaleDateString("en-GB"));
+document.getElementById("date").innerText=
+convertNumber(today.toLocaleDateString("en-GB"));
 
 /* CLOCK */
 function updateClock(){
 let now=new Date();
 let time=now.toLocaleTimeString("en-GB",{hour12:false});
-document.getElementById("clock").innerText=convertNumber(time);
+document.getElementById("clock").innerText=
+convertNumber(time);
 }
 setInterval(updateClock,1000);
 updateClock();
@@ -99,24 +101,23 @@ prayerTimes=[
 {name:T.isha,time:t.Isha}
 ];
 
-/* store */
-const cleanTimes=prayerTimes.map(p=>cleanTime(p.time));
-localStorage.setItem("azanTimes",JSON.stringify(cleanTimes));
-
 renderPrayerGrid();
 updatePrayer();
 
 });
-
 }
 
+/* GRID */
 function renderPrayerGrid(){
+
 let grid=document.getElementById("prayerGrid");
 grid.innerHTML="";
 
 prayerTimes.forEach(p=>{
+
 let box=document.createElement("div");
 box.className="prayer-box";
+
 box.innerHTML="<b>"+p.name+"</b><br>"+convertNumber(cleanTime(p.time));
 
 box.onclick=()=>{
@@ -129,6 +130,7 @@ window.location.href="./sunrise.html";
 };
 
 grid.appendChild(box);
+
 });
 }
 
@@ -181,6 +183,7 @@ nextTime=tomorrow;
 
 /* COUNTDOWN */
 function updateCountdown(){
+
 if(!nextTime)return;
 
 let diff=Math.floor((nextTime-new Date())/1000);
@@ -189,9 +192,13 @@ let h=Math.floor(diff/3600);
 let m=Math.floor((diff%3600)/60);
 let s=Math.floor(diff%60);
 
-let time=String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+let time=
+String(h).padStart(2,"0")+":"+
+String(m).padStart(2,"0")+":"+
+String(s).padStart(2,"0");
 
-document.getElementById("countdown").innerText=convertNumber(time);
+document.getElementById("countdown").innerText=
+convertNumber(time);
 }
 
 setInterval(updatePrayer,30000);
@@ -201,7 +208,9 @@ setInterval(updateCountdown,1000);
 let lastPlayed=null;
 
 function playAzan(name){
-let azan=localStorage.getItem("azanVoice")||"makkah";
+
+let azan=localStorage.getItem("azanVoice") || "makkah";
+
 let audio=new Audio("../assets/"+azan+".mp3");
 audio.play().catch(()=>{});
 
@@ -211,19 +220,26 @@ new Notification("🕌 "+name+" time");
 }
 
 function checkAzan(){
+
 if(!prayerTimes.length)return;
 
 let now=new Date();
-let current=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
+
+let current=
+String(now.getHours()).padStart(2,"0")+":"+
+String(now.getMinutes()).padStart(2,"0");
 
 if(current===lastPlayed)return;
 
 prayerTimes.forEach(p=>{
+
 let t=cleanTime(p.time);
+
 if(t===current){
 playAzan(p.name);
 lastPlayed=current;
 }
+
 });
 }
 
@@ -234,18 +250,26 @@ let lat=localStorage.getItem("lat");
 let lon=localStorage.getItem("lon");
 
 if(lat && lon){
+
 loadPrayerTimes(lat,lon);
+
 }else{
+
 navigator.geolocation.getCurrentPosition(
+
 pos=>{
 let lat=pos.coords.latitude;
 let lon=pos.coords.longitude;
+
 localStorage.setItem("lat",lat);
 localStorage.setItem("lon",lon);
+
 loadPrayerTimes(lat,lon);
 },
+
 ()=>{
 loadPrayerTimes(22.5726,88.3639);
 }
+
 );
-    }
+}
