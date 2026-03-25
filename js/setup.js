@@ -1,51 +1,32 @@
-/* GET LOCATION */
+function getLocation(){
 
-function getLocation() {
+    if(navigator.geolocation){
 
-if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos=>{
 
-navigator.geolocation.getCurrentPosition(
+            localStorage.setItem("lat", pos.coords.latitude);
+            localStorage.setItem("lon", pos.coords.longitude);
 
-  function (position) {
+            alert("Location Saved ✔️");
 
-    let lat = position.coords.latitude;
-    let lon = position.coords.longitude;
+        },()=>{
+            alert("Location Permission Denied ❌");
+        });
 
-    // Save location
-    localStorage.setItem("lat", lat);
-    localStorage.setItem("lon", lon);
-
-    alert("Location saved successfully");
-
-  },
-
-  function () {
-
-    alert("Location permission denied");
-
-  }
-
-);
-
-} else {
-
-alert("Geolocation not supported");
-
+    }
 }
 
+function continueApp(){
+
+    const lang = document.getElementById("language").value;
+
+    localStorage.setItem("appLang", lang);
+
+    window.location.href = "html/home.html";
 }
 
-/* CONTINUE BUTTON */
+/* AUTO REDIRECT */
 
-function continueApp() {
-
-// Language value
-let lang = document.getElementById("language").value;
-
-// Save language
-localStorage.setItem("appLang", lang);
-
-// Go to home page
-window.location.href = "html/home.html";
-
+if(localStorage.getItem("appLang")){
+    window.location.href = "html/home.html";
 }
