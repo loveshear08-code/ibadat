@@ -22,3 +22,9 @@ async function getPrayerTimes(){
         console.log("API error", e);
     }
 }
+
+/* 🔥 STEP-2 CODE এখানে */
+getPrayerTimes();
+
+// প্রতি 12 ঘন্টায় update
+setInterval(getPrayerTimes, 43200000);
