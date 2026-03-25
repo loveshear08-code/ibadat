@@ -21,8 +21,7 @@ function checkAzanTime(){
     const now = new Date();
     const current = now.getHours() + ":" + now.getMinutes().toString().padStart(2,"0");
 
-    // ⚠️ DEMO TIMES (তুমি পরে change করবে)
-    const times = ["05:00","13:30","16:45","18:30","20:00"];
+    const times = JSON.parse(localStorage.getItem("azanTimes")) || [];
 
     if(times.includes(current)){
         playAutoAzan();
