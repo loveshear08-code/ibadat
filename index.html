@@ -1,39 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>IBADAT</title>
 
 <link rel="stylesheet" href="css/style.css">
-<link rel="manifest" href="manifest.json">
 
 </head>
 
 <body>
 
-<div class="setup-card">
+<!-- TOP BAR -->
+<div class="top-bar">
+<span id="city">Loading...</span>
+<span id="date"></span>
+</div>
 
-<h1>IBADAT</h1>
+<!-- BISMILLAH -->
+<div class="card" id="bismillahCard">
+<h2 class="arabic">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</h2>
+<p id="bismillahMeaning"></p>
+</div>
 
-<select id="language">
-<option value="bn">বাংলা</option>
-<option value="en">English</option>
-<option value="hi">हिन्दी</option>
-</select>
+<!-- TIME CARD -->
+<div class="card">
 
-<button onclick="getLocation()">Allow Location</button>
-<button onclick="continueApp()">Continue</button>
+<div class="row">
+<h3 id="todayDay"></h3>
+<h3 id="weather"></h3>
+</div>
+
+<h1 id="clock"></h1>
+
+<div class="row">
+<span id="currentPrayerName"></span>
+<span>/</span>
+<span id="nextPrayerName"></span>
+</div>
 
 </div>
 
-<script src="js/setup.js"></script>
+<!-- PRAYER GRID -->
+<div class="grid" id="prayerGrid"></div>
 
-<script>
-if ('serviceWorker' in navigator) {
-navigator.serviceWorker.register('service-worker.js');
-}
-</script>
+<!-- FEATURES -->
+<div class="grid2">
+
+<div id="namaz" class="btn"></div>
+<div id="quran" class="btn"></div>
+<div id="dua" class="btn"></div>
+<div id="hadith" class="btn"></div>
+<div id="qibla" class="btn"></div>
+<div id="tasbih" class="btn"></div>
+
+</div>
+
+<!-- BOTTOM SCROLL -->
+<div class="bottom-bar">
+<span id="bottomText"></span>
+</div>
+
+<script src="js/home.js"></script>
 
 </body>
 </html>
