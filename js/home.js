@@ -119,6 +119,7 @@ box.innerHTML="<b>"+p.name+"</b><br>"+convertNumber(p.time);
 grid.appendChild(box);
 });
 }
+attachPrayerClick();
 
 /* CURRENT / NEXT */
 
@@ -242,6 +243,7 @@ const audio=new Audio("../assets/kuwait.mp3");
 audio.play();
 }
 
+
 setInterval(()=>{
 let now=new Date();
 let current=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
@@ -253,3 +255,38 @@ playAzan(p.name);
 });
 
 },30000);
+
+/* =========================
+   🔗 CLICK NAVIGATION FIX
+========================= */
+
+// Waqt Board → Calendar
+const statusBoard = document.getElementById("statusBoard");
+if(statusBoard){
+    statusBoard.onclick = () => {
+        window.location.href = "./calendar.html";
+    };
+}
+
+// Prayer click → Azan / Sunrise
+function attachPrayerClick(){
+
+    const boxes = document.querySelectorAll(".prayer-box");
+
+    boxes.forEach((box, index) => {
+
+        box.onclick = () => {
+
+            // Sunrise আলাদা page
+            if(index === 1){
+                window.location.href = "./sunrise.html";
+            }else{
+                localStorage.setItem("selectedPrayer", prayerTimes[index].name);
+                window.location.href = "./azan-setting.html";
+            }
+
+        };
+
+    });
+
+}
