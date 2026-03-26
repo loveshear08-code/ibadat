@@ -1,16 +1,14 @@
 /* =========================
-   🌿 GLOBAL THEME
+   🌿 THEME
 ========================= */
 
 :root{
 --primary:#1f6f43;
---primary-light:#dff5e8;
+--light:#dff5e8;
 --bg:#f4f6f5;
 --card:#ffffff;
 --text:#1a1a1a;
 }
-
-/* BODY */
 
 body{
 margin:0;
@@ -23,7 +21,7 @@ color:var(--text);
 
 .header{
 background:var(--primary);
-color:white;
+color:#fff;
 display:flex;
 justify-content:space-between;
 padding:12px 15px;
@@ -34,17 +32,25 @@ font-weight:bold;
 
 .card{
 background:var(--card);
-border-radius:20px;
-padding:15px;
 margin:10px;
-box-shadow:0 4px 15px rgba(0,0,0,0.08);
+padding:15px;
+border-radius:20px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
 }
 
 /* BISMILLAH */
 
 .bismillah-card{
-background:var(--primary-light);
+background:var(--light);
 text-align:center;
+}
+
+/* STATUS CARD */
+
+.status-card{
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
 /* PRAYER GRID */
@@ -57,13 +63,12 @@ padding:10px;
 }
 
 .prayer-box{
-background:var(--card);
-padding:15px;
+background:#fff;
+padding:12px;
 border-radius:15px;
 text-align:center;
-box-shadow:0 3px 10px rgba(0,0,0,0.08);
+box-shadow:0 2px 8px rgba(0,0,0,0.08);
 cursor:pointer;
-transition:0.2s;
 }
 
 .prayer-box:active{
@@ -73,7 +78,7 @@ transform:scale(0.95);
 /* FEATURE BUTTON */
 
 .feature-btn{
-background:var(--primary-light);
+background:var(--light);
 margin:10px;
 padding:15px;
 border-radius:15px;
@@ -81,11 +86,11 @@ text-align:center;
 font-weight:bold;
 }
 
-/* FOOTER TEXT */
+/* FOOTER */
 
 #bottomText{
 background:var(--primary);
-color:white;
+color:#fff;
 text-align:center;
 padding:10px;
 }
