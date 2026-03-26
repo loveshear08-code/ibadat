@@ -30,3 +30,56 @@ margin-top:15px;
 border:none;
 border-radius:10px;
 }
+/* =========================
+   🌿 GLOBAL GREEN THEME OVERRIDE
+========================= */
+
+body{
+  background:#eef3f1 !important;
+  color:#1e2d2f !important;
+}
+
+/* HEADER */
+.header{
+  background:#1f7a5a !important;
+  color:white !important;
+}
+
+/* MAIN CARDS */
+.card,
+.bismillah-card,
+.prayer-main{
+  background:#cfe8dd !important;
+  color:#1e2d2f !important;
+  box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* PRAYER BOX */
+.prayer-box{
+  background:white !important;
+  border-radius:15px;
+  box-shadow:0 3px 10px rgba(0,0,0,0.05);
+}
+
+/* FEATURE BUTTON */
+.feature-btn{
+  background:#cfe8dd !important;
+  color:#1e2d2f !important;
+  border-radius:15px;
+}
+
+/* FOOTER */
+.bottom-bar{
+  background:#1f7a5a !important;
+  color:white !important;
+}
+
+/* TEXT COLORS */
+h1,h2,h3,h4,p{
+  color:#1e2d2f !important;
+}
+
+/* LINKS */
+a{
+  color:#1f7a5a;
+}
