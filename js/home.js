@@ -11,11 +11,10 @@ fajr:"ফজর", sunrise:"সূর্যোদয়", dhuhr:"জোহর", a
 namaz:"📚 নামাজ শিক্ষা", quran:"🕌 আল কুরআন", dua:"🤲 দোয়া", hadith:"📖 হাদিস",
 qibla:"🕋 কিবলা কম্পাস", tasbih:"📿 ডিজিটাল তসবিহ",
 bismillah:"পরম করুণাময় অসীম দয়ালু আল্লাহর নামে",
-location:"অবস্থান",
 weatherText:{
 clear:"পরিষ্কার",cloud:"মেঘলা",rain:"বৃষ্টি",snow:"তুষার",storm:"ঝড়"
 },
-quotes:["আল্লাহকে স্মরণ করো","ধৈর্য ধরো"]
+quotes:["নামাজ জান্নাতের চাবি","আল্লাহকে স্মরণ করো","ধৈর্যশীলদের সাথে আল্লাহ আছেন"]
 },
 en:{
 days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
@@ -23,11 +22,10 @@ fajr:"Fajr", sunrise:"Sunrise", dhuhr:"Dhuhr", asr:"Asr", maghrib:"Maghrib", ish
 namaz:"📚 Namaz Guide", quran:"🕌 Al Quran", dua:"🤲 Dua", hadith:"📖 Hadith",
 qibla:"🕋 Qibla Compass", tasbih:"📿 Digital Tasbih",
 bismillah:"In the name of Allah",
-location:"Location",
 weatherText:{
 clear:"Clear",cloud:"Cloudy",rain:"Rain",snow:"Snow",storm:"Storm"
 },
-quotes:["Remember Allah","Be patient"]
+quotes:["Prayer is the key","Remember Allah","Allah is with patience"]
 }
 };
 
@@ -38,12 +36,12 @@ SAFE SET
 ====================== */
 
 function setText(id,val){
-let el=document.getElementById(id);
+const el=document.getElementById(id);
 if(el) el.innerText=val;
 }
 
 /* ======================
-TEXT APPLY
+TEXT
 ====================== */
 
 setText("bismillahMeaning",T.bismillah);
@@ -53,13 +51,13 @@ setText("dua",T.dua);
 setText("hadith",T.hadith);
 setText("qibla",T.qibla);
 setText("tasbih",T.tasbih);
-setText("locationLabel",T.location);
 
 /* ======================
 DATE + CLOCK
 ====================== */
 
 let today=new Date();
+
 setText("todayDay",T.days[today.getDay()]);
 setText("date",today.toLocaleDateString("en-GB"));
 
@@ -104,22 +102,24 @@ updatePrayer();
 
 function renderGrid(){
 
-let grid=document.getElementById("prayerGrid");
+const grid=document.getElementById("prayerGrid");
+if(!grid) return;
+
 grid.innerHTML="";
 
 prayerTimes.forEach((p,i)=>{
 
-let box=document.createElement("div");
+const box=document.createElement("div");
 box.className="prayer-box";
 box.innerHTML=`<b>${p.name}</b><br>${p.time}`;
 
 box.onclick=()=>{
 
 if(i===1){
-window.location.href="features/sunrise.html";
+window.location.href="html/sunrise.html";
 }else{
 localStorage.setItem("selectedPrayer",p.name);
-window.location.href="features/azan-setting.html";
+window.location.href="html/azan-setting.html";
 }
 
 };
@@ -134,27 +134,43 @@ grid.appendChild(box);
 
 function updatePrayer(){
 
+if(!prayerTimes.length) return;
+
 let now=new Date();
+let found=false;
 
 for(let i=0;i<prayerTimes.length;i++){
 
 let [h,m]=prayerTimes[i].time.split(":");
 
 let pt=new Date();
-pt.setHours(h,m,0);
+pt.setHours(parseInt(h));
+pt.setMinutes(parseInt(m));
+pt.setSeconds(0);
 
 if(now<pt){
 
-setText("currentPrayerName",prayerTimes[i-1]?.name || prayerTimes[5].name);
-setText("nextPrayerName",prayerTimes[i].name);
+setText("currentPrayerName",
+i===0 ? prayerTimes[5].name : prayerTimes[i-1].name);
 
-return;
+setText("nextPrayerName",
+prayerTimes[i].name);
+
+found=true;
+break;
 
 }
 
 }
 
+if(!found){
+setText("currentPrayerName",prayerTimes[5].name);
+setText("nextPrayerName",prayerTimes[0].name);
 }
+
+}
+
+setInterval(updatePrayer,30000);
 
 /* ======================
 WEATHER
@@ -192,7 +208,8 @@ fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${
 .then(r=>r.json())
 .then(d=>{
 
-let city=d.address.city || d.address.town || d.address.state;
+let city=d.address.city || d.address.town || d.address.village || d.address.state || "";
+
 setText("city",city);
 
 })
@@ -206,9 +223,9 @@ GEO
 
 navigator.geolocation.getCurrentPosition(
 
-p=>{
-let lat=p.coords.latitude;
-let lon=p.coords.longitude;
+pos=>{
+let lat=pos.coords.latitude;
+let lon=pos.coords.longitude;
 
 loadPrayerTimes(lat,lon);
 loadWeather(lat,lon);
@@ -217,7 +234,7 @@ loadLocation(lat,lon);
 },
 
 ()=>{
-let lat=22.57,lon=88.36;
+let lat=22.5726,lon=88.3639;
 
 loadPrayerTimes(lat,lon);
 loadWeather(lat,lon);
@@ -227,40 +244,57 @@ loadLocation(lat,lon);
 );
 
 /* ======================
-FEATURE NAV
+NAVIGATION
 ====================== */
 
-document.getElementById("bismillahCard").onclick=()=>location.href="features/allah-names.html";
-document.getElementById("namaz").onclick=()=>location.href="features/namaz-guide.html";
-document.getElementById("quran").onclick=()=>location.href="features/quran.html";
-document.getElementById("dua").onclick=()=>location.href="features/dua.html";
-document.getElementById("hadith").onclick=()=>location.href="features/hadith.html";
-document.getElementById("qibla").onclick=()=>location.href="features/qibla.html";
-document.getElementById("tasbih").onclick=()=>location.href="features/tasbih.html";
+document.getElementById("bismillahCard").onclick=()=>{
+window.location.href="html/allah-names.html";
+};
+
+document.getElementById("namaz").onclick=()=>{
+window.location.href="html/namaz-guide.html";
+};
+
+document.getElementById("quran").onclick=()=>{
+window.location.href="html/quran.html";
+};
+
+document.getElementById("dua").onclick=()=>{
+window.location.href="html/dua.html";
+};
+
+document.getElementById("hadith").onclick=()=>{
+window.location.href="html/hadith.html";
+};
+
+document.getElementById("qibla").onclick=()=>{
+window.location.href="html/qibla.html";
+};
+
+document.getElementById("tasbih").onclick=()=>{
+window.location.href="html/tasbih.html";
+};
 
 /* ======================
-SMOOTH SCROLL TEXT
+QUOTE (SMOOTH)
 ====================== */
 
-let i=0;
+let qi=0;
 
-function scrollQuote(){
-
-let text=T.quotes[i];
+function updateQuote(){
 
 let el=document.getElementById("bottomText");
 
-el.style.transition="all 1s";
 el.style.opacity="0";
 
 setTimeout(()=>{
-el.innerText=text;
+el.innerText=T.quotes[qi];
 el.style.opacity="1";
-},500);
+},300);
 
-i=(i+1)%T.quotes.length;
+qi=(qi+1)%T.quotes.length;
 
 }
 
-setInterval(scrollQuote,4000);
-scrollQuote();
+setInterval(updateQuote,4000);
+updateQuote();
