@@ -119,7 +119,6 @@ box.innerHTML="<b>"+p.name+"</b><br>"+convertNumber(p.time);
 grid.appendChild(box);
 });
 }
-attachPrayerClick();
 
 /* CURRENT / NEXT */
 
@@ -257,56 +256,42 @@ playAzan(p.name);
 },30000);
 
 /* =========================
-   🔗 CLICK NAVIGATION FIX
+   🔗 FINAL CLICK SYSTEM (WORKING)
 ========================= */
 
-// Waqt Board → Calendar
-const statusBoard = document.getElementById("statusBoard");
-if(statusBoard){
-    statusBoard.onclick = () => {
-        window.location.href = "./calendar.html";
-    };
-}
+/* Waqt Board → Calendar */
+document.addEventListener("DOMContentLoaded", ()=>{
 
-// Prayer click → Azan / Sunrise
-function attachPrayerClick(){
+    const statusBoard = document.getElementById("statusBoard");
 
-    const boxes = document.querySelectorAll(".prayer-box");
-
-    boxes.forEach((box, index) => {
-
-        box.onclick = () => {
-
-            // Sunrise আলাদা page
-            if(index === 1){
-                window.location.href = "./sunrise.html";
-            }else{
-                localStorage.setItem("selectedPrayer", prayerTimes[index].name);
-                window.location.href = "./azan-setting.html";
-            }
-
-        };
-
-    });
-
-}
-function attachPrayerClick(){
-
-    const boxes = document.querySelectorAll(".prayer-box");
-
-    boxes.forEach((box, index) => {
-
-        box.addEventListener("click", () => {
-
-            if(index === 1){
-                window.location.href = "./sunrise.html";
-            }else{
-                localStorage.setItem("selectedPrayer", prayerTimes[index].name);
-                window.location.href = "./azan-setting.html";
-            }
-
+    if(statusBoard){
+        statusBoard.addEventListener("click", ()=>{
+            window.location.href = "./calendar.html";
         });
+    }
 
-    });
+});
 
-}
+
+/* Prayer Box Click (NO FAIL SYSTEM) */
+document.addEventListener("click", function(e){
+
+    const box = e.target.closest(".prayer-box");
+    if(!box) return;
+
+    const boxes = document.querySelectorAll(".prayer-box");
+    const index = Array.from(boxes).indexOf(box);
+
+    if(index === -1 || !prayerTimes.length) return;
+
+    console.log("Clicked:", index);
+
+    // Sunrise
+    if(index === 1){
+        window.location.href = "./sunrise.html";
+    }else{
+        localStorage.setItem("selectedPrayer", prayerTimes[index].name);
+        window.location.href = "./azan-setting.html";
+    }
+
+});
