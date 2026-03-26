@@ -1,54 +1,82 @@
-const lang = localStorage.getItem("appLang") || "bn";
+/* ======================
+LANG
+====================== */
 
-/* TEXT */
+const lang = localStorage.getItem("appLang") || "bn";
 
 const text={
 bn:{
 days:["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"],
 fajr:"ফজর", sunrise:"সূর্যোদয়", dhuhr:"জোহর", asr:"আসর", maghrib:"মাগরিব", isha:"এশা",
+namaz:"📚 নামাজ শিক্ষা", quran:"🕌 আল কুরআন", dua:"🤲 দোয়া", hadith:"📖 হাদিস",
+qibla:"🕋 কিবলা কম্পাস", tasbih:"📿 ডিজিটাল তসবিহ",
 bismillah:"পরম করুণাময় অসীম দয়ালু আল্লাহর নামে",
 location:"অবস্থান",
-weather:"আবহাওয়া",
-current:"বর্তমান",
-next:"পরবর্তী",
-quotes:["আল্লাহকে স্মরণ করো"]
+weatherText:{
+clear:"পরিষ্কার",cloud:"মেঘলা",rain:"বৃষ্টি",snow:"তুষার",storm:"ঝড়"
+},
+quotes:["আল্লাহকে স্মরণ করো","ধৈর্য ধরো"]
 },
 en:{
 days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
 fajr:"Fajr", sunrise:"Sunrise", dhuhr:"Dhuhr", asr:"Asr", maghrib:"Maghrib", isha:"Isha",
+namaz:"📚 Namaz Guide", quran:"🕌 Al Quran", dua:"🤲 Dua", hadith:"📖 Hadith",
+qibla:"🕋 Qibla Compass", tasbih:"📿 Digital Tasbih",
 bismillah:"In the name of Allah",
 location:"Location",
-weather:"Weather",
-current:"Current",
-next:"Next",
-quotes:["Remember Allah"]
+weatherText:{
+clear:"Clear",cloud:"Cloudy",rain:"Rain",snow:"Snow",storm:"Storm"
+},
+quotes:["Remember Allah","Be patient"]
 }
 };
 
 const T=text[lang];
 
-/* SAFE SET */
+/* ======================
+SAFE SET
+====================== */
 
 function setText(id,val){
 let el=document.getElementById(id);
 if(el) el.innerText=val;
 }
 
-/* DATE */
+/* ======================
+TEXT APPLY
+====================== */
+
+setText("bismillahMeaning",T.bismillah);
+setText("namaz",T.namaz);
+setText("quran",T.quran);
+setText("dua",T.dua);
+setText("hadith",T.hadith);
+setText("qibla",T.qibla);
+setText("tasbih",T.tasbih);
+setText("locationLabel",T.location);
+
+/* ======================
+DATE + CLOCK
+====================== */
 
 let today=new Date();
 setText("todayDay",T.days[today.getDay()]);
 setText("date",today.toLocaleDateString("en-GB"));
 
-/* BISMILLAH */
-setText("bismillahMeaning",T.bismillah);
+function updateClock(){
+let now=new Date();
+setText("clock",now.toLocaleTimeString("en-GB",{hour12:false}));
+}
+setInterval(updateClock,1000);
+updateClock();
 
-/* PRAYER */
+/* ======================
+PRAYER
+====================== */
 
 let prayerTimes=[];
-let nextTime=null;
 
-function loadPrayer(lat,lon){
+function loadPrayerTimes(lat,lon){
 
 fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=2`)
 .then(r=>r.json())
@@ -66,7 +94,7 @@ prayerTimes=[
 ];
 
 renderGrid();
-updateCurrent();
+updatePrayer();
 
 });
 
@@ -88,10 +116,10 @@ box.innerHTML=`<b>${p.name}</b><br>${p.time}`;
 box.onclick=()=>{
 
 if(i===1){
-window.location.href="./sunrise.html";
+window.location.href="features/sunrise.html";
 }else{
 localStorage.setItem("selectedPrayer",p.name);
-window.location.href="./azan-setting.html";
+window.location.href="features/azan-setting.html";
 }
 
 };
@@ -102,9 +130,9 @@ grid.appendChild(box);
 
 }
 
-/* CURRENT + NEXT */
+/* CURRENT / NEXT */
 
-function updateCurrent(){
+function updatePrayer(){
 
 let now=new Date();
 
@@ -128,7 +156,9 @@ return;
 
 }
 
-/* WEATHER */
+/* ======================
+WEATHER
+====================== */
 
 function loadWeather(lat,lon){
 
@@ -137,13 +167,24 @@ fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&c
 .then(d=>{
 
 let temp=d.current_weather.temperature;
-setText("weather",temp+"°C");
+let code=d.current_weather.weathercode;
+
+let condition="clear";
+
+if([1,2,3].includes(code)) condition="cloud";
+if([51,53,55,61,63,65].includes(code)) condition="rain";
+if([71,73,75].includes(code)) condition="snow";
+if([95,96,99].includes(code)) condition="storm";
+
+setText("weather",temp+"°C "+T.weatherText[condition]);
 
 });
 
 }
 
-/* LOCATION */
+/* ======================
+LOCATION
+====================== */
 
 function loadLocation(lat,lon){
 
@@ -153,14 +194,15 @@ fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${
 
 let city=d.address.city || d.address.town || d.address.state;
 setText("city",city);
-setText("locationLabel",T.location);
 
 })
 .catch(()=>setText("city","--"));
 
 }
 
-/* GEO */
+/* ======================
+GEO
+====================== */
 
 navigator.geolocation.getCurrentPosition(
 
@@ -168,19 +210,57 @@ p=>{
 let lat=p.coords.latitude;
 let lon=p.coords.longitude;
 
-loadPrayer(lat,lon);
+loadPrayerTimes(lat,lon);
 loadWeather(lat,lon);
 loadLocation(lat,lon);
+
 },
 
 ()=>{
 let lat=22.57,lon=88.36;
-loadPrayer(lat,lon);
+
+loadPrayerTimes(lat,lon);
 loadWeather(lat,lon);
 loadLocation(lat,lon);
 }
 
 );
 
-/* FOOTER */
-setText("bottomText",T.quotes[0]);
+/* ======================
+FEATURE NAV
+====================== */
+
+document.getElementById("bismillahCard").onclick=()=>location.href="features/allah-names.html";
+document.getElementById("namaz").onclick=()=>location.href="features/namaz-guide.html";
+document.getElementById("quran").onclick=()=>location.href="features/quran.html";
+document.getElementById("dua").onclick=()=>location.href="features/dua.html";
+document.getElementById("hadith").onclick=()=>location.href="features/hadith.html";
+document.getElementById("qibla").onclick=()=>location.href="features/qibla.html";
+document.getElementById("tasbih").onclick=()=>location.href="features/tasbih.html";
+
+/* ======================
+SMOOTH SCROLL TEXT
+====================== */
+
+let i=0;
+
+function scrollQuote(){
+
+let text=T.quotes[i];
+
+let el=document.getElementById("bottomText");
+
+el.style.transition="all 1s";
+el.style.opacity="0";
+
+setTimeout(()=>{
+el.innerText=text;
+el.style.opacity="1";
+},500);
+
+i=(i+1)%T.quotes.length;
+
+}
+
+setInterval(scrollQuote,4000);
+scrollQuote();
