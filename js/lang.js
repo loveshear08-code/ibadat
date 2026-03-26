@@ -14,9 +14,10 @@ bismillah:"अल्लाह के नाम से"
 
 function applyLang(){
 
-if(document.getElementById("bismillahMeaning")){
-document.getElementById("bismillahMeaning").innerText =
-TEXT[lang].bismillah;
-}
+    const el = document.getElementById("bismillahMeaning");
+
+    if(el){
+        el.innerText = TEXT[lang].bismillah;
+    }
 
 }
