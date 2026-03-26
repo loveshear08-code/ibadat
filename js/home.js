@@ -11,9 +11,7 @@ fajr:"ফজর", sunrise:"সূর্যোদয়", dhuhr:"জোহর", a
 namaz:"📚 নামাজ শিক্ষা", quran:"🕌 আল কুরআন", dua:"🤲 দোয়া", hadith:"📖 হাদিস",
 qibla:"🕋 কিবলা কম্পাস", tasbih:"📿 ডিজিটাল তসবিহ",
 bismillah:"পরম করুণাময় অসীম দয়ালু আল্লাহর নামে",
-weatherText:{
-clear:"পরিষ্কার",cloud:"মেঘলা",rain:"বৃষ্টি",snow:"তুষার",storm:"ঝড়"
-},
+weatherText:{clear:"পরিষ্কার",cloud:"মেঘলা",rain:"বৃষ্টি",snow:"তুষার",storm:"ঝড়"},
 quotes:["নামাজ জান্নাতের চাবি","আল্লাহকে স্মরণ করো","ধৈর্যশীলদের সাথে আল্লাহ আছেন"]
 },
 en:{
@@ -22,9 +20,7 @@ fajr:"Fajr", sunrise:"Sunrise", dhuhr:"Dhuhr", asr:"Asr", maghrib:"Maghrib", ish
 namaz:"📚 Namaz Guide", quran:"🕌 Al Quran", dua:"🤲 Dua", hadith:"📖 Hadith",
 qibla:"🕋 Qibla Compass", tasbih:"📿 Digital Tasbih",
 bismillah:"In the name of Allah",
-weatherText:{
-clear:"Clear",cloud:"Cloudy",rain:"Rain",snow:"Snow",storm:"Storm"
-},
+weatherText:{clear:"Clear",cloud:"Cloudy",rain:"Rain",snow:"Snow",storm:"Storm"},
 quotes:["Prayer is the key","Remember Allah","Allah is with patience"]
 }
 };
@@ -32,7 +28,7 @@ quotes:["Prayer is the key","Remember Allah","Allah is with patience"]
 const T=text[lang];
 
 /* ======================
-SAFE SET
+SAFE TEXT
 ====================== */
 
 function setText(id,val){
@@ -41,7 +37,7 @@ if(el) el.innerText=val;
 }
 
 /* ======================
-TEXT
+TEXT APPLY
 ====================== */
 
 setText("bismillahMeaning",T.bismillah);
@@ -98,8 +94,6 @@ updatePrayer();
 
 }
 
-/* GRID */
-
 function renderGrid(){
 
 const grid=document.getElementById("prayerGrid");
@@ -130,8 +124,6 @@ grid.appendChild(box);
 
 }
 
-/* CURRENT / NEXT */
-
 function updatePrayer(){
 
 if(!prayerTimes.length) return;
@@ -151,10 +143,10 @@ pt.setSeconds(0);
 if(now<pt){
 
 setText("currentPrayerName",
-i===0 ? prayerTimes[5].name : prayerTimes[i-1].name);
+"🟢 "+(i===0 ? prayerTimes[5].name : prayerTimes[i-1].name));
 
 setText("nextPrayerName",
-prayerTimes[i].name);
+"⏭️ "+prayerTimes[i].name);
 
 found=true;
 break;
@@ -164,8 +156,8 @@ break;
 }
 
 if(!found){
-setText("currentPrayerName",prayerTimes[5].name);
-setText("nextPrayerName",prayerTimes[0].name);
+setText("currentPrayerName","🟢 "+prayerTimes[5].name);
+setText("nextPrayerName","⏭️ "+prayerTimes[0].name);
 }
 
 }
@@ -247,36 +239,16 @@ loadLocation(lat,lon);
 NAVIGATION
 ====================== */
 
-document.getElementById("bismillahCard").onclick=()=>{
-window.location.href="html/allah-names.html";
-};
-
-document.getElementById("namaz").onclick=()=>{
-window.location.href="html/namaz-guide.html";
-};
-
-document.getElementById("quran").onclick=()=>{
-window.location.href="html/quran.html";
-};
-
-document.getElementById("dua").onclick=()=>{
-window.location.href="html/dua.html";
-};
-
-document.getElementById("hadith").onclick=()=>{
-window.location.href="html/hadith.html";
-};
-
-document.getElementById("qibla").onclick=()=>{
-window.location.href="html/qibla.html";
-};
-
-document.getElementById("tasbih").onclick=()=>{
-window.location.href="html/tasbih.html";
-};
+document.getElementById("bismillahCard").onclick=()=>location.href="html/allah-names.html";
+document.getElementById("namaz").onclick=()=>location.href="html/namaz-guide.html";
+document.getElementById("quran").onclick=()=>location.href="html/quran.html";
+document.getElementById("dua").onclick=()=>location.href="html/dua.html";
+document.getElementById("hadith").onclick=()=>location.href="html/hadith.html";
+document.getElementById("qibla").onclick=()=>location.href="html/qibla.html";
+document.getElementById("tasbih").onclick=()=>location.href="html/tasbih.html";
 
 /* ======================
-QUOTE (SMOOTH)
+QUOTE
 ====================== */
 
 let qi=0;
