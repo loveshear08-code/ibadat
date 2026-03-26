@@ -295,3 +295,22 @@ document.addEventListener("click", function(e){
     }
 
 });
+/* =========================
+   🌐 EXTRA LANGUAGE FIX
+========================= */
+
+const extraText = {
+bn:{
+location:"অবস্থান",
+remember:"আল্লাহকে স্মরণ করো"
+},
+en:{
+location:"Location",
+remember:"Remember Allah"
+}
+};
+
+if(extraText[lang]){
+setText("locationLabel", extraText[lang].location);
+setText("bottomText", extraText[lang].remember);
+}
