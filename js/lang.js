@@ -1,30 +1,22 @@
-const LANG = {
-  bn: {
-    azanSettings: "আজান সেটিং",
-    selectAzan: "আজানের সাউন্ড নির্বাচন",
-    save: "সংরক্ষণ",
-    test: "পরীক্ষা"
-  },
-  en: {
-    azanSettings: "Azan Settings",
-    selectAzan: "Select Azan Sound",
-    save: "Save",
-    test: "Test"
-  }
+const lang = localStorage.getItem("appLang") || "bn";
+
+const TEXT = {
+bn:{
+bismillah:"পরম করুণাময় অসীম দয়ালু আল্লাহর নামে"
+},
+en:{
+bismillah:"In the name of Allah, Most Merciful"
+},
+hi:{
+bismillah:"अल्लाह के नाम से"
+}
 };
 
-function getLang(){
-  return localStorage.getItem("lang") || "bn";
+function applyLang(){
+
+if(document.getElementById("bismillahMeaning")){
+document.getElementById("bismillahMeaning").innerText =
+TEXT[lang].bismillah;
 }
 
-function applyLang(){
-  const lang = getLang();
-  const data = LANG[lang];
-
-  document.querySelectorAll("[data-key]").forEach(el=>{
-    const key = el.getAttribute("data-key");
-    if(data[key]){
-      el.innerText = data[key];
-    }
-  });
 }
