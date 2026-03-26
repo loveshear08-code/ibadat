@@ -290,3 +290,23 @@ function attachPrayerClick(){
     });
 
 }
+function attachPrayerClick(){
+
+    const boxes = document.querySelectorAll(".prayer-box");
+
+    boxes.forEach((box, index) => {
+
+        box.addEventListener("click", () => {
+
+            if(index === 1){
+                window.location.href = "./sunrise.html";
+            }else{
+                localStorage.setItem("selectedPrayer", prayerTimes[index].name);
+                window.location.href = "./azan-setting.html";
+            }
+
+        });
+
+    });
+
+}
