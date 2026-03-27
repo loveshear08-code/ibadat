@@ -2,7 +2,6 @@ body{
 margin:0;
 font-family:sans-serif;
 background:#eef7f0;
-overflow:hidden;
 }
 
 /* TOP + BOTTOM */
@@ -18,11 +17,6 @@ justify-content:space-between;
 padding:0 12px;
 box-sizing:border-box;
 z-index:100;
-}
-
-.top-bar span{
-font-size:14px;
-white-space:nowrap;
 }
 
 .top-bar{top:0;}
@@ -41,7 +35,7 @@ gap:8px;
 padding:8px;
 }
 
-/* 🔥 BIG BOX (ALL SAME) */
+/* CARD */
 .card{
 background:#dcedc8;
 border-radius:16px;
@@ -51,6 +45,7 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
+flex:1;
 }
 
 /* BISMILLAH */
@@ -62,85 +57,65 @@ font-weight:bold;
 
 #bismillahMeaning{
 font-weight:bold;
-font-size:16px;
 }
 
 /* STATUS */
 .status{
 display:flex;
 width:100%;
-height:100%;
 }
 
 .status-left,.status-right{
 width:50%;
 display:flex;
 flex-direction:column;
-justify-content:center;
 align-items:center;
-gap:10px;
+gap:8px;
 }
 
-/* SAME TEXT SIZE */
 .status-left div,
 .status-right div{
-font-size:22px;
+font-size:20px;
 font-weight:bold;
 }
 
-/* CLOCK */
-#clock{
-font-size:28px;
-color:#1b5e20;
-}
+#clock{color:#1b5e20;}
+#countdown{color:#d32f2f;}
 
-/* COUNTDOWN */
-#countdown{
-font-size:28px;
-color:#d32f2f;
-}
-
-/* 🔥 PRAYER GRID COMPACT */
+/* PRAYER GRID */
 .grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
-grid-template-rows:repeat(2,1fr);
 gap:6px;
 width:100%;
-height:100%;
 }
 
 .prayer-box{
 background:#a5d6a7;
 border-radius:10px;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-font-weight:bold;
-font-size:14px;
 padding:6px;
+font-size:14px;
+font-weight:bold;
+text-align:center;
 }
 
-/* FEATURES */
+/* FEATURE GRID FIX */
 .feature-grid{
 display:grid;
 grid-template-columns:repeat(2,1fr);
-gap:8px;
+gap:10px;
+flex:1;
 }
 
 .feature{
 background:#a5d6a7;
 border-radius:12px;
-display:flex;
-justify-content:center;
-align-items:center;
+padding:12px;
 font-weight:bold;
-font-size:14px;
-padding:10px;
+text-align:center;
 }
 
-/* SCROLL TEXT */
+/* SCROLL */
 .bottom-bar span{
 white-space:nowrap;
 padding-left:100%;
@@ -150,28 +125,4 @@ animation:scroll 15s linear infinite;
 @keyframes scroll{
 0%{transform:translateX(0);}
 100%{transform:translateX(-100%);}
-}
-/* 🔥 LAYOUT FIX (NO GAP) */
-.main{
-height:calc(100vh - 100px);
-}
-
-/* 🔥 60% / 40% BALANCE */
-.card{
-flex:2;
-}
-
-.feature-grid{
-flex:4;
-}
-
-/* 🔥 FEATURE FULL HEIGHT */
-.feature{
-height:100%;
-}
-
-/* 🔥 PRAYER BOX COMPACT */
-.prayer-box{
-padding:4px;
-font-size:13px;
 }
