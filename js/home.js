@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 applySettings();
 const s = getSettings();
+let currentLang = s.lang;
 
 /* ================= LANGUAGE DATA ================= */
 
@@ -12,7 +13,7 @@ bn:{
 bismillah:"পরম করুণাময় অসীম দয়ালু আল্লাহর নামে",
 days:["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"],
 weather:"২৫°সি মেঘলা",
-settings:"Settings",
+settings:"সেটিংস",
 features:{
 namaz:"📚 নামাজ শিক্ষা",
 quran:"🕌 আল কুরআন",
@@ -46,7 +47,7 @@ hi:{
 bismillah:"अल्लाह के नाम से जो रहमान और रहीम है",
 days:["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"],
 weather:"25°C बादल",
-settings:"Settings",
+settings:"सेटिंग्स",
 features:{
 namaz:"📚 नमाज़ गाइड",
 quran:"🕌 अल कुरआन",
@@ -240,5 +241,14 @@ setInterval(()=>{
 setText("bottomText",t.quotes[i]);
 i=(i+1)%t.quotes.length;
 },3000);
+
+/* ================= AUTO LANGUAGE REFRESH (🔥 FIX) ================= */
+
+setInterval(()=>{
+let newLang = getSettings().lang;
+if(newLang !== currentLang){
+    location.reload();
+}
+},1000);
 
 });
