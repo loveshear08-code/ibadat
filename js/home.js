@@ -106,3 +106,70 @@ i=(i+1)%T.quotes.length;
 },3000);
 
 });
+/* =========================
+   GLOBAL CLICK SYSTEM
+========================= */
+
+// 🔹 open page helper
+function openPage(name){
+window.location.href=name+".html";
+}
+
+/* =========================
+   STATUS BOX CLICK
+========================= */
+
+// current → calendar page
+let current=document.getElementById("currentPrayerName");
+if(current){
+current.style.cursor="pointer";
+current.onclick=()=>openPage("calendar");
+}
+
+// next → calendar page
+let next=document.getElementById("nextPrayerName");
+if(next){
+next.style.cursor="pointer";
+next.onclick=()=>openPage("calendar");
+}
+
+/* =========================
+   PRAYER GRID CLICK
+========================= */
+
+let grid=document.getElementById("prayerGrid");
+
+if(grid){
+grid.addEventListener("click",function(e){
+
+let box=e.target.closest(".prayer-box");
+if(!box) return;
+
+let name=box.innerText.split("\n")[0]; // ফজর, জোহর etc
+
+// 🔥 সব নামাজ → same settings page
+openPage("azan");
+
+});
+}
+
+/* =========================
+   FEATURE CLICK
+========================= */
+
+const features={
+namaz:"namaz",
+quran:"quran",
+dua:"dua",
+hadith:"hadith",
+qibla:"qibla",
+tasbih:"tasbih"
+};
+
+Object.keys(features).forEach(id=>{
+let el=document.getElementById(id);
+if(el){
+el.style.cursor="pointer";
+el.onclick=()=>openPage(features[id]);
+}
+});
