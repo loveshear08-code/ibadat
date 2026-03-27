@@ -48,9 +48,31 @@ setText("currentPrayerName","● ফজর");
 setText("nextPrayerName","⏭ জোহর");
 
 /* COUNTDOWN */
-setInterval(()=>{
-setText("countdown","01:25:10");
-},1000);
+let targetTime=new Date();
+targetTime.setHours(11);
+targetTime.setMinutes(42);
+targetTime.setSeconds(0);
+
+function updateCountdown(){
+let now=new Date();
+let diff=targetTime-now;
+
+if(diff<=0){
+document.getElementById("countdown").innerText="00:00:00";
+return;
+}
+
+let h=Math.floor(diff/1000/60/60);
+let m=Math.floor((diff/1000/60)%60);
+let s=Math.floor((diff/1000)%60);
+
+document.getElementById("countdown").innerText=
+String(h).padStart(2,"0")+":"+
+String(m).padStart(2,"0")+":"+
+String(s).padStart(2,"0");
+}
+
+setInterval(updateCountdown,1000);
 
 /* WEATHER */
 setText("weather","25°C মেঘলা");
