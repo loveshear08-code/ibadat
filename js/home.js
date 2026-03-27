@@ -130,7 +130,6 @@ if(p[0] === "সূর্যোদয়"){
 }else{
     div.style.cursor="default";
 }
-  
 
 grid.appendChild(div);
 });
