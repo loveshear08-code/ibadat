@@ -30,7 +30,13 @@ Object.keys(T.features).forEach(k=>{
 setText(k,T.features[k]);
 });
 
-setText("todayDay",T.days[new Date().getDay()]);
+/* DAY */
+let now=new Date();
+setText("todayDay",T.days[now.getDay()]);
+
+/* DATE */
+document.getElementById("date").innerText=
+now.toLocaleDateString("bn-BD");
 
 /* CLOCK */
 setInterval(()=>{
@@ -41,9 +47,13 @@ setText("clock",new Date().toLocaleTimeString());
 setText("currentPrayerName","● ফজর");
 setText("nextPrayerName","⏭ জোহর");
 
+/* COUNTDOWN */
 setInterval(()=>{
 setText("countdown","01:25:10");
 },1000);
+
+/* WEATHER */
+setText("weather","25°C মেঘলা");
 
 /* PRAYER GRID */
 let prayerList=[
