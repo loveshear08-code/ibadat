@@ -47,16 +47,11 @@ padding:10px;
 text-align:center;
 }
 
-/* BISMILLAH */
+/* GOLD BISMILLAH */
 .bismillah-ar{
+color:#d4af37;
 font-size:22px;
 font-weight:bold;
-color:gold;
-}
-
-#bismillahMeaning{
-font-size:14px;
-font-weight:600;
 }
 
 /* STATUS */
@@ -85,16 +80,11 @@ font-weight:bold;
 color:#2e7d32;
 }
 
-#countdown{
-font-size:14px;
-font-weight:bold;
-}
-
 .divider{
 font-size:18px;
 }
 
-/* 🔥 PRAYER GRID PERFECT */
+/* PRAYER GRID */
 .prayer-grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -103,14 +93,14 @@ gap:6px;
 
 .prayer-box{
 background:#c8e6c9;
-padding:8px;
-border-radius:12px;
-font-size:13px;
+padding:6px;
+border-radius:10px;
+font-size:12px;
 font-weight:bold;
 text-align:center;
 }
 
-/* 🔥 FEATURE GRID PERFECT */
+/* FEATURE GRID */
 .feature-grid{
 display:grid;
 grid-template-columns:repeat(2,1fr);
@@ -120,11 +110,12 @@ gap:6px;
 .feature-box{
 background:#a5d6a7;
 padding:10px;
-border-radius:14px;
+border-radius:12px;
 font-weight:bold;
+text-align:center;
 }
 
-/* SCROLL TEXT */
+/* SCROLL */
 .bottom-bar span{
 white-space:nowrap;
 padding-left:100%;
