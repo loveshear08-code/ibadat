@@ -1,24 +1,13 @@
 body{
-background:red !important;
-}
-/* =========================
-GLOBAL
-========================= */
-body{
 margin:0;
-padding:0;
 font-family:sans-serif;
 background:#eef7f0;
 overflow:hidden;
 }
 
-/* =========================
-TOP BAR
-========================= */
-.top-bar{
+/* TOP + BOTTOM */
+.top-bar,.bottom-bar{
 position:fixed;
-top:0;
-left:0;
 width:100%;
 height:50px;
 background:#2e7d32;
@@ -27,45 +16,14 @@ display:flex;
 align-items:center;
 justify-content:space-between;
 padding:0 12px;
-box-sizing:border-box;
 z-index:100;
 }
 
-/* =========================
-BOTTOM BAR
-========================= */
-.bottom-bar{
-position:fixed;
-bottom:0;
-left:0;
-width:100%;
-height:50px;
-background:#2e7d32;
-color:#fff;
-display:flex;
-align-items:center;
-justify-content:center;
-overflow:hidden;
-z-index:100;
-}
+.top-bar{top:0;}
+.bottom-bar{bottom:0; justify-content:center;}
 
-/* SMOOTH SCROLL TEXT */
-.bottom-bar span{
-display:inline-block;
-white-space:nowrap;
-padding-left:100%;
-animation:scrollText 15s linear infinite;
-}
-
-@keyframes scrollText{
-0%{transform:translateX(0);}
-100%{transform:translateX(-100%);}
-}
-
-/* =========================
-MAIN CONTAINER
-========================= */
-.main-container{
+/* MAIN */
+.main{
 position:absolute;
 top:50px;
 bottom:50px;
@@ -76,19 +34,13 @@ display:flex;
 flex-direction:column;
 gap:10px;
 padding:10px;
-box-sizing:border-box;
 }
 
-/* =========================
-COMMON BOX
-========================= */
-.box{
+/* CARD (ALL SAME SIZE LOOK) */
+.card{
+flex:1;
 background:#e8f5e9;
 border-radius:18px;
-padding:10px;
-box-shadow:0 4px 10px rgba(0,0,0,0.08);
-
-flex:1;
 
 display:flex;
 flex-direction:column;
@@ -97,82 +49,49 @@ align-items:center;
 text-align:center;
 }
 
-/* =========================
-BISMILLAH BOX
-========================= */
+/* BISMILLAH */
 .bismillah-ar{
+color:#d4af37;
 font-size:20px;
 font-weight:bold;
-color:#d4af37; /* GOLD */
-margin-bottom:5px;
 }
 
-#bismillahMeaning{
-font-size:14px;
-font-weight:bold;
-}
-
-/* =========================
-STATUS BOX
-========================= */
+/* STATUS */
 .row{
 width:100%;
 display:flex;
 justify-content:space-between;
 font-weight:bold;
-margin-bottom:5px;
 }
 
 #clock{
-font-size:30px;
-font-weight:bold;
+font-size:28px;
 color:#1b5e20;
-margin:5px 0;
-}
-
-#currentPrayerName,
-#nextPrayerName{
 font-weight:bold;
 }
 
-#countdown{
-font-size:14px;
-font-weight:bold;
-margin-top:5px;
-}
-
-/* =========================
-PRAYER GRID (2x3 PERFECT)
-========================= */
-.prayer-grid{
-width:100%;
-height:100%;
-
+/* PRAYER GRID */
+.grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
 grid-template-rows:repeat(2,1fr);
 gap:8px;
+width:100%;
+height:100%;
 }
 
-.prayer-item{
+.prayer-box{
 background:#c8e6c9;
 border-radius:12px;
-
 display:flex;
 justify-content:center;
 align-items:center;
-text-align:center;
-
+flex-direction:column;
 font-weight:bold;
-font-size:14px;
 }
 
-/* =========================
-FEATURE GRID (2x3 PERFECT)
-========================= */
+/* FEATURE GRID */
 .feature-grid{
-flex:1;
-
 display:grid;
 grid-template-columns:repeat(2,1fr);
 grid-template-rows:repeat(3,1fr);
@@ -181,36 +100,21 @@ gap:10px;
 
 .feature{
 background:#a5d6a7;
-border-radius:14px;
-
+border-radius:12px;
 display:flex;
 justify-content:center;
 align-items:center;
-text-align:center;
-
 font-weight:bold;
-font-size:15px;
 }
 
-/* =========================
-RESPONSIVE FIX (SMALL SCREEN)
-========================= */
-@media(max-height:650px){
-
-#clock{
-font-size:24px;
+/* TEXT SCROLL */
+.bottom-bar span{
+white-space:nowrap;
+padding-left:100%;
+animation:scroll 15s linear infinite;
 }
 
-.bismillah-ar{
-font-size:18px;
-}
-
-.prayer-item{
-font-size:12px;
-}
-
-.feature{
-font-size:13px;
-}
-
+@keyframes scroll{
+0%{transform:translateX(0);}
+100%{transform:translateX(-100%);}
 }
