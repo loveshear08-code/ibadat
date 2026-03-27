@@ -1,61 +1,29 @@
 document.addEventListener("DOMContentLoaded", function(){
 
-/* =========================
-   TEXT DATA
-========================= */
-const T={
-days:["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"],
-bismillah:"পরম করুণাময় অসীম দয়ালু আল্লাহর নামে",
-quotes:[
-"নামাজ জান্নাতের চাবি",
-"আল্লাহকে স্মরণ করো",
-"ধৈর্য ধরো, আল্লাহ সাথে আছেন"
-],
-features:{
-namaz:"📚 নামাজ শিক্ষা",
-quran:"🕌 আল কুরআন",
-dua:"🤲 দোয়া",
-hadith:"📖 হাদিস",
-qibla:"🕋 কিবলা কম্পাস",
-tasbih:"📿 ডিজিটাল তসবিহ"
-}
-};
-
-/* SAFE TEXT */
 function setText(id,text){
 let el=document.getElementById(id);
 if(el) el.innerText=text;
 }
 
-/* =========================
-   BASIC TEXT
-========================= */
-setText("bismillahMeaning",T.bismillah);
+function toBN(num){
+return num.toString().replace(/[0-9]/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
+}
 
-Object.keys(T.features).forEach(k=>{
-setText(k,T.features[k]);
-});
+/* TEXT */
+setText("bismillahMeaning","পরম করুণাময় অসীম দয়ালু আল্লাহর নামে");
 
-/* =========================
-   DATE + DAY
-========================= */
+/* DATE */
 let now=new Date();
+setText("todayDay",["রবি","সোম","মঙ্গল","বুধ","বৃহস্পতি","শুক্র","শনি"][now.getDay()]);
+setText("date",now.toLocaleDateString("bn-BD"));
 
-setText("todayDay",T.days[now.getDay()]);
-
-document.getElementById("date").innerText =
-now.toLocaleDateString("bn-BD",{day:"2-digit",month:"short"});
-
-/* =========================
-   CLOCK
-========================= */
+/* CLOCK */
 setInterval(()=>{
-setText("clock",new Date().toLocaleTimeString("bn-BD",{hour12:false}));
+let t=new Date().toLocaleTimeString("en-GB",{hour12:false});
+setText("clock",toBN(t));
 },1000);
 
-/* =========================
-   PRAYER DATA
-========================= */
+/* PRAYER LIST */
 let prayerList=[
 ["ফজর","04:33"],
 ["সূর্যোদয়","05:34"],
@@ -65,143 +33,90 @@ let prayerList=[
 ["এশা","18:52"]
 ];
 
-/* =========================
-   CURRENT + NEXT + COUNTDOWN
-========================= */
 function getNextPrayer(){
-
 let now=new Date();
-
 for(let p of prayerList){
-
 let [h,m]=p[1].split(":");
 let t=new Date();
 t.setHours(h,m,0);
-
-if(now < t){
-return {name:p[0],time:t};
+if(now < t) return {name:p[0],time:t};
 }
-}
-
-// next day fajr
 let [h,m]=prayerList[0][1].split(":");
 let t=new Date();
 t.setDate(t.getDate()+1);
 t.setHours(h,m,0);
-
 return {name:prayerList[0][0],time:t};
 }
 
-function updateStatus(){
+function getCurrentPrayer(){
+let now=new Date();
+for(let i=prayerList.length-1;i>=0;i--){
+let [h,m]=prayerList[i][1].split(":");
+let t=new Date();
+t.setHours(h,m,0);
+if(now>=t) return prayerList[i][0];
+}
+return prayerList[0][0];
+}
 
+/* STATUS */
+function updateStatus(){
 let next=getNextPrayer();
 
+setText("currentPrayerName","● "+getCurrentPrayer());
 setText("nextPrayerName","⏭ "+next.name);
 
-/* CURRENT (simple logic) */
-setText("currentPrayerName","● চলমান");
-
-/* COUNTDOWN */
 let diff=next.time - new Date();
 
 let h=Math.floor(diff/1000/60/60);
 let m=Math.floor((diff/1000/60)%60);
 let s=Math.floor((diff/1000)%60);
 
-setText("countdown",
+let time=
 String(h).padStart(2,"0")+":"+
 String(m).padStart(2,"0")+":"+
-String(s).padStart(2,"0")
-);
+String(s).padStart(2,"0");
 
+setText("countdown",toBN(time));
 }
 
 setInterval(updateStatus,1000);
 updateStatus();
 
-/* =========================
-   WEATHER (DEMO)
-========================= */
-setText("weather","25°C মেঘলা");
+/* WEATHER */
+setText("weather","২৫°সি মেঘলা");
 
-/* =========================
-   LOCATION AUTO
-========================= */
-function loadLocation(lat,lon){
-
-fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
-.then(r=>r.json())
-.then(d=>{
-let city=d.address.city || d.address.town || d.address.village || d.address.state || "";
-setText("city",city || "অবস্থান");
-})
-.catch(()=>setText("city","কলকাতা"));
-
-}
-
-navigator.geolocation.getCurrentPosition(
-pos=>loadLocation(pos.coords.latitude,pos.coords.longitude),
-()=>setText("city","কলকাতা")
-);
-
-/* =========================
-   PRAYER GRID
-========================= */
+/* PRAYER GRID */
 let grid=document.getElementById("prayerGrid");
-
-if(grid){
 grid.innerHTML="";
-
-prayerList.forEach((p,i)=>{
-
+prayerList.forEach(p=>{
 let div=document.createElement("div");
 div.className="prayer-box";
-div.innerHTML=`${p[0]}<br>${p[1]}`;
-
-div.style.cursor="pointer";
-
-div.onclick=()=>{
-if(i===1){
-window.location.href="sunrise.html";
-}else{
-window.location.href="azan-setting.html";
-}
-};
-
+div.innerHTML=`${p[0]}<br>${toBN(p[1])}`;
 grid.appendChild(div);
-
 });
-}
 
-/* =========================
-   FEATURE CLICK
-========================= */
+/* FEATURES */
 ["namaz","quran","dua","hadith","qibla","tasbih"].forEach(id=>{
 let el=document.getElementById(id);
 if(el){
-el.style.cursor="pointer";
-el.onclick=()=>window.location.href=id+".html";
+el.innerText={
+namaz:"📚 নামাজ শিক্ষা",
+quran:"🕌 আল কুরআন",
+dua:"🤲 দোয়া",
+hadith:"📖 হাদিস",
+qibla:"🕋 কিবলা",
+tasbih:"📿 তসবিহ"
+}[id];
 }
 });
 
-/* =========================
-   STATUS CLICK
-========================= */
-["currentPrayerName","nextPrayerName"].forEach(id=>{
-let el=document.getElementById(id);
-if(el){
-el.style.cursor="pointer";
-el.onclick=()=>window.location.href="calendar.html";
-}
-});
-
-/* =========================
-   BOTTOM TEXT
-========================= */
+/* BOTTOM */
+let q=["নামাজ জান্নাতের চাবি","আল্লাহকে স্মরণ করো","ধৈর্য ধরো"];
 let i=0;
 setInterval(()=>{
-setText("bottomText",T.quotes[i]);
-i=(i+1)%T.quotes.length;
-},4000);
+setText("bottomText",q[i]);
+i=(i+1)%q.length;
+},3000);
 
 });
