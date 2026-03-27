@@ -1,66 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>IBADAT</title>
 
-<link rel="stylesheet" href="css/style.css">
-
+<link rel="stylesheet" href="css/home.css">
 </head>
 
 <body>
 
 <!-- TOP BAR -->
 <div class="top-bar">
-<span id="city">Loading...</span>
-<span id="date"></span>
+  <span id="city">Kolkata</span>
+  <span id="date"></span>
 </div>
 
-<!-- BISMILLAH -->
-<div class="card" id="bismillahCard">
-<h2 class="arabic">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</h2>
-<p id="bismillahMeaning"></p>
+<!-- MAIN -->
+<div class="main">
+
+  <!-- BISMILLAH -->
+  <div class="card">
+    <div class="bismillah-ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+    <div id="bismillahMeaning"></div>
+  </div>
+
+  <!-- STATUS -->
+  <div class="card">
+    <div class="row">
+      <span id="todayDay"></span>
+      <span id="weather">--°C</span>
+    </div>
+
+    <div id="clock"></div>
+
+    <div class="row">
+      <span id="currentPrayerName"></span>
+      <span>/</span>
+      <span id="nextPrayerName"></span>
+    </div>
+
+    <div id="countdown"></div>
+  </div>
+
+  <!-- PRAYER GRID -->
+  <div class="card">
+    <div class="grid" id="prayerGrid"></div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="feature-grid">
+    <div class="feature" id="namaz"></div>
+    <div class="feature" id="quran"></div>
+
+    <div class="feature" id="dua"></div>
+    <div class="feature" id="hadith"></div>
+
+    <div class="feature" id="qibla"></div>
+    <div class="feature" id="tasbih"></div>
+  </div>
+
 </div>
 
-<!-- TIME CARD -->
-<div class="card">
-
-<div class="row">
-<h3 id="todayDay"></h3>
-<h3 id="weather"></h3>
-</div>
-
-<h1 id="clock"></h1>
-
-<div class="row">
-<span id="currentPrayerName"></span>
-<span>/</span>
-<span id="nextPrayerName"></span>
-</div>
-
-</div>
-
-<!-- PRAYER GRID -->
-<div class="grid" id="prayerGrid"></div>
-
-<!-- FEATURES -->
-<div class="grid2">
-
-<div id="namaz" class="btn"></div>
-<div id="quran" class="btn"></div>
-<div id="dua" class="btn"></div>
-<div id="hadith" class="btn"></div>
-<div id="qibla" class="btn"></div>
-<div id="tasbih" class="btn"></div>
-
-</div>
-
-<!-- BOTTOM SCROLL -->
+<!-- BOTTOM -->
 <div class="bottom-bar">
-<span id="bottomText"></span>
+  <span id="bottomText"></span>
 </div>
 
 <script src="js/home.js"></script>
