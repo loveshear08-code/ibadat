@@ -1,7 +1,4 @@
-/* ======================
-LANG
-====================== */
-
+// LANG
 const lang = localStorage.getItem("appLang") || "bn";
 
 const text={
@@ -27,19 +24,12 @@ quotes:["Prayer is the key","Remember Allah","Allah is with patience"]
 
 const T=text[lang];
 
-/* ======================
-SAFE TEXT
-====================== */
-
 function setText(id,val){
-const el=document.getElementById(id);
+let el=document.getElementById(id);
 if(el) el.innerText=val;
 }
 
-/* ======================
-TEXT APPLY
-====================== */
-
+// TEXT
 setText("bismillahMeaning",T.bismillah);
 setText("namaz",T.namaz);
 setText("quran",T.quran);
@@ -48,34 +38,22 @@ setText("hadith",T.hadith);
 setText("qibla",T.qibla);
 setText("tasbih",T.tasbih);
 
-/* ======================
-DATE + CLOCK
-====================== */
-
+// DATE + CLOCK
 let today=new Date();
-
 setText("todayDay",T.days[today.getDay()]);
 setText("date",today.toLocaleDateString("en-GB"));
 
-function updateClock(){
-let now=new Date();
-setText("clock",now.toLocaleTimeString("en-GB",{hour12:false}));
-}
-setInterval(updateClock,1000);
-updateClock();
+setInterval(()=>{
+setText("clock",new Date().toLocaleTimeString("en-GB",{hour12:false}));
+},1000);
 
-/* ======================
-PRAYER
-====================== */
-
-let prayerTimes=[];
+// PRAYER
+let prayerTimes=[],nextTime=null;
 
 function loadPrayerTimes(lat,lon){
-
 fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=2`)
 .then(r=>r.json())
 .then(d=>{
-
 let t=d.data.timings;
 
 prayerTimes=[
@@ -89,236 +67,86 @@ prayerTimes=[
 
 renderGrid();
 updatePrayer();
-
 });
-
 }
 
 function renderGrid(){
-
-const grid=document.getElementById("prayerGrid");
-if(!grid) return;
-
+let grid=document.getElementById("prayerGrid");
 grid.innerHTML="";
 
 prayerTimes.forEach((p,i)=>{
-
-const box=document.createElement("div");
+let box=document.createElement("div");
 box.className="prayer-box";
-box.innerHTML=`<b>${p.name}</b><br>${p.time}`;
+box.innerHTML=`${p.name}<br>${p.time}`;
 
 box.onclick=()=>{
-
-if(i===1){
-window.location.href="html/sunrise.html";
-}else{
-localStorage.setItem("selectedPrayer",p.name);
-window.location.href="html/azan-setting.html";
-}
-
+if(i===1) location.href="html/calendar.html";
+else location.href="html/azan-setting.html";
 };
 
 grid.appendChild(box);
-
 });
-
 }
 
 function updatePrayer(){
-
-if(!prayerTimes.length) return;
-
-let now=new Date();
-let found=false;
-
-for(let i=0;i<prayerTimes.length;i++){
-
-let [h,m]=prayerTimes[i].time.split(":");
-
-let pt=new Date();
-pt.setHours(parseInt(h));
-pt.setMinutes(parseInt(m));
-pt.setSeconds(0);
-
-if(now<pt){
-
-setText("currentPrayerName",
-"🟢 "+(i===0 ? prayerTimes[5].name : prayerTimes[i-1].name));
-
-setText("nextPrayerName",
-"⏭️ "+prayerTimes[i].name);
-
-found=true;
-break;
-
-}
-
-}
-
-if(!found){
-setText("currentPrayerName","🟢 "+prayerTimes[5].name);
-setText("nextPrayerName","⏭️ "+prayerTimes[0].name);
-}
-
-}
-
-setInterval(updatePrayer,30000);
-
-/* ======================
-WEATHER
-====================== */
-
-function loadWeather(lat,lon){
-
-fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
-.then(r=>r.json())
-.then(d=>{
-
-let temp=d.current_weather.temperature;
-let code=d.current_weather.weathercode;
-
-let condition="clear";
-
-if([1,2,3].includes(code)) condition="cloud";
-if([51,53,55,61,63,65].includes(code)) condition="rain";
-if([71,73,75].includes(code)) condition="snow";
-if([95,96,99].includes(code)) condition="storm";
-
-setText("weather",temp+"°C "+T.weatherText[condition]);
-
-});
-
-}
-
-/* ======================
-LOCATION
-====================== */
-
-function loadLocation(lat,lon){
-
-fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
-.then(r=>r.json())
-.then(d=>{
-
-let city=d.address.city || d.address.town || d.address.village || d.address.state || "";
-
-setText("city",city);
-
-})
-.catch(()=>setText("city","--"));
-
-}
-
-/* ======================
-GEO
-====================== */
-
-navigator.geolocation.getCurrentPosition(
-
-pos=>{
-let lat=pos.coords.latitude;
-let lon=pos.coords.longitude;
-
-loadPrayerTimes(lat,lon);
-loadWeather(lat,lon);
-loadLocation(lat,lon);
-
-},
-
-()=>{
-let lat=22.5726,lon=88.3639;
-
-loadPrayerTimes(lat,lon);
-loadWeather(lat,lon);
-loadLocation(lat,lon);
-}
-
-);
-
-/* ======================
-NAVIGATION
-====================== */
-
-document.getElementById("bismillahCard").onclick=()=>location.href="html/allah-names.html";
-document.getElementById("namaz").onclick=()=>location.href="html/namaz-guide.html";
-document.getElementById("quran").onclick=()=>location.href="html/quran.html";
-document.getElementById("dua").onclick=()=>location.href="html/dua.html";
-document.getElementById("hadith").onclick=()=>location.href="html/hadith.html";
-document.getElementById("qibla").onclick=()=>location.href="html/qibla.html";
-document.getElementById("tasbih").onclick=()=>location.href="html/tasbih.html";
-
-/* ======================
-QUOTE
-====================== */
-
-let qi=0;
-
-function updateQuote(){
-
-let el=document.getElementById("bottomText");
-
-el.style.opacity="0";
-
-setTimeout(()=>{
-el.innerText=T.quotes[qi];
-el.style.opacity="1";
-},300);
-
-qi=(qi+1)%T.quotes.length;
-
-}
-
-setInterval(updateQuote,4000);
-updateQuote();
-
-let nextTime=null;
-
-function updatePrayer(){
-
-if(!prayerTimes.length) return;
-
 let now=new Date();
 
 for(let i=0;i<prayerTimes.length;i++){
-
 let [h,m]=prayerTimes[i].time.split(":");
-
 let pt=new Date();
-pt.setHours(parseInt(h));
-pt.setMinutes(parseInt(m));
-pt.setSeconds(0);
+pt.setHours(h,m,0);
 
 if(now<pt){
-
 nextTime=pt;
 
-setText("currentPrayerName",
-"🟢 "+(i===0 ? prayerTimes[5].name : prayerTimes[i-1].name));
-
-setText("nextPrayerName",
-"⏭️ "+prayerTimes[i].name);
-
+setText("currentPrayerName",prayerTimes[i-1]?.name || prayerTimes[5].name);
+setText("nextPrayerName",prayerTimes[i].name);
 return;
-
+}
+}
 }
 
-}
-
-nextTime=null;
-}
-
-function updateCountdown(){
-
+setInterval(()=>{
 if(!nextTime) return;
-
 let diff=Math.floor((nextTime-new Date())/1000);
-
 let h=Math.floor(diff/3600);
 let m=Math.floor((diff%3600)/60);
 let s=diff%60;
-
 setText("countdown",h+":"+m+":"+s);
+},1000);
 
+// WEATHER
+function loadWeather(lat,lon){
+fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
+.then(r=>r.json())
+.then(d=>{
+let temp=d.current_weather.temperature;
+setText("weather",temp+"°C");
+});
 }
 
-setInterval(updateCountdown,1000);
+// LOCATION
+function loadLocation(lat,lon){
+fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+.then(r=>r.json())
+.then(d=>{
+setText("city",d.address.city || d.address.state || "");
+});
+}
+
+// GEO
+navigator.geolocation.getCurrentPosition(p=>{
+let lat=p.coords.latitude;
+let lon=p.coords.longitude;
+
+loadPrayerTimes(lat,lon);
+loadWeather(lat,lon);
+loadLocation(lat,lon);
+});
+
+// QUOTE
+let i=0;
+setInterval(()=>{
+setText("bottomText",T.quotes[i]);
+i=(i+1)%T.quotes.length;
+},4000);
