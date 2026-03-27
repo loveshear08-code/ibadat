@@ -1,6 +1,8 @@
 /* =========================
-   IBADAT HOME JS (FINAL)
+   IBADAT HOME JS (FINAL FIXED)
 ========================= */
+
+document.addEventListener("DOMContentLoaded", function(){
 
 /* TEXT DATA */
 const T={
@@ -21,24 +23,27 @@ tasbih:"📿 ডিজিটাল তসবিহ"
 }
 };
 
+/* SAFE FUNCTION */
+function setText(id,text){
+let el=document.getElementById(id);
+if(el) el.innerText=text;
+}
+
 /* =========================
    BASIC TEXT SETUP
 ========================= */
 
-// bismillah
-document.getElementById("bismillahMeaning").innerText=T.bismillah;
+setText("bismillahMeaning",T.bismillah);
 
-// feature names
-document.getElementById("namaz").innerText=T.features.namaz;
-document.getElementById("quran").innerText=T.features.quran;
-document.getElementById("dua").innerText=T.features.dua;
-document.getElementById("hadith").innerText=T.features.hadith;
-document.getElementById("qibla").innerText=T.features.qibla;
-document.getElementById("tasbih").innerText=T.features.tasbih;
+setText("namaz",T.features.namaz);
+setText("quran",T.features.quran);
+setText("dua",T.features.dua);
+setText("hadith",T.features.hadith);
+setText("qibla",T.features.qibla);
+setText("tasbih",T.features.tasbih);
 
-// day
 let d=new Date();
-document.getElementById("todayDay").innerText=T.days[d.getDay()];
+setText("todayDay",T.days[d.getDay()]);
 
 /* =========================
    CLOCK + STATUS
@@ -46,19 +51,18 @@ document.getElementById("todayDay").innerText=T.days[d.getDay()];
 
 function runStatus(){
 
-// 🔥 CLOCK
+// CLOCK
 setInterval(()=>{
-document.getElementById("clock").innerText=
-new Date().toLocaleTimeString();
+setText("clock", new Date().toLocaleTimeString());
 },1000);
 
-// 🔥 CURRENT + NEXT (demo)
-document.getElementById("currentPrayerName").innerText="● ফজর";
-document.getElementById("nextPrayerName").innerText="⏭ জোহর";
+// CURRENT + NEXT
+setText("currentPrayerName","● ফজর");
+setText("nextPrayerName","⏭ জোহর");
 
-// 🔥 COUNTDOWN (demo)
+// COUNTDOWN
 setInterval(()=>{
-document.getElementById("countdown").innerText="01:25:10";
+setText("countdown","01:25:10");
 },1000);
 
 }
@@ -80,12 +84,14 @@ let prayerList=[
 
 let grid=document.getElementById("prayerGrid");
 
+if(grid){
 prayerList.forEach(p=>{
 let div=document.createElement("div");
 div.className="prayer-box";
 div.innerHTML=`${p[0]}<br>${p[1]}`;
 grid.appendChild(div);
 });
+}
 
 /* =========================
    BOTTOM TEXT SCROLL
@@ -93,6 +99,8 @@ grid.appendChild(div);
 
 let i=0;
 setInterval(()=>{
-document.getElementById("bottomText").innerText=T.quotes[i];
+setText("bottomText",T.quotes[i]);
 i=(i+1)%T.quotes.length;
 },3000);
+
+});
