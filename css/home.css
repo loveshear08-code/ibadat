@@ -16,7 +16,13 @@ display:flex;
 align-items:center;
 justify-content:space-between;
 padding:0 12px;
+box-sizing:border-box;
 z-index:100;
+}
+
+.top-bar span{
+font-size:14px;
+white-space:nowrap;
 }
 
 .top-bar{top:0;}
@@ -31,15 +37,15 @@ left:0;
 right:0;
 display:flex;
 flex-direction:column;
-gap:10px;
-padding:10px;
+gap:8px;
+padding:8px;
 }
 
-/* CARD (🔥 color improved) */
+/* 🔥 BIG BOX (ALL SAME) */
 .card{
-flex:1;
-background:#a5d6a7;   /* changed from light to match feature */
-border-radius:18px;
+background:#dcedc8;
+border-radius:16px;
+padding:8px;
 display:flex;
 flex-direction:column;
 justify-content:center;
@@ -59,27 +65,23 @@ font-weight:bold;
 font-size:16px;
 }
 
-/* =========================
-   STATUS (FINAL FIX)
-========================= */
+/* STATUS */
 .status{
 display:flex;
 width:100%;
 height:100%;
 }
 
-/* LEFT + RIGHT */
-.status-left,
-.status-right{
+.status-left,.status-right{
 width:50%;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-gap:12px;   /* spacing improved */
+gap:10px;
 }
 
-/* 🔥 ALL TEXT SAME SIZE */
+/* SAME TEXT SIZE */
 .status-left div,
 .status-right div{
 font-size:22px;
@@ -88,48 +90,48 @@ font-weight:bold;
 
 /* CLOCK */
 #clock{
-font-size:30px;
+font-size:28px;
 color:#1b5e20;
-font-weight:bold;
 }
 
 /* COUNTDOWN */
 #countdown{
-font-size:30px;
+font-size:28px;
 color:#d32f2f;
-font-weight:bold;
 }
 
-/* PRAYER GRID */
+/* 🔥 PRAYER GRID COMPACT */
 .grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
 grid-template-rows:repeat(2,1fr);
-gap:8px;
+gap:6px;
 width:100%;
 height:100%;
 }
 
 .prayer-box{
-background:#c8e6c9;
-border-radius:12px;
+background:#a5d6a7;
+border-radius:10px;
 display:flex;
 justify-content:center;
 align-items:center;
 flex-direction:column;
 font-weight:bold;
+font-size:14px;
+padding:6px;
 }
 
-/* FEATURES (🔥 size fixed) */
+/* FEATURES */
 .feature-grid{
 display:grid;
 grid-template-columns:repeat(2,1fr);
-gap:10px;
+gap:8px;
 }
 
 .feature{
 background:#a5d6a7;
-border-radius:14px;
+border-radius:12px;
 display:flex;
 justify-content:center;
 align-items:center;
@@ -138,7 +140,7 @@ font-size:14px;
 padding:10px;
 }
 
-/* TEXT SCROLL */
+/* SCROLL TEXT */
 .bottom-bar span{
 white-space:nowrap;
 padding-left:100%;
@@ -148,33 +150,4 @@ animation:scroll 15s linear infinite;
 @keyframes scroll{
 0%{transform:translateX(0);}
 100%{transform:translateX(-100%);}
-}
-/* 🔥 FORCE FIX */
-
-.status-left div,
-.status-right div{
-font-size:22px !important;
-font-weight:bold !important;
-}
-
-#clock{
-font-size:30px !important;
-color:#1b5e20 !important;
-}
-
-#countdown{
-font-size:30px !important;
-color:red !important;
-}
-
-.status-left,
-.status-right{
-gap:14px !important;
-justify-content:center !important;
-align-items:center !important;
-}
-
-/* CARD COLOR FORCE */
-.card{
-background:#a5d6a7 !important;
 }
