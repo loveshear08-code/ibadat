@@ -1,8 +1,7 @@
-/* RESET */
 body{
 margin:0;
 font-family:sans-serif;
-background:#f1f8f4;
+background:#eef7f0;
 overflow:hidden;
 }
 
@@ -10,154 +9,104 @@ overflow:hidden;
 .top-bar,.bottom-bar{
 position:fixed;
 width:100%;
-height:52px;
+height:50px;
+background:#2e7d32;
+color:#fff;
 display:flex;
 align-items:center;
 justify-content:space-between;
-padding:0 14px;
-background:#4caf50;
-color:#fff;
+padding:0 12px;
 z-index:100;
 }
 
 .top-bar{top:0;}
-.bottom-bar{
-bottom:0;
-justify-content:center;
-}
+.bottom-bar{bottom:0; justify-content:center;}
 
-/* MAIN GRID */
+/* MAIN */
 .main-container{
 position:absolute;
-top:52px;
-bottom:52px;
+top:50px;
+bottom:50px;
 left:0;
 right:0;
 
 display:grid;
-
-/* 🔥 EXACT DISTRIBUTION */
-grid-template-rows:
-1fr   /* bismillah */
-1.2fr /* status */
-1.6fr /* prayer */
-1.6fr /* features */
-
-gap:10px;
-padding:10px;
-box-sizing:border-box;
+grid-template-rows:1fr 1fr 1.4fr 1.4fr;
+gap:8px;
+padding:8px;
 }
 
-/* COMMON BOX */
+/* BOX */
 .box{
 background:#e8f5e9;
-border-radius:22px;
+border-radius:18px;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
-padding:12px;
-box-shadow:0 6px 15px rgba(0,0,0,0.08);
+padding:10px;
 }
 
 /* BISMILLAH */
 .bismillah-ar{
 color:#d4af37;
-font-size:22px;
-font-weight:bold;
-}
-
-.bismillah-meaning{
-margin-top:6px;
-font-size:14px;
-font-weight:600;
-}
-
-/* STATUS */
-.status-box{
-justify-content:space-between;
-width:100%;
-}
-
-.status-row{
-width:100%;
-display:flex;
-justify-content:space-between;
-font-weight:bold;
-font-size:14px;
-}
-
-.status-center{
-display:flex;
-align-items:center;
-justify-content:space-between;
-width:100%;
-margin-top:6px;
-}
-
-.status-left,
-.status-right{
-flex:1;
-text-align:center;
-}
-
-.status-divider{
 font-size:20px;
 font-weight:bold;
 }
 
-#clock{
-font-size:30px;
+/* STATUS */
+.row{
+width:100%;
+display:flex;
+justify-content:space-between;
 font-weight:bold;
-color:#2e7d32;
 }
 
-/* 🔥 PRAYER GRID (perfect 2x3) */
-.prayer-box-wrap{
-padding:8px;
+#clock{
+font-size:28px;
+font-weight:bold;
+color:#1b5e20;
 }
 
-.prayer-list{
+/* PRAYER GRID */
+.prayer-grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
 grid-template-rows:repeat(2,1fr);
-gap:10px;
+gap:8px;
 width:100%;
 height:100%;
 }
 
 .prayer-item{
 background:#c8e6c9;
-border-radius:16px;
+border-radius:12px;
 display:flex;
-flex-direction:column;
 justify-content:center;
 align-items:center;
-font-size:14px;
 font-weight:bold;
 }
 
-/* 🔥 FEATURE GRID */
+/* FEATURE GRID */
 .feature-grid{
 display:grid;
 grid-template-columns:repeat(2,1fr);
 grid-template-rows:repeat(3,1fr);
-gap:10px;
+gap:8px;
 height:100%;
 }
 
-.feature-box{
+.feature{
 background:#a5d6a7;
-border-radius:18px;
+border-radius:12px;
 display:flex;
 justify-content:center;
 align-items:center;
-font-size:14px;
 font-weight:bold;
 }
 
-/* SCROLL TEXT */
+/* SCROLL */
 .bottom-bar span{
 white-space:nowrap;
 padding-left:100%;
