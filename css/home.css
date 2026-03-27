@@ -94,8 +94,29 @@ font-weight:bold;
 .feature-grid{
 display:grid;
 grid-template-columns:repeat(2,1fr);
-grid-template-rows:repeat(3,1fr);
-gap:10px;
+gap:12px;
+
+/* 🔥 height fix */
+flex:1;
+}
+
+/* FEATURE BOX BIG + BEAUTIFUL */
+.feature{
+background:#a5d6a7;
+border-radius:18px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-weight:bold;
+font-size:16px;
+
+/* 🔥 height increase */
+padding:16px;
+
+/* 🔥 shadow for premium look */
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
 }
 
 .feature{
