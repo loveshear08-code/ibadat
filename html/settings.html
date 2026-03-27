@@ -29,11 +29,10 @@ body{
 
 .title{
     font-size:22px;
-    margin-bottom:10px;
 }
 
 .azan-list{
-    margin-top:20px;
+    margin-top:15px;
     text-align:left;
 }
 
@@ -63,15 +62,13 @@ button{
     padding:12px;
     border:none;
     border-radius:10px;
-    font-size:16px;
     background:#4caf50;
     color:white;
-    cursor:pointer;
+    font-size:16px;
 }
 
 .status{
     margin-top:10px;
-    font-size:14px;
     color:green;
 }
 </style>
@@ -87,7 +84,7 @@ button{
 <!-- AZAN -->
 <h3>🔊 আজান সেটিং</h3>
 <p>আজানের সাউন্ড নির্বাচন করুন</p>
-<div class="azan-list" id="azanList"></div>
+<div id="azanList" class="azan-list"></div>
 
 <!-- LANGUAGE -->
 <h3 style="margin-top:20px">🌐 Language</h3>
@@ -102,15 +99,17 @@ button{
 <input type="checkbox" id="darkToggle"> Dark Mode
 </label>
 
-<!-- BUTTONS -->
+<!-- BUTTON -->
 <div class="buttons">
 <button onclick="saveSettings()">Save</button>
 <button onclick="testAzan()">Test</button>
 </div>
 
-<div class="status" id="status"></div>
+<div id="status" class="status"></div>
 
 </div>
+
+<script src="../js/settings.js"></script>
 
 <script>
 
@@ -123,10 +122,10 @@ const azans = [
     {name:"আলাস্কা", file:"alaska.mp3"}
 ];
 
-let selected = localStorage.getItem("azanVoice") || "makkah.mp3";
+let selected = "makkah.mp3";
 let audio = null;
 
-/* LOAD AZAN UI */
+/* LOAD UI */
 function loadAzan(){
     const list = document.getElementById("azanList");
     list.innerHTML="";
@@ -147,30 +146,27 @@ function loadAzan(){
         div.onclick=()=>{
             selected=a.file;
             loadAzan();
-        }
+        };
 
         list.appendChild(div);
     });
 }
 
-/* SAVE ALL SETTINGS */
+/* SAVE */
 function saveSettings(){
 
-    // Azan
-    localStorage.setItem("azanVoice", selected);
+    let s = getSettings();
 
-    // Language
-    let lang = document.getElementById("langSelect").value;
-    localStorage.setItem("lang", lang);
+    s.azan = selected;
+    s.lang = document.getElementById("langSelect").value;
+    s.dark = document.getElementById("darkToggle").checked;
 
-    // Dark Mode
-    let dark = document.getElementById("darkToggle").checked;
-    localStorage.setItem("darkMode", dark);
+    saveSettingsToStorage(s);
 
-    document.getElementById("status").innerText="✔ সব সেটিং সেভ হয়েছে";
+    document.getElementById("status").innerText="✔ Saved";
 }
 
-/* TEST AZAN */
+/* TEST */
 function testAzan(){
 
     if(audio){
@@ -184,15 +180,14 @@ function testAzan(){
 /* INIT */
 document.addEventListener("DOMContentLoaded",()=>{
 
+    let s = getSettings();
+
+    selected = s.azan;
+
+    document.getElementById("langSelect").value = s.lang;
+    document.getElementById("darkToggle").checked = s.dark;
+
     loadAzan();
-
-    // Load Language
-    document.getElementById("langSelect").value =
-        localStorage.getItem("lang") || "bn";
-
-    // Load Dark Mode
-    document.getElementById("darkToggle").checked =
-        localStorage.getItem("darkMode") === "true";
 
 });
 
