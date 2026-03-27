@@ -6,31 +6,104 @@ const defaultSettings = {
     azan: "makkah.mp3"
 };
 
-/* GET */
+/* ================= LANGUAGE TEXT ================= */
+
+const TEXT = {
+    bn: {
+        title: "ইবাদত",
+        settings: "⚙️ সেটিং",
+        azan: "আজান সেটিং",
+        azanDesc: "আজানের সাউন্ড নির্বাচন করুন",
+        language: "ভাষা",
+        theme: "থিম",
+        dark: "ডার্ক মোড",
+        save: "সেভ",
+        test: "টেস্ট",
+        saved: "✔ সেভ হয়েছে"
+    },
+    en: {
+        title: "IBADAT",
+        settings: "⚙️ Settings",
+        azan: "Azan Setting",
+        azanDesc: "Select azan sound",
+        language: "Language",
+        theme: "Theme",
+        dark: "Dark Mode",
+        save: "Save",
+        test: "Test",
+        saved: "✔ Saved"
+    },
+    hi: {
+        title: "इबादत",
+        settings: "⚙️ सेटिंग",
+        azan: "अज़ान सेटिंग",
+        azanDesc: "अज़ान ध्वनि चुनें",
+        language: "भाषा",
+        theme: "थीम",
+        dark: "डार्क मोड",
+        save: "सेव",
+        test: "टेस्ट",
+        saved: "✔ सेव हो गया"
+    }
+};
+
+/* ================= GET ================= */
+
 function getSettings(){
     let s = localStorage.getItem("appSettings");
     return s ? JSON.parse(s) : defaultSettings;
 }
 
-/* SAVE */
+/* ================= SAVE ================= */
+
 function saveSettingsToStorage(newSettings){
     localStorage.setItem("appSettings", JSON.stringify(newSettings));
 }
 
-/* APPLY */
+/* ================= APPLY ================= */
+
 function applySettings(){
 
     let s = getSettings();
+    let t = TEXT[s.lang] || TEXT["bn"];
 
     /* DARK MODE */
     if(s.dark){
         document.body.style.background = "#121212";
         document.body.style.color = "#ffffff";
+
+        document.querySelectorAll(".card").forEach(el=>{
+            el.style.background = "#1e1e1e";
+            el.style.color = "#ffffff";
+        });
+
     }else{
         document.body.style.background = "";
         document.body.style.color = "";
+
+        document.querySelectorAll(".card").forEach(el=>{
+            el.style.background = "";
+            el.style.color = "";
+        });
     }
 
-    /* LANGUAGE (basic) */
-    document.title = (s.lang === "en") ? "IBADAT" : "ইবাদত";
+    /* TITLE */
+    document.title = t.title;
+
+    /* SETTINGS PAGE TEXT (if exist) */
+    const map = {
+        settingsTitle: t.settings,
+        azanTitle: t.azan,
+        azanDesc: t.azanDesc,
+        langTitle: t.language,
+        themeTitle: t.theme,
+        darkLabel: t.dark,
+        saveBtn: t.save,
+        testBtn: t.test
+    };
+
+    Object.keys(map).forEach(id=>{
+        let el = document.getElementById(id);
+        if(el) el.innerText = map[id];
+    });
 }
