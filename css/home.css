@@ -35,10 +35,10 @@ gap:10px;
 padding:10px;
 }
 
-/* CARD */
+/* CARD (🔥 color improved) */
 .card{
 flex:1;
-background:#e8f5e9;
+background:#a5d6a7;   /* changed from light to match feature */
 border-radius:18px;
 display:flex;
 flex-direction:column;
@@ -50,39 +50,53 @@ text-align:center;
 /* BISMILLAH */
 .bismillah-ar{
 color:#d4af37;
-font-size:20px;
+font-size:22px;
 font-weight:bold;
 }
 
 #bismillahMeaning{
 font-weight:bold;
+font-size:16px;
 }
 
-/* STATUS */
+/* =========================
+   STATUS (FINAL FIX)
+========================= */
 .status{
 display:flex;
 width:100%;
-justify-content:space-between;
-align-items:center;
+height:100%;
 }
 
-.status-left,.status-right{
+/* LEFT + RIGHT */
+.status-left,
+.status-right{
 width:50%;
 display:flex;
 flex-direction:column;
+justify-content:center;
 align-items:center;
-gap:6px;
+gap:12px;   /* spacing improved */
 }
 
+/* 🔥 ALL TEXT SAME SIZE */
+.status-left div,
+.status-right div{
+font-size:22px;
+font-weight:bold;
+}
+
+/* CLOCK */
 #clock{
-font-size:28px;
+font-size:30px;
 color:#1b5e20;
 font-weight:bold;
 }
 
+/* COUNTDOWN */
 #countdown{
-font-size:28px;
-color:red;
+font-size:30px;
+color:#d32f2f;
 font-weight:bold;
 }
 
@@ -106,7 +120,7 @@ flex-direction:column;
 font-weight:bold;
 }
 
-/* FEATURES */
+/* FEATURES (🔥 size fixed) */
 .feature-grid{
 display:grid;
 grid-template-columns:repeat(2,1fr);
