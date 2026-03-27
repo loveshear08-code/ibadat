@@ -1,7 +1,68 @@
 document.addEventListener("DOMContentLoaded", function(){
 
+/* ================= INIT ================= */
+
 applySettings();
 const s = getSettings();
+
+/* ================= LANGUAGE DATA ================= */
+
+const TEXT = {
+bn:{
+bismillah:"পরম করুণাময় অসীম দয়ালু আল্লাহর নামে",
+days:["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"],
+weather:"২৫°সি মেঘলা",
+settings:"Settings",
+features:{
+namaz:"📚 নামাজ শিক্ষা",
+quran:"🕌 আল কুরআন",
+dua:"🤲 দোয়া",
+hadith:"📖 হাদিস",
+qibla:"🕋 কিবলা",
+tasbih:"📿 তসবিহ"
+},
+quotes:["নামাজ জান্নাতের চাবি","আল্লাহকে স্মরণ করো","ধৈর্য ধরো"],
+prayer:["ফজর","সূর্যোদয়","জোহর","আসর","মাগরিব","এশা"]
+},
+
+en:{
+bismillah:"In the name of Allah, Most Merciful",
+days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+weather:"25°C Cloudy",
+settings:"Settings",
+features:{
+namaz:"📚 Namaz Guide",
+quran:"🕌 Al Quran",
+dua:"🤲 Dua",
+hadith:"📖 Hadith",
+qibla:"🕋 Qibla",
+tasbih:"📿 Tasbih"
+},
+quotes:["Prayer is the key to Jannah","Remember Allah","Have patience"],
+prayer:["Fajr","Sunrise","Dhuhr","Asr","Maghrib","Isha"]
+},
+
+hi:{
+bismillah:"अल्लाह के नाम से जो रहमान और रहीम है",
+days:["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"],
+weather:"25°C बादल",
+settings:"Settings",
+features:{
+namaz:"📚 नमाज़ गाइड",
+quran:"🕌 अल कुरआन",
+dua:"🤲 दुआ",
+hadith:"📖 हदीस",
+qibla:"🕋 क़िबला",
+tasbih:"📿 तस्बीह"
+},
+quotes:["नमाज़ जन्नत की चाबी है","अल्लाह को याद करो","सब्र करो"],
+prayer:["फ़ज्र","सूर्योदय","ज़ुहर","असर","मग़रिब","इशा"]
+}
+};
+
+const t = TEXT[s.lang] || TEXT["bn"];
+
+/* ================= HELPERS ================= */
 
 function setText(id,text){
 let el=document.getElementById(id);
@@ -9,40 +70,44 @@ if(el) el.innerText=text;
 }
 
 function toBN(num){
+if(s.lang !== "bn") return num;
 return num.toString().replace(/[0-9]/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
 }
 
 /* ================= TEXT ================= */
-setText("bismillahMeaning","পরম করুণাময় অসীম দয়ালু আল্লাহর নামে");
+
+setText("bismillahMeaning",t.bismillah);
 
 /* ================= DATE ================= */
-let now=new Date();
-let days=["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"];
 
-setText("todayDay",days[now.getDay()]);
-setText("date",now.toLocaleDateString("bn-BD"));
+let now=new Date();
+setText("todayDay",t.days[now.getDay()]);
+setText("date",now.toLocaleDateString(s.lang==="bn"?"bn-BD":"en-US"));
 
 /* ================= CLOCK ================= */
+
 setInterval(()=>{
 let d=new Date();
 let h=String(d.getHours()).padStart(2,"0");
 let m=String(d.getMinutes()).padStart(2,"0");
-let s=String(d.getSeconds()).padStart(2,"0");
+let sec=String(d.getSeconds()).padStart(2,"0");
 
-setText("clock",toBN(h+":"+m+":"+s));
+setText("clock",toBN(h+":"+m+":"+sec));
 },1000);
 
 /* ================= PRAYER DATA ================= */
+
 let prayerList=[
-["ফজর","04:33"],
-["সূর্যোদয়","05:34"],
-["জোহর","11:42"],
-["আসর","15:07"],
-["মাগরিব","17:50"],
-["এশা","18:52"]
+[t.prayer[0],"04:33"],
+[t.prayer[1],"05:34"],
+[t.prayer[2],"11:42"],
+[t.prayer[3],"15:07"],
+[t.prayer[4],"17:50"],
+[t.prayer[5],"18:52"]
 ];
 
 /* ================= NEXT ================= */
+
 function getNextPrayer(){
 let now=new Date();
 
@@ -57,14 +122,15 @@ return {name:p[0],time:t};
 }
 
 let [h,m]=prayerList[0][1].split(":");
-let t=new Date();
-t.setDate(t.getDate()+1);
-t.setHours(h,m,0);
+let t2=new Date();
+t2.setDate(t2.getDate()+1);
+t2.setHours(h,m,0);
 
-return {name:prayerList[0][0],time:t};
+return {name:prayerList[0][0],time:t2};
 }
 
 /* ================= CURRENT ================= */
+
 function getCurrentPrayer(){
 let now=new Date();
 
@@ -81,6 +147,7 @@ return prayerList[0][0];
 }
 
 /* ================= STATUS ================= */
+
 function updateStatus(){
 
 let next=getNextPrayer();
@@ -92,12 +159,12 @@ let diff=next.time - new Date();
 
 let h=Math.floor(diff/1000/60/60);
 let m=Math.floor((diff/1000/60)%60);
-let s=Math.floor((diff/1000)%60);
+let sec=Math.floor((diff/1000)%60);
 
 let time=
 String(h).padStart(2,"0")+":"+
 String(m).padStart(2,"0")+":"+
-String(s).padStart(2,"0");
+String(sec).padStart(2,"0");
 
 setText("countdown",toBN(time));
 }
@@ -106,14 +173,17 @@ setInterval(updateStatus,1000);
 updateStatus();
 
 /* ================= WEATHER ================= */
-setText("weather","২৫°সি মেঘলা");
+
+setText("weather",t.weather);
 
 /* ================= NAVIGATION ================= */
+
 function openPage(page){
 window.location.href="./html/"+page+".html";
 }
 
 /* ================= PRAYER GRID ================= */
+
 let grid=document.getElementById("prayerGrid");
 
 if(grid){
@@ -124,12 +194,11 @@ let div=document.createElement("div");
 div.className="prayer-box";
 div.innerHTML=`${p[0]}<br>${toBN(p[1])}`;
 
-/* ONLY Sunrise clickable */
-if(p[0] === "সূর্যোদয়"){
+if(p[0] === t.prayer[1]){
     div.style.cursor="pointer";
     div.onclick=()=>openPage("settings");
 
-    div.innerHTML += "<br><small style='font-size:10px'>Settings</small>";
+    div.innerHTML += `<br><small style="opacity:0.6">⚙️ ${t.settings}</small>`;
 }else{
     div.style.cursor="default";
 }
@@ -139,20 +208,13 @@ grid.appendChild(div);
 }
 
 /* ================= FEATURES ================= */
-const features={
-namaz:"📚 নামাজ শিক্ষা",
-quran:"🕌 আল কুরআন",
-dua:"🤲 দোয়া",
-hadith:"📖 হাদিস",
-qibla:"🕋 কিবলা",
-tasbih:"📿 তসবিহ"
-};
 
-Object.keys(features).forEach(id=>{
-setText(id,features[id]);
+Object.keys(t.features).forEach(id=>{
+setText(id,t.features[id]);
 });
 
-/* CLICK FIX SAFE */
+/* ================= CLICK ================= */
+
 ["namaz","quran","dua","hadith","qibla","tasbih"].forEach(id=>{
 let el=document.getElementById(id);
 if(el){
@@ -161,7 +223,8 @@ el.onclick=()=>openPage(id==="namaz"?"namaz-guide":id);
 }
 });
 
-/* STATUS CLICK */
+/* ================= STATUS CLICK ================= */
+
 ["currentPrayerName","nextPrayerName"].forEach(id=>{
 let el=document.getElementById(id);
 if(el){
@@ -171,16 +234,11 @@ el.onclick=()=>openPage("calendar");
 });
 
 /* ================= BOTTOM TEXT ================= */
-let quotes=[
-"নামাজ জান্নাতের চাবি",
-"আল্লাহকে স্মরণ করো",
-"ধৈর্য ধরো"
-];
 
 let i=0;
 setInterval(()=>{
-setText("bottomText",quotes[i]);
-i=(i+1)%quotes.length;
+setText("bottomText",t.quotes[i]);
+i=(i+1)%t.quotes.length;
 },3000);
 
 });
