@@ -4,73 +4,70 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IBADAT</title>
-
-<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/home.css">
 </head>
 
 <body>
 
-<!-- TOP BAR -->
 <div class="top-bar">
-  <span id="city"></span>
-  <span id="date"></span>
+<span id="city"></span>
+<span id="date"></span>
 </div>
 
-<!-- MAIN -->
 <div class="main-container">
 
-  <!-- 1) BISMILLAH -->
-  <div class="box bismillah-box" id="bismillahCard">
-    <div class="bismillah-ar">
-      بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
-    </div>
-    <div id="bismillahMeaning" class="bismillah-meaning"></div>
-  </div>
+<!-- BISMILLAH -->
+<div class="box">
+<div class="bismillah-ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+<div id="bismillahMeaning"></div>
+</div>
 
-  <!-- 2) STATUS -->
-  <div class="box status-box" id="statusBoard">
-    <div class="status-row top">
-      <span id="todayDay"></span>
-      <span id="weather"></span>
-    </div>
+<!-- STATUS -->
+<div class="box">
 
-    <div class="status-center">
-      <div class="status-left">
-        <div id="currentPrayerName"></div>
-        <div id="clock"></div>
-      </div>
+<div class="row">
+<span id="todayDay"></span>
+<span id="weather"></span>
+</div>
 
-      <div class="status-divider">/</div>
+<div id="clock"></div>
 
-      <div class="status-right">
-        <div id="nextPrayerName"></div>
-        <div id="countdown"></div>
-      </div>
-    </div>
-  </div>
+<div class="row">
+<span id="currentPrayerName"></span>
+<span>/</span>
+<span id="nextPrayerName"></span>
+</div>
 
-  <!-- 3) PRAYER GRID (2x3) -->
-  <div class="box prayer-box-wrap">
-    <div class="prayer-list" id="prayerList"></div>
-  </div>
-
-  <!-- 4) FEATURE GRID (2x3) -->
-  <div class="feature-grid">
-    <div class="feature-box" id="namaz"></div>
-    <div class="feature-box" id="quran"></div>
-    <div class="feature-box" id="dua"></div>
-    <div class="feature-box" id="hadith"></div>
-    <div class="feature-box" id="qibla"></div>
-    <div class="feature-box" id="tasbih"></div>
-  </div>
+<div id="countdown"></div>
 
 </div>
 
-<!-- BOTTOM BAR -->
+<!-- PRAYER -->
+<div class="box">
+<div class="prayer-grid" id="prayerList"></div>
+</div>
+
+<!-- FEATURES -->
+<div class="feature-grid">
+
+<div class="feature" id="namaz"></div>
+<div class="feature" id="quran"></div>
+
+<div class="feature" id="dua"></div>
+<div class="feature" id="hadith"></div>
+
+<div class="feature" id="qibla"></div>
+<div class="feature" id="tasbih"></div>
+
+</div>
+
+</div>
+
 <div class="bottom-bar">
-  <span id="bottomText"></span>
+<span id="bottomText"></span>
 </div>
 
 <script src="../js/home.js"></script>
+
 </body>
 </html>
