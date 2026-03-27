@@ -64,7 +64,7 @@ prayer:["फ़ज्र","सूर्योदय","ज़ुहर","अस�
 
 const t = TEXT[s.lang] || TEXT["bn"];
 
-/* ================= CITY (🔥 FIX) ================= */
+/* ================= CITY ================= */
 
 const CITY = {
 bn:"কলকাতা",
@@ -79,14 +79,23 @@ let el=document.getElementById(id);
 if(el) el.innerText=text;
 }
 
-function toBN(num){
-if(s.lang !== "bn") return num;
-return num.toString().replace(/[0-9]/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
+/* 🔥 NUMBER FORMAT FIX */
+function formatNumber(num){
+if(s.lang === "bn"){
+    return num.toString().replace(/[0-9]/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
+}
+if(s.lang === "hi"){
+    return num.toString().replace(/[0-9]/g,d=>"०१२३४५६७८९"[d]);
+}
+return num;
 }
 
 /* ================= APPLY TEXT ================= */
 
+setTimeout(()=>{
 setText("city", CITY[s.lang] || "কলকাতা");
+},0);
+
 setText("bismillahMeaning",t.bismillah);
 
 /* ================= DATE ================= */
@@ -98,7 +107,7 @@ s.lang==="bn" ? "bn-BD" :
 s.lang==="hi" ? "hi-IN" : "en-US";
 
 setText("todayDay",t.days[now.getDay()]);
-setText("date",now.toLocaleDateString(locale));
+setText("date", formatNumber(now.toLocaleDateString(locale)));
 
 /* ================= CLOCK ================= */
 
@@ -108,7 +117,7 @@ let h=String(d.getHours()).padStart(2,"0");
 let m=String(d.getMinutes()).padStart(2,"0");
 let sec=String(d.getSeconds()).padStart(2,"0");
 
-setText("clock",toBN(h+":"+m+":"+sec));
+setText("clock", formatNumber(h+":"+m+":"+sec));
 },1000);
 
 /* ================= PRAYER DATA ================= */
@@ -182,7 +191,7 @@ String(h).padStart(2,"0")+":"+
 String(m).padStart(2,"0")+":"+
 String(sec).padStart(2,"0");
 
-setText("countdown",toBN(time));
+setText("countdown", formatNumber(time));
 }
 
 setInterval(updateStatus,1000);
@@ -208,7 +217,7 @@ grid.innerHTML="";
 prayerList.forEach(p=>{
 let div=document.createElement("div");
 div.className="prayer-box";
-div.innerHTML=`${p[0]}<br>${toBN(p[1])}`;
+div.innerHTML=`${p[0]}<br>${formatNumber(p[1])}`;
 
 if(p[0] === t.prayer[1]){
     div.style.cursor="pointer";
