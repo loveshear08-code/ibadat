@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Azan Settings</title>
+<title>আজান সেটিং</title>
 
 <style>
 body{
@@ -48,10 +48,16 @@ body{
     display:flex;
     justify-content:space-between;
     cursor:pointer;
+    transition:0.2s;
+}
+
+.item:hover{
+    background:#dff5e9;
 }
 
 .item.active{
     background:#c8f2dc;
+    font-weight:bold;
 }
 
 /* BUTTONS */
@@ -90,37 +96,36 @@ button:hover{
 
 <div class="card">
 
-<h2 class="title" data-key="azanSettings">Azan Settings</h2>
-<p data-key="selectAzan">Select Azan Sound</p>
+<h2 class="title">আজান সেটিং</h2>
+<p>আজানের সাউন্ড নির্বাচন করুন</p>
 
 <div class="azan-list" id="azanList"></div>
 
 <div class="buttons">
-<button onclick="saveAzan()" data-key="save">Save</button>
-<button onclick="testAzan()" data-key="test">Test</button>
+<button onclick="saveAzan()">Save</button>
+<button onclick="testAzan()">Test</button>
 </div>
 
 <div class="status" id="status"></div>
 
 </div>
 
-<!-- LANGUAGE -->
-<script src="../js/lang.js"></script>
-
 <script>
 
+/* AZAN LIST */
 const azans = [
-    {name:"Makkah", file:"makkah.mp3"},
-    {name:"Madinah", file:"madinah.mp3"},
-    {name:"Kuwait", file:"kuwait.mp3"},
-    {name:"Bangladesh", file:"bangladesh.mp3"},
-    {name:"Alaska", file:"alaska.mp3"}
+    {name:"মক্কা", file:"makkah.mp3"},
+    {name:"মদিনা", file:"madinah.mp3"},
+    {name:"কুয়েত", file:"kuwait.mp3"},
+    {name:"বাংলাদেশ", file:"bangladesh.mp3"},
+    {name:"আলাস্কা", file:"alaska.mp3"}
 ];
 
+/* LOAD SAVED */
 let selected = localStorage.getItem("azanVoice") || "makkah.mp3";
 let audio = null;
 
-/* LOAD LIST */
+/* LOAD UI */
 function loadAzan(){
     const list = document.getElementById("azanList");
     list.innerHTML="";
@@ -150,8 +155,7 @@ function loadAzan(){
 /* SAVE */
 function saveAzan(){
     localStorage.setItem("azanVoice",selected);
-
-    document.getElementById("status").innerText="✔ Saved";
+    document.getElementById("status").innerText="✔ সেভ হয়েছে";
 }
 
 /* TEST */
@@ -168,13 +172,9 @@ function testAzan(){
 /* INIT */
 document.addEventListener("DOMContentLoaded",()=>{
     loadAzan();
-    applyLang();
 });
 
 </script>
-    <script src="../js/azan-ui.js"></script>
-<script src="../js/azan-auto.js"></script>
-    <script src="../js/azan-api.js"></script>
 
 </body>
 </html>
