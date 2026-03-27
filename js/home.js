@@ -13,14 +13,21 @@ return num.toString().replace(/[0-9]/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
 setText("bismillahMeaning","পরম করুণাময় অসীম দয়ালু আল্লাহর নামে");
 
 /* DATE */
-let now=new Date();
-setText("todayDay",["রবি","সোম","মঙ্গল","বুধ","বৃহস্পতি","শুক্র","শনি"][now.getDay()]);
-setText("date",now.toLocaleDateString("bn-BD"));
+setText("todayDay",
+["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"][now.getDay()]
+);
 
 /* CLOCK */
 setInterval(()=>{
-let t=new Date().toLocaleTimeString("en-GB",{hour12:false});
-setText("clock",toBN(t));
+let now=new Date();
+
+let h=String(now.getHours()).padStart(2,"0");
+let m=String(now.getMinutes()).padStart(2,"0");
+let s=String(now.getSeconds()).padStart(2,"0");
+
+let time = `${h}:${m}:${s}`;
+
+setText("clock", time.replace(/[0-9]/g,d=>"০১২৩৪৫৬৭৮৯"[d]));
 },1000);
 
 /* PRAYER LIST */
