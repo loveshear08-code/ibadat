@@ -1,28 +1,25 @@
-/* GLOBAL */
 body{
 margin:0;
 font-family:sans-serif;
-background:#e8f5e9;
+background:#f1f8f4;
 overflow:hidden;
 }
 
 /* TOP + BOTTOM */
-.top-bar,
-.bottom-bar{
+.top-bar,.bottom-bar{
 position:fixed;
-left:0;
 width:100%;
 height:50px;
 display:flex;
 align-items:center;
 justify-content:space-between;
 padding:0 12px;
-background:#1b5e20;
+background:#4caf50;
 color:#fff;
 z-index:100;
 }
 
-.top-bar{ top:0; }
+.top-bar{top:0;}
 .bottom-bar{
 bottom:0;
 justify-content:center;
@@ -38,50 +35,43 @@ left:0;
 right:0;
 display:flex;
 flex-direction:column;
-gap:8px;
-padding:8px;
+gap:6px;
+padding:6px;
 }
 
 /* CARD */
 .card{
-background:#a5d6a7;
+background:#e6f4ea;
 border-radius:16px;
 padding:10px;
+text-align:center;
 }
 
 /* BISMILLAH */
-.bismillah-card{
-text-align:center;
-padding:12px;
-}
-
 .bismillah-ar{
-font-size:20px;
+font-size:22px;
 font-weight:bold;
+color:gold;
 }
 
-.bismillah-meaning{
+#bismillahMeaning{
 font-size:14px;
 font-weight:600;
 }
 
 /* STATUS */
-.status-card{
-padding:10px;
-}
-
 .status-top{
 display:flex;
 justify-content:space-between;
-font-weight:bold;
 font-size:14px;
+font-weight:bold;
 }
 
 .status-middle{
 display:flex;
 align-items:center;
 justify-content:space-between;
-margin-top:6px;
+margin-top:5px;
 }
 
 .current,.next{
@@ -90,9 +80,9 @@ text-align:center;
 }
 
 #clock{
-font-size:28px;
+font-size:26px;
 font-weight:bold;
-color:#1b5e20;
+color:#2e7d32;
 }
 
 #countdown{
@@ -104,7 +94,7 @@ font-weight:bold;
 font-size:18px;
 }
 
-/* 🔥 PRAYER GRID FIX */
+/* 🔥 PRAYER GRID PERFECT */
 .prayer-grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -112,34 +102,31 @@ gap:6px;
 }
 
 .prayer-box{
-background:#81c784;
-border-radius:12px;
+background:#c8e6c9;
 padding:8px;
-text-align:center;
+border-radius:12px;
 font-size:13px;
 font-weight:bold;
+text-align:center;
 }
 
-/* 🔥 FEATURE GRID FIX */
+/* 🔥 FEATURE GRID PERFECT */
 .feature-grid{
 display:grid;
 grid-template-columns:repeat(2,1fr);
-gap:8px;
+gap:6px;
 }
 
 .feature-box{
-background:#66bb6a;
+background:#a5d6a7;
+padding:10px;
 border-radius:14px;
-padding:12px;
-text-align:center;
-font-size:14px;
 font-weight:bold;
 }
 
 /* SCROLL TEXT */
 .bottom-bar span{
 white-space:nowrap;
-display:inline-block;
 padding-left:100%;
 animation:scroll 15s linear infinite;
 }
