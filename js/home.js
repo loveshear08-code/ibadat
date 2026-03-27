@@ -13,24 +13,26 @@ return num.toString().replace(/[0-9]/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
 setText("bismillahMeaning","পরম করুণাময় অসীম দয়ালু আল্লাহর নামে");
 
 /* DATE */
-setText("todayDay",
-["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"][now.getDay()]
-);
+let now=new Date();
+let days=["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"];
+
+setText("todayDay",days[now.getDay()]);
+setText("date",now.toLocaleDateString("bn-BD"));
 
 /* CLOCK */
 setInterval(()=>{
-let now=new Date();
+let d=new Date();
 
-let h=String(now.getHours()).padStart(2,"0");
-let m=String(now.getMinutes()).padStart(2,"0");
-let s=String(now.getSeconds()).padStart(2,"0");
+let h=String(d.getHours()).padStart(2,"0");
+let m=String(d.getMinutes()).padStart(2,"0");
+let s=String(d.getSeconds()).padStart(2,"0");
 
-let time = `${h}:${m}:${s}`;
+let time=h+":"+m+":"+s;
 
-setText("clock", time.replace(/[0-9]/g,d=>"০১২৩৪৫৬৭৮৯"[d]));
+setText("clock",toBN(time));
 },1000);
 
-/* PRAYER LIST */
+/* PRAYER */
 let prayerList=[
 ["ফজর","04:33"],
 ["সূর্যোদয়","05:34"],
@@ -42,32 +44,42 @@ let prayerList=[
 
 function getNextPrayer(){
 let now=new Date();
+
 for(let p of prayerList){
 let [h,m]=p[1].split(":");
 let t=new Date();
 t.setHours(h,m,0);
-if(now < t) return {name:p[0],time:t};
+
+if(now < t){
+return {name:p[0],time:t};
 }
+}
+
 let [h,m]=prayerList[0][1].split(":");
 let t=new Date();
 t.setDate(t.getDate()+1);
 t.setHours(h,m,0);
+
 return {name:prayerList[0][0],time:t};
 }
 
 function getCurrentPrayer(){
 let now=new Date();
+
 for(let i=prayerList.length-1;i>=0;i--){
 let [h,m]=prayerList[i][1].split(":");
 let t=new Date();
 t.setHours(h,m,0);
-if(now>=t) return prayerList[i][0];
+
+if(now>=t){
+return prayerList[i][0];
+}
 }
 return prayerList[0][0];
 }
 
-/* STATUS */
 function updateStatus(){
+
 let next=getNextPrayer();
 
 setText("currentPrayerName","● "+getCurrentPrayer());
@@ -93,37 +105,33 @@ updateStatus();
 /* WEATHER */
 setText("weather","২৫°সি মেঘলা");
 
-/* PRAYER GRID */
+/* GRID */
 let grid=document.getElementById("prayerGrid");
+
+if(grid){
 grid.innerHTML="";
+
 prayerList.forEach(p=>{
 let div=document.createElement("div");
 div.className="prayer-box";
+
 div.innerHTML=`${p[0]}<br>${toBN(p[1])}`;
 grid.appendChild(div);
 });
+}
 
 /* FEATURES */
-["namaz","quran","dua","hadith","qibla","tasbih"].forEach(id=>{
-let el=document.getElementById(id);
-if(el){
-el.innerText={
+const features={
 namaz:"📚 নামাজ শিক্ষা",
 quran:"🕌 আল কুরআন",
 dua:"🤲 দোয়া",
 hadith:"📖 হাদিস",
 qibla:"🕋 কিবলা",
 tasbih:"📿 তসবিহ"
-}[id];
-}
-});
+};
 
-/* BOTTOM */
-let q=["নামাজ জান্নাতের চাবি","আল্লাহকে স্মরণ করো","ধৈর্য ধরো"];
-let i=0;
-setInterval(()=>{
-setText("bottomText",q[i]);
-i=(i+1)%q.length;
-},3000);
+Object.keys(features).forEach(id=>{
+setText(id,features[id]);
+});
 
 });
