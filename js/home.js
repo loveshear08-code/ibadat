@@ -140,8 +140,8 @@ setText(id,features[id]);
 
 /* PAGE NAVIGATION */
 function openPage(page){
-window.location.href = page + ".html";
-}
+    window.location.href = "html/" + page + ".html";
+        }
 
 /* FEATURE CLICK */
 document.getElementById("namaz").onclick = ()=>openPage("namaz-guide");
