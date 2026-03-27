@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", function(){
 
+applySettings();
+const s = getSettings();
+
 function setText(id,text){
 let el=document.getElementById(id);
 if(el) el.innerText=text;
