@@ -55,3 +55,23 @@ setInterval(()=>{
 document.getElementById("bottomText").innerText=T.quotes[i];
 i=(i+1)%T.quotes.length;
 },3000);
+function runStatus(){
+
+// clock
+setInterval(()=>{
+document.getElementById("clock").innerText =
+new Date().toLocaleTimeString();
+},1000);
+
+// demo current + next
+document.getElementById("currentPrayerName").innerText="● ফজর";
+document.getElementById("nextPrayerName").innerText="⏭ জোহর";
+
+// demo countdown
+setInterval(()=>{
+document.getElementById("countdown").innerText="01:25:10";
+},1000);
+
+}
+
+runStatus();
