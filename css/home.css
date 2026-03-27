@@ -151,3 +151,27 @@ animation:scroll 15s linear infinite;
 0%{transform:translateX(0);}
 100%{transform:translateX(-100%);}
 }
+/* 🔥 LAYOUT FIX (NO GAP) */
+.main{
+height:calc(100vh - 100px);
+}
+
+/* 🔥 60% / 40% BALANCE */
+.card{
+flex:2;
+}
+
+.feature-grid{
+flex:4;
+}
+
+/* 🔥 FEATURE FULL HEIGHT */
+.feature{
+height:100%;
+}
+
+/* 🔥 PRAYER BOX COMPACT */
+.prayer-box{
+padding:4px;
+font-size:13px;
+}
