@@ -2,99 +2,62 @@
 <html>
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>IBADAT</title>
 
-<link rel="stylesheet" href="../css/home.css">
-
+<link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
 
 <!-- TOP BAR -->
-
-<div class="topbar">
-
+<div class="top-bar">
 <span id="city"></span>
-
 <span id="date"></span>
-
 </div>
 
-
 <!-- MAIN -->
-
-<div class="main">
-
+<div class="main-container">
 
 <!-- BISMILLAH -->
-
-<div class="card bismillah-card" id="bismillahCard"
-onclick="location.href='allah-names.html'">
-
+<div class="card bismillah-card" id="bismillahCard">
 <div class="bismillah-ar">
 بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
 </div>
-
 <div id="bismillahMeaning" class="bismillah-meaning"></div>
-
 </div>
 
-
-
-<!-- PRAYER STATUS BOARD -->
-
-<div class="card prayer-status" id="statusBoard">
+<!-- PRAYER STATUS -->
+<div class="card status-card" id="statusBoard">
 
 <div class="status-top">
-
 <span id="todayDay"></span>
-
 <span id="weather"></span>
-
 </div>
 
-<div class="timer-grid">
+<div class="status-middle">
 
-<!-- CURRENT PRAYER -->
-
-<div class="current-side" id="currentPrayerBox">
-
-<div id="currentPrayerName" class="prayer-name"></div>
-
-<div id="clock" class="timer"></div>
-
+<div class="current">
+<div id="currentPrayerName"></div>
+<div id="clock"></div>
 </div>
 
 <div class="divider">/</div>
 
-<!-- NEXT PRAYER -->
-
-<div class="next-side" id="nextPrayerBox">
-
-<div id="nextPrayerName" class="prayer-name"></div>
-
-<div id="countdown" class="countdown"></div>
-
+<div class="next">
+<div id="nextPrayerName"></div>
+<div id="countdown"></div>
 </div>
 
 </div>
 
 </div>
-
-
 
 <!-- PRAYER GRID -->
-
-<div class="card prayer-grid" id="prayerGrid"></div>
-
-
+<div class="prayer-grid" id="prayerGrid"></div>
 
 <!-- FEATURES -->
-
 <div class="feature-grid">
 
 <div class="feature-box" id="namaz"></div>
@@ -110,15 +73,10 @@ onclick="location.href='allah-names.html'">
 
 </div>
 
-
 <!-- BOTTOM BAR -->
-
 <div class="bottom-bar">
-
-<marquee id="bottomText"></marquee>
-
+<span id="bottomText"></span>
 </div>
-
 
 <script src="../js/home.js"></script>
 
