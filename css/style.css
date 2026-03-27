@@ -6,7 +6,7 @@ background:#e8f5e9;
 overflow:hidden;
 }
 
-/* TOP + BOTTOM BAR */
+/* TOP + BOTTOM */
 .top-bar,
 .bottom-bar{
 position:fixed;
@@ -29,6 +29,113 @@ justify-content:center;
 overflow:hidden;
 }
 
+/* MAIN */
+.main-container{
+position:absolute;
+top:50px;
+bottom:50px;
+left:0;
+right:0;
+display:flex;
+flex-direction:column;
+gap:8px;
+padding:8px;
+}
+
+/* CARD */
+.card{
+background:#a5d6a7;
+border-radius:16px;
+padding:10px;
+}
+
+/* BISMILLAH */
+.bismillah-card{
+text-align:center;
+padding:12px;
+}
+
+.bismillah-ar{
+font-size:20px;
+font-weight:bold;
+}
+
+.bismillah-meaning{
+font-size:14px;
+font-weight:600;
+}
+
+/* STATUS */
+.status-card{
+padding:10px;
+}
+
+.status-top{
+display:flex;
+justify-content:space-between;
+font-weight:bold;
+font-size:14px;
+}
+
+.status-middle{
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-top:6px;
+}
+
+.current,.next{
+flex:1;
+text-align:center;
+}
+
+#clock{
+font-size:28px;
+font-weight:bold;
+color:#1b5e20;
+}
+
+#countdown{
+font-size:14px;
+font-weight:bold;
+}
+
+.divider{
+font-size:18px;
+}
+
+/* 🔥 PRAYER GRID FIX */
+.prayer-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:6px;
+}
+
+.prayer-box{
+background:#81c784;
+border-radius:12px;
+padding:8px;
+text-align:center;
+font-size:13px;
+font-weight:bold;
+}
+
+/* 🔥 FEATURE GRID FIX */
+.feature-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:8px;
+}
+
+.feature-box{
+background:#66bb6a;
+border-radius:14px;
+padding:12px;
+text-align:center;
+font-size:14px;
+font-weight:bold;
+}
+
 /* SCROLL TEXT */
 .bottom-bar span{
 white-space:nowrap;
@@ -40,109 +147,4 @@ animation:scroll 15s linear infinite;
 @keyframes scroll{
 0%{transform:translateX(0);}
 100%{transform:translateX(-100%);}
-}
-
-/* MAIN LAYOUT */
-.main-container{
-position:absolute;
-top:50px;
-bottom:50px;
-left:0;
-right:0;
-display:flex;
-flex-direction:column;
-justify-content:space-between;
-gap:8px;
-padding:10px;
-}
-
-/* CARD */
-.card{
-background:#a5d6a7;
-border-radius:18px;
-padding:12px;
-}
-
-/* BISMILLAH */
-.bismillah-card{
-text-align:center;
-}
-
-.bismillah-ar{
-font-size:22px;
-font-weight:bold;
-}
-
-.bismillah-meaning{
-font-size:15px;
-font-weight:600;
-margin-top:6px;
-}
-
-/* STATUS */
-.status-top{
-display:flex;
-justify-content:space-between;
-font-weight:bold;
-}
-
-.status-middle{
-display:flex;
-align-items:center;
-justify-content:space-between;
-margin-top:10px;
-}
-
-.current,
-.next{
-text-align:center;
-flex:1;
-}
-
-.divider{
-font-size:20px;
-font-weight:bold;
-}
-
-/* CLOCK */
-#clock{
-font-size:36px;
-font-weight:bold;
-color:#1b5e20;
-}
-
-/* COUNTDOWN */
-#countdown{
-font-size:16px;
-font-weight:bold;
-}
-
-/* PRAYER GRID */
-.prayer-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:8px;
-}
-
-.prayer-box{
-background:#81c784;
-border-radius:12px;
-padding:10px;
-text-align:center;
-font-weight:bold;
-}
-
-/* FEATURES */
-.feature-grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px;
-}
-
-.feature-box{
-background:#66bb6a;
-padding:14px;
-border-radius:16px;
-text-align:center;
-font-weight:bold;
 }
