@@ -10,60 +10,67 @@
 
 <body>
 
+<!-- TOP BAR -->
 <div class="top-bar">
-<span id="city"></span>
-<span id="date"></span>
+  <span id="city"></span>
+  <span id="date"></span>
 </div>
 
+<!-- MAIN -->
 <div class="main-container">
 
-<!-- BISMILLAH -->
-<div class="box bismillah-box" id="bismillahCard">
-<div class="bismillah-ar">
-بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+  <!-- 1) BISMILLAH -->
+  <div class="box bismillah-box" id="bismillahCard">
+    <div class="bismillah-ar">
+      بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+    </div>
+    <div id="bismillahMeaning" class="bismillah-meaning"></div>
+  </div>
+
+  <!-- 2) STATUS -->
+  <div class="box status-box" id="statusBoard">
+    <div class="status-row top">
+      <span id="todayDay"></span>
+      <span id="weather"></span>
+    </div>
+
+    <div class="status-center">
+      <div class="status-left">
+        <div id="currentPrayerName"></div>
+        <div id="clock"></div>
+      </div>
+
+      <div class="status-divider">/</div>
+
+      <div class="status-right">
+        <div id="nextPrayerName"></div>
+        <div id="countdown"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3) PRAYER GRID (2x3) -->
+  <div class="box prayer-box-wrap">
+    <div class="prayer-list" id="prayerList"></div>
+  </div>
+
+  <!-- 4) FEATURE GRID (2x3) -->
+  <div class="feature-grid">
+    <div class="feature-box" id="namaz"></div>
+    <div class="feature-box" id="quran"></div>
+    <div class="feature-box" id="dua"></div>
+    <div class="feature-box" id="hadith"></div>
+    <div class="feature-box" id="qibla"></div>
+    <div class="feature-box" id="tasbih"></div>
+  </div>
+
 </div>
-<div id="bismillahMeaning"></div>
-</div>
 
-<!-- STATUS -->
-<div class="box status-box" id="statusBoard">
-
-<div class="row">
-<span id="todayDay"></span>
-<span id="weather"></span>
-</div>
-
-<div class="center">
-<div id="clock"></div>
-</div>
-
-<div class="row">
-<span id="currentPrayerName"></span>
-<span id="nextPrayerName"></span>
-</div>
-
-</div>
-
-<!-- PRAYER LIST (ONE BOX) -->
-<div class="box prayer-list" id="prayerList"></div>
-
-<!-- FEATURES -->
-<div class="feature-grid">
-<div class="feature-box" id="namaz"></div>
-<div class="feature-box" id="quran"></div>
-<div class="feature-box" id="dua"></div>
-<div class="feature-box" id="hadith"></div>
-<div class="feature-box" id="qibla"></div>
-<div class="feature-box" id="tasbih"></div>
-</div>
-
-</div>
-
+<!-- BOTTOM BAR -->
 <div class="bottom-bar">
-<span id="bottomText"></span>
+  <span id="bottomText"></span>
 </div>
 
 <script src="../js/home.js"></script>
-
 </body>
 </html>
