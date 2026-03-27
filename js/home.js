@@ -27,12 +27,10 @@ let h=String(d.getHours()).padStart(2,"0");
 let m=String(d.getMinutes()).padStart(2,"0");
 let s=String(d.getSeconds()).padStart(2,"0");
 
-let time=h+":"+m+":"+s;
-
-setText("clock",toBN(time));
+setText("clock",toBN(h+":"+m+":"+s));
 },1000);
 
-/* PRAYER */
+/* PRAYER DATA */
 let prayerList=[
 ["ফজর","04:33"],
 ["সূর্যোদয়","05:34"],
@@ -42,6 +40,7 @@ let prayerList=[
 ["এশা","18:52"]
 ];
 
+/* NEXT PRAYER */
 function getNextPrayer(){
 let now=new Date();
 
@@ -63,6 +62,7 @@ t.setHours(h,m,0);
 return {name:prayerList[0][0],time:t};
 }
 
+/* CURRENT PRAYER */
 function getCurrentPrayer(){
 let now=new Date();
 
@@ -78,6 +78,7 @@ return prayerList[i][0];
 return prayerList[0][0];
 }
 
+/* STATUS UPDATE */
 function updateStatus(){
 
 let next=getNextPrayer();
@@ -105,7 +106,7 @@ updateStatus();
 /* WEATHER */
 setText("weather","২৫°সি মেঘলা");
 
-/* GRID */
+/* PRAYER GRID */
 let grid=document.getElementById("prayerGrid");
 
 if(grid){
@@ -114,8 +115,11 @@ grid.innerHTML="";
 prayerList.forEach(p=>{
 let div=document.createElement("div");
 div.className="prayer-box";
-
 div.innerHTML=`${p[0]}<br>${toBN(p[1])}`;
+
+div.style.cursor="pointer";
+div.onclick=()=>openPage("azan-setting");
+
 grid.appendChild(div);
 });
 }
@@ -133,5 +137,22 @@ tasbih:"📿 তসবিহ"
 Object.keys(features).forEach(id=>{
 setText(id,features[id]);
 });
+
+/* PAGE NAVIGATION */
+function openPage(page){
+window.location.href = page + ".html";
+}
+
+/* FEATURE CLICK */
+document.getElementById("namaz").onclick = ()=>openPage("namaz-guide");
+document.getElementById("quran").onclick = ()=>openPage("quran");
+document.getElementById("dua").onclick = ()=>openPage("dua");
+document.getElementById("hadith").onclick = ()=>openPage("hadith");
+document.getElementById("qibla").onclick = ()=>openPage("qibla");
+document.getElementById("tasbih").onclick = ()=>openPage("tasbih");
+
+/* STATUS CLICK */
+document.getElementById("currentPrayerName").onclick = ()=>openPage("calendar");
+document.getElementById("nextPrayerName").onclick = ()=>openPage("calendar");
 
 });
