@@ -2,8 +2,9 @@ document.addEventListener("DOMContentLoaded", function(){
 
 /* ================= INIT ================= */
 
-applySettings();
 const s = getSettings();
+applySettings();
+
 let currentLang = s.lang;
 
 /* ================= LANGUAGE DATA ================= */
@@ -63,6 +64,14 @@ prayer:["फ़ज्र","सूर्योदय","ज़ुहर","अस�
 
 const t = TEXT[s.lang] || TEXT["bn"];
 
+/* ================= CITY (🔥 FIX) ================= */
+
+const CITY = {
+bn:"কলকাতা",
+en:"Kolkata",
+hi:"कोलकाता"
+};
+
 /* ================= HELPERS ================= */
 
 function setText(id,text){
@@ -75,15 +84,21 @@ if(s.lang !== "bn") return num;
 return num.toString().replace(/[0-9]/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
 }
 
-/* ================= TEXT ================= */
+/* ================= APPLY TEXT ================= */
 
+setText("city", CITY[s.lang] || "কলকাতা");
 setText("bismillahMeaning",t.bismillah);
 
 /* ================= DATE ================= */
 
 let now=new Date();
+
+let locale =
+s.lang==="bn" ? "bn-BD" :
+s.lang==="hi" ? "hi-IN" : "en-US";
+
 setText("todayDay",t.days[now.getDay()]);
-setText("date",now.toLocaleDateString(s.lang==="bn"?"bn-BD":"en-US"));
+setText("date",now.toLocaleDateString(locale));
 
 /* ================= CLOCK ================= */
 
@@ -242,7 +257,7 @@ setText("bottomText",t.quotes[i]);
 i=(i+1)%t.quotes.length;
 },3000);
 
-/* ================= AUTO LANGUAGE REFRESH (🔥 FIX) ================= */
+/* ================= AUTO LANGUAGE REFRESH ================= */
 
 setInterval(()=>{
 let newLang = getSettings().lang;
