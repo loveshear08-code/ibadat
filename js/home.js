@@ -79,15 +79,17 @@ let el=document.getElementById(id);
 if(el) el.innerText=text;
 }
 
-/* 🔥 NUMBER FORMAT FIX */
+/* 🔥 NUMBER FORMAT FIX (FINAL) */
 function formatNumber(num){
+let str = num.toString();
+
 if(s.lang === "bn"){
-    return num.toString().replace(/[0-9]/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
+    return str.replace(/[0-9]/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
 }
 if(s.lang === "hi"){
-    return num.toString().replace(/[0-9]/g,d=>"०१२३४५६७८९"[d]);
+    return str.replace(/[0-9]/g,d=>"०१२३४५६७८९"[d]);
 }
-return num;
+return str;
 }
 
 /* ================= APPLY TEXT ================= */
@@ -207,7 +209,7 @@ function openPage(page){
 window.location.href="./html/"+page+".html";
 }
 
-/* ================= PRAYER GRID ================= */
+/* ================= PRAYER GRID (🔥 FINAL FIX) ================= */
 
 let grid=document.getElementById("prayerGrid");
 
@@ -217,7 +219,12 @@ grid.innerHTML="";
 prayerList.forEach(p=>{
 let div=document.createElement("div");
 div.className="prayer-box";
-div.innerHTML=`${p[0]}<br>${formatNumber(p[1])}`;
+
+/* 🔥 FORCE RENDER FIX */
+let timeFormatted = formatNumber(p[1]);
+
+div.innerHTML = "";
+div.innerHTML = `${p[0]}<br>${timeFormatted}`;
 
 if(p[0] === t.prayer[1]){
     div.style.cursor="pointer";
