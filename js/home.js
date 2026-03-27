@@ -121,14 +121,15 @@ let div=document.createElement("div");
 div.className="prayer-box";
 div.innerHTML=`${p[0]}<br>${toBN(p[1])}`;
 
-/* ❗ Sunrise disable */
-if(p[0] !== "সূর্যোদয়"){
+/* ONLY Sunrise clickable */
+if(p[0] === "সূর্যোদয়"){
     div.style.cursor="pointer";
-    div.onclick=()=>openPage("azan-setting");
+    div.onclick=()=>openPage("settings");
+
+    div.innerHTML += "<br><small style='font-size:10px'>Settings</small>";
 }else{
-    div.style.opacity="0.6";   // optional UI effect
     div.style.cursor="default";
-      }
+}
   
 
 grid.appendChild(div);
