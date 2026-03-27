@@ -1,3 +1,85 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Settings</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#e6f7ee;
+    margin:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.card{
+    background:#ffffff;
+    padding:25px;
+    border-radius:20px;
+    width:90%;
+    max-width:400px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
+    text-align:center;
+}
+
+.title{
+    font-size:22px;
+    margin-bottom:10px;
+}
+
+.azan-list{
+    margin-top:20px;
+    text-align:left;
+}
+
+.item{
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:8px;
+    background:#f1fbf5;
+    display:flex;
+    justify-content:space-between;
+    cursor:pointer;
+}
+
+.item.active{
+    background:#c8f2dc;
+    font-weight:bold;
+}
+
+.buttons{
+    margin-top:20px;
+    display:flex;
+    gap:10px;
+}
+
+button{
+    flex:1;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    background:#4caf50;
+    color:white;
+    cursor:pointer;
+}
+
+.status{
+    margin-top:10px;
+    font-size:14px;
+    color:green;
+}
+</style>
+
+</head>
+
+<body>
+
 <div class="card">
 
 <h2 class="title">⚙️ Settings</h2>
@@ -29,3 +111,92 @@
 <div class="status" id="status"></div>
 
 </div>
+
+<script>
+
+/* AZAN LIST */
+const azans = [
+    {name:"মক্কা", file:"makkah.mp3"},
+    {name:"মদিনা", file:"madinah.mp3"},
+    {name:"কুয়েত", file:"kuwait.mp3"},
+    {name:"বাংলাদেশ", file:"bangladesh.mp3"},
+    {name:"আলাস্কা", file:"alaska.mp3"}
+];
+
+let selected = localStorage.getItem("azanVoice") || "makkah.mp3";
+let audio = null;
+
+/* LOAD AZAN UI */
+function loadAzan(){
+    const list = document.getElementById("azanList");
+    list.innerHTML="";
+
+    azans.forEach(a=>{
+        const div=document.createElement("div");
+        div.className="item";
+
+        if(a.file===selected){
+            div.classList.add("active");
+        }
+
+        div.innerHTML = `
+            <span>${a.name}</span>
+            <span>${a.file===selected ? "✔" : ""}</span>
+        `;
+
+        div.onclick=()=>{
+            selected=a.file;
+            loadAzan();
+        }
+
+        list.appendChild(div);
+    });
+}
+
+/* SAVE ALL SETTINGS */
+function saveSettings(){
+
+    // Azan
+    localStorage.setItem("azanVoice", selected);
+
+    // Language
+    let lang = document.getElementById("langSelect").value;
+    localStorage.setItem("lang", lang);
+
+    // Dark Mode
+    let dark = document.getElementById("darkToggle").checked;
+    localStorage.setItem("darkMode", dark);
+
+    document.getElementById("status").innerText="✔ সব সেটিং সেভ হয়েছে";
+}
+
+/* TEST AZAN */
+function testAzan(){
+
+    if(audio){
+        audio.pause();
+    }
+
+    audio = new Audio("../assets/" + selected);
+    audio.play();
+}
+
+/* INIT */
+document.addEventListener("DOMContentLoaded",()=>{
+
+    loadAzan();
+
+    // Load Language
+    document.getElementById("langSelect").value =
+        localStorage.getItem("lang") || "bn";
+
+    // Load Dark Mode
+    document.getElementById("darkToggle").checked =
+        localStorage.getItem("darkMode") === "true";
+
+});
+
+</script>
+
+</body>
+</html>
