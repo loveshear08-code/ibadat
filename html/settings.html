@@ -94,16 +94,32 @@ button{
 
 <script>
 
+/* ================= AZAN NAME (MULTI LANG) ================= */
+
+let s = getSettings();
+
+const AZAN_NAME = {
+bn:["মক্কা","মদিনা","কুয়েত","বাংলাদেশ","আলাস্কা"],
+en:["Makkah","Madinah","Kuwait","Bangladesh","Alaska"],
+hi:["मक्का","मदीना","कुवैत","बांग्लादेश","अलास्का"]
+};
+
+let names = AZAN_NAME[s.lang] || AZAN_NAME["bn"];
+
 const azans = [
-{name:"মক্কা",file:"makkah.mp3"},
-{name:"মদিনা",file:"madinah.mp3"},
-{name:"কুয়েত",file:"kuwait.mp3"},
-{name:"বাংলাদেশ",file:"bangladesh.mp3"},
-{name:"আলাস্কা",file:"alaska.mp3"}
+{name:names[0],file:"makkah.mp3"},
+{name:names[1],file:"madinah.mp3"},
+{name:names[2],file:"kuwait.mp3"},
+{name:names[3],file:"bangladesh.mp3"},
+{name:names[4],file:"alaska.mp3"}
 ];
 
-let selected="makkah.mp3";
-let audio=null;
+/* ================= INIT ================= */
+
+let selected = s.azan || "makkah.mp3";
+let audio = null;
+
+/* ================= LOAD LIST ================= */
 
 function loadAzan(){
     const list=document.getElementById("azanList");
@@ -128,6 +144,8 @@ function loadAzan(){
     });
 }
 
+/* ================= SAVE ================= */
+
 function saveSettings(){
 
     let s=getSettings();
@@ -138,11 +156,16 @@ function saveSettings(){
 
     saveSettingsToStorage(s);
 
-    applySettings();
-
     document.getElementById("status").innerText =
     TEXT[s.lang].saved;
+
+    /* 🔥 AUTO RELOAD */
+    setTimeout(()=>{
+        location.reload();
+    },500);
 }
+
+/* ================= TEST ================= */
 
 function testAzan(){
     if(audio) audio.pause();
@@ -150,11 +173,11 @@ function testAzan(){
     audio.play();
 }
 
+/* ================= INIT LOAD ================= */
+
 document.addEventListener("DOMContentLoaded",()=>{
 
     let s=getSettings();
-
-    selected=s.azan;
 
     document.getElementById("langSelect").value=s.lang;
     document.getElementById("darkToggle").checked=s.dark;
@@ -162,6 +185,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     loadAzan();
     applySettings();
 });
+
 </script>
 
 </body>
