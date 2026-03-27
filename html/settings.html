@@ -16,7 +16,6 @@ body{
     align-items:center;
     height:100vh;
 }
-
 .card{
     background:#ffffff;
     padding:25px;
@@ -26,16 +25,6 @@ body{
     box-shadow:0 10px 25px rgba(0,0,0,0.1);
     text-align:center;
 }
-
-.title{
-    font-size:22px;
-}
-
-.azan-list{
-    margin-top:15px;
-    text-align:left;
-}
-
 .item{
     padding:12px;
     border-radius:10px;
@@ -45,18 +34,14 @@ body{
     justify-content:space-between;
     cursor:pointer;
 }
-
 .item.active{
     background:#c8f2dc;
-    font-weight:bold;
 }
-
 .buttons{
     margin-top:20px;
     display:flex;
     gap:10px;
 }
-
 button{
     flex:1;
     padding:12px;
@@ -64,9 +49,7 @@ button{
     border-radius:10px;
     background:#4caf50;
     color:white;
-    font-size:16px;
 }
-
 .status{
     margin-top:10px;
     color:green;
@@ -79,30 +62,28 @@ button{
 
 <div class="card">
 
-<h2 class="title">⚙️ Settings</h2>
+<h2 id="settingsTitle">⚙️ Settings</h2>
 
-<!-- AZAN -->
-<h3>🔊 আজান সেটিং</h3>
-<p>আজানের সাউন্ড নির্বাচন করুন</p>
-<div id="azanList" class="azan-list"></div>
+<h3 id="azanTitle">আজান সেটিং</h3>
+<p id="azanDesc">আজানের সাউন্ড নির্বাচন করুন</p>
+<div id="azanList"></div>
 
-<!-- LANGUAGE -->
-<h3 style="margin-top:20px">🌐 Language</h3>
+<h3 id="langTitle">Language</h3>
 <select id="langSelect">
 <option value="bn">বাংলা</option>
 <option value="en">English</option>
+<option value="hi">हिंदी</option>
 </select>
 
-<!-- DARK MODE -->
-<h3 style="margin-top:20px">🌙 Theme</h3>
+<h3 id="themeTitle">Theme</h3>
 <label>
-<input type="checkbox" id="darkToggle"> Dark Mode
+<input type="checkbox" id="darkToggle">
+<span id="darkLabel">Dark Mode</span>
 </label>
 
-<!-- BUTTON -->
 <div class="buttons">
-<button onclick="saveSettings()">Save</button>
-<button onclick="testAzan()">Test</button>
+<button id="saveBtn" onclick="saveSettings()">Save</button>
+<button id="testBtn" onclick="testAzan()">Test</button>
 </div>
 
 <div id="status" class="status"></div>
@@ -113,21 +94,19 @@ button{
 
 <script>
 
-/* AZAN LIST */
 const azans = [
-    {name:"মক্কা", file:"makkah.mp3"},
-    {name:"মদিনা", file:"madinah.mp3"},
-    {name:"কুয়েত", file:"kuwait.mp3"},
-    {name:"বাংলাদেশ", file:"bangladesh.mp3"},
-    {name:"আলাস্কা", file:"alaska.mp3"}
+{name:"মক্কা",file:"makkah.mp3"},
+{name:"মদিনা",file:"madinah.mp3"},
+{name:"কুয়েত",file:"kuwait.mp3"},
+{name:"বাংলাদেশ",file:"bangladesh.mp3"},
+{name:"আলাস্কা",file:"alaska.mp3"}
 ];
 
-let selected = "makkah.mp3";
-let audio = null;
+let selected="makkah.mp3";
+let audio=null;
 
-/* LOAD UI */
 function loadAzan(){
-    const list = document.getElementById("azanList");
+    const list=document.getElementById("azanList");
     list.innerHTML="";
 
     azans.forEach(a=>{
@@ -138,10 +117,7 @@ function loadAzan(){
             div.classList.add("active");
         }
 
-        div.innerHTML = `
-            <span>${a.name}</span>
-            <span>${a.file===selected ? "✔" : ""}</span>
-        `;
+        div.innerHTML=`<span>${a.name}</span><span>${a.file===selected?"✔":""}</span>`;
 
         div.onclick=()=>{
             selected=a.file;
@@ -152,45 +128,40 @@ function loadAzan(){
     });
 }
 
-/* SAVE */
 function saveSettings(){
 
-    let s = getSettings();
+    let s=getSettings();
 
-    s.azan = selected;
-    s.lang = document.getElementById("langSelect").value;
-    s.dark = document.getElementById("darkToggle").checked;
+    s.azan=selected;
+    s.lang=document.getElementById("langSelect").value;
+    s.dark=document.getElementById("darkToggle").checked;
 
     saveSettingsToStorage(s);
 
-    document.getElementById("status").innerText="✔ Saved";
+    applySettings();
+
+    document.getElementById("status").innerText =
+    TEXT[s.lang].saved;
 }
 
-/* TEST */
 function testAzan(){
-
-    if(audio){
-        audio.pause();
-    }
-
-    audio = new Audio("../assets/" + selected);
+    if(audio) audio.pause();
+    audio=new Audio("../assets/"+selected);
     audio.play();
 }
 
-/* INIT */
 document.addEventListener("DOMContentLoaded",()=>{
 
-    let s = getSettings();
+    let s=getSettings();
 
-    selected = s.azan;
+    selected=s.azan;
 
-    document.getElementById("langSelect").value = s.lang;
-    document.getElementById("darkToggle").checked = s.dark;
+    document.getElementById("langSelect").value=s.lang;
+    document.getElementById("darkToggle").checked=s.dark;
 
     loadAzan();
-
+    applySettings();
 });
-
 </script>
 
 </body>
