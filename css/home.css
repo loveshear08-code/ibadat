@@ -126,3 +126,15 @@ animation:scroll 15s linear infinite;
 0%{transform:translateX(0);}
 100%{transform:translateX(-100%);}
 }
+.status-left,
+.status-right{
+gap:12px;
+}
+
+.card{
+padding:12px;
+}
+
+.grid{
+gap:10px;
+}
