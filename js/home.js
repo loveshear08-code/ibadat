@@ -26,15 +26,11 @@ if(el) el.innerText=text;
 /* TEXT */
 setText("bismillahMeaning",T.bismillah);
 
-setText("namaz",T.features.namaz);
-setText("quran",T.features.quran);
-setText("dua",T.features.dua);
-setText("hadith",T.features.hadith);
-setText("qibla",T.features.qibla);
-setText("tasbih",T.features.tasbih);
+Object.keys(T.features).forEach(k=>{
+setText(k,T.features[k]);
+});
 
-let d=new Date();
-setText("todayDay",T.days[d.getDay()]);
+setText("todayDay",T.days[new Date().getDay()]);
 
 /* CLOCK */
 setInterval(()=>{
@@ -70,7 +66,7 @@ grid.appendChild(div);
 });
 }
 
-/* BOTTOM TEXT */
+/* BOTTOM */
 let i=0;
 setInterval(()=>{
 setText("bottomText",T.quotes[i]);
