@@ -133,7 +133,6 @@ if(p[0] === "সূর্যোদয়"){
 
 grid.appendChild(div);
 });
-}
 
 /* ================= FEATURES ================= */
 const features={
