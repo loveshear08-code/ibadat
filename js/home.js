@@ -1,10 +1,5 @@
-/* =========================
-   IBADAT HOME JS (FINAL FIXED)
-========================= */
-
 document.addEventListener("DOMContentLoaded", function(){
 
-/* TEXT DATA */
 const T={
 days:["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"],
 bismillah:"পরম করুণাময় অসীম দয়ালু আল্লাহর নামে",
@@ -23,16 +18,12 @@ tasbih:"📿 ডিজিটাল তসবিহ"
 }
 };
 
-/* SAFE FUNCTION */
 function setText(id,text){
 let el=document.getElementById(id);
 if(el) el.innerText=text;
 }
 
-/* =========================
-   BASIC TEXT SETUP
-========================= */
-
+/* TEXT */
 setText("bismillahMeaning",T.bismillah);
 
 setText("namaz",T.features.namaz);
@@ -45,34 +36,20 @@ setText("tasbih",T.features.tasbih);
 let d=new Date();
 setText("todayDay",T.days[d.getDay()]);
 
-/* =========================
-   CLOCK + STATUS
-========================= */
-
-function runStatus(){
-
-// CLOCK
+/* CLOCK */
 setInterval(()=>{
-setText("clock", new Date().toLocaleTimeString());
+setText("clock",new Date().toLocaleTimeString());
 },1000);
 
-// CURRENT + NEXT
+/* STATUS */
 setText("currentPrayerName","● ফজর");
 setText("nextPrayerName","⏭ জোহর");
 
-// COUNTDOWN
 setInterval(()=>{
 setText("countdown","01:25:10");
 },1000);
 
-}
-
-runStatus();
-
-/* =========================
-   PRAYER GRID
-========================= */
-
+/* PRAYER GRID */
 let prayerList=[
 ["ফজর","04:33"],
 ["সূর্যোদয়","05:34"],
@@ -93,10 +70,7 @@ grid.appendChild(div);
 });
 }
 
-/* =========================
-   BOTTOM TEXT SCROLL
-========================= */
-
+/* BOTTOM TEXT */
 let i=0;
 setInterval(()=>{
 setText("bottomText",T.quotes[i]);
