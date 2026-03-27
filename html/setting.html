@@ -1,180 +1,31 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>সেটিং</title>
-
-<style>
-body{
-    font-family: Arial;
-    background:#e6f7ee;
-    margin:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-}
-
-/* CARD */
-.card{
-    background:#ffffff;
-    padding:25px;
-    border-radius:20px;
-    width:90%;
-    max-width:400px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.1);
-    text-align:center;
-}
-
-/* TITLE */
-.title{
-    font-size:22px;
-    margin-bottom:10px;
-}
-
-/* LIST */
-.azan-list{
-    margin-top:20px;
-    text-align:left;
-}
-
-.item{
-    padding:12px;
-    border-radius:10px;
-    margin-bottom:8px;
-    background:#f1fbf5;
-    display:flex;
-    justify-content:space-between;
-    cursor:pointer;
-    transition:0.2s;
-}
-
-.item:hover{
-    background:#dff5e9;
-}
-
-.item.active{
-    background:#c8f2dc;
-    font-weight:bold;
-}
-
-/* BUTTONS */
-.buttons{
-    margin-top:20px;
-    display:flex;
-    gap:10px;
-}
-
-button{
-    flex:1;
-    padding:12px;
-    border:none;
-    border-radius:10px;
-    font-size:16px;
-    background:#4caf50;
-    color:white;
-    cursor:pointer;
-}
-
-button:hover{
-    background:#3e9442;
-}
-
-/* STATUS */
-.status{
-    margin-top:10px;
-    font-size:14px;
-    color:green;
-}
-</style>
-
-</head>
-
-<body>
-
 <div class="card">
 
-<h2 class="title">আজান সেটিং</h2>
-<p>আজানের সাউন্ড নির্বাচন করুন</p>
+<h2 class="title">⚙️ Settings</h2>
 
+<!-- AZAN -->
+<h3>🔊 আজান সেটিং</h3>
+<p>আজানের সাউন্ড নির্বাচন করুন</p>
 <div class="azan-list" id="azanList"></div>
 
+<!-- LANGUAGE -->
+<h3 style="margin-top:20px">🌐 Language</h3>
+<select id="langSelect">
+<option value="bn">বাংলা</option>
+<option value="en">English</option>
+</select>
+
+<!-- DARK MODE -->
+<h3 style="margin-top:20px">🌙 Theme</h3>
+<label>
+<input type="checkbox" id="darkToggle"> Dark Mode
+</label>
+
+<!-- BUTTONS -->
 <div class="buttons">
-<button onclick="saveAzan()">Save</button>
+<button onclick="saveSettings()">Save</button>
 <button onclick="testAzan()">Test</button>
 </div>
 
 <div class="status" id="status"></div>
 
 </div>
-
-<script>
-
-/* AZAN LIST */
-const azans = [
-    {name:"মক্কা", file:"makkah.mp3"},
-    {name:"মদিনা", file:"madinah.mp3"},
-    {name:"কুয়েত", file:"kuwait.mp3"},
-    {name:"বাংলাদেশ", file:"bangladesh.mp3"},
-    {name:"আলাস্কা", file:"alaska.mp3"}
-];
-
-/* LOAD SAVED */
-let selected = localStorage.getItem("azanVoice") || "makkah.mp3";
-let audio = null;
-
-/* LOAD UI */
-function loadAzan(){
-    const list = document.getElementById("azanList");
-    list.innerHTML="";
-
-    azans.forEach(a=>{
-        const div=document.createElement("div");
-        div.className="item";
-
-        if(a.file===selected){
-            div.classList.add("active");
-        }
-
-        div.innerHTML = `
-            <span>${a.name}</span>
-            <span>${a.file===selected ? "✔" : ""}</span>
-        `;
-
-        div.onclick=()=>{
-            selected=a.file;
-            loadAzan();
-        }
-
-        list.appendChild(div);
-    });
-}
-
-/* SAVE */
-function saveAzan(){
-    localStorage.setItem("azanVoice",selected);
-    document.getElementById("status").innerText="✔ সেভ হয়েছে";
-}
-
-/* TEST */
-function testAzan(){
-
-    if(audio){
-        audio.pause();
-    }
-
-    audio=new Audio("../assets/"+selected);
-    audio.play();
-}
-
-/* INIT */
-document.addEventListener("DOMContentLoaded",()=>{
-    loadAzan();
-});
-
-</script>
-
-</body>
-</html>
