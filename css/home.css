@@ -149,3 +149,32 @@ animation:scroll 15s linear infinite;
 0%{transform:translateX(0);}
 100%{transform:translateX(-100%);}
 }
+/* 🔥 FORCE FIX */
+
+.status-left div,
+.status-right div{
+font-size:22px !important;
+font-weight:bold !important;
+}
+
+#clock{
+font-size:30px !important;
+color:#1b5e20 !important;
+}
+
+#countdown{
+font-size:30px !important;
+color:red !important;
+}
+
+.status-left,
+.status-right{
+gap:14px !important;
+justify-content:center !important;
+align-items:center !important;
+}
+
+/* CARD COLOR FORCE */
+.card{
+background:#a5d6a7 !important;
+}
