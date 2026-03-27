@@ -270,3 +270,55 @@ qi=(qi+1)%T.quotes.length;
 
 setInterval(updateQuote,4000);
 updateQuote();
+
+let nextTime=null;
+
+function updatePrayer(){
+
+if(!prayerTimes.length) return;
+
+let now=new Date();
+
+for(let i=0;i<prayerTimes.length;i++){
+
+let [h,m]=prayerTimes[i].time.split(":");
+
+let pt=new Date();
+pt.setHours(parseInt(h));
+pt.setMinutes(parseInt(m));
+pt.setSeconds(0);
+
+if(now<pt){
+
+nextTime=pt;
+
+setText("currentPrayerName",
+"🟢 "+(i===0 ? prayerTimes[5].name : prayerTimes[i-1].name));
+
+setText("nextPrayerName",
+"⏭️ "+prayerTimes[i].name);
+
+return;
+
+}
+
+}
+
+nextTime=null;
+}
+
+function updateCountdown(){
+
+if(!nextTime) return;
+
+let diff=Math.floor((nextTime-new Date())/1000);
+
+let h=Math.floor(diff/3600);
+let m=Math.floor((diff%3600)/60);
+let s=diff%60;
+
+setText("countdown",h+":"+m+":"+s);
+
+}
+
+setInterval(updateCountdown,1000);
