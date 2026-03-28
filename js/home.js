@@ -101,14 +101,49 @@ setText("bismillahMeaning",t.bismillah);
 
 /* ================= DATE ================= */
 
-let now=new Date();
+let now = new Date();
 
-let locale =
-s.lang==="bn" ? "bn-BD" :
-s.lang==="hi" ? "hi-IN" : "en-US";
+/* DAY */
+setText("todayDay", t.days[now.getDay()]);
 
-setText("todayDay",t.days[now.getDay()]);
-setText("date", formatNumber(now.toLocaleDateString(locale)));
+/* ENGLISH DATE */
+let enDate = now.toLocaleDateString("en-GB");
+
+/* BANGLA DATE (approx fix) */
+const banglaMonths = [
+"পৌষ","মাঘ","ফাল্গুন","চৈত্র",
+"বৈশাখ","জ্যৈষ্ঠ","আষাঢ়","শ্রাবণ",
+"ভাদ্র","আশ্বিন","কার্তিক","অগ্রহায়ণ"
+];
+
+let start = new Date(now.getFullYear(), 3, 14); // 14 April
+let diff = Math.floor((now - start)/(1000*60*60*24));
+
+if(diff < 0){
+    start = new Date(now.getFullYear()-1, 3, 14);
+    diff = Math.floor((now - start)/(1000*60*60*24));
+}
+
+let bMonth = Math.floor(diff / 30);
+let bDay = (diff % 30) + 1;
+
+let bnDate = banglaMonths[bMonth] + " " + formatNumber(bDay);
+
+/* HIJRI DATE */
+let hijri = new Intl.DateTimeFormat('en-TN-u-ca-islamic', {
+day: 'numeric',
+month: 'long',
+year: 'numeric'
+}).format(now);
+
+/* LANGUAGE APPLY */
+if(s.lang === "bn"){
+    setText("date", bnDate);
+}else if(s.lang === "hi"){
+    setText("date", formatNumber(enDate));
+}else{
+    setText("date", enDate);
+}
 
 /* ================= CLOCK ================= */
 
