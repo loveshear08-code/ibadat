@@ -76,7 +76,7 @@ if(s.lang==="hi") return str.replace(/[0-9]/g,d=>"०१२३४५६७८९
 return str;
 }
 
-/* ================= STATIC UI ================= */
+/* ================= STATIC ================= */
 
 setText("city","Kolkata");
 setText("bismillahMeaning",t.bismillah);
@@ -108,8 +108,12 @@ let data=await res.json();
 let tm=data.data.timings;
 let hijri=data.data.date.hijri;
 
-/* HIJRI */
-setText("date",formatNumber(`${hijri.day} ${hijri.month.en} ${hijri.year}`));
+/* ✅ CLEAN DATE (ENGLISH + HIJRI) */
+let now=new Date();
+let engDate = now.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
+let hijriDate = `${hijri.day} ${hijri.month.en} ${hijri.year}`;
+
+setText("date", formatNumber(engDate + " | " + hijriDate));
 
 /* PRAYER */
 prayerList=[
@@ -138,7 +142,15 @@ async function loadWeather(){
 
 try{
 
-let res=await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Kolkata&appid=YOUR_API_KEY&units=metric`);
+// 🔥 যদি API key না থাকে → fallback
+let apiKey="";
+
+if(!apiKey){
+setText("weather","--");
+return;
+}
+
+let res=await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Kolkata&appid=${apiKey}&units=metric`);
 let data=await res.json();
 
 let temp=Math.round(data.main.temp);
@@ -146,7 +158,9 @@ let desc=data.weather[0].main;
 
 setText("weather",formatNumber(temp+"°C "+desc));
 
-}catch(e){}
+}catch(e){
+setText("weather","--");
+}
 }
 
 loadWeather();
@@ -195,6 +209,7 @@ setText("currentPrayerName","● "+getCurrent());
 setText("nextPrayerName","⏭ "+next.name);
 
 let diff=next.time-new Date();
+if(diff<0) diff=0; // ✅ FIX
 
 let time=
 String(Math.floor(diff/3600000)).padStart(2,"0")+":"+
@@ -247,7 +262,7 @@ let el=document.getElementById(id);
 if(el) el.onclick=()=>openPage(id==="namaz"?"namaz-guide":id);
 });
 
-/* ================= EXTRA CLICK ================= */
+/* ================= EXTRA ================= */
 
 let b=document.getElementById("bismillahCard");
 if(b) b.onclick=()=>openPage("allah-names");
