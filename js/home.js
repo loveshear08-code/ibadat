@@ -177,18 +177,22 @@ return prayerList[0][0];
 
 function updateStatus(){
 
-let next=getNextPrayer();
+let now = new Date(); // 🔥 SINGLE SOURCE
+
+let next = getNextPrayer();
 
 setText("currentPrayerName","● "+getCurrentPrayer());
 setText("nextPrayerName","⏭ "+next.name);
 
-let diff=next.time - new Date();
+let diff = next.time.getTime() - now.getTime(); // 🔥 FIX
 
-let h=Math.floor(diff/1000/60/60);
-let m=Math.floor((diff/1000/60)%60);
-let sec=Math.floor((diff/1000)%60);
+if(diff < 0) diff = 0; // safety
 
-let time=
+let h = Math.floor(diff/1000/60/60);
+let m = Math.floor((diff/1000/60)%60);
+let sec = Math.floor((diff/1000)%60);
+
+let time =
 String(h).padStart(2,"0")+":"+
 String(m).padStart(2,"0")+":"+
 String(sec).padStart(2,"0");
