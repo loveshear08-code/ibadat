@@ -102,6 +102,8 @@ navigator.geolocation.getCurrentPosition(async pos=>{
 let lat = pos.coords.latitude;
 let lon = pos.coords.longitude;
 
+loadWeather(lat, lon);
+
 /* 📍 CITY */
 try{
 let locRes = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
@@ -150,7 +152,7 @@ async function loadWeather(lat, lon){
 
 try{
 
-let apiKey = "YOUR_REAL_API_KEY"; // 👉 এখানে তোমার API key বসাও
+let apiKey = "a7f2e6a4e4dd9b86ec885982fac12ace"; // 👉 এখানে তোমার API key বসাও
 
 if(!apiKey){
 setText("weather", t.weather);
