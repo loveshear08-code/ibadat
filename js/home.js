@@ -46,7 +46,7 @@ hi:{
 bismillah:"अल्लाह के नाम से जो रहमान और रहीम है",
 days:["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"],
 weather:"लोड हो रहा है...",
-settings:"सेटিং्स",
+settings:"सेटिंग्स",
 features:{
 namaz:"📚 नमाज़ गाइड",
 quran:"🕌 अल कुरआन",
@@ -108,7 +108,7 @@ async function startApp(pos){
 let lat = pos.coords.latitude;
 let lon = pos.coords.longitude;
 
-/* CITY (LANG FIX) */
+/* CITY */
 try{
 let locRes = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
 let loc = await locRes.json();
@@ -157,9 +157,22 @@ let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat
 let data = await res.json();
 
 if(data && data.main){
+
 let temp = Math.round(data.main.temp);
 let desc = data.weather[0].main;
+
+/* 🔥 WEATHER TRANSLATE */
+const WEATHER = {
+bn:{ "Haze":"কুয়াশা","Clouds":"মেঘলা","Clear":"পরিষ্কার","Rain":"বৃষ্টি" },
+hi:{ "Haze":"धुंध","Clouds":"बादल","Clear":"साफ","Rain":"बारिश" }
+};
+
+if(WEATHER[s.lang] && WEATHER[s.lang][desc]){
+desc = WEATHER[s.lang][desc];
+}
+
 setText("weather", formatNumber(temp+"°C "+desc));
+
 }else{
 setText("weather", t.weather);
 }
@@ -182,37 +195,24 @@ let data=await res.json();
 let tm=data.data.timings;
 let hijri=data.data.date.hijri;
 
-/* HIJRI ONLY */
+/* 🔥 HIJRI TRANSLATE */
+
 let month = hijri.month.en;
 
 const HIJRI_MONTH = {
 bn:{
-"Muharram":"মুহাররম",
-"Safar":"সফর",
-"Rabi al-Awwal":"রবিউল আউয়াল",
-"Rabi al-Thani":"রবিউস সানি",
-"Jumada al-Ula":"জুমাদাল উলা",
-"Jumada al-Akhirah":"জুমাদাস সানিয়া",
-"Rajab":"রজব",
-"Sha'ban":"শাবান",
-"Ramadan":"রমজান",
-"Shawwal":"শাওয়াল",
-"Dhul Qadah":"জিলকদ",
-"Dhul Hijjah":"জিলহজ্জ"
+"Muharram":"মুহাররম","Safar":"সফর","Rabi al-Awwal":"রবিউল আউয়াল",
+"Rabi al-Thani":"রবিউস সানি","Jumada al-Ula":"জুমাদাল উলা",
+"Jumada al-Akhirah":"জুমাদাস সানিয়া","Rajab":"রজব",
+"Sha'ban":"শাবান","Ramadan":"রমজান","Shawwal":"শাওয়াল",
+"Dhul Qadah":"জিলকদ","Dhul Hijjah":"জিলহজ্জ"
 },
 hi:{
-"Muharram":"मुहर्रम",
-"Safar":"सफ़र",
-"Rabi al-Awwal":"रबी अल अव्वल",
-"Rabi al-Thani":"रबी अस सानी",
-"Jumada al-Ula":"जुमादा अल ऊला",
-"Jumada al-Akhirah":"जुमादा अस सानिया",
-"Rajab":"रजब",
-"Sha'ban":"शाबान",
-"Ramadan":"रमज़ान",
-"Shawwal":"शव्वाल",
-"Dhul Qadah":"ज़िलक़ादा",
-"Dhul Hijjah":"ज़िलहिज्जा"
+"Muharram":"मुहर्रम","Safar":"सफ़र","Rabi al-Awwal":"रबी अल अव्वल",
+"Rabi al-Thani":"रबी अस सानी","Jumada al-Ula":"जुमादा अल ऊला",
+"Jumada al-Akhirah":"जुमादा अस सानिया","Rajab":"रजब",
+"Sha'ban":"शाबान","Ramadan":"रमज़ान","Shawwal":"शव्वाल",
+"Dhul Qadah":"ज़िलक़ादा","Dhul Hijjah":"ज़िलहिज्जा"
 }
 };
 
@@ -224,6 +224,7 @@ let hij = `${hijri.day} ${month} ${hijri.year}`;
 setText("date", formatNumber(hij));
 
 /* LIST */
+
 prayerList=[
 [t.prayer[0],tm.Fajr],
 [t.prayer[1],tm.Sunrise],
