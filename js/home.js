@@ -7,13 +7,13 @@ applySettings();
 
 let currentLang = s.lang;
 
-/* ================= LANGUAGE DATA ================= */
+/* ================= TEXT ================= */
 
 const TEXT = {
 bn:{
 bismillah:"পরম করুণাময় অসীম দয়ালু আল্লাহর নামে",
 days:["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"],
-weather:"২৫°সি মেঘলা",
+weather:"লোড হচ্ছে...",
 settings:"সেটিংস",
 features:{
 namaz:"📚 নামাজ শিক্ষা",
@@ -26,11 +26,10 @@ tasbih:"📿 তসবিহ"
 quotes:["নামাজ জান্নাতের চাবি","আল্লাহকে স্মরণ করো","ধৈর্য ধরো"],
 prayer:["ফজর","সূর্যোদয়","জোহর","আসর","মাগরিব","এশা"]
 },
-
 en:{
 bismillah:"In the name of Allah, Most Merciful",
 days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-weather:"25°C Cloudy",
+weather:"Loading...",
 settings:"Settings",
 features:{
 namaz:"📚 Namaz Guide",
@@ -43,11 +42,10 @@ tasbih:"📿 Tasbih"
 quotes:["Prayer is the key to Jannah","Remember Allah","Have patience"],
 prayer:["Fajr","Sunrise","Dhuhr","Asr","Maghrib","Isha"]
 },
-
 hi:{
 bismillah:"अल्लाह के नाम से जो रहमान और रहीम है",
 days:["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"],
-weather:"25°C बादल",
+weather:"लोड हो रहा है...",
 settings:"सेटिंग्स",
 features:{
 namaz:"📚 नमाज़ गाइड",
@@ -64,15 +62,7 @@ prayer:["फ़ज्र","सूर्योदय","ज़ुहर","अस�
 
 const t = TEXT[s.lang] || TEXT["bn"];
 
-/* ================= CITY ================= */
-
-const CITY = {
-bn:"কলকাতা",
-en:"Kolkata",
-hi:"कोलकाता"
-};
-
-/* ================= HELPERS ================= */
+/* ================= BASIC ================= */
 
 function setText(id,text){
 let el=document.getElementById(id);
@@ -80,128 +70,98 @@ if(el) el.innerText=text;
 }
 
 function formatNumber(num){
-let str = num.toString();
-
-if(s.lang === "bn"){
-    return str.replace(/[0-9]/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
-}
-if(s.lang === "hi"){
-    return str.replace(/[0-9]/g,d=>"०१२३४५६७८९"[d]);
-}
+let str=num.toString();
+if(s.lang==="bn") return str.replace(/[0-9]/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
+if(s.lang==="hi") return str.replace(/[0-9]/g,d=>"०१२३४५६७८९"[d]);
 return str;
 }
 
-/* ================= APPLY TEXT ================= */
+/* ================= STATIC UI ================= */
 
-setTimeout(()=>{
-setText("city", CITY[s.lang] || "কলকাতা");
-},0);
-
+setText("city","Kolkata");
 setText("bismillahMeaning",t.bismillah);
-
-/* ================= DATE ================= */
-
-let now = new Date();
-
-/* DAY */
-setText("todayDay", t.days[now.getDay()]);
-
-/* ENGLISH DATE */
-let enDate = now.toLocaleDateString("en-GB");
-
-/* BANGLA DATE (approx fix) */
-const banglaMonths = [
-"পৌষ","মাঘ","ফাল্গুন","চৈত্র",
-"বৈশাখ","জ্যৈষ্ঠ","আষাঢ়","শ্রাবণ",
-"ভাদ্র","আশ্বিন","কার্তিক","অগ্রহায়ণ"
-];
-
-let start = new Date(now.getFullYear(), 3, 14); // 14 April
-let diff = Math.floor((now - start)/(1000*60*60*24));
-
-if(diff < 0){
-    start = new Date(now.getFullYear()-1, 3, 14);
-    diff = Math.floor((now - start)/(1000*60*60*24));
-}
-
-let bMonth = Math.floor(diff / 30);
-let bDay = (diff % 30) + 1;
-
-let bnDate = banglaMonths[bMonth] + " " + formatNumber(bDay);
-
-/* HIJRI DATE */
-let hijri = new Intl.DateTimeFormat('en-TN-u-ca-islamic', {
-day: 'numeric',
-month: 'long',
-year: 'numeric'
-}).format(now);
-
-/* LANGUAGE APPLY */
-if(s.lang === "bn"){
-    setText("date", bnDate);
-}else if(s.lang === "hi"){
-    setText("date", formatNumber(enDate));
-}else{
-    setText("date", enDate);
-}
+setText("todayDay",t.days[new Date().getDay()]);
 
 /* ================= CLOCK ================= */
 
 setInterval(()=>{
 let d=new Date();
-let h=String(d.getHours()).padStart(2,"0");
-let m=String(d.getMinutes()).padStart(2,"0");
-let sec=String(d.getSeconds()).padStart(2,"0");
+let time=
+String(d.getHours()).padStart(2,"0")+":"+
+String(d.getMinutes()).padStart(2,"0")+":"+
+String(d.getSeconds()).padStart(2,"0");
 
-setText("clock", formatNumber(h+":"+m+":"+sec));
+setText("clock",formatNumber(time));
 },1000);
 
-/* ================= PRAYER DATA ================= */
+/* ================= API ================= */
 
-let prayerList=[
-[t.prayer[0],"04:33"],
-[t.prayer[1],"05:34"],
-[t.prayer[2],"11:42"],
-[t.prayer[3],"15:07"],
-[t.prayer[4],"17:50"],
-[t.prayer[5],"18:52"]
+let prayerList=[];
+
+async function loadAPI(){
+
+try{
+
+let res=await fetch(`https://api.aladhan.com/v1/timingsByCity?city=Kolkata&country=India&method=1`);
+let data=await res.json();
+
+let tm=data.data.timings;
+let hijri=data.data.date.hijri;
+
+/* HIJRI */
+setText("date",formatNumber(`${hijri.day} ${hijri.month.en} ${hijri.year}`));
+
+/* PRAYER */
+prayerList=[
+[t.prayer[0],tm.Fajr],
+[t.prayer[1],tm.Sunrise],
+[t.prayer[2],tm.Dhuhr],
+[t.prayer[3],tm.Asr],
+[t.prayer[4],tm.Maghrib],
+[t.prayer[5],tm.Isha]
 ];
 
-/* ================= AZAN AUDIO SYSTEM ================= */
+renderGrid();
+updateStatus();
 
-const AZAN_FILES = {
-    makkah: "assets/makkah.mp3",
-    madinah: "assets/madinah.mp3",
-    kuwait: "assets/kuwait.mp3",
-    bangladesh: "assets/bangladesh.mp3",
-    alaska: "assets/alaska.mp3"
-};
-
-let azanAudio = new Audio();
-
-function getAzanSource(){
-    let s = getSettings();
-    return s.azan || "makkah";
+}catch(e){
+console.log("API error",e);
 }
 
-function loadAzan(){
-    azanAudio.src = AZAN_FILES[getAzanSource()];
 }
-loadAzan();
 
-/* ================= NEXT ================= */
+loadAPI();
 
-function getNextPrayer(){
+/* ================= WEATHER ================= */
+
+async function loadWeather(){
+
+try{
+
+let res=await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Kolkata&appid=YOUR_API_KEY&units=metric`);
+let data=await res.json();
+
+let temp=Math.round(data.main.temp);
+let desc=data.weather[0].main;
+
+setText("weather",formatNumber(temp+"°C "+desc));
+
+}catch(e){}
+}
+
+loadWeather();
+
+/* ================= PRAYER LOGIC ================= */
+
+function getNext(){
+
 let now=new Date();
 
 for(let p of prayerList){
 let [h,m]=p[1].split(":");
 let t=new Date();
 t.setHours(h,m,0);
-
-if(now < t){
-return {name:p[0],time:t};
-}
+if(now<t) return {name:p[0],time:t};
 }
 
 let [h,m]=prayerList[0][1].split(":");
@@ -212,134 +172,90 @@ t2.setHours(h,m,0);
 return {name:prayerList[0][0],time:t2};
 }
 
-/* ================= CURRENT ================= */
+function getCurrent(){
 
-function getCurrentPrayer(){
 let now=new Date();
 
 for(let i=prayerList.length-1;i>=0;i--){
 let [h,m]=prayerList[i][1].split(":");
 let t=new Date();
 t.setHours(h,m,0);
-
-if(now>=t){
-return prayerList[i][0];
+if(now>=t) return prayerList[i][0];
 }
+return "";
 }
-return prayerList[0][0];
-}
-
-/* ================= STATUS ================= */
 
 function updateStatus(){
 
-let now = new Date();
+if(!prayerList.length) return;
 
-let next = getNextPrayer();
+let next=getNext();
 
-setText("currentPrayerName","● "+getCurrentPrayer());
+setText("currentPrayerName","● "+getCurrent());
 setText("nextPrayerName","⏭ "+next.name);
 
-let diff = next.time.getTime() - now.getTime();
-if(diff < 0) diff = 0;
+let diff=next.time-new Date();
 
-let h = Math.floor(diff/1000/60/60);
-let m = Math.floor((diff/1000/60)%60);
-let sec = Math.floor((diff/1000)%60);
+let time=
+String(Math.floor(diff/3600000)).padStart(2,"0")+":"+
+String(Math.floor(diff/60000)%60).padStart(2,"0")+":"+
+String(Math.floor(diff/1000)%60).padStart(2,"0");
 
-let time =
-String(h).padStart(2,"0")+":"+
-String(m).padStart(2,"0")+":"+
-String(sec).padStart(2,"0");
-
-setText("countdown", formatNumber(time));
+setText("countdown",formatNumber(time));
 }
 
 setInterval(updateStatus,1000);
-updateStatus();
 
-/* ================= AZAN AUTO PLAY ================= */
+/* ================= GRID ================= */
 
-let lastPlayed = null;
+function renderGrid(){
 
-function checkAzan(){
+let grid=document.getElementById("prayerGrid");
+if(!grid) return;
 
-let now = new Date();
-
-let currentTime =
-String(now.getHours()).padStart(2,"0")+":"+
-String(now.getMinutes()).padStart(2,"0");
+grid.innerHTML="";
 
 prayerList.forEach(p=>{
-    if(p[1] === currentTime){
-        if(lastPlayed !== currentTime){
-            azanAudio.currentTime = 0;
-            azanAudio.play().catch(()=>{});
-            lastPlayed = currentTime;
-        }
-    }
+
+let div=document.createElement("div");
+div.className="prayer-box";
+
+if(p[0]===t.prayer[1]){
+div.innerHTML=`<div style="font-size:24px;">⚙️</div><div>${t.settings}</div>`;
+div.onclick=()=>openPage("settings");
+}else{
+div.innerHTML=`${p[0]}<br>${formatNumber(p[1])}`;
+}
+
+grid.appendChild(div);
+
 });
 }
 
-setInterval(checkAzan,1000);
-
-/* ================= WEATHER ================= */
-
-setText("weather", formatNumber(t.weather));
-
-/* ================= NAVIGATION ================= */
+/* ================= NAV ================= */
 
 function openPage(page){
 window.location.href="./html/"+page+".html";
 }
 
-/* ================= PRAYER GRID ================= */
-
-let grid=document.getElementById("prayerGrid");
-
-if(grid){
-grid.innerHTML="";
-
-prayerList.forEach(p=>{
-let div=document.createElement("div");
-div.className="prayer-box";
-
-// 🔥 Sunrise box special design
-if(p[0] === t.prayer[1]){
-
-    div.style.cursor="pointer";
-    div.onclick=()=>openPage("settings");
-
-    div.innerHTML = `
-    <div style="font-size:24px;">⚙️</div>
-    <div style="margin-top:8px;">${t.settings}</div>
-    `;
-
-}else{
-
-    div.innerHTML = `${p[0]}<br>${formatNumber(p[1])}`;
-}
-
-grid.appendChild(div);
-});
-}
-
 /* ================= FEATURES ================= */
 
-Object.keys(t.features).forEach(id=>{
-setText(id,t.features[id]);
-});
-
-/* ================= CLICK ================= */
+Object.keys(t.features).forEach(id=>setText(id,t.features[id]));
 
 ["namaz","quran","dua","hadith","qibla","tasbih"].forEach(id=>{
 let el=document.getElementById(id);
-if(el){
-el.onclick=()=>openPage(id==="namaz"?"namaz-guide":id);
-}
+if(el) el.onclick=()=>openPage(id==="namaz"?"namaz-guide":id);
 });
 
-/* ================= BOTTOM TEXT ================= */
+/* ================= EXTRA CLICK ================= */
+
+let b=document.getElementById("bismillahCard");
+if(b) b.onclick=()=>openPage("allah-names");
+
+let sBox=document.querySelector(".status");
+if(sBox) sBox.onclick=()=>openPage("calendar");
+
+/* ================= QUOTES ================= */
 
 let i=0;
 setInterval(()=>{
@@ -347,30 +263,11 @@ setText("bottomText",t.quotes[i]);
 i=(i+1)%t.quotes.length;
 },3000);
 
-/* ================= AUTO LANGUAGE REFRESH ================= */
+/* ================= LANG AUTO ================= */
 
 setInterval(()=>{
-let newLang = getSettings().lang;
-if(newLang !== currentLang){
-    location.reload();
-}
+let newLang=getSettings().lang;
+if(newLang!==currentLang) location.reload();
 },1000);
 
-/* ================= BISMILLAH + STATUS CLICK ================= */
-
-// Bismillah click
-let b = document.getElementById("bismillahCard");
-
-if(b){
-    b.style.cursor = "pointer";
-    b.onclick = ()=>openPage("allah-names");
-}
-
-// Status (timer box) click
-let statusBox = document.querySelector(".status");
-
-if(statusBox){
-    statusBox.style.cursor = "pointer";
-    statusBox.onclick = ()=>openPage("calendar");
-}
 });
