@@ -29,9 +29,17 @@ const banglaMonths=[
 "কার্তিক","অগ্রহায়ণ","পৌষ","মাঘ","ফাল্গুন","চৈত্র"
 ];
 
-let day=date.getDate();
-let month=date.getMonth();
-let year=date.getFullYear()-593;
+const start = new Date(date.getFullYear(),3,14);
+
+let diff = Math.floor((date - start) / (1000*60*60*24));
+
+if(diff < 0){
+diff += 365;
+}
+
+let month = Math.floor(diff / 30);
+let day = (diff % 30) + 1;
+let year = date.getFullYear() - 593;
 
 return `${day} ${banglaMonths[month]} ${year}`;
 }
@@ -40,7 +48,9 @@ return `${day} ${banglaMonths[month]} ${year}`;
 
 function getHijriDate(date){
 
-return new Intl.DateTimeFormat('ar-TN-u-ca-islamic',{
+let locale = lang === "bn" ? "bn" : (lang === "hi" ? "hi" : "en");
+
+return new Intl.DateTimeFormat(locale + '-u-ca-islamic',{
 day:'numeric',
 month:'short',
 year:'numeric'
@@ -64,7 +74,7 @@ const days=new Date(year,month+1,0).getDate();
 
 let today=new Date();
 
-/* empty space */
+/* empty */
 for(let i=0;i<firstDay;i++){
 const empty=document.createElement("div");
 grid.appendChild(empty);
@@ -84,7 +94,7 @@ cell.innerHTML=`
 <div>${getHijriDate(fullDate)}</div>
 `;
 
-/* TODAY highlight */
+/* today highlight */
 if(
 d===today.getDate() &&
 month===today.getMonth() &&
