@@ -14,23 +14,23 @@
 
 <div class="container">
 
-<h2>⚙️ সেটিংস</h2>
+<h2 id="settingsTitle">⚙️ সেটিংস</h2>
 
 <!-- AZAN -->
 <div class="card">
-<h3>আজান সাউন্ড</h3>
+<h3 id="azanTitle">আজান সাউন্ড</h3>
 
-<div class="option" onclick="setAzan('makkah')">মক্কা</div>
-<div class="option" onclick="setAzan('madinah')">মদিনা</div>
-<div class="option" onclick="setAzan('kuwait')">কুয়েত</div>
-<div class="option" onclick="setAzan('bangladesh')">বাংলাদেশ</div>
-<div class="option active" onclick="setAzan('alaska')">আলাস্কা ✔</div>
+<div class="option" data-azan="makkah" onclick="setAzan('makkah')">মক্কা</div>
+<div class="option" data-azan="madinah" onclick="setAzan('madinah')">মদিনা</div>
+<div class="option" data-azan="kuwait" onclick="setAzan('kuwait')">কুয়েত</div>
+<div class="option" data-azan="bangladesh" onclick="setAzan('bangladesh')">বাংলাদেশ</div>
+<div class="option" data-azan="alaska" onclick="setAzan('alaska')">আলাস্কা</div>
 
 </div>
 
 <!-- LANGUAGE -->
 <div class="card">
-<h3>ভাষা</h3>
+<h3 id="langTitle">ভাষা</h3>
 
 <select id="langSelect">
 <option value="bn">বাংলা</option>
@@ -42,22 +42,23 @@
 
 <!-- THEME -->
 <div class="card">
-<h3>থিম</h3>
+<h3 id="themeTitle">থিম</h3>
 
 <label>
-<input type="checkbox" id="darkMode"> ডার্ক মোড
+<input type="checkbox" id="darkMode">
+<span id="darkLabel">ডার্ক মোড</span>
 </label>
 
 </div>
 
 <!-- BUTTON -->
 <div class="btn-box">
-<button onclick="saveSettings()">সেভ</button>
+<button id="saveBtn" onclick="saveSettings()">সেভ</button>
 </div>
 
 </div>
 
-<script src="../js/settings.js?v=3"></script>
+<script src="../js/settings.js?v=4"></script>
 
 </body>
 </html>
