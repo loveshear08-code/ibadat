@@ -183,7 +183,44 @@ let tm=data.data.timings;
 let hijri=data.data.date.hijri;
 
 /* HIJRI ONLY */
-let hij = `${hijri.day} ${hijri.month.en} ${hijri.year}`;
+let month = hijri.month.en;
+
+const HIJRI_MONTH = {
+bn:{
+"Muharram":"মুহাররম",
+"Safar":"সফর",
+"Rabi al-Awwal":"রবিউল আউয়াল",
+"Rabi al-Thani":"রবিউস সানি",
+"Jumada al-Ula":"জুমাদাল উলা",
+"Jumada al-Akhirah":"জুমাদাস সানিয়া",
+"Rajab":"রজব",
+"Sha'ban":"শাবান",
+"Ramadan":"রমজান",
+"Shawwal":"শাওয়াল",
+"Dhul Qadah":"জিলকদ",
+"Dhul Hijjah":"জিলহজ্জ"
+},
+hi:{
+"Muharram":"मुहर्रम",
+"Safar":"सफ़र",
+"Rabi al-Awwal":"रबी अल अव्वल",
+"Rabi al-Thani":"रबी अस सानी",
+"Jumada al-Ula":"जुमादा अल ऊला",
+"Jumada al-Akhirah":"जुमादा अस सानिया",
+"Rajab":"रजब",
+"Sha'ban":"शाबान",
+"Ramadan":"रमज़ान",
+"Shawwal":"शव्वाल",
+"Dhul Qadah":"ज़िलक़ादा",
+"Dhul Hijjah":"ज़िलहिज्जा"
+}
+};
+
+if(HIJRI_MONTH[s.lang] && HIJRI_MONTH[s.lang][month]){
+month = HIJRI_MONTH[s.lang][month];
+}
+
+let hij = `${hijri.day} ${month} ${hijri.year}`;
 setText("date", formatNumber(hij));
 
 /* LIST */
