@@ -11,7 +11,7 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 padding:14px;
-background:#2f6aa3;
+background:#2e7d32; /* deep green match */
 color:white;
 font-weight:bold;
 font-size:16px;
@@ -35,14 +35,14 @@ padding:16px;
 /* CARD */
 
 .name-card{
-background:#e8f5e9;
+background:#c8e6c9;
 border-radius:18px;
 padding:22px;
 text-align:center;
 box-shadow:0 4px 12px rgba(0,0,0,0.08);
 }
 
-/* ARABIC NAME */
+/* ARABIC */
 
 .arabic{
 font-size:26px;
@@ -51,7 +51,7 @@ font-weight:bold;
 margin-bottom:8px;
 }
 
-/* BANGLA / ENGLISH / HINDI */
+/* PRON */
 
 .pron{
 font-size:18px;
