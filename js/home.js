@@ -257,4 +257,33 @@ setText("bottomText",t.quotes[i]);
 i=(i+1)%t.quotes.length;
 },3000);
 
+/* ================= NAV ================= */
+
+function openPage(page){
+window.location.href="./html/"+page+".html";
+}
+
+/* ================= FEATURES ================= */
+
+Object.keys(t.features).forEach(id=>setText(id,t.features[id]));
+
+["namaz","quran","dua","hadith","qibla","tasbih"].forEach(id=>{
+let el=document.getElementById(id);
+if(el){
+el.onclick=()=>openPage(id==="namaz"?"namaz-guide":id);
+}
+});
+
+/* ================= EXTRA CLICK ================= */
+
+let b=document.getElementById("bismillahCard");
+if(b){
+b.onclick=()=>openPage("allah-names");
+}
+
+let sBox=document.querySelector(".status");
+if(sBox){
+sBox.onclick=()=>openPage("calendar");
+}
+
 });
