@@ -119,12 +119,23 @@ function applySettings(){
     }
 
     /* 🔥 ACTIVE AZAN HIGHLIGHT */
-    document.querySelectorAll(".option").forEach(el=>{
-        el.classList.remove("active");
-        if(el.dataset.azan === s.azan){
-            el.classList.add("active");
-        }
-    });
+    
+  document.querySelectorAll(".option").forEach(el=>{
+
+    let tick = el.querySelector(".tick");
+
+    // আগে সব clear
+    el.classList.remove("active");
+    if(tick) tick.innerText = "";
+
+    // selected হলে
+    if(el.dataset.azan === s.azan){
+        el.classList.add("active");
+        if(tick) tick.innerText = "✔";
+    }
+
+}); 
+    
 }
 
 /* ================= SET AZAN ================= */
@@ -173,3 +184,21 @@ function saveSettings(){
 document.addEventListener("DOMContentLoaded", function(){
     applySettings();
 });
+
+const AZAN_FILES = {
+    makkah: "../assets/makkah.mp3",
+    madinah: "../assets/madinah.mp3",
+    kuwait: "../assets/kuwait.mp3",
+    bangladesh: "../assets/bangladesh.mp3",
+    alaska: "../assets/alaska.mp3"
+};
+
+let audio = new Audio();
+
+function playAzan(e,type){
+    e.stopPropagation(); // 🔥 option click trigger বন্ধ
+
+    audio.src = AZAN_FILES[type];
+    audio.currentTime = 0;
+    audio.play().catch(()=>{});
+}
