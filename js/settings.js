@@ -3,7 +3,7 @@
 const defaultSettings = {
     lang: "bn",
     dark: false,
-    azan: "makkah" // 🔥 FIXED এখানে .mp3 বাদ
+    azan: "makkah"
 };
 
 /* ================= LANGUAGE TEXT ================= */
@@ -106,4 +106,70 @@ function applySettings(){
         let el = document.getElementById(id);
         if(el) el.innerText = map[id];
     });
+
+    /* 🔥 SELECT VALUE SET (IMPORTANT FIX) */
+    let langSelect = document.getElementById("langSelect");
+    if(langSelect){
+        langSelect.value = s.lang;
+    }
+
+    let darkMode = document.getElementById("darkMode");
+    if(darkMode){
+        darkMode.checked = s.dark;
+    }
+
+    /* 🔥 ACTIVE AZAN HIGHLIGHT */
+    document.querySelectorAll(".option").forEach(el=>{
+        el.classList.remove("active");
+        if(el.dataset.azan === s.azan){
+            el.classList.add("active");
+        }
+    });
 }
+
+/* ================= SET AZAN ================= */
+
+function setAzan(type){
+
+    let s = getSettings();
+    s.azan = type;
+
+    saveSettingsToStorage(s);
+
+    /* UI update */
+    document.querySelectorAll(".option").forEach(el=>{
+        el.classList.remove("active");
+    });
+
+    let selected = document.querySelector(`[data-azan="${type}"]`);
+    if(selected){
+        selected.classList.add("active");
+    }
+}
+
+/* ================= SAVE BUTTON ================= */
+
+function saveSettings(){
+
+    let s = getSettings();
+
+    let langEl = document.getElementById("langSelect");
+    let darkEl = document.getElementById("darkMode");
+
+    if(langEl) s.lang = langEl.value;
+    if(darkEl) s.dark = darkEl.checked;
+
+    saveSettingsToStorage(s);
+
+    /* OPTIONAL TOAST */
+    let t = TEXT[s.lang] || TEXT["bn"];
+    alert(t.saved);
+
+    location.reload();
+}
+
+/* ================= INIT ================= */
+
+document.addEventListener("DOMContentLoaded", function(){
+    applySettings();
+});
