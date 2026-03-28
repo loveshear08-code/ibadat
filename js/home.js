@@ -46,7 +46,7 @@ hi:{
 bismillah:"अल्लाह के नाम से जो रहमान और रहीम है",
 days:["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"],
 weather:"लोड हो रहा है...",
-settings:"सेटिंग्स",
+settings:"सेटিং्स",
 features:{
 namaz:"📚 नमाज़ गाइड",
 quran:"🕌 अल कुरआन",
@@ -97,11 +97,8 @@ setText("clock",formatNumber(time));
 
 let prayerList=[];
 
-/* 👉 GPS FAIL হলে fallback */
 if(navigator.geolocation){
-
 navigator.geolocation.getCurrentPosition(startApp, fallback);
-
 }else{
 fallback();
 }
@@ -111,11 +108,18 @@ async function startApp(pos){
 let lat = pos.coords.latitude;
 let lon = pos.coords.longitude;
 
-/* CITY */
+/* CITY (LANG FIX) */
 try{
 let locRes = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
 let loc = await locRes.json();
-setText("city", loc.city || "Kolkata");
+
+let cityName = loc.city || "Kolkata";
+
+if(s.lang==="bn" && cityName==="Kolkata") cityName="কলকাতা";
+if(s.lang==="hi" && cityName==="Kolkata") cityName="कोलकाता";
+
+setText("city", cityName);
+
 }catch{
 setText("city","Kolkata");
 }
@@ -128,10 +132,13 @@ loadPrayer(lat, lon);
 
 }
 
-/* 👉 fallback (GPS off হলে Kolkata use করবে) */
 function fallback(){
 
-setText("city","Kolkata");
+let cityName = "Kolkata";
+if(s.lang==="bn") cityName="কলকাতা";
+if(s.lang==="hi") cityName="कोलकाता";
+
+setText("city",cityName);
 
 loadWeather(22.5726,88.3639);
 loadPrayer(22.5726,88.3639);
@@ -175,14 +182,11 @@ let data=await res.json();
 let tm=data.data.timings;
 let hijri=data.data.date.hijri;
 
-/* DATE */
-let now=new Date();
-let eng = now.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
+/* HIJRI ONLY */
 let hij = `${hijri.day} ${hijri.month.en} ${hijri.year}`;
+setText("date", formatNumber(hij));
 
-setText("date", formatNumber(eng+" | "+hij));
-
-/* PRAYER LIST */
+/* LIST */
 prayerList=[
 [t.prayer[0],tm.Fajr],
 [t.prayer[1],tm.Sunrise],
@@ -204,14 +208,36 @@ console.log("Prayer error",e);
 /* ================= STATUS ================= */
 
 function getNext(){
+
 let now=new Date();
+
 for(let p of prayerList){
 let [h,m]=p[1].split(":");
 let t=new Date();
 t.setHours(h,m,0);
 if(now<t) return {name:p[0],time:t};
 }
-return null;
+
+let [h,m]=prayerList[0][1].split(":");
+let t2=new Date();
+t2.setDate(t2.getDate()+1);
+t2.setHours(h,m,0);
+
+return {name:prayerList[0][0],time:t2};
+}
+
+function getCurrent(){
+
+let now=new Date();
+
+for(let i=prayerList.length-1;i>=0;i--){
+let [h,m]=prayerList[i][1].split(":");
+let t=new Date();
+t.setHours(h,m,0);
+if(now>=t) return prayerList[i][0];
+}
+
+return "";
 }
 
 function updateStatus(){
@@ -219,11 +245,22 @@ function updateStatus(){
 if(!prayerList.length) return;
 
 let next=getNext();
-if(!next) return;
 
+setText("currentPrayerName","● "+getCurrent());
 setText("nextPrayerName","⏭ "+next.name);
 
+let diff=next.time-new Date();
+if(diff<0) diff=0;
+
+let time=
+String(Math.floor(diff/3600000)).padStart(2,"0")+":"+
+String(Math.floor(diff/60000)%60).padStart(2,"0")+":"+
+String(Math.floor(diff/1000)%60).padStart(2,"0");
+
+setText("countdown",formatNumber(time));
 }
+
+setInterval(updateStatus,1000);
 
 /* ================= GRID ================= */
 
@@ -238,24 +275,18 @@ prayerList.forEach(p=>{
 
 let div=document.createElement("div");
 div.className="prayer-box";
+
+if(p[0]===t.prayer[1]){
+div.innerHTML=`<div style="font-size:24px;">⚙️</div><div>${t.settings}</div>`;
+div.onclick=()=>openPage("settings");
+}else{
 div.innerHTML=`${p[0]}<br>${formatNumber(p[1])}`;
+}
+
 grid.appendChild(div);
 
 });
-
 }
-
-/* ================= FEATURES ================= */
-
-Object.keys(t.features).forEach(id=>setText(id,t.features[id]));
-
-/* ================= QUOTES ================= */
-
-let i=0;
-setInterval(()=>{
-setText("bottomText",t.quotes[i]);
-i=(i+1)%t.quotes.length;
-},3000);
 
 /* ================= NAV ================= */
 
@@ -274,7 +305,7 @@ el.onclick=()=>openPage(id==="namaz"?"namaz-guide":id);
 }
 });
 
-/* ================= EXTRA CLICK ================= */
+/* ================= EXTRA ================= */
 
 let b=document.getElementById("bismillahCard");
 if(b){
@@ -285,5 +316,20 @@ let sBox=document.querySelector(".status");
 if(sBox){
 sBox.onclick=()=>openPage("calendar");
 }
+
+/* ================= QUOTES ================= */
+
+let i=0;
+setInterval(()=>{
+setText("bottomText",t.quotes[i]);
+i=(i+1)%t.quotes.length;
+},3000);
+
+/* ================= LANG AUTO ================= */
+
+setInterval(()=>{
+let newLang=getSettings().lang;
+if(newLang!==currentLang) location.reload();
+},1000);
 
 });
