@@ -269,12 +269,20 @@ prayerList.forEach(p=>{
 let div=document.createElement("div");
 div.className="prayer-box";
 
-div.innerHTML = `${p[0]}<br>${formatNumber(p[1])}`;
-
+// 🔥 Sunrise box special design
 if(p[0] === t.prayer[1]){
+
     div.style.cursor="pointer";
     div.onclick=()=>openPage("settings");
-    div.innerHTML += `<br><small>⚙️ ${t.settings}</small>`;
+
+    div.innerHTML = `
+    <div style="font-size:24px;">⚙️</div>
+    <div style="margin-top:8px;">${t.settings}</div>
+    `;
+
+}else{
+
+    div.innerHTML = `${p[0]}<br>${formatNumber(p[1])}`;
 }
 
 grid.appendChild(div);
