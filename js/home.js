@@ -78,7 +78,6 @@ return str;
 
 /* ================= STATIC ================= */
 
-setText("city","Kolkata");
 setText("bismillahMeaning",t.bismillah);
 setText("todayDay",t.days[new Date().getDay()]);
 
@@ -94,26 +93,39 @@ String(d.getSeconds()).padStart(2,"0");
 setText("clock",formatNumber(time));
 },1000);
 
-/* ================= API ================= */
+/* ================= MAIN (GPS + API) ================= */
 
 let prayerList=[];
 
-async function loadAPI(){
+navigator.geolocation.getCurrentPosition(async pos=>{
 
+let lat = pos.coords.latitude;
+let lon = pos.coords.longitude;
+
+/* 📍 CITY */
+try{
+let locRes = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
+let loc = await locRes.json();
+setText("city", loc.city || "Your City");
+}catch{
+setText("city","Your City");
+}
+
+/* 🕌 PRAYER + HIJRI */
 try{
 
-let res=await fetch(`https://api.aladhan.com/v1/timingsByCity?city=Kolkata&country=India&method=1`);
+let res=await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=2`);
 let data=await res.json();
 
 let tm=data.data.timings;
 let hijri=data.data.date.hijri;
 
-/* ✅ CLEAN DATE (ENGLISH + HIJRI) */
+/* DATE */
 let now=new Date();
-let engDate = now.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
-let hijriDate = `${hijri.day} ${hijri.month.en} ${hijri.year}`;
+let eng = now.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
+let hij = `${hijri.day} ${hijri.month.en} ${hijri.year}`;
 
-setText("date", formatNumber(engDate + " | " + hijriDate));
+setText("date", formatNumber(eng+" | "+hij));
 
 /* PRAYER */
 prayerList=[
@@ -129,41 +141,32 @@ renderGrid();
 updateStatus();
 
 }catch(e){
-console.log("API error",e);
+console.log("Prayer API error",e);
 }
 
-}
-
-loadAPI();
-
-/* ================= WEATHER ================= */
-
-async function loadWeather(){
-
+/* 🌦 WEATHER */
 try{
 
-// 🔥 যদি API key না থাকে → fallback
-let apiKey="";
+let apiKey="YOUR_API_KEY"; // 🔥 এখানে key বসাও
 
 if(!apiKey){
 setText("weather","--");
 return;
 }
 
-let res=await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Kolkata&appid=${apiKey}&units=metric`);
-let data=await res.json();
+let wRes=await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`);
+let wData=await wRes.json();
 
-let temp=Math.round(data.main.temp);
-let desc=data.weather[0].main;
+let temp=Math.round(wData.main.temp);
+let desc=wData.weather[0].main;
 
 setText("weather",formatNumber(temp+"°C "+desc));
 
-}catch(e){
+}catch{
 setText("weather","--");
 }
-}
 
-loadWeather();
+});
 
 /* ================= PRAYER LOGIC ================= */
 
@@ -209,7 +212,7 @@ setText("currentPrayerName","● "+getCurrent());
 setText("nextPrayerName","⏭ "+next.name);
 
 let diff=next.time-new Date();
-if(diff<0) diff=0; // ✅ FIX
+if(diff<0) diff=0;
 
 let time=
 String(Math.floor(diff/3600000)).padStart(2,"0")+":"+
