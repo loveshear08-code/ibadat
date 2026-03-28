@@ -79,7 +79,6 @@ let el=document.getElementById(id);
 if(el) el.innerText=text;
 }
 
-/* 🔥 NUMBER FORMAT FIX (FINAL) */
 function formatNumber(num){
 let str = num.toString();
 
@@ -133,6 +132,28 @@ let prayerList=[
 [t.prayer[5],"18:52"]
 ];
 
+/* ================= AZAN AUDIO SYSTEM ================= */
+
+const AZAN_FILES = {
+    makkah: "assets/makkah.mp3",
+    madinah: "assets/madinah.mp3",
+    kuwait: "assets/kuwait.mp3",
+    bangladesh: "assets/bangladesh.mp3",
+    alaska: "assets/alaska.mp3"
+};
+
+let azanAudio = new Audio();
+
+function getAzanSource(){
+    let s = getSettings();
+    return s.azan || "makkah";
+}
+
+function loadAzan(){
+    azanAudio.src = AZAN_FILES[getAzanSource()];
+}
+loadAzan();
+
 /* ================= NEXT ================= */
 
 function getNextPrayer(){
@@ -177,16 +198,15 @@ return prayerList[0][0];
 
 function updateStatus(){
 
-let now = new Date(); // 🔥 SINGLE SOURCE
+let now = new Date();
 
 let next = getNextPrayer();
 
 setText("currentPrayerName","● "+getCurrentPrayer());
 setText("nextPrayerName","⏭ "+next.name);
 
-let diff = next.time.getTime() - now.getTime(); // 🔥 FIX
-
-if(diff < 0) diff = 0; // safety
+let diff = next.time.getTime() - now.getTime();
+if(diff < 0) diff = 0;
 
 let h = Math.floor(diff/1000/60/60);
 let m = Math.floor((diff/1000/60)%60);
@@ -203,6 +223,31 @@ setText("countdown", formatNumber(time));
 setInterval(updateStatus,1000);
 updateStatus();
 
+/* ================= AZAN AUTO PLAY ================= */
+
+let lastPlayed = null;
+
+function checkAzan(){
+
+let now = new Date();
+
+let currentTime =
+String(now.getHours()).padStart(2,"0")+":"+
+String(now.getMinutes()).padStart(2,"0");
+
+prayerList.forEach(p=>{
+    if(p[1] === currentTime){
+        if(lastPlayed !== currentTime){
+            azanAudio.currentTime = 0;
+            azanAudio.play().catch(()=>{});
+            lastPlayed = currentTime;
+        }
+    }
+});
+}
+
+setInterval(checkAzan,1000);
+
 /* ================= WEATHER ================= */
 
 setText("weather", formatNumber(t.weather));
@@ -213,7 +258,7 @@ function openPage(page){
 window.location.href="./html/"+page+".html";
 }
 
-/* ================= PRAYER GRID (🔥 FINAL FIX) ================= */
+/* ================= PRAYER GRID ================= */
 
 let grid=document.getElementById("prayerGrid");
 
@@ -224,19 +269,12 @@ prayerList.forEach(p=>{
 let div=document.createElement("div");
 div.className="prayer-box";
 
-/* 🔥 FORCE RENDER FIX */
-let timeFormatted = formatNumber(p[1]);
-
-div.innerHTML = "";
-div.innerHTML = `${p[0]}<br>${timeFormatted}`;
+div.innerHTML = `${p[0]}<br>${formatNumber(p[1])}`;
 
 if(p[0] === t.prayer[1]){
     div.style.cursor="pointer";
     div.onclick=()=>openPage("settings");
-
-    div.innerHTML += `<br><small style="opacity:0.6">⚙️ ${t.settings}</small>`;
-}else{
-    div.style.cursor="default";
+    div.innerHTML += `<br><small>⚙️ ${t.settings}</small>`;
 }
 
 grid.appendChild(div);
@@ -254,18 +292,7 @@ setText(id,t.features[id]);
 ["namaz","quran","dua","hadith","qibla","tasbih"].forEach(id=>{
 let el=document.getElementById(id);
 if(el){
-el.style.cursor="pointer";
 el.onclick=()=>openPage(id==="namaz"?"namaz-guide":id);
-}
-});
-
-/* ================= STATUS CLICK ================= */
-
-["currentPrayerName","nextPrayerName"].forEach(id=>{
-let el=document.getElementById(id);
-if(el){
-el.style.cursor="pointer";
-el.onclick=()=>openPage("calendar");
 }
 });
 
