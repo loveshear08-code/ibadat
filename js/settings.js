@@ -3,7 +3,7 @@
 const defaultSettings = {
     lang: "bn",
     dark: false,
-    azan: "makkah.mp3"
+    azan: "makkah" // 🔥 FIXED এখানে .mp3 বাদ
 };
 
 /* ================= LANGUAGE TEXT ================= */
@@ -90,7 +90,7 @@ function applySettings(){
     /* TITLE */
     document.title = t.title;
 
-    /* SETTINGS PAGE TEXT (if exist) */
+    /* SETTINGS PAGE TEXT */
     const map = {
         settingsTitle: t.settings,
         azanTitle: t.azan,
