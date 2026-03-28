@@ -201,7 +201,7 @@ updateStatus();
 
 /* ================= WEATHER ================= */
 
-setText("weather",t.weather);
+setText("weather", formatNumber(t.weather));
 
 /* ================= NAVIGATION ================= */
 
