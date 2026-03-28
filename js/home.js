@@ -144,29 +144,38 @@ updateStatus();
 console.log("Prayer API error",e);
 }
 
-/* 🌦 WEATHER */
+/* ================= WEATHER ================= */
+
+async function loadWeather(lat, lon){
+
 try{
 
-let apiKey="YOUR_API_KEY"; // 🔥 এখানে key বসাও
+let apiKey = "YOUR_REAL_API_KEY"; // 👉 এখানে তোমার API key বসাও
 
 if(!apiKey){
-setText("weather","--");
+setText("weather", t.weather);
 return;
 }
 
-let wRes=await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`);
-let wData=await wRes.json();
+let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`);
+let data = await res.json();
 
-let temp=Math.round(wData.main.temp);
-let desc=wData.weather[0].main;
+if(data && data.main){
 
-setText("weather",formatNumber(temp+"°C "+desc));
+let temp = Math.round(data.main.temp);
+let desc = data.weather[0].main;
 
-}catch{
-setText("weather","--");
+setText("weather", formatNumber(temp + "°C " + desc));
+
+}else{
+setText("weather", t.weather);
 }
 
-});
+}catch(e){
+setText("weather", t.weather);
+}
+
+}
 
 /* ================= PRAYER LOGIC ================= */
 
