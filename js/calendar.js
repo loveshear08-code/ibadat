@@ -7,6 +7,49 @@ const next=document.getElementById("nextMonth");
 
 let current=new Date();
 
+/* ================= SETTINGS ================= */
+
+let s = JSON.parse(localStorage.getItem("appSettings")) || {lang:"bn"};
+let lang = s.lang;
+
+/* ================= MONTHS ================= */
+
+const MONTHS = {
+bn:["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"],
+en:["January","February","March","April","May","June","July","August","September","October","November","December"],
+hi:["जनवरी","फ़रवरी","मार्च","अप्रैल","मई","जून","जुलाई","अगस्त","सितंबर","अक्टूबर","नवंबर","दिसंबर"]
+};
+
+/* ================= BANGLA DATE ================= */
+
+function getBanglaDate(date){
+
+const banglaMonths=[
+"বৈশাখ","জ্যৈষ্ঠ","আষাঢ়","শ্রাবণ","ভাদ্র","আশ্বিন",
+"কার্তিক","অগ্রহায়ণ","পৌষ","মাঘ","ফাল্গুন","চৈত্র"
+];
+
+let day=date.getDate();
+let month=date.getMonth();
+let year=date.getFullYear()-593;
+
+return `${day} ${banglaMonths[month]} ${year}`;
+}
+
+/* ================= HIJRI DATE ================= */
+
+function getHijriDate(date){
+
+return new Intl.DateTimeFormat('ar-TN-u-ca-islamic',{
+day:'numeric',
+month:'short',
+year:'numeric'
+}).format(date);
+
+}
+
+/* ================= DRAW ================= */
+
 function drawCalendar(){
 
 grid.innerHTML="";
@@ -14,32 +57,49 @@ grid.innerHTML="";
 const year=current.getFullYear();
 const month=current.getMonth();
 
+monthTitle.innerText=MONTHS[lang][month]+" "+year;
+
 const firstDay=new Date(year,month,1).getDay();
 const days=new Date(year,month+1,0).getDate();
 
-const months=[
-"January","February","March","April","May","June",
-"July","August","September","October","November","December"
-];
+let today=new Date();
 
-monthTitle.textContent=months[month]+" "+year;
-
+/* empty space */
 for(let i=0;i<firstDay;i++){
 const empty=document.createElement("div");
 grid.appendChild(empty);
 }
 
+/* days */
 for(let d=1;d<=days;d++){
+
+let fullDate=new Date(year,month,d);
 
 const cell=document.createElement("div");
 cell.className="day";
-cell.textContent=d;
+
+cell.innerHTML=`
+<div>${d}</div>
+<div>${getBanglaDate(fullDate)}</div>
+<div>${getHijriDate(fullDate)}</div>
+`;
+
+/* TODAY highlight */
+if(
+d===today.getDate() &&
+month===today.getMonth() &&
+year===today.getFullYear()
+){
+cell.classList.add("today");
+}
 
 grid.appendChild(cell);
 
 }
 
 }
+
+/* ================= NAV ================= */
 
 prev.onclick=function(){
 current.setMonth(current.getMonth()-1);
