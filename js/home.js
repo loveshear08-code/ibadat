@@ -321,4 +321,21 @@ if(newLang !== currentLang){
 }
 },1000);
 
+/* ================= BISMILLAH + STATUS CLICK ================= */
+
+// Bismillah click
+let b = document.getElementById("bismillahCard");
+
+if(b){
+    b.style.cursor = "pointer";
+    b.onclick = ()=>openPage("allah-names");
+}
+
+// Status (timer box) click
+let statusBox = document.querySelector(".status");
+
+if(statusBox){
+    statusBox.style.cursor = "pointer";
+    statusBox.onclick = ()=>openPage("calendar");
+}
 });
