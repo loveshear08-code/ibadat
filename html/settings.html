@@ -1,192 +1,63 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Settings</title>
 
-<style>
-body{
-    font-family: Arial;
-    background:#e6f7ee;
-    margin:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-}
-.card{
-    background:#ffffff;
-    padding:25px;
-    border-radius:20px;
-    width:90%;
-    max-width:400px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.1);
-    text-align:center;
-}
-.item{
-    padding:12px;
-    border-radius:10px;
-    margin-bottom:8px;
-    background:#f1fbf5;
-    display:flex;
-    justify-content:space-between;
-    cursor:pointer;
-}
-.item.active{
-    background:#c8f2dc;
-}
-.buttons{
-    margin-top:20px;
-    display:flex;
-    gap:10px;
-}
-button{
-    flex:1;
-    padding:12px;
-    border:none;
-    border-radius:10px;
-    background:#4caf50;
-    color:white;
-}
-.status{
-    margin-top:10px;
-    color:green;
-}
-</style>
+<link rel="stylesheet" href="../css/settings.css">
 
 </head>
 
 <body>
 
+<div class="container">
+
+<h2>⚙️ সেটিংস</h2>
+
+<!-- AZAN -->
 <div class="card">
+<h3>আজান সাউন্ড</h3>
 
-<h2 id="settingsTitle">⚙️ Settings</h2>
+<div class="option" onclick="setAzan('makkah')">মক্কা</div>
+<div class="option" onclick="setAzan('madinah')">মদিনা</div>
+<div class="option" onclick="setAzan('kuwait')">কুয়েত</div>
+<div class="option" onclick="setAzan('bangladesh')">বাংলাদেশ</div>
+<div class="option active" onclick="setAzan('alaska')">আলাস্কা ✔</div>
 
-<h3 id="azanTitle">আজান সেটিং</h3>
-<p id="azanDesc">আজানের সাউন্ড নির্বাচন করুন</p>
-<div id="azanList"></div>
+</div>
 
-<h3 id="langTitle">Language</h3>
+<!-- LANGUAGE -->
+<div class="card">
+<h3>ভাষা</h3>
+
 <select id="langSelect">
 <option value="bn">বাংলা</option>
 <option value="en">English</option>
 <option value="hi">हिंदी</option>
 </select>
 
-<h3 id="themeTitle">Theme</h3>
+</div>
+
+<!-- THEME -->
+<div class="card">
+<h3>থিম</h3>
+
 <label>
-<input type="checkbox" id="darkToggle">
-<span id="darkLabel">Dark Mode</span>
+<input type="checkbox" id="darkMode"> ডার্ক মোড
 </label>
 
-<div class="buttons">
-<button id="saveBtn" onclick="saveSettings()">Save</button>
-<button id="testBtn" onclick="testAzan()">Test</button>
 </div>
 
-<div id="status" class="status"></div>
+<!-- BUTTON -->
+<div class="btn-box">
+<button onclick="saveSettings()">সেভ</button>
+</div>
 
 </div>
 
-<script src="../js/settings.js"></script>
-
-<script>
-
-/* ================= AZAN NAME (MULTI LANG) ================= */
-
-let s = getSettings();
-
-const AZAN_NAME = {
-bn:["মক্কা","মদিনা","কুয়েত","বাংলাদেশ","আলাস্কা"],
-en:["Makkah","Madinah","Kuwait","Bangladesh","Alaska"],
-hi:["मक्का","मदीना","कुवैत","बांग्लादेश","अलास्का"]
-};
-
-let names = AZAN_NAME[s.lang] || AZAN_NAME["bn"];
-
-const azans = [
-{name:names[0],file:"makkah.mp3"},
-{name:names[1],file:"madinah.mp3"},
-{name:names[2],file:"kuwait.mp3"},
-{name:names[3],file:"bangladesh.mp3"},
-{name:names[4],file:"alaska.mp3"}
-];
-
-/* ================= INIT ================= */
-
-let selected = s.azan || "makkah.mp3";
-let audio = null;
-
-/* ================= LOAD LIST ================= */
-
-function loadAzan(){
-    const list=document.getElementById("azanList");
-    list.innerHTML="";
-
-    azans.forEach(a=>{
-        const div=document.createElement("div");
-        div.className="item";
-
-        if(a.file===selected){
-            div.classList.add("active");
-        }
-
-        div.innerHTML=`<span>${a.name}</span><span>${a.file===selected?"✔":""}</span>`;
-
-        div.onclick=()=>{
-            selected=a.file;
-            loadAzan();
-        };
-
-        list.appendChild(div);
-    });
-}
-
-/* ================= SAVE ================= */
-
-function saveSettings(){
-
-    let s=getSettings();
-
-    s.azan=selected;
-    s.lang=document.getElementById("langSelect").value;
-    s.dark=document.getElementById("darkToggle").checked;
-
-    saveSettingsToStorage(s);
-
-    document.getElementById("status").innerText =
-    TEXT[s.lang].saved;
-
-    /* 🔥 AUTO RELOAD */
-    setTimeout(()=>{
-        location.reload();
-    },500);
-}
-
-/* ================= TEST ================= */
-
-function testAzan(){
-    if(audio) audio.pause();
-    audio=new Audio("../assets/"+selected);
-    audio.play();
-}
-
-/* ================= INIT LOAD ================= */
-
-document.addEventListener("DOMContentLoaded",()=>{
-
-    let s=getSettings();
-
-    document.getElementById("langSelect").value=s.lang;
-    document.getElementById("darkToggle").checked=s.dark;
-
-    loadAzan();
-    applySettings();
-});
-
-</script>
+<script src="../js/settings.js?v=3"></script>
 
 </body>
 </html>
