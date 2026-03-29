@@ -47,6 +47,14 @@ const TEXT = {
     }
 };
 
+/* ================= AZAN NAME MULTI LANGUAGE ================= */
+
+const AZAN_TEXT = {
+    bn:["মক্কা","মদিনা","কুয়েত","বাংলাদেশ","আলাস্কা"],
+    en:["Makkah","Madinah","Kuwait","Bangladesh","Alaska"],
+    hi:["मक्का","मदीना","कुवैत","बांग्लादेश","अलास्का"]
+};
+
 /* ================= GET ================= */
 
 function getSettings(){
@@ -90,16 +98,14 @@ function applySettings(){
     /* TITLE */
     document.title = t.title;
 
-    /* SETTINGS PAGE TEXT */
+    /* TEXT APPLY */
     const map = {
         settingsTitle: t.settings,
         azanTitle: t.azan,
-        azanDesc: t.azanDesc,
         langTitle: t.language,
         themeTitle: t.theme,
         darkLabel: t.dark,
-        saveBtn: t.save,
-        testBtn: t.test
+        saveBtn: t.save
     };
 
     Object.keys(map).forEach(id=>{
@@ -107,35 +113,44 @@ function applySettings(){
         if(el) el.innerText = map[id];
     });
 
-    /* 🔥 SELECT VALUE SET (IMPORTANT FIX) */
+    /* SELECT VALUE */
     let langSelect = document.getElementById("langSelect");
-    if(langSelect){
-        langSelect.value = s.lang;
-    }
+    if(langSelect) langSelect.value = s.lang;
 
     let darkMode = document.getElementById("darkMode");
-    if(darkMode){
-        darkMode.checked = s.dark;
-    }
+    if(darkMode) darkMode.checked = s.dark;
 
-    /* 🔥 ACTIVE AZAN HIGHLIGHT */
-    
-  document.querySelectorAll(".option").forEach(el=>{
+    /* AZAN ACTIVE */
+    document.querySelectorAll(".option").forEach(el=>{
+        let tick = el.querySelector(".tick");
 
-    let tick = el.querySelector(".tick");
+        el.classList.remove("active");
+        if(tick) tick.innerText = "";
 
-    // আগে সব clear
-    el.classList.remove("active");
-    if(tick) tick.innerText = "";
+        if(el.dataset.azan === s.azan){
+            el.classList.add("active");
+            if(tick) tick.innerText = "✔";
+        }
+    });
 
-    // selected হলে
-    if(el.dataset.azan === s.azan){
-        el.classList.add("active");
-        if(tick) tick.innerText = "✔";
-    }
+    /* 🔥 AZAN NAME APPLY (MAIN FIX) */
+    applyAzanText();
+}
 
-}); 
-    
+/* ================= AZAN TEXT APPLY ================= */
+
+function applyAzanText(){
+
+    let s = getSettings();
+    let lang = s.lang;
+
+    let list = AZAN_TEXT[lang] || AZAN_TEXT["bn"];
+
+    document.getElementById("azan_makkah").innerText = list[0];
+    document.getElementById("azan_madinah").innerText = list[1];
+    document.getElementById("azan_kuwait").innerText = list[2];
+    document.getElementById("azan_bangladesh").innerText = list[3];
+    document.getElementById("azan_alaska").innerText = list[4];
 }
 
 /* ================= SET AZAN ================= */
@@ -147,14 +162,17 @@ function setAzan(type){
 
     saveSettingsToStorage(s);
 
-    /* UI update */
     document.querySelectorAll(".option").forEach(el=>{
         el.classList.remove("active");
+        let tick = el.querySelector(".tick");
+        if(tick) tick.innerText = "";
     });
 
     let selected = document.querySelector(`[data-azan="${type}"]`);
     if(selected){
         selected.classList.add("active");
+        let tick = selected.querySelector(".tick");
+        if(tick) tick.innerText = "✔";
     }
 }
 
@@ -172,7 +190,6 @@ function saveSettings(){
 
     saveSettingsToStorage(s);
 
-    /* OPTIONAL TOAST */
     let t = TEXT[s.lang] || TEXT["bn"];
     alert(t.saved);
 
@@ -185,6 +202,8 @@ document.addEventListener("DOMContentLoaded", function(){
     applySettings();
 });
 
+/* ================= AZAN AUDIO ================= */
+
 const AZAN_FILES = {
     makkah: "../assets/makkah.mp3",
     madinah: "../assets/madinah.mp3",
@@ -196,7 +215,7 @@ const AZAN_FILES = {
 let audio = new Audio();
 
 function playAzan(e,type){
-    e.stopPropagation(); // 🔥 option click trigger বন্ধ
+    e.stopPropagation();
 
     audio.src = AZAN_FILES[type];
     audio.currentTime = 0;
