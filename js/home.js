@@ -370,8 +370,8 @@ div.className="prayer-box";
 
 if(p[0]===t.prayer[1]){
 div.innerHTML=`
-<div style="font-size:14px; line-height:1;">⚙️</div>
-<div style="font-size:12px;">${t.settings}</div>
+<div style="font-size:18px; margin-bottom:6px;">⚙️</div>
+<div style="font-size:14px;">${t.settings}</div>
 `;
 
 div.onclick=()=>openPage("settings");
