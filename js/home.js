@@ -194,8 +194,62 @@ let data=await res.json();
 let tm=data.data.timings;
 let hijri=data.data.date.hijri;
 
-/* HIJRI */
-let hij = `${hijri.day} ${hijri.month.en} ${hijri.year}`;
+/* ================= HIJRI FIX ================= */
+
+let rawMonth = hijri.month.en || "";
+
+/* normalize */
+let month = rawMonth
+.toLowerCase()
+.replace(/ā|â|ä/g,"a")
+.replace(/ī|ï/g,"i")
+.replace(/ū|ü/g,"u")
+.replace(/'/g,"")
+.replace(/[^a-z\s]/g,"")
+.replace(/\s+/g," ")
+.trim();
+
+/* month map */
+const HIJRI_MONTH = {
+bn:{
+"muharram":"মুহাররম",
+"safar":"সফর",
+"rabi al awwal":"রবিউল আউয়াল",
+"rabi al thani":"রবিউস সানি",
+"jumada al ula":"জুমাদাল উলা",
+"jumada al akhirah":"জুমাদাস সানিয়া",
+"rajab":"রজব",
+"shaban":"শাবান",
+"ramadan":"রমজান",
+"shawwal":"শাওয়াল",
+"dhul qadah":"জিলকদ",
+"dhul hijjah":"জিলহজ্জ"
+},
+hi:{
+"muharram":"मुहर्रम",
+"safar":"सफ़र",
+"rabi al awwal":"रबी अल अव्वल",
+"rabi al thani":"रबी अस सानी",
+"jumada al ula":"जुमादा अल ऊला",
+"jumada al akhirah":"जुमादा अस सानिया",
+"rajab":"रजब",
+"shaban":"शाबान",
+"ramadan":"रमज़ान",
+"shawwal":"शव्वाल",
+"dhul qadah":"ज़िलक़ादा",
+"dhul hijjah":"ज़िलहिज्जा"
+}
+};
+
+/* final month */
+let finalMonth = rawMonth;
+
+if(s.lang !== "en" && HIJRI_MONTH[s.lang] && HIJRI_MONTH[s.lang][month]){
+    finalMonth = HIJRI_MONTH[s.lang][month];
+}
+
+/* final date */
+let hij = `${hijri.day} ${finalMonth} ${hijri.year}`;
 setText("date", formatNumber(hij));
 
 /* LIST */
