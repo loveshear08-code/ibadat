@@ -146,11 +146,21 @@ function applyAzanText(){
 
     let list = AZAN_TEXT[lang] || AZAN_TEXT["bn"];
 
-    document.getElementById("azan_makkah").innerText = list[0];
-    document.getElementById("azan_madinah").innerText = list[1];
-    document.getElementById("azan_kuwait").innerText = list[2];
-    document.getElementById("azan_bangladesh").innerText = list[3];
-    document.getElementById("azan_alaska").innerText = list[4];
+    let ids = [
+        "azan_makkah",
+        "azan_madinah",
+        "azan_kuwait",
+        "azan_bangladesh",
+        "azan_alaska"
+    ];
+
+    ids.forEach((id,i)=>{
+        let el = document.getElementById(id);
+        if(el){
+            el.innerText = list[i];
+        }
+    });
+
 }
 
 /* ================= SET AZAN ================= */
