@@ -199,30 +199,50 @@ let hijri=data.data.date.hijri;
 
 let month = hijri.month.en;
 
+/* FULL NORMALIZE */
+month = month
+.toLowerCase()
+.replace(/ā|â/g,"a")
+.replace(/ī/g,"i")
+.replace(/'/g,"")
+.replace(/\s+/g," ")
+.trim();
+
+/* MAP */
 const HIJRI_MONTH = {
 bn:{
-"Muharram":"মুহাররম","Safar":"সফর","Rabi al-Awwal":"রবিউল আউয়াল",
-"Rabi al-Thani":"রবিউস সানি","Jumada al-Ula":"জুমাদাল উলা",
-"Jumada al-Akhirah":"জুমাদাস সানিয়া","Rajab":"রজব",
-"Sha'ban":"শাবান","Ramadan":"রমজান","Shawwal":"শাওয়াল",
-"Dhul Qadah":"জিলকদ","Dhul Hijjah":"জিলহজ্জ"
+"muharram":"মুহাররম",
+"safar":"সফর",
+"rabi al awwal":"রবিউল আউয়াল",
+"rabi al thani":"রবিউস সানি",
+"jumada al ula":"জুমাদাল উলা",
+"jumada al akhirah":"জুমাদাস সানিয়া",
+"rajab":"রজব",
+"shaban":"শাবান",
+"ramadan":"রমজান",
+"shawwal":"শাওয়াল",
+"dhul qadah":"জিলকদ",
+"dhul hijjah":"জিলহজ্জ"
 },
 hi:{
-"Muharram":"मुहर्रम","Safar":"सफ़र","Rabi al-Awwal":"रबी अल अव्वल",
-"Rabi al-Thani":"रबी अस सानी","Jumada al-Ula":"जुमादा अल ऊला",
-"Jumada al-Akhirah":"जुमादा अस सानिया","Rajab":"रजब",
-"Sha'ban":"शाबान","Ramadan":"रमज़ान","Shawwal":"शव्वाल",
-"Dhul Qadah":"ज़िलक़ादा","Dhul Hijjah":"ज़िलहिज्जा"
+"muharram":"मुहर्रम",
+"safar":"सफ़र",
+"rabi al awwal":"रबी अल अव्वल",
+"rabi al thani":"रबी अस सानी",
+"jumada al ula":"जुमादा अल ऊला",
+"jumada al akhirah":"जुमादा अस सानिया",
+"rajab":"रजब",
+"shaban":"शाबान",
+"ramadan":"रमज़ान",
+"shawwal":"शव्वाल",
+"dhul qadah":"ज़िलक़ादा",
+"dhul hijjah":"ज़िलहिज्जा"
 }
 };
 
 if(HIJRI_MONTH[s.lang] && HIJRI_MONTH[s.lang][month]){
 month = HIJRI_MONTH[s.lang][month];
 }
-
-let hij = `${hijri.day} ${month} ${hijri.year}`;
-setText("date", formatNumber(hij));
-
 /* LIST */
 
 prayerList=[
