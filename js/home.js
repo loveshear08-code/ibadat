@@ -7,7 +7,7 @@ applySettings();
 
 let currentLang = s.lang;
 
-/* ================= AUTO AZAN SYSTEM ================= */
+/* ================= AZAN ================= */
 
 let azanPlayed = {};
 let azanAudio = new Audio();
@@ -26,6 +26,7 @@ const TEXT = {
 bn:{
 bismillah:"পরম করুণাময় অসীম দয়ালু আল্লাহর নামে",
 days:["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"],
+months:["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"],
 weather:"লোড হচ্ছে...",
 settings:"সেটিংস",
 features:{
@@ -37,11 +38,12 @@ qibla:"🕋 কিবলা",
 tasbih:"📿 তসবিহ"
 },
 quotes:["নামাজ জান্নাতের চাবি","আল্লাহকে স্মরণ করো","ধৈর্য ধরো"],
-prayer:["ফজর","সূর্যোদয়","জোহর","আসর","মাগরিব","এশা"]
+prayer:["ফজর","জোহর","আসর","মাগরিব","এশা"]
 },
 en:{
 bismillah:"In the name of Allah, Most Merciful",
 days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+months:["January","February","March","April","May","June","July","August","September","October","November","December"],
 weather:"Loading...",
 settings:"Settings",
 features:{
@@ -53,11 +55,12 @@ qibla:"🕋 Qibla",
 tasbih:"📿 Tasbih"
 },
 quotes:["Prayer is the key to Jannah","Remember Allah","Have patience"],
-prayer:["Fajr","Sunrise","Dhuhr","Asr","Maghrib","Isha"]
+prayer:["Fajr","Dhuhr","Asr","Maghrib","Isha"]
 },
 hi:{
 bismillah:"अल्लाह के नाम से जो रहमान और रहीम है",
 days:["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"],
+months:["जनवरी","फरवरी","मार्च","अप्रैल","मई","जून","जुलाई","अगस्त","सितंबर","अक्टूबर","नवंबर","दिसंबर"],
 weather:"लोड हो रहा है...",
 settings:"सेटिंग्स",
 features:{
@@ -69,13 +72,13 @@ qibla:"🕋 क़िबला",
 tasbih:"📿 तस्बीह"
 },
 quotes:["नमाज़ जन्नत की चाबी है","अल्लाह को याद करो","सब्र करो"],
-prayer:["फ़ज्र","सूर्यোদय","ज़ुहर","असर","मग़रिब","इशा"]
+prayer:["फ़ज्र","ज़ुहर","असर","मग़रिब","इशा"]
 }
 };
 
 const t = TEXT[s.lang] || TEXT["bn"];
 
-/* ================= BASIC ================= */
+/* ================= UTIL ================= */
 
 function setText(id,text){
 let el=document.getElementById(id);
@@ -89,75 +92,23 @@ if(s.lang==="hi") return str.replace(/[0-9]/g,d=>"०१२३४५६७८९
 return str;
 }
 
-/* ================= STATIC ================= */
-
-setText("bismillahMeaning",t.bismillah);
-setText("todayDay",t.days[new Date().getDay()]);
-
-/* ================= CLOCK ================= */
+/* ================= CLOCK + DATE ================= */
 
 setInterval(()=>{
 let d=new Date();
+
 let time=
 String(d.getHours()).padStart(2,"0")+":"+
 String(d.getMinutes()).padStart(2,"0")+":"+
 String(d.getSeconds()).padStart(2,"0");
 
 setText("clock",formatNumber(time));
+setText("todayDay",t.days[d.getDay()]);
+
+let date = d.getDate()+" "+t.months[d.getMonth()]+" "+d.getFullYear();
+setText("date",formatNumber(date));
 
 },1000);
-
-/* ================= MAIN ================= */
-
-let prayerList=[];
-
-if(navigator.geolocation){
-navigator.geolocation.getCurrentPosition(startApp, fallback);
-}else{
-fallback();
-}
-
-async function startApp(pos){
-
-let lat = pos.coords.latitude;
-let lon = pos.coords.longitude;
-
-/* CITY */
-try{
-let locRes = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
-let loc = await locRes.json();
-
-let cityName = loc.city || loc.locality || "Kolkata";
-
-if(s.lang==="bn" && cityName==="Kolkata") cityName="কলকাতা";
-if(s.lang==="hi" && cityName==="Kolkata") cityName="कोलकाता";
-
-setText("city", cityName);
-
-}catch{
-setText("city","Kolkata");
-}
-
-/* WEATHER */
-loadWeather(lat, lon);
-
-/* PRAYER */
-loadPrayer(lat, lon);
-
-}
-
-function fallback(){
-
-let cityName = "Kolkata";
-if(s.lang==="bn") cityName="কলকাতা";
-if(s.lang==="hi") cityName="कोलकाता";
-
-setText("city",cityName);
-
-loadWeather(22.5726,88.3639);
-loadPrayer(22.5726,88.3639);
-
-}
 
 /* ================= WEATHER ================= */
 
@@ -165,148 +116,138 @@ async function loadWeather(lat, lon){
 
 try{
 
-let apiKey = "YOUR_API_KEY";
+let apiKey = "a7f2e6a4e4dd9b86ec885982fac12ace";
 
 let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`);
 let data = await res.json();
 
-if(data && data.main){
+let conditionMap = {
+Clear:{bn:"পরিষ্কার",hi:"साफ",en:"Clear"},
+Clouds:{bn:"মেঘলা",hi:"बादल",en:"Cloudy"},
+Rain:{bn:"বৃষ্টি",hi:"बारिश",en:"Rain"},
+Drizzle:{bn:"গুঁড়ি বৃষ্টি",hi:"हल्की बारिश",en:"Drizzle"},
+Thunderstorm:{bn:"ঝড়",hi:"तूफान",en:"Storm"},
+Snow:{bn:"তুষার",hi:"बर्फ",en:"Snow"},
+Mist:{bn:"কুয়াশা",hi:"धुंध",en:"Mist"},
+Haze:{bn:"ধোঁয়াশা",hi:"धुंध",en:"Haze"}
+};
 
 let temp = Math.round(data.main.temp);
-let desc = data.weather[0].main;
+let raw = data.weather[0].main;
+
+let desc = conditionMap[raw] ? conditionMap[raw][s.lang] : raw;
 
 setText("weather", formatNumber(temp+"°C "+desc));
 
-}else{
-setText("weather", t.weather);
-}
-
 }catch{
-setText("weather", t.weather);
+setText("weather","Error");
 }
 
+}
+
+/* ================= LOCATION ================= */
+
+if(navigator.geolocation){
+navigator.geolocation.getCurrentPosition(startApp, fallback);
+}else{
+fallback();
+}
+
+function startApp(pos){
+let lat = pos.coords.latitude;
+let lon = pos.coords.longitude;
+
+loadWeather(lat, lon);
+loadPrayer(lat, lon);
+}
+
+function fallback(){
+loadWeather(22.5726,88.3639);
+loadPrayer(22.5726,88.3639);
 }
 
 /* ================= PRAYER ================= */
 
-async function loadPrayer(lat, lon){
+let prayerList=[];
 
-try{
+async function loadPrayer(lat, lon){
 
 let res=await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=2`);
 let data=await res.json();
 
 let tm=data.data.timings;
-let hijri=data.data.date.hijri;
-
-let hij = `${hijri.day} ${hijri.month.en} ${hijri.year}`;
-setText("date", formatNumber(hij));
 
 prayerList=[
 [t.prayer[0],tm.Fajr],
-[t.prayer[1],tm.Sunrise],
-[t.prayer[2],tm.Dhuhr],
-[t.prayer[3],tm.Asr],
-[t.prayer[4],tm.Maghrib],
-[t.prayer[5],tm.Isha]
+[t.prayer[1],tm.Dhuhr],
+[t.prayer[2],tm.Asr],
+[t.prayer[3],tm.Maghrib],
+[t.prayer[4],tm.Isha]
 ];
 
 renderGrid();
 updateStatus();
 
-}catch(e){
-console.log(e);
 }
 
-}
+/* ================= GRID ================= */
 
-/* ================= AUTO AZAN ================= */
+function renderGrid(){
 
-function checkAzan(){
+let grid=document.getElementById("prayerGrid");
+grid.innerHTML="";
 
-if(!prayerList.length) return;
-
-let now=new Date();
-
-let currentTime=
-String(now.getHours()).padStart(2,"0")+":"+
-String(now.getMinutes()).padStart(2,"0");
-
+/* prayers */
 prayerList.forEach(p=>{
-
-let name=p[0];
-let time=p[1];
-
-/* skip sunrise */
-if(name===t.prayer[1]) return;
-
-if(azanPlayed[name]) return;
-
-if(currentTime===time){
-
-let s=getSettings();
-let type=s.azan||"makkah";
-
-azanAudio.src=AZAN_FILES[type];
-azanAudio.play().catch(()=>{});
-
-azanPlayed[name]=true;
-
-}
-
+let div=document.createElement("div");
+div.className="prayer-box";
+div.innerHTML=`${p[0]}<br>${formatNumber(p[1])}`;
+grid.appendChild(div);
 });
 
-}
+/* settings box (extra) */
+let sBox=document.createElement("div");
+sBox.className="prayer-box";
+sBox.innerHTML=`⚙️<br>${t.settings}`;
+sBox.onclick=()=>openPage("settings");
 
-setInterval(checkAzan,1000);
+grid.appendChild(sBox);
 
-/* reset daily */
-setInterval(()=>{
-let now=new Date();
-if(now.getHours()===0 && now.getMinutes()===0){
-azanPlayed={};
 }
-},60000);
 
 /* ================= STATUS ================= */
 
 function getNext(){
 
 let now=new Date();
-let validPrayer=prayerList.filter(p=>p[0]!==t.prayer[1]);
 
-for(let p of validPrayer){
+for(let p of prayerList){
 let [h,m]=p[1].split(":");
 let tTime=new Date();
 tTime.setHours(h,m,0);
-if(now<tTime){
-return {name:p[0],time:tTime};
-}
+if(now<tTime) return {name:p[0],time:tTime};
 }
 
-let [h,m]=validPrayer[0][1].split(":");
+let [h,m]=prayerList[0][1].split(":");
 let t2=new Date();
 t2.setDate(t2.getDate()+1);
 t2.setHours(h,m,0);
 
-return {name:validPrayer[0][0],time:t2};
+return {name:prayerList[0][0],time:t2};
 }
 
 function getCurrent(){
 
 let now=new Date();
-let validPrayer=prayerList.filter(p=>p[0]!==t.prayer[1]);
 
-for(let i=validPrayer.length-1;i>=0;i--){
-let [h,m]=validPrayer[i][1].split(":");
+for(let i=prayerList.length-1;i>=0;i--){
+let [h,m]=prayerList[i][1].split(":");
 let tTime=new Date();
 tTime.setHours(h,m,0);
-if(now>=tTime){
-return validPrayer[i][0];
-}
+if(now>=tTime) return prayerList[i][0];
 }
 
-return validPrayer[0][0];
+return prayerList[0][0];
 }
 
 function updateStatus(){
@@ -320,44 +261,18 @@ setText("currentPrayerName","● "+current);
 setText("nextPrayerName","⏭ "+next.name);
 
 let diff=next.time-new Date();
-if(diff<0) diff=0;
 
 let time=
 String(Math.floor(diff/3600000)).padStart(2,"0")+":"+
 String(Math.floor((diff%3600000)/60000)).padStart(2,"0")+":"+
-String(Math.floor((diff%60000)/1000)).padStart(2,"0");
+String(Math.floor((diff%60000)/1000)).padStart(2,"0")+":"+
+"00";
 
 setText("countdown",formatNumber(time));
 
 }
 
 setInterval(updateStatus,1000);
-
-/* ================= GRID ================= */
-
-function renderGrid(){
-
-let grid=document.getElementById("prayerGrid");
-if(!grid) return;
-
-grid.innerHTML="";
-
-prayerList.forEach(p=>{
-
-let div=document.createElement("div");
-div.className="prayer-box";
-
-if(p[0]===t.prayer[1]){
-div.innerHTML=`<div style="font-size:16px;">⚙️</div><div>${t.settings}</div>`;
-div.onclick=()=>openPage("settings");
-}else{
-div.innerHTML=`${p[0]}<br>${formatNumber(p[1])}`;
-}
-
-grid.appendChild(div);
-
-});
-}
 
 /* ================= NAV ================= */
 
@@ -375,18 +290,6 @@ if(el){
 el.onclick=()=>openPage(id==="namaz"?"namaz-guide":id);
 }
 });
-
-/* ================= EXTRA ================= */
-
-let b=document.getElementById("bismillahCard");
-if(b){
-b.onclick=()=>openPage("allah-names");
-}
-
-let sBox=document.querySelector(".status");
-if(sBox){
-sBox.onclick=()=>openPage("calendar");
-}
 
 /* ================= QUOTES ================= */
 
