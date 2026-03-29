@@ -7,6 +7,19 @@ applySettings();
 
 let currentLang = s.lang;
 
+/* ================= AUTO AZAN SYSTEM ================= */
+
+let azanPlayed = {};
+let azanAudio = new Audio();
+
+const AZAN_FILES = {
+    makkah: "assets/makkah.mp3",
+    madinah: "assets/madinah.mp3",
+    kuwait: "assets/kuwait.mp3",
+    bangladesh: "assets/bangladesh.mp3",
+    alaska: "assets/alaska.mp3"
+};
+
 /* ================= TEXT ================= */
 
 const TEXT = {
@@ -56,7 +69,7 @@ qibla:"🕋 क़िबला",
 tasbih:"📿 तस्बीह"
 },
 quotes:["नमाज़ जन्नत की चाबी है","अल्लाह को याद करो","सब्र करो"],
-prayer:["फ़ज्र","सूर्योदय","ज़ुहर","असर","मग़रिब","इशा"]
+prayer:["फ़ज्र","सूर्यোদय","ज़ुहर","असर","मग़रिब","इशा"]
 }
 };
 
@@ -91,6 +104,7 @@ String(d.getMinutes()).padStart(2,"0")+":"+
 String(d.getSeconds()).padStart(2,"0");
 
 setText("clock",formatNumber(time));
+
 },1000);
 
 /* ================= MAIN ================= */
@@ -151,7 +165,7 @@ async function loadWeather(lat, lon){
 
 try{
 
-let apiKey = "a7f2e6a4e4dd9b86ec885982fac12ace";
+let apiKey = "YOUR_API_KEY";
 
 let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`);
 let data = await res.json();
@@ -160,55 +174,6 @@ if(data && data.main){
 
 let temp = Math.round(data.main.temp);
 let desc = data.weather[0].main;
-
-const WEATHER = {
-
-bn:{
-"Clear":"পরিষ্কার",
-"Clouds":"মেঘলা",
-"Rain":"বৃষ্টি",
-"Drizzle":"হালকা বৃষ্টি",
-"Thunderstorm":"বজ্রপাতসহ বৃষ্টি",
-"Snow":"তুষারপাত",
-"Mist":"কুয়াশা",
-"Smoke":"ধোঁয়া",
-"Haze":"কুয়াশা",
-"Dust":"ধুলা",
-"Fog":"ঘন কুয়াশা",
-"Sand":"বালুঝড়",
-"Ash":"আগ্নেয় ছাই",
-"Squall":"ঝড়ো হাওয়া",
-"Tornado":"ঘূর্ণিঝড়"
-},
-
-hi:{
-"Clear":"साफ",
-"Clouds":"बादल",
-"Rain":"बारिश",
-"Drizzle":"हल्की बारिश",
-"Thunderstorm":"तूफानी बारिश",
-"Snow":"बर्फबारी",
-"Mist":"धुंध",
-"Smoke":"धुआँ",
-"Haze":"धुंध",
-"Dust":"धूल",
-"Fog":"घना कोहरा",
-"Sand":"रेत का तूफान",
-"Ash":"ज्वालामुखी राख",
-"Squall":"तेज़ हवा",
-"Tornado":"बवंडर"
-}
-
-};
-
-/* translate */
-if(WEATHER[s.lang] && WEATHER[s.lang][desc]){
-desc = WEATHER[s.lang][desc];
-}else{
-/* fallback */
-if(s.lang === "bn") desc = "আবহাওয়া";
-if(s.lang === "hi") desc = "मौसम";
-}
 
 setText("weather", formatNumber(temp+"°C "+desc));
 
@@ -234,65 +199,9 @@ let data=await res.json();
 let tm=data.data.timings;
 let hijri=data.data.date.hijri;
 
-/* ================= HIJRI FIX ================= */
-
-let rawMonth = hijri.month.en || "";
-
-/* normalize */
-let month = rawMonth
-.toLowerCase()
-.replace(/ā|â|ä/g,"a")
-.replace(/ī|ï/g,"i")
-.replace(/ū|ü/g,"u")
-.replace(/'/g,"")
-.replace(/[^a-z\s]/g,"")
-.replace(/\s+/g," ")
-.trim();
-
-/* month map */
-const HIJRI_MONTH = {
-bn:{
-"muharram":"মুহাররম",
-"safar":"সফর",
-"rabi al awwal":"রবিউল আউয়াল",
-"rabi al thani":"রবিউস সানি",
-"jumada al ula":"জুমাদাল উলা",
-"jumada al akhirah":"জুমাদাস সানিয়া",
-"rajab":"রজব",
-"shaban":"শাবান",
-"ramadan":"রমজান",
-"shawwal":"শাওয়াল",
-"dhul qadah":"জিলকদ",
-"dhul hijjah":"জিলহজ্জ"
-},
-hi:{
-"muharram":"मुहर्रम",
-"safar":"सफ़र",
-"rabi al awwal":"रबी अल अव्वल",
-"rabi al thani":"रबी अस सानी",
-"jumada al ula":"जुमादा अल ऊला",
-"jumada al akhirah":"जुमादा अस सानिया",
-"rajab":"रजब",
-"shaban":"शाबान",
-"ramadan":"रमज़ान",
-"shawwal":"शव्वाल",
-"dhul qadah":"ज़िलक़ादा",
-"dhul hijjah":"ज़िलहिज्जा"
-}
-};
-
-/* final month */
-let finalMonth = rawMonth;
-
-if(s.lang !== "en" && HIJRI_MONTH[s.lang] && HIJRI_MONTH[s.lang][month]){
-    finalMonth = HIJRI_MONTH[s.lang][month];
-}
-
-/* final date */
-let hij = `${hijri.day} ${finalMonth} ${hijri.year}`;
+let hij = `${hijri.day} ${hijri.month.en} ${hijri.year}`;
 setText("date", formatNumber(hij));
 
-/* LIST */
 prayerList=[
 [t.prayer[0],tm.Fajr],
 [t.prayer[1],tm.Sunrise],
@@ -306,24 +215,72 @@ renderGrid();
 updateStatus();
 
 }catch(e){
-console.log("Prayer error",e);
+console.log(e);
 }
 
 }
+
+/* ================= AUTO AZAN ================= */
+
+function checkAzan(){
+
+if(!prayerList.length) return;
+
+let now=new Date();
+
+let currentTime=
+String(now.getHours()).padStart(2,"0")+":"+
+String(now.getMinutes()).padStart(2,"0");
+
+prayerList.forEach(p=>{
+
+let name=p[0];
+let time=p[1];
+
+/* skip sunrise */
+if(name===t.prayer[1]) return;
+
+if(azanPlayed[name]) return;
+
+if(currentTime===time){
+
+let s=getSettings();
+let type=s.azan||"makkah";
+
+azanAudio.src=AZAN_FILES[type];
+azanAudio.play().catch(()=>{});
+
+azanPlayed[name]=true;
+
+}
+
+});
+
+}
+
+setInterval(checkAzan,1000);
+
+/* reset daily */
+setInterval(()=>{
+let now=new Date();
+if(now.getHours()===0 && now.getMinutes()===0){
+azanPlayed={};
+}
+},60000);
 
 /* ================= STATUS ================= */
 
 function getNext(){
 
 let now=new Date();
-let validPrayer = prayerList.filter(p => p[0] !== t.prayer[1]);
+let validPrayer=prayerList.filter(p=>p[0]!==t.prayer[1]);
 
 for(let p of validPrayer){
 let [h,m]=p[1].split(":");
 let tTime=new Date();
 tTime.setHours(h,m,0);
-if(now < tTime){
-return {name:p[0], time:tTime};
+if(now<tTime){
+return {name:p[0],time:tTime};
 }
 }
 
@@ -332,19 +289,19 @@ let t2=new Date();
 t2.setDate(t2.getDate()+1);
 t2.setHours(h,m,0);
 
-return {name:validPrayer[0][0], time:t2};
+return {name:validPrayer[0][0],time:t2};
 }
 
 function getCurrent(){
 
 let now=new Date();
-let validPrayer = prayerList.filter(p => p[0] !== t.prayer[1]);
+let validPrayer=prayerList.filter(p=>p[0]!==t.prayer[1]);
 
 for(let i=validPrayer.length-1;i>=0;i--){
 let [h,m]=validPrayer[i][1].split(":");
 let tTime=new Date();
 tTime.setHours(h,m,0);
-if(now >= tTime){
+if(now>=tTime){
 return validPrayer[i][0];
 }
 }
@@ -356,21 +313,21 @@ function updateStatus(){
 
 if(!prayerList.length) return;
 
-let next = getNext();
-let current = getCurrent();
+let next=getNext();
+let current=getCurrent();
 
 setText("currentPrayerName","● "+current);
 setText("nextPrayerName","⏭ "+next.name);
 
-let diff = next.time - new Date();
-if(diff < 0) diff = 0;
+let diff=next.time-new Date();
+if(diff<0) diff=0;
 
-let time =
+let time=
 String(Math.floor(diff/3600000)).padStart(2,"0")+":"+
 String(Math.floor((diff%3600000)/60000)).padStart(2,"0")+":"+
 String(Math.floor((diff%60000)/1000)).padStart(2,"0");
 
-setText("countdown", formatNumber(time));
+setText("countdown",formatNumber(time));
 
 }
 
