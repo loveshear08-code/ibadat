@@ -195,16 +195,18 @@ let data=await res.json();
 let tm=data.data.timings;
 let hijri=data.data.date.hijri;
 
-/* 🔥 HIJRI TRANSLATE */
+/* 🔥 HIJRI TRANSLATE (FINAL FIX) */
 
-let month = hijri.month.en;
+let rawMonth = hijri.month.en || "";
 
 /* FULL NORMALIZE */
-month = month
+let month = rawMonth
 .toLowerCase()
-.replace(/ā|â/g,"a")
-.replace(/ī/g,"i")
+.replace(/ā|â|ä/g,"a")
+.replace(/ī|ï/g,"i")
+.replace(/ū|ü/g,"u")
 .replace(/'/g,"")
+.replace(/[^a-z\s]/g,"")
 .replace(/\s+/g," ")
 .trim();
 
@@ -240,9 +242,16 @@ hi:{
 }
 };
 
-if(HIJRI_MONTH[s.lang] && HIJRI_MONTH[s.lang][month]){
-month = HIJRI_MONTH[s.lang][month];
+/* FINAL MONTH SELECT */
+let finalMonth = rawMonth; // default English
+
+if(s.lang !== "en" && HIJRI_MONTH[s.lang] && HIJRI_MONTH[s.lang][month]){
+finalMonth = HIJRI_MONTH[s.lang][month];
 }
+
+/* FINAL DATE */
+let hij = `${hijri.day} ${finalMonth} ${hijri.year}`;
+setText("date", formatNumber(hij));
 /* LIST */
 
 prayerList=[
