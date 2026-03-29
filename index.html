@@ -13,63 +13,65 @@
 
 <body>
 
-<!-- TOP BAR -->
+<!-- ================= TOP BAR ================= -->
 <div class="top-bar">
-<span id="city">Kolkata</span>
-<span id="date"></span>
+    <span id="city">Kolkata</span>
+    <span id="date"></span>
 </div>
 
-<!-- MAIN -->
+<!-- ================= MAIN ================= -->
 <div class="main">
 
-<!-- BISMILLAH -->
-<div class="card" id="bismillahCard">
-<div class="bismillah-ar">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
-<div id="bismillahMeaning"></div>
+    <!-- BISMILLAH -->
+    <div class="card" id="bismillahCard">
+        <div class="bismillah-ar">
+            بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
+        </div>
+        <div id="bismillahMeaning"></div>
+    </div>
+
+    <!-- STATUS -->
+    <div class="card">
+        <div class="status">
+
+            <div class="status-left">
+                <div id="todayDay"></div>
+                <div id="clock"></div>
+                <div id="currentPrayerName"></div>
+            </div>
+
+            <div class="status-right">
+                <div id="weather"></div>
+                <div id="countdown"></div>
+                <div id="nextPrayerName"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- PRAYER GRID -->
+    <div class="card">
+        <div class="grid" id="prayerGrid"></div>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="feature-grid">
+        <div class="feature" id="namaz"></div>
+        <div class="feature" id="quran"></div>
+        <div class="feature" id="dua"></div>
+        <div class="feature" id="hadith"></div>
+        <div class="feature" id="qibla"></div>
+        <div class="feature" id="tasbih"></div>
+    </div>
+
 </div>
 
-<!-- STATUS -->
-<div class="card">
-<div class="status">
-
-<div class="status-left">
-<div id="todayDay"></div>
-<div id="clock"></div>
-<div id="currentPrayerName"></div>
-</div>
-
-<div class="status-right">
-<div id="weather"></div>
-<div id="countdown"></div>
-<div id="nextPrayerName"></div>
-</div>
-
-</div>
-</div>
-
-<!-- PRAYER GRID -->
-<div class="card">
-<div class="grid" id="prayerGrid"></div>
-</div>
-
-<!-- FEATURES -->
-<div class="feature-grid">
-<div class="feature" id="namaz"></div>
-<div class="feature" id="quran"></div>
-<div class="feature" id="dua"></div>
-<div class="feature" id="hadith"></div>
-<div class="feature" id="qibla"></div>
-<div class="feature" id="tasbih"></div>
-</div>
-
-</div>
-
-<!-- BOTTOM -->
+<!-- ================= BOTTOM ================= -->
 <div class="bottom-bar">
-<span id="bottomText"></span>
+    <span id="bottomText"></span>
 </div>
 
-<!-- 🔥 JS LOAD (VERY IMPORTANT ORDER) -->
+<!-- ================= JS ================= -->
 <script src="js/settings.js?v=5"></script>
 <script src="js/home.js?v=30"></script>
 
