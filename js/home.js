@@ -278,55 +278,80 @@ function getNext(){
 
 let now=new Date();
 
-for(let p of prayerList){
+/* Sunrise বাদ */
+let validPrayer = prayerList.filter(p => p[0] !== t.prayer[1]);
+
+for(let p of validPrayer){
 let [h,m]=p[1].split(":");
-let t=new Date();
-t.setHours(h,m,0);
-if(now<t) return {name:p[0],time:t};
+let tTime=new Date();
+tTime.setHours(h,m,0);
+
+if(now < tTime){
+return {name:p[0], time:tTime};
+}
 }
 
-let [h,m]=prayerList[0][1].split(":");
+/* next day Fajr */
+let [h,m]=validPrayer[0][1].split(":");
 let t2=new Date();
 t2.setDate(t2.getDate()+1);
 t2.setHours(h,m,0);
 
-return {name:prayerList[0][0],time:t2};
+return {name:validPrayer[0][0], time:t2};
 }
+
 
 function getCurrent(){
 
 let now=new Date();
 
-for(let i=prayerList.length-1;i>=0;i--){
-let [h,m]=prayerList[i][1].split(":");
-let t=new Date();
-t.setHours(h,m,0);
-if(now>=t) return prayerList[i][0];
+/* Sunrise বাদ */
+let validPrayer = prayerList.filter(p => p[0] !== t.prayer[1]);
+
+for(let i=validPrayer.length-1;i>=0;i--){
+let [h,m]=validPrayer[i][1].split(":");
+let tTime=new Date();
+tTime.setHours(h,m,0);
+
+if(now >= tTime){
+return validPrayer[i][0];
+}
 }
 
-return "";
+return validPrayer[0][0]; // fallback (early morning)
 }
+
 
 function updateStatus(){
 
 if(!prayerList.length) return;
 
-let next=getNext();
+let next = getNext();
+let current = getCurrent();
 
-setText("currentPrayerName","● "+getCurrent());
+/* UI text */
+setText("currentPrayerName","● "+current);
 setText("nextPrayerName","⏭ "+next.name);
 
-let diff=next.time-new Date();
-if(diff<0) diff=0;
+/* countdown */
+let diff = next.time - new Date();
+if(diff < 0) diff = 0;
 
-let time=
-String(Math.floor(diff/3600000)).padStart(2,"0")+":"+
-String(Math.floor(diff/60000)%60).padStart(2,"0")+":"+
-String(Math.floor(diff/1000)%60).padStart(2,"0");
+let hours = Math.floor(diff / 3600000);
+let minutes = Math.floor((diff % 3600000) / 60000);
+let seconds = Math.floor((diff % 60000) / 1000);
 
-setText("countdown",formatNumber(time));
+let time =
+String(hours).padStart(2,"0")+":"+
+String(minutes).padStart(2,"0")+":"+
+String(seconds).padStart(2,"0");
+
+setText("countdown", formatNumber(time));
+
 }
 
+
+/* live update */
 setInterval(updateStatus,1000);
 
 /* ================= GRID ================= */
