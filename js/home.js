@@ -26,7 +26,7 @@ const TEXT = {
 bn:{
 bismillah:"পরম করুণাময় অসীম দয়ালু আল্লাহর নামে",
 days:["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"],
-months:["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"],
+hijriMonths:["মুহাররম","সফর","রবিউল আউয়াল","রবিউস সানি","জুমাদাল উলা","জুমাদাল আখিরা","রজব","শাবান","রমজান","শাওয়াল","জিলকদ","জিলহজ"],
 weather:"লোড হচ্ছে...",
 settings:"সেটিংস",
 features:{
@@ -43,7 +43,7 @@ prayer:["ফজর","জোহর","আসর","মাগরিব","এশা"]
 en:{
 bismillah:"In the name of Allah, Most Merciful",
 days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-months:["January","February","March","April","May","June","July","August","September","October","November","December"],
+hijriMonths:["Muharram","Safar","Rabi al-Awwal","Rabi al-Thani","Jumada al-Ula","Jumada al-Akhirah","Rajab","Sha'ban","Ramadan","Shawwal","Dhul Qa'dah","Dhul Hijjah"],
 weather:"Loading...",
 settings:"Settings",
 features:{
@@ -60,7 +60,7 @@ prayer:["Fajr","Dhuhr","Asr","Maghrib","Isha"]
 hi:{
 bismillah:"अल्लाह के नाम से जो रहमान और रहीम है",
 days:["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"],
-months:["जनवरी","फरवरी","मार्च","अप्रैल","मई","जून","जुलाई","अगस्त","सितंबर","अक्टूबर","नवंबर","दिसंबर"],
+hijriMonths:["मुहर्रम","सफर","रबीउल अव्वल","रबीउस सानी","जुमादा अल उला","जुमादा अल आखिरा","रजब","शाबान","रमज़ान","शव्वाल","ज़िलक़ादा","ज़िलहिज्जा"],
 weather:"लोड हो रहा है...",
 settings:"सेटिंग्स",
 features:{
@@ -92,7 +92,13 @@ if(s.lang==="hi") return str.replace(/[0-9]/g,d=>"०१२३४५६७८९
 return str;
 }
 
-/* ================= CLOCK + DATE ================= */
+/* ================= BISMILLAH ================= */
+
+setTimeout(()=>{
+setText("bismillahMeaning",t.bismillah);
+},100);
+
+/* ================= CLOCK ================= */
 
 setInterval(()=>{
 let d=new Date();
@@ -105,10 +111,47 @@ String(d.getSeconds()).padStart(2,"0");
 setText("clock",formatNumber(time));
 setText("todayDay",t.days[d.getDay()]);
 
-let date = d.getDate()+" "+t.months[d.getMonth()]+" "+d.getFullYear();
-setText("date",formatNumber(date));
-
 },1000);
+
+/* ================= LOCATION ================= */
+
+if(navigator.geolocation){
+navigator.geolocation.getCurrentPosition(startApp, fallback);
+}else{
+fallback();
+}
+
+async function startApp(pos){
+
+let lat = pos.coords.latitude;
+let lon = pos.coords.longitude;
+
+/* CITY */
+try{
+let locRes = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
+let loc = await locRes.json();
+
+let cityName = loc.city || loc.locality || "Kolkata";
+
+if(s.lang==="bn" && cityName==="Kolkata") cityName="কলকাতা";
+if(s.lang==="hi" && cityName==="Kolkata") cityName="कोलकाता";
+
+setText("city", cityName);
+
+}catch{
+setText("city","Kolkata");
+}
+
+loadWeather(lat, lon);
+loadPrayer(lat, lon);
+
+}
+
+function fallback(){
+setText("city","Kolkata");
+loadWeather(22.5726,88.3639);
+loadPrayer(22.5726,88.3639);
+}
 
 /* ================= WEATHER ================= */
 
@@ -145,27 +188,6 @@ setText("weather","Error");
 
 }
 
-/* ================= LOCATION ================= */
-
-if(navigator.geolocation){
-navigator.geolocation.getCurrentPosition(startApp, fallback);
-}else{
-fallback();
-}
-
-function startApp(pos){
-let lat = pos.coords.latitude;
-let lon = pos.coords.longitude;
-
-loadWeather(lat, lon);
-loadPrayer(lat, lon);
-}
-
-function fallback(){
-loadWeather(22.5726,88.3639);
-loadPrayer(22.5726,88.3639);
-}
-
 /* ================= PRAYER ================= */
 
 let prayerList=[];
@@ -176,6 +198,15 @@ let res=await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitud
 let data=await res.json();
 
 let tm=data.data.timings;
+let hijri=data.data.date.hijri;
+
+/* Hijri language convert */
+let monthIndex = hijri.month.number - 1;
+let monthName = t.hijriMonths[monthIndex];
+
+let hijriText = hijri.day+" "+monthName+" "+hijri.year;
+
+setText("date", formatNumber(hijriText));
 
 prayerList=[
 [t.prayer[0],tm.Fajr],
@@ -197,21 +228,21 @@ function renderGrid(){
 let grid=document.getElementById("prayerGrid");
 grid.innerHTML="";
 
-/* prayers */
-prayerList.forEach(p=>{
+prayerList.forEach((p,index)=>{
+
 let div=document.createElement("div");
 div.className="prayer-box";
+
+if(index===1){
+div.innerHTML=`⚙️<br>${t.settings}`;
+div.onclick=()=>openPage("settings");
+}else{
 div.innerHTML=`${p[0]}<br>${formatNumber(p[1])}`;
+}
+
 grid.appendChild(div);
+
 });
-
-/* settings box (extra) */
-let sBox=document.createElement("div");
-sBox.className="prayer-box";
-sBox.innerHTML=`⚙️<br>${t.settings}`;
-sBox.onclick=()=>openPage("settings");
-
-grid.appendChild(sBox);
 
 }
 
@@ -265,8 +296,7 @@ let diff=next.time-new Date();
 let time=
 String(Math.floor(diff/3600000)).padStart(2,"0")+":"+
 String(Math.floor((diff%3600000)/60000)).padStart(2,"0")+":"+
-String(Math.floor((diff%60000)/1000)).padStart(2,"0")+":"+
-"00";
+String(Math.floor((diff%60000)/1000)).padStart(2,"0");
 
 setText("countdown",formatNumber(time));
 
@@ -279,6 +309,16 @@ setInterval(updateStatus,1000);
 function openPage(page){
 window.location.href="./html/"+page+".html";
 }
+
+/* ================= CLICK FIX ================= */
+
+document.getElementById("bismillahCard").onclick = () => {
+openPage("allah-names");
+};
+
+document.querySelector(".status").onclick = () => {
+openPage("calendar");
+};
 
 /* ================= FEATURES ================= */
 
