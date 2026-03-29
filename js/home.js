@@ -77,7 +77,7 @@ prayer:["फ़ज्र","ज़ुहर","असर","मग़रिब","�
 
 const t = TEXT[s.lang] || TEXT["bn"];
 
-/* ================= UTIL ================= */
+/* ================= BASIC ================= */
 
 function setText(id,text){
 let el=document.getElementById(id);
@@ -91,7 +91,7 @@ if(s.lang==="hi") return str.replace(/[0-9]/g,d=>"०१२३४५६७८९
 return str;
 }
 
-/* ================= BISMILLAH ================= */
+/* ================= STATIC ================= */
 
 setTimeout(()=>{
 setText("bismillahMeaning",t.bismillah);
@@ -138,7 +138,7 @@ let desc = data.weather[0].main;
 setText("weather", formatNumber(temp+"°C "+desc));
 
 }catch{
-setText("weather","Error");
+setText("weather", t.weather);
 }
 
 }
@@ -155,11 +155,12 @@ let data=await res.json();
 let tm=data.data.timings;
 let hijri=data.data.date.hijri;
 
-/* Hijri */
+/* Hijri only */
 let monthName = t.hijriMonths[hijri.month.number-1];
 let hijriText = hijri.day+" "+monthName+" "+hijri.year;
 setText("date",formatNumber(hijriText));
 
+/* LIST (NO SUNRISE) */
 prayerList=[
 [t.prayer[0],tm.Fajr],
 [t.prayer[1],tm.Dhuhr],
@@ -173,28 +174,28 @@ updateStatus();
 
 }
 
-/* ================= GRID ================= */
+/* ================= GRID (FIXED) ================= */
 
 function renderGrid(){
 
 let grid=document.getElementById("prayerGrid");
+if(!grid) return;
+
 grid.innerHTML="";
 
-/* Fajr */
-grid.appendChild(makeBox(prayerList[0]));
-
-/* SETTINGS (ZOHOR PLACE) */
+/* Settings box */
 let sBox=document.createElement("div");
 sBox.className="prayer-box";
 sBox.innerHTML=`⚙️<br>${t.settings}`;
 sBox.onclick=()=>openPage("settings");
-grid.appendChild(sBox);
 
-/* Shift others */
-grid.appendChild(makeBox(prayerList[1]));
-grid.appendChild(makeBox(prayerList[2]));
-grid.appendChild(makeBox(prayerList[3]));
-grid.appendChild(makeBox(prayerList[4]));
+/* EXACT ORDER */
+grid.appendChild(makeBox(prayerList[0])); // Fajr
+grid.appendChild(sBox);                  // Settings
+grid.appendChild(makeBox(prayerList[1])); // Dhuhr
+grid.appendChild(makeBox(prayerList[2])); // Asr
+grid.appendChild(makeBox(prayerList[3])); // Maghrib
+grid.appendChild(makeBox(prayerList[4])); // Isha
 
 }
 
@@ -251,6 +252,7 @@ setText("currentPrayerName","● "+current);
 setText("nextPrayerName","⏭ "+next.name);
 
 let diff=next.time-new Date();
+if(diff<0) diff=0;
 
 let time=
 String(Math.floor(diff/3600000)).padStart(2,"0")+":"+
