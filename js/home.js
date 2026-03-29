@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function(){
 
 const s = getSettings();
 applySettings();
-
 let currentLang = s.lang;
 
 /* ================= AZAN ================= */
@@ -60,7 +59,7 @@ prayer:["Fajr","Dhuhr","Asr","Maghrib","Isha"]
 hi:{
 bismillah:"अल्लाह के नाम से जो रहमान और रहीम है",
 days:["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"],
-hijriMonths:["मुहर्रम","सफर","रबीउल अव्वल","रबीउस सानी","जुमादा अल उला","जुमादा अल आखिरा","रजब","शाबान","रमज़ान","शव्वाल","ज़िलक़ादा","ज़िलहिज्जा"],
+hijriMonths:["मुहर्रम","सफर","रबीउल अव्वल","रबीउस सानी","जुमादा","रजब","शाबान","रमज़ान","शव्वाल","ज़िलक़ादा","ज़िलहिज्जा"],
 weather:"लोड हो रहा है...",
 settings:"सेटिंग्स",
 features:{
@@ -113,72 +112,28 @@ setText("todayDay",t.days[d.getDay()]);
 
 },1000);
 
-/* ================= LOCATION ================= */
+/* ================= CITY ================= */
 
-if(navigator.geolocation){
-navigator.geolocation.getCurrentPosition(startApp, fallback);
-}else{
-fallback();
+function setCity(){
+let city="Kolkata";
+if(s.lang==="bn") city="কলকাতা";
+if(s.lang==="hi") city="कोलकाता";
+setText("city",city);
 }
-
-async function startApp(pos){
-
-let lat = pos.coords.latitude;
-let lon = pos.coords.longitude;
-
-/* CITY */
-try{
-let locRes = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
-let loc = await locRes.json();
-
-let cityName = loc.city || loc.locality || "Kolkata";
-
-if(s.lang==="bn" && cityName==="Kolkata") cityName="কলকাতা";
-if(s.lang==="hi" && cityName==="Kolkata") cityName="कोलकाता";
-
-setText("city", cityName);
-
-}catch{
-setText("city","Kolkata");
-}
-
-loadWeather(lat, lon);
-loadPrayer(lat, lon);
-
-}
-
-function fallback(){
-setText("city","Kolkata");
-loadWeather(22.5726,88.3639);
-loadPrayer(22.5726,88.3639);
-}
+setCity();
 
 /* ================= WEATHER ================= */
 
 async function loadWeather(lat, lon){
 
 try{
-
 let apiKey = "a7f2e6a4e4dd9b86ec885982fac12ace";
 
 let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`);
 let data = await res.json();
 
-let conditionMap = {
-Clear:{bn:"পরিষ্কার",hi:"साफ",en:"Clear"},
-Clouds:{bn:"মেঘলা",hi:"बादल",en:"Cloudy"},
-Rain:{bn:"বৃষ্টি",hi:"बारिश",en:"Rain"},
-Drizzle:{bn:"গুঁড়ি বৃষ্টি",hi:"हल्की बारिश",en:"Drizzle"},
-Thunderstorm:{bn:"ঝড়",hi:"तूफान",en:"Storm"},
-Snow:{bn:"তুষার",hi:"बर्फ",en:"Snow"},
-Mist:{bn:"কুয়াশা",hi:"धुंध",en:"Mist"},
-Haze:{bn:"ধোঁয়াশা",hi:"धुंध",en:"Haze"}
-};
-
 let temp = Math.round(data.main.temp);
-let raw = data.weather[0].main;
-
-let desc = conditionMap[raw] ? conditionMap[raw][s.lang] : raw;
+let desc = data.weather[0].main;
 
 setText("weather", formatNumber(temp+"°C "+desc));
 
@@ -192,21 +147,18 @@ setText("weather","Error");
 
 let prayerList=[];
 
-async function loadPrayer(lat, lon){
+async function loadPrayer(){
 
-let res=await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=2`);
+let res=await fetch(`https://api.aladhan.com/v1/timingsByCity?city=Kolkata&country=India&method=2`);
 let data=await res.json();
 
 let tm=data.data.timings;
 let hijri=data.data.date.hijri;
 
-/* Hijri language convert */
-let monthIndex = hijri.month.number - 1;
-let monthName = t.hijriMonths[monthIndex];
-
+/* Hijri */
+let monthName = t.hijriMonths[hijri.month.number-1];
 let hijriText = hijri.day+" "+monthName+" "+hijri.year;
-
-setText("date", formatNumber(hijriText));
+setText("date",formatNumber(hijriText));
 
 prayerList=[
 [t.prayer[0],tm.Fajr],
@@ -228,22 +180,29 @@ function renderGrid(){
 let grid=document.getElementById("prayerGrid");
 grid.innerHTML="";
 
-prayerList.forEach((p,index)=>{
+/* Fajr */
+grid.appendChild(makeBox(prayerList[0]));
 
-let div=document.createElement("div");
-div.className="prayer-box";
+/* SETTINGS (ZOHOR PLACE) */
+let sBox=document.createElement("div");
+sBox.className="prayer-box";
+sBox.innerHTML=`⚙️<br>${t.settings}`;
+sBox.onclick=()=>openPage("settings");
+grid.appendChild(sBox);
 
-if(index===1){
-div.innerHTML=`⚙️<br>${t.settings}`;
-div.onclick=()=>openPage("settings");
-}else{
-div.innerHTML=`${p[0]}<br>${formatNumber(p[1])}`;
+/* Shift others */
+grid.appendChild(makeBox(prayerList[1]));
+grid.appendChild(makeBox(prayerList[2]));
+grid.appendChild(makeBox(prayerList[3]));
+grid.appendChild(makeBox(prayerList[4]));
+
 }
 
-grid.appendChild(div);
-
-});
-
+function makeBox(p){
+let div=document.createElement("div");
+div.className="prayer-box";
+div.innerHTML=`${p[0]}<br>${formatNumber(p[1])}`;
+return div;
 }
 
 /* ================= STATUS ================= */
@@ -304,21 +263,16 @@ setText("countdown",formatNumber(time));
 
 setInterval(updateStatus,1000);
 
+/* ================= CLICK ================= */
+
+document.getElementById("bismillahCard").onclick=()=>openPage("allah-names");
+document.querySelector(".status").onclick=()=>openPage("calendar");
+
 /* ================= NAV ================= */
 
 function openPage(page){
 window.location.href="./html/"+page+".html";
 }
-
-/* ================= CLICK FIX ================= */
-
-document.getElementById("bismillahCard").onclick = () => {
-openPage("allah-names");
-};
-
-document.querySelector(".status").onclick = () => {
-openPage("calendar");
-};
 
 /* ================= FEATURES ================= */
 
@@ -338,6 +292,11 @@ setInterval(()=>{
 setText("bottomText",t.quotes[i]);
 i=(i+1)%t.quotes.length;
 },3000);
+
+/* ================= START ================= */
+
+loadWeather(22.5726,88.3639);
+loadPrayer();
 
 /* ================= LANG AUTO ================= */
 
