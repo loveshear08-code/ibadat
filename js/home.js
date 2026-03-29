@@ -162,12 +162,52 @@ let temp = Math.round(data.main.temp);
 let desc = data.weather[0].main;
 
 const WEATHER = {
-bn:{ "Haze":"কুয়াশা","Clouds":"মেঘলা","Clear":"পরিষ্কার","Rain":"বৃষ্টি" },
-hi:{ "Haze":"धुंध","Clouds":"बादल","Clear":"साफ","Rain":"बारिश" }
+
+bn:{
+"Clear":"পরিষ্কার",
+"Clouds":"মেঘলা",
+"Rain":"বৃষ্টি",
+"Drizzle":"হালকা বৃষ্টি",
+"Thunderstorm":"বজ্রপাতসহ বৃষ্টি",
+"Snow":"তুষারপাত",
+"Mist":"কুয়াশা",
+"Smoke":"ধোঁয়া",
+"Haze":"কুয়াশা",
+"Dust":"ধুলা",
+"Fog":"ঘন কুয়াশা",
+"Sand":"বালুঝড়",
+"Ash":"আগ্নেয় ছাই",
+"Squall":"ঝড়ো হাওয়া",
+"Tornado":"ঘূর্ণিঝড়"
+},
+
+hi:{
+"Clear":"साफ",
+"Clouds":"बादल",
+"Rain":"बारिश",
+"Drizzle":"हल्की बारिश",
+"Thunderstorm":"तूफानी बारिश",
+"Snow":"बर्फबारी",
+"Mist":"धुंध",
+"Smoke":"धुआँ",
+"Haze":"धुंध",
+"Dust":"धूल",
+"Fog":"घना कोहरा",
+"Sand":"रेत का तूफान",
+"Ash":"ज्वालामुखी राख",
+"Squall":"तेज़ हवा",
+"Tornado":"बवंडर"
+}
+
 };
 
+/* translate */
 if(WEATHER[s.lang] && WEATHER[s.lang][desc]){
 desc = WEATHER[s.lang][desc];
+}else{
+/* fallback */
+if(s.lang === "bn") desc = "আবহাওয়া";
+if(s.lang === "hi") desc = "मौसम";
 }
 
 setText("weather", formatNumber(temp+"°C "+desc));
