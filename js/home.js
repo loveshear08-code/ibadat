@@ -369,7 +369,11 @@ let div=document.createElement("div");
 div.className="prayer-box";
 
 if(p[0]===t.prayer[1]){
-div.innerHTML=`<div style="font-size:24px;">⚙️</div><div>${t.settings}</div>`;
+div.innerHTML=`
+<div style="font-size:14px; line-height:1;">⚙️</div>
+<div style="font-size:12px;">${t.settings}</div>
+`;
+
 div.onclick=()=>openPage("settings");
 }else{
 div.innerHTML=`${p[0]}<br>${formatNumber(p[1])}`;
