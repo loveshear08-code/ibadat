@@ -113,7 +113,7 @@ try{
 let locRes = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
 let loc = await locRes.json();
 
-let cityName = loc.city || "Kolkata";
+let cityName = loc.city || loc.locality || "Kolkata";
 
 if(s.lang==="bn" && cityName==="Kolkata") cityName="কলকাতা";
 if(s.lang==="hi" && cityName==="Kolkata") cityName="कोलकाता";
@@ -161,7 +161,6 @@ if(data && data.main){
 let temp = Math.round(data.main.temp);
 let desc = data.weather[0].main;
 
-/* 🔥 WEATHER TRANSLATE */
 const WEATHER = {
 bn:{ "Haze":"কুয়াশা","Clouds":"মেঘলা","Clear":"পরিষ্কার","Rain":"বৃষ্টি" },
 hi:{ "Haze":"धुंध","Clouds":"बादल","Clear":"साफ","Rain":"बारिश" }
@@ -195,65 +194,11 @@ let data=await res.json();
 let tm=data.data.timings;
 let hijri=data.data.date.hijri;
 
-/* 🔥 HIJRI TRANSLATE (FINAL FIX) */
-
-let rawMonth = hijri.month.en || "";
-
-/* FULL NORMALIZE */
-let month = rawMonth
-.toLowerCase()
-.replace(/ā|â|ä/g,"a")
-.replace(/ī|ï/g,"i")
-.replace(/ū|ü/g,"u")
-.replace(/'/g,"")
-.replace(/[^a-z\s]/g,"")
-.replace(/\s+/g," ")
-.trim();
-
-/* MAP */
-const HIJRI_MONTH = {
-bn:{
-"muharram":"মুহাররম",
-"safar":"সফর",
-"rabi al awwal":"রবিউল আউয়াল",
-"rabi al thani":"রবিউস সানি",
-"jumada al ula":"জুমাদাল উলা",
-"jumada al akhirah":"জুমাদাস সানিয়া",
-"rajab":"রজব",
-"shaban":"শাবান",
-"ramadan":"রমজান",
-"shawwal":"শাওয়াল",
-"dhul qadah":"জিলকদ",
-"dhul hijjah":"জিলহজ্জ"
-},
-hi:{
-"muharram":"मुहर्रम",
-"safar":"सफ़र",
-"rabi al awwal":"रबी अल अव्वल",
-"rabi al thani":"रबी अस सानी",
-"jumada al ula":"जुमादा अल ऊला",
-"jumada al akhirah":"जुमादा अस सानिया",
-"rajab":"रजब",
-"shaban":"शाबान",
-"ramadan":"रमज़ान",
-"shawwal":"शव्वाल",
-"dhul qadah":"ज़िलक़ादा",
-"dhul hijjah":"ज़िलहिज्जा"
-}
-};
-
-/* FINAL MONTH SELECT */
-let finalMonth = rawMonth; // default English
-
-if(s.lang !== "en" && HIJRI_MONTH[s.lang] && HIJRI_MONTH[s.lang][month]){
-finalMonth = HIJRI_MONTH[s.lang][month];
-}
-
-/* FINAL DATE */
-let hij = `${hijri.day} ${finalMonth} ${hijri.year}`;
+/* HIJRI */
+let hij = `${hijri.day} ${hijri.month.en} ${hijri.year}`;
 setText("date", formatNumber(hij));
-/* LIST */
 
+/* LIST */
 prayerList=[
 [t.prayer[0],tm.Fajr],
 [t.prayer[1],tm.Sunrise],
@@ -277,21 +222,17 @@ console.log("Prayer error",e);
 function getNext(){
 
 let now=new Date();
-
-/* Sunrise বাদ */
 let validPrayer = prayerList.filter(p => p[0] !== t.prayer[1]);
 
 for(let p of validPrayer){
 let [h,m]=p[1].split(":");
 let tTime=new Date();
 tTime.setHours(h,m,0);
-
 if(now < tTime){
 return {name:p[0], time:tTime};
 }
 }
 
-/* next day Fajr */
 let [h,m]=validPrayer[0][1].split(":");
 let t2=new Date();
 t2.setDate(t2.getDate()+1);
@@ -300,27 +241,22 @@ t2.setHours(h,m,0);
 return {name:validPrayer[0][0], time:t2};
 }
 
-
 function getCurrent(){
 
 let now=new Date();
-
-/* Sunrise বাদ */
 let validPrayer = prayerList.filter(p => p[0] !== t.prayer[1]);
 
 for(let i=validPrayer.length-1;i>=0;i--){
 let [h,m]=validPrayer[i][1].split(":");
 let tTime=new Date();
 tTime.setHours(h,m,0);
-
 if(now >= tTime){
 return validPrayer[i][0];
 }
 }
 
-return validPrayer[0][0]; // fallback (early morning)
+return validPrayer[0][0];
 }
-
 
 function updateStatus(){
 
@@ -329,29 +265,21 @@ if(!prayerList.length) return;
 let next = getNext();
 let current = getCurrent();
 
-/* UI text */
 setText("currentPrayerName","● "+current);
 setText("nextPrayerName","⏭ "+next.name);
 
-/* countdown */
 let diff = next.time - new Date();
 if(diff < 0) diff = 0;
 
-let hours = Math.floor(diff / 3600000);
-let minutes = Math.floor((diff % 3600000) / 60000);
-let seconds = Math.floor((diff % 60000) / 1000);
-
 let time =
-String(hours).padStart(2,"0")+":"+
-String(minutes).padStart(2,"0")+":"+
-String(seconds).padStart(2,"0");
+String(Math.floor(diff/3600000)).padStart(2,"0")+":"+
+String(Math.floor((diff%3600000)/60000)).padStart(2,"0")+":"+
+String(Math.floor((diff%60000)/1000)).padStart(2,"0");
 
 setText("countdown", formatNumber(time));
 
 }
 
-
-/* live update */
 setInterval(updateStatus,1000);
 
 /* ================= GRID ================= */
@@ -369,11 +297,7 @@ let div=document.createElement("div");
 div.className="prayer-box";
 
 if(p[0]===t.prayer[1]){
-div.innerHTML=`
-<div style="font-size:16px; margin-bottom:8px;">⚙️</div>
-<div style="font-size:16px;">${t.settings}</div>
-`;
-
+div.innerHTML=`<div style="font-size:16px;">⚙️</div><div>${t.settings}</div>`;
 div.onclick=()=>openPage("settings");
 }else{
 div.innerHTML=`${p[0]}<br>${formatNumber(p[1])}`;
