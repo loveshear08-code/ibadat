@@ -1,3 +1,4 @@
+alert("Tasbih JS Loaded");
 // ================= SAFE LANGUAGE =================
 
 function getLang(){
