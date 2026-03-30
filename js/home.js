@@ -109,25 +109,19 @@ String(d.getSeconds()).padStart(2,"0");
 setText("clock",formatNumber(time));
 },1000);
 
-/* ================= LOCATION AUTO ================= */
+/* ================= LOCATION ================= */
 
 if(navigator.geolocation){
-
-navigator.geolocation.getCurrentPosition(
-pos=>{
+navigator.geolocation.getCurrentPosition(pos=>{
 let lat=pos.coords.latitude;
 let lon=pos.coords.longitude;
 
+setCity(lat,lon);
 loadWeather(lat,lon);
 loadPrayer(lat,lon);
-setCity(lat,lon);
-},
-()=>fallback()
-);
 
-}else{
-fallback();
-}
+},fallback);
+}else fallback();
 
 function fallback(){
 setCity();
@@ -138,14 +132,11 @@ loadPrayer(22.5726,88.3639);
 /* ================= CITY ================= */
 
 async function setCity(lat,lon){
-
 try{
-
-if(!lat || !lon){
+if(!lat){
 setText("city", s.lang==="bn"?"কলকাতা":s.lang==="hi"?"कोलकाता":"Kolkata");
 return;
 }
-
 let res=await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
 let data=await res.json();
 
@@ -159,23 +150,23 @@ setText("city",city);
 }catch{
 setText("city","Kolkata");
 }
-
 }
 
 /* ================= WEATHER ================= */
 
 async function loadWeather(lat, lon){
-
 try{
 
-let apiKey="YOUR_API_KEY";
+let apiKey="a7f2e6a4e4dd9b86ec885982fac12ace";
 
-let res=await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`);
+let langCode = s.lang==="hi"?"hi":"en";
+
+let res=await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=${langCode}`);
 let data=await res.json();
 
 if(data && data.main){
 let temp=Math.round(data.main.temp);
-let desc=data.weather[0].main;
+let desc=data.weather[0].description;
 setText("weather",formatNumber(temp+"°C "+desc));
 }else{
 setText("weather",t.weather);
@@ -184,7 +175,6 @@ setText("weather",t.weather);
 }catch{
 setText("weather",t.weather);
 }
-
 }
 
 /* ================= PRAYER ================= */
@@ -216,10 +206,9 @@ updateStatus();
 
 }
 
-/* ================= AUTO AZAN ================= */
+/* ================= AZAN ================= */
 
 function checkAzan(){
-
 let now=new Date();
 
 let currentTime=
@@ -227,23 +216,16 @@ String(now.getHours()).padStart(2,"0")+":"+
 String(now.getMinutes()).padStart(2,"0");
 
 prayerList.forEach(p=>{
-
 if(!p[1]) return;
-
 if(azanPlayed[p[0]]) return;
 
 if(currentTime===p[1]){
-
 let type=getSettings().azan || "makkah";
 azanAudio.src=AZAN_FILES[type];
 azanAudio.play().catch(()=>{});
-
 azanPlayed[p[0]]=true;
-
 }
-
 });
-
 }
 
 setInterval(checkAzan,1000);
@@ -251,16 +233,13 @@ setInterval(checkAzan,1000);
 /* ================= STATUS ================= */
 
 function getNext(){
-
 let now=new Date();
-
 let valid=prayerList.filter(p=>p[1]);
 
 for(let p of valid){
 let [h,m]=p[1].split(":");
 let tTime=new Date();
 tTime.setHours(h,m,0);
-
 if(now<tTime) return {name:p[0],time:tTime};
 }
 
@@ -273,16 +252,13 @@ return {name:valid[0][0],time:t2};
 }
 
 function getCurrent(){
-
 let now=new Date();
-
 let valid=prayerList.filter(p=>p[1]);
 
 for(let i=valid.length-1;i>=0;i--){
 let [h,m]=valid[i][1].split(":");
 let tTime=new Date();
 tTime.setHours(h,m,0);
-
 if(now>=tTime) return valid[i][0];
 }
 
@@ -290,7 +266,6 @@ return valid[0][0];
 }
 
 function updateStatus(){
-
 if(!prayerList.length) return;
 
 let next=getNext();
@@ -308,7 +283,6 @@ String(Math.floor((diff%3600000)/60000)).padStart(2,"0")+":"+
 String(Math.floor((diff%60000)/1000)).padStart(2,"0");
 
 setText("countdown",formatNumber(time));
-
 }
 
 setInterval(updateStatus,1000);
@@ -337,6 +311,16 @@ grid.appendChild(div);
 });
 
 }
+
+/* ================= FEATURES FIX ================= */
+
+Object.keys(t.features).forEach(id=>{
+let el=document.getElementById(id);
+if(el){
+el.innerText=t.features[id];
+el.onclick=()=>openPage(id==="namaz"?"namaz-guide":id);
+}
+});
 
 /* ================= NAV ================= */
 
