@@ -7,13 +7,12 @@ padding:0;
 body{
 font-family:sans-serif;
 background:#eaf3e6;
-height:100vh;
-overflow:hidden;
+min-height:100vh;
 }
 
-/* FULL SCREEN */
+/* MAIN */
 .container{
-height:100vh;
+min-height:100vh;
 display:flex;
 flex-direction:column;
 justify-content:space-between;
@@ -21,53 +20,34 @@ align-items:center;
 padding:20px;
 }
 
-/* TOP */
-.top{
-font-size:20px;
+/* TITLE */
+.title{
+font-size:22px;
 font-weight:bold;
-text-align:center;
 }
 
-/* COUNTER AREA */
+/* COUNTER */
 .counter-box{
 flex:1;
 display:flex;
-justify-content:center;
 align-items:center;
+justify-content:center;
 width:100%;
 }
 
-/* BIG NUMBER */
 #counter{
-font-size:120px;
+font-size:110px;
 font-weight:bold;
 color:#2e7d32;
-transition:0.1s;
 }
 
-/* TAP EFFECT */
-.tap{
-transform:scale(1.1);
-}
-
-/* BUTTONS */
-.controls{
-width:100%;
-display:flex;
-justify-content:center;
-}
-
+/* BUTTON */
 button{
-padding:15px 30px;
+padding:15px 25px;
 border:none;
-border-radius:14px;
-font-size:16px;
-font-weight:bold;
+border-radius:12px;
 background:#f44336;
 color:white;
+font-size:16px;
 cursor:pointer;
-}
-
-button:active{
-transform:scale(0.95);
 }
