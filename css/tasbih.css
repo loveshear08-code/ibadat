@@ -1,9 +1,14 @@
+*{
+box-sizing:border-box;
+}
+
 body{
 margin:0;
 font-family:sans-serif;
 background:#eaf3e6;
 }
 
+/* CENTER SCREEN */
 .main{
 display:flex;
 justify-content:center;
@@ -12,6 +17,7 @@ height:100vh;
 padding:15px;
 }
 
+/* CARD DESIGN */
 .card{
 background:#dce9d3;
 border-radius:20px;
@@ -19,36 +25,45 @@ padding:30px;
 width:100%;
 max-width:400px;
 text-align:center;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
+box-shadow:0 4px 12px rgba(0,0,0,0.1);
 }
 
+/* TITLE */
 .title{
 font-size:22px;
-margin-bottom:20px;
 font-weight:bold;
+margin-bottom:20px;
 }
 
+/* COUNTER */
 #counter{
-font-size:60px;
-margin:20px 0;
+font-size:64px;
+font-weight:bold;
 color:#2e7d32;
+margin:25px 0;
 }
 
+/* BUTTONS */
 .buttons{
 display:flex;
 gap:10px;
-justify-content:center;
 }
 
 button{
 flex:1;
-padding:12px;
+padding:14px;
 border:none;
-border-radius:10px;
+border-radius:12px;
 font-size:16px;
+font-weight:bold;
+cursor:pointer;
 background:#4caf50;
 color:white;
-cursor:pointer;
+transition:0.2s;
+}
+
+button:active{
+transform:scale(0.95);
 }
 
 button:last-child{
