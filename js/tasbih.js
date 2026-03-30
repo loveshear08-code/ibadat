@@ -1,13 +1,9 @@
-alert("Tasbih JS Loaded");
-// ================= SAFE LANGUAGE =================
+// ================= LANGUAGE =================
 
 function getLang(){
     try{
-        if(typeof getSettings === "function"){
-            const s = getSettings();
-            return s.lang || "bn";
-        }
-        return "bn";
+        const s = getSettings();
+        return s.lang || "bn";
     }catch{
         return "bn";
     }
@@ -16,9 +12,9 @@ function getLang(){
 // ================= TEXT =================
 
 const TEXT = {
-bn:{title:"📿 ডিজিটাল তসবিহ", click:"ক্লিক", reset:"রিসেট"},
-en:{title:"📿 Digital Tasbih", click:"Click", reset:"Reset"},
-hi:{title:"📿 डिजिटल तस्बीह", click:"क्लिक", reset:"रीसेट"}
+bn:{title:"📿 ডিজিটাল তসবিহ", reset:"রিসেট"},
+en:{title:"📿 Digital Tasbih", reset:"Reset"},
+hi:{title:"📿 डिजिटल तस्बीह", reset:"रीसेट"}
 };
 
 // ================= GLOBAL =================
@@ -44,32 +40,43 @@ function formatNumber(num){
     if(lang === "bn"){
         return num.toString().replace(/[0-9]/g, d=>"০১২৩৪৫৬৭৮৯"[d]);
     }
+
     if(lang === "hi"){
         return num.toString().replace(/[0-9]/g, d=>"०१२३४५६७८९"[d]);
     }
+
     return num;
 }
 
 // ================= UI =================
 
 function updateUI(){
-    const el = document.getElementById("counter");
-    if(el) el.innerText = formatNumber(count);
+    document.getElementById("counter").innerText = formatNumber(count);
 }
 
-// ================= ACTION =================
+// ================= TAP ACTION =================
 
 function increment(){
+
     count++;
     saveCount();
     updateUI();
 
+    // vibration
     if(navigator.vibrate){
-        navigator.vibrate(30);
+        navigator.vibrate(20);
     }
+
+    // animation
+    let c = document.getElementById("counter");
+    c.classList.add("tap");
+    setTimeout(()=>c.classList.remove("tap"),100);
 }
 
-function reset(){
+// ================= RESET =================
+
+function reset(e){
+    e.stopPropagation(); // prevent tap
     count = 0;
     saveCount();
     updateUI();
@@ -82,14 +89,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const lang = getLang();
     const t = TEXT[lang] || TEXT["bn"];
 
-    const title = document.getElementById("title");
-    const btnClick = document.getElementById("btnClick");
-    const btnReset = document.getElementById("btnReset");
-
-    if(title) title.innerText = t.title;
-    if(btnClick) btnClick.innerText = t.click;
-    if(btnReset) btnReset.innerText = t.reset;
+    document.getElementById("title").innerText = t.title;
+    document.getElementById("btnReset").innerText = t.reset;
 
     loadCount();
     updateUI();
+
+    // FULL SCREEN TAP
+    document.getElementById("tapArea").addEventListener("click", increment);
+
 });
