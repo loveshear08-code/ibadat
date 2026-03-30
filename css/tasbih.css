@@ -1,71 +1,73 @@
 *{
 box-sizing:border-box;
+margin:0;
+padding:0;
 }
 
 body{
-margin:0;
 font-family:sans-serif;
 background:#eaf3e6;
+height:100vh;
+overflow:hidden;
 }
 
-/* CENTER SCREEN */
-.main{
+/* FULL SCREEN */
+.container{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+align-items:center;
+padding:20px;
+}
+
+/* TOP */
+.top{
+font-size:20px;
+font-weight:bold;
+text-align:center;
+}
+
+/* COUNTER AREA */
+.counter-box{
+flex:1;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
-padding:15px;
-}
-
-/* CARD */
-.card{
-background:#dce9d3;
-border-radius:20px;
-padding:30px;
 width:100%;
-max-width:400px;
-text-align:center;
-box-shadow:0 4px 12px rgba(0,0,0,0.1);
 }
 
-/* TITLE */
-.title{
-font-size:22px;
-font-weight:bold;
-margin-bottom:20px;
-}
-
-/* COUNTER */
+/* BIG NUMBER */
 #counter{
-font-size:64px;
+font-size:120px;
 font-weight:bold;
 color:#2e7d32;
-margin:25px 0;
+transition:0.1s;
+}
+
+/* TAP EFFECT */
+.tap{
+transform:scale(1.1);
 }
 
 /* BUTTONS */
-.buttons{
+.controls{
+width:100%;
 display:flex;
-gap:10px;
+justify-content:center;
 }
 
 button{
-flex:1;
-padding:14px;
+padding:15px 30px;
 border:none;
-border-radius:12px;
+border-radius:14px;
 font-size:16px;
 font-weight:bold;
-cursor:pointer;
-background:#4caf50;
+background:#f44336;
 color:white;
-transition:0.2s;
+cursor:pointer;
 }
 
 button:active{
 transform:scale(0.95);
-}
-
-button:last-child{
-background:#f44336;
 }
