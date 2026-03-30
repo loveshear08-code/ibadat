@@ -1,101 +1,89 @@
-// ================= LANGUAGE =================
-
+// ================= SAFE LANG =================
 function getLang(){
     try{
-        const s = getSettings();
-        return s.lang || "bn";
+        if(typeof getSettings === "function"){
+            return getSettings().lang || "bn";
+        }
+        return "bn";
     }catch{
         return "bn";
     }
 }
 
 // ================= TEXT =================
-
 const TEXT = {
-bn:{title:"📿 ডিজিটাল তসবিহ", reset:"রিসেট"},
-en:{title:"📿 Digital Tasbih", reset:"Reset"},
-hi:{title:"📿 डिजिटल तस्बीह", reset:"रीसेट"}
+bn:{title:"📿 তসবিহ", reset:"রিসেট"},
+en:{title:"📿 Tasbih", reset:"Reset"},
+hi:{title:"📿 तस्बीह", reset:"रीसेट"}
 };
 
 // ================= GLOBAL =================
-
 let count = 0;
 
 // ================= STORAGE =================
-
-function loadCount(){
-    const saved = localStorage.getItem("tasbih_count");
-    count = saved ? parseInt(saved) : 0;
+function load(){
+    let s = localStorage.getItem("tasbih_count");
+    count = s ? parseInt(s) : 0;
 }
 
-function saveCount(){
+function save(){
     localStorage.setItem("tasbih_count", count);
 }
 
-// ================= NUMBER =================
+// ================= FORMAT =================
+function format(n){
+    let lang = getLang();
 
-function formatNumber(num){
-    const lang = getLang();
-
-    if(lang === "bn"){
-        return num.toString().replace(/[0-9]/g, d=>"০১২৩৪৫৬৭৮৯"[d]);
+    if(lang==="bn"){
+        return n.toString().replace(/[0-9]/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
     }
-
-    if(lang === "hi"){
-        return num.toString().replace(/[0-9]/g, d=>"०१२३४५६७८९"[d]);
+    if(lang==="hi"){
+        return n.toString().replace(/[0-9]/g,d=>"०१२३४५६७८९"[d]);
     }
-
-    return num;
+    return n;
 }
 
 // ================= UI =================
-
-function updateUI(){
-    document.getElementById("counter").innerText = formatNumber(count);
+function update(){
+    document.getElementById("counter").innerText = format(count);
 }
 
-// ================= TAP ACTION =================
-
+// ================= ACTION =================
 function increment(){
-
     count++;
-    saveCount();
-    updateUI();
+    save();
+    update();
 
-    // vibration
     if(navigator.vibrate){
         navigator.vibrate(20);
     }
-
-    // animation
-    let c = document.getElementById("counter");
-    c.classList.add("tap");
-    setTimeout(()=>c.classList.remove("tap"),100);
 }
 
-// ================= RESET =================
-
-function reset(e){
-    e.stopPropagation(); // prevent tap
+function reset(){
     count = 0;
-    saveCount();
-    updateUI();
+    save();
+    update();
 }
 
 // ================= INIT =================
+document.addEventListener("DOMContentLoaded",()=>{
 
-document.addEventListener("DOMContentLoaded", ()=>{
-
-    const lang = getLang();
-    const t = TEXT[lang] || TEXT["bn"];
+    let lang = getLang();
+    let t = TEXT[lang] || TEXT["bn"];
 
     document.getElementById("title").innerText = t.title;
     document.getElementById("btnReset").innerText = t.reset;
 
-    loadCount();
-    updateUI();
+    load();
+    update();
 
     // FULL SCREEN TAP
     document.getElementById("tapArea").addEventListener("click", increment);
+
+    // RESET BUTTON
+    document.getElementById("btnReset").addEventListener("click",(e)=>{
+        e.stopPropagation();
+        reset();
+    });
 
 });
