@@ -157,14 +157,17 @@ setText("city","Kolkata");
 /* ================= WEATHER FIX ================= */
 
 function translateWeather(desc){
+
 desc = desc.toLowerCase();
 
 if(desc.includes("clear")) return "রোদ";
 if(desc.includes("cloud")) return "মেঘলা";
 if(desc.includes("rain")) return "বৃষ্টি";
-if(desc.includes("mist") || desc.includes("fog")) return "কুয়াশা";
+if(desc.includes("mist") || desc.includes("fog") || desc.includes("haze")) return "কুয়াশা";
+if(desc.includes("thunder")) return "বজ্রপাত";
+if(desc.includes("drizzle")) return "গুঁড়ি বৃষ্টি";
 
-return "আবহাওয়া";
+return desc; // 🔥 fallback fixed
 }
 
 async function loadWeather(lat, lon){
