@@ -17,19 +17,23 @@
 
     <div class="card">
 
-        <div class="title">📿 Digital Tasbih</div>
+        <div class="title" id="title"></div>
 
         <div id="counter">0</div>
 
         <div class="buttons">
-            <button onclick="increment()">Click</button>
-            <button onclick="reset()">Reset</button>
+            <button id="btnClick" onclick="increment()"></button>
+            <button id="btnReset" onclick="reset()"></button>
         </div>
 
     </div>
 
 </div>
 
+<!-- SETTINGS (important for language) -->
+<script src="../js/settings.js"></script>
+
+<!-- MAIN JS -->
 <script src="../js/tasbih.js"></script>
 
 </body>
