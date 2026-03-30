@@ -13,27 +13,29 @@
 
 <body>
 
-<div class="main">
+<div class="container" id="tapArea">
 
-    <div class="card">
+    <!-- TOP BAR -->
+    <div class="top">
+        <div id="title"></div>
+    </div>
 
-        <div class="title" id="title"></div>
-
+    <!-- COUNTER -->
+    <div class="counter-box">
         <div id="counter">0</div>
+    </div>
 
-        <div class="buttons">
-            <button id="btnClick" onclick="increment()"></button>
-            <button id="btnReset" onclick="reset()"></button>
-        </div>
-
+    <!-- BUTTONS -->
+    <div class="controls">
+        <button id="btnReset" onclick="reset(event)"></button>
     </div>
 
 </div>
 
-<!-- SETTINGS (important for language) -->
+<!-- SETTINGS -->
 <script src="../js/settings.js"></script>
 
-<!-- MAIN JS -->
+<!-- MAIN -->
 <script src="../js/tasbih.js"></script>
 
 </body>
