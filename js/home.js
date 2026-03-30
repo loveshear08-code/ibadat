@@ -157,7 +157,7 @@ setText("city","Kolkata");
 async function loadWeather(lat, lon){
 try{
 
-let apiKey="a7f2e6a4e4dd9b86ec885982fac12ace";
+let apiKey="3cdd0e815e03d36fbdc1266a5a37da8e";
 
 let langCode = s.lang==="hi"?"hi":"en";
 
