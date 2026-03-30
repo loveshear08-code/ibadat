@@ -10,7 +10,11 @@ let currentLang = s.lang;
 /* ================= AUTO AZAN SYSTEM ================= */
 
 let azanPlayed = {};
+let lastAzan = "";
 let azanAudio = new Audio();
+
+let userLat = 22.5726;
+let userLon = 88.3639;
 
 const AZAN_FILES = {
     makkah: "assets/makkah.mp3",
@@ -76,24 +80,7 @@ hijriMonths:["मुहर्रम","सफ़र","रबी अल अव्�
 }
 };
 
-    const WEATHER_MAP = {
-    haze:{bn:"কুয়াশা", hi:"कुहासा", en:"Haze"},
-    mist:{bn:"কুয়াশা", hi:"धुंध", en:"Mist"},
-    fog:{bn:"কুয়াশা", hi:"कोहरा", en:"Fog"},
-    smoke:{bn:"ধোঁয়া", hi:"धुआँ", en:"Smoke"},
-    dust:{bn:"ধূলা", hi:"धूल", en:"Dust"},
-    sand:{bn:"বালু", hi:"रेत", en:"Sand"},
-    
-    clear:{bn:"পরিষ্কার", hi:"साफ", en:"Clear"},
-    clouds:{bn:"মেঘলা", hi:"बादल", en:"Clouds"},
-    
-    rain:{bn:"বৃষ্টি", hi:"बारिश", en:"Rain"},
-    drizzle:{bn:"গুঁড়ি বৃষ্টি", hi:"बूंदाबांदी", en:"Drizzle"},
-    
-    thunderstorm:{bn:"বজ্রপাত", hi:"तूफान", en:"Thunderstorm"}
-};
-    const t = TEXT[s.lang] || TEXT["bn"];  
-
+const t = TEXT[s.lang] || TEXT["bn"];
 
 /* ================= BASIC ================= */
 
@@ -130,20 +117,20 @@ setText("clock",formatNumber(time));
 
 if(navigator.geolocation){
 navigator.geolocation.getCurrentPosition(pos=>{
-let lat=pos.coords.latitude;
-let lon=pos.coords.longitude;
+userLat=pos.coords.latitude;
+userLon=pos.coords.longitude;
 
-setCity(lat,lon);
-loadWeather(lat,lon);
-loadPrayer(lat,lon);
+setCity(userLat,userLon);
+loadWeather(userLat,userLon);
+loadPrayer(userLat,userLon);
 
 },fallback);
 }else fallback();
 
 function fallback(){
 setCity();
-loadWeather(22.5726,88.3639);
-loadPrayer(22.5726,88.3639);
+loadWeather(userLat,userLon);
+loadPrayer(userLat,userLon);
 }
 
 /* ================= CITY ================= */
@@ -151,16 +138,14 @@ loadPrayer(22.5726,88.3639);
 async function setCity(lat,lon){
 try{
 if(!lat){
-setText("city", s.lang==="bn"?"কলকাতা":s.lang==="hi"?"कोलकाता":"Kolkata");
+setText("city","কলকাতা");
 return;
 }
-let res=await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
+let res=await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}`);
 let data=await res.json();
 
 let city=data.city || data.locality || "Kolkata";
-
 if(s.lang==="bn" && city==="Kolkata") city="কলকাতা";
-if(s.lang==="hi" && city==="Kolkata") city="कोलकाता";
 
 setText("city",city);
 
@@ -169,49 +154,39 @@ setText("city","Kolkata");
 }
 }
 
-/* ================= WEATHER (FIXED) ================= */
+/* ================= WEATHER FIX ================= */
+
+function translateWeather(desc){
+desc = desc.toLowerCase();
+
+if(desc.includes("clear")) return "রোদ";
+if(desc.includes("cloud")) return "মেঘলা";
+if(desc.includes("rain")) return "বৃষ্টি";
+if(desc.includes("mist") || desc.includes("fog")) return "কুয়াশা";
+
+return "আবহাওয়া";
+}
 
 async function loadWeather(lat, lon){
 try{
 
-let apiKey="3cdd0e815e03d36fbdc1266a5a37da8e";
-
-let langCode = s.lang==="hi" ? "hi" : "en";
-
-let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=${langCode}`);
-
+let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=3cdd0e815e03d36fbdc1266a5a37da8e&units=metric`);
 let data = await res.json();
 
-if(data.cod === 200){
-
 let temp = Math.round(data.main.temp);
-let raw = data.weather[0].main.toLowerCase();
+let desc = translateWeather(data.weather[0].description);
 
-let desc;
+setText("weather", formatNumber(temp+"°C "+desc));
 
-if(WEATHER_MAP[raw]){
-    desc = WEATHER_MAP[raw][s.lang];
-}else{
-    if(s.lang === "bn"){
-        desc = "🌤️ আবহাওয়া";
-    }else if(s.lang === "hi"){
-        desc = "🌤️ मौसम";
-    }else{
-        desc = "🌤️ Weather";
-    }
-}
-
-setText("weather", formatNumber(temp + "°C " + desc));
-
-}else{
-setText("weather", t.weather);
-}
-
-}catch(e){
-console.log(e);
+}catch{
 setText("weather",t.weather);
 }
 }
+
+/* AUTO UPDATE */
+setInterval(()=>{
+loadWeather(userLat,userLon);
+},600000);
 
 /* ================= PRAYER ================= */
 
@@ -223,10 +198,6 @@ let res=await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitud
 let data=await res.json();
 
 let tm=data.data.timings;
-let hijri=data.data.date.hijri;
-
-let month=t.hijriMonths[hijri.month.number-1];
-setText("date",formatNumber(hijri.day+" "+month+" "+hijri.year));
 
 prayerList=[
 [t.prayer[0],tm.Fajr],
@@ -242,29 +213,37 @@ updateStatus();
 
 }
 
-/* ================= AZAN ================= */
+/* ================= AZAN FIX ================= */
 
 function checkAzan(){
-let now=new Date();
 
-let currentTime=
-String(now.getHours()).padStart(2,"0")+":"+
-String(now.getMinutes()).padStart(2,"0");
+let now=new Date();
+let h=now.getHours();
+let m=now.getMinutes();
 
 prayerList.forEach(p=>{
-if(!p[1]) return;
-if(azanPlayed[p[0]]) return;
 
-if(currentTime===p[1]){
+if(!p[1]) return;
+
+let [ph,pm]=p[1].split(":").map(Number);
+
+if(h===ph && m===pm){
+
+let id = p[0]+"_"+new Date().toDateString();
+if(lastAzan===id) return;
+
+lastAzan=id;
+
 let type=getSettings().azan || "makkah";
 azanAudio.src=AZAN_FILES[type];
 azanAudio.play().catch(()=>{});
-azanPlayed[p[0]]=true;
+
 }
+
 });
 }
 
-setInterval(checkAzan,1000);
+setInterval(checkAzan,10000);
 
 /* ================= STATUS ================= */
 
@@ -336,7 +315,7 @@ let div=document.createElement("div");
 div.className="prayer-box";
 
 if(p[0]===t.prayer[1]){
-div.innerHTML=`<div style="font-size:16px;">⚙️</div><div>${t.settings}</div>`;
+div.innerHTML=`<div>⚙️</div><div>${t.settings}</div>`;
 div.onclick=()=>openPage("settings");
 }else{
 div.innerHTML=`${p[0]}<br>${formatNumber(p[1]||"")}`;
@@ -348,7 +327,7 @@ grid.appendChild(div);
 
 }
 
-/* ================= FEATURES FIX ================= */
+/* ================= FEATURES ================= */
 
 setTimeout(()=>{
 ["namaz","quran","dua","hadith","qibla","tasbih"].forEach(id=>{
