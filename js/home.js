@@ -152,27 +152,32 @@ setText("city","Kolkata");
 }
 }
 
-/* ================= WEATHER ================= */
+/* ================= WEATHER (FIXED) ================= */
 
 async function loadWeather(lat, lon){
 try{
 
 let apiKey="3cdd0e815e03d36fbdc1266a5a37da8e";
 
-let langCode = s.lang==="hi"?"hi":"en";
+let langCode = s.lang==="hi" ? "hi" : "en";
 
-let res=await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=${langCode}`);
-let data=await res.json();
+let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=${langCode}`);
 
-if(data && data.main){
-let temp=Math.round(data.main.temp);
-let desc=data.weather[0].description;
-setText("weather",formatNumber(temp+"°C "+desc));
+let data = await res.json();
+
+if(data.cod === 200){
+
+let temp = Math.round(data.main.temp);
+let desc = data.weather[0].description;
+
+setText("weather", formatNumber(temp + "°C " + desc));
+
 }else{
-setText("weather",t.weather);
+setText("weather", t.weather);
 }
 
-}catch{
+}catch(e){
+console.log(e);
 setText("weather",t.weather);
 }
 }
@@ -314,13 +319,15 @@ grid.appendChild(div);
 
 /* ================= FEATURES FIX ================= */
 
-Object.keys(t.features).forEach(id=>{
+setTimeout(()=>{
+["namaz","quran","dua","hadith","qibla","tasbih"].forEach(id=>{
 let el=document.getElementById(id);
-if(el){
+if(!el) return;
+
 el.innerText=t.features[id];
 el.onclick=()=>openPage(id==="namaz"?"namaz-guide":id);
-}
 });
+},100);
 
 /* ================= NAV ================= */
 
