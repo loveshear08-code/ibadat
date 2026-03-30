@@ -94,5 +94,16 @@
 
 <script src="../js/settings.js?v=5"></script>
 
+<script>
+document.addEventListener("backbutton", function(e){
+    e.preventDefault();
+
+    if(history.length > 1){
+        history.back();
+    }else{
+        window.location.href = "../index.html";
+    }
+}, false);
+</script>
 </body>
 </html>
