@@ -1,40 +1,30 @@
-// ================= SETTINGS =================
+// ================= SAFE LANGUAGE =================
 
-// settings.js থেকে language নাও
 function getLang(){
     try{
-        const s = getSettings();
-        return s.lang || "bn";
+        if(typeof getSettings === "function"){
+            const s = getSettings();
+            return s.lang || "bn";
+        }
+        return "bn";
     }catch{
         return "bn";
     }
 }
 
-// ================= LANGUAGE TEXT =================
+// ================= TEXT =================
 
 const TEXT = {
-    bn:{
-        title:"📿 ডিজিটাল তসবিহ",
-        click:"ক্লিক",
-        reset:"রিসেট"
-    },
-    en:{
-        title:"📿 Digital Tasbih",
-        click:"Click",
-        reset:"Reset"
-    },
-    hi:{
-        title:"📿 डिजिटल तस्बीह",
-        click:"क्लिक",
-        reset:"रीसेट"
-    }
+bn:{title:"📿 ডিজিটাল তসবিহ", click:"ক্লিক", reset:"রিসেট"},
+en:{title:"📿 Digital Tasbih", click:"Click", reset:"Reset"},
+hi:{title:"📿 डिजिटल तस्बीह", click:"क्लिक", reset:"रीसेट"}
 };
 
 // ================= GLOBAL =================
 
 let count = 0;
 
-// ================= LOCAL STORAGE =================
+// ================= STORAGE =================
 
 function loadCount(){
     const saved = localStorage.getItem("tasbih_count");
@@ -45,7 +35,7 @@ function saveCount(){
     localStorage.setItem("tasbih_count", count);
 }
 
-// ================= NUMBER FORMAT =================
+// ================= NUMBER =================
 
 function formatNumber(num){
     const lang = getLang();
@@ -53,18 +43,17 @@ function formatNumber(num){
     if(lang === "bn"){
         return num.toString().replace(/[0-9]/g, d=>"০১২৩৪৫৬৭৮৯"[d]);
     }
-
     if(lang === "hi"){
         return num.toString().replace(/[0-9]/g, d=>"०१२३४५६७८९"[d]);
     }
-
     return num;
 }
 
-// ================= UI UPDATE =================
+// ================= UI =================
 
 function updateUI(){
-    document.getElementById("counter").innerText = formatNumber(count);
+    const el = document.getElementById("counter");
+    if(el) el.innerText = formatNumber(count);
 }
 
 // ================= ACTION =================
@@ -74,7 +63,6 @@ function increment(){
     saveCount();
     updateUI();
 
-    // vibration (mobile)
     if(navigator.vibrate){
         navigator.vibrate(30);
     }
@@ -93,14 +81,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const lang = getLang();
     const t = TEXT[lang] || TEXT["bn"];
 
-    // set text
-    document.getElementById("title").innerText = t.title;
-    document.getElementById("btnClick").innerText = t.click;
-    document.getElementById("btnReset").innerText = t.reset;
+    const title = document.getElementById("title");
+    const btnClick = document.getElementById("btnClick");
+    const btnReset = document.getElementById("btnReset");
 
-    // load count
+    if(title) title.innerText = t.title;
+    if(btnClick) btnClick.innerText = t.click;
+    if(btnReset) btnReset.innerText = t.reset;
+
     loadCount();
-
-    // show count
     updateUI();
 });
