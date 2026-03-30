@@ -177,7 +177,11 @@ let data = await res.json();
 if(data.cod === 200){
 
 let temp = Math.round(data.main.temp);
-let desc = data.weather[0].description;
+let raw = data.weather[0].main.toLowerCase();
+
+let desc = WEATHER_MAP[raw]
+    ? WEATHER_MAP[raw][s.lang]
+    : raw;
 
 setText("weather", formatNumber(temp + "°C " + desc));
 
