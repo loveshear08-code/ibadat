@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", async function(){
 
 /* ================= ELEMENTS ================= */
 
@@ -29,13 +29,6 @@ en:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
 hi:["रवि","सोम","मंगल","बुध","गुरु","शुक्र","शनि"]
 };
 
-/* ================= BANGLA MONTH ================= */
-
-const B_MONTHS = [
-"বৈশাখ","জ্যৈষ্ঠ","আষাঢ়","শ্রাবণ","ভাদ্র","আশ্বিন",
-"কার্তিক","অগ্রহায়ণ","পৌষ","মাঘ","ফাল্গুন","চৈত্র"
-];
-
 /* ================= NUMBER FORMAT ================= */
 
 function formatNum(num){
@@ -51,35 +44,37 @@ DAYS[lang].forEach(d=>{
 dayNamesDiv.innerHTML += `<div>${d}</div>`;
 });
 
-/* ================= BANGLA DATE ================= */
+/* ================= CACHE ================= */
 
-function getBanglaDate(date){
-
-const monthDays = [31,31,31,31,31,30,30,30,30,29,30,30];
-
-const start = new Date(date.getFullYear(),3,14); // April 14
-
-let diff = Math.floor((date - start)/(1000*60*60*24));
-
-if(diff < 0){
-diff += 365;
+function getCacheKey(y,m){
+return `bangla-${y}-${m}`;
 }
 
-let month = 0;
+/* ================= FETCH FULL MONTH ================= */
 
-while(diff >= monthDays[month]){
-diff -= monthDays[month];
-month++;
+async function fetchMonthBangla(year, month){
+
+let key = getCacheKey(year,month);
+let cached = localStorage.getItem(key);
+
+if(cached){
+return JSON.parse(cached); // ⚡ instant
 }
 
-let day = diff + 1;
-let year = date.getFullYear() - 593;
+try{
 
-return {
-day: day,
-month: B_MONTHS[month],
-year: year
-};
+let res = await fetch(`https://bangla-calendar-api.vercel.app/api/month?year=${year}&month=${month+1}`);
+let data = await res.json();
+
+/* STORE */
+localStorage.setItem(key, JSON.stringify(data));
+
+return data;
+
+}catch{
+return null;
+}
+
 }
 
 /* ================= CURRENT ================= */
@@ -88,40 +83,47 @@ let current = new Date();
 
 /* ================= DRAW ================= */
 
-function draw(){
+async function draw(){
 
 grid.innerHTML="";
 
+/* HEADER */
 let year = current.getFullYear();
 let month = current.getMonth();
 
 title.innerText = MONTHS[lang][month] + " " + formatNum(year);
 
+/* GET DATA */
+let banglaData = await fetchMonthBangla(year,month);
+
+/* CALC */
 let firstDay = new Date(year,month,1).getDay();
 let totalDays = new Date(year,month+1,0).getDate();
 
 let today = new Date();
 
-/* EMPTY SPACE */
+/* EMPTY */
 for(let i=0;i<firstDay;i++){
 grid.innerHTML += `<div></div>`;
 }
 
-/* DAYS LOOP */
+/* LOOP */
 for(let d=1; d<=totalDays; d++){
-
-let fullDate = new Date(year,month,d);
-let b = getBanglaDate(fullDate);
 
 let cell = document.createElement("div");
 cell.className = "day";
 
+/* 🔥 GET FROM ARRAY */
+let b = banglaData ? banglaData[d-1] : null;
+
 cell.innerHTML = `
 <div class="eng">${formatNum(d)}</div>
-<div class="bangla">${formatNum(b.day)} ${b.month}</div>
+<div class="bangla">
+${b ? formatNum(b.day)+" "+b.month : ""}
+</div>
 `;
 
-/* TODAY HIGHLIGHT */
+/* TODAY */
 if(
 d===today.getDate() &&
 month===today.getMonth() &&
@@ -135,7 +137,7 @@ grid.appendChild(cell);
 
 }
 
-/* ================= NAVIGATION ================= */
+/* ================= NAV ================= */
 
 prev.onclick = ()=>{
 current.setMonth(current.getMonth()-1);
