@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", async function(){
+document.addEventListener("DOMContentLoaded", function(){
 
 const grid = document.getElementById("calendarGrid");
 const title = document.getElementById("monthTitle");
@@ -9,9 +9,6 @@ const dayNamesDiv = document.getElementById("dayNames");
 /* SETTINGS */
 let s = JSON.parse(localStorage.getItem("appSettings")) || {lang:"bn"};
 let lang = s.lang;
-
-/* 🔥 HIJRI OFFSET */
-let HIJRI_OFFSET = parseInt(localStorage.getItem("hijriOffset") || "0");
 
 /* MONTHS */
 const MONTHS = {
@@ -27,12 +24,11 @@ en:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
 hi:["रवि","सोम","मंगल","बुध","गुरु","शुक्र","शनि"]
 };
 
-/* HIJRI MONTHS */
-const H_MONTHS = {
-bn:["মুহাররম","সফর","রবিউল আউয়াল","রবিউস সানি","জমাদিউল আউয়াল","জমাদিউস সানি","রজব","শাবান","রমজান","শাওয়াল","যিলকদ","যিলহজ্জ"],
-en:["Muharram","Safar","Rabi I","Rabi II","Jumada I","Jumada II","Rajab","Shaban","Ramadan","Shawwal","Dhul Qadah","Dhul Hijjah"],
-hi:["मुहर्रम","सफ़र","रबी I","रबी II","जुमादा I","जुमादा II","रजब","शाबान","रमज़ान","शव्वाल","ज़िलक़ादा","ज़िलहिज्जा"]
-};
+/* BANGLA MONTH */
+const B_MONTHS = [
+"বৈশাখ","জ্যৈষ্ঠ","আষাঢ়","শ্রাবণ","ভাদ্র","আশ্বিন",
+"কার্তিক","অগ্রহায়ণ","পৌষ","মাঘ","ফাল্গুন","চৈত্র"
+];
 
 /* NUMBER FORMAT */
 function formatNum(num){
@@ -47,28 +43,32 @@ DAYS[lang].forEach(d=>{
 dayNamesDiv.innerHTML += `<div>${d}</div>`;
 });
 
+/* 🔥 BANGLA DATE FUNCTION */
+function getBanglaDate(date){
+
+const start = new Date(date.getFullYear(),3,14); // April 14
+
+let diff = Math.floor((date - start)/(1000*60*60*24));
+
+if(diff < 0){
+diff += 365;
+}
+
+let month = Math.floor(diff/30);
+let day = (diff%30)+1;
+let year = date.getFullYear() - 593;
+
+return {
+day: day,
+month: B_MONTHS[month],
+year: year
+};
+}
+
 let current = new Date();
 
-/* API CACHE */
-async function fetchHijri(year,month){
-
-let key = `hijri-${year}-${month}`;
-let cached = localStorage.getItem(key);
-
-if(cached){
-return JSON.parse(cached);
-}
-
-let res = await fetch(`https://api.aladhan.com/v1/gToHCalendar/${month+1}/${year}`);
-let data = await res.json();
-
-localStorage.setItem(key, JSON.stringify(data.data));
-
-return data.data;
-}
-
 /* DRAW */
-async function draw(){
+function draw(){
 
 grid.innerHTML="";
 
@@ -77,14 +77,12 @@ let month = current.getMonth();
 
 title.innerText = MONTHS[lang][month] + " " + formatNum(year);
 
-let hijriData = await fetchHijri(year,month);
-
 let firstDay = new Date(year,month,1).getDay();
 let totalDays = new Date(year,month+1,0).getDate();
 
 let today = new Date();
 
-/* EMPTY BOX */
+/* EMPTY */
 for(let i=0;i<firstDay;i++){
 grid.innerHTML += `<div></div>`;
 }
@@ -92,26 +90,15 @@ grid.innerHTML += `<div></div>`;
 /* DAYS */
 for(let d=1; d<=totalDays; d++){
 
-let h = hijriData[d-1].hijri;
-
-/* 🔥 OFFSET APPLY */
-let hDayRaw = parseInt(h.day) + HIJRI_OFFSET;
-
-/* 🔥 MONTH + YEAR */
-let hMonth = H_MONTHS[lang][parseInt(h.month.number)-1];
-let hYear = h.year;
-
-/* FORMAT */
-let hDay = formatNum(hDayRaw);
-let gDay = formatNum(d);
+let fullDate = new Date(year,month,d);
+let b = getBanglaDate(fullDate);
 
 let cell = document.createElement("div");
 cell.className = "day";
 
-/* 🔥 CLEAN UI (SHORT MONTH) */
 cell.innerHTML = `
-<div class="eng">${gDay}</div>
-<div class="hijri">${hDay} ${hMonth.substring(0,3)}</div>
+<div class="eng">${formatNum(d)}</div>
+<div class="bangla">${formatNum(b.day)} ${b.month}</div>
 `;
 
 /* TODAY */
