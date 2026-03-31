@@ -1,3 +1,5 @@
+/* ================= BASE ================= */
+
 body{
 margin:0;
 font-family:sans-serif;
@@ -6,22 +8,24 @@ height:100dvh;
 overflow:hidden;
 }
 
-/* MAIN */
+/* ================= MAIN ================= */
+
 .calendar{
 max-width:500px;
 margin:auto;
 height:100dvh;
 display:flex;
 flex-direction:column;
-padding:4px;
+padding:6px;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
+
 .header{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:4px;
+margin-bottom:6px;
 }
 
 .header button{
@@ -29,61 +33,93 @@ background:#2e7d32;
 border:none;
 color:white;
 font-size:14px;
-padding:6px 8px;
-border-radius:8px;
+padding:6px 10px;
+border-radius:10px;
+cursor:pointer;
+transition:0.2s;
+}
+
+.header button:active{
+transform:scale(0.95);
 }
 
 #monthTitle{
-font-size:16px;
+font-size:17px;
 font-weight:bold;
 color:#1b5e20;
 }
 
-/* DAY NAMES */
+/* ================= DAY NAMES ================= */
+
 .day-names{
 display:grid;
 grid-template-columns:repeat(7,1fr);
 text-align:center;
 font-weight:bold;
 font-size:12px;
-margin-bottom:4px;
+margin-bottom:6px;
+color:#2e7d32;
 }
 
-/* GRID */
+/* ================= GRID ================= */
+
 .grid{
 display:grid;
 grid-template-columns:repeat(7,1fr);
-gap:2px;
+gap:4px;
 flex:1;
 }
 
-/* DAY BOX */
+/* ================= DAY BOX ================= */
+
 .day{
 background:#ffffff;
-border-radius:6px;
+border-radius:10px;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-height:42px; /* 🔥 PERFECT FIT */
-box-shadow:0 1px 2px rgba(0,0,0,0.08);
+height:50px;
+box-shadow:0 2px 5px rgba(0,0,0,0.08);
+transition:0.2s;
 }
 
-/* DATE */
+/* HOVER / TOUCH EFFECT */
+.day:active{
+background:#e8f5e9;
+}
+
+/* ================= ENGLISH DATE ================= */
+
 .eng{
-font-size:13px;
+font-size:14px;
 font-weight:bold;
+color:#1b5e20;
 }
 
-/* HIJRI */
-.hijri{
+/* ================= BANGLA DATE ================= */
+
+.bangla{
 font-size:10px;
 color:#2e7d32;
 line-height:1;
+white-space:nowrap;
 }
 
-/* TODAY */
+/* ================= TODAY ================= */
+
 .today{
 background:#2e7d32 !important;
 color:white;
+}
+
+.today .bangla{
+color:#c8e6c9;
+}
+
+/* ================= EMPTY BOX ================= */
+
+.grid div:empty{
+background:transparent;
+box-shadow:none;
 }
