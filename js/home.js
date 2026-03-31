@@ -210,8 +210,8 @@ let gregText=formatNumber(greg.day+" "+greg.month.en+" "+greg.year);
 setText("date",hijriText+" | "+gregText);
 
 /* DAY */
-let dayIndex=new Date(greg.date).getDay();
-setText("todayDay",t.days[dayIndex]);
+let dayIndex = parseInt(greg.weekday.number) - 1;
+setText("todayDay", t.days[dayIndex]);
 
 /* PRAYER */
 prayerList=[
