@@ -4,8 +4,6 @@ body{
 margin:0;
 font-family:sans-serif;
 background:#eef7f0;
-height:100dvh;
-overflow:hidden;
 }
 
 /* ================= MAIN ================= */
@@ -13,10 +11,7 @@ overflow:hidden;
 .calendar{
 max-width:500px;
 margin:auto;
-height:100dvh;
-display:flex;
-flex-direction:column;
-padding:6px;
+padding:8px 6px 20px;
 }
 
 /* ================= HEADER ================= */
@@ -25,7 +20,7 @@ padding:6px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:6px;
+margin-bottom:8px;
 }
 
 .header button{
@@ -33,19 +28,19 @@ background:#2e7d32;
 border:none;
 color:white;
 font-size:14px;
-padding:6px 10px;
-border-radius:10px;
+padding:7px 12px;
+border-radius:12px;
 cursor:pointer;
 transition:0.2s;
 }
 
 .header button:active{
-transform:scale(0.95);
+transform:scale(0.92);
 }
 
 #monthTitle{
-font-size:17px;
-font-weight:bold;
+font-size:18px;
+font-weight:700;
 color:#1b5e20;
 }
 
@@ -55,7 +50,7 @@ color:#1b5e20;
 display:grid;
 grid-template-columns:repeat(7,1fr);
 text-align:center;
-font-weight:bold;
+font-weight:600;
 font-size:12px;
 margin-bottom:6px;
 color:#2e7d32;
@@ -66,44 +61,46 @@ color:#2e7d32;
 .grid{
 display:grid;
 grid-template-columns:repeat(7,1fr);
-gap:4px;
-flex:1;
+gap:6px;
+
+/* 🔥 FIX GAP ISSUE */
+justify-content:start;
+align-content:start;
 }
 
 /* ================= DAY BOX ================= */
 
 .day{
 background:#ffffff;
-border-radius:10px;
+border-radius:12px;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-height:50px;
-box-shadow:0 2px 5px rgba(0,0,0,0.08);
-transition:0.2s;
+height:48px;
+box-shadow:0 2px 6px rgba(0,0,0,0.08);
+transition:0.2s ease;
 }
 
-/* HOVER / TOUCH EFFECT */
+/* TOUCH EFFECT */
 .day:active{
 background:#e8f5e9;
+transform:scale(0.95);
 }
 
-/* ================= ENGLISH DATE ================= */
+/* ================= DATE ================= */
 
 .eng{
 font-size:14px;
-font-weight:bold;
+font-weight:700;
 color:#1b5e20;
 }
 
-/* ================= BANGLA DATE ================= */
-
+/* (Future use – Bangla / extra line থাকলে ready থাকবে) */
 .bangla{
 font-size:10px;
 color:#2e7d32;
 line-height:1;
-white-space:nowrap;
 }
 
 /* ================= TODAY ================= */
@@ -113,11 +110,15 @@ background:#2e7d32 !important;
 color:white;
 }
 
+.today .eng{
+color:white;
+}
+
 .today .bangla{
 color:#c8e6c9;
 }
 
-/* ================= EMPTY BOX ================= */
+/* ================= EMPTY ================= */
 
 .grid div:empty{
 background:transparent;
