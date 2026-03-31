@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded",function(){
+document.addEventListener("DOMContentLoaded", async function(){
 
 const grid = document.getElementById("calendarGrid");
 const title = document.getElementById("monthTitle");
@@ -24,37 +24,49 @@ en:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
 hi:["रवि","सोम","मंगल","बुध","गुरु","शुक्र","शनि"]
 };
 
-/* RENDER DAY NAMES */
-dayNamesDiv.innerHTML = "";
+/* HIJRI MONTH NAMES */
+const H_MONTHS = {
+bn:["মুহাররম","সফর","রবিউল আউয়াল","রবিউস সানি","জমাদিউল আউয়াল","জমাদিউস সানি","রজব","শাবান","রমজান","শাওয়াল","যিলকদ","যিলহজ্জ"],
+en:["Muharram","Safar","Rabi I","Rabi II","Jumada I","Jumada II","Rajab","Shaban","Ramadan","Shawwal","Dhul Qadah","Dhul Hijjah"],
+hi:["मुहर्रम","सफ़र","रबी I","रबी II","जुमादा I","जुमादा II","रजब","शाबान","रमज़ान","शव्वाल","ज़िलक़ादा","ज़िलहिज्जा"]
+};
+
+/* NUMBER FORMAT */
+function formatNum(num){
+if(lang==="bn") return num.toString().replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
+if(lang==="hi") return num.toString().replace(/\d/g,d=>"०१२३४५६७८९"[d]);
+return num;
+}
+
+/* DAY NAMES */
+dayNamesDiv.innerHTML="";
 DAYS[lang].forEach(d=>{
 dayNamesDiv.innerHTML += `<div>${d}</div>`;
 });
 
 let current = new Date();
 
-/* HIJRI DATE (REAL) */
-function getHijri(date){
-let locale = lang==="bn" ? "bn" : (lang==="hi" ? "hi" : "en");
+/* 🔥 HIJRI FETCH (MONTH BASED CACHE) */
+async function fetchHijri(year,month){
 
-return new Intl.DateTimeFormat(locale+'-u-ca-islamic',{
-day:'numeric',
-month:'short'
-}).format(date);
+let key = `hijri-${year}-${month}`;
+let cached = localStorage.getItem(key);
+
+if(cached){
+return JSON.parse(cached);
 }
 
-/* NUMBER FORMAT */
-function formatNum(num){
-if(lang==="bn"){
-return num.toString().replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
-}
-if(lang==="hi"){
-return num.toString().replace(/\d/g,d=>"०१२३४५६७८९"[d]);
-}
-return num;
+let url = `https://api.aladhan.com/v1/gToHCalendar/${month+1}/${year}`;
+let res = await fetch(url);
+let data = await res.json();
+
+localStorage.setItem(key, JSON.stringify(data.data));
+
+return data.data;
 }
 
 /* DRAW */
-function draw(){
+async function draw(){
 
 grid.innerHTML="";
 
@@ -63,6 +75,10 @@ let month = current.getMonth();
 
 title.innerText = MONTHS[lang][month] + " " + formatNum(year);
 
+/* API DATA */
+let hijriData = await fetchHijri(year,month);
+
+/* CALC */
 let firstDay = new Date(year,month,1).getDay();
 let totalDays = new Date(year,month+1,0).getDate();
 
@@ -76,14 +92,24 @@ grid.innerHTML += `<div></div>`;
 /* DAYS */
 for(let d=1; d<=totalDays; d++){
 
-let full = new Date(year,month,d);
+let h = hijriData[d-1].hijri;
+
+let hDay = formatNum(h.day);
+let hMonth = H_MONTHS[lang][parseInt(h.month.number)-1];
 
 let cell = document.createElement("div");
 cell.className = "day";
 
+/* 🔥 RAMADAN / EID */
+let specialClass = "";
+if(h.month.number == 9) specialClass = "ramadan";
+if(h.month.number == 10 && h.day == 1) specialClass = "eid";
+
+cell.classList.add(specialClass);
+
 cell.innerHTML = `
 <div class="eng">${formatNum(d)}</div>
-<div class="hijri">${getHijri(full)}</div>
+<div class="hijri">${hDay} ${hMonth}</div>
 `;
 
 /* TODAY */
@@ -104,13 +130,14 @@ grid.appendChild(cell);
 prev.onclick = ()=>{
 current.setMonth(current.getMonth()-1);
 draw();
-}
+};
 
 next.onclick = ()=>{
 current.setMonth(current.getMonth()+1);
 draw();
-}
+};
 
+/* INIT */
 draw();
 
 });
