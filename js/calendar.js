@@ -12,48 +12,30 @@ let current=new Date();
 let s = JSON.parse(localStorage.getItem("appSettings")) || {lang:"bn"};
 let lang = s.lang;
 
-/* ================= MONTHS ================= */
+/* ================= TEXT ================= */
 
-const MONTHS = {
-bn:["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"],
-en:["January","February","March","April","May","June","July","August","September","October","November","December"],
-hi:["जनवरी","फ़रवरी","मार्च","अप्रैल","मई","जून","जुलाई","अगस्त","सितंबर","अक्टूबर","नवंबर","दिसंबर"]
+const TEXT = {
+bn:{
+months:["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"],
+days:["রবি","সোম","মঙ্গল","বুধ","বৃহস্পতি","শুক্র","শনি"]
+},
+en:{
+months:["January","February","March","April","May","June","July","August","September","October","November","December"],
+days:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
+},
+hi:{
+months:["जनवरी","फ़रवरी","मार्च","अप्रैल","मई","जून","जुलाई","अगस्त","सितंबर","अक्टूबर","नवंबर","दिसंबर"],
+days:["रवि","सोम","मंगल","बुध","गुरु","शुक्र","शनि"]
+}
 };
 
-/* ================= BANGLA DATE ================= */
-
-function getBanglaDate(date){
-
-const banglaMonths=[
-"বৈশাখ","জ্যৈষ্ঠ","আষাঢ়","শ্রাবণ","ভাদ্র","আশ্বিন",
-"কার্তিক","অগ্রহায়ণ","পৌষ","মাঘ","ফাল্গুন","চৈত্র"
-];
-
-const start = new Date(date.getFullYear(),3,14);
-
-let diff = Math.floor((date - start) / (1000*60*60*24));
-
-if(diff < 0){
-diff += 365;
-}
-
-let month = Math.floor(diff / 30);
-let day = (diff % 30) + 1;
-let year = date.getFullYear() - 593;
-
-return `${day} ${banglaMonths[month]} ${year}`;
-}
-
-/* ================= HIJRI DATE ================= */
+/* ================= HIJRI FIX ================= */
 
 function getHijriDate(date){
 
-let locale = lang === "bn" ? "bn" : (lang === "hi" ? "hi" : "en");
-
-return new Intl.DateTimeFormat(locale + '-u-ca-islamic',{
+return new Intl.DateTimeFormat('en-TN-u-ca-islamic',{
 day:'numeric',
-month:'short',
-year:'numeric'
+month:'short'
 }).format(date);
 
 }
@@ -67,7 +49,17 @@ grid.innerHTML="";
 const year=current.getFullYear();
 const month=current.getMonth();
 
-monthTitle.innerText=MONTHS[lang][month]+" "+year;
+monthTitle.innerText=TEXT[lang].months[month]+" "+year;
+
+/* ===== DAY HEADER ===== */
+TEXT[lang].days.forEach(d=>{
+let div=document.createElement("div");
+div.style.textAlign="center";
+div.style.fontWeight="bold";
+div.style.fontSize="12px";
+div.innerText=d;
+grid.appendChild(div);
+});
 
 const firstDay=new Date(year,month,1).getDay();
 const days=new Date(year,month+1,0).getDate();
@@ -90,11 +82,12 @@ cell.className="day";
 
 cell.innerHTML=`
 <div>${d}</div>
-<div>${getBanglaDate(fullDate)}</div>
-<div>${getHijriDate(fullDate)}</div>
+<div style="color:#2e7d32;font-size:11px;">
+${getHijriDate(fullDate)}
+</div>
 `;
 
-/* today highlight */
+/* today */
 if(
 d===today.getDate() &&
 month===today.getMonth() &&
@@ -104,7 +97,6 @@ cell.classList.add("today");
 }
 
 grid.appendChild(cell);
-
 }
 
 }
