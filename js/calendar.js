@@ -10,6 +10,9 @@ const dayNamesDiv = document.getElementById("dayNames");
 let s = JSON.parse(localStorage.getItem("appSettings")) || {lang:"bn"};
 let lang = s.lang;
 
+/* 🔥 HIJRI OFFSET */
+let HIJRI_OFFSET = parseInt(localStorage.getItem("hijriOffset") || "0");
+
 /* MONTHS */
 const MONTHS = {
 bn:["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"],
@@ -22,6 +25,13 @@ const DAYS = {
 bn:["রবি","সোম","মঙ্গল","বুধ","বৃহ","শুক্র","শনি"],
 en:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
 hi:["रवि","सोम","मंगल","बुध","गुरु","शुक्र","शनि"]
+};
+
+/* HIJRI MONTHS */
+const H_MONTHS = {
+bn:["মুহাররম","সফর","রবিউল আউয়াল","রবিউস সানি","জমাদিউল আউয়াল","জমাদিউস সানি","রজব","শাবান","রমজান","শাওয়াল","যিলকদ","যিলহজ্জ"],
+en:["Muharram","Safar","Rabi I","Rabi II","Jumada I","Jumada II","Rajab","Shaban","Ramadan","Shawwal","Dhul Qadah","Dhul Hijjah"],
+hi:["मुहर्रम","सफ़र","रबी I","रबी II","जुमादा I","जुमादा II","रजब","शाबान","रमज़ान","शव्वाल","ज़िलक़ादा","ज़िलहिज्जा"]
 };
 
 /* NUMBER FORMAT */
@@ -74,7 +84,7 @@ let totalDays = new Date(year,month+1,0).getDate();
 
 let today = new Date();
 
-/* EMPTY */
+/* EMPTY BOX */
 for(let i=0;i<firstDay;i++){
 grid.innerHTML += `<div></div>`;
 }
@@ -84,13 +94,24 @@ for(let d=1; d<=totalDays; d++){
 
 let h = hijriData[d-1].hijri;
 
+/* 🔥 OFFSET APPLY */
+let hDayRaw = parseInt(h.day) + HIJRI_OFFSET;
+
+/* 🔥 MONTH + YEAR */
+let hMonth = H_MONTHS[lang][parseInt(h.month.number)-1];
+let hYear = h.year;
+
+/* FORMAT */
+let hDay = formatNum(hDayRaw);
+let gDay = formatNum(d);
+
 let cell = document.createElement("div");
 cell.className = "day";
 
-/* ONLY NUMBER (CLEAN UI) */
+/* 🔥 CLEAN UI (SHORT MONTH) */
 cell.innerHTML = `
-<div class="eng">${formatNum(d)}</div>
-<div class="hijri">${formatNum(h.day)}</div>
+<div class="eng">${gDay}</div>
+<div class="hijri">${hDay} ${hMonth.substring(0,3)}</div>
 `;
 
 /* TODAY */
