@@ -332,15 +332,17 @@ function openPage(page){
 window.location.href="./html/"+page+".html";
 }
 
-/* ================= 🔥 CLICK FIX FINAL ================= */
+/* ================= 🔥 CLICK FIX (FINAL) ================= */
 
 document.addEventListener("click", function(e){
 
-if(e.target.closest("#bismillahCard")){
+// Bismillah fix
+if(e.target.closest("#bismillahCard") || e.target.closest(".bismillah-ar")){
 openPage("allah-names");
 }
 
-if(e.target.closest(".status")){
+// Status fix
+if(e.target.closest(".status") || e.target.closest(".card:nth-child(2)")){
 openPage("calendar");
 }
 
