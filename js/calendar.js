@@ -42,24 +42,25 @@ return str.replace(/[0-9]/g,d=>"०१२३४५६७८९"[d]);
 return str;
 }
 
-/* ================= HIJRI ================= */
+/* ================= HIJRI API ================= */
 
-function getHijri(date){
+async function getHijri(date){
 
-let locale =
-lang === "bn" ? "bn-u-ca-islamic" :
-lang === "hi" ? "hi-u-ca-islamic" :
-"en-u-ca-islamic";
+let d = date.getDate();
+let m = date.getMonth()+1;
+let y = date.getFullYear();
 
-let parts = new Intl.DateTimeFormat(locale,{
-day:'numeric',
-month:'short'
-}).formatToParts(date);
+try{
+let res = await fetch(`https://api.aladhan.com/v1/gToH?date=${d}-${m}-${y}`);
+let data = await res.json();
 
-let day = parts.find(p=>p.type==="day").value;
-let month = parts.find(p=>p.type==="month").value;
+let h = data.data.hijri;
 
-return formatNumber(day) + " " + month;
+return formatNumber(h.day) + " " + h.month.en;
+
+}catch{
+return "";
+}
 }
 
 /* ================= CURRENT ================= */
@@ -93,7 +94,7 @@ let totalDays = new Date(year,month+1,0).getDate();
 
 let today = new Date();
 
-/* EMPTY SPACE */
+/* EMPTY */
 for(let i=0;i<firstDay;i++){
 grid.appendChild(document.createElement("div"));
 }
@@ -108,7 +109,7 @@ div.className="day";
 
 div.innerHTML = `
 <div class="eng">${formatNumber(d)}</div>
-<div class="hijri">${getHijri(full)}</div>
+<div class="hijri" id="h-${d}">...</div>
 `;
 
 /* TODAY */
@@ -123,6 +124,25 @@ div.classList.add("today");
 grid.appendChild(div);
 }
 
+/* LOAD HIJRI */
+loadHijri(year,month);
+}
+
+/* ================= LOAD HIJRI ================= */
+
+async function loadHijri(year,month){
+
+for(let d=1; d<=31; d++){
+
+let el = document.getElementById("h-"+d);
+if(!el) continue;
+
+let date = new Date(year,month,d);
+let h = await getHijri(date);
+
+el.innerText = h;
+
+}
 }
 
 /* ================= NAV ================= */
