@@ -38,7 +38,6 @@ tasbih:"📿 তসবিহ"
 },
 quotes:["নামাজ জান্নাতের চাবি","আল্লাহকে স্মরণ করো","ধৈর্য ধরো"],
 prayer:["ফজর","সেটিং","যোহর","আসর","মাগরিব","এশা"],
-hijriMonths:["মুহাররম","সফর","রবিউল আউয়াল","রবিউস সানি","জুমাদাল উলা","জুমাদাস সানিয়া","রজব","শাবান","রমজান","শাওয়াল","জিলকদ","জিলহজ্জ"]
 },
 en:{
 bismillah:"In the name of Allah, Most Merciful",
@@ -55,7 +54,6 @@ tasbih:"📿 Tasbih"
 },
 quotes:["Prayer is the key to Jannah","Remember Allah","Have patience"],
 prayer:["Fajr","Settings","Dhuhr","Asr","Maghrib","Isha"],
-hijriMonths:["Muharram","Safar","Rabi I","Rabi II","Jumada I","Jumada II","Rajab","Shaban","Ramadan","Shawwal","Dhul Qadah","Dhul Hijjah"]
 },
 hi:{
 bismillah:"अल्लाह के नाम से जो रहमान और रहीम है",
@@ -72,7 +70,6 @@ tasbih:"📿 तस्बीह"
 },
 quotes:["नमाज़ जन्नत की चाबी है","अल्लाह को याद करो","सब्र करो"],
 prayer:["फ़ज्र","सेटिंग","ज़ुहर","असर","मग़रिब","इशा"],
-hijriMonths:["मुहर्रम","सफ़र","रबी I","रबी II","जुमादा I","जुमादा II","रजब","शाबान","रमज़ान","शव्वाल","ज़िलक़ादा","ज़िलहिज्जा"]
 }
 };
 
@@ -195,13 +192,26 @@ async function loadPrayer(lat, lon){
 let res=await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=1`);
 let data=await res.json();
 
-let tm=data.data.timings;
-let hijri=data.data.date.hijri;
-let greg=data.data.date.gregorian;
+let tm = data.data.timings;
+let hijri = data.data.date.hijri;
+let greg = data.data.date.gregorian;
 
-/* HIJRI */
-let month=t.hijriMonths[hijri.month.number-1];
-let hijriText=formatNumber(hijri.day+" "+month+" "+hijri.year);
+/* 🔥 এখানে বসাবে */
+
+// Month list
+const months = {
+bn:["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"],
+en:["January","February","March","April","May","June","July","August","September","October","November","December"],
+hi:["जनवरी","फ़रवरी","मार्च","अप्रैल","मई","जून","जुलाई","अगस्त","सितंबर","अक्टूबर","नवंबर","दिसंबर"]
+};
+
+// Final date
+let gregText = formatNumber(
+greg.day + " " + months[s.lang][greg.month.number - 1] + " " + greg.year
+);
+
+// Show
+setText("date", gregText);
 
 /* GREGORIAN */
 let gregText=formatNumber(greg.day+" "+greg.month.en+" "+greg.year);
