@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Calendar</title>
 
@@ -15,19 +15,20 @@
 
 <div class="calendar">
 
-<div class="header">
-<button id="prevMonth">◀</button>
-<h2 id="monthTitle"></h2>
-<button id="nextMonth">▶</button>
+    <div class="header">
+        <button id="prevMonth">◀</button>
+        <h2 id="monthTitle"></h2>
+        <button id="nextMonth">▶</button>
+    </div>
+
+    <!-- DAY NAMES -->
+    <div class="day-names" id="dayNames"></div>
+
+    <!-- GRID -->
+    <div id="calendarGrid" class="grid"></div>
+
 </div>
 
-<div id="dayNames" class="day-names"></div>
-
-<div id="calendarGrid" class="grid"></div>
-
-</div>
-
-<script src="../js/settings.js"></script>
 <script src="../js/calendar.js?v=10"></script>
 
 </body>
