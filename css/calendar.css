@@ -10,10 +10,10 @@ overflow:hidden;
 .calendar{
 max-width:500px;
 margin:auto;
-padding:4px;
 height:100dvh;
 display:flex;
 flex-direction:column;
+padding:4px;
 }
 
 /* HEADER */
@@ -53,33 +53,33 @@ margin-bottom:4px;
 .grid{
 display:grid;
 grid-template-columns:repeat(7,1fr);
-gap:1px;
+gap:2px;
 flex:1;
 }
 
 /* DAY BOX */
 .day{
 background:#ffffff;
-border-radius:8px;
-padding:2px 1px;
-text-align:center;
-box-shadow:0 1px 3px rgba(0,0,0,0.08);
+border-radius:6px;
 display:flex;
 flex-direction:column;
 justify-content:center;
-min-height:32px;
+align-items:center;
+height:42px; /* 🔥 PERFECT FIT */
+box-shadow:0 1px 2px rgba(0,0,0,0.08);
 }
 
-/* ENGLISH DATE */
+/* DATE */
 .eng{
-font-size:15px;
+font-size:13px;
 font-weight:bold;
 }
 
 /* HIJRI */
 .hijri{
-font-size:12px;
+font-size:10px;
 color:#2e7d32;
+line-height:1;
 }
 
 /* TODAY */
@@ -87,4 +87,3 @@ color:#2e7d32;
 background:#2e7d32 !important;
 color:white;
 }
-
