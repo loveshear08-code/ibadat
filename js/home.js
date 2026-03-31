@@ -37,7 +37,7 @@ qibla:"🕋 কিবলা",
 tasbih:"📿 তসবিহ"
 },
 quotes:["নামাজ জান্নাতের চাবি","আল্লাহকে স্মরণ করো","ধৈর্য ধরো"],
-prayer:["ফজর","সেটিং","যোহর","আসর","মাগরিব","এশা"],
+prayer:["ফজর","সেটিং","যোহর","আসর","মাগরিব","এশা"]
 },
 en:{
 bismillah:"In the name of Allah, Most Merciful",
@@ -53,7 +53,7 @@ qibla:"🕋 Qibla",
 tasbih:"📿 Tasbih"
 },
 quotes:["Prayer is the key to Jannah","Remember Allah","Have patience"],
-prayer:["Fajr","Settings","Dhuhr","Asr","Maghrib","Isha"],
+prayer:["Fajr","Settings","Dhuhr","Asr","Maghrib","Isha"]
 },
 hi:{
 bismillah:"अल्लाह के नाम से जो रहमान और रहीम है",
@@ -69,7 +69,7 @@ qibla:"🕋 क़िबला",
 tasbih:"📿 तस्बीह"
 },
 quotes:["नमाज़ जन्नत की चाबी है","अल्लाह को याद करो","सब्र करो"],
-prayer:["फ़ज्र","सेटिंग","ज़ुहर","असर","मग़रिब","इशा"],
+prayer:["फ़ज्र","सेटिंग","ज़ुहर","असर","मग़रिब","इशा"]
 }
 };
 
@@ -183,7 +183,7 @@ setText("weather",t.weather);
 }
 }
 
-/* ================= PRAYER + DATE (FIXED) ================= */
+/* ================= PRAYER + DATE ================= */
 
 let prayerList=[];
 
@@ -193,49 +193,33 @@ let res=await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitud
 let data=await res.json();
 
 let tm = data.data.timings;
-let hijri = data.data.date.hijri;
 let greg = data.data.date.gregorian;
 
-/* 🔥 এখানে বসাবে */
+/* DATE */
 
-// Month list
 const months = {
 bn:["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"],
 en:["January","February","March","April","May","June","July","August","September","October","November","December"],
 hi:["जनवरी","फ़रवरी","मार्च","अप्रैल","मई","जून","जुलाई","अगस्त","सितंबर","अक्टूबर","नवंबर","दिसंबर"]
 };
 
-// Final date
 let gregText = formatNumber(
 greg.day + " " + months[s.lang][greg.month.number - 1] + " " + greg.year
 );
 
-// Show
 setText("date", gregText);
 
-/* GREGORIAN */
-let gregText=formatNumber(greg.day+" "+greg.month.en+" "+greg.year);
-
-/* FINAL */
-setText("date",hijriText+" | "+gregText);
-
 /* DAY */
-let dayNameEN = greg.weekday.en;
 
 let map = {
-"Sunday":0,
-"Monday":1,
-"Tuesday":2,
-"Wednesday":3,
-"Thursday":4,
-"Friday":5,
-"Saturday":6
+"Sunday":0,"Monday":1,"Tuesday":2,"Wednesday":3,
+"Thursday":4,"Friday":5,"Saturday":6
 };
 
-let dayIndex = map[dayNameEN];
-setText("todayDay", t.days[dayIndex]);
+setText("todayDay", t.days[map[greg.weekday.en]]);
 
 /* PRAYER */
+
 prayerList=[
 [t.prayer[0],tm.Fajr],
 [t.prayer[1],""],
@@ -328,7 +312,6 @@ setInterval(updateStatus,1000);
 /* ================= GRID ================= */
 
 function renderGrid(){
-
 let grid=document.getElementById("prayerGrid");
 grid.innerHTML="";
 
@@ -373,7 +356,7 @@ if(e.target.closest("#bismillahCard") || e.target.closest(".bismillah-ar")){
 openPage("allah-names");
 }
 
-if(e.target.closest(".status") || e.target.closest(".card:nth-child(2)")){
+if(e.target.closest(".status")){
 openPage("calendar");
 }
 
