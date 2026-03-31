@@ -71,7 +71,7 @@ qibla:"🕋 क़िबला",
 tasbih:"📿 तस्बीह"
 },
 quotes:["नमाज़ जन्नत की चाबी है","अल्लाह को याद करो","सब्र करो"],
-prayer:["फ़ज्र","सेटিং","ज़ुहर","असर","मग़रिब","इशा"],
+prayer:["फ़ज्र","सेटिंग","ज़ुहर","असर","मग़रिब","इशा"],
 hijriMonths:["मुहर्रम","सफ़र","रबी I","रबी II","जुमादा I","जुमादा II","रजब","शाबान","रमज़ान","शव्वाल","ज़िलक़ादा","ज़िलहिज्जा"]
 }
 };
@@ -187,7 +187,7 @@ setText("weather",t.weather);
 }
 }
 
-/* ================= PRAYER ================= */
+/* ================= PRAYER + DATE FIX ================= */
 
 let prayerList=[];
 
@@ -199,9 +199,26 @@ let data=await res.json();
 let tm=data.data.timings;
 let hijri=data.data.date.hijri;
 
+/* HIJRI */
 let month=t.hijriMonths[hijri.month.number-1];
-setText("date",formatNumber(hijri.day+" "+month+" "+hijri.year));
+let hijriText=formatNumber(hijri.day+" "+month+" "+hijri.year);
 
+/* GREGORIAN */
+let today=new Date();
+let gregMonths={
+bn:["জানু","ফেব","মার্চ","এপ্র","মে","জুন","জুলাই","আগ","সেপ্ট","অক্টো","নভে","ডিসে"],
+en:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+hi:["जन","फ़र","मार्च","अप्रै","मई","जून","जुलाई","अग","सित","अक्टू","नव","दिस"]
+};
+
+let gregText=formatNumber(
+today.getDate()+" "+gregMonths[s.lang][today.getMonth()]+" "+today.getFullYear()
+);
+
+/* FINAL DATE */
+setText("date",hijriText+" | "+gregText);
+
+/* PRAYER */
 prayerList=[
 [t.prayer[0],tm.Fajr],
 [t.prayer[1],""],
@@ -332,16 +349,14 @@ function openPage(page){
 window.location.href="./html/"+page+".html";
 }
 
-/* ================= 🔥 CLICK FIX (FINAL) ================= */
+/* ================= CLICK FIX ================= */
 
 document.addEventListener("click", function(e){
 
-// Bismillah fix
 if(e.target.closest("#bismillahCard") || e.target.closest(".bismillah-ar")){
 openPage("allah-names");
 }
 
-// Status fix
 if(e.target.closest(".status") || e.target.closest(".card:nth-child(2)")){
 openPage("calendar");
 }
