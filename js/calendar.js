@@ -1,23 +1,22 @@
-document.addEventListener("DOMContentLoaded",function(){
+document.addEventListener("DOMContentLoaded", function(){
 
-const grid=document.getElementById("calendarGrid");
-const monthTitle=document.getElementById("monthTitle");
-const prev=document.getElementById("prevMonth");
-const next=document.getElementById("nextMonth");
-
-let current=new Date();
+const grid = document.getElementById("calendarGrid");
+const title = document.getElementById("monthTitle");
+const dayNames = document.getElementById("dayNames");
+const prev = document.getElementById("prevMonth");
+const next = document.getElementById("nextMonth");
 
 /* ================= SETTINGS ================= */
 
-let s = JSON.parse(localStorage.getItem("appSettings")) || {lang:"bn"};
-let lang = s.lang;
+let s = typeof getSettings === "function" ? getSettings() : {lang:"bn"};
+let lang = s.lang || "bn";
 
 /* ================= TEXT ================= */
 
 const TEXT = {
 bn:{
 months:["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"],
-days:["রবি","সোম","মঙ্গল","বুধ","বৃহস্পতি","শুক্র","শনি"]
+days:["রবি","সোম","মঙ্গল","বুধ","বৃহ","শুক্র","শনি"]
 },
 en:{
 months:["January","February","March","April","May","June","July","August","September","October","November","December"],
@@ -29,90 +28,93 @@ days:["रवि","सोम","मंगल","बुध","गुरु","शु�
 }
 };
 
-/* ================= HIJRI FIX ================= */
+/* ================= CURRENT ================= */
 
-function getHijriDate(date){
+let current = new Date();
 
+/* ================= DAY NAMES ================= */
+
+function renderDays(){
+dayNames.innerHTML="";
+TEXT[lang].days.forEach(d=>{
+let div=document.createElement("div");
+div.innerText=d;
+dayNames.appendChild(div);
+});
+}
+
+/* ================= HIJRI ================= */
+
+function getHijri(date){
 return new Intl.DateTimeFormat('en-TN-u-ca-islamic',{
 day:'numeric',
 month:'short'
 }).format(date);
-
 }
 
 /* ================= DRAW ================= */
 
-function drawCalendar(){
+function draw(){
 
 grid.innerHTML="";
 
-const year=current.getFullYear();
-const month=current.getMonth();
+let year = current.getFullYear();
+let month = current.getMonth();
 
-monthTitle.innerText=TEXT[lang].months[month]+" "+year;
+title.innerText = TEXT[lang].months[month] + " " + year;
 
-/* ===== DAY HEADER ===== */
-TEXT[lang].days.forEach(d=>{
-let div=document.createElement("div");
-div.style.textAlign="center";
-div.style.fontWeight="bold";
-div.style.fontSize="12px";
-div.innerText=d;
-grid.appendChild(div);
-});
+let firstDay = new Date(year,month,1).getDay();
+let totalDays = new Date(year,month+1,0).getDate();
 
-const firstDay=new Date(year,month,1).getDay();
-const days=new Date(year,month+1,0).getDate();
+let today = new Date();
 
-let today=new Date();
-
-/* empty */
+/* EMPTY */
 for(let i=0;i<firstDay;i++){
-const empty=document.createElement("div");
-grid.appendChild(empty);
+grid.appendChild(document.createElement("div"));
 }
 
-/* days */
-for(let d=1;d<=days;d++){
+/* DAYS */
+for(let d=1; d<=totalDays; d++){
 
-let fullDate=new Date(year,month,d);
+let full = new Date(year,month,d);
 
-const cell=document.createElement("div");
-cell.className="day";
+let div = document.createElement("div");
+div.className="day";
 
-cell.innerHTML=`
-<div>${d}</div>
-<div style="color:#2e7d32;font-size:11px;">
-${getHijriDate(fullDate)}
-</div>
+div.innerHTML = `
+<div class="eng">${d}</div>
+<div class="hijri">${getHijri(full)}</div>
 `;
 
-/* today */
+/* TODAY */
 if(
 d===today.getDate() &&
 month===today.getMonth() &&
 year===today.getFullYear()
 ){
-cell.classList.add("today");
+div.classList.add("today");
 }
 
-grid.appendChild(cell);
+grid.appendChild(div);
 }
 
 }
 
 /* ================= NAV ================= */
 
-prev.onclick=function(){
+prev.onclick = ()=>{
 current.setMonth(current.getMonth()-1);
-drawCalendar();
-}
+draw();
+};
 
-next.onclick=function(){
+next.onclick = ()=>{
 current.setMonth(current.getMonth()+1);
-drawCalendar();
-}
+draw();
+};
 
-drawCalendar();
+/* ================= INIT ================= */
+
+renderDays();
+draw();
 
 });
