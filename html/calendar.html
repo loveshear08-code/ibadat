@@ -3,11 +3,11 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Calendar</title>
 
-<link rel="stylesheet" href="../css/calendar.css">
+<link rel="stylesheet" href="../css/calendar.css?v=10">
 
 </head>
 
@@ -15,23 +15,20 @@
 
 <div class="calendar">
 
-    <!-- HEADER -->
-    <div class="header">
-        <button id="prevMonth">◀</button>
-        <div id="monthTitle"></div>
-        <button id="nextMonth">▶</button>
-    </div>
+<div class="header">
+<button id="prevMonth">◀</button>
+<h2 id="monthTitle"></h2>
+<button id="nextMonth">▶</button>
+</div>
 
-    <!-- DAYS NAME -->
-    <div class="day-names" id="dayNames"></div>
+<div id="dayNames" class="day-names"></div>
 
-    <!-- GRID -->
-    <div class="grid" id="calendarGrid"></div>
+<div id="calendarGrid" class="grid"></div>
 
 </div>
 
 <script src="../js/settings.js"></script>
-<script src="../js/calendar.js"></script>
+<script src="../js/calendar.js?v=10"></script>
 
 </body>
 </html>
