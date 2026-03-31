@@ -1,145 +1,116 @@
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded",function(){
 
 const grid = document.getElementById("calendarGrid");
 const title = document.getElementById("monthTitle");
-const dayNames = document.getElementById("dayNames");
 const prev = document.getElementById("prevMonth");
 const next = document.getElementById("nextMonth");
+const dayNamesDiv = document.getElementById("dayNames");
 
-let s = typeof getSettings === "function" ? getSettings() : {lang:"bn"};
-let lang = s.lang || "bn";
+/* SETTINGS */
+let s = JSON.parse(localStorage.getItem("appSettings")) || {lang:"bn"};
+let lang = s.lang;
 
-/* TEXT */
-
-const TEXT = {
-bn:{
-months:["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"],
-days:["রবি","সোম","মঙ্গল","বুধ","বৃহ","শুক্র","শনি"]
-},
-en:{
-months:["January","February","March","April","May","June","July","August","September","October","November","December"],
-days:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
-},
-hi:{
-months:["जनवरी","फ़रवरी","मार्च","अप्रैल","मई","जून","जुलाई","अगस्त","सितंबर","अक्टूबर","नवंबर","दिसंबर"],
-days:["रवि","सोम","मंगल","बुध","गुरु","शुक्र","शनि"]
-}
+/* MONTHS */
+const MONTHS = {
+bn:["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"],
+en:["January","February","March","April","May","June","July","August","September","October","November","December"],
+hi:["जनवरी","फ़रवरी","मार्च","अप्रैल","मई","जून","जुलाई","अगस्त","सितंबर","अक्टूबर","नवंबर","दिसंबर"]
 };
 
-/* HIJRI MONTHS */
-
-const HIJRI_MONTHS = {
-bn:["মুহাররম","সফর","রবিউল আউয়াল","রবিউস সানি","জুমাদাল উলা","জুমাদাস সানিয়া","রজব","শাবান","রমজান","শাওয়াল","জিলকদ","জিলহজ্জ"],
-en:["Muharram","Safar","Rabi I","Rabi II","Jumada I","Jumada II","Rajab","Shaban","Ramadan","Shawwal","Dhul Qadah","Dhul Hijjah"],
-hi:["मुहर्रम","सफ़र","रबी I","रबी II","जुमादा I","जुमादा II","रजब","शाबान","रमज़ान","शव्वाल","ज़िलक़ादा","ज़िलहिज्जा"]
+/* DAYS */
+const DAYS = {
+bn:["রবি","সোম","মঙ্গল","বুধ","বৃহ","শুক্র","শনি"],
+en:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
+hi:["रवि","सोम","मंगल","बुध","गुरु","शुक्र","शनि"]
 };
 
-/* NUMBER */
-
-function formatNumber(num){
-let str=num.toString();
-if(lang==="bn") return str.replace(/[0-9]/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
-if(lang==="hi") return str.replace(/[0-9]/g,d=>"०१२३४५६७८९"[d]);
-return str;
-}
-
-/* HIJRI API */
-
-async function getHijri(date){
-
-let d = date.getDate();
-let m = date.getMonth()+1;
-let y = date.getFullYear();
-
-let res = await fetch(`https://api.aladhan.com/v1/gToH?date=${d}-${m}-${y}`);
-let data = await res.json();
-
-let h = data.data.hijri;
-
-let monthName = HIJRI_MONTHS[lang][h.month.number-1];
-
-return formatNumber(h.day) + " " + monthName;
-}
-
-/* CURRENT */
+/* RENDER DAY NAMES */
+dayNamesDiv.innerHTML = "";
+DAYS[lang].forEach(d=>{
+dayNamesDiv.innerHTML += `<div>${d}</div>`;
+});
 
 let current = new Date();
 
-/* DAY NAMES */
+/* HIJRI DATE (REAL) */
+function getHijri(date){
+let locale = lang==="bn" ? "bn" : (lang==="hi" ? "hi" : "en");
 
-function renderDays(){
-dayNames.innerHTML="";
-TEXT[lang].days.forEach(d=>{
-let div=document.createElement("div");
-div.innerText=d;
-dayNames.appendChild(div);
-});
+return new Intl.DateTimeFormat(locale+'-u-ca-islamic',{
+day:'numeric',
+month:'short'
+}).format(date);
+}
+
+/* NUMBER FORMAT */
+function formatNum(num){
+if(lang==="bn"){
+return num.toString().replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
+}
+if(lang==="hi"){
+return num.toString().replace(/\d/g,d=>"०१२३४५६७८९"[d]);
+}
+return num;
 }
 
 /* DRAW */
-
-async function draw(){
+function draw(){
 
 grid.innerHTML="";
 
-let year=current.getFullYear();
-let month=current.getMonth();
+let year = current.getFullYear();
+let month = current.getMonth();
 
-title.innerText=TEXT[lang].months[month]+" "+formatNumber(year);
+title.innerText = MONTHS[lang][month] + " " + formatNum(year);
 
-let firstDay=new Date(year,month,1).getDay();
-let totalDays=new Date(year,month+1,0).getDate();
+let firstDay = new Date(year,month,1).getDay();
+let totalDays = new Date(year,month+1,0).getDate();
 
-let today=new Date();
+let today = new Date();
 
 /* EMPTY */
 for(let i=0;i<firstDay;i++){
-grid.appendChild(document.createElement("div"));
+grid.innerHTML += `<div></div>`;
 }
 
 /* DAYS */
 for(let d=1; d<=totalDays; d++){
 
-let full=new Date(year,month,d);
+let full = new Date(year,month,d);
 
-let hijri = await getHijri(full);
+let cell = document.createElement("div");
+cell.className = "day";
 
-let div=document.createElement("div");
-div.className="day";
-
-div.innerHTML=`
-<div class="eng">${formatNumber(d)}</div>
-<div class="hijri">${hijri}</div>
+cell.innerHTML = `
+<div class="eng">${formatNum(d)}</div>
+<div class="hijri">${getHijri(full)}</div>
 `;
 
+/* TODAY */
 if(
 d===today.getDate() &&
 month===today.getMonth() &&
 year===today.getFullYear()
 ){
-div.classList.add("today");
+cell.classList.add("today");
 }
 
-grid.appendChild(div);
+grid.appendChild(cell);
 }
 
 }
 
 /* NAV */
-
-prev.onclick=()=>{
+prev.onclick = ()=>{
 current.setMonth(current.getMonth()-1);
 draw();
-};
+}
 
-next.onclick=()=>{
+next.onclick = ()=>{
 current.setMonth(current.getMonth()+1);
 draw();
-};
+}
 
-/* INIT */
-
-renderDays();
 draw();
 
 });
