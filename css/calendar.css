@@ -33,7 +33,7 @@ border-radius:8px;
 }
 
 #monthTitle{
-font-size:15px;   /* 🔥 readable */
+font-size:16px;
 font-weight:bold;
 color:#1b5e20;
 }
@@ -44,7 +44,7 @@ display:grid;
 grid-template-columns:repeat(7,1fr);
 text-align:center;
 font-weight:bold;
-font-size:11px;   /* 🔥 readable */
+font-size:12px;   /* 🔥 bigger */
 margin-bottom:4px;
 }
 
@@ -52,32 +52,32 @@ margin-bottom:4px;
 .grid{
 display:grid;
 grid-template-columns:repeat(7,1fr);
-gap:3px;
+gap:2px;   /* 🔥 gap কম */
 flex:1;
 }
 
-/* DAY BOX (SMALL BUT CLEAN) */
+/* DAY BOX (FINAL SIZE) */
 .day{
 background:#ffffff;
 border-radius:8px;
-padding:4px 2px;
+padding:3px 2px;
 text-align:center;
-box-shadow:0 1px 4px rgba(0,0,0,0.08);
+box-shadow:0 1px 3px rgba(0,0,0,0.08);
 display:flex;
 flex-direction:column;
 justify-content:center;
-min-height:48px;   /* 🔥 smaller but balanced */
+min-height:42px;   /* 🔥 KEY FIX (আরো ছোট) */
 }
 
-/* DATE */
+/* DATE (ENGLISH/BANGLA NUMBER) */
 .day .eng{
-font-size:14px;   /* 🔥 বড় */
+font-size:15px;   /* 🔥 বড় */
 font-weight:bold;
 }
 
 /* HIJRI */
 .day .hijri{
-font-size:11px;   /* 🔥 readable */
+font-size:12px;   /* 🔥 readable */
 color:#2e7d32;
 }
 
