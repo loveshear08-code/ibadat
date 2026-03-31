@@ -71,7 +71,7 @@ qibla:"🕋 क़िबला",
 tasbih:"📿 तस्बीह"
 },
 quotes:["नमाज़ जन्नत की चाबी है","अल्लाह को याद करो","सब्र करो"],
-prayer:["फ़ज्र","सेटिंग","ज़ुहर","असर","मग़रिब","इशा"],
+prayer:["फ़ज्र","सेटিং","ज़ुहर","असर","मग़रिब","इशा"],
 hijriMonths:["मुहर्रम","सफ़र","रबी I","रबी II","जुमादा I","जुमादा II","रजब","शाबान","रमज़ान","शव्वाल","ज़िलक़ादा","ज़िलहिज्जा"]
 }
 };
@@ -118,9 +118,7 @@ if(navigator.geolocation){
 navigator.geolocation.getCurrentPosition(pos=>{
 lat=pos.coords.latitude;
 lon=pos.coords.longitude;
-
 initAll();
-
 },initAll);
 }else{
 initAll();
@@ -151,15 +149,13 @@ setText("city","Kolkata");
 }
 }
 
-/* ================= WEATHER FIX ================= */
+/* ================= WEATHER ================= */
 
 async function loadWeather(lat, lon){
 try{
-
 let apiKey="3cdd0e815e03d36fbdc1266a5a37da8e";
 
 let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`);
-
 let data = await res.json();
 
 if(data.cod === 200){
@@ -203,8 +199,8 @@ let data=await res.json();
 let tm=data.data.timings;
 let hijri=data.data.date.hijri;
 
-/* 🔥 HIJRI FIX */
-setText("date", formatHijri(hijri));
+let month=t.hijriMonths[hijri.month.number-1];
+setText("date",formatNumber(hijri.day+" "+month+" "+hijri.year));
 
 prayerList=[
 [t.prayer[0],tm.Fajr],
@@ -217,29 +213,13 @@ prayerList=[
 
 renderGrid();
 updateStatus();
-
-}
-
-/* ================= HIJRI FORMAT ================= */
-
-function formatHijri(hijri){
-
-let month = t.hijriMonths[hijri.month.number-1];
-
-let day = formatNumber(hijri.day);
-let year = formatNumber(hijri.year);
-
-return `${day} ${month} ${year}`;
 }
 
 /* ================= AZAN ================= */
 
 function checkAzan(){
 let now=new Date();
-
-let currentTime=
-String(now.getHours()).padStart(2,"0")+":"+
-String(now.getMinutes()).padStart(2,"0");
+let currentTime=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
 
 prayerList.forEach(p=>{
 if(!p[1]) return;
@@ -320,7 +300,6 @@ let grid=document.getElementById("prayerGrid");
 grid.innerHTML="";
 
 prayerList.forEach(p=>{
-
 let div=document.createElement("div");
 div.className="prayer-box";
 
@@ -332,9 +311,7 @@ div.innerHTML=`${p[0]}<br>${formatNumber(p[1]||"")}`;
 }
 
 grid.appendChild(div);
-
 });
-
 }
 
 /* ================= FEATURES ================= */
@@ -354,6 +331,20 @@ el.onclick=()=>openPage(id==="namaz"?"namaz-guide":id);
 function openPage(page){
 window.location.href="./html/"+page+".html";
 }
+
+/* ================= 🔥 CLICK FIX FINAL ================= */
+
+document.addEventListener("click", function(e){
+
+if(e.target.closest("#bismillahCard")){
+openPage("allah-names");
+}
+
+if(e.target.closest(".status")){
+openPage("calendar");
+}
+
+});
 
 /* ================= QUOTES ================= */
 
