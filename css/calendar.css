@@ -9,7 +9,7 @@ overflow:hidden;
 .calendar{
 max-width:500px;
 margin:auto;
-padding:6px;
+padding:4px;
 height:100vh;
 display:flex;
 flex-direction:column;
@@ -20,20 +20,20 @@ flex-direction:column;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:4px;
+margin-bottom:2px;
 }
 
 .header button{
 background:#2e7d32;
 border:none;
 color:white;
-font-size:16px;
-padding:8px 10px;
-border-radius:10px;
+font-size:14px;
+padding:6px 8px;
+border-radius:8px;
 }
 
 #monthTitle{
-font-size:16px;
+font-size:14px;
 font-weight:bold;
 color:#1b5e20;
 }
@@ -44,7 +44,7 @@ display:grid;
 grid-template-columns:repeat(7,1fr);
 text-align:center;
 font-weight:bold;
-font-size:11px;
+font-size:10px;
 margin-bottom:2px;
 }
 
@@ -52,33 +52,32 @@ margin-bottom:2px;
 .grid{
 display:grid;
 grid-template-columns:repeat(7,1fr);
-gap:4px;
+gap:2px;
 flex:1;
-overflow:hidden;
 }
 
 /* DAY BOX */
 .day{
 background:#ffffff;
-border-radius:10px;
-padding:4px 2px;
-text-align:center;
-font-size:12px;
-box-shadow:0 2px 6px rgba(0,0,0,0.08);
+border-radius:6px;
+padding:2px;
+font-size:10px;
+box-shadow:0 1px 3px rgba(0,0,0,0.08);
 display:flex;
 flex-direction:column;
 justify-content:center;
-min-height:55px;
+min-height:42px;
 }
 
 /* DATE */
 .day .eng{
+font-size:11px;
 font-weight:bold;
 }
 
 /* HIJRI */
 .day .hijri{
-font-size:10px;
+font-size:8px;
 color:#2e7d32;
 }
 
