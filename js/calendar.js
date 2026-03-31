@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", async function(){
+document.addEventListener("DOMContentLoaded", function(){
 
 /* ================= ELEMENTS ================= */
 
@@ -39,42 +39,11 @@ return num;
 
 /* ================= DAY NAMES ================= */
 
+function renderDays(){
 dayNamesDiv.innerHTML="";
 DAYS[lang].forEach(d=>{
 dayNamesDiv.innerHTML += `<div>${d}</div>`;
 });
-
-/* ================= CACHE ================= */
-
-function getCacheKey(y,m){
-return `bangla-${y}-${m}`;
-}
-
-/* ================= FETCH FULL MONTH ================= */
-
-async function fetchMonthBangla(year, month){
-
-let key = getCacheKey(year,month);
-let cached = localStorage.getItem(key);
-
-if(cached){
-return JSON.parse(cached); // ⚡ instant
-}
-
-try{
-
-let res = await fetch(`https://bangla-calendar-api.vercel.app/api/month?year=${year}&month=${month+1}`);
-let data = await res.json();
-
-/* STORE */
-localStorage.setItem(key, JSON.stringify(data));
-
-return data;
-
-}catch{
-return null;
-}
-
 }
 
 /* ================= CURRENT ================= */
@@ -83,20 +52,15 @@ let current = new Date();
 
 /* ================= DRAW ================= */
 
-async function draw(){
+function draw(){
 
 grid.innerHTML="";
 
-/* HEADER */
 let year = current.getFullYear();
 let month = current.getMonth();
 
 title.innerText = MONTHS[lang][month] + " " + formatNum(year);
 
-/* GET DATA */
-let banglaData = await fetchMonthBangla(year,month);
-
-/* CALC */
 let firstDay = new Date(year,month,1).getDay();
 let totalDays = new Date(year,month+1,0).getDate();
 
@@ -107,20 +71,14 @@ for(let i=0;i<firstDay;i++){
 grid.innerHTML += `<div></div>`;
 }
 
-/* LOOP */
+/* DAYS */
 for(let d=1; d<=totalDays; d++){
 
 let cell = document.createElement("div");
 cell.className = "day";
 
-/* 🔥 GET FROM ARRAY */
-let b = banglaData ? banglaData[d-1] : null;
-
 cell.innerHTML = `
 <div class="eng">${formatNum(d)}</div>
-<div class="bangla">
-${b ? formatNum(b.day)+" "+b.month : ""}
-</div>
 `;
 
 /* TODAY */
@@ -151,6 +109,18 @@ draw();
 
 /* ================= INIT ================= */
 
+renderDays();
 draw();
+
+/* ================= AUTO LANG UPDATE ================= */
+
+setInterval(()=>{
+let newLang = JSON.parse(localStorage.getItem("appSettings"))?.lang || "bn";
+if(newLang !== lang){
+lang = newLang;
+renderDays();
+draw();
+}
+},1000);
 
 });
