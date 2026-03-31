@@ -1,50 +1,61 @@
 document.addEventListener("DOMContentLoaded", function(){
 
+/* ================= ELEMENTS ================= */
+
 const grid = document.getElementById("calendarGrid");
 const title = document.getElementById("monthTitle");
 const prev = document.getElementById("prevMonth");
 const next = document.getElementById("nextMonth");
 const dayNamesDiv = document.getElementById("dayNames");
 
-/* SETTINGS */
+/* ================= SETTINGS ================= */
+
 let s = JSON.parse(localStorage.getItem("appSettings")) || {lang:"bn"};
 let lang = s.lang;
 
-/* MONTHS */
+/* ================= MONTHS ================= */
+
 const MONTHS = {
 bn:["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"],
 en:["January","February","March","April","May","June","July","August","September","October","November","December"],
 hi:["जनवरी","फ़रवरी","मार्च","अप्रैल","मई","जून","जुलाई","अगस्त","सितंबर","अक्टूबर","नवंबर","दिसंबर"]
 };
 
-/* DAYS */
+/* ================= DAYS ================= */
+
 const DAYS = {
 bn:["রবি","সোম","মঙ্গল","বুধ","বৃহ","শুক্র","শনি"],
 en:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
 hi:["रवि","सोम","मंगल","बुध","गुरु","शुक्र","शनि"]
 };
 
-/* BANGLA MONTH */
+/* ================= BANGLA MONTH ================= */
+
 const B_MONTHS = [
 "বৈশাখ","জ্যৈষ্ঠ","আষাঢ়","শ্রাবণ","ভাদ্র","আশ্বিন",
 "কার্তিক","অগ্রহায়ণ","পৌষ","মাঘ","ফাল্গুন","চৈত্র"
 ];
 
-/* NUMBER FORMAT */
+/* ================= NUMBER FORMAT ================= */
+
 function formatNum(num){
 if(lang==="bn") return num.toString().replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
 if(lang==="hi") return num.toString().replace(/\d/g,d=>"०१२३४५६७८९"[d]);
 return num;
 }
 
-/* DAY NAMES */
+/* ================= DAY NAMES ================= */
+
 dayNamesDiv.innerHTML="";
 DAYS[lang].forEach(d=>{
 dayNamesDiv.innerHTML += `<div>${d}</div>`;
 });
 
-/* 🔥 BANGLA DATE FUNCTION */
+/* ================= BANGLA DATE ================= */
+
 function getBanglaDate(date){
+
+const monthDays = [31,31,31,31,31,30,30,30,30,29,30,30];
 
 const start = new Date(date.getFullYear(),3,14); // April 14
 
@@ -54,8 +65,14 @@ if(diff < 0){
 diff += 365;
 }
 
-let month = Math.floor(diff/30);
-let day = (diff%30)+1;
+let month = 0;
+
+while(diff >= monthDays[month]){
+diff -= monthDays[month];
+month++;
+}
+
+let day = diff + 1;
 let year = date.getFullYear() - 593;
 
 return {
@@ -65,9 +82,12 @@ year: year
 };
 }
 
+/* ================= CURRENT ================= */
+
 let current = new Date();
 
-/* DRAW */
+/* ================= DRAW ================= */
+
 function draw(){
 
 grid.innerHTML="";
@@ -82,12 +102,12 @@ let totalDays = new Date(year,month+1,0).getDate();
 
 let today = new Date();
 
-/* EMPTY */
+/* EMPTY SPACE */
 for(let i=0;i<firstDay;i++){
 grid.innerHTML += `<div></div>`;
 }
 
-/* DAYS */
+/* DAYS LOOP */
 for(let d=1; d<=totalDays; d++){
 
 let fullDate = new Date(year,month,d);
@@ -101,7 +121,7 @@ cell.innerHTML = `
 <div class="bangla">${formatNum(b.day)} ${b.month}</div>
 `;
 
-/* TODAY */
+/* TODAY HIGHLIGHT */
 if(
 d===today.getDate() &&
 month===today.getMonth() &&
@@ -115,7 +135,8 @@ grid.appendChild(cell);
 
 }
 
-/* NAV */
+/* ================= NAVIGATION ================= */
+
 prev.onclick = ()=>{
 current.setMonth(current.getMonth()-1);
 draw();
@@ -126,7 +147,8 @@ current.setMonth(current.getMonth()+1);
 draw();
 };
 
-/* INIT */
+/* ================= INIT ================= */
+
 draw();
 
 });
