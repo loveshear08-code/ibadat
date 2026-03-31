@@ -9,7 +9,7 @@ const next = document.getElementById("nextMonth");
 let s = typeof getSettings === "function" ? getSettings() : {lang:"bn"};
 let lang = s.lang || "bn";
 
-/* ================= TEXT ================= */
+/* TEXT */
 
 const TEXT = {
 bn:{
@@ -26,7 +26,7 @@ days:["रवि","सोम","मंगल","बुध","गुरु","शु�
 }
 };
 
-/* ================= HIJRI MONTHS ================= */
+/* HIJRI MONTHS */
 
 const HIJRI_MONTHS = {
 bn:["মুহাররম","সফর","রবিউল আউয়াল","রবিউস সানি","জুমাদাল উলা","জুমাদাস সানিয়া","রজব","শাবান","রমজান","শাওয়াল","জিলকদ","জিলহজ্জ"],
@@ -34,7 +34,7 @@ en:["Muharram","Safar","Rabi I","Rabi II","Jumada I","Jumada II","Rajab","Shaban
 hi:["मुहर्रम","सफ़र","रबी I","रबी II","जुमादा I","जुमादा II","रजब","शाबान","रमज़ान","शव्वाल","ज़िलक़ादा","ज़िलहिज्जा"]
 };
 
-/* ================= NUMBER ================= */
+/* NUMBER */
 
 function formatNumber(num){
 let str=num.toString();
@@ -43,32 +43,29 @@ if(lang==="hi") return str.replace(/[0-9]/g,d=>"०१२३४५६७८९"[
 return str;
 }
 
-/* ================= HIJRI (OFFLINE CALCULATION) ================= */
+/* HIJRI API */
 
-function getHijri(date){
+async function getHijri(date){
 
-// Julian Day
-let jd = Math.floor((date - new Date(622,6,16)) / 86400000);
+let d = date.getDate();
+let m = date.getMonth()+1;
+let y = date.getFullYear();
 
-// Hijri calculation
-let hYear = Math.floor(jd / 354.367);
-let hMonth = Math.floor((jd % 354.367) / 29.5);
-let hDay = Math.floor((jd % 29.5)) + 1;
+let res = await fetch(`https://api.aladhan.com/v1/gToH?date=${d}-${m}-${y}`);
+let data = await res.json();
 
-// Fix range
-if(hMonth < 0) hMonth = 0;
-if(hMonth > 11) hMonth = 11;
+let h = data.data.hijri;
 
-let monthName = HIJRI_MONTHS[lang][hMonth];
+let monthName = HIJRI_MONTHS[lang][h.month.number-1];
 
-return formatNumber(hDay) + " " + monthName;
+return formatNumber(h.day) + " " + monthName;
 }
 
-/* ================= CURRENT ================= */
+/* CURRENT */
 
 let current = new Date();
 
-/* ================= DAY NAMES ================= */
+/* DAY NAMES */
 
 function renderDays(){
 dayNames.innerHTML="";
@@ -79,9 +76,9 @@ dayNames.appendChild(div);
 });
 }
 
-/* ================= DRAW ================= */
+/* DRAW */
 
-function draw(){
+async function draw(){
 
 grid.innerHTML="";
 
@@ -105,12 +102,14 @@ for(let d=1; d<=totalDays; d++){
 
 let full=new Date(year,month,d);
 
+let hijri = await getHijri(full);
+
 let div=document.createElement("div");
 div.className="day";
 
 div.innerHTML=`
 <div class="eng">${formatNumber(d)}</div>
-<div class="hijri">${getHijri(full)}</div>
+<div class="hijri">${hijri}</div>
 `;
 
 if(
@@ -126,7 +125,7 @@ grid.appendChild(div);
 
 }
 
-/* ================= NAV ================= */
+/* NAV */
 
 prev.onclick=()=>{
 current.setMonth(current.getMonth()-1);
@@ -138,7 +137,7 @@ current.setMonth(current.getMonth()+1);
 draw();
 };
 
-/* ================= INIT ================= */
+/* INIT */
 
 renderDays();
 draw();
