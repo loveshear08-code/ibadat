@@ -210,7 +210,19 @@ let gregText=formatNumber(greg.day+" "+greg.month.en+" "+greg.year);
 setText("date",hijriText+" | "+gregText);
 
 /* DAY */
-let dayIndex = parseInt(greg.weekday.number) - 1;
+let dayNameEN = greg.weekday.en;
+
+let map = {
+"Sunday":0,
+"Monday":1,
+"Tuesday":2,
+"Wednesday":3,
+"Thursday":4,
+"Friday":5,
+"Saturday":6
+};
+
+let dayIndex = map[dayNameEN];
 setText("todayDay", t.days[dayIndex]);
 
 /* PRAYER */
