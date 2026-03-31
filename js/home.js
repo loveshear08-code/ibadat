@@ -95,7 +95,6 @@ return str;
 /* ================= STATIC ================= */
 
 setText("bismillahMeaning",t.bismillah);
-setText("todayDay",t.days[new Date().getDay()]);
 
 /* ================= CLOCK ================= */
 
@@ -187,36 +186,32 @@ setText("weather",t.weather);
 }
 }
 
-/* ================= PRAYER + DATE FIX ================= */
+/* ================= PRAYER + DATE (FIXED) ================= */
 
 let prayerList=[];
 
 async function loadPrayer(lat, lon){
 
-let res=await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=2`);
+let res=await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=1`);
 let data=await res.json();
 
 let tm=data.data.timings;
 let hijri=data.data.date.hijri;
+let greg=data.data.date.gregorian;
 
 /* HIJRI */
 let month=t.hijriMonths[hijri.month.number-1];
 let hijriText=formatNumber(hijri.day+" "+month+" "+hijri.year);
 
 /* GREGORIAN */
-let today=new Date();
-let gregMonths={
-bn:["জানু","ফেব","মার্চ","এপ্র","মে","জুন","জুলাই","আগ","সেপ্ট","অক্টো","নভে","ডিসে"],
-en:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
-hi:["जन","फ़र","मार्च","अप्रै","मई","जून","जुलाई","अग","सित","अक्टू","नव","दिस"]
-};
+let gregText=formatNumber(greg.day+" "+greg.month.en+" "+greg.year);
 
-let gregText=formatNumber(
-today.getDate()+" "+gregMonths[s.lang][today.getMonth()]+" "+today.getFullYear()
-);
-
-/* FINAL DATE */
+/* FINAL */
 setText("date",hijriText+" | "+gregText);
+
+/* DAY */
+let dayIndex=new Date(greg.date).getDay();
+setText("todayDay",t.days[dayIndex]);
 
 /* PRAYER */
 prayerList=[
@@ -243,8 +238,7 @@ if(!p[1]) return;
 if(azanPlayed[p[0]]) return;
 
 if(currentTime===p[1]){
-let type=getSettings().azan || "makkah";
-azanAudio.src=AZAN_FILES[type];
+azanAudio.src=AZAN_FILES[getSettings().azan || "makkah"];
 azanAudio.play().catch(()=>{});
 azanPlayed[p[0]]=true;
 }
