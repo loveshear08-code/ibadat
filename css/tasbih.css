@@ -1,52 +1,59 @@
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-}
-
 body{
+margin:0;
 font-family:sans-serif;
-background:#eaf3e6;
-min-height:100vh;
-}
-
-/* MAIN */
-.container{
-min-height:100vh;
+background:#eef7f0;
+height:100vh;
 display:flex;
-flex-direction:column;
-justify-content:space-between;
+justify-content:center;
 align-items:center;
-padding:20px;
 }
 
-/* TITLE */
-.title{
-font-size:22px;
+.tasbih-container{
+text-align:center;
+width:100%;
+max-width:400px;
+}
+
+/* COUNT */
+.count-box{
+font-size:60px;
 font-weight:bold;
+color:#1b5e20;
+margin-bottom:30px;
 }
 
-/* COUNTER */
-.counter-box{
-flex:1;
+/* TAP BUTTON */
+.tap-area{
+width:180px;
+height:180px;
+background:#2e7d32;
+border-radius:50%;
+color:white;
 display:flex;
 align-items:center;
 justify-content:center;
-width:100%;
+font-size:24px;
+margin:0 auto;
+box-shadow:0 6px 15px rgba(0,0,0,0.2);
+cursor:pointer;
+transition:0.2s;
 }
 
-#counter{
-font-size:110px;
-font-weight:bold;
-color:#2e7d32;
+.tap-area:active{
+transform:scale(0.95);
+background:#1b5e20;
 }
 
-/* BUTTON */
+/* RESET */
+.actions{
+margin-top:30px;
+}
+
 button{
-padding:15px 25px;
+padding:10px 25px;
 border:none;
-border-radius:12px;
-background:#f44336;
+border-radius:10px;
+background:#d32f2f;
 color:white;
 font-size:16px;
 cursor:pointer;
