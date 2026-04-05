@@ -1,30 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Tasbih</title>
 
 <link rel="stylesheet" href="../css/tasbih.css">
+
 </head>
 
 <body>
 
-<div class="container" id="tapArea">
+<div class="tasbih-container">
 
-    <div class="title" id="title"></div>
+    <!-- COUNT -->
+    <div class="count-box" id="count">0</div>
 
-    <div class="counter-box">
-        <div id="counter">0</div>
+    <!-- CIRCLE BUTTON -->
+    <div class="tap-area" onclick="increase()">
+        TAP
     </div>
 
-    <button id="btnReset">Reset</button>
+    <!-- ACTION -->
+    <div class="actions">
+        <button onclick="resetTasbih()">RESET</button>
+    </div>
 
 </div>
 
-<script src="../js/settings.js"></script>
-<script src="../js/tasbih.js"></script>
+<script src="../js/tasbih.js?v=2"></script>
 
 </body>
 </html>
