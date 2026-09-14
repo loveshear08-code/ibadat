@@ -130,36 +130,47 @@ const TEXT = {
    ========================================================= */
 
 function getSettingsSafe() {
-    const defaultSettings = {
+
+    const defaults = {
         lang: "bn",
         dark: false,
         azan: "makkah"
     };
 
     try {
-        const saved = localStorage.getItem("appSettings");
+
+        const saved =
+            localStorage.getItem("appSettings");
 
         if (!saved) {
-            return defaultSettings;
+            return defaults;
         }
 
         const parsed = JSON.parse(saved);
 
         return {
-            lang: ["bn", "en", "hi"].includes(parsed.lang)
-                ? parsed.lang
-                : "bn",
+            lang:
+                ["bn", "en", "hi"].includes(parsed.lang)
+                    ? parsed.lang
+                    : "bn",
 
-            dark: parsed.dark === true,
+            dark:
+                parsed.dark === true,
 
-            azan: AZAN_FILES[parsed.azan]
-                ? parsed.azan
-                : "makkah"
+            azan:
+                AZAN_FILES[parsed.azan]
+                    ? parsed.azan
+                    : "makkah"
         };
 
     } catch (error) {
-        console.warn("Settings read error:", error);
-        return defaultSettings;
+
+        console.warn(
+            "Settings error:",
+            error
+        );
+
+        return defaults;
     }
 }
 
@@ -173,10 +184,12 @@ function el(id) {
 }
 
 function setText(id, value) {
+
     const element = el(id);
 
     if (element) {
-        element.textContent = value ?? "";
+        element.textContent =
+            value ?? "";
     }
 }
 
@@ -190,45 +203,58 @@ function getText() {
 
 
 /* =========================================================
-   APPLY LANGUAGE / THEME
+   LANGUAGE / THEME
    ========================================================= */
 
 function applyHomeSettings() {
-    const settings = getSettingsSafe();
 
-    document.documentElement.lang = settings.lang;
+    const settings =
+        getSettingsSafe();
+
+    document.documentElement.lang =
+        settings.lang;
 
     document.body.classList.toggle(
         "dark-mode",
         settings.dark
     );
 
-    const t = TEXT[settings.lang] || TEXT.bn;
+    const t =
+        TEXT[settings.lang] || TEXT.bn;
 
-    setText("bismillahMeaning", t.bismillahMeaning);
+    setText(
+        "bismillahMeaning",
+        t.bismillahMeaning
+    );
 
-    const featureNames = [
+    [
         "namaz",
         "quran",
         "dua",
         "hadith",
         "qibla",
         "tasbih"
-    ];
+    ].forEach(name => {
 
-    featureNames.forEach(name => {
-        setText(name, t.features[name]);
+        setText(
+            name,
+            t.features[name]
+        );
     });
 }
 
 
 /* =========================================================
-   CLOCK
+   CLOCK / DATE
    ========================================================= */
 
 function updateClock() {
-    const now = new Date();
-    const lang = getLang();
+
+    const now =
+        new Date();
+
+    const lang =
+        getLang();
 
     const locale = {
         bn: "bn-BD",
@@ -236,28 +262,49 @@ function updateClock() {
         hi: "hi-IN"
     }[lang] || "bn-BD";
 
-    const time = now.toLocaleTimeString(locale, {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: true
-    });
+    const time =
+        now.toLocaleTimeString(
+            locale,
+            {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: true
+            }
+        );
 
-    setText("clock", time);
+    setText(
+        "clock",
+        time
+    );
 
-    const day = now.toLocaleDateString(locale, {
-        weekday: "long"
-    });
+    const day =
+        now.toLocaleDateString(
+            locale,
+            {
+                weekday: "long"
+            }
+        );
 
-    setText("todayDay", day);
+    setText(
+        "todayDay",
+        day
+    );
 
-    const date = now.toLocaleDateString(locale, {
-        day: "numeric",
-        month: "long",
-        year: "numeric"
-    });
+    const date =
+        now.toLocaleDateString(
+            locale,
+            {
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            }
+        );
 
-    setText("date", date);
+    setText(
+        "date",
+        date
+    );
 }
 
 
@@ -272,27 +319,41 @@ let currentLocation = {
 };
 
 function setCityText(cityName) {
-    if (cityName) {
-        currentLocation.city = cityName;
-        setText("city", cityName);
+
+    if (!cityName) {
+        return;
     }
+
+    currentLocation.city =
+        cityName;
+
+    setText(
+        "city",
+        cityName
+    );
 }
 
 async function reverseGeocode(lat, lon) {
+
     try {
+
         const url =
             "https://api.bigdatacloud.net/data/reverse-geocode-client" +
             `?latitude=${encodeURIComponent(lat)}` +
             `&longitude=${encodeURIComponent(lon)}` +
             "&localityLanguage=en";
 
-        const response = await fetch(url);
+        const response =
+            await fetch(url);
 
         if (!response.ok) {
-            throw new Error("Reverse geocoding failed");
+            throw new Error(
+                "Reverse geocoding failed"
+            );
         }
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
         const city =
             data.city ||
@@ -303,37 +364,67 @@ async function reverseGeocode(lat, lon) {
         setCityText(city);
 
     } catch (error) {
-        console.warn("City lookup failed:", error);
-        setCityText(DEFAULT_LOCATION.city);
+
+        console.warn(
+            "City lookup failed:",
+            error
+        );
+
+        setCityText(
+            DEFAULT_LOCATION.city
+        );
     }
 }
 
 function getLocation() {
-    setCityText(DEFAULT_LOCATION.city);
+
+    setCityText(
+        DEFAULT_LOCATION.city
+    );
 
     if (!navigator.geolocation) {
+
         initWithLocation(
             DEFAULT_LOCATION.lat,
             DEFAULT_LOCATION.lon
         );
+
         return;
     }
 
     navigator.geolocation.getCurrentPosition(
+
         position => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
 
-            currentLocation.lat = lat;
-            currentLocation.lon = lon;
+            const lat =
+                position.coords.latitude;
 
-            reverseGeocode(lat, lon);
+            const lon =
+                position.coords.longitude;
 
-            initWithLocation(lat, lon);
+            currentLocation.lat =
+                lat;
+
+            currentLocation.lon =
+                lon;
+
+            reverseGeocode(
+                lat,
+                lon
+            );
+
+            initWithLocation(
+                lat,
+                lon
+            );
         },
 
         error => {
-            console.warn("Location unavailable:", error);
+
+            console.warn(
+                "Location unavailable:",
+                error
+            );
 
             initWithLocation(
                 DEFAULT_LOCATION.lat,
@@ -354,9 +445,13 @@ function getLocation() {
    WEATHER
    ========================================================= */
 
-function weatherDescription(code, lang) {
+function weatherDescription(
+    code,
+    lang
+) {
 
     const descriptions = {
+
         bn: {
             0: "পরিষ্কার আকাশ",
             1: "প্রধানত পরিষ্কার",
@@ -422,8 +517,13 @@ function weatherDescription(code, lang) {
     );
 }
 
-async function loadWeather(lat, lon) {
+async function loadWeather(
+    lat,
+    lon
+) {
+
     try {
+
         const url =
             "https://api.open-meteo.com/v1/forecast" +
             `?latitude=${encodeURIComponent(lat)}` +
@@ -431,29 +531,33 @@ async function loadWeather(lat, lon) {
             "&current=temperature_2m,weather_code" +
             "&timezone=auto";
 
-        const response = await fetch(url);
+        const response =
+            await fetch(url);
 
         if (!response.ok) {
-            throw new Error("Weather request failed");
+            throw new Error(
+                "Weather request failed"
+            );
         }
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
-        const current = data.current;
-
-        if (!current) {
-            throw new Error("Weather data unavailable");
+        if (!data.current) {
+            throw new Error(
+                "Weather unavailable"
+            );
         }
-
-        const lang = getLang();
 
         const temperature =
-            Math.round(current.temperature_2m);
+            Math.round(
+                data.current.temperature_2m
+            );
 
         const description =
             weatherDescription(
-                current.weather_code,
-                lang
+                data.current.weather_code,
+                getLang()
             );
 
         setText(
@@ -462,7 +566,11 @@ async function loadWeather(lat, lon) {
         );
 
     } catch (error) {
-        console.warn("Weather error:", error);
+
+        console.warn(
+            "Weather error:",
+            error
+        );
 
         setText(
             "weather",
@@ -487,30 +595,41 @@ const PRAYER_NAMES = [
 let prayerTimes = {};
 
 function todayKey() {
-    const now = new Date();
+
+    const now =
+        new Date();
 
     return [
         now.getFullYear(),
-        String(now.getMonth() + 1).padStart(2, "0"),
-        String(now.getDate()).padStart(2, "0")
+        String(
+            now.getMonth() + 1
+        ).padStart(2, "0"),
+        String(
+            now.getDate()
+        ).padStart(2, "0")
     ].join("-");
 }
 
 function cleanPrayerTime(value) {
+
     if (!value) {
         return null;
     }
 
-    const match = String(value).match(
-        /^(\d{1,2}):(\d{2})/
-    );
+    const match =
+        String(value).match(
+            /^(\d{1,2}):(\d{2})/
+        );
 
     if (!match) {
         return null;
     }
 
-    const hour = Number(match[1]);
-    const minute = Number(match[2]);
+    const hour =
+        Number(match[1]);
+
+    const minute =
+        Number(match[2]);
 
     if (
         hour < 0 ||
@@ -531,7 +650,9 @@ function cleanPrayerTime(value) {
 }
 
 function savePrayerCache(data) {
+
     try {
+
         localStorage.setItem(
             PRAYER_CACHE_KEY,
             JSON.stringify({
@@ -539,21 +660,31 @@ function savePrayerCache(data) {
                 times: data
             })
         );
+
     } catch (error) {
-        console.warn("Prayer cache save failed:", error);
+
+        console.warn(
+            "Prayer cache save failed:",
+            error
+        );
     }
 }
 
 function loadPrayerCache() {
+
     try {
+
         const saved =
-            localStorage.getItem(PRAYER_CACHE_KEY);
+            localStorage.getItem(
+                PRAYER_CACHE_KEY
+            );
 
         if (!saved) {
             return null;
         }
 
-        const data = JSON.parse(saved);
+        const data =
+            JSON.parse(saved);
 
         if (
             data.date !== todayKey() ||
@@ -565,47 +696,71 @@ function loadPrayerCache() {
         return data.times;
 
     } catch (error) {
-        console.warn("Prayer cache read failed:", error);
+
+        console.warn(
+            "Prayer cache read failed:",
+            error
+        );
+
         return null;
     }
 }
 
 function normalizePrayerTimes(raw) {
+
     const result = {};
 
     PRAYER_NAMES.forEach(name => {
-        const parsed = cleanPrayerTime(raw[name]);
+
+        const parsed =
+            cleanPrayerTime(
+                raw[name]
+            );
 
         if (parsed) {
-            result[name] = parsed;
+            result[name] =
+                parsed;
         }
     });
 
     return result;
 }
 
-async function loadPrayerTimes(lat, lon) {
+async function loadPrayerTimes(
+    lat,
+    lon
+) {
 
-    const cached = loadPrayerCache();
+    const cached =
+        loadPrayerCache();
 
     if (cached) {
-        prayerTimes = cached;
+
+        prayerTimes =
+            cached;
+
         renderPrayerGrid();
+
         return;
     }
 
     try {
-        const date = new Date();
 
-        const dd = String(
-            date.getDate()
-        ).padStart(2, "0");
+        const date =
+            new Date();
 
-        const mm = String(
-            date.getMonth() + 1
-        ).padStart(2, "0");
+        const dd =
+            String(
+                date.getDate()
+            ).padStart(2, "0");
 
-        const yyyy = date.getFullYear();
+        const mm =
+            String(
+                date.getMonth() + 1
+            ).padStart(2, "0");
+
+        const yyyy =
+            date.getFullYear();
 
         const url =
             `https://api.aladhan.com/v1/timings/${dd}-${mm}-${yyyy}` +
@@ -613,19 +768,25 @@ async function loadPrayerTimes(lat, lon) {
             `&longitude=${encodeURIComponent(lon)}` +
             "&method=1";
 
-        const response = await fetch(url);
+        const response =
+            await fetch(url);
 
         if (!response.ok) {
-            throw new Error("Prayer API failed");
+            throw new Error(
+                "Prayer API failed"
+            );
         }
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
         if (
             !data.data ||
             !data.data.timings
         ) {
-            throw new Error("Prayer timings unavailable");
+            throw new Error(
+                "Prayer timings unavailable"
+            );
         }
 
         const normalized =
@@ -636,12 +797,17 @@ async function loadPrayerTimes(lat, lon) {
         if (
             Object.keys(normalized).length !== 5
         ) {
-            throw new Error("Incomplete prayer timings");
+            throw new Error(
+                "Incomplete prayer timings"
+            );
         }
 
-        prayerTimes = normalized;
+        prayerTimes =
+            normalized;
 
-        savePrayerCache(prayerTimes);
+        savePrayerCache(
+            prayerTimes
+        );
 
         renderPrayerGrid();
 
@@ -652,17 +818,10 @@ async function loadPrayerTimes(lat, lon) {
             error
         );
 
-        const cached = loadPrayerCache();
-
-        if (cached) {
-            prayerTimes = cached;
-            renderPrayerGrid();
-        } else {
-            setText(
-                "prayerGrid",
-                getText().unavailable
-            );
-        }
+        setText(
+            "prayerGrid",
+            getText().unavailable
+        );
     }
 }
 
@@ -672,19 +831,19 @@ async function loadPrayerTimes(lat, lon) {
    ========================================================= */
 
 function formatPrayerTime(time) {
+
     if (!time) {
         return "--:--";
     }
-
-    const lang = getLang();
 
     const locale = {
         bn: "bn-BD",
         en: "en-IN",
         hi: "hi-IN"
-    }[lang] || "en-IN";
+    }[getLang()] || "en-IN";
 
-    const date = new Date();
+    const date =
+        new Date();
 
     date.setHours(
         time.hour,
@@ -705,41 +864,57 @@ function formatPrayerTime(time) {
 
 function renderPrayerGrid() {
 
-    const grid = el("prayerGrid");
+    const grid =
+        el("prayerGrid");
 
     if (!grid) {
         return;
     }
 
-    const t = getText();
+    const t =
+        getText();
 
     grid.innerHTML = "";
 
     PRAYER_NAMES.forEach(name => {
 
         const box =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
-        box.className = "prayer-box";
+        box.className =
+            "prayer-box";
 
         const nameElement =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         nameElement.textContent =
             t.prayers[name];
 
         const timeElement =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         timeElement.textContent =
             formatPrayerTime(
                 prayerTimes[name]
             );
 
-        box.appendChild(nameElement);
-        box.appendChild(timeElement);
+        box.appendChild(
+            nameElement
+        );
 
-        grid.appendChild(box);
+        box.appendChild(
+            timeElement
+        );
+
+        grid.appendChild(
+            box
+        );
     });
 }
 
@@ -748,9 +923,13 @@ function renderPrayerGrid() {
    CURRENT / NEXT PRAYER
    ========================================================= */
 
-function prayerDate(time, baseDate = new Date()) {
+function prayerDate(
+    time,
+    baseDate = new Date()
+) {
 
-    const date = new Date(baseDate);
+    const date =
+        new Date(baseDate);
 
     date.setHours(
         time.hour,
@@ -764,20 +943,26 @@ function prayerDate(time, baseDate = new Date()) {
 
 function getCurrentPrayer() {
 
-    const now = new Date();
+    const now =
+        new Date();
 
-    let current = null;
+    let current =
+        null;
 
     for (const name of PRAYER_NAMES) {
 
-        const time = prayerTimes[name];
+        const time =
+            prayerTimes[name];
 
         if (!time) {
             continue;
         }
 
         const prayerTime =
-            prayerDate(time, now);
+            prayerDate(
+                time,
+                now
+            );
 
         if (now >= prayerTime) {
             current = name;
@@ -789,30 +974,32 @@ function getCurrentPrayer() {
 
 function getNextPrayer() {
 
-    const now = new Date();
+    const now =
+        new Date();
 
     for (const name of PRAYER_NAMES) {
 
-        const time = prayerTimes[name];
+        const time =
+            prayerTimes[name];
 
         if (!time) {
             continue;
         }
 
         const prayerTime =
-            prayerDate(time, now);
+            prayerDate(
+                time,
+                now
+            );
 
         if (prayerTime > now) {
+
             return {
                 name,
                 date: prayerTime
             };
         }
     }
-
-    /*
-       সব নামাজ শেষ হলে পরের দিন Fajr
-    */
 
     const tomorrow =
         new Date(now);
@@ -821,14 +1008,12 @@ function getNextPrayer() {
         tomorrow.getDate() + 1
     );
 
-    const fajr =
-        prayerTimes.Fajr;
+    if (prayerTimes.Fajr) {
 
-    if (fajr) {
         return {
             name: "Fajr",
             date: prayerDate(
-                fajr,
+                prayerTimes.Fajr,
                 tomorrow
             )
         };
@@ -837,16 +1022,61 @@ function getNextPrayer() {
     return null;
 }
 
+
+/* =========================================================
+   COUNTDOWN
+   ========================================================= */
+
+function updateCountdown(target) {
+
+    const difference =
+        target.getTime() -
+        Date.now();
+
+    if (difference <= 0) {
+        setText(
+            "countdown",
+            "00:00:00"
+        );
+        return;
+    }
+
+    const totalSeconds =
+        Math.floor(
+            difference / 1000
+        );
+
+    const hours =
+        Math.floor(
+            totalSeconds / 3600
+        );
+
+    const minutes =
+        Math.floor(
+            (totalSeconds % 3600) / 60
+        );
+
+    const seconds =
+        totalSeconds % 60;
+
+    setText(
+        "countdown",
+        `${String(hours).padStart(2, "0")}:` +
+        `${String(minutes).padStart(2, "0")}:` +
+        `${String(seconds).padStart(2, "0")}`
+    );
+}
+
 function updatePrayerStatus() {
 
-    const t = getText();
-
     if (
-        !prayerTimes.Fajr ||
         Object.keys(prayerTimes).length !== 5
     ) {
         return;
     }
+
+    const t =
+        getText();
 
     const current =
         getCurrentPrayer();
@@ -854,19 +1084,15 @@ function updatePrayerStatus() {
     const next =
         getNextPrayer();
 
-    if (current) {
-        setText(
-            "currentPrayerName",
-            `${t.current}: ${t.prayers[current]}`
-        );
-    } else {
-        setText(
-            "currentPrayerName",
-            t.beforeFajr
-        );
-    }
+    setText(
+        "currentPrayerName",
+        current
+            ? `${t.current}: ${t.prayers[current]}`
+            : t.beforeFajr
+    );
 
     if (!next) {
+
         setText(
             "nextPrayerName",
             ""
@@ -885,45 +1111,9 @@ function updatePrayerStatus() {
         `${t.next}: ${t.prayers[next.name]}`
     );
 
-    updateCountdown(next.date);
-}
-
-
-/* =========================================================
-   COUNTDOWN
-   ========================================================= */
-
-function updateCountdown(target) {
-
-    const difference =
-        target.getTime() -
-        Date.now();
-
-    if (difference <= 0) {
-        setText("countdown", "00:00:00");
-        return;
-    }
-
-    const totalSeconds =
-        Math.floor(difference / 1000);
-
-    const hours =
-        Math.floor(totalSeconds / 3600);
-
-    const minutes =
-        Math.floor(
-            (totalSeconds % 3600) / 60
-        );
-
-    const seconds =
-        totalSeconds % 60;
-
-    const result =
-        `${String(hours).padStart(2, "0")}:` +
-        `${String(minutes).padStart(2, "0")}:` +
-        `${String(seconds).padStart(2, "0")}`;
-
-    setText("countdown", result);
+    updateCountdown(
+        next.date
+    );
 }
 
 
@@ -931,14 +1121,378 @@ function updateCountdown(target) {
    AZAN
    ========================================================= */
 
-const azanAudio = new Audio();
+const azanAudio =
+    new Audio();
 
-azanAudio.preload = "auto";
+azanAudio.preload =
+    "auto";
 
 let azanPlayed = {};
-let lastAzanAttempt = "";
 
-function azanKey(prayerName, time) {
+function azanKey(
+    prayerName,
+    time
+) {
 
-    return [
-        todayKey
+    return `${todayKey()}_${prayerName}_${time}`;
+}
+
+function checkAzan() {
+
+    if (
+        Object.keys(prayerTimes).length !== 5
+    ) {
+        return;
+    }
+
+    const now =
+        new Date();
+
+    const currentSeconds =
+        now.getHours() * 3600 +
+        now.getMinutes() * 60 +
+        now.getSeconds();
+
+    for (const name of PRAYER_NAMES) {
+
+        const time =
+            prayerTimes[name];
+
+        if (!time) {
+            continue;
+        }
+
+        const prayerSeconds =
+            time.hour * 3600 +
+            time.minute * 60;
+
+        const difference =
+            currentSeconds -
+            prayerSeconds;
+
+        if (
+            difference < 0 ||
+            difference > 60
+        ) {
+            continue;
+        }
+
+        const key =
+            azanKey(
+                name,
+                time.text
+            );
+
+        if (azanPlayed[key]) {
+            continue;
+        }
+
+        azanPlayed[key] =
+            true;
+
+        playAzan();
+    }
+}
+
+function playAzan() {
+
+    const settings =
+        getSettingsSafe();
+
+    const file =
+        AZAN_FILES[
+            settings.azan
+        ] ||
+        AZAN_FILES.makkah;
+
+    azanAudio.src =
+        file;
+
+    azanAudio.currentTime =
+        0;
+
+    azanAudio.play()
+        .catch(error => {
+
+            console.warn(
+                "Azan autoplay blocked:",
+                error
+            );
+        });
+}
+
+
+/* =========================================================
+   FEATURES
+   ========================================================= */
+
+function openPage(page) {
+
+    window.location.href =
+        `./html/${page}.html`;
+}
+
+function setupFeatures() {
+
+    const pages = {
+        namaz: "namaz-guide",
+        quran: "quran",
+        dua: "dua",
+        hadith: "hadith",
+        qibla: "qibla",
+        tasbih: "tasbih"
+    };
+
+    Object.entries(pages)
+        .forEach(([id, page]) => {
+
+            const element =
+                el(id);
+
+            if (!element) {
+                return;
+            }
+
+            element.onclick =
+                () => openPage(page);
+        });
+}
+
+
+/* =========================================================
+   SETTINGS TILE
+   ========================================================= */
+
+function addSettingsTile() {
+
+    const grid =
+        el("prayerGrid");
+
+    if (!grid) {
+        return;
+    }
+
+    if (
+        document.getElementById(
+            "settingsTile"
+        )
+    ) {
+        return;
+    }
+
+    const tile =
+        document.createElement(
+            "div"
+        );
+
+    tile.className =
+        "prayer-box";
+
+    tile.id =
+        "settingsTile";
+
+    tile.textContent =
+        getText().settings;
+
+    tile.style.cursor =
+        "pointer";
+
+    tile.onclick =
+        () => openPage("settings");
+
+    grid.appendChild(
+        tile
+    );
+}
+
+
+/* =========================================================
+   BOTTOM QUOTE
+   ========================================================= */
+
+function updateBottomQuote() {
+
+    const t =
+        getText();
+
+    const quotes =
+        t.quotes;
+
+    if (!quotes.length) {
+        return;
+    }
+
+    const index =
+        new Date().getDate() %
+        quotes.length;
+
+    setText(
+        "bottomText",
+        quotes[index]
+    );
+}
+
+
+/* =========================================================
+   CARD NAVIGATION
+   ========================================================= */
+
+function setupHomeCards() {
+
+    const bismillah =
+        el("bismillahCard");
+
+    if (bismillah) {
+
+        bismillah.onclick =
+            () => openPage(
+                "allah-names"
+            );
+    }
+
+    const statusCards =
+        document.querySelectorAll(
+            ".status"
+        );
+
+    statusCards.forEach(card => {
+
+        card.style.cursor =
+            "pointer";
+
+        card.onclick =
+            () => openPage(
+                "calendar"
+            );
+    });
+}
+
+
+/* =========================================================
+   MAIN LOCATION INITIALIZATION
+   ========================================================= */
+
+let initialized =
+    false;
+
+function initWithLocation(
+    lat,
+    lon
+) {
+
+    if (initialized) {
+        return;
+    }
+
+    initialized =
+        true;
+
+    currentLocation.lat =
+        lat;
+
+    currentLocation.lon =
+        lon;
+
+    loadWeather(
+        lat,
+        lon
+    );
+
+    loadPrayerTimes(
+        lat,
+        lon
+    );
+}
+
+
+/* =========================================================
+   MIDNIGHT RESET
+   ========================================================= */
+
+let lastDate =
+    todayKey();
+
+function checkDateChange() {
+
+    const currentDate =
+        todayKey();
+
+    if (
+        currentDate === lastDate
+    ) {
+        return;
+    }
+
+    lastDate =
+        currentDate;
+
+    prayerTimes = {};
+
+    azanPlayed = {};
+
+    initialized =
+        false;
+
+    getLocation();
+}
+
+
+/* =========================================================
+   START APP
+   ========================================================= */
+
+function startHome() {
+
+    applyHomeSettings();
+
+    updateClock();
+
+    updateBottomQuote();
+
+    setupFeatures();
+
+    setupHomeCards();
+
+    addSettingsTile();
+
+    getLocation();
+
+    setInterval(
+        updateClock,
+        1000
+    );
+
+    setInterval(
+        updatePrayerStatus,
+        1000
+    );
+
+    setInterval(
+        checkAzan,
+        1000
+    );
+
+    setInterval(
+        checkDateChange,
+        30000
+    );
+}
+
+
+/* =========================================================
+   START
+   ========================================================= */
+
+if (
+    document.readyState === "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        startHome
+    );
+
+} else {
+
+    startHome();
+}
