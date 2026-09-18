@@ -1,13 +1,15 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="bn">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Settings</title>
 
 <link rel="stylesheet" href="../css/settings.css">
+
 </head>
 
 <body>
@@ -15,103 +17,197 @@
 <div class="container">
 
     <!-- TITLE -->
+
     <h2 id="settingsTitle">⚙️ সেটিংস</h2>
 
-    <!-- CONTENT WRAP -->
+
     <div class="content">
 
         <!-- ================= AZAN ================= -->
+
         <div class="card">
 
-            <h3 id="azanTitle">আজান সেটিং</h3>
+            <h3 id="azanTitle">
+                আজান সেটিং
+            </h3>
 
-            <!-- MAKKAH -->
-            <div class="option" data-azan="makkah" onclick="setAzan('makkah')">
-                <span id="azan_makkah">মক্কা</span>
+            <p id="azanDesc">
+                কোন ওয়াক্তে কোন আজান বাজবে
+            </p>
 
-                <span class="right">
-                    <button onclick="playAzan(event,'makkah')">▶️</button>
-                    <span class="tick"></span>
+
+            <!-- FAJR -->
+
+            <div class="azan-row">
+
+                <span id="prayer_fajr">
+                    ফজর
                 </span>
+
+                <select id="azan_fajr"></select>
+
+                <button
+                    onclick="playAzan(
+                        document.getElementById('azan_fajr').value
+                    )">
+                    ▶️
+                </button>
+
             </div>
 
-            <!-- MADINAH -->
-            <div class="option" data-azan="madinah" onclick="setAzan('madinah')">
-                <span id="azan_madinah">মদিনা</span>
 
-                <span class="right">
-                    <button onclick="playAzan(event,'madinah')">▶️</button>
-                    <span class="tick"></span>
+            <!-- DHUHR -->
+
+            <div class="azan-row">
+
+                <span id="prayer_dhuhr">
+                    জোহর
                 </span>
+
+                <select id="azan_dhuhr"></select>
+
+                <button
+                    onclick="playAzan(
+                        document.getElementById('azan_dhuhr').value
+                    )">
+                    ▶️
+                </button>
+
             </div>
 
-            <!-- KUWAIT -->
-            <div class="option" data-azan="kuwait" onclick="setAzan('kuwait')">
-                <span id="azan_kuwait">কুয়েত</span>
 
-                <span class="right">
-                    <button onclick="playAzan(event,'kuwait')">▶️</button>
-                    <span class="tick"></span>
+            <!-- ASR -->
+
+            <div class="azan-row">
+
+                <span id="prayer_asr">
+                    আসর
                 </span>
+
+                <select id="azan_asr"></select>
+
+                <button
+                    onclick="playAzan(
+                        document.getElementById('azan_asr').value
+                    )">
+                    ▶️
+                </button>
+
             </div>
 
-            <!-- BANGLADESH -->
-            <div class="option" data-azan="bangladesh" onclick="setAzan('bangladesh')">
-                <span id="azan_bangladesh">বাংলাদেশ</span>
 
-                <span class="right">
-                    <button onclick="playAzan(event,'bangladesh')">▶️</button>
-                    <span class="tick"></span>
+            <!-- MAGHRIB -->
+
+            <div class="azan-row">
+
+                <span id="prayer_maghrib">
+                    মাগরিব
                 </span>
+
+                <select id="azan_maghrib"></select>
+
+                <button
+                    onclick="playAzan(
+                        document.getElementById('azan_maghrib').value
+                    )">
+                    ▶️
+                </button>
+
             </div>
 
-            <!-- ALASKA -->
-            <div class="option" data-azan="alaska" onclick="setAzan('alaska')">
-                <span id="azan_alaska">আলাস্কা</span>
 
-                <span class="right">
-                    <button onclick="playAzan(event,'alaska')">▶️</button>
-                    <span class="tick"></span>
+            <!-- ISHA -->
+
+            <div class="azan-row">
+
+                <span id="prayer_isha">
+                    এশা
                 </span>
+
+                <select id="azan_isha"></select>
+
+                <button
+                    onclick="playAzan(
+                        document.getElementById('azan_isha').value
+                    )">
+                    ▶️
+                </button>
+
             </div>
 
         </div>
 
+
         <!-- ================= LANGUAGE ================= -->
+
         <div class="card">
 
-            <h3 id="langTitle">ভাষা</h3>
+            <h3 id="langTitle">
+                ভাষা
+            </h3>
 
             <select id="langSelect">
-                <option value="bn">বাংলা</option>
-                <option value="en">English</option>
-                <option value="hi">हिंदी</option>
+
+                <option value="bn">
+                    বাংলা
+                </option>
+
+                <option value="en">
+                    English
+                </option>
+
+                <option value="hi">
+                    हिन्दी
+                </option>
+
             </select>
 
         </div>
 
+
         <!-- ================= THEME ================= -->
+
         <div class="card">
 
-            <h3 id="themeTitle">থিম</h3>
+            <h3 id="themeTitle">
+                থিম
+            </h3>
 
             <label>
-                <input type="checkbox" id="darkMode">
-                <span id="darkLabel">ডার্ক মোড</span>
+
+                <input
+                    type="checkbox"
+                    id="darkMode">
+
+                <span id="darkLabel">
+                    ডার্ক মোড
+                </span>
+
             </label>
 
         </div>
 
     </div>
 
-    <!-- ================= SAVE BUTTON ================= -->
+
+    <!-- ================= SAVE ================= -->
+
     <div class="btn-box">
-        <button id="saveBtn" onclick="saveSettings()">সেভ</button>
+
+        <button
+            id="saveBtn"
+            onclick="saveSettings()">
+
+            সেভ
+
+        </button>
+
     </div>
 
 </div>
 
-<script src="../js/settings.js?v=6"></script>
+
+<script src="../js/settings.js?v=20"></script>
 
 </body>
-</html>
+</html>      
