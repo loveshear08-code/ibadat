@@ -138,3 +138,48 @@ padding:12px;
 .grid{
 gap:10px;
 }
+
+/* ================= FINAL HOME FIX ================= */
+
+/* STATUS ALIGNMENT */
+
+.status-left div,
+.status-right div{
+width:100%;
+min-height:24px;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+}
+
+
+/* SUNRISE SETTINGS */
+
+.sunrise-box{
+cursor:pointer;
+}
+
+
+/* PRAYER BOX */
+
+.prayer-box{
+min-height:42px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+gap:3px;
+}
+
+
+/* STATUS BOARD */
+
+.status{
+align-items:stretch;
+}
+
+.status-left,
+.status-right{
+justify-content:center;
+}
