@@ -1,1 +1,329 @@
+<!DOCTYPE html>
+<html lang="bn">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>নামাজ গাইড</title>
+
+<link rel="stylesheet" href="../css/namaz-guide.css">
+
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<div class="top-bar">
+
+    <button id="backBtn">←</button>
+
+    <span id="pageTitle">🕌 নামাজ গাইড</span>
+
+</div>
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="main">
+
+    <div class="intro">
+
+        <div id="introTitle">
+            নামাজ সম্পর্কে সহজভাবে জানুন
+        </div>
+
+        <div id="introText">
+            ধাপে ধাপে নামাজ শেখার জন্য একটি সহজ গাইড
+        </div>
+
+    </div>
+
+
+    <!-- 01 -->
+
+    <div class="guide-card" data-page="wudu">
+
+        <div class="icon">🧼</div>
+
+        <div class="card-text">
+
+            <div class="card-title" id="titleWudu">
+                পবিত্রতা ও ওযু
+            </div>
+
+            <div class="card-desc" id="descWudu">
+                ওযু, গোসল, তায়াম্মুম এবং পবিত্রতার নিয়ম
+            </div>
+
+        </div>
+
+        <div class="arrow">›</div>
+
+    </div>
+
+
+    <!-- 02 -->
+
+    <div class="guide-card" data-page="what">
+
+        <div class="icon">🕌</div>
+
+        <div class="card-text">
+
+            <div class="card-title" id="titleWhat">
+                নামাজ কী ও কেন
+            </div>
+
+            <div class="card-desc" id="descWhat">
+                নামাজের পরিচয়, গুরুত্ব ও উদ্দেশ্য
+            </div>
+
+        </div>
+
+        <div class="arrow">›</div>
+
+    </div>
+
+
+    <!-- 03 -->
+
+    <div class="guide-card" data-page="preparation">
+
+        <div class="icon">📋</div>
+
+        <div class="card-text">
+
+            <div class="card-title" id="titlePreparation">
+                নামাজের প্রস্তুতি
+            </div>
+
+            <div class="card-desc" id="descPreparation">
+                নামাজের আগে কী কী করতে হবে
+            </div>
+
+        </div>
+
+        <div class="arrow">›</div>
+
+    </div>
+
+
+    <!-- 04 -->
+
+    <div class="guide-card" data-page="times">
+
+        <div class="icon">🕰️</div>
+
+        <div class="card-text">
+
+            <div class="card-title" id="titleTimes">
+                পাঁচ ওয়াক্ত নামাজ
+            </div>
+
+            <div class="card-desc" id="descTimes">
+                ফজর, জোহর, আসর, মাগরিব ও এশা
+            </div>
+
+        </div>
+
+        <div class="arrow">›</div>
+
+    </div>
+
+
+    <!-- 05 -->
+
+    <div class="guide-card" data-page="rakat">
+
+        <div class="icon">📿</div>
+
+        <div class="card-text">
+
+            <div class="card-title" id="titleRakat">
+                রাকাত ও নামাজের ধরন
+            </div>
+
+            <div class="card-desc" id="descRakat">
+                বিভিন্ন নামাজের রাকাত ও কাঠামো
+            </div>
+
+        </div>
+
+        <div class="arrow">›</div>
+
+    </div>
+
+
+    <!-- 06 -->
+
+    <div class="guide-card" data-page="learn">
+
+        <div class="icon">📖</div>
+
+        <div class="card-text">
+
+            <div class="card-title" id="titleLearn">
+                নামাজ শিক্ষা
+            </div>
+
+            <div class="card-desc" id="descLearn">
+                শুরু থেকে শেষ পর্যন্ত ধাপে ধাপে নামাজ
+            </div>
+
+        </div>
+
+        <div class="arrow">›</div>
+
+    </div>
+
+
+    <!-- 07 -->
+
+    <div class="guide-card" data-page="duas">
+
+        <div class="icon">🤲</div>
+
+        <div class="card-text">
+
+            <div class="card-title" id="titleDuas">
+                নামাজে যা যা পড়তে হয়
+            </div>
+
+            <div class="card-desc" id="descDuas">
+                সানা, ফাতিহা, সূরা, তাসবিহ, দোয়া ও দরুদ
+            </div>
+
+        </div>
+
+        <div class="arrow">›</div>
+
+    </div>
+
+
+    <!-- 08 -->
+
+    <div class="guide-card" data-page="jamaat">
+
+        <div class="icon">👥</div>
+
+        <div class="card-text">
+
+            <div class="card-title" id="titleJamaat">
+                জামাতে নামাজ
+            </div>
+
+            <div class="card-desc" id="descJamaat">
+                ইমামের পিছনে নামাজ ও জামাতের নিয়ম
+            </div>
+
+        </div>
+
+        <div class="arrow">›</div>
+
+    </div>
+
+
+    <!-- 09 -->
+
+    <div class="guide-card" data-page="mistakes">
+
+        <div class="icon">⚠️</div>
+
+        <div class="card-text">
+
+            <div class="card-title" id="titleMistakes">
+                নামাজে ভুল হলে করণীয়
+            </div>
+
+            <div class="card-desc" id="descMistakes">
+                ভুল, সন্দেহ ও সিজদায়ে সাহুর নিয়ম
+            </div>
+
+        </div>
+
+        <div class="arrow">›</div>
+
+    </div>
+
+
+    <!-- 10 -->
+
+    <div class="guide-card" data-page="special">
+
+        <div class="icon">🌙</div>
+
+        <div class="card-text">
+
+            <div class="card-title" id="titleSpecial">
+                বিশেষ নামাজ
+            </div>
+
+            <div class="card-desc" id="descSpecial">
+                বিতর, তাহাজ্জুদ, তারাবিহ, ঈদ ও জানাজার নামাজ
+            </div>
+
+        </div>
+
+        <div class="arrow">›</div>
+
+    </div>
+
+
+    <!-- 11 -->
+
+    <div class="guide-card" data-page="women">
+
+        <div class="icon">👩</div>
+
+        <div class="card-text">
+
+            <div class="card-title" id="titleWomen">
+                নারীদের নামাজ
+            </div>
+
+            <div class="card-desc" id="descWomen">
+                নারীদের জন্য প্রযোজ্য নামাজের নির্দেশনা
+            </div>
+
+        </div>
+
+        <div class="arrow">›</div>
+
+    </div>
+
+
+    <!-- 12 -->
+
+    <div class="guide-card" data-page="quick">
+
+        <div class="icon">⚡</div>
+
+        <div class="card-text">
+
+            <div class="card-title" id="titleQuick">
+                Quick Namaz Guide
+            </div>
+
+            <div class="card-desc" id="descQuick">
+                দ্রুত দেখে নেওয়ার জন্য সংক্ষিপ্ত নামাজ গাইড
+            </div>
+
+        </div>
+
+        <div class="arrow">›</div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= JS ================= -->
+
+<script src="../js/namaz-guide.js?v=1"></script>
+
+</body>
+
+</html>
