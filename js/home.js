@@ -2,6 +2,7 @@
    IBADAT HOME - FINAL VERSION
    ========================================================= */
 
+
 /* ================= LANGUAGE ================= */
 
 const HOME_TEXT = {
@@ -39,9 +40,10 @@ const HOME_TEXT = {
         bottom: "আল্লাহকে স্মরণ করুন — নামাজ কায়েম করুন"
     },
 
+
     en: {
         today: "Today",
-        current: "Current Prayer",
+        current: "Current Time",
         next: "Next Prayer",
         remaining: "Remaining",
         noPrayer: "No prayer time now",
@@ -72,9 +74,10 @@ const HOME_TEXT = {
         bottom: "Remember Allah — Establish Prayer"
     },
 
+
     hi: {
         today: "आज",
-        current: "वर्तमान नमाज़",
+        current: "वर्तमान समय",
         next: "अगली नमाज़",
         remaining: "शेष",
         noPrayer: "अभी कोई नमाज़ का समय नहीं",
@@ -104,6 +107,7 @@ const HOME_TEXT = {
 
         bottom: "अल्लाह को याद करें — नमाज़ कायम करें"
     }
+
 };
 
 
@@ -111,7 +115,8 @@ const HOME_TEXT = {
 
 /*
    Sunrise countdown-এর অংশ।
-   কিন্তু Sunrise নামাজ নয় এবং Azan বাজাবে না।
+   Sunrise নামাজ নয়।
+   Sunrise-এর সময় Azan বাজবে না।
 */
 
 const ALL_TIMES = [
@@ -123,9 +128,9 @@ const ALL_TIMES = [
     "Isha"
 ];
 
+
 const ACTUAL_PRAYERS = [
     "Fajr",
-   "Sunrise",
     "Dhuhr",
     "Asr",
     "Maghrib",
@@ -136,11 +141,16 @@ const ACTUAL_PRAYERS = [
 /* ================= STATE ================= */
 
 let prayerTimes = {};
+
 let currentDateKey = "";
+
 let lastAzanKey = "";
 
-let latitude = 23.8103;
-let longitude = 90.4125;
+let latitude = null;
+
+let longitude = null;
+
+let locationTimezone = null;
 
 
 /* ================= SETTINGS ================= */
@@ -148,9 +158,12 @@ let longitude = 90.4125;
 function homeSettings(){
 
     try{
-        let s = localStorage.getItem("appSettings");
+
+        let s =
+            localStorage.getItem("appSettings");
 
         if(!s){
+
             return {
                 lang: "bn",
                 dark: false,
@@ -166,28 +179,52 @@ function homeSettings(){
 
         let obj = JSON.parse(s);
 
-        if(!obj.azan || typeof obj.azan !== "object"){
+
+        /* OLD AZAN SETTINGS MIGRATION */
+
+        if(
+            !obj.azan ||
+            typeof obj.azan !== "object"
+        ){
+
             obj.azan = {
-                fajr: obj.azan || "makkah",
+
+                fajr:
+                    typeof obj.azan === "string"
+                    ? obj.azan
+                    : "makkah",
+
                 dhuhr: "makkah",
+
                 asr: "makkah",
+
                 maghrib: "makkah",
+
                 isha: "makkah"
             };
         }
+
 
         return obj;
 
     }catch(e){
 
         return {
+
             lang: "bn",
+
             dark: false,
+
             azan: {
+
                 fajr: "makkah",
+
                 dhuhr: "makkah",
+
                 asr: "makkah",
+
                 maghrib: "makkah",
+
                 isha: "makkah"
             }
         };
@@ -195,20 +232,33 @@ function homeSettings(){
 }
 
 
-/* ================= LANGUAGE NUMBERS ================= */
+/* ================= LANGUAGE NUMBER ================= */
 
 function localNumber(value){
 
     const s = homeSettings();
-    const lang = s.lang || "bn";
+
+    const lang =
+        s.lang || "bn";
+
 
     if(lang === "bn"){
-        return String(value).replace(/\d/g, d => "০১২৩৪৫৬৭৮৯"[d]);
+
+        return String(value).replace(
+            /\d/g,
+            d => "০১২৩৪৫৬৭৮৯"[d]
+        );
     }
 
+
     if(lang === "hi"){
-        return String(value).replace(/\d/g, d => "०१२३४५६७८९"[d]);
+
+        return String(value).replace(
+            /\d/g,
+            d => "०१२३४५६७८९"[d]
+        );
     }
+
 
     return String(value);
 }
@@ -218,37 +268,66 @@ function localNumber(value){
 
 function formatClock(date){
 
-    const s = homeSettings();
+    let h =
+        date.getHours();
 
-    let h = date.getHours();
-    let m = date.getMinutes();
-    let sec = date.getSeconds();
+    let m =
+        date.getMinutes();
+
+    let sec =
+        date.getSeconds();
+
 
     let result =
-        String(h).padStart(2,"0") + ":" +
-        String(m).padStart(2,"0") + ":" +
+
+        String(h).padStart(2,"0") +
+        ":" +
+        String(m).padStart(2,"0") +
+        ":" +
         String(sec).padStart(2,"0");
+
 
     return localNumber(result);
 }
 
 
+/* ================= PRAYER TIME FORMAT ================= */
+
 function formatTime(time){
 
-    if(!time) return "--:--";
+    if(!time){
 
-    let clean = String(time).split(" ")[0];
+        return "--:--";
+    }
 
-    let parts = clean.split(":");
 
-    if(parts.length < 2) return clean;
+    let clean =
+        String(time).split(" ")[0];
 
-    let h = parseInt(parts[0],10);
-    let m = parts[1];
+
+    let parts =
+        clean.split(":");
+
+
+    if(parts.length < 2){
+
+        return clean;
+    }
+
+
+    let h =
+        parseInt(parts[0],10);
+
+    let m =
+        parts[1];
+
 
     let result =
-        String(h).padStart(2,"0") + ":" +
+
+        String(h).padStart(2,"0") +
+        ":" +
         String(m).padStart(2,"0");
+
 
     return localNumber(result);
 }
@@ -258,24 +337,51 @@ function formatTime(time){
 
 function timeToMinutes(time){
 
-    if(!time) return null;
+    if(!time){
 
-    let clean = String(time).split(" ")[0];
-    let p = clean.split(":");
+        return null;
+    }
 
-    if(p.length < 2) return null;
 
-    return parseInt(p[0],10) * 60 + parseInt(p[1],10);
+    let clean =
+        String(time).split(" ")[0];
+
+
+    let p =
+        clean.split(":");
+
+
+    if(p.length < 2){
+
+        return null;
+    }
+
+
+    return (
+
+        parseInt(p[0],10) * 60 +
+
+        parseInt(p[1],10)
+    );
 }
 
 
-/* ================= DATE ================= */
+/* ================= DATE KEY ================= */
 
 function dateKey(date){
 
-    return date.getFullYear() + "-" +
-           String(date.getMonth()+1).padStart(2,"0") + "-" +
-           String(date.getDate()).padStart(2,"0");
+    return (
+
+        date.getFullYear() +
+        "-" +
+        String(
+            date.getMonth() + 1
+        ).padStart(2,"0") +
+        "-" +
+        String(
+            date.getDate()
+        ).padStart(2,"0")
+    );
 }
 
 
@@ -283,30 +389,79 @@ function dateKey(date){
 
 function formatDate(date){
 
-    const s = homeSettings();
-    const lang = s.lang || "bn";
+    const s =
+        homeSettings();
+
+    const lang =
+        s.lang || "bn";
+
 
     const options = {
-        weekday: "long",
+
+        day: "numeric",
+
+        month: "long",
+
+        year: "numeric"
     };
-   
-const topDate =
-    now.toLocaleDateString(
+
+
+    let locale =
+        "bn-BD";
+
+
+    if(lang === "en"){
+
+        locale = "en-US";
+    }
+
+
+    if(lang === "hi"){
+
+        locale = "hi-IN";
+    }
+
+
+    return new Intl.DateTimeFormat(
+        locale,
+        options
+    ).format(date);
+}
+
+
+/* ================= WEEKDAY ================= */
+
+function formatDay(date){
+
+    const s =
+        homeSettings();
+
+    const lang =
+        s.lang || "bn";
+
+
+    let locale =
+        "bn-BD";
+
+
+    if(lang === "en"){
+
+        locale = "en-US";
+    }
+
+
+    if(lang === "hi"){
+
+        locale = "hi-IN";
+    }
+
+
+    return new Intl.DateTimeFormat(
         locale,
         {
-            day: "numeric",
-            month: "long",
-            year: "numeric"
+            weekday: "long"
         }
-    );
-
-setText("date", topDate);
-    let locale = "bn-BD";
-
-    if(lang === "en") locale = "en-US";
-    if(lang === "hi") locale = "hi-IN";
-
-    return new Intl.DateTimeFormat(locale, options).format(date);
+    ).format(date);
 }
 
 
@@ -314,30 +469,93 @@ setText("date", topDate);
 
 function applyHomeLanguage(){
 
-    const s = homeSettings();
-    const t = HOME_TEXT[s.lang] || HOME_TEXT.bn;
+    const s =
+        homeSettings();
+
+    const t =
+        HOME_TEXT[s.lang] ||
+        HOME_TEXT.bn;
+
+
+    /* HTML LANGUAGE */
+
+    document.documentElement.lang =
+        s.lang;
+
+
+    /* TITLE */
 
     document.title =
-        s.lang === "bn" ? "ইবাদত" :
-        s.lang === "hi" ? "इबादत" :
-        "IBADAT";
 
-    setText("namaz", t.features.namaz);
-    setText("quran", t.features.quran);
-    setText("dua", t.features.dua);
-    setText("hadith", t.features.hadith);
-    setText("qibla", t.features.qibla);
-    setText("tasbih", t.features.tasbih);
-
-    setText("bottomText", t.bottom);
-
-    setText("bismillahMeaning",
         s.lang === "bn"
-        ? "পরম করুণাময় ও অসীম দয়ালু আল্লাহর নামে"
+        ? "ইবাদত"
+
         : s.lang === "hi"
+        ? "इबादत"
+
+        : "IBADAT";
+
+
+    /* FEATURES */
+
+    setText(
+        "namaz",
+        t.features.namaz
+    );
+
+    setText(
+        "quran",
+        t.features.quran
+    );
+
+    setText(
+        "dua",
+        t.features.dua
+    );
+
+    setText(
+        "hadith",
+        t.features.hadith
+    );
+
+    setText(
+        "qibla",
+        t.features.qibla
+    );
+
+    setText(
+        "tasbih",
+        t.features.tasbih
+    );
+
+
+    /* BOTTOM */
+
+    setText(
+        "bottomText",
+        t.bottom
+    );
+
+
+    /* BISMILLAH MEANING */
+
+    setText(
+
+        "bismillahMeaning",
+
+        s.lang === "bn"
+
+        ? "পরম করুণাময় ও অসীম দয়ালু আল্লাহর নামে"
+
+        : s.lang === "hi"
+
         ? "अत्यंत कृपाशील और दयालु अल्लाह के नाम से"
+
         : "In the name of Allah, the Most Gracious, the Most Merciful"
     );
+
+
+    /* PRAYER GRID */
 
     updatePrayerGrid();
 }
@@ -347,9 +565,12 @@ function applyHomeLanguage(){
 
 function setText(id,text){
 
-    const el = document.getElementById(id);
+    const el =
+        document.getElementById(id);
+
 
     if(el){
+
         el.innerText = text;
     }
 }
@@ -359,41 +580,79 @@ function setText(id,text){
 
 function updatePrayerGrid(){
 
-    const grid = document.getElementById("prayerGrid");
+    const grid =
+        document.getElementById(
+            "prayerGrid"
+        );
 
-    if(!grid) return;
 
-    const s = homeSettings();
-    const t = HOME_TEXT[s.lang] || HOME_TEXT.bn;
+    if(!grid){
+
+        return;
+    }
+
+
+    const s =
+        homeSettings();
+
+
+    const t =
+        HOME_TEXT[s.lang] ||
+        HOME_TEXT.bn;
+
 
     grid.innerHTML = "";
 
+
     ALL_TIMES.forEach(name => {
 
-        const box = document.createElement("div");
+        const box =
+            document.createElement(
+                "div"
+            );
 
-        box.className = "prayer-box";
+
+        box.className =
+            "prayer-box";
+
 
         if(name === "Sunrise"){
-            box.classList.add("sunrise-box");
+
+            box.classList.add(
+                "sunrise-box"
+            );
         }
 
+
         box.innerHTML = `
-            <div>${t.prayers[name]}</div>
-            <div>${formatTime(prayerTimes[name])}</div>
+
+            <div>
+                ${t.prayers[name]}
+            </div>
+
+            <div>
+                ${formatTime(
+                    prayerTimes[name]
+                )}
+            </div>
+
         `;
 
-        /* Sunrise → Settings */
+
+        /* SUNRISE → SETTINGS */
 
         if(name === "Sunrise"){
 
             box.onclick = function(){
-                window.location.href = "html/settings.html";
-            };
 
+                window.location.href =
+                    "html/settings.html";
+            };
         }
 
+
         grid.appendChild(box);
+
     });
 }
 
@@ -402,136 +661,400 @@ function updatePrayerGrid(){
 
 function updateStatus(){
 
-    const s = homeSettings();
-    const t = HOME_TEXT[s.lang] || HOME_TEXT.bn;
+    const s =
+        homeSettings();
 
-    const now = new Date();
 
-    setText("clock", formatClock(now));
+    const t =
+        HOME_TEXT[s.lang] ||
+        HOME_TEXT.bn;
+
+
+    const now =
+        new Date();
+
+
+    /* LIVE CLOCK */
+
+    setText(
+        "clock",
+        formatClock(now)
+    );
+
+
+    /* DAY ONLY IN STATUS */
+
+    setText(
+        "todayDay",
+        formatDay(now)
+    );
+
+
+    /* TOP BAR DATE */
+
+    setText(
+        "date",
+        formatDate(now)
+    );
+
+
+    /* GET PRAYER MINUTES */
 
     const times = {};
 
+
     ALL_TIMES.forEach(name => {
 
-        let min = timeToMinutes(prayerTimes[name]);
+        let min =
+            timeToMinutes(
+                prayerTimes[name]
+            );
+
 
         if(min !== null){
+
             times[name] = min;
         }
     });
 
-    if(Object.keys(times).length === 0) return;
+
+    if(
+        Object.keys(times).length === 0
+    ){
+
+        return;
+    }
+
 
     const nowMinutes =
+
         now.getHours() * 60 +
+
         now.getMinutes() +
-        now.getSeconds()/60;
+
+        now.getSeconds() / 60;
 
 
-    /* ================= NEXT TIME ================= */
+    /* ================= NEXT EVENT ================= */
 
     let nextName = null;
+
     let nextMinutes = null;
 
-    for(const name of ALL_TIMES){
 
-        if(times[name] > nowMinutes){
+    for(
+        const name of ALL_TIMES
+    ){
 
-            nextName = name;
-            nextMinutes = times[name];
+        if(
+            times[name] > nowMinutes
+        ){
+
+            nextName =
+                name;
+
+            nextMinutes =
+                times[name];
 
             break;
         }
     }
 
-    /* Next day Fajr */
+
+    /* AFTER ISHA → NEXT DAY FAJR */
 
     if(!nextName){
 
-        nextName = "Fajr";
-        nextMinutes = times.Fajr + 1440;
+        nextName =
+            "Fajr";
+
+        nextMinutes =
+            times.Fajr + 1440;
     }
 
 
-    /* ================= CURRENT PRAYER ================= */
+    /* ================= CURRENT TIME ================= */
 
     let currentName = null;
 
+
     /*
-       Sunrise current prayer নয়।
-       তাই Actual prayers দিয়েই Current নির্ধারণ হবে।
+       Fajr → Sunrise
     */
 
-    for(let i = ACTUAL_PRAYERS.length - 1; i >= 0; i--){
+    if(
 
-        const name = ACTUAL_PRAYERS[i];
+        times.Fajr !== undefined &&
 
-        if(times[name] <= nowMinutes){
+        times.Sunrise !== undefined &&
 
-            currentName = name;
+        nowMinutes >= times.Fajr &&
+
+        nowMinutes < times.Sunrise
+
+    ){
+
+        currentName =
+            "Fajr";
+    }
+
+
+    /*
+       Sunrise → Dhuhr
+
+       এখানে Sunrise-কে Current Time হিসেবে
+       দেখানো হবে, যদিও Sunrise নামাজ নয়।
+    */
+
+    else if(
+
+        times.Sunrise !== undefined &&
+
+        times.Dhuhr !== undefined &&
+
+        nowMinutes >= times.Sunrise &&
+
+        nowMinutes < times.Dhuhr
+
+    ){
+
+        currentName =
+            "Sunrise";
+    }
+
+
+    /*
+       Dhuhr → Asr
+    */
+
+    else if(
+
+        times.Dhuhr !== undefined &&
+
+        times.Asr !== undefined &&
+
+        nowMinutes >= times.Dhuhr &&
+
+        nowMinutes < times.Asr
+
+    ){
+
+        currentName =
+            "Dhuhr";
+    }
+
+
+    /*
+       Asr → Maghrib
+    */
+
+    else if(
+
+        times.Asr !== undefined &&
+
+        times.Maghrib !== undefined &&
+
+        nowMinutes >= times.Asr &&
+
+        nowMinutes < times.Maghrib
+
+    ){
+
+        currentName =
+            "Asr";
+    }
+
+
+    /*
+       Maghrib → Isha
+    */
+
+    else if(
+
+        times.Maghrib !== undefined &&
+
+        times.Isha !== undefined &&
+
+        nowMinutes >= times.Maghrib &&
+
+        nowMinutes < times.Isha
+
+    ){
+
+        currentName =
+            "Maghrib";
+    }
+
+
+    /*
+       Isha → next Fajr
+    */
+
+    else if(
+
+        times.Isha !== undefined &&
+
+        nowMinutes >= times.Isha
+
+    ){
+
+        currentName =
+            "Isha";
+    }
+
+
+    /*
+       Fajr-এর আগে কোনো Current Prayer নয়।
+    */
+
+    else{
+
+        currentName =
+            null;
+    }
+
+
+    /* ================= CURRENT DISPLAY ================= */
+
+    if(currentName){
+
+        setText(
+
+            "currentPrayerName",
+
+            t.current +
+            ": " +
+            t.prayers[currentName]
+        );
+
+    }else{
+
+        setText(
+
+            "currentPrayerName",
+
+            t.noPrayer
+        );
+    }
+
+
+    /* ================= NEXT PRAYER DISPLAY ================= */
+
+    /*
+       Sunrise নামাজ নয়।
+       তাই Next Prayer হিসেবে Sunrise দেখানো হবে না।
+
+       Countdown কিন্তু Sunrise পর্যন্ত হবে।
+    */
+
+    let nextPrayerName =
+        null;
+
+
+    for(
+        const name of ACTUAL_PRAYERS
+    ){
+
+        if(
+            times[name] > nowMinutes
+        ){
+
+            nextPrayerName =
+                name;
+
             break;
         }
     }
 
-    /*
-       যদি Fajr-এর আগে হয়,
-       previous day's Isha technically current cycle-এর শেষ।
-       কিন্তু UI-তে current prayer হিসেবে Isha দেখানো যেতে পারে।
-    */
 
-    if(!currentName){
+    /* Next day Fajr */
 
-        currentName = "Isha";
+    if(!nextPrayerName){
+
+        nextPrayerName =
+            "Fajr";
     }
 
 
-    /* ================= NEXT DISPLAY ================= */
-
     setText(
-        "currentPrayerName",
-        t.current + ": " + t.prayers[currentName]
-    );
 
-    /*
-       Countdown-এ Sunrise থাকবে।
-    */
-
-    setText(
         "nextPrayerName",
-        t.next + ": " + t.prayers[nextName]
+
+        t.next +
+        ": " +
+        t.prayers[nextPrayerName]
     );
 
 
     /* ================= COUNTDOWN ================= */
 
     let nowSeconds =
+
         now.getHours() * 3600 +
+
         now.getMinutes() * 60 +
+
         now.getSeconds();
 
+
     let targetSeconds =
+
         nextMinutes * 60;
 
-    let diff = targetSeconds - nowSeconds;
+
+    let diff =
+
+        targetSeconds -
+        nowSeconds;
+
 
     if(diff < 0){
-        diff += 24 * 60 * 60;
+
+        diff +=
+            24 * 60 * 60;
     }
 
-    const hours = Math.floor(diff / 3600);
-    const minutes = Math.floor((diff % 3600) / 60);
-    const seconds = diff % 60;
+
+    const hours =
+        Math.floor(
+            diff / 3600
+        );
+
+
+    const minutes =
+        Math.floor(
+            (diff % 3600) / 60
+        );
+
+
+    const seconds =
+        diff % 60;
+
 
     const countdown =
+
         localNumber(
-            String(hours).padStart(2,"0") + ":" +
-            String(minutes).padStart(2,"0") + ":" +
+
+            String(hours).padStart(2,"0") +
+            ":" +
+            String(minutes).padStart(2,"0") +
+            ":" +
             String(seconds).padStart(2,"0")
         );
 
-    setText("countdown", countdown);
 
-    checkAzan(now, times);
+    setText(
+        "countdown",
+        countdown
+    );
+
+
+    /* AZAN */
+
+    checkAzan(
+        now,
+        times
+    );
 }
 
 
@@ -539,67 +1062,152 @@ function updateStatus(){
 
 const HOME_AZAN_FILES = {
 
-    makkah: "assets/makkah.mp3",
-    madinah: "assets/madinah.mp3",
-    kuwait: "assets/kuwait.mp3",
-    bangladesh: "assets/bangladesh.mp3",
-    alaska: "assets/alaska.mp3"
+    makkah:
+        "assets/makkah.mp3",
+
+    madinah:
+        "assets/madinah.mp3",
+
+    kuwait:
+        "assets/kuwait.mp3",
+
+    bangladesh:
+        "assets/bangladesh.mp3",
+
+    alaska:
+        "assets/alaska.mp3"
 };
 
-let homeAudio = new Audio();
+
+let homeAudio =
+    new Audio();
 
 
 /* ================= AZAN CHECK ================= */
 
-function checkAzan(now, times){
+function checkAzan(
+    now,
+    times
+){
 
-    const s = homeSettings();
+    const s =
+        homeSettings();
+
 
     const prayerMap = {
-        Fajr: "fajr",
-        Dhuhr: "dhuhr",
-        Asr: "asr",
-        Maghrib: "maghrib",
-        Isha: "isha"
+
+        Fajr:
+            "fajr",
+
+        Dhuhr:
+            "dhuhr",
+
+        Asr:
+            "asr",
+
+        Maghrib:
+            "maghrib",
+
+        Isha:
+            "isha"
     };
 
+
     const minuteNow =
+
         now.getHours() * 60 +
+
         now.getMinutes();
 
-    const today = dateKey(now);
 
-    ACTUAL_PRAYERS.forEach(prayer => {
+    const today =
+        dateKey(now);
 
-        if(times[prayer] === undefined) return;
 
-        if(times[prayer] !== minuteNow) return;
+    ACTUAL_PRAYERS.forEach(
+        prayer => {
 
-        const key = today + "-" + prayer;
+            if(
+                times[prayer] === undefined
+            ){
 
-        if(lastAzanKey === key) return;
+                return;
+            }
 
-        lastAzanKey = key;
 
-        const selected =
-            s.azan[prayerMap[prayer]] || "makkah";
+            if(
+                times[prayer] !== minuteNow
+            ){
 
-        const file =
-            HOME_AZAN_FILES[selected];
+                return;
+            }
 
-        if(!file) return;
 
-        homeAudio.src = file;
-        homeAudio.currentTime = 0;
+            const key =
 
-        homeAudio.play().catch(() => {
-            /*
-               Browser autoplay policy may block
-               background audio.
-            */
-        });
+                today +
+                "-" +
+                prayer;
 
-    });
+
+            if(
+                lastAzanKey === key
+            ){
+
+                return;
+            }
+
+
+            lastAzanKey =
+                key;
+
+
+            const selected =
+
+                s.azan &&
+                s.azan[
+                    prayerMap[prayer]
+                ]
+                ? s.azan[
+                    prayerMap[prayer]
+                ]
+                : "makkah";
+
+
+            const file =
+                HOME_AZAN_FILES[
+                    selected
+                ];
+
+
+            if(!file){
+
+                return;
+            }
+
+
+            homeAudio.pause();
+
+
+            homeAudio.src =
+                file;
+
+
+            homeAudio.currentTime =
+                0;
+
+
+            homeAudio.play()
+                .catch(() => {
+
+                    /*
+                       Browser autoplay
+                       policy may block audio.
+                    */
+                });
+
+        }
+    );
 }
 
 
@@ -607,99 +1215,198 @@ function checkAzan(now, times){
 
 async function loadWeather(){
 
-    const weatherEl = document.getElementById("weather");
+    const weatherEl =
+        document.getElementById(
+            "weather"
+        );
 
-    if(!weatherEl) return;
+
+    if(
+        !weatherEl ||
+        latitude === null ||
+        longitude === null
+    ){
+
+        return;
+    }
+
 
     try{
 
         const url =
+
             `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code&timezone=auto`;
 
-        const res = await fetch(url);
-        const data = await res.json();
+
+        const res =
+            await fetch(url);
+
+
+        const data =
+            await res.json();
+
+
+        if(
+            !data.current
+        ){
+
+            return;
+        }
+
 
         const temp =
-            Math.round(data.current.temperature_2m);
+
+            Math.round(
+                data.current.temperature_2m
+            );
+
 
         const code =
             data.current.weather_code;
 
-        const s = homeSettings();
-        const t = HOME_TEXT[s.lang] || HOME_TEXT.bn;
 
-        let condition = t.clear;
-        let icon = "☀️";
+        const s =
+            homeSettings();
 
-        if(code >= 1 && code <= 3){
-            condition = t.cloudy;
-            icon = "⛅";
+
+        const t =
+            HOME_TEXT[s.lang] ||
+            HOME_TEXT.bn;
+
+
+        let condition =
+            t.clear;
+
+
+        let icon =
+            "☀️";
+
+
+        if(
+            code >= 1 &&
+            code <= 3
+        ){
+
+            condition =
+                t.cloudy;
+
+            icon =
+                "⛅";
         }
 
-        if(code >= 51){
-            condition = t.rain;
-            icon = "🌧️";
+
+        if(
+            code >= 51
+        ){
+
+            condition =
+                t.rain;
+
+            icon =
+                "🌧️";
         }
+
 
         setText(
+
             "weather",
+
             `${icon} ${localNumber(temp)}°C`
         );
 
+
         const weatherTitle =
-            document.getElementById("weather");
+            document.getElementById(
+                "weather"
+            );
+
 
         if(weatherTitle){
-            weatherTitle.title = condition;
+
+            weatherTitle.title =
+                condition;
         }
+
 
     }catch(e){
 
-        setText("weather","--");
+        setText(
+            "weather",
+            "--"
+        );
     }
 }
 
 
-/* ================= CITY / LOCATION ================= */
+/* ================= LOCATION ================= */
 
 async function loadLocation(){
 
-    if(!navigator.geolocation){
+    if(
+        !navigator.geolocation
+    ){
 
         setText(
             "city",
-            HOME_TEXT[homeSettings().lang].locationError
+            HOME_TEXT[
+                homeSettings().lang
+            ].locationError
         );
-
-        loadPrayerTimes();
-        loadWeather();
 
         return;
     }
+
 
     navigator.geolocation.getCurrentPosition(
 
         async position => {
 
-            latitude = position.coords.latitude;
-            longitude = position.coords.longitude;
+            latitude =
+                position.coords.latitude;
+
+
+            longitude =
+                position.coords.longitude;
+
 
             await reverseLocation();
 
-            loadPrayerTimes();
+
+            await loadPrayerTimes();
+
+
             loadWeather();
         },
+
 
         () => {
 
-            loadPrayerTimes();
-            loadWeather();
+            setText(
+
+                "city",
+
+                HOME_TEXT[
+                    homeSettings().lang
+                ].locationError
+            );
+
+
+            /*
+               GPS না পেলে Kolkata fixed করা হবে না।
+            */
         },
 
+
         {
-            enableHighAccuracy: true,
-            timeout: 10000,
-            maximumAge: 300000
+
+            enableHighAccuracy:
+                true,
+
+            timeout:
+                15000,
+
+            maximumAge:
+                300000
         }
     );
 }
@@ -709,68 +1416,166 @@ async function loadLocation(){
 
 async function reverseLocation(){
 
+    if(
+        latitude === null ||
+        longitude === null
+    ){
+
+        return;
+    }
+
+
     try{
 
+        const lang =
+            homeSettings().lang ||
+            "en";
+
+
         const url =
-            `https://geocoding-api.open-meteo.com/v1/reverse?latitude=${latitude}&longitude=${longitude}&count=1&language=en&format=json`;
 
-        const res = await fetch(url);
-        const data = await res.json();
+            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=${lang}`;
 
-        if(data.results && data.results.length){
 
-            const r = data.results[0];
+        const res =
+            await fetch(url);
 
-            let city =
-                r.name ||
-                r.city ||
-                r.town ||
-                r.village ||
+
+        const data =
+            await res.json();
+
+
+        let city =
+
+            data.city ||
+
+            data.locality ||
+
+            data.principalSubdivision ||
+
+            "";
+
+
+        if(!city){
+
+            city =
+                data.countryName ||
                 "";
-
-            setText("city", city);
         }
+
+
+        if(city){
+
+            setText(
+                "city",
+                city
+            );
+        }
+
 
     }catch(e){
 
-        setText("city","Kolkata");
+        setText(
+
+            "city",
+
+            HOME_TEXT[
+                homeSettings().lang
+            ].locationError
+        );
     }
 }
 
-     /* ================= PRAYER API ================= */
+
+/* ================= PRAYER API ================= */
 
 async function loadPrayerTimes(){
 
+    if(
+        latitude === null ||
+        longitude === null
+    ){
+
+        return;
+    }
+
+
     try{
 
-        const today = new Date();
+        const today =
+            new Date();
+
 
         const date =
-            String(today.getDate()).padStart(2,"0") + "-" +
-            String(today.getMonth()+1).padStart(2,"0") + "-" +
+
+            String(
+                today.getDate()
+            ).padStart(2,"0") +
+
+            "-" +
+
+            String(
+                today.getMonth() + 1
+            ).padStart(2,"0") +
+
+            "-" +
+
             today.getFullYear();
 
+
         const url =
+
             `https://api.aladhan.com/v1/timings/${date}?latitude=${latitude}&longitude=${longitude}&method=1`;
 
-        const res = await fetch(url);
-        const data = await res.json();
 
-        if(!data.data || !data.data.timings){
+        const res =
+            await fetch(url);
+
+
+        const data =
+            await res.json();
+
+
+        if(
+            !data.data ||
+            !data.data.timings
+        ){
 
             return;
         }
 
-        prayerTimes = data.data.timings;
 
-        currentDateKey = dateKey(today);
+        prayerTimes =
+            data.data.timings;
+
+
+        /* LOCATION TIMEZONE */
+
+        if(
+            data.data.meta &&
+            data.data.meta.timezone
+        ){
+
+            locationTimezone =
+                data.data.meta.timezone;
+        }
+
+
+        currentDateKey =
+            dateKey(today);
+
 
         updatePrayerGrid();
+
         updateStatus();
+
 
     }catch(e){
 
-        console.error("Prayer API error:",e);
+        console.error(
+            "Prayer API error:",
+            e
+        );
     }
 }
 
@@ -779,15 +1584,28 @@ async function loadPrayerTimes(){
 
 function updateToday(){
 
-    const now = new Date();
+    const now =
+        new Date();
 
-    const s = homeSettings();
-    const t = HOME_TEXT[s.lang] || HOME_TEXT.bn;
 
-    const day =
-        formatDate(now);
+    /*
+       Status Board-এ শুধু Day
+    */
 
-    setText("todayDay", day);
+    setText(
+        "todayDay",
+        formatDay(now)
+    );
+
+
+    /*
+       Top Bar-এ Date
+    */
+
+    setText(
+        "date",
+        formatDate(now)
+    );
 }
 
 
@@ -797,57 +1615,91 @@ function setupNavigation(){
 
     const routes = {
 
-        namaz: "html/namaz-guide.html",
-        quran: "html/quran.html",
-        dua: "html/dua.html",
-        hadith: "html/hadith.html",
-        qibla: "html/qibla.html",
-        tasbih: "html/tasbih.html"
+        namaz:
+            "html/namaz-guide.html",
+
+        quran:
+            "html/quran.html",
+
+        dua:
+            "html/dua.html",
+
+        hadith:
+            "html/hadith.html",
+
+        qibla:
+            "html/qibla.html",
+
+        tasbih:
+            "html/tasbih.html"
     };
 
-    Object.keys(routes).forEach(id => {
 
-        const el = document.getElementById(id);
+    Object.keys(routes).forEach(
+        id => {
 
-        if(el){
+            const el =
+                document.getElementById(
+                    id
+                );
 
-            el.onclick = () => {
-                window.location.href = routes[id];
-            };
+
+            if(el){
+
+                el.onclick = () => {
+
+                    window.location.href =
+                        routes[id];
+                };
+            }
         }
-    });
+    );
 
 
-    /* Bismillah → Allah Names */
+    /* ================= BISMILLAH ================= */
 
     const bismillah =
-        document.getElementById("bismillahCard");
+        document.getElementById(
+            "bismillahCard"
+        );
+
 
     if(bismillah){
 
-        bismillah.style.cursor = "pointer";
+        bismillah.style.cursor =
+            "pointer";
+
 
         bismillah.onclick = () => {
+
             window.location.href =
                 "html/allah-names.html";
         };
     }
 
 
-    /* Status → Calendar */
+    /* ================= STATUS → CALENDAR ================= */
 
     const cards =
-        document.querySelectorAll(".card");
+        document.querySelectorAll(
+            ".card"
+        );
+
 
     cards.forEach(card => {
 
         if(
-            card.querySelector(".status")
+            card.querySelector(
+                ".status"
+            )
         ){
 
-            card.style.cursor = "pointer";
+            card.style.cursor =
+                "pointer";
+
 
             card.onclick = () => {
+
                 window.location.href =
                     "html/calendar.html";
             };
@@ -861,12 +1713,55 @@ function setupNavigation(){
 function checkNewDay(){
 
     const todayKey =
-        dateKey(new Date());
+        dateKey(
+            new Date()
+        );
 
-    if(todayKey !== currentDateKey){
+
+    if(
+        todayKey !== currentDateKey
+    ){
 
         loadPrayerTimes();
+
         updateToday();
+    }
+}
+
+
+/* ================= LANGUAGE / FOCUS REFRESH ================= */
+
+/*
+   Settings থেকে ফিরে এলে Home আবার
+   নতুন Language এবং Location অনুযায়ী
+   UI refresh করবে।
+*/
+
+function refreshHomeAfterReturn(){
+
+    applyHomeLanguage();
+
+    updateToday();
+
+    updatePrayerGrid();
+
+    updateStatus();
+
+    /*
+       Location আবার পড়া হবে না যদি
+       আগের GPS location থাকে।
+       শুধু language অনুযায়ী city
+       নাম refresh হবে।
+    */
+
+    if(
+        latitude !== null &&
+        longitude !== null
+    ){
+
+        reverseLocation();
+
+        loadWeather();
     }
 }
 
@@ -883,15 +1778,56 @@ function startHome(){
 
     loadLocation();
 
+
+    /*
+       প্রতি ১ সেকেন্ডে:
+       Clock
+       Current
+       Next
+       Countdown
+       Azan
+       Date
+    */
+
     setInterval(() => {
 
         updateToday();
+
         updateStatus();
+
         checkNewDay();
 
     },1000);
+
+
+    /*
+       Settings page থেকে ফিরে এলে
+       Home language refresh হবে।
+    */
+
+    window.addEventListener(
+        "focus",
+        refreshHomeAfterReturn
+    );
+
+
+    document.addEventListener(
+        "visibilitychange",
+        () => {
+
+            if(
+                document.visibilityState ===
+                "visible"
+            ){
+
+                refreshHomeAfterReturn();
+            }
+        }
+    );
 }
 
+
+/* ================= INIT ================= */
 
 document.addEventListener(
     "DOMContentLoaded",
