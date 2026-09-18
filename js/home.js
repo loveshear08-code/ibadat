@@ -1,5 +1,6 @@
 /* =========================================================
    IBADAT HOME - FINAL VERSION
+   LANGUAGE SYNC FIXED
    ========================================================= */
 
 
@@ -43,7 +44,7 @@ const HOME_TEXT = {
 
     en: {
         today: "Today",
-        current: "Current Time",
+        current: "Current Prayer",
         next: "Next Prayer",
         remaining: "Remaining",
         noPrayer: "No prayer time now",
@@ -77,7 +78,7 @@ const HOME_TEXT = {
 
     hi: {
         today: "आज",
-        current: "वर्तमान समय",
+        current: "वर्तमान नमाज़",
         next: "अगली नमाज़",
         remaining: "शेष",
         noPrayer: "अभी कोई नमाज़ का समय नहीं",
@@ -112,12 +113,6 @@ const HOME_TEXT = {
 
 
 /* ================= PRAYER ORDER ================= */
-
-/*
-   Sunrise countdown-এর অংশ।
-   Sunrise নামাজ নয়।
-   Sunrise-এর সময় Azan বাজবে না।
-*/
 
 const ALL_TIMES = [
     "Fajr",
@@ -157,32 +152,69 @@ let lastHomeLanguage = null;
 
 /* ================= SETTINGS ================= */
 
+/*
+   Home থেকে প্রতিবার সরাসরি localStorage
+   থেকে Language পড়া হবে।
+*/
+
 function homeSettings(){
+
+    const defaultSettings = {
+
+        lang: "bn",
+
+        dark: false,
+
+        azan: {
+
+            fajr: "makkah",
+
+            dhuhr: "makkah",
+
+            asr: "makkah",
+
+            maghrib: "makkah",
+
+            isha: "makkah"
+        }
+    };
+
 
     try{
 
-        let s =
+        const saved =
             localStorage.getItem("appSettings");
 
-        if(!s){
 
-            return {
-                lang: "bn",
-                dark: false,
-                azan: {
-                    fajr: "makkah",
-                    dhuhr: "makkah",
-                    asr: "makkah",
-                    maghrib: "makkah",
-                    isha: "makkah"
-                }
-            };
+        if(!saved){
+
+            return defaultSettings;
         }
 
-        let obj = JSON.parse(s);
+
+        const obj =
+            JSON.parse(saved);
 
 
-        /* OLD AZAN SETTINGS MIGRATION */
+        if(!obj || typeof obj !== "object"){
+
+            return defaultSettings;
+        }
+
+
+        /* ================= LANGUAGE ================= */
+
+        if(
+            obj.lang !== "bn" &&
+            obj.lang !== "en" &&
+            obj.lang !== "hi"
+        ){
+
+            obj.lang = "bn";
+        }
+
+
+        /* ================= AZAN ================= */
 
         if(
             !obj.azan ||
@@ -209,28 +241,53 @@ function homeSettings(){
 
         return obj;
 
+
     }catch(e){
 
-        return {
-
-            lang: "bn",
-
-            dark: false,
-
-            azan: {
-
-                fajr: "makkah",
-
-                dhuhr: "makkah",
-
-                asr: "makkah",
-
-                maghrib: "makkah",
-
-                isha: "makkah"
-            }
-        };
+        return defaultSettings;
     }
+}
+
+
+/* ================= GET CURRENT LANGUAGE ================= */
+
+function getHomeLanguage(){
+
+    try{
+
+        const saved =
+            localStorage.getItem("appSettings");
+
+
+        if(saved){
+
+            const obj =
+                JSON.parse(saved);
+
+
+            if(
+                obj &&
+                (
+                    obj.lang === "bn" ||
+                    obj.lang === "en" ||
+                    obj.lang === "hi"
+                )
+            ){
+
+                return obj.lang;
+            }
+        }
+
+    }catch(e){
+
+        console.error(
+            "Language read error:",
+            e
+        );
+    }
+
+
+    return "bn";
 }
 
 
@@ -238,10 +295,8 @@ function homeSettings(){
 
 function localNumber(value){
 
-    const s = homeSettings();
-
     const lang =
-        s.lang || "bn";
+        getHomeLanguage();
 
 
     if(lang === "bn"){
@@ -270,17 +325,17 @@ function localNumber(value){
 
 function formatClock(date){
 
-    let h =
+    const h =
         date.getHours();
 
-    let m =
+    const m =
         date.getMinutes();
 
-    let sec =
+    const sec =
         date.getSeconds();
 
 
-    let result =
+    const result =
 
         String(h).padStart(2,"0") +
         ":" +
@@ -303,11 +358,11 @@ function formatTime(time){
     }
 
 
-    let clean =
+    const clean =
         String(time).split(" ")[0];
 
 
-    let parts =
+    const parts =
         clean.split(":");
 
 
@@ -317,14 +372,14 @@ function formatTime(time){
     }
 
 
-    let h =
+    const h =
         parseInt(parts[0],10);
 
-    let m =
+    const m =
         parts[1];
 
 
-    let result =
+    const result =
 
         String(h).padStart(2,"0") +
         ":" +
@@ -345,11 +400,11 @@ function timeToMinutes(time){
     }
 
 
-    let clean =
+    const clean =
         String(time).split(" ")[0];
 
 
-    let p =
+    const p =
         clean.split(":");
 
 
@@ -391,11 +446,8 @@ function dateKey(date){
 
 function formatDate(date){
 
-    const s =
-        homeSettings();
-
     const lang =
-        s.lang || "bn";
+        getHomeLanguage();
 
 
     const options = {
@@ -435,11 +487,8 @@ function formatDate(date){
 
 function formatDay(date){
 
-    const s =
-        homeSettings();
-
     const lang =
-        s.lang || "bn";
+        getHomeLanguage();
 
 
     let locale =
@@ -471,28 +520,34 @@ function formatDay(date){
 
 function applyHomeLanguage(){
 
-    const s =
-        homeSettings();
+    /*
+       IMPORTANT:
+       প্রতিবার localStorage থেকে নতুন Language নেওয়া হচ্ছে।
+    */
+
+    const lang =
+        getHomeLanguage();
+
 
     const t =
-        HOME_TEXT[s.lang] ||
+        HOME_TEXT[lang] ||
         HOME_TEXT.bn;
 
 
     /* HTML LANGUAGE */
 
     document.documentElement.lang =
-        s.lang;
+        lang;
 
 
     /* TITLE */
 
     document.title =
 
-        s.lang === "bn"
+        lang === "bn"
         ? "ইবাদত"
 
-        : s.lang === "hi"
+        : lang === "hi"
         ? "इबादत"
 
         : "IBADAT";
@@ -545,11 +600,11 @@ function applyHomeLanguage(){
 
         "bismillahMeaning",
 
-        s.lang === "bn"
+        lang === "bn"
 
         ? "পরম করুণাময় ও অসীম দয়ালু আল্লাহর নামে"
 
-        : s.lang === "hi"
+        : lang === "hi"
 
         ? "अत्यंत कृपाशील और दयालु अल्लाह के नाम से"
 
@@ -560,6 +615,40 @@ function applyHomeLanguage(){
     /* PRAYER GRID */
 
     updatePrayerGrid();
+
+
+    /* DAY + DATE */
+
+    updateToday();
+
+
+    /*
+       Prayer status থাকলে
+       Current / Next language-ও সঙ্গে সঙ্গে বদলাবে।
+    */
+
+    if(
+        Object.keys(prayerTimes).length > 0
+    ){
+
+        updateStatus();
+    }
+
+
+    /*
+       Language পরিবর্তন হলে city-ও
+       নতুন ভাষায় reverse geocode হবে।
+    */
+
+    if(
+        latitude !== null &&
+        longitude !== null
+    ){
+
+        reverseLocation();
+
+        loadWeather();
+    }
 }
 
 
@@ -594,12 +683,12 @@ function updatePrayerGrid(){
     }
 
 
-    const s =
-        homeSettings();
+    const lang =
+        getHomeLanguage();
 
 
     const t =
-        HOME_TEXT[s.lang] ||
+        HOME_TEXT[lang] ||
         HOME_TEXT.bn;
 
 
@@ -663,12 +752,12 @@ function updatePrayerGrid(){
 
 function updateStatus(){
 
-    const s =
-        homeSettings();
+    const lang =
+        getHomeLanguage();
 
 
     const t =
-        HOME_TEXT[s.lang] ||
+        HOME_TEXT[lang] ||
         HOME_TEXT.bn;
 
 
@@ -684,7 +773,7 @@ function updateStatus(){
     );
 
 
-    /* DAY ONLY IN STATUS */
+    /* DAY */
 
     setText(
         "todayDay",
@@ -692,7 +781,7 @@ function updateStatus(){
     );
 
 
-    /* TOP BAR DATE */
+    /* DATE */
 
     setText(
         "date",
@@ -707,7 +796,7 @@ function updateStatus(){
 
     ALL_TIMES.forEach(name => {
 
-        let min =
+        const min =
             timeToMinutes(
                 prayerTimes[name]
             );
@@ -780,9 +869,7 @@ function updateStatus(){
     let currentName = null;
 
 
-    /*
-       Fajr → Sunrise
-    */
+    /* Fajr → Sunrise */
 
     if(
 
@@ -801,12 +888,7 @@ function updateStatus(){
     }
 
 
-    /*
-       Sunrise → Dhuhr
-
-       এখানে Sunrise-কে Current Time হিসেবে
-       দেখানো হবে, যদিও Sunrise নামাজ নয়।
-    */
+    /* Sunrise → Dhuhr */
 
     else if(
 
@@ -825,9 +907,7 @@ function updateStatus(){
     }
 
 
-    /*
-       Dhuhr → Asr
-    */
+    /* Dhuhr → Asr */
 
     else if(
 
@@ -846,9 +926,7 @@ function updateStatus(){
     }
 
 
-    /*
-       Asr → Maghrib
-    */
+    /* Asr → Maghrib */
 
     else if(
 
@@ -867,9 +945,7 @@ function updateStatus(){
     }
 
 
-    /*
-       Maghrib → Isha
-    */
+    /* Maghrib → Isha */
 
     else if(
 
@@ -888,9 +964,7 @@ function updateStatus(){
     }
 
 
-    /*
-       Isha → next Fajr
-    */
+    /* Isha → Fajr */
 
     else if(
 
@@ -905,9 +979,7 @@ function updateStatus(){
     }
 
 
-    /*
-       Fajr-এর আগে কোনো Current Prayer নয়।
-    */
+    /* Fajr-এর আগে */
 
     else{
 
@@ -940,14 +1012,7 @@ function updateStatus(){
     }
 
 
-    /* ================= NEXT PRAYER DISPLAY ================= */
-
-    /*
-       Sunrise নামাজ নয়।
-       তাই Next Prayer হিসেবে Sunrise দেখানো হবে না।
-
-       Countdown কিন্তু Sunrise পর্যন্ত হবে।
-    */
+    /* ================= NEXT ACTUAL PRAYER ================= */
 
     let nextPrayerName =
         null;
@@ -988,7 +1053,7 @@ function updateStatus(){
     );
 
 
-    /* ================= COUNTDOWN ================= */
+   /* ================= COUNTDOWN ================= */
 
     let nowSeconds =
 
@@ -1170,9 +1235,11 @@ function checkAzan(
                 s.azan[
                     prayerMap[prayer]
                 ]
+
                 ? s.azan[
                     prayerMap[prayer]
                 ]
+
                 : "makkah";
 
 
@@ -1267,12 +1334,12 @@ async function loadWeather(){
             data.current.weather_code;
 
 
-        const s =
-            homeSettings();
+        const lang =
+            getHomeLanguage();
 
 
         const t =
-            HOME_TEXT[s.lang] ||
+            HOME_TEXT[lang] ||
             HOME_TEXT.bn;
 
 
@@ -1349,9 +1416,11 @@ async function loadLocation(){
     ){
 
         setText(
+
             "city",
+
             HOME_TEXT[
-                homeSettings().lang
+                getHomeLanguage()
             ].locationError
         );
 
@@ -1388,14 +1457,10 @@ async function loadLocation(){
                 "city",
 
                 HOME_TEXT[
-                    homeSettings().lang
+                    getHomeLanguage()
                 ].locationError
             );
 
-
-            /*
-               GPS না পেলে Kolkata fixed করা হবে না।
-            */
         },
 
 
@@ -1430,8 +1495,7 @@ async function reverseLocation(){
     try{
 
         const lang =
-            homeSettings().lang ||
-            "en";
+            getHomeLanguage();
 
 
         const url =
@@ -1482,7 +1546,7 @@ async function reverseLocation(){
             "city",
 
             HOME_TEXT[
-                homeSettings().lang
+                getHomeLanguage()
             ].locationError
         );
     }
@@ -1590,19 +1654,11 @@ function updateToday(){
         new Date();
 
 
-    /*
-       Status Board-এ শুধু Day
-    */
-
     setText(
         "todayDay",
         formatDay(now)
     );
 
-
-    /*
-       Top Bar-এ Date
-    */
 
     setText(
         "date",
@@ -1709,85 +1765,7 @@ function setupNavigation(){
     });
 }
 
-/* ================= LANGUAGE SYNC ================= */
 
-function syncHomeLanguage(){
-
-    const s = homeSettings();
-
-    const currentLanguage =
-        s.lang || "bn";
-
-
-    /*
-       প্রথমবার language store করা
-    */
-
-    if(lastHomeLanguage === null){
-
-        lastHomeLanguage =
-            currentLanguage;
-
-        return;
-    }
-
-
-    /*
-       Settings থেকে language বদলেছে কি না
-    */
-
-    if(
-        currentLanguage !==
-        lastHomeLanguage
-    ){
-
-        lastHomeLanguage =
-            currentLanguage;
-
-
-        /*
-           Home-এর সব language text আবার apply
-        */
-
-        applyHomeLanguage();
-
-        updateToday();
-
-        updatePrayerGrid();
-
-
-        /*
-           Current / Next prayer
-        */
-
-        if(
-            Object.keys(prayerTimes).length > 0
-        ){
-
-            updateStatus();
-        }
-
-
-        /*
-           City-এর নাম নতুন language-এ
-        */
-
-        if(
-            latitude !== null &&
-            longitude !== null
-        ){
-
-            reverseLocation();
-        }
-
-
-        /*
-           Weather-এর title/text refresh
-        */
-
-        loadWeather();
-    }
-}
 /* ================= MIDNIGHT REFRESH ================= */
 
 function checkNewDay(){
@@ -1809,39 +1787,49 @@ function checkNewDay(){
 }
 
 
-/* ================= LANGUAGE / FOCUS REFRESH ================= */
+/* ================= LANGUAGE SYNC ================= */
 
-/*
-   Settings থেকে ফিরে এলে Home আবার
-   নতুন Language এবং Location অনুযায়ী
-   UI refresh করবে।
-*/
+function syncHomeLanguage(){
 
-function refreshHomeAfterReturn(){
+    const currentLanguage =
+        getHomeLanguage();
 
-    applyHomeLanguage();
-
-    updateToday();
-
-    updatePrayerGrid();
-
-    updateStatus();
 
     /*
-       Location আবার পড়া হবে না যদি
-       আগের GPS location থাকে।
-       শুধু language অনুযায়ী city
-       নাম refresh হবে।
+       প্রথমবার current language save করা
     */
 
     if(
-        latitude !== null &&
-        longitude !== null
+        lastHomeLanguage === null
     ){
 
-        reverseLocation();
+        lastHomeLanguage =
+            currentLanguage;
 
-        loadWeather();
+        return;
+    }
+
+
+    /*
+       Settings page থেকে language
+       পরিবর্তন হয়েছে কি না।
+    */
+
+    if(
+        currentLanguage !==
+        lastHomeLanguage
+    ){
+
+        lastHomeLanguage =
+            currentLanguage;
+
+
+        /*
+           সম্পূর্ণ Home UI নতুন
+           language অনুযায়ী refresh
+        */
+
+        applyHomeLanguage();
     }
 }
 
@@ -1850,10 +1838,17 @@ function refreshHomeAfterReturn(){
 
 function startHome(){
 
-    applyHomeLanguage();
+    /*
+       Home শুরু হওয়ার সময়
+       সরাসরি localStorage থেকে
+       language নেওয়া হবে।
+    */
 
-   lastHomeLanguage =
-        homeSettings().lang || "bn";
+    lastHomeLanguage =
+        getHomeLanguage();
+
+
+    applyHomeLanguage();
 
     updateToday();
 
@@ -1864,17 +1859,19 @@ function startHome(){
 
     /*
        প্রতি ১ সেকেন্ডে:
-       Clock
-       Current
-       Next
-       Countdown
-       Azan
-       Date
+
+       - Language
+       - Clock
+       - Current
+       - Next
+       - Countdown
+       - Azan
+       - Date
     */
 
     setInterval(() => {
 
-       syncHomeLanguage();
+        syncHomeLanguage();
 
         updateToday();
 
@@ -1883,32 +1880,6 @@ function startHome(){
         checkNewDay();
 
     },1000);
-
-
-    /*
-       Settings page থেকে ফিরে এলে
-       Home language refresh হবে।
-    */
-
-    window.addEventListener(
-        "focus",
-        refreshHomeAfterReturn
-    );
-
-
-    document.addEventListener(
-        "visibilitychange",
-        () => {
-
-            if(
-                document.visibilityState ===
-                "visible"
-            ){
-
-                refreshHomeAfterReturn();
-            }
-        }
-    );
 }
 
 
