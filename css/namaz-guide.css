@@ -1,1 +1,217 @@
+*{
+    box-sizing:border-box;
+}
 
+body{
+    margin:0;
+    font-family:sans-serif;
+    background:#eef7f0;
+    color:#222;
+    min-height:100dvh;
+}
+
+
+/* ================= TOP BAR ================= */
+
+.top-bar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:50px;
+
+    background:#2e7d32;
+    color:#fff;
+
+    display:flex;
+    align-items:center;
+
+    padding:0 12px;
+
+    z-index:100;
+}
+
+#backBtn{
+    border:none;
+    background:transparent;
+    color:#fff;
+
+    font-size:26px;
+
+    width:42px;
+    height:42px;
+
+    padding:0;
+
+    cursor:pointer;
+}
+
+#pageTitle{
+    flex:1;
+
+    text-align:center;
+
+    font-size:19px;
+    font-weight:bold;
+
+    margin-right:42px;
+}
+
+
+/* ================= MAIN ================= */
+
+.main{
+    padding:60px 10px 15px;
+
+    max-width:600px;
+
+    margin:auto;
+}
+
+
+/* ================= INTRO ================= */
+
+.intro{
+    background:#dcedc8;
+
+    border-radius:16px;
+
+    padding:15px 12px;
+
+    margin-bottom:10px;
+
+    text-align:center;
+}
+
+#introTitle{
+    font-size:18px;
+    font-weight:bold;
+
+    color:#1b5e20;
+
+    margin-bottom:5px;
+}
+
+#introText{
+    font-size:13px;
+}
+
+
+/* ================= GUIDE CARD ================= */
+
+.guide-card{
+    display:flex;
+    align-items:center;
+
+    width:100%;
+
+    background:#ffffff;
+
+    border-radius:14px;
+
+    margin-bottom:9px;
+
+    padding:12px;
+
+    box-shadow:0 2px 7px rgba(0,0,0,0.08);
+
+    cursor:pointer;
+
+    transition:transform 0.1s;
+}
+
+.guide-card:active{
+    transform:scale(0.98);
+}
+
+
+/* ================= ICON ================= */
+
+.icon{
+    width:45px;
+    min-width:45px;
+    height:45px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#e8f5e9;
+
+    border-radius:12px;
+
+    font-size:23px;
+
+    margin-right:11px;
+}
+
+
+/* ================= TEXT ================= */
+
+.card-text{
+    flex:1;
+
+    min-width:0;
+}
+
+.card-title{
+    font-size:16px;
+    font-weight:bold;
+
+    color:#1b5e20;
+
+    margin-bottom:3px;
+}
+
+.card-desc{
+    font-size:12px;
+
+    line-height:1.4;
+
+    color:#555;
+}
+
+
+/* ================= ARROW ================= */
+
+.arrow{
+    font-size:27px;
+
+    color:#2e7d32;
+
+    margin-left:8px;
+}
+
+
+/* ================= SMALL SCREEN ================= */
+
+@media(max-width:360px){
+
+    .main{
+        padding-left:8px;
+        padding-right:8px;
+    }
+
+    .guide-card{
+        padding:10px;
+    }
+
+    .icon{
+        width:40px;
+        min-width:40px;
+        height:40px;
+
+        font-size:20px;
+
+        margin-right:9px;
+    }
+
+    .card-title{
+        font-size:14px;
+    }
+
+    .card-desc{
+        font-size:11px;
+    }
+
+}
