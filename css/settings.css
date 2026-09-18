@@ -8,9 +8,11 @@ body{
 margin:0;
 font-family:sans-serif;
 background:#eef5ef;
+color:#222;
 height:100dvh;
-overflow:hidden; /* 🔥 NO SCROLL */
+overflow:hidden;
 }
+
 
 /* ================= MAIN ================= */
 
@@ -24,6 +26,7 @@ max-width:500px;
 margin:auto;
 }
 
+
 /* ================= TITLE ================= */
 
 h2{
@@ -32,14 +35,18 @@ color:#2e7d32;
 margin:5px 0 10px;
 }
 
-/* ================= CONTENT WRAP ================= */
+
+/* ================= CONTENT ================= */
 
 .content{
 flex:1;
 display:flex;
 flex-direction:column;
 gap:10px;
+overflow:auto;
+padding-bottom:8px;
 }
+
 
 /* ================= CARD ================= */
 
@@ -50,52 +57,66 @@ border-radius:12px;
 box-shadow:0 3px 8px rgba(0,0,0,0.05);
 }
 
-/* ================= OPTION ================= */
-
-.option{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:10px;
-background:#e8f5e9;
-border-radius:10px;
-margin-top:6px;
-cursor:pointer;
+.card h3{
+margin:0 0 8px;
 }
 
-.option.active{
-background:#a5d6a7;
-font-weight:bold;
+.card p{
+margin:0 0 8px;
+font-size:13px;
 }
 
-/* ================= RIGHT ================= */
 
-.right{
-display:flex;
-align-items:center;
+/* ================= AZAN ROW ================= */
+
+.azan-row{
+display:grid;
+grid-template-columns:80px 1fr 42px;
 gap:8px;
+align-items:center;
+
+padding:8px;
+
+background:#e8f5e9;
+
+border-radius:10px;
+
+margin-top:6px;
 }
 
-/* ================= BUTTON ================= */
-
-button{
-border:none;
-background:#2e7d32;
-color:white;
-border-radius:6px;
-padding:5px 8px;
-cursor:pointer;
-}
 
 /* ================= SELECT ================= */
 
 select{
 width:100%;
 padding:8px;
+
 border-radius:8px;
-border:none;
+
+border:1px solid #c8e6c9;
+
 background:#e8f5e9;
+
+font-size:14px;
 }
+
+
+/* ================= BUTTON ================= */
+
+button{
+border:none;
+
+background:#2e7d32;
+
+color:white;
+
+border-radius:6px;
+
+padding:7px 8px;
+
+cursor:pointer;
+}
+
 
 /* ================= LABEL ================= */
 
@@ -105,7 +126,8 @@ align-items:center;
 gap:8px;
 }
 
-/* ================= SAVE BUTTON ================= */
+
+/* ================= SAVE ================= */
 
 .btn-box{
 padding-top:8px;
@@ -113,14 +135,58 @@ padding-top:8px;
 
 #saveBtn{
 width:100%;
+
 padding:12px;
+
 font-size:16px;
+
 border-radius:12px;
 }
 
-/* ================= TICK ================= */
 
-.tick{
-color:#1b5e20;
-font-weight:bold;
+/* ================= DARK MODE ================= */
+
+body.dark-mode{
+background:#121212;
+color:#ffffff;
+}
+
+body.dark-mode h2{
+color:#81c784;
+}
+
+body.dark-mode .card{
+background:#1e1e1e;
+color:#ffffff;
+}
+
+body.dark-mode .azan-row{
+background:#2a2a2a;
+}
+
+body.dark-mode select{
+background:#2a2a2a;
+color:#ffffff;
+border-color:#444;
+}
+
+body.dark-mode .card p{
+color:#dddddd;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:360px){
+
+.azan-row{
+grid-template-columns:65px 1fr 40px;
+gap:5px;
+font-size:13px;
+}
+
+select{
+font-size:12px;
+}
+
 }
