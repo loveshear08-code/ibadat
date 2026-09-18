@@ -1,220 +1,442 @@
-/* ================= GLOBAL SETTINGS ================= */
+/* =========================================================
+   IBADAT SETTINGS - FINAL VERSION
+   ========================================================= */
+
+
+/* ================= DEFAULT SETTINGS ================= */
 
 const defaultSettings = {
+
     lang: "bn",
+
     dark: false,
-    azan: "makkah"
+
+    azan: {
+        fajr: "makkah",
+        dhuhr: "makkah",
+        asr: "makkah",
+        maghrib: "makkah",
+        isha: "makkah"
+    }
 };
+
 
 /* ================= LANGUAGE TEXT ================= */
 
 const TEXT = {
+
     bn: {
-        title: "ইবাদত",
-        settings: "⚙️ সেটিং",
+
+        title: "⚙️ সেটিংস",
+
         azan: "আজান সেটিং",
-        azanDesc: "আজানের সাউন্ড নির্বাচন করুন",
+
         language: "ভাষা",
+
         theme: "থিম",
+
+        normal: "নরমাল মোড",
+
         dark: "ডার্ক মোড",
+
         save: "সেভ",
-        test: "টেস্ট",
-        saved: "✔ সেভ হয়েছে"
+
+        saved: "✔ সেভ হয়েছে",
+
+        azanFor: "কোন ওয়াক্তে কোন আজান বাজবে",
+
+        prayers: {
+            fajr: "ফজর",
+            dhuhr: "জোহর",
+            asr: "আসর",
+            maghrib: "মাগরিব",
+            isha: "এশা"
+        },
+
+        azans: {
+            makkah: "মক্কা",
+            madinah: "মদিনা",
+            kuwait: "কুয়েত",
+            bangladesh: "বাংলাদেশ",
+            alaska: "আলাস্কা"
+        }
     },
+
     en: {
-        title: "IBADAT",
-        settings: "⚙️ Settings",
-        azan: "Azan Setting",
-        azanDesc: "Select azan sound",
+
+        title: "⚙️ Settings",
+
+        azan: "Azan Settings",
+
         language: "Language",
+
         theme: "Theme",
+
+        normal: "Normal Mode",
+
         dark: "Dark Mode",
+
         save: "Save",
-        test: "Test",
-        saved: "✔ Saved"
+
+        saved: "✔ Saved",
+
+        azanFor: "Choose which Azan plays for each prayer",
+
+        prayers: {
+            fajr: "Fajr",
+            dhuhr: "Dhuhr",
+            asr: "Asr",
+            maghrib: "Maghrib",
+            isha: "Isha"
+        },
+
+        azans: {
+            makkah: "Makkah",
+            madinah: "Madinah",
+            kuwait: "Kuwait",
+            bangladesh: "Bangladesh",
+            alaska: "Alaska"
+        }
     },
+
     hi: {
-        title: "इबादत",
-        settings: "⚙️ सेटिंग",
+
+        title: "⚙️ सेटिंग्स",
+
         azan: "अज़ान सेटिंग",
-        azanDesc: "अज़ान ध्वनि चुनें",
+
         language: "भाषा",
+
         theme: "थीम",
+
+        normal: "नॉर्मल मोड",
+
         dark: "डार्क मोड",
+
         save: "सेव",
-        test: "टेस्ट",
-        saved: "✔ सेव हो गया"
+
+        saved: "✔ सेव हो गया",
+
+        azanFor: "हर नमाज़ के लिए अज़ान चुनें",
+
+        prayers: {
+            fajr: "फ़ज्र",
+            dhuhr: "ज़ुहर",
+            asr: "असर",
+            maghrib: "मग़रिब",
+            isha: "इशा"
+        },
+
+        azans: {
+            makkah: "मक्का",
+            madinah: "मदीना",
+            kuwait: "कुवैत",
+            bangladesh: "बांग्लादेश",
+            alaska: "अलास्का"
+        }
     }
 };
 
-/* ================= AZAN NAME MULTI LANGUAGE ================= */
-
-const AZAN_TEXT = {
-    bn:["মক্কা","মদিনা","কুয়েত","বাংলাদেশ","আলাস্কা"],
-    en:["Makkah","Madinah","Kuwait","Bangladesh","Alaska"],
-    hi:["मक्का","मदीना","कुवैत","बांग्लादेश","अलास्का"]
-};
 
 /* ================= GET ================= */
 
 function getSettings(){
-    let s = localStorage.getItem("appSettings");
-    return s ? JSON.parse(s) : defaultSettings;
+
+    try{
+
+        let raw =
+            localStorage.getItem("appSettings");
+
+        if(!raw){
+
+            return structuredClone(defaultSettings);
+        }
+
+        let s = JSON.parse(raw);
+
+        /* Old version migration */
+
+        if(
+            typeof s.azan === "string"
+        ){
+
+            const oldAzan = s.azan;
+
+            s.azan = {
+
+                fajr: oldAzan,
+                dhuhr: oldAzan,
+                asr: oldAzan,
+                maghrib: oldAzan,
+                isha: oldAzan
+            };
+        }
+
+        if(!s.azan){
+
+            s.azan =
+                structuredClone(
+                    defaultSettings.azan
+                );
+        }
+
+        return s;
+
+    }catch(e){
+
+        return structuredClone(
+            defaultSettings
+        );
+    }
 }
+
 
 /* ================= SAVE ================= */
 
-function saveSettingsToStorage(newSettings){
-    localStorage.setItem("appSettings", JSON.stringify(newSettings));
+function saveSettingsToStorage(settings){
+
+    localStorage.setItem(
+        "appSettings",
+        JSON.stringify(settings)
+    );
 }
+
 
 /* ================= APPLY ================= */
 
 function applySettings(){
 
-    let s = getSettings();
-    let t = TEXT[s.lang] || TEXT["bn"];
+    const s = getSettings();
 
-    /* DARK MODE */
-    if(s.dark){
-        document.body.style.background = "#121212";
-        document.body.style.color = "#ffffff";
+    const t =
+        TEXT[s.lang] || TEXT.bn;
 
-        document.querySelectorAll(".card").forEach(el=>{
-            el.style.background = "#1e1e1e";
-            el.style.color = "#ffffff";
-        });
 
-    }else{
-        document.body.style.background = "";
-        document.body.style.color = "";
+    /* ================= TITLE ================= */
 
-        document.querySelectorAll(".card").forEach(el=>{
-            el.style.background = "";
-            el.style.color = "";
-        });
+    setText(
+        "settingsTitle",
+        t.title
+    );
+
+
+    setText(
+        "azanTitle",
+        t.azan
+    );
+
+    setText(
+        "langTitle",
+        t.language
+    );
+
+    setText(
+        "themeTitle",
+        t.theme
+    );
+
+    setText(
+        "darkLabel",
+        t.dark
+    );
+
+    setText(
+        "normalLabel",
+        t.normal
+    );
+
+    setText(
+        "azanDesc",
+        t.azanFor
+    );
+
+    setText(
+        "saveBtn",
+        t.save
+    );
+
+
+    /* ================= LANGUAGE ================= */
+
+    const lang =
+        document.getElementById("langSelect");
+
+    if(lang){
+        lang.value = s.lang;
     }
 
-    /* TITLE */
-    document.title = t.title;
 
-    /* TEXT APPLY */
-    const map = {
-        settingsTitle: t.settings,
-        azanTitle: t.azan,
-        langTitle: t.language,
-        themeTitle: t.theme,
-        darkLabel: t.dark,
-        saveBtn: t.save
-    };
+    /* ================= THEME ================= */
 
-    Object.keys(map).forEach(id=>{
-        let el = document.getElementById(id);
-        if(el) el.innerText = map[id];
-    });
+    const dark =
+        document.getElementById("darkMode");
 
-    /* SELECT VALUE */
-    let langSelect = document.getElementById("langSelect");
-    if(langSelect) langSelect.value = s.lang;
+    if(dark){
+        dark.checked = !!s.dark;
+    }
 
-    let darkMode = document.getElementById("darkMode");
-    if(darkMode) darkMode.checked = s.dark;
 
-    /* AZAN ACTIVE */
-    document.querySelectorAll(".option").forEach(el=>{
-        let tick = el.querySelector(".tick");
+    applyTheme();
 
-        el.classList.remove("active");
-        if(tick) tick.innerText = "";
 
-        if(el.dataset.azan === s.azan){
-            el.classList.add("active");
-            if(tick) tick.innerText = "✔";
-        }
-    });
+    /* ================= PRAYER LABELS ================= */
 
-    /* 🔥 AZAN NAME APPLY (MAIN FIX) */
-    applyAzanText();
-}
-
-/* ================= AZAN TEXT APPLY ================= */
-
-function applyAzanText(){
-
-    let s = getSettings();
-    let lang = s.lang;
-
-    let list = AZAN_TEXT[lang] || AZAN_TEXT["bn"];
-
-    let ids = [
-        "azan_makkah",
-        "azan_madinah",
-        "azan_kuwait",
-        "azan_bangladesh",
-        "azan_alaska"
+    const prayerIds = [
+        "fajr",
+        "dhuhr",
+        "asr",
+        "maghrib",
+        "isha"
     ];
 
-    ids.forEach((id,i)=>{
-        let el = document.getElementById(id);
+    prayerIds.forEach(id => {
+
+        const el =
+            document.getElementById(
+                "prayer_" + id
+            );
+
         if(el){
-            el.innerText = list[i];
+            el.innerText =
+                t.prayers[id];
         }
     });
 
+
+    /* ================= AZAN OPTIONS ================= */
+
+    const azanOptions = [
+        "makkah",
+        "madinah",
+        "kuwait",
+        "bangladesh",
+        "alaska"
+    ];
+
+    prayerIds.forEach(prayer => {
+
+        const select =
+            document.getElementById(
+                "azan_" + prayer
+            );
+
+        if(!select) return;
+
+        select.innerHTML = "";
+
+        azanOptions.forEach(azan => {
+
+            const option =
+                document.createElement("option");
+
+            option.value = azan;
+
+            option.innerText =
+                t.azans[azan];
+
+            select.appendChild(option);
+        });
+
+        select.value =
+            s.azan[prayer] || "makkah";
+    });
 }
 
-/* ================= SET AZAN ================= */
 
-function setAzan(type){
+/* ================= THEME ================= */
 
-    let s = getSettings();
-    s.azan = type;
+function applyTheme(){
 
-    saveSettingsToStorage(s);
+    const s = getSettings();
 
-    document.querySelectorAll(".option").forEach(el=>{
-        el.classList.remove("active");
-        let tick = el.querySelector(".tick");
-        if(tick) tick.innerText = "";
-    });
+    if(s.dark){
 
-    let selected = document.querySelector(`[data-azan="${type}"]`);
-    if(selected){
-        selected.classList.add("active");
-        let tick = selected.querySelector(".tick");
-        if(tick) tick.innerText = "✔";
+        document.body.classList.add(
+            "dark-mode"
+        );
+
+    }else{
+
+        document.body.classList.remove(
+            "dark-mode"
+        );
     }
 }
+
 
 /* ================= SAVE BUTTON ================= */
 
 function saveSettings(){
 
-    let s = getSettings();
+    const s = getSettings();
 
-    let langEl = document.getElementById("langSelect");
-    let darkEl = document.getElementById("darkMode");
+    const lang =
+        document.getElementById("langSelect");
 
-    if(langEl) s.lang = langEl.value;
-    if(darkEl) s.dark = darkEl.checked;
+    const dark =
+        document.getElementById("darkMode");
+
+
+    if(lang){
+        s.lang = lang.value;
+    }
+
+    if(dark){
+        s.dark = dark.checked;
+    }
+
+
+    const prayers = [
+        "fajr",
+        "dhuhr",
+        "asr",
+        "maghrib",
+        "isha"
+    ];
+
+    prayers.forEach(prayer => {
+
+        const select =
+            document.getElementById(
+                "azan_" + prayer
+            );
+
+        if(select){
+            s.azan[prayer] =
+                select.value;
+        }
+    });
+
 
     saveSettingsToStorage(s);
 
-    let t = TEXT[s.lang] || TEXT["bn"];
+
+    const t =
+        TEXT[s.lang] || TEXT.bn;
+
     alert(t.saved);
 
     location.reload();
 }
 
-/* ================= INIT ================= */
 
-document.addEventListener("DOMContentLoaded", function(){
-    applySettings();
-});
+/* ================= TEXT HELPER ================= */
+
+function setText(id,text){
+
+    const el =
+        document.getElementById(id);
+
+    if(el){
+        el.innerText = text;
+    }
+}
+
 
 /* ================= AZAN AUDIO ================= */
 
 const AZAN_FILES = {
+
     makkah: "../assets/makkah.mp3",
     madinah: "../assets/madinah.mp3",
     kuwait: "../assets/kuwait.mp3",
@@ -222,12 +444,28 @@ const AZAN_FILES = {
     alaska: "../assets/alaska.mp3"
 };
 
+
 let audio = new Audio();
 
-function playAzan(e,type){
-    e.stopPropagation();
 
-    audio.src = AZAN_FILES[type];
+function playAzan(type){
+
+    if(!AZAN_FILES[type]) return;
+
+    audio.pause();
+
+    audio.src =
+        AZAN_FILES[type];
+
     audio.currentTime = 0;
-    audio.play().catch(()=>{});
+
+    audio.play().catch(() => {});
 }
+
+
+/* ================= INIT ================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    applySettings
+);
