@@ -1,76 +1,161 @@
 <!DOCTYPE html>
 <html lang="bn">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IBADAT - Namaz</title>
+
+    <title>IBADAT - নামাজ</title>
+
     <link rel="stylesheet" href="../css/namaz-guide.css">
 </head>
 
 <body>
 
 <header class="top-bar">
+
     <button id="backButton">←</button>
+
     <span id="pageTitle"></span>
+
     <span class="top-space"></span>
+
 </header>
+
 
 <main class="main">
 
-    <!-- Main Namaz Menu -->
+
+    <!-- =========================================
+         MAIN MENU
+         ========================================= -->
+
     <section id="mainMenu">
 
-        <div class="intro-card">
-            <div id="introTitle"></div>
-            <div id="introText"></div>
+
+        <!-- NAMAZ WHAT & WHY -->
+        <div class="namaz-info-card" id="namazInfoCard">
+
+            <div class="info-icon">🕌</div>
+
+            <div class="info-title" id="infoTitle"></div>
+
+            <div class="info-text" id="infoText1"></div>
+
+            <div class="info-text" id="infoText2"></div>
+
+            <div class="info-more" id="infoMore"></div>
+
         </div>
+
+
+        <!-- FOUR MAIN OPTIONS -->
 
         <div class="guide-grid">
 
+
             <div class="guide-card" data-section="purity">
+
                 <div class="guide-icon">🧼</div>
+
                 <div class="guide-title" id="titlePurity"></div>
+
                 <div class="guide-desc" id="descPurity"></div>
+
             </div>
+
 
             <div class="guide-card" data-section="learn">
+
                 <div class="guide-icon">📖</div>
+
                 <div class="guide-title" id="titleLearn"></div>
+
                 <div class="guide-desc" id="descLearn"></div>
+
             </div>
+
 
             <div class="guide-card" data-section="recitations">
+
                 <div class="guide-icon">🤲</div>
+
                 <div class="guide-title" id="titleRecitations"></div>
+
                 <div class="guide-desc" id="descRecitations"></div>
+
             </div>
 
+
             <div class="guide-card" data-section="jamaat">
+
                 <div class="guide-icon">👥</div>
+
                 <div class="guide-title" id="titleJamaat"></div>
+
                 <div class="guide-desc" id="descJamaat"></div>
+
             </div>
+
 
         </div>
 
     </section>
 
 
-    <!-- Section Page -->
-    <section id="sectionPage" class="section-page hidden">
+
+    <!-- =========================================
+         NAMAZ DETAILS
+         ========================================= -->
+
+    <section id="namazDetails" class="inner-page hidden">
 
         <div class="section-header">
-            <button id="sectionBackButton">←</button>
-            <span id="sectionTitle"></span>
+
+            <button id="namazDetailsBack">←</button>
+
+            <span id="namazDetailsTitle"></span>
+
         </div>
+
+
+        <div class="details-card">
+
+            <div class="details-heading" id="fivePrayersTitle"></div>
+
+            <div id="prayerDetails"></div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         OTHER SECTION PAGE
+         ========================================= -->
+
+    <section id="sectionPage" class="inner-page hidden">
+
+        <div class="section-header">
+
+            <button id="sectionBackButton">←</button>
+
+            <span id="sectionTitle"></span>
+
+        </div>
+
 
         <div id="sectionContent"></div>
 
     </section>
 
+
 </main>
 
-<script src="../js/namaz-guide.js?v=5"></script>
+
+<script src="../js/namaz-guide.js?v=6"></script>
 
 </body>
+
 </html>
