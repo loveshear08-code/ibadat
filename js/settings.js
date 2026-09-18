@@ -416,7 +416,7 @@ function saveSettings(){
 
     alert(t.saved);
 
-    location.reload();
+    window.location.href = "../index.html";
 }
 
 
