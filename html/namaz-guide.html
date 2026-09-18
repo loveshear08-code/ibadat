@@ -1,91 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IBADAT - Namaz Guide</title>
-
-<link rel="stylesheet" href="../css/namaz-guide.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IBADAT - Namaz</title>
+    <link rel="stylesheet" href="../css/namaz-guide.css">
 </head>
 
 <body>
 
-<div class="top-bar">
+<header class="top-bar">
     <button id="backButton">←</button>
     <span id="pageTitle"></span>
     <span class="top-space"></span>
-</div>
+</header>
 
-<div class="main">
+<main class="main">
 
-    <div class="intro-card">
-        <div id="introTitle"></div>
-        <div id="introText"></div>
-    </div>
+    <!-- Main Namaz Menu -->
+    <section id="mainMenu">
 
-    <div class="guide-grid">
-
-        <!-- 1 -->
-        <div class="guide-card" data-page="wudu">
-            <div class="guide-icon">🧼</div>
-            <div class="guide-title" id="titleWudu"></div>
-            <div class="guide-desc" id="descWudu"></div>
+        <div class="intro-card">
+            <div id="introTitle"></div>
+            <div id="introText"></div>
         </div>
 
-        <!-- 2 -->
-        <div class="guide-card" data-page="what">
-            <div class="guide-icon">🕌</div>
-            <div class="guide-title" id="titleWhat"></div>
-            <div class="guide-desc" id="descWhat"></div>
+        <div class="guide-grid">
+
+            <div class="guide-card" data-section="purity">
+                <div class="guide-icon">🧼</div>
+                <div class="guide-title" id="titlePurity"></div>
+                <div class="guide-desc" id="descPurity"></div>
+            </div>
+
+            <div class="guide-card" data-section="learn">
+                <div class="guide-icon">📖</div>
+                <div class="guide-title" id="titleLearn"></div>
+                <div class="guide-desc" id="descLearn"></div>
+            </div>
+
+            <div class="guide-card" data-section="recitations">
+                <div class="guide-icon">🤲</div>
+                <div class="guide-title" id="titleRecitations"></div>
+                <div class="guide-desc" id="descRecitations"></div>
+            </div>
+
+            <div class="guide-card" data-section="jamaat">
+                <div class="guide-icon">👥</div>
+                <div class="guide-title" id="titleJamaat"></div>
+                <div class="guide-desc" id="descJamaat"></div>
+            </div>
+
         </div>
 
-        <!-- 3 -->
-        <div class="guide-card" data-page="preparation">
-            <div class="guide-icon">📋</div>
-            <div class="guide-title" id="titlePreparation"></div>
-            <div class="guide-desc" id="descPreparation"></div>
+    </section>
+
+
+    <!-- Section Page -->
+    <section id="sectionPage" class="section-page hidden">
+
+        <div class="section-header">
+            <button id="sectionBackButton">←</button>
+            <span id="sectionTitle"></span>
         </div>
 
-        <!-- 4 -->
-        <div class="guide-card" data-page="times">
-            <div class="guide-icon">🕰️</div>
-            <div class="guide-title" id="titleTimes"></div>
-            <div class="guide-desc" id="descTimes"></div>
-        </div>
+        <div id="sectionContent"></div>
 
-        <!-- 5 -->
-        <div class="guide-card" data-page="learn">
-            <div class="guide-icon">📖</div>
-            <div class="guide-title" id="titleLearn"></div>
-            <div class="guide-desc" id="descLearn"></div>
-        </div>
+    </section>
 
-        <!-- 6 -->
-        <div class="guide-card" data-page="duas">
-            <div class="guide-icon">🤲</div>
-            <div class="guide-title" id="titleDuas"></div>
-            <div class="guide-desc" id="descDuas"></div>
-        </div>
+</main>
 
-        <!-- 7 -->
-        <div class="guide-card" data-page="jamaat">
-            <div class="guide-icon">👥</div>
-            <div class="guide-title" id="titleJamaat"></div>
-            <div class="guide-desc" id="descJamaat"></div>
-        </div>
-
-        <!-- 8 -->
-        <div class="guide-card" data-page="special">
-            <div class="guide-icon">🌙</div>
-            <div class="guide-title" id="titleSpecial"></div>
-            <div class="guide-desc" id="descSpecial"></div>
-        </div>
-
-    </div>
-
-</div>
-
-<script src="../js/namaz-guide.js?v=2"></script>
+<script src="../js/namaz-guide.js?v=5"></script>
 
 </body>
 </html>
