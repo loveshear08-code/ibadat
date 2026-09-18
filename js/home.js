@@ -288,7 +288,18 @@ function formatDate(date){
     const options = {
         weekday: "long",
     };
+   
+const topDate =
+    now.toLocaleDateString(
+        locale,
+        {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        }
+    );
 
+setText("date", topDate);
     let locale = "bn-BD";
 
     if(lang === "en") locale = "en-US";
