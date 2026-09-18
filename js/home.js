@@ -152,6 +152,8 @@ let longitude = null;
 
 let locationTimezone = null;
 
+let lastHomeLanguage = null;
+
 
 /* ================= SETTINGS ================= */
 
@@ -1707,7 +1709,85 @@ function setupNavigation(){
     });
 }
 
+/* ================= LANGUAGE SYNC ================= */
 
+function syncHomeLanguage(){
+
+    const s = homeSettings();
+
+    const currentLanguage =
+        s.lang || "bn";
+
+
+    /*
+       প্রথমবার language store করা
+    */
+
+    if(lastHomeLanguage === null){
+
+        lastHomeLanguage =
+            currentLanguage;
+
+        return;
+    }
+
+
+    /*
+       Settings থেকে language বদলেছে কি না
+    */
+
+    if(
+        currentLanguage !==
+        lastHomeLanguage
+    ){
+
+        lastHomeLanguage =
+            currentLanguage;
+
+
+        /*
+           Home-এর সব language text আবার apply
+        */
+
+        applyHomeLanguage();
+
+        updateToday();
+
+        updatePrayerGrid();
+
+
+        /*
+           Current / Next prayer
+        */
+
+        if(
+            Object.keys(prayerTimes).length > 0
+        ){
+
+            updateStatus();
+        }
+
+
+        /*
+           City-এর নাম নতুন language-এ
+        */
+
+        if(
+            latitude !== null &&
+            longitude !== null
+        ){
+
+            reverseLocation();
+        }
+
+
+        /*
+           Weather-এর title/text refresh
+        */
+
+        loadWeather();
+    }
+}
 /* ================= MIDNIGHT REFRESH ================= */
 
 function checkNewDay(){
@@ -1772,6 +1852,9 @@ function startHome(){
 
     applyHomeLanguage();
 
+   lastHomeLanguage =
+        homeSettings().lang || "bn";
+
     updateToday();
 
     setupNavigation();
@@ -1790,6 +1873,8 @@ function startHome(){
     */
 
     setInterval(() => {
+
+       syncHomeLanguage();
 
         updateToday();
 
