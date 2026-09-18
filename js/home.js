@@ -887,4 +887,4 @@ function startHome(){
 document.addEventListener(
     "DOMContentLoaded",
     startHome
-););
+);
