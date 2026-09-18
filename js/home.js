@@ -287,9 +287,6 @@ function formatDate(date){
 
     const options = {
         weekday: "long",
-        day: "numeric",
-        month: "long",
-        year: "numeric"
     };
 
     let locale = "bn-BD";
