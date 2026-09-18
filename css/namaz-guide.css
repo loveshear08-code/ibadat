@@ -6,212 +6,168 @@ body{
     margin:0;
     font-family:sans-serif;
     background:#eef7f0;
-    color:#222;
-    min-height:100dvh;
+    color:#1b1b1b;
 }
 
-
-/* ================= TOP BAR ================= */
+/* =========================
+   TOP BAR
+   ========================= */
 
 .top-bar{
     position:fixed;
     top:0;
     left:0;
-    width:100%;
+    right:0;
     height:50px;
-
     background:#2e7d32;
     color:#fff;
 
     display:flex;
     align-items:center;
+    justify-content:space-between;
 
-    padding:0 12px;
-
+    padding:0 10px;
     z-index:100;
 }
 
-#backBtn{
+.top-bar button{
+    width:38px;
+    height:38px;
+
     border:none;
+    border-radius:50%;
+
     background:transparent;
     color:#fff;
 
-    font-size:26px;
-
-    width:42px;
-    height:42px;
-
-    padding:0;
-
+    font-size:25px;
     cursor:pointer;
 }
 
 #pageTitle{
-    flex:1;
-
-    text-align:center;
-
-    font-size:19px;
+    font-size:20px;
     font-weight:bold;
-
-    margin-right:42px;
+    text-align:center;
 }
 
+.top-space{
+    width:38px;
+}
 
-/* ================= MAIN ================= */
+/* =========================
+   MAIN
+   ========================= */
 
 .main{
     padding:60px 10px 15px;
-
-    max-width:600px;
-
-    margin:auto;
 }
 
+/* =========================
+   INTRO
+   ========================= */
 
-/* ================= INTRO ================= */
-
-.intro{
+.intro-card{
     background:#dcedc8;
-
     border-radius:16px;
 
-    padding:15px 12px;
-
-    margin-bottom:10px;
+    padding:14px 12px;
+    margin-bottom:12px;
 
     text-align:center;
 }
 
 #introTitle{
-    font-size:18px;
+    font-size:20px;
     font-weight:bold;
-
     color:#1b5e20;
-
-    margin-bottom:5px;
+    margin-bottom:6px;
 }
 
 #introText{
-    font-size:13px;
+    font-size:14px;
+    line-height:1.5;
+    font-weight:500;
 }
 
+/* =========================
+   GUIDE GRID
+   ========================= */
 
-/* ================= GUIDE CARD ================= */
+.guide-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+/* =========================
+   GUIDE CARD
+   ========================= */
 
 .guide-card{
-    display:flex;
-    align-items:center;
-
-    width:100%;
-
-    background:#ffffff;
-
+    background:#a5d6a7;
     border-radius:14px;
 
-    margin-bottom:9px;
-
-    padding:12px;
-
-    box-shadow:0 2px 7px rgba(0,0,0,0.08);
-
-    cursor:pointer;
-
-    transition:transform 0.1s;
-}
-
-.guide-card:active{
-    transform:scale(0.98);
-}
-
-
-/* ================= ICON ================= */
-
-.icon{
-    width:45px;
-    min-width:45px;
-    height:45px;
+    min-height:145px;
+    padding:14px 10px;
 
     display:flex;
+    flex-direction:column;
     align-items:center;
     justify-content:center;
 
-    background:#e8f5e9;
+    text-align:center;
 
-    border-radius:12px;
+    cursor:pointer;
 
-    font-size:23px;
-
-    margin-right:11px;
+    transition:transform 0.15s ease;
 }
 
-
-/* ================= TEXT ================= */
-
-.card-text{
-    flex:1;
-
-    min-width:0;
+.guide-card:active{
+    transform:scale(0.97);
 }
 
-.card-title{
-    font-size:16px;
+.guide-icon{
+    font-size:30px;
+    margin-bottom:7px;
+}
+
+.guide-title{
+    font-size:17px;
     font-weight:bold;
-
     color:#1b5e20;
-
-    margin-bottom:3px;
+    margin-bottom:6px;
 }
 
-.card-desc{
-    font-size:12px;
-
+.guide-desc{
+    font-size:13px;
     line-height:1.4;
-
-    color:#555;
+    font-weight:500;
 }
 
-
-/* ================= ARROW ================= */
-
-.arrow{
-    font-size:27px;
-
-    color:#2e7d32;
-
-    margin-left:8px;
-}
-
-
-/* ================= SMALL SCREEN ================= */
+/* =========================
+   SMALL SCREENS
+   ========================= */
 
 @media(max-width:360px){
 
-    .main{
-        padding-left:8px;
-        padding-right:8px;
+    .guide-grid{
+        gap:7px;
     }
 
     .guide-card{
-        padding:10px;
+        min-height:135px;
+        padding:10px 7px;
     }
 
-    .icon{
-        width:40px;
-        min-width:40px;
-        height:40px;
-
-        font-size:20px;
-
-        margin-right:9px;
+    .guide-icon{
+        font-size:27px;
     }
 
-    .card-title{
-        font-size:14px;
+    .guide-title{
+        font-size:15px;
     }
 
-    .card-desc{
-        font-size:11px;
+    .guide-desc{
+        font-size:12px;
     }
-
 }
