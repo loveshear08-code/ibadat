@@ -1,258 +1,186 @@
 /* =========================================================
-   IBADAT - NAMAZ GUIDE MAIN PAGE
+   IBADAT - NAMAZ GUIDE
+   8 MAIN OPTIONS
+   LANGUAGE: BN / EN / HI
    ========================================================= */
 
 
-/* ================= LANGUAGE TEXT ================= */
+/* =========================
+   LANGUAGE TEXT
+   ========================= */
 
 const NAMAZ_GUIDE_TEXT = {
 
     bn: {
 
-        title: "🕌 নামাজ গাইড",
+        pageTitle: "নামাজ শিক্ষা",
 
-        introTitle: "নামাজ সম্পর্কে সহজভাবে জানুন",
+        introTitle: "নামাজ শেখার গাইড",
 
         introText:
-            "ধাপে ধাপে নামাজ শেখার জন্য একটি সহজ গাইড",
+            "ধাপে ধাপে পবিত্রতা, প্রস্তুতি, পাঁচ ওয়াক্ত নামাজ, নামাজের পদ্ধতি ও প্রয়োজনীয় দোয়া শিখুন।",
 
-        cards: {
+        wudu: {
+            title: "পবিত্রতা ও ওযু",
+            desc: "পবিত্রতা, ওযু, গোসল, ওযু ভঙ্গের কারণ ও তায়াম্মুম"
+        },
 
-            wudu: {
-                title: "পবিত্রতা ও ওযু",
-                desc: "ওযু, গোসল, তায়াম্মুম এবং পবিত্রতার নিয়ম"
-            },
+        what: {
+            title: "নামাজ কী ও কেন",
+            desc: "নামাজের পরিচয়, গুরুত্ব, উদ্দেশ্য ও প্রয়োজনীয়তা"
+        },
 
-            what: {
-                title: "নামাজ কী ও কেন",
-                desc: "নামাজের পরিচয়, গুরুত্ব ও উদ্দেশ্য"
-            },
+        preparation: {
+            title: "নামাজের প্রস্তুতি",
+            desc: "পোশাক, শরীর, স্থান, সতর, কিবলা, সময় ও নিয়ত"
+        },
 
-            preparation: {
-                title: "নামাজের প্রস্তুতি",
-                desc: "নামাজের আগে কী কী করতে হবে"
-            },
+        times: {
+            title: "পাঁচ ওয়াক্ত নামাজ",
+            desc: "ফজর, জোহর, আসর, মাগরিব ও এশার সময় ও রাকাত"
+        },
 
-            times: {
-                title: "পাঁচ ওয়াক্ত নামাজ",
-                desc: "ফজর, জোহর, আসর, মাগরিব ও এশা"
-            },
+        learn: {
+            title: "নামাজ শিক্ষা",
+            desc: "তাকবির থেকে সালাম পর্যন্ত ধাপে ধাপে নামাজ শেখা"
+        },
 
-            rakat: {
-                title: "রাকাত ও নামাজের ধরন",
-                desc: "বিভিন্ন নামাজের রাকাত ও কাঠামো"
-            },
+        duas: {
+            title: "নামাজে যা পড়তে হয়",
+            desc: "সানা, ফাতিহা, সূরা, তাসবিহ, আত্তাহিয়্যাতু, দরুদ ও দোয়া"
+        },
 
-            learn: {
-                title: "নামাজ শিক্ষা",
-                desc: "শুরু থেকে শেষ পর্যন্ত ধাপে ধাপে নামাজ"
-            },
+        jamaat: {
+            title: "জামাত ও বিশেষ পরিস্থিতি",
+            desc: "জামাত, ইমামের অনুসরণ, মাসবুক, ভুল ও সিজদায়ে সাহু"
+        },
 
-            duas: {
-                title: "নামাজে যা যা পড়তে হয়",
-                desc: "সানা, ফাতিহা, সূরা, তাসবিহ, দোয়া ও দরুদ"
-            },
-
-            jamaat: {
-                title: "জামাতে নামাজ",
-                desc: "ইমামের পিছনে নামাজ ও জামাতের নিয়ম"
-            },
-
-            mistakes: {
-                title: "নামাজে ভুল হলে করণীয়",
-                desc: "ভুল, সন্দেহ ও সিজদায়ে সাহুর নিয়ম"
-            },
-
-            special: {
-                title: "বিশেষ নামাজ",
-                desc: "বিতর, তাহাজ্জুদ, তারাবিহ, ঈদ ও জানাজার নামাজ"
-            },
-
-            women: {
-                title: "নারীদের নামাজ",
-                desc: "নারীদের জন্য প্রযোজ্য নামাজের নির্দেশনা"
-            },
-
-            quick: {
-                title: "Quick Namaz Guide",
-                desc: "দ্রুত দেখে নেওয়ার জন্য সংক্ষিপ্ত নামাজ গাইড"
-            }
+        special: {
+            title: "বিশেষ নামাজ",
+            desc: "বিতর, তাহাজ্জুদ, তারাবিহ, ঈদ, জানাজা ও অন্যান্য নফল নামাজ"
         }
     },
 
 
     en: {
 
-        title: "🕌 Namaz Guide",
+        pageTitle: "Namaz Guide",
 
-        introTitle: "Learn Namaz Easily",
+        introTitle: "Namaz Learning Guide",
 
         introText:
-            "A simple step-by-step guide to learning Namaz",
+            "Learn purification, preparation, the five daily prayers, the method of Salah and the essential recitations step by step.",
 
-        cards: {
+        wudu: {
+            title: "Purification & Wudu",
+            desc: "Purification, Wudu, Ghusl, things that break Wudu and Tayammum"
+        },
 
-            wudu: {
-                title: "Purification & Wudu",
-                desc: "Wudu, Ghusl, Tayammum and purification rules"
-            },
+        what: {
+            title: "What is Namaz & Why",
+            desc: "Introduction, importance, purpose and significance of Namaz"
+        },
 
-            what: {
-                title: "What is Namaz & Why",
-                desc: "Meaning, importance and purpose of Namaz"
-            },
+        preparation: {
+            title: "Preparation for Namaz",
+            desc: "Clothing, body, place, awrah, Qibla, prayer time and intention"
+        },
 
-            preparation: {
-                title: "Preparing for Namaz",
-                desc: "What to do before starting Namaz"
-            },
+        times: {
+            title: "Five Daily Prayers",
+            desc: "Fajr, Dhuhr, Asr, Maghrib and Isha: times and rakats"
+        },
 
-            times: {
-                title: "Five Daily Prayers",
-                desc: "Fajr, Dhuhr, Asr, Maghrib and Isha"
-            },
+        learn: {
+            title: "Namaz Education",
+            desc: "Step-by-step Namaz from Takbir to Salam"
+        },
 
-            rakat: {
-                title: "Rakats & Types of Prayer",
-                desc: "Rakats and structure of different prayers"
-            },
+        duas: {
+            title: "What to Recite in Namaz",
+            desc: "Sana, Al-Fatihah, Surahs, Tasbih, Tashahhud, Durood and Duas"
+        },
 
-            learn: {
-                title: "Learn Namaz",
-                desc: "Step-by-step guide from beginning to end"
-            },
+        jamaat: {
+            title: "Jamaat & Special Situations",
+            desc: "Congregation, following the Imam, Masbuq, mistakes and Sajdah Sahw"
+        },
 
-            duas: {
-                title: "What to Recite in Namaz",
-                desc: "Sana, Fatiha, Surahs, Tasbih, Duas and Durood"
-            },
-
-            jamaat: {
-                title: "Prayer in Congregation",
-                desc: "Following the Imam and rules of congregation"
-            },
-
-            mistakes: {
-                title: "What to Do When You Make a Mistake",
-                desc: "Mistakes, doubts and Sajdah Sahw"
-            },
-
-            special: {
-                title: "Special Prayers",
-                desc: "Witr, Tahajjud, Taraweeh, Eid and Janazah"
-            },
-
-            women: {
-                title: "Namaz for Women",
-                desc: "Relevant guidance for women"
-            },
-
-            quick: {
-                title: "Quick Namaz Guide",
-                desc: "A short guide for quick reference"
-            }
+        special: {
+            title: "Special Prayers",
+            desc: "Witr, Tahajjud, Tarawih, Eid, Janazah and other Nafl prayers"
         }
     },
 
 
     hi: {
 
-        title: "🕌 नमाज़ गाइड",
+        pageTitle: "नमाज़ गाइड",
 
-        introTitle: "नमाज़ आसानी से सीखें",
+        introTitle: "नमाज़ सीखने की गाइड",
 
         introText:
-            "नमाज़ सीखने के लिए आसान चरण-दर-चरण गाइड",
+            "पवित्रता, तैयारी, पाँच वक्त की नमाज़, नमाज़ पढ़ने का तरीका और ज़रूरी दुआएँ चरणबद्ध तरीके से सीखें।",
 
-        cards: {
+        wudu: {
+            title: "पवित्रता और वुज़ू",
+            desc: "पवित्रता, वुज़ू, ग़ुस्ल, वुज़ू तोड़ने वाली चीज़ें और तयम्मुम"
+        },
 
-            wudu: {
-                title: "पवित्रता और वुज़ू",
-                desc: "वुज़ू, ग़ुस्ल, तयम्मुम और पवित्रता के नियम"
-            },
+        what: {
+            title: "नमाज़ क्या है और क्यों",
+            desc: "नमाज़ का परिचय, महत्व, उद्देश्य और आवश्यकता"
+        },
 
-            what: {
-                title: "नमाज़ क्या है और क्यों",
-                desc: "नमाज़ का परिचय, महत्व और उद्देश्य"
-            },
+        preparation: {
+            title: "नमाज़ की तैयारी",
+            desc: "कपड़े, शरीर, स्थान, सतर, क़िबला, समय और नियत"
+        },
 
-            preparation: {
-                title: "नमाज़ की तैयारी",
-                desc: "नमाज़ से पहले क्या करना चाहिए"
-            },
+        times: {
+            title: "पाँच वक्त की नमाज़",
+            desc: "फ़ज्र, ज़ुहर, असर, मग़रिब और ईशा के समय और रकअत"
+        },
 
-            times: {
-                title: "पाँच वक़्त की नमाज़",
-                desc: "फ़ज्र, ज़ुहर, असर, मग़रिब और इशा"
-            },
+        learn: {
+            title: "नमाज़ की शिक्षा",
+            desc: "तकबीर से सलाम तक नमाज़ पढ़ने का चरणबद्ध तरीका"
+        },
 
-            rakat: {
-                title: "रकअत और नमाज़ के प्रकार",
-                desc: "विभिन्न नमाज़ों की रकअत और संरचना"
-            },
+        duas: {
+            title: "नमाज़ में क्या पढ़ें",
+            desc: "सना, फ़ातिहा, सूरह, तस्बीह, अतहिय्यात, दुरूद और दुआ"
+        },
 
-            learn: {
-                title: "नमाज़ सीखें",
-                desc: "शुरू से अंत तक चरण-दर-चरण नमाज़"
-            },
+        jamaat: {
+            title: "जमाअत और विशेष परिस्थितियाँ",
+            desc: "जमाअत, इमाम का अनुसरण, मसबूक, गलतियाँ और सजदह सहव"
+        },
 
-            duas: {
-                title: "नमाज़ में क्या पढ़ें",
-                desc: "सना, फ़ातिहा, सूरह, तस्बीह, दुआ और दुरूद"
-            },
-
-            jamaat: {
-                title: "जमाअत की नमाज़",
-                desc: "इमाम के पीछे नमाज़ और जमाअत के नियम"
-            },
-
-            mistakes: {
-                title: "नमाज़ में गलती होने पर",
-                desc: "गलती, संदेह और सज्दा-ए-सहव के नियम"
-            },
-
-            special: {
-                title: "विशेष नमाज़",
-                desc: "वित्र, तहज्जुद, तरावीह, ईद और जनाज़ा"
-            },
-
-            women: {
-                title: "महिलाओं की नमाज़",
-                desc: "महिलाओं के लिए संबंधित नमाज़ निर्देश"
-            },
-
-            quick: {
-                title: "Quick Namaz Guide",
-                desc: "जल्दी देखने के लिए संक्षिप्त नमाज़ गाइड"
-            }
+        special: {
+            title: "विशेष नमाज़",
+            desc: "वित्र, तहज्जुद, तरावीह, ईद, जनाज़ा और अन्य नफ़्ल नमाज़"
         }
     }
-
 };
 
 
-/* ================= GET LANGUAGE ================= */
+/* =========================
+   GET LANGUAGE
+   ========================= */
 
 function getNamazLanguage(){
 
     try{
 
-        const raw =
-            localStorage.getItem("appSettings");
-
-        if(!raw) return "bn";
-
-        const settings =
-            JSON.parse(raw);
+        const saved =
+            JSON.parse(localStorage.getItem("ibadatSettings"));
 
         if(
-            settings.lang === "bn" ||
-            settings.lang === "en" ||
-            settings.lang === "hi"
+            saved &&
+            ["bn","en","hi"].includes(saved.lang)
         ){
-
-            return settings.lang;
-
+            return saved.lang;
         }
 
     }catch(e){}
@@ -261,211 +189,184 @@ function getNamazLanguage(){
 }
 
 
-/* ================= APPLY LANGUAGE ================= */
+/* =========================
+   APPLY LANGUAGE
+   ========================= */
 
 function applyNamazLanguage(){
 
-    const lang =
-        getNamazLanguage();
+    const lang = getNamazLanguage();
 
-    const t =
+    const text =
         NAMAZ_GUIDE_TEXT[lang] ||
         NAMAZ_GUIDE_TEXT.bn;
 
 
-    document.documentElement.lang =
-        lang;
+    document.documentElement.lang = lang;
 
 
-    document.title =
-        t.title;
+    document.getElementById("pageTitle").textContent =
+        text.pageTitle;
+
+    document.getElementById("introTitle").textContent =
+        text.introTitle;
+
+    document.getElementById("introText").textContent =
+        text.introText;
 
 
-    document.getElementById(
-        "pageTitle"
-    ).innerText =
-        t.title;
+    /* 1 */
+
+    document.getElementById("titleWudu").textContent =
+        text.wudu.title;
+
+    document.getElementById("descWudu").textContent =
+        text.wudu.desc;
 
 
-    document.getElementById(
-        "introTitle"
-    ).innerText =
-        t.introTitle;
+    /* 2 */
+
+    document.getElementById("titleWhat").textContent =
+        text.what.title;
+
+    document.getElementById("descWhat").textContent =
+        text.what.desc;
 
 
-    document.getElementById(
-        "introText"
-    ).innerText =
-        t.introText;
+    /* 3 */
+
+    document.getElementById("titlePreparation").textContent =
+        text.preparation.title;
+
+    document.getElementById("descPreparation").textContent =
+        text.preparation.desc;
 
 
-    const ids = [
+    /* 4 */
 
-        "wudu",
-        "what",
-        "preparation",
-        "times",
-        "rakat",
-        "learn",
-        "duas",
-        "jamaat",
-        "mistakes",
-        "special",
-        "women",
-        "quick"
+    document.getElementById("titleTimes").textContent =
+        text.times.title;
 
-    ];
+    document.getElementById("descTimes").textContent =
+        text.times.desc;
 
 
-    ids.forEach(id => {
+    /* 5 */
 
-        const title =
-            document.getElementById(
-                "title" +
-                id.charAt(0).toUpperCase() +
-                id.slice(1)
-            );
+    document.getElementById("titleLearn").textContent =
+        text.learn.title;
 
-        const desc =
-            document.getElementById(
-                "desc" +
-                id.charAt(0).toUpperCase() +
-                id.slice(1)
-            );
+    document.getElementById("descLearn").textContent =
+        text.learn.desc;
 
 
-        if(title){
+    /* 6 */
 
-            title.innerText =
-                t.cards[id].title;
+    document.getElementById("titleDuas").textContent =
+        text.duas.title;
 
-        }
+    document.getElementById("descDuas").textContent =
+        text.duas.desc;
 
 
-        if(desc){
+    /* 7 */
 
-            desc.innerText =
-                t.cards[id].desc;
+    document.getElementById("titleJamaat").textContent =
+        text.jamaat.title;
 
-        }
+    document.getElementById("descJamaat").textContent =
+        text.jamaat.desc;
 
-    });
 
+    /* 8 */
+
+    document.getElementById("titleSpecial").textContent =
+        text.special.title;
+
+    document.getElementById("descSpecial").textContent =
+        text.special.desc;
 }
 
 
-/* ================= NAVIGATION ================= */
+/* =========================
+   NAVIGATION
+   ========================= */
 
 function setupNamazNavigation(){
 
-    const cards =
-        document.querySelectorAll(
-            ".guide-card"
-        );
+    const pages = {
+
+        wudu:
+            "namaz-wudu.html",
+
+        what:
+            "namaz-what.html",
+
+        preparation:
+            "namaz-preparation.html",
+
+        times:
+            "namaz-times.html",
+
+        learn:
+            "namaz-learn.html",
+
+        duas:
+            "namaz-duas.html",
+
+        jamaat:
+            "namaz-jamaat.html",
+
+        special:
+            "namaz-special.html"
+    };
 
 
-    cards.forEach(card => {
+    document
+        .querySelectorAll(".guide-card")
+        .forEach(card => {
 
-        card.addEventListener(
-            "click",
-            function(){
+            card.addEventListener("click", () => {
 
                 const page =
-                    this.dataset.page;
+                    pages[card.dataset.page];
 
-
-                /*
-                 * এই পেজগুলো আমরা
-                 * পরের ধাপে তৈরি করব।
-                 */
-
-                const pages = {
-
-                    wudu:
-                        "namaz-wudu.html",
-
-                    what:
-                        "namaz-what.html",
-
-                    preparation:
-                        "namaz-preparation.html",
-
-                    times:
-                        "namaz-times.html",
-
-                    rakat:
-                        "namaz-rakat.html",
-
-                    learn:
-                        "namaz-learn.html",
-
-                    duas:
-                        "namaz-duas.html",
-
-                    jamaat:
-                        "namaz-jamaat.html",
-
-                    mistakes:
-                        "namaz-mistakes.html",
-
-                    special:
-                        "namaz-special.html",
-
-                    women:
-                        "namaz-women.html",
-
-                    quick:
-                        "namaz-quick.html"
-
-                };
-
-
-                if(pages[page]){
+                if(page){
 
                     window.location.href =
-                        pages[page];
-
+                        page;
                 }
+            });
 
-            }
-        );
-
-    });
-
+        });
 }
 
 
-/* ================= BACK ================= */
+/* =========================
+   BACK BUTTON
+   ========================= */
 
 function setupBackButton(){
 
-    const back =
-        document.getElementById(
-            "backBtn"
-        );
+    const button =
+        document.getElementById("backButton");
 
+    if(!button) return;
 
-    if(back){
+    button.addEventListener("click", () => {
 
-        back.addEventListener(
-            "click",
-            function(){
-
-                window.location.href =
-                    "../index.html";
-
-            }
-        );
-
-    }
-
+        window.location.href =
+            "../index.html";
+    });
 }
 
 
-/* ================= LANGUAGE SYNC ================= */
+/* =========================
+   LANGUAGE SYNC
+   ========================= */
 
 let lastNamazLanguage =
-    null;
+    getNamazLanguage();
 
 
 function syncNamazLanguage(){
@@ -473,37 +374,29 @@ function syncNamazLanguage(){
     const current =
         getNamazLanguage();
 
-
-    if(
-        current !==
-        lastNamazLanguage
-    ){
+    if(current !== lastNamazLanguage){
 
         lastNamazLanguage =
             current;
 
         applyNamazLanguage();
-
     }
-
 }
 
 
-/* ================= INIT ================= */
+/* =========================
+   START
+   ========================= */
 
 document.addEventListener(
     "DOMContentLoaded",
-    function(){
-
-        lastNamazLanguage =
-            getNamazLanguage();
+    () => {
 
         applyNamazLanguage();
 
         setupNamazNavigation();
 
         setupBackButton();
-
 
         setInterval(
             syncNamazLanguage,
