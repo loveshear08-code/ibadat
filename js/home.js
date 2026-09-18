@@ -125,6 +125,7 @@ const ALL_TIMES = [
 
 const ACTUAL_PRAYERS = [
     "Fajr",
+   "Sunrise",
     "Dhuhr",
     "Asr",
     "Maghrib",
