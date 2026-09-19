@@ -1385,7 +1385,7 @@ if(lang === "hi"){
 
 setText(
     "weather",
-    `${icon} ${condition} • ${localNumber(temp)}${unit}`
+    `${icon} ${localNumber(temp)}${unit}`
 );
 
 
