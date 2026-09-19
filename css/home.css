@@ -206,3 +206,29 @@ body.dark-mode #clock{
 body.dark-mode #countdown{
     color:#ef5350;
 }
+
+/* HOME TEXT DARK MODE */
+
+body.dark-mode #bismillahMeaning{
+    color:#c8e6c9;
+}
+
+body.dark-mode #weather{
+    color:#c8e6c9;
+}
+
+body.dark-mode #currentPrayerName{
+    color:#c8e6c9;
+}
+
+body.dark-mode #nextPrayerName{
+    color:#c8e6c9;
+}
+
+body.dark-mode .prayer-box{
+    color:#c8e6c9;
+}
+
+body.dark-mode .feature{
+    color:#c8e6c9;
+}
