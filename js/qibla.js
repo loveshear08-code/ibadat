@@ -1,5 +1,5 @@
 /* =========================================================
-   IBADAT QIBLA
+   IBADAT QIBLA - REFRESHED FINAL VERSION
    ========================================================= */
 
 
@@ -23,8 +23,7 @@ const QIBLA_TEXT = {
         started: "কম্পাস চালু হয়েছে",
         permission: "কম্পাস ব্যবহারের অনুমতি দিন",
         locationError: "লোকেশন পাওয়া যায়নি",
-        compassError: "আপনার ডিভাইসে কম্পাস সাপোর্ট পাওয়া যায়নি",
-        north: "উত্তর"
+        compassError: "আপনার ডিভাইসে কম্পাস সাপোর্ট পাওয়া যায়নি"
     },
 
     en: {
@@ -37,8 +36,7 @@ const QIBLA_TEXT = {
         started: "Compass started",
         permission: "Allow compass permission",
         locationError: "Location unavailable",
-        compassError: "Compass is not supported on this device",
-        north: "North"
+        compassError: "Compass is not supported on this device"
     },
 
     hi: {
@@ -51,8 +49,7 @@ const QIBLA_TEXT = {
         started: "कम्पास चालू हो गया",
         permission: "कम्पास की अनुमति दें",
         locationError: "स्थान उपलब्ध नहीं",
-        compassError: "इस डिवाइस में कम्पास उपलब्ध नहीं है",
-        north: "उत्तर"
+        compassError: "इस डिवाइस में कम्पास उपलब्ध नहीं है"
     }
 };
 
@@ -63,17 +60,20 @@ function getLanguage(){
 
     try{
 
-        const s =
-            JSON.parse(
-                localStorage.getItem("appSettings")
-            );
+        const saved =
+            localStorage.getItem("appSettings");
 
-        return s?.lang || "bn";
+        if(saved){
 
-    }catch(e){
+            const settings =
+                JSON.parse(saved);
 
-        return "bn";
-    }
+            return settings.lang || "bn";
+        }
+
+    }catch(e){}
+
+    return "bn";
 }
 
 
@@ -108,7 +108,7 @@ const directionText =
 const qiblaDegree =
     document.getElementById("qiblaDegree");
 
-const startCompass =
+const startCompassBtn =
     document.getElementById("startCompass");
 
 const compassMessage =
@@ -121,37 +121,77 @@ const backBtn =
     document.getElementById("backBtn");
 
 
+/* ================= LOCATION STATE ================= */
+
+let latitude = null;
+let longitude = null;
+
+let userLocationLoaded = false;
+
+let qiblaBearing = 0;
+
+let compassStarted = false;
+
+
 /* ================= LANGUAGE APPLY ================= */
 
 function applyLanguage(){
 
     const t = getText();
 
-    if(pageTitle)
-        pageTitle.innerText = t.title;
 
-    if(locationLabel)
-        locationLabel.innerText = t.location;
+    if(pageTitle){
 
-    if(locationName &&
-       !userLocationLoaded)
-        locationName.innerText = t.locating;
+        pageTitle.innerText =
+            t.title;
+    }
 
-    if(distanceLabel)
-        distanceLabel.innerText = t.distance;
 
-    if(directionText)
+    if(locationLabel){
+
+        locationLabel.innerText =
+            t.location;
+    }
+
+
+    if(
+        locationName &&
+        !userLocationLoaded
+    ){
+
+        locationName.innerText =
+            t.locating;
+    }
+
+
+    if(distanceLabel){
+
+        distanceLabel.innerText =
+            t.distance;
+    }
+
+
+    if(directionText){
+
         directionText.innerText =
             t.qiblaDirection;
+    }
 
-    if(startCompass)
-        startCompass.innerText = t.start;
+
+    if(startCompassBtn){
+
+        startCompassBtn.innerText =
+            compassStarted
+                ? t.started
+                : t.start;
+    }
+
 
     updateDegreeText();
 }
 
 
-/* ================= BACK ================= */
+/* ================= BACK BUTTON ================= */
 
 if(backBtn){
 
@@ -168,7 +208,9 @@ if(backBtn){
 
 function localNumber(number){
 
-    const lang = getLanguage();
+    const lang =
+        getLanguage();
+
 
     if(lang === "bn"){
 
@@ -180,6 +222,7 @@ function localNumber(number){
             );
     }
 
+
     if(lang === "hi"){
 
         return number
@@ -190,16 +233,12 @@ function localNumber(number){
             );
     }
 
+
     return number.toString();
 }
 
 
-/* ================= LOCATION ================= */
-
-let latitude = null;
-let longitude = null;
-
-let userLocationLoaded = false;
+/* ================= GET LOCATION ================= */
 
 function getLocation(){
 
@@ -222,20 +261,35 @@ function getLocation(){
             longitude =
                 position.coords.longitude;
 
-            userLocationLoaded = true;
+
+            userLocationLoaded =
+                true;
+
+
+            /* LOCATION */
 
             showLocation();
 
+
+            /* QIBLA */
+
             calculateQibla();
+
+
+            /* DISTANCE */
+
+            calculateDistance();
 
         },
 
-        () => {
+
+        error => {
 
             locationName.innerText =
                 getText().locationError;
 
         },
+
 
         {
             enableHighAccuracy:true,
@@ -255,30 +309,50 @@ async function showLocation(){
         const url =
             `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10&addressdetails=1`;
 
+
         const response =
             await fetch(url);
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "Reverse location failed"
+            );
+        }
+
 
         const data =
             await response.json();
 
+
         const address =
             data.address || {};
+
 
         const name =
             address.city ||
             address.town ||
             address.village ||
             address.municipality ||
+            address.county ||
             address.state ||
             "Location";
+
 
         locationName.innerText =
             name;
 
     }catch(e){
 
-        locationName.innerText =
-            `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
+        if(
+            latitude !== null &&
+            longitude !== null
+        ){
+
+            locationName.innerText =
+                `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
+        }
     }
 }
 
@@ -287,17 +361,37 @@ async function showLocation(){
 
 function calculateQibla(){
 
+    if(
+        latitude === null ||
+        longitude === null
+    ){
+
+        return;
+    }
+
+
     const lat1 =
-        latitude * Math.PI / 180;
+        latitude *
+        Math.PI /
+        180;
+
 
     const lon1 =
-        longitude * Math.PI / 180;
+        longitude *
+        Math.PI /
+        180;
+
 
     const lat2 =
-        KAABA_LAT * Math.PI / 180;
+        KAABA_LAT *
+        Math.PI /
+        180;
+
 
     const lon2 =
-        KAABA_LON * Math.PI / 180;
+        KAABA_LON *
+        Math.PI /
+        180;
 
 
     const deltaLon =
@@ -319,8 +413,9 @@ function calculateQibla(){
 
 
     let bearing =
-        Math.atan2(y,x) *
-        180 / Math.PI;
+        Math.atan2(y, x) *
+        180 /
+        Math.PI;
 
 
     bearing =
@@ -337,11 +432,10 @@ function calculateQibla(){
 
 /* ================= DEGREE ================= */
 
-let qiblaBearing = 0;
-
 function updateDegreeText(){
 
     if(!qiblaDegree) return;
+
 
     qiblaDegree.innerText =
         localNumber(
@@ -354,25 +448,40 @@ function updateDegreeText(){
 
 function calculateDistance(){
 
-    if(latitude === null ||
-       longitude === null) return;
+    if(
+        latitude === null ||
+        longitude === null
+    ){
+
+        return;
+    }
 
 
     const R = 6371;
 
+
     const lat1 =
-        latitude * Math.PI / 180;
+        latitude *
+        Math.PI /
+        180;
+
 
     const lat2 =
-        KAABA_LAT * Math.PI / 180;
+        KAABA_LAT *
+        Math.PI /
+        180;
+
 
     const deltaLat =
         (KAABA_LAT - latitude) *
-        Math.PI / 180;
+        Math.PI /
+        180;
+
 
     const deltaLon =
         (KAABA_LON - longitude) *
-        Math.PI / 180;
+        Math.PI /
+        180;
 
 
     const a =
@@ -389,7 +498,7 @@ function calculateDistance(){
         2 *
         Math.atan2(
             Math.sqrt(a),
-            Math.sqrt(1-a)
+            Math.sqrt(1 - a)
         );
 
 
@@ -402,31 +511,34 @@ function calculateDistance(){
         const value =
             (km / 1000).toFixed(1);
 
+
         distance.innerText =
-            localNumber(value) + " km";
+            localNumber(value) +
+            " km";
 
     }else{
 
         const value =
             Math.round(km);
 
+
         distance.innerText =
-            localNumber(value) + " km";
+            localNumber(value) +
+            " km";
     }
 }
 
 
 /* ================= COMPASS ================= */
 
-let compassStarted = false;
-
-
-/* Device heading */
-
 function handleOrientation(event){
 
     let heading = null;
 
+
+    /*
+       iPhone / iPad
+    */
 
     if(
         typeof event.webkitCompassHeading ===
@@ -435,8 +547,14 @@ function handleOrientation(event){
 
         heading =
             event.webkitCompassHeading;
+    }
 
-    }else if(
+
+    /*
+       Android / Other browsers
+    */
+
+    else if(
         typeof event.alpha ===
         "number"
     ){
@@ -446,15 +564,22 @@ function handleOrientation(event){
     }
 
 
-    if(heading === null) return;
+    if(heading === null){
+
+        return;
+    }
 
 
     const rotation =
-        qiblaBearing - heading;
+        qiblaBearing -
+        heading;
 
 
-    qiblaArrow.style.transform =
-        `translateX(-50%) rotate(${rotation}deg)`;
+    if(qiblaArrow){
+
+        qiblaArrow.style.transform =
+            `translateX(-50%) rotate(${rotation}deg)`;
+    }
 }
 
 
@@ -462,25 +587,35 @@ function handleOrientation(event){
 
 async function startCompass(){
 
-    if(compassStarted) return;
+    if(compassStarted){
+
+        return;
+    }
 
 
-    const t = getText();
+    const t =
+        getText();
 
 
     try{
 
+        /*
+           iPhone / iPad permission
+        */
+
         if(
             typeof DeviceOrientationEvent !==
             "undefined" &&
+
             typeof DeviceOrientationEvent
                 .requestPermission ===
-                "function"
+            "function"
         ){
 
             const permission =
                 await DeviceOrientationEvent
                     .requestPermission();
+
 
             if(permission !== "granted"){
 
@@ -492,11 +627,12 @@ async function startCompass(){
         }
 
 
-        let eventName =
-            "deviceorientationabsolute";
+        /*
+           Compass events
+        */
 
         window.addEventListener(
-            eventName,
+            "deviceorientationabsolute",
             handleOrientation,
             true
         );
@@ -509,26 +645,39 @@ async function startCompass(){
         );
 
 
-        compassStarted = true;
+        compassStarted =
+            true;
 
-        startCompass.innerText =
-            t.started;
 
-        compassMessage.innerText = "";
+        if(startCompassBtn){
+
+            startCompassBtn.innerText =
+                t.started;
+        }
+
+
+        if(compassMessage){
+
+            compassMessage.innerText =
+                "";
+        }
 
     }catch(e){
 
-        compassMessage.innerText =
-            t.compassError;
+        if(compassMessage){
+
+            compassMessage.innerText =
+                t.compassError;
+        }
     }
 }
 
 
 /* ================= BUTTON ================= */
 
-if(startCompass){
+if(startCompassBtn){
 
-    startCompass.addEventListener(
+    startCompassBtn.addEventListener(
         "click",
         startCompass
     );
@@ -551,6 +700,10 @@ document.addEventListener(
 
 /* ================= LANGUAGE WATCH ================= */
 
+window.currentQiblaLang =
+    getLanguage();
+
+
 setInterval(
 
     () => {
@@ -558,14 +711,17 @@ setInterval(
         const newLang =
             getLanguage();
 
-        if(newLang !==
-           window.currentQiblaLang){
+
+        if(
+            newLang !==
+            window.currentQiblaLang
+        ){
 
             window.currentQiblaLang =
                 newLang;
 
-            applyLanguage();
 
+            applyLanguage();
         }
 
     },
