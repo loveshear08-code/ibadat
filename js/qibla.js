@@ -846,28 +846,55 @@ function calculateDistance(){
        হাজারে দেখানো হবে।
     */
 
-    if(km >= 1000){
+if(km >= 1000){
 
-        const value =
-            (km / 1000).toFixed(1);
+    const value =
+        (km / 1000).toFixed(1);
 
+    const lang =
+        getLanguage();
 
-        distance.innerText =
+    let unit = "হাজার কিমি";
 
-            localNumber(value) +
-            " হাজার কিমি";
+    if(lang === "en"){
 
-    }else{
+        unit = "thousand km";
 
-        const value =
-            km.toFixed(1);
+    }else if(lang === "hi"){
 
-
-        distance.innerText =
-
-            localNumber(value) +
-            " km";
+        unit = "हज़ार किमी";
     }
+
+    distance.innerText =
+
+        localNumber(value) +
+        " " +
+        unit;
+
+}else{
+
+    const value =
+        km.toFixed(1);
+
+    const lang =
+        getLanguage();
+
+    let unit = "কিমি";
+
+    if(lang === "en"){
+
+        unit = "km";
+
+    }else if(lang === "hi"){
+
+        unit = "किमी";
+    }
+
+    distance.innerText =
+
+        localNumber(value) +
+        " " +
+        unit;
 }
 
 
