@@ -992,23 +992,21 @@ function updateStatus(){
 
     if(currentName){
 
-        setText(
+    setText(
+        "currentPrayerName",
 
-            "currentPrayerName",
+        "🟢 : " +
+        t.prayers[currentName]
+    );
 
-            t.current +
-            ": " +
-            t.prayers[currentName]
-        );
+}else{
 
-    }else{
+    setText(
+        "currentPrayerName",
 
-        setText(
-
-            "currentPrayerName",
-
-            t.noPrayer
-        );
+        "🟢 : " +
+        t.noPrayer
+    );
     }
 
 
@@ -1045,12 +1043,11 @@ function updateStatus(){
 
     setText(
 
-        "nextPrayerName",
+    "nextPrayerName",
 
-        t.next +
-        ": " +
-        t.prayers[nextPrayerName]
-    );
+    "⏭️ : " +
+    t.prayers[nextPrayerName]
+);
 
 
    /* ================= COUNTDOWN ================= */
