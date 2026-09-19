@@ -1,6 +1,5 @@
 /* =========================================================
-   IBADAT QIBLA - FINAL VERSION
-   SHARED LOCATION + IMPROVED COMPASS
+   IBADAT QIBLA - FRESH GPS FINAL VERSION
    ========================================================= */
 
 
@@ -113,60 +112,50 @@ const pageTitle =
         "pageTitle"
     );
 
-
 const locationLabel =
     document.getElementById(
         "locationLabel"
     );
-
 
 const locationName =
     document.getElementById(
         "locationName"
     );
 
-
 const distanceLabel =
     document.getElementById(
         "distanceLabel"
     );
-
 
 const distance =
     document.getElementById(
         "distance"
     );
 
-
 const directionText =
     document.getElementById(
         "directionText"
     );
-
 
 const qiblaDegree =
     document.getElementById(
         "qiblaDegree"
     );
 
-
 const startCompassBtn =
     document.getElementById(
         "startCompass"
     );
-
 
 const compassMessage =
     document.getElementById(
         "compassMessage"
     );
 
-
 const qiblaArrow =
     document.getElementById(
         "qiblaArrow"
     );
-
 
 const backBtn =
     document.getElementById(
@@ -190,96 +179,6 @@ let qiblaBearing = 0;
 let compassStarted = false;
 
 let lastHeading = null;
-
-let absoluteCompassSupported = false;
-
-
-/* =========================================================
-   SHARED LOCATION
-   ========================================================= */
-
-function getSharedLocation(){
-
-    try{
-
-        const saved =
-            localStorage.getItem(
-                IBADAT_LOCATION_KEY
-            );
-
-
-        if(!saved){
-
-            return null;
-        }
-
-
-        const data =
-            JSON.parse(saved);
-
-
-        if(
-            !data ||
-            typeof data.latitude !== "number" ||
-            typeof data.longitude !== "number"
-        ){
-
-            return null;
-        }
-
-
-        return data;
-
-
-    }catch(e){
-
-        return null;
-    }
-}
-
-
-/* ================= SAVE LOCATION ================= */
-
-function saveSharedLocation(
-    lat,
-    lon,
-    city
-){
-
-    try{
-
-        const data = {
-
-            latitude:
-                Number(lat),
-
-            longitude:
-                Number(lon),
-
-            city:
-                city || "",
-
-            updatedAt:
-                Date.now()
-        };
-
-
-        localStorage.setItem(
-
-            IBADAT_LOCATION_KEY,
-
-            JSON.stringify(data)
-        );
-
-
-    }catch(e){
-
-        console.error(
-            "Location save error:",
-            e
-        );
-    }
-}
 
 
 /* =========================================================
@@ -344,7 +243,7 @@ function applyLanguage(){
 }
 
 
-/* ================= BACK BUTTON ================= */
+/* ================= BACK ================= */
 
 if(backBtn){
 
@@ -393,80 +292,32 @@ function localNumber(number){
 
 
 /* =========================================================
-   LOAD SHARED LOCATION
-   ========================================================= */
-
-function loadSharedLocation(){
-
-    const shared =
-        getSharedLocation();
-
-
-    if(!shared){
-
-        return false;
-    }
-
-
-    latitude =
-        shared.latitude;
-
-
-    longitude =
-        shared.longitude;
-
-
-    userLocationLoaded =
-        true;
-
-
-    /*
-       সবচেয়ে গুরুত্বপূর্ণ:
-
-       Home যে location name save করেছে
-       সেটাই Qibla দেখাবে।
-    */
-
-    if(
-        locationName &&
-        shared.city
-    ){
-
-        locationName.innerText =
-            shared.city;
-    }
-
-
-    calculateQibla();
-
-    calculateDistance();
-
-
-    return true;
-}
-
-
-/* =========================================================
-   GET FRESH LOCATION
+   FRESH GPS LOCATION
    ========================================================= */
 
 function getFreshLocation(){
 
     if(!navigator.geolocation){
 
-        if(!userLocationLoaded){
-
-            locationName.innerText =
-                getText().locationError;
-        }
+        locationName.innerText =
+            getText().locationError;
 
         return;
     }
 
 
+    locationName.innerText =
+        getText().locating;
+
+
     navigator.geolocation.getCurrentPosition(
 
-        position => {
+        async position => {
+
+            /*
+               প্রতিবার Qibla খুললে
+               নতুন GPS coordinate নেওয়া হচ্ছে।
+            */
 
             latitude =
                 position.coords.latitude;
@@ -481,35 +332,42 @@ function getFreshLocation(){
 
 
             /*
-               GPS পাওয়ার পরে
-               Home-এর মতো একই reverse
-               geocoder ব্যবহার করা হবে।
+               নতুন coordinate প্রথমে save।
             */
 
-            reverseLocation();
+            saveSharedLocation();
+
+
+            /*
+               নতুন coordinate থেকে
+               নতুন location name।
+            */
+
+            await reverseLocation();
+
+
+            /*
+               নতুন coordinate থেকেই
+               Qibla calculation।
+            */
 
             calculateQibla();
+
 
             calculateDistance();
 
         },
 
 
-        () => {
+        error => {
 
             /*
-               Shared location থাকলে
-               সেটাই থাকবে।
-
-               তাই Qibla খোলার সময়
-               Home-এর location নষ্ট হবে না।
+               Fresh GPS না পাওয়া গেলে
+               পুরোনো shared location fallback।
             */
 
-            if(!userLocationLoaded){
+            loadSharedLocationFallback();
 
-                locationName.innerText =
-                    getText().locationError;
-            }
         },
 
 
@@ -519,12 +377,154 @@ function getFreshLocation(){
                 true,
 
             timeout:
-                15000,
+                20000,
 
             maximumAge:
-                60000
+                0
         }
     );
+}
+
+
+/* =========================================================
+   SHARED LOCATION FALLBACK
+   ========================================================= */
+
+function loadSharedLocationFallback(){
+
+    try{
+
+        const saved =
+            localStorage.getItem(
+                IBADAT_LOCATION_KEY
+            );
+
+
+        if(!saved){
+
+            locationName.innerText =
+                getText().locationError;
+
+            return;
+        }
+
+
+        const data =
+            JSON.parse(saved);
+
+
+        if(
+            !data ||
+            typeof data.latitude !== "number" ||
+            typeof data.longitude !== "number"
+        ){
+
+            locationName.innerText =
+                getText().locationError;
+
+            return;
+        }
+
+
+        latitude =
+            data.latitude;
+
+
+        longitude =
+            data.longitude;
+
+
+        userLocationLoaded =
+            true;
+
+
+        if(
+            data.city &&
+            locationName
+        ){
+
+            locationName.innerText =
+                data.city;
+        }
+
+
+        calculateQibla();
+
+        calculateDistance();
+
+
+    }catch(e){
+
+        locationName.innerText =
+            getText().locationError;
+    }
+}
+
+
+/* =========================================================
+   SAVE SHARED LOCATION
+   ========================================================= */
+
+function saveSharedLocation(){
+
+    if(
+        latitude === null ||
+        longitude === null
+    ){
+
+        return;
+    }
+
+
+    try{
+
+        let oldData = {};
+
+
+        const saved =
+            localStorage.getItem(
+                IBADAT_LOCATION_KEY
+            );
+
+
+        if(saved){
+
+            oldData =
+                JSON.parse(saved) || {};
+        }
+
+
+        const data = {
+
+            latitude:
+                latitude,
+
+            longitude:
+                longitude,
+
+            city:
+                oldData.city || "",
+
+            updatedAt:
+                Date.now()
+        };
+
+
+        localStorage.setItem(
+
+            IBADAT_LOCATION_KEY,
+
+            JSON.stringify(data)
+        );
+
+
+    }catch(e){
+
+        console.error(
+            "Location save error:",
+            e
+        );
+    }
 }
 
 
@@ -570,15 +570,6 @@ async function reverseLocation(){
             await response.json();
 
 
-        /*
-           Home-এর EXACT same priority:
-
-           locality
-           → city
-           → district
-           → subdivision
-        */
-
         const city =
 
             data.locality ||
@@ -600,43 +591,71 @@ async function reverseLocation(){
                 city;
 
 
-            saveSharedLocation(
+            try{
 
-                latitude,
+                const shared = {
 
-                longitude,
+                    latitude:
+                        latitude,
 
-                city
-            );
+                    longitude:
+                        longitude,
+
+                    city:
+                        city,
+
+                    updatedAt:
+                        Date.now()
+                };
+
+
+                localStorage.setItem(
+
+                    IBADAT_LOCATION_KEY,
+
+                    JSON.stringify(shared)
+                );
+
+            }catch(e){}
         }
 
 
     }catch(e){
 
         /*
-           Reverse geocoding fail হলে
-           existing shared location name
-           পরিবর্তন করা হবে না।
+           GPS coordinate ঠিক থাকলে
+           reverse location না পেলেও
+           calculation চলবে।
         */
 
-        const shared =
-            getSharedLocation();
+        const saved =
+            localStorage.getItem(
+                IBADAT_LOCATION_KEY
+            );
 
 
-        if(
-            shared &&
-            shared.city
-        ){
+        if(saved){
 
-            locationName.innerText =
-                shared.city;
+            try{
+
+                const data =
+                    JSON.parse(saved);
+
+
+                if(data.city){
+
+                    locationName.innerText =
+                        data.city;
+                }
+
+            }catch(e){}
         }
     }
 }
 
 
 /* =========================================================
-   QIBLA CALCULATION
+   QIBLA BEARING
    ========================================================= */
 
 function calculateQibla(){
@@ -709,6 +728,17 @@ function calculateQibla(){
         (bearing + 360) % 360;
 
 
+    /*
+       IMPORTANT:
+
+       এই bearing হলো
+       GPS location → Kaaba-এর
+       স্থির true bearing।
+
+       ফোন ঘোরালেও এই number
+       পরিবর্তন হবে না।
+    */
+
     qiblaBearing =
         bearing;
 
@@ -718,7 +748,7 @@ function calculateQibla(){
 
 
 /* =========================================================
-   DEGREE
+   DEGREE DISPLAY
    ========================================================= */
 
 function updateDegreeText(){
@@ -740,7 +770,7 @@ function updateDegreeText(){
 
 
 /* =========================================================
-   DISTANCE
+   MAKKAH DISTANCE
    ========================================================= */
 
 function calculateDistance(){
@@ -811,6 +841,11 @@ function calculateDistance(){
         R * c;
 
 
+    /*
+       1000 km-এর বেশি হলে
+       হাজারে দেখানো হবে।
+    */
+
     if(km >= 1000){
 
         const value =
@@ -820,7 +855,7 @@ function calculateDistance(){
         distance.innerText =
 
             localNumber(value) +
-            " km";
+            " হাজার কিমি";
 
     }else{
 
@@ -837,19 +872,20 @@ function calculateDistance(){
 
 
 /* =========================================================
-   COMPASS HELPERS
+   ANGLE NORMALIZE
    ========================================================= */
 
 function normalizeAngle(angle){
 
     return (
-        angle +
-        360
+        angle + 360
     ) % 360;
 }
 
 
-/* ================= SMOOTH HEADING ================= */
+/* =========================================================
+   SMOOTH COMPASS
+   ========================================================= */
 
 function smoothHeading(
     heading
@@ -870,11 +906,6 @@ function smoothHeading(
         lastHeading;
 
 
-    /*
-       -180 থেকে +180
-       এর মধ্যে difference রাখা।
-    */
-
     if(difference > 180){
 
         difference -=
@@ -888,11 +919,6 @@ function smoothHeading(
             360;
     }
 
-
-    /*
-       25% smoothing
-       → compass jitter কমাবে।
-    */
 
     lastHeading =
 
@@ -927,9 +953,6 @@ function handleOrientation(event){
 
         heading =
             event.webkitCompassHeading;
-
-        absoluteCompassSupported =
-            true;
     }
 
 
@@ -938,9 +961,12 @@ function handleOrientation(event){
     */
 
     else if(
+
         event.absolute === true &&
+
         typeof event.alpha ===
         "number"
+
     ){
 
         heading =
@@ -949,17 +975,11 @@ function handleOrientation(event){
                 360 -
                 event.alpha
             );
-
-        absoluteCompassSupported =
-            true;
     }
 
 
     /*
-       Fallback
-       কিছু Android browser
-       event.absolute না দিলেও
-       alpha দেয়।
+       Browser fallback
     */
 
     else if(
@@ -989,14 +1009,12 @@ function handleOrientation(event){
 
 
     /*
-       Qibla bearing:
-       North থেকে clockwise.
+       IMPORTANT:
 
-       Device heading:
-       North থেকে phone কত degree
-       ঘুরেছে।
+       Qibla bearing স্থির থাকবে।
 
-       Difference = arrow rotation.
+       শুধু arrow-এর rotation
+       phone heading অনুযায়ী বদলাবে।
     */
 
     const rotation =
@@ -1033,7 +1051,7 @@ async function startCompass(){
     try{
 
         /*
-           iOS permission
+           iPhone / iPad
         */
 
         if(
@@ -1069,7 +1087,7 @@ async function startCompass(){
 
 
         /*
-           Absolute orientation first.
+           Absolute orientation
         */
 
         window.addEventListener(
@@ -1083,7 +1101,7 @@ async function startCompass(){
 
 
         /*
-           General orientation fallback.
+           Normal orientation fallback
         */
 
         window.addEventListener(
@@ -1154,23 +1172,16 @@ document.addEventListener(
 
 
         /*
-           প্রথমে Home-এর shared
-           location নেওয়া হবে।
+           IMPORTANT:
+
+           Qibla page খুললেই
+           প্রথমে FRESH GPS নেওয়া হবে।
+
+           পুরোনো location সরাসরি
+           ব্যবহার করা হবে না।
         */
 
-        const sharedLoaded =
-            loadSharedLocation();
-
-
-        /*
-           Shared location না থাকলে
-           তবেই নতুন GPS নেওয়া হবে।
-        */
-
-        if(!sharedLoaded){
-
-            getFreshLocation();
-        }
+        getFreshLocation();
 
     }
 );
@@ -1205,9 +1216,8 @@ setInterval(
 
 
             /*
-               একই coordinate রেখে
-               নতুন ভাষায় location name
-               refresh করা হবে।
+               একই GPS coordinate রেখে
+               নতুন ভাষায় location name।
             */
 
             if(
