@@ -1,35 +1,60 @@
-/* ================= BASE ================= */
+/* =========================================================
+   IBADAT TASBIH - FULL SCREEN
+   ========================================================= */
 
+
+/* ================= BODY ================= */
+
+html,
 body{
 
     margin:0;
 
-    font-family:sans-serif;
+    padding:0;
+
+    width:100%;
+
+    height:100%;
+
+    overflow:hidden;
+
+    font-family:
+        Arial,
+        sans-serif;
 
     background:#eef7f0;
 
-    color:#1b4332;
+    color:#1b5e20;
 
 }
+
+
+/* ================= MAIN PAGE ================= */
 
 .tasbih-page{
 
-    min-height:100vh;
+    width:100%;
 
-    box-sizing:border-box;
+    height:100vh;
 
-    padding-bottom:25px;
+    height:100dvh;
+
+    display:flex;
+
+    flex-direction:column;
 
 }
 
 
-/* ================= TOP BAR ================= */
+/* ================= HEADER ================= */
 
-.topbar{
+.tasbih-header{
 
-    height:52px;
+    height:55px;
 
-    background:#2e7d32;
+    min-height:55px;
+
+    background:#1b5e20;
 
     color:white;
 
@@ -37,68 +62,81 @@ body{
 
     align-items:center;
 
-    justify-content:center;
-
     position:relative;
-
-    font-size:19px;
-
-    font-weight:bold;
 
 }
 
+
 .back-btn{
 
-    position:absolute;
+    width:48px;
 
-    left:12px;
-
-    background:none;
+    height:48px;
 
     border:none;
 
+    background:transparent;
+
     color:white;
 
-    font-size:25px;
+    font-size:30px;
 
     cursor:pointer;
 
 }
 
 
-/* ================= CONTAINER ================= */
+.page-title{
 
-.tasbih-container{
+    position:absolute;
 
-    width:100%;
+    left:50%;
 
-    max-width:430px;
+    transform:translateX(-50%);
 
-    margin:0 auto;
+    font-size:20px;
 
-    padding:14px;
-
-    box-sizing:border-box;
+    font-weight:bold;
 
 }
 
 
-/* ================= COMMON CARD ================= */
+/* ================= TOP 2/3 AREA ================= */
 
-.zikr-card,
-.target-card,
-.counter-card,
-.info-card{
+.top-area{
+
+    height:calc(66.6667vh - 55px);
+
+    height:calc(66.6667dvh - 55px);
+
+    min-height:0;
+
+    box-sizing:border-box;
+
+    padding:10px 14px 6px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+    overflow:hidden;
+
+}
+
+
+/* ================= ZIKR CARD ================= */
+
+.zikr-card{
 
     background:white;
 
-    border-radius:18px;
+    border-radius:16px;
 
-    margin-bottom:14px;
+    padding:9px 10px;
 
-    padding:16px;
-
-    box-sizing:border-box;
+    text-align:center;
 
     box-shadow:
         0 3px 10px rgba(0,0,0,0.08);
@@ -106,147 +144,135 @@ body{
 }
 
 
-/* ================= LABEL ================= */
-
-.section-label{
+.small-label{
 
     font-size:13px;
 
+    color:#777;
+
+    margin-bottom:3px;
+
+}
+
+
+.zikr-arabic{
+
+    font-size:30px;
+
     font-weight:bold;
 
-    color:#52796f;
+    line-height:1.25;
 
-    margin-bottom:8px;
+    color:#1b5e20;
 
-}
-
-
-/* ================= ZIKR ================= */
-
-#zikrSelect{
-
-    width:100%;
-
-    padding:12px;
-
-    border-radius:12px;
-
-    border:1px solid #b7d5bd;
-
-    background:#f5faf6;
-
-    color:#1b4332;
-
-    font-size:16px;
-
-    outline:none;
+    margin:2px 0;
 
 }
 
 
-/* ================= TARGET ================= */
+.zikr-name{
 
-.target-buttons{
+    font-size:17px;
 
-    display:flex;
-
-    gap:10px;
-
-}
-
-.target-btn{
-
-    flex:1;
-
-    padding:11px 5px;
-
-    border:none;
-
-    border-radius:12px;
-
-    background:#e8f5e9;
+    font-weight:bold;
 
     color:#2e7d32;
 
-    font-size:16px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
 }
 
-.target-btn.active{
 
-    background:#2e7d32;
+.step-text{
 
-    color:white;
+    font-size:13px;
 
-}
+    color:#777;
 
-.target-btn:active{
-
-    transform:scale(0.96);
+    margin-top:3px;
 
 }
 
 
-/* ================= COUNTER ================= */
+/* ================= COUNT INFO ================= */
 
-.counter-card{
+.count-info{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:8px;
+
+}
+
+
+.count-card{
+
+    background:white;
+
+    border-radius:14px;
+
+    padding:8px;
 
     text-align:center;
 
-    padding-top:20px;
+    box-shadow:
+        0 3px 8px rgba(0,0,0,0.07);
 
 }
 
-.counter-label{
 
-    font-size:14px;
+.step-count{
+
+    font-size:23px;
 
     font-weight:bold;
 
-    color:#52796f;
+    color:#2e7d32;
 
 }
 
 
-.count-box{
+.total-count{
 
-    font-size:68px;
-
-    line-height:1;
+    font-size:23px;
 
     font-weight:bold;
 
     color:#1b5e20;
-
-    margin-top:10px;
-
-}
-
-
-.remaining{
-
-    margin-top:8px;
-
-    font-size:14px;
-
-    font-weight:bold;
-
-    color:#52796f;
 
 }
 
 
 /* ================= PROGRESS ================= */
 
-.progress-area{
+.progress-section{
 
-    margin-top:18px;
+    background:white;
+
+    border-radius:14px;
+
+    padding:8px 10px;
+
+    box-shadow:
+        0 3px 8px rgba(0,0,0,0.07);
 
 }
+
+
+.progress-text{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:13px;
+
+    margin-bottom:5px;
+
+    color:#555;
+
+}
+
 
 .progress-bar{
 
@@ -254,7 +280,7 @@ body{
 
     height:9px;
 
-    background:#dcefe0;
+    background:#dcebdd;
 
     border-radius:20px;
 
@@ -262,44 +288,112 @@ body{
 
 }
 
+
 .progress-fill{
 
-    height:100%;
-
     width:0%;
+
+    height:100%;
 
     background:#2e7d32;
 
     border-radius:20px;
 
-    transition:width 0.2s ease;
-
-}
-
-.progress-text{
-
-    margin-top:6px;
-
-    font-size:12px;
-
-    color:#52796f;
+    transition:width .2s ease;
 
 }
 
 
-/* ================= TAP ================= */
+/* ================= TODAY ================= */
+
+.today-card{
+
+    background:white;
+
+    border-radius:14px;
+
+    padding:7px;
+
+    text-align:center;
+
+    box-shadow:
+        0 3px 8px rgba(0,0,0,0.07);
+
+}
+
+
+.today-number{
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    color:#1b5e20;
+
+}
+
+
+/* ================= COMPLETE MESSAGE ================= */
+
+.complete-message{
+
+    min-height:25px;
+
+    text-align:center;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    color:#2e7d32;
+
+}
+
+
+/* ================= TAP AREA ================= */
 
 .tap-area{
 
-    width:190px;
+    height:33.3333vh;
 
-    height:190px;
+    height:33.3333dvh;
 
-    margin:22px auto 18px;
+    min-height:0;
 
-    border:none;
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    position:relative;
+
+}
+
+
+/* ================= TAP BUTTON ================= */
+
+.tap-button{
+
+    width:min(70vw, 280px);
+
+    height:min(70vw, 280px);
+
+    max-height:calc(33.3333dvh - 55px);
+
+    max-width:calc(33.3333dvh - 55px);
+
+    min-width:160px;
+
+    min-height:160px;
 
     border-radius:50%;
+
+    border:none;
 
     background:#2e7d32;
 
@@ -307,90 +401,120 @@ body{
 
     display:flex;
 
+    flex-direction:column;
+
     align-items:center;
 
     justify-content:center;
 
-    font-size:27px;
-
-    font-weight:bold;
-
     box-shadow:
-        0 7px 18px rgba(0,0,0,0.22);
+        0 8px 20px rgba(0,0,0,0.20);
 
     cursor:pointer;
 
+    -webkit-tap-highlight-color:transparent;
+
+    user-select:none;
+
     transition:
-        transform 0.12s ease,
-        background 0.12s ease;
+        transform .08s ease,
+        background .15s ease;
 
 }
 
-.tap-area:active{
 
-    transform:scale(0.94);
+.tap-button:active{
+
+    transform:scale(.94);
 
     background:#1b5e20;
 
 }
 
 
+.tap-text{
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    letter-spacing:1px;
+
+}
+
+
+.tap-number{
+
+    font-size:48px;
+
+    font-weight:bold;
+
+    margin-top:2px;
+
+}
+
+
 /* ================= RESET ================= */
 
-.reset-btn{
+.reset-button{
 
-    padding:10px 26px;
+    position:absolute;
+
+    bottom:5px;
+
+    right:14px;
 
     border:none;
-
-    border-radius:11px;
 
     background:#d32f2f;
 
     color:white;
 
-    font-size:14px;
+    border-radius:10px;
 
-    font-weight:bold;
+    padding:7px 12px;
+
+    font-size:13px;
 
     cursor:pointer;
 
 }
 
-.reset-btn:active{
 
-    transform:scale(0.96);
+/* ================= COMPLETE STATE ================= */
+
+.tap-button.completed{
+
+    background:#388e3c;
+
+}
+
+
+.complete-message.show{
+
+    animation:
+        completePop .35s ease;
 
 }
 
 
-/* ================= INFORMATION ================= */
+@keyframes completePop{
 
-.info-card{
+    0%{
 
-    background:#dcedc8;
+        transform:scale(.8);
 
-}
+        opacity:0;
 
-.info-title{
+    }
 
-    font-size:15px;
+    100%{
 
-    font-weight:bold;
+        transform:scale(1);
 
-    color:#2e7d32;
+        opacity:1;
 
-    margin-bottom:7px;
-
-}
-
-.info-text{
-
-    font-size:13px;
-
-    line-height:1.6;
-
-    color:#52796f;
+    }
 
 }
 
@@ -405,100 +529,203 @@ body.dark-mode{
 
 }
 
-body.dark-mode
-.zikr-card,
-body.dark-mode
-.target-card,
-body.dark-mode
-.counter-card{
+
+body.dark-mode .zikr-card,
+body.dark-mode .count-card,
+body.dark-mode .progress-section,
+body.dark-mode .today-card{
 
     background:#1e2a1f;
 
     box-shadow:
-        0 3px 10px rgba(0,0,0,0.35);
+        0 3px 10px rgba(0,0,0,.35);
 
 }
 
-body.dark-mode
-.info-card{
 
-    background:#1e2a1f;
-
-}
-
-body.dark-mode
-.section-label,
-body.dark-mode
-.counter-label,
-body.dark-mode
-.remaining,
-body.dark-mode
-.progress-text{
+body.dark-mode .small-label{
 
     color:#a5d6a7;
 
 }
 
-body.dark-mode
-#zikrSelect{
 
-    background:#263b29;
-
-    border-color:#52796f;
-
-    color:#c8e6c9;
-
-}
-
-body.dark-mode
-.target-btn{
-
-    background:#263b29;
-
-    color:#c8e6c9;
-
-}
-
-body.dark-mode
-.target-btn.active{
-
-    background:#2e7d32;
-
-    color:white;
-
-}
-
-body.dark-mode
-.count-box{
+body.dark-mode .zikr-arabic{
 
     color:#81c784;
 
 }
 
-body.dark-mode
-.progress-bar{
 
-    background:#263b29;
+body.dark-mode .zikr-name{
 
-}
-
-body.dark-mode
-.progress-fill{
-
-    background:#2e7d32;
+    color:#c8e6c9;
 
 }
 
-body.dark-mode
-.info-title{
 
-    color:#81c784;
-
-}
-
-body.dark-mode
-.info-text{
+body.dark-mode .step-text{
 
     color:#a5d6a7;
+
+}
+
+
+body.dark-mode .step-count{
+
+    color:#81c784;
+
+}
+
+
+body.dark-mode .total-count{
+
+    color:#c8e6c9;
+
+}
+
+
+body.dark-mode .progress-text{
+
+    color:#c8e6c9;
+
+}
+
+
+body.dark-mode .progress-bar{
+
+    background:#304534;
+
+}
+
+
+body.dark-mode .progress-fill{
+
+    background:#66bb6a;
+
+}
+
+
+body.dark-mode .today-number{
+
+    color:#81c784;
+
+}
+
+
+body.dark-mode .complete-message{
+
+    color:#81c784;
+
+}
+
+
+body.dark-mode .tap-button{
+
+    background:#2e7d32;
+
+}
+
+
+body.dark-mode .tap-button:active{
+
+    background:#1b5e20;
+
+}
+
+
+/* ================= SMALL SCREEN ================= */
+
+@media(max-height:650px){
+
+    .tasbih-header{
+
+        height:48px;
+
+        min-height:48px;
+
+    }
+
+
+    .top-area{
+
+        padding-top:6px;
+
+        gap:5px;
+
+    }
+
+
+    .zikr-card{
+
+        padding:5px;
+
+    }
+
+
+    .zikr-arabic{
+
+        font-size:24px;
+
+    }
+
+
+    .zikr-name{
+
+        font-size:15px;
+
+    }
+
+
+    .count-card{
+
+        padding:5px;
+
+    }
+
+
+    .step-count,
+    .total-count{
+
+        font-size:19px;
+
+    }
+
+
+    .progress-section{
+
+        padding:5px 8px;
+
+    }
+
+
+    .today-card{
+
+        padding:5px;
+
+    }
+
+
+    .today-number{
+
+        font-size:19px;
+
+    }
+
+
+    .tap-button{
+
+        min-width:145px;
+
+        min-height:145px;
+
+    }
+
+
+    .tap-number{
+
+        font-size:40px;
+
+    }
 
 }
