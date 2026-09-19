@@ -1,5 +1,6 @@
 /* =========================================================
-   IBADAT QIBLA - REFRESHED FINAL VERSION
+   IBADAT QIBLA - FINAL VERSION
+   SHARED LOCATION + IMPROVED COMPASS
    ========================================================= */
 
 
@@ -7,6 +8,9 @@
 
 const KAABA_LAT = 21.422487;
 const KAABA_LON = 39.826206;
+
+const IBADAT_LOCATION_KEY =
+    "IBADAT_LOCATION";
 
 
 /* ================= LANGUAGE ================= */
@@ -23,7 +27,8 @@ const QIBLA_TEXT = {
         started: "কম্পাস চালু হয়েছে",
         permission: "কম্পাস ব্যবহারের অনুমতি দিন",
         locationError: "লোকেশন পাওয়া যায়নি",
-        compassError: "আপনার ডিভাইসে কম্পাস সাপোর্ট পাওয়া যায়নি"
+        compassError: "আপনার ডিভাইসে কম্পাস সাপোর্ট পাওয়া যায়নি",
+        holdFlat: "ফোনটি সমতলভাবে ধরে ধীরে ঘোরান"
     },
 
     en: {
@@ -36,7 +41,8 @@ const QIBLA_TEXT = {
         started: "Compass started",
         permission: "Allow compass permission",
         locationError: "Location unavailable",
-        compassError: "Compass is not supported on this device"
+        compassError: "Compass is not supported on this device",
+        holdFlat: "Hold the phone flat and rotate slowly"
     },
 
     hi: {
@@ -49,7 +55,8 @@ const QIBLA_TEXT = {
         started: "कम्पास चालू हो गया",
         permission: "कम्पास की अनुमति दें",
         locationError: "स्थान उपलब्ध नहीं",
-        compassError: "इस डिवाइस में कम्पास उपलब्ध नहीं है"
+        compassError: "इस डिवाइस में कम्पास उपलब्ध नहीं है",
+        holdFlat: "फ़ोन को समतल रखें और धीरे-धीरे घुमाएँ"
     }
 };
 
@@ -61,14 +68,28 @@ function getLanguage(){
     try{
 
         const saved =
-            localStorage.getItem("appSettings");
+            localStorage.getItem(
+                "appSettings"
+            );
+
 
         if(saved){
 
             const settings =
                 JSON.parse(saved);
 
-            return settings.lang || "bn";
+
+            if(
+                settings &&
+                (
+                    settings.lang === "bn" ||
+                    settings.lang === "en" ||
+                    settings.lang === "hi"
+                )
+            ){
+
+                return settings.lang;
+            }
         }
 
     }catch(e){}
@@ -88,56 +109,187 @@ function getText(){
 /* ================= DOM ================= */
 
 const pageTitle =
-    document.getElementById("pageTitle");
+    document.getElementById(
+        "pageTitle"
+    );
+
 
 const locationLabel =
-    document.getElementById("locationLabel");
+    document.getElementById(
+        "locationLabel"
+    );
+
 
 const locationName =
-    document.getElementById("locationName");
+    document.getElementById(
+        "locationName"
+    );
+
 
 const distanceLabel =
-    document.getElementById("distanceLabel");
+    document.getElementById(
+        "distanceLabel"
+    );
+
 
 const distance =
-    document.getElementById("distance");
+    document.getElementById(
+        "distance"
+    );
+
 
 const directionText =
-    document.getElementById("directionText");
+    document.getElementById(
+        "directionText"
+    );
+
 
 const qiblaDegree =
-    document.getElementById("qiblaDegree");
+    document.getElementById(
+        "qiblaDegree"
+    );
+
 
 const startCompassBtn =
-    document.getElementById("startCompass");
+    document.getElementById(
+        "startCompass"
+    );
+
 
 const compassMessage =
-    document.getElementById("compassMessage");
+    document.getElementById(
+        "compassMessage"
+    );
+
 
 const qiblaArrow =
-    document.getElementById("qiblaArrow");
+    document.getElementById(
+        "qiblaArrow"
+    );
+
 
 const backBtn =
-    document.getElementById("backBtn");
+    document.getElementById(
+        "backBtn"
+    );
 
 
 /* ================= LOCATION STATE ================= */
 
 let latitude = null;
+
 let longitude = null;
 
 let userLocationLoaded = false;
 
 let qiblaBearing = 0;
 
+
+/* ================= COMPASS STATE ================= */
+
 let compassStarted = false;
 
+let lastHeading = null;
 
-/* ================= LANGUAGE APPLY ================= */
+let absoluteCompassSupported = false;
+
+
+/* =========================================================
+   SHARED LOCATION
+   ========================================================= */
+
+function getSharedLocation(){
+
+    try{
+
+        const saved =
+            localStorage.getItem(
+                IBADAT_LOCATION_KEY
+            );
+
+
+        if(!saved){
+
+            return null;
+        }
+
+
+        const data =
+            JSON.parse(saved);
+
+
+        if(
+            !data ||
+            typeof data.latitude !== "number" ||
+            typeof data.longitude !== "number"
+        ){
+
+            return null;
+        }
+
+
+        return data;
+
+
+    }catch(e){
+
+        return null;
+    }
+}
+
+
+/* ================= SAVE LOCATION ================= */
+
+function saveSharedLocation(
+    lat,
+    lon,
+    city
+){
+
+    try{
+
+        const data = {
+
+            latitude:
+                Number(lat),
+
+            longitude:
+                Number(lon),
+
+            city:
+                city || "",
+
+            updatedAt:
+                Date.now()
+        };
+
+
+        localStorage.setItem(
+
+            IBADAT_LOCATION_KEY,
+
+            JSON.stringify(data)
+        );
+
+
+    }catch(e){
+
+        console.error(
+            "Location save error:",
+            e
+        );
+    }
+}
+
+
+/* =========================================================
+   LANGUAGE APPLY
+   ========================================================= */
 
 function applyLanguage(){
 
-    const t = getText();
+    const t =
+        getText();
 
 
     if(pageTitle){
@@ -181,9 +333,10 @@ function applyLanguage(){
     if(startCompassBtn){
 
         startCompassBtn.innerText =
+
             compassStarted
-                ? t.started
-                : t.start;
+            ? t.started
+            : t.start;
     }
 
 
@@ -199,12 +352,13 @@ if(backBtn){
 
         window.location.href =
             "../index.html";
-
     };
 }
 
 
-/* ================= NUMBER ================= */
+/* =========================================================
+   NUMBER
+   ========================================================= */
 
 function localNumber(number){
 
@@ -238,14 +392,73 @@ function localNumber(number){
 }
 
 
-/* ================= GET LOCATION ================= */
+/* =========================================================
+   LOAD SHARED LOCATION
+   ========================================================= */
 
-function getLocation(){
+function loadSharedLocation(){
+
+    const shared =
+        getSharedLocation();
+
+
+    if(!shared){
+
+        return false;
+    }
+
+
+    latitude =
+        shared.latitude;
+
+
+    longitude =
+        shared.longitude;
+
+
+    userLocationLoaded =
+        true;
+
+
+    /*
+       সবচেয়ে গুরুত্বপূর্ণ:
+
+       Home যে location name save করেছে
+       সেটাই Qibla দেখাবে।
+    */
+
+    if(
+        locationName &&
+        shared.city
+    ){
+
+        locationName.innerText =
+            shared.city;
+    }
+
+
+    calculateQibla();
+
+    calculateDistance();
+
+
+    return true;
+}
+
+
+/* =========================================================
+   GET FRESH LOCATION
+   ========================================================= */
+
+function getFreshLocation(){
 
     if(!navigator.geolocation){
 
-        locationName.innerText =
-            getText().locationError;
+        if(!userLocationLoaded){
+
+            locationName.innerText =
+                getText().locationError;
+        }
 
         return;
     }
@@ -258,6 +471,7 @@ function getLocation(){
             latitude =
                 position.coords.latitude;
 
+
             longitude =
                 position.coords.longitude;
 
@@ -266,48 +480,78 @@ function getLocation(){
                 true;
 
 
-            /* LOCATION */
+            /*
+               GPS পাওয়ার পরে
+               Home-এর মতো একই reverse
+               geocoder ব্যবহার করা হবে।
+            */
 
-            showLocation();
-
-
-            /* QIBLA */
+            reverseLocation();
 
             calculateQibla();
-
-
-            /* DISTANCE */
 
             calculateDistance();
 
         },
 
 
-        error => {
+        () => {
 
-            locationName.innerText =
-                getText().locationError;
+            /*
+               Shared location থাকলে
+               সেটাই থাকবে।
 
+               তাই Qibla খোলার সময়
+               Home-এর location নষ্ট হবে না।
+            */
+
+            if(!userLocationLoaded){
+
+                locationName.innerText =
+                    getText().locationError;
+            }
         },
 
 
         {
-            enableHighAccuracy:true,
-            timeout:15000,
-            maximumAge:60000
+
+            enableHighAccuracy:
+                true,
+
+            timeout:
+                15000,
+
+            maximumAge:
+                60000
         }
     );
 }
 
 
-/* ================= REVERSE LOCATION ================= */
+/* =========================================================
+   REVERSE LOCATION
+   ========================================================= */
 
-async function showLocation(){
+async function reverseLocation(){
+
+    if(
+        latitude === null ||
+        longitude === null
+    ){
+
+        return;
+    }
+
 
     try{
 
+        const lang =
+            getLanguage();
+
+
         const url =
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10&addressdetails=1`;
+
+            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=${lang}`;
 
 
         const response =
@@ -317,7 +561,7 @@ async function showLocation(){
         if(!response.ok){
 
             throw new Error(
-                "Reverse location failed"
+                "Reverse geocoding failed"
             );
         }
 
@@ -326,38 +570,74 @@ async function showLocation(){
             await response.json();
 
 
-        const address =
-            data.address || {};
+        /*
+           Home-এর EXACT same priority:
+
+           locality
+           → city
+           → district
+           → subdivision
+        */
+
+        const city =
+
+            data.locality ||
+
+            data.city ||
+
+            data.district ||
+
+            data.principalSubdivision ||
+
+            data.countryName ||
+
+            "";
 
 
-        const name =
-            address.city ||
-            address.town ||
-            address.village ||
-            address.municipality ||
-            address.county ||
-            address.state ||
-            "Location";
+        if(city){
+
+            locationName.innerText =
+                city;
 
 
-        locationName.innerText =
-            name;
+            saveSharedLocation(
+
+                latitude,
+
+                longitude,
+
+                city
+            );
+        }
+
 
     }catch(e){
 
+        /*
+           Reverse geocoding fail হলে
+           existing shared location name
+           পরিবর্তন করা হবে না।
+        */
+
+        const shared =
+            getSharedLocation();
+
+
         if(
-            latitude !== null &&
-            longitude !== null
+            shared &&
+            shared.city
         ){
 
             locationName.innerText =
-                `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
+                shared.city;
         }
     }
 }
 
 
-/* ================= QIBLA CALCULATION ================= */
+/* =========================================================
+   QIBLA CALCULATION
+   ========================================================= */
 
 function calculateQibla(){
 
@@ -404,16 +684,23 @@ function calculateQibla(){
 
 
     const x =
+
         Math.cos(lat1) *
         Math.sin(lat2)
+
         -
+
         Math.sin(lat1) *
         Math.cos(lat2) *
         Math.cos(deltaLon);
 
 
     let bearing =
-        Math.atan2(y, x) *
+
+        Math.atan2(
+            y,
+            x
+        ) *
         180 /
         Math.PI;
 
@@ -430,21 +717,31 @@ function calculateQibla(){
 }
 
 
-/* ================= DEGREE ================= */
+/* =========================================================
+   DEGREE
+   ========================================================= */
 
 function updateDegreeText(){
 
-    if(!qiblaDegree) return;
+    if(!qiblaDegree){
+
+        return;
+    }
 
 
     qiblaDegree.innerText =
+
         localNumber(
             Math.round(qiblaBearing)
-        ) + "°";
+        ) +
+
+        "°";
 }
 
 
-/* ================= DISTANCE ================= */
+/* =========================================================
+   DISTANCE
+   ========================================================= */
 
 function calculateDistance(){
 
@@ -457,7 +754,8 @@ function calculateDistance(){
     }
 
 
-    const R = 6371;
+    const R =
+        6371;
 
 
     const lat1 =
@@ -473,28 +771,35 @@ function calculateDistance(){
 
 
     const deltaLat =
+
         (KAABA_LAT - latitude) *
         Math.PI /
         180;
 
 
     const deltaLon =
+
         (KAABA_LON - longitude) *
         Math.PI /
         180;
 
 
     const a =
+
         Math.sin(deltaLat / 2) *
         Math.sin(deltaLat / 2)
+
         +
+
         Math.cos(lat1) *
         Math.cos(lat2) *
+
         Math.sin(deltaLon / 2) *
         Math.sin(deltaLon / 2);
 
 
     const c =
+
         2 *
         Math.atan2(
             Math.sqrt(a),
@@ -513,23 +818,98 @@ function calculateDistance(){
 
 
         distance.innerText =
+
             localNumber(value) +
             " km";
 
     }else{
 
         const value =
-            Math.round(km);
+            km.toFixed(1);
 
 
         distance.innerText =
+
             localNumber(value) +
             " km";
     }
 }
 
 
-/* ================= COMPASS ================= */
+/* =========================================================
+   COMPASS HELPERS
+   ========================================================= */
+
+function normalizeAngle(angle){
+
+    return (
+        angle +
+        360
+    ) % 360;
+}
+
+
+/* ================= SMOOTH HEADING ================= */
+
+function smoothHeading(
+    heading
+){
+
+    if(lastHeading === null){
+
+        lastHeading =
+            heading;
+
+        return heading;
+    }
+
+
+    let difference =
+
+        heading -
+        lastHeading;
+
+
+    /*
+       -180 থেকে +180
+       এর মধ্যে difference রাখা।
+    */
+
+    if(difference > 180){
+
+        difference -=
+            360;
+    }
+
+
+    if(difference < -180){
+
+        difference +=
+            360;
+    }
+
+
+    /*
+       25% smoothing
+       → compass jitter কমাবে।
+    */
+
+    lastHeading =
+
+        normalizeAngle(
+
+            lastHeading +
+            difference * 0.25
+        );
+
+
+    return lastHeading;
+}
+
+
+/* =========================================================
+   DEVICE ORIENTATION
+   ========================================================= */
 
 function handleOrientation(event){
 
@@ -547,11 +927,39 @@ function handleOrientation(event){
 
         heading =
             event.webkitCompassHeading;
+
+        absoluteCompassSupported =
+            true;
     }
 
 
     /*
-       Android / Other browsers
+       Android absolute orientation
+    */
+
+    else if(
+        event.absolute === true &&
+        typeof event.alpha ===
+        "number"
+    ){
+
+        heading =
+
+            normalizeAngle(
+                360 -
+                event.alpha
+            );
+
+        absoluteCompassSupported =
+            true;
+    }
+
+
+    /*
+       Fallback
+       কিছু Android browser
+       event.absolute না দিলেও
+       alpha দেয়।
     */
 
     else if(
@@ -560,7 +968,11 @@ function handleOrientation(event){
     ){
 
         heading =
-            360 - event.alpha;
+
+            normalizeAngle(
+                360 -
+                event.alpha
+            );
     }
 
 
@@ -570,7 +982,25 @@ function handleOrientation(event){
     }
 
 
+    heading =
+        smoothHeading(
+            heading
+        );
+
+
+    /*
+       Qibla bearing:
+       North থেকে clockwise.
+
+       Device heading:
+       North থেকে phone কত degree
+       ঘুরেছে।
+
+       Difference = arrow rotation.
+    */
+
     const rotation =
+
         qiblaBearing -
         heading;
 
@@ -578,12 +1008,15 @@ function handleOrientation(event){
     if(qiblaArrow){
 
         qiblaArrow.style.transform =
+
             `translateX(-50%) rotate(${rotation}deg)`;
     }
 }
 
 
-/* ================= START COMPASS ================= */
+/* =========================================================
+   START COMPASS
+   ========================================================= */
 
 async function startCompass(){
 
@@ -600,24 +1033,32 @@ async function startCompass(){
     try{
 
         /*
-           iPhone / iPad permission
+           iOS permission
         */
 
         if(
+
             typeof DeviceOrientationEvent !==
-            "undefined" &&
+            "undefined"
+
+            &&
 
             typeof DeviceOrientationEvent
                 .requestPermission ===
             "function"
+
         ){
 
             const permission =
+
                 await DeviceOrientationEvent
                     .requestPermission();
 
 
-            if(permission !== "granted"){
+            if(
+                permission !==
+                "granted"
+            ){
 
                 compassMessage.innerText =
                     t.permission;
@@ -628,25 +1069,39 @@ async function startCompass(){
 
 
         /*
-           Compass events
+           Absolute orientation first.
         */
 
         window.addEventListener(
+
             "deviceorientationabsolute",
+
             handleOrientation,
+
             true
         );
 
 
+        /*
+           General orientation fallback.
+        */
+
         window.addEventListener(
+
             "deviceorientation",
+
             handleOrientation,
+
             true
         );
 
 
         compassStarted =
             true;
+
+
+        lastHeading =
+            null;
 
 
         if(startCompassBtn){
@@ -659,8 +1114,9 @@ async function startCompass(){
         if(compassMessage){
 
             compassMessage.innerText =
-                "";
+                t.holdFlat;
         }
+
 
     }catch(e){
 
@@ -684,21 +1140,45 @@ if(startCompassBtn){
 }
 
 
-/* ================= INIT ================= */
+/* =========================================================
+   INIT
+   ========================================================= */
 
 document.addEventListener(
+
     "DOMContentLoaded",
+
     function(){
 
         applyLanguage();
 
-        getLocation();
+
+        /*
+           প্রথমে Home-এর shared
+           location নেওয়া হবে।
+        */
+
+        const sharedLoaded =
+            loadSharedLocation();
+
+
+        /*
+           Shared location না থাকলে
+           তবেই নতুন GPS নেওয়া হবে।
+        */
+
+        if(!sharedLoaded){
+
+            getFreshLocation();
+        }
 
     }
 );
 
 
-/* ================= LANGUAGE WATCH ================= */
+/* =========================================================
+   LANGUAGE WATCH
+   ========================================================= */
 
 window.currentQiblaLang =
     getLanguage();
@@ -722,6 +1202,21 @@ setInterval(
 
 
             applyLanguage();
+
+
+            /*
+               একই coordinate রেখে
+               নতুন ভাষায় location name
+               refresh করা হবে।
+            */
+
+            if(
+                latitude !== null &&
+                longitude !== null
+            ){
+
+                reverseLocation();
+            }
         }
 
     },
