@@ -1376,12 +1376,20 @@ async function loadWeather(){
         }
 
 
-        setText(
+        let unit = "°C";
 
-            "weather",
+if(lang === "bn"){
+    unit = "°সে";
+}
 
-            `${icon} ${localNumber(temp)}°C`
-        );
+if(lang === "hi"){
+    unit = "°से";
+}
+
+setText(
+    "weather",
+    `${icon} ${condition} • ${localNumber(temp)}${unit}`
+);
 
 
         const weatherTitle =
