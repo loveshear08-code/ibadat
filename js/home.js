@@ -1,6 +1,6 @@
 /* =========================================================
    IBADAT HOME - FINAL VERSION
-   LANGUAGE SYNC FIXED
+   SHARED LOCATION SYSTEM
    ========================================================= */
 
 
@@ -38,7 +38,8 @@ const HOME_TEXT = {
             tasbih: "তাসবিহ"
         },
 
-        bottom: "আল্লাহকে স্মরণ করুন — নামাজ কায়েম করুন"
+        bottom:
+            "আল্লাহকে স্মরণ করুন — নামাজ কায়েম করুন"
     },
 
 
@@ -72,7 +73,8 @@ const HOME_TEXT = {
             tasbih: "Tasbih"
         },
 
-        bottom: "Remember Allah — Establish Prayer"
+        bottom:
+            "Remember Allah — Establish Prayer"
     },
 
 
@@ -106,7 +108,8 @@ const HOME_TEXT = {
             tasbih: "तस्बीह"
         },
 
-        bottom: "अल्लाह को याद करें — नमाज़ कायम करें"
+        bottom:
+            "अल्लाह को याद करें — नमाज़ कायम करें"
     }
 
 };
@@ -133,6 +136,12 @@ const ACTUAL_PRAYERS = [
 ];
 
 
+/* ================= SHARED LOCATION ================= */
+
+const IBADAT_LOCATION_KEY =
+    "IBADAT_LOCATION";
+
+
 /* ================= STATE ================= */
 
 let prayerTimes = {};
@@ -151,11 +160,6 @@ let lastHomeLanguage = null;
 
 
 /* ================= SETTINGS ================= */
-
-/*
-   Home থেকে প্রতিবার সরাসরি localStorage
-   থেকে Language পড়া হবে।
-*/
 
 function homeSettings(){
 
@@ -183,7 +187,9 @@ function homeSettings(){
     try{
 
         const saved =
-            localStorage.getItem("appSettings");
+            localStorage.getItem(
+                "appSettings"
+            );
 
 
         if(!saved){
@@ -196,13 +202,14 @@ function homeSettings(){
             JSON.parse(saved);
 
 
-        if(!obj || typeof obj !== "object"){
+        if(
+            !obj ||
+            typeof obj !== "object"
+        ){
 
             return defaultSettings;
         }
 
-
-        /* ================= LANGUAGE ================= */
 
         if(
             obj.lang !== "bn" &&
@@ -213,8 +220,6 @@ function homeSettings(){
             obj.lang = "bn";
         }
 
-
-        /* ================= AZAN ================= */
 
         if(
             !obj.azan ||
@@ -249,14 +254,16 @@ function homeSettings(){
 }
 
 
-/* ================= GET CURRENT LANGUAGE ================= */
+/* ================= LANGUAGE ================= */
 
 function getHomeLanguage(){
 
     try{
 
         const saved =
-            localStorage.getItem("appSettings");
+            localStorage.getItem(
+                "appSettings"
+            );
 
 
         if(saved){
@@ -291,7 +298,7 @@ function getHomeLanguage(){
 }
 
 
-/* ================= LANGUAGE NUMBER ================= */
+/* ================= NUMBER ================= */
 
 function localNumber(value){
 
@@ -466,13 +473,15 @@ function formatDate(date){
 
     if(lang === "en"){
 
-        locale = "en-US";
+        locale =
+            "en-US";
     }
 
 
     if(lang === "hi"){
 
-    locale = "hi-IN-u-nu-deva";
+        locale =
+            "hi-IN-u-nu-deva";
     }
 
 
@@ -497,13 +506,15 @@ function formatDay(date){
 
     if(lang === "en"){
 
-        locale = "en-US";
+        locale =
+            "en-US";
     }
 
 
     if(lang === "hi"){
 
-        locale = "hi-IN";
+        locale =
+            "hi-IN";
     }
 
 
@@ -516,14 +527,116 @@ function formatDay(date){
 }
 
 
+/* ================= SAFE TEXT ================= */
+
+function setText(id,text){
+
+    const el =
+        document.getElementById(id);
+
+
+    if(el){
+
+        el.innerText =
+            text;
+    }
+}
+
+
+/* =========================================================
+   SHARED LOCATION SAVE
+   ========================================================= */
+
+function saveSharedLocation(
+    lat,
+    lon,
+    city
+){
+
+    try{
+
+        const locationData = {
+
+            latitude:
+                Number(lat),
+
+            longitude:
+                Number(lon),
+
+            city:
+                city || "",
+
+            updatedAt:
+                Date.now()
+        };
+
+
+        localStorage.setItem(
+
+            IBADAT_LOCATION_KEY,
+
+            JSON.stringify(
+                locationData
+            )
+        );
+
+    }catch(e){
+
+        console.error(
+            "Shared location save error:",
+            e
+        );
+    }
+}
+
+
+/* =========================================================
+   SHARED LOCATION READ
+   ========================================================= */
+
+function getSharedLocation(){
+
+    try{
+
+        const saved =
+            localStorage.getItem(
+                IBADAT_LOCATION_KEY
+            );
+
+
+        if(!saved){
+
+            return null;
+        }
+
+
+        const data =
+            JSON.parse(saved);
+
+
+        if(
+            !data ||
+            typeof data.latitude !== "number" ||
+            typeof data.longitude !== "number"
+        ){
+
+            return null;
+        }
+
+
+        return data;
+
+
+    }catch(e){
+
+        return null;
+    }
+}
+
+
 /* ================= APPLY LANGUAGE ================= */
 
 function applyHomeLanguage(){
-
-    /*
-       IMPORTANT:
-       প্রতিবার localStorage থেকে নতুন Language নেওয়া হচ্ছে।
-    */
 
     const lang =
         getHomeLanguage();
@@ -534,13 +647,9 @@ function applyHomeLanguage(){
         HOME_TEXT.bn;
 
 
-    /* HTML LANGUAGE */
-
     document.documentElement.lang =
         lang;
 
-
-    /* TITLE */
 
     document.title =
 
@@ -552,8 +661,6 @@ function applyHomeLanguage(){
 
         : "IBADAT";
 
-
-    /* FEATURES */
 
     setText(
         "namaz",
@@ -586,15 +693,11 @@ function applyHomeLanguage(){
     );
 
 
-    /* BOTTOM */
-
     setText(
         "bottomText",
         t.bottom
     );
 
-
-    /* BISMILLAH MEANING */
 
     setText(
 
@@ -612,20 +715,10 @@ function applyHomeLanguage(){
     );
 
 
-    /* PRAYER GRID */
-
     updatePrayerGrid();
-
-
-    /* DAY + DATE */
 
     updateToday();
 
-
-    /*
-       Prayer status থাকলে
-       Current / Next language-ও সঙ্গে সঙ্গে বদলাবে।
-    */
 
     if(
         Object.keys(prayerTimes).length > 0
@@ -635,11 +728,6 @@ function applyHomeLanguage(){
     }
 
 
-    /*
-       Language পরিবর্তন হলে city-ও
-       নতুন ভাষায় reverse geocode হবে।
-    */
-
     if(
         latitude !== null &&
         longitude !== null
@@ -648,21 +736,6 @@ function applyHomeLanguage(){
         reverseLocation();
 
         loadWeather();
-    }
-}
-
-
-/* ================= SAFE TEXT ================= */
-
-function setText(id,text){
-
-    const el =
-        document.getElementById(id);
-
-
-    if(el){
-
-        el.innerText = text;
     }
 }
 
@@ -730,8 +803,6 @@ function updatePrayerGrid(){
         `;
 
 
-        /* SUNRISE → SETTINGS */
-
         if(name === "Sunrise"){
 
             box.onclick = function(){
@@ -765,15 +836,11 @@ function updateStatus(){
         new Date();
 
 
-    /* LIVE CLOCK */
-
     setText(
         "clock",
         formatClock(now)
     );
 
-
-    /* DAY */
 
     setText(
         "todayDay",
@@ -781,15 +848,11 @@ function updateStatus(){
     );
 
 
-    /* DATE */
-
     setText(
         "date",
         formatDate(now)
     );
 
-
-    /* GET PRAYER MINUTES */
 
     const times = {};
 
@@ -804,7 +867,8 @@ function updateStatus(){
 
         if(min !== null){
 
-            times[name] = min;
+            times[name] =
+                min;
         }
     });
 
@@ -825,8 +889,6 @@ function updateStatus(){
 
         now.getSeconds() / 60;
 
-
-    /* ================= NEXT EVENT ================= */
 
     let nextName = null;
 
@@ -852,8 +914,6 @@ function updateStatus(){
     }
 
 
-    /* AFTER ISHA → NEXT DAY FAJR */
-
     if(!nextName){
 
         nextName =
@@ -864,12 +924,8 @@ function updateStatus(){
     }
 
 
-    /* ================= CURRENT TIME ================= */
-
     let currentName = null;
 
-
-    /* Fajr → Sunrise */
 
     if(
 
@@ -888,8 +944,6 @@ function updateStatus(){
     }
 
 
-    /* Sunrise → Dhuhr */
-
     else if(
 
         times.Sunrise !== undefined &&
@@ -906,8 +960,6 @@ function updateStatus(){
             "Sunrise";
     }
 
-
-    /* Dhuhr → Asr */
 
     else if(
 
@@ -926,8 +978,6 @@ function updateStatus(){
     }
 
 
-    /* Asr → Maghrib */
-
     else if(
 
         times.Asr !== undefined &&
@@ -944,8 +994,6 @@ function updateStatus(){
             "Asr";
     }
 
-
-    /* Maghrib → Isha */
 
     else if(
 
@@ -964,8 +1012,6 @@ function updateStatus(){
     }
 
 
-    /* Isha → Fajr */
-
     else if(
 
         times.Isha !== undefined &&
@@ -979,8 +1025,6 @@ function updateStatus(){
     }
 
 
-    /* Fajr-এর আগে */
-
     else{
 
         currentName =
@@ -988,29 +1032,27 @@ function updateStatus(){
     }
 
 
-    /* ================= CURRENT DISPLAY ================= */
-
     if(currentName){
 
-    setText(
-        "currentPrayerName",
+        setText(
 
-        "🟢 : " +
-        t.prayers[currentName]
-    );
+            "currentPrayerName",
 
-}else{
+            "🟢 : " +
+            t.prayers[currentName]
+        );
 
-    setText(
-        "currentPrayerName",
+    }else{
 
-        "🟢 : " +
-        t.noPrayer
-    );
+        setText(
+
+            "currentPrayerName",
+
+            "🟢 : " +
+            t.noPrayer
+        );
     }
 
-
-    /* ================= NEXT ACTUAL PRAYER ================= */
 
     let nextPrayerName =
         null;
@@ -1032,8 +1074,6 @@ function updateStatus(){
     }
 
 
-    /* Next day Fajr */
-
     if(!nextPrayerName){
 
         nextPrayerName =
@@ -1043,14 +1083,12 @@ function updateStatus(){
 
     setText(
 
-    "nextPrayerName",
+        "nextPrayerName",
 
-    "⏭️ : " +
-    t.prayers[nextPrayerName]
-);
+        "⏭️ : " +
+        t.prayers[nextPrayerName]
+    );
 
-
-   /* ================= COUNTDOWN ================= */
 
     let nowSeconds =
 
@@ -1112,8 +1150,6 @@ function updateStatus(){
         countdown
     );
 
-
-    /* AZAN */
 
     checkAzan(
         now,
@@ -1254,24 +1290,15 @@ function checkAzan(
 
             homeAudio.pause();
 
-
             homeAudio.src =
                 file;
-
 
             homeAudio.currentTime =
                 0;
 
 
             homeAudio.play()
-                .catch(() => {
-
-                    /*
-                       Browser autoplay
-                       policy may block audio.
-                    */
-                });
-
+                .catch(() => {});
         }
     );
 }
@@ -1373,20 +1400,30 @@ async function loadWeather(){
         }
 
 
-        let unit = "°C";
+        let unit =
+            "°C";
 
-if(lang === "bn"){
-    unit = "°সে";
-}
 
-if(lang === "hi"){
-    unit = "°से";
-}
+        if(lang === "bn"){
 
-setText(
-    "weather",
-    `${icon} ${localNumber(temp)}${unit}`
-);
+            unit =
+                "°সে";
+        }
+
+
+        if(lang === "hi"){
+
+            unit =
+                "°से";
+        }
+
+
+        setText(
+
+            "weather",
+
+            `${icon} ${localNumber(temp)}${unit}`
+        );
 
 
         const weatherTitle =
@@ -1412,13 +1449,13 @@ setText(
 }
 
 
-/* ================= LOCATION ================= */
+/* =========================================================
+   LOCATION
+   ========================================================= */
 
 async function loadLocation(){
 
-    if(
-        !navigator.geolocation
-    ){
+    if(!navigator.geolocation){
 
         setText(
 
@@ -1433,6 +1470,11 @@ async function loadLocation(){
     }
 
 
+    /*
+       Fresh GPS location নেওয়া হবে।
+       পুরোনো cached GPS ব্যবহার করা হবে না।
+    */
+
     navigator.geolocation.getCurrentPosition(
 
         async position => {
@@ -1445,11 +1487,37 @@ async function loadLocation(){
                 position.coords.longitude;
 
 
+            /*
+               প্রথমে coordinate save
+               করা হচ্ছে।
+            */
+
+            saveSharedLocation(
+                latitude,
+                longitude,
+                ""
+            );
+
+
+            /*
+               তারপর একই coordinate থেকে
+               city বের করা হবে।
+            */
+
             await reverseLocation();
 
 
+            /*
+               Prayer time-ও একই GPS
+               coordinate ব্যবহার করবে।
+            */
+
             await loadPrayerTimes();
 
+
+            /*
+               Weather-ও একই coordinate।
+            */
 
             loadWeather();
         },
@@ -1475,16 +1543,18 @@ async function loadLocation(){
                 true,
 
             timeout:
-                15000,
+                20000,
 
             maximumAge:
-                300000
+                0
         }
     );
 }
 
 
-/* ================= REVERSE LOCATION ================= */
+/* =========================================================
+   REVERSE LOCATION
+   ========================================================= */
 
 async function reverseLocation(){
 
@@ -1512,15 +1582,31 @@ async function reverseLocation(){
             await fetch(url);
 
 
+        if(!res.ok){
+
+            throw new Error(
+                "Reverse geocoding failed"
+            );
+        }
+
+
         const data =
             await res.json();
 
 
+        /*
+           ছোট locality আগে।
+           যাতে Baranagar-এর মতো
+           actual local area পাওয়া যায়।
+        */
+
         let city =
+
+            data.locality ||
 
             data.city ||
 
-            data.locality ||
+            data.district ||
 
             data.principalSubdivision ||
 
@@ -1541,10 +1627,40 @@ async function reverseLocation(){
                 "city",
                 city
             );
+
+
+            /*
+               City-সহ একই GPS data
+               Qibla-এর জন্য save করা হচ্ছে।
+            */
+
+            saveSharedLocation(
+
+                latitude,
+
+                longitude,
+
+                city
+            );
         }
 
 
     }catch(e){
+
+        /*
+           Reverse geocode না হলেও
+           GPS coordinate হারাবে না।
+        */
+
+        saveSharedLocation(
+
+            latitude,
+
+            longitude,
+
+            ""
+        );
+
 
         setText(
 
@@ -1619,8 +1735,6 @@ async function loadPrayerTimes(){
         prayerTimes =
             data.data.timings;
 
-
-        /* LOCATION TIMEZONE */
 
         if(
             data.data.meta &&
@@ -1719,8 +1833,6 @@ function setupNavigation(){
     );
 
 
-    /* ================= BISMILLAH ================= */
-
     const bismillah =
         document.getElementById(
             "bismillahCard"
@@ -1740,8 +1852,6 @@ function setupNavigation(){
         };
     }
 
-
-    /* ================= STATUS → CALENDAR ================= */
 
     const cards =
         document.querySelectorAll(
@@ -1800,10 +1910,6 @@ function syncHomeLanguage(){
         getHomeLanguage();
 
 
-    /*
-       প্রথমবার current language save করা
-    */
-
     if(
         lastHomeLanguage === null
     ){
@@ -1815,11 +1921,6 @@ function syncHomeLanguage(){
     }
 
 
-    /*
-       Settings page থেকে language
-       পরিবর্তন হয়েছে কি না।
-    */
-
     if(
         currentLanguage !==
         lastHomeLanguage
@@ -1829,11 +1930,6 @@ function syncHomeLanguage(){
             currentLanguage;
 
 
-        /*
-           সম্পূর্ণ Home UI নতুন
-           language অনুযায়ী refresh
-        */
-
         applyHomeLanguage();
     }
 }
@@ -1842,12 +1938,6 @@ function syncHomeLanguage(){
 /* ================= START ================= */
 
 function startHome(){
-
-    /*
-       Home শুরু হওয়ার সময়
-       সরাসরি localStorage থেকে
-       language নেওয়া হবে।
-    */
 
     lastHomeLanguage =
         getHomeLanguage();
@@ -1861,18 +1951,6 @@ function startHome(){
 
     loadLocation();
 
-
-    /*
-       প্রতি ১ সেকেন্ডে:
-
-       - Language
-       - Clock
-       - Current
-       - Next
-       - Countdown
-       - Azan
-       - Date
-    */
 
     setInterval(() => {
 
