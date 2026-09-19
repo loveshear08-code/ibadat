@@ -1,36 +1,196 @@
 <!DOCTYPE html>
 <html lang="bn">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>Tasbih</title>
 
-<link rel="stylesheet" href="../css/tasbih.css">
+<link rel="stylesheet"
+      href="../css/tasbih.css">
 
 </head>
 
 <body>
 
-<div class="tasbih-container">
+<div class="tasbih-page">
 
-    <!-- COUNT -->
-    <div class="count-box" id="count">0</div>
+    <!-- HEADER -->
+    <div class="topbar">
 
-    <!-- CIRCLE BUTTON -->
-    <div class="tap-area" onclick="increase()">
-        TAP
+        <button id="backBtn"
+                class="back-btn">
+            ←
+        </button>
+
+        <div id="pageTitle">
+            তসবিহ
+        </div>
+
     </div>
 
-    <!-- ACTION -->
-    <div class="actions">
-        <button onclick="resetTasbih()">RESET</button>
+
+    <!-- MAIN CONTENT -->
+    <div class="tasbih-container">
+
+
+        <!-- ZIKR CARD -->
+        <div class="zikr-card">
+
+            <div class="section-label"
+                 id="zikrLabel">
+                জিকির
+            </div>
+
+            <select id="zikrSelect">
+
+                <option value="subhanallah">
+                    সুবহানাল্লাহ
+                </option>
+
+                <option value="alhamdulillah">
+                    আলহামদুলিল্লাহ
+                </option>
+
+                <option value="allahuakbar">
+                    আল্লাহু আকবার
+                </option>
+
+                <option value="astaghfirullah">
+                    আস্তাগফিরুল্লাহ
+                </option>
+
+                <option value="salawat">
+                    দরুদ শরীফ
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- TARGET -->
+        <div class="target-card">
+
+            <div class="section-label"
+                 id="targetLabel">
+                লক্ষ্য
+            </div>
+
+            <div class="target-buttons">
+
+                <button
+                    class="target-btn"
+                    data-target="33">
+                    33
+                </button>
+
+                <button
+                    class="target-btn"
+                    data-target="99">
+                    99
+                </button>
+
+                <button
+                    class="target-btn"
+                    data-target="100">
+                    100
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- COUNTER -->
+        <div class="counter-card">
+
+            <div class="counter-label"
+                 id="countLabel">
+                বর্তমান গণনা
+            </div>
+
+            <div class="count-box"
+                 id="count">
+                0
+            </div>
+
+            <div class="remaining"
+                 id="remaining">
+                বাকি: 33
+            </div>
+
+
+            <!-- PROGRESS -->
+            <div class="progress-area">
+
+                <div class="progress-bar">
+
+                    <div class="progress-fill"
+                         id="progressFill">
+                    </div>
+
+                </div>
+
+                <div class="progress-text"
+                     id="progressText">
+                    0%
+                </div>
+
+            </div>
+
+
+            <!-- TAP BUTTON -->
+            <button id="tapButton"
+                    class="tap-area">
+
+                <span id="tapText">
+                    TAP
+                </span>
+
+            </button>
+
+
+            <!-- RESET -->
+            <button id="resetBtn"
+                    class="reset-btn">
+
+                RESET
+
+            </button>
+
+        </div>
+
+
+        <!-- INFORMATION -->
+        <div class="info-card">
+
+            <div class="info-title"
+                 id="infoTitle">
+                তসবিহ সম্পর্কে
+            </div>
+
+            <div class="info-text"
+                 id="infoText">
+
+                জিকির নির্বাচন করে লক্ষ্য সংখ্যা নির্ধারণ করুন।
+                তারপর তসবিহ বাটনে চাপ দিয়ে গণনা করুন।
+
+            </div>
+
+        </div>
+
     </div>
 
 </div>
 
-<script src="../js/tasbih.js?v=2"></script>
+
+<script src="../js/tasbih.js?v=3"></script>
+<script src="../js/theme.js"></script>
 
 </body>
+
 </html>
