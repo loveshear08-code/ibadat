@@ -280,9 +280,16 @@ names.forEach((item,index)=>{
 let name = item[lang];
 let meaning = item[lang+"_mean"];
 
+const serial =
+    lang === "bn"
+        ? (index + 1).toLocaleString("bn-BD")
+        : lang === "hi"
+            ? (index + 1).toLocaleString("hi-IN-u-nu-deva")
+            : (index + 1).toLocaleString("en-US");
+
 html += `
 <div class="name-card">
-<div class="arabic">${index+1}. ${item.ar}</div>
+<div class="arabic">${serial}. ${item.ar}</div>
 <div class="pron">${name}</div>
 <div class="meaning">${meaning}</div>
 </div>
