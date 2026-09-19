@@ -472,7 +472,7 @@ function formatDate(date){
 
     if(lang === "hi"){
 
-        locale = "hi-IN";
+    locale = "hi-IN-u-nu-deva";
     }
 
 
