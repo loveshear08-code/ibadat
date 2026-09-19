@@ -1,1 +1,114 @@
+<!DOCTYPE html>
+<html lang="bn">
 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Qibla</title>
+
+<link rel="stylesheet" href="../css/qibla.css">
+</head>
+
+<body>
+
+<div class="qibla-page">
+
+    <!-- HEADER -->
+    <div class="topbar">
+
+        <button id="backBtn" class="back-btn">←</button>
+
+        <div id="pageTitle">কিবলা</div>
+
+    </div>
+
+
+    <!-- LOCATION -->
+    <div class="location-card">
+
+        <div id="locationLabel">
+            বর্তমান অবস্থান
+        </div>
+
+        <div id="locationName">
+            লোকেশন খোঁজা হচ্ছে...
+        </div>
+
+    </div>
+
+
+    <!-- COMPASS -->
+    <div class="compass-section">
+
+        <div class="compass">
+
+            <div class="direction north">N</div>
+            <div class="direction east">E</div>
+            <div class="direction south">S</div>
+            <div class="direction west">W</div>
+
+            <div class="compass-ring">
+
+                <div class="qibla-arrow"
+                     id="qiblaArrow">
+
+                    🕋
+
+                </div>
+
+            </div>
+
+            <div class="center-point"></div>
+
+        </div>
+
+
+        <div class="degree" id="qiblaDegree">
+            --°
+        </div>
+
+        <div class="direction-text"
+             id="directionText">
+            কিবলার দিক
+        </div>
+
+    </div>
+
+
+    <!-- DISTANCE -->
+    <div class="info-card">
+
+        <div id="distanceLabel">
+            মক্কার দূরত্ব
+        </div>
+
+        <div id="distance">
+            --
+        </div>
+
+    </div>
+
+
+    <!-- COMPASS START -->
+    <button id="startCompass"
+            class="start-btn">
+
+        কম্পাস চালু করুন
+
+    </button>
+
+
+    <div id="compassMessage"
+         class="message">
+
+    </div>
+
+</div>
+
+
+<script src="../js/qibla.js"></script>
+<script src="../js/theme.js"></script>
+
+</body>
+</html>
