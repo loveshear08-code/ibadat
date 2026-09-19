@@ -183,3 +183,26 @@ align-items:stretch;
 .status-right{
 justify-content:center;
 }
+
+/* ================= DARK MODE ================= */
+
+body.dark-mode{
+    background:#121212;
+}
+
+body.dark-mode .card{
+    background:#1e2a1f;
+}
+
+body.dark-mode .prayer-box,
+body.dark-mode .feature{
+    background:#263b29;
+}
+
+body.dark-mode #clock{
+    color:#81c784;
+}
+
+body.dark-mode #countdown{
+    color:#ef5350;
+}
