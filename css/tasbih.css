@@ -1,60 +1,504 @@
+/* ================= BASE ================= */
+
 body{
-margin:0;
-font-family:sans-serif;
-background:#eef7f0;
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
+
+    margin:0;
+
+    font-family:sans-serif;
+
+    background:#eef7f0;
+
+    color:#1b4332;
+
 }
+
+.tasbih-page{
+
+    min-height:100vh;
+
+    box-sizing:border-box;
+
+    padding-bottom:25px;
+
+}
+
+
+/* ================= TOP BAR ================= */
+
+.topbar{
+
+    height:52px;
+
+    background:#2e7d32;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    position:relative;
+
+    font-size:19px;
+
+    font-weight:bold;
+
+}
+
+.back-btn{
+
+    position:absolute;
+
+    left:12px;
+
+    background:none;
+
+    border:none;
+
+    color:white;
+
+    font-size:25px;
+
+    cursor:pointer;
+
+}
+
+
+/* ================= CONTAINER ================= */
 
 .tasbih-container{
-text-align:center;
-width:100%;
-max-width:400px;
+
+    width:100%;
+
+    max-width:430px;
+
+    margin:0 auto;
+
+    padding:14px;
+
+    box-sizing:border-box;
+
 }
 
-/* COUNT */
+
+/* ================= COMMON CARD ================= */
+
+.zikr-card,
+.target-card,
+.counter-card,
+.info-card{
+
+    background:white;
+
+    border-radius:18px;
+
+    margin-bottom:14px;
+
+    padding:16px;
+
+    box-sizing:border-box;
+
+    box-shadow:
+        0 3px 10px rgba(0,0,0,0.08);
+
+}
+
+
+/* ================= LABEL ================= */
+
+.section-label{
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    color:#52796f;
+
+    margin-bottom:8px;
+
+}
+
+
+/* ================= ZIKR ================= */
+
+#zikrSelect{
+
+    width:100%;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    border:1px solid #b7d5bd;
+
+    background:#f5faf6;
+
+    color:#1b4332;
+
+    font-size:16px;
+
+    outline:none;
+
+}
+
+
+/* ================= TARGET ================= */
+
+.target-buttons{
+
+    display:flex;
+
+    gap:10px;
+
+}
+
+.target-btn{
+
+    flex:1;
+
+    padding:11px 5px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#e8f5e9;
+
+    color:#2e7d32;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+.target-btn.active{
+
+    background:#2e7d32;
+
+    color:white;
+
+}
+
+.target-btn:active{
+
+    transform:scale(0.96);
+
+}
+
+
+/* ================= COUNTER ================= */
+
+.counter-card{
+
+    text-align:center;
+
+    padding-top:20px;
+
+}
+
+.counter-label{
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    color:#52796f;
+
+}
+
+
 .count-box{
-font-size:60px;
-font-weight:bold;
-color:#1b5e20;
-margin-bottom:30px;
+
+    font-size:68px;
+
+    line-height:1;
+
+    font-weight:bold;
+
+    color:#1b5e20;
+
+    margin-top:10px;
+
 }
 
-/* TAP BUTTON */
+
+.remaining{
+
+    margin-top:8px;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    color:#52796f;
+
+}
+
+
+/* ================= PROGRESS ================= */
+
+.progress-area{
+
+    margin-top:18px;
+
+}
+
+.progress-bar{
+
+    width:100%;
+
+    height:9px;
+
+    background:#dcefe0;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+}
+
+.progress-fill{
+
+    height:100%;
+
+    width:0%;
+
+    background:#2e7d32;
+
+    border-radius:20px;
+
+    transition:width 0.2s ease;
+
+}
+
+.progress-text{
+
+    margin-top:6px;
+
+    font-size:12px;
+
+    color:#52796f;
+
+}
+
+
+/* ================= TAP ================= */
+
 .tap-area{
-width:180px;
-height:180px;
-background:#2e7d32;
-border-radius:50%;
-color:white;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:24px;
-margin:0 auto;
-box-shadow:0 6px 15px rgba(0,0,0,0.2);
-cursor:pointer;
-transition:0.2s;
+
+    width:190px;
+
+    height:190px;
+
+    margin:22px auto 18px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#2e7d32;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:27px;
+
+    font-weight:bold;
+
+    box-shadow:
+        0 7px 18px rgba(0,0,0,0.22);
+
+    cursor:pointer;
+
+    transition:
+        transform 0.12s ease,
+        background 0.12s ease;
+
 }
 
 .tap-area:active{
-transform:scale(0.95);
-background:#1b5e20;
+
+    transform:scale(0.94);
+
+    background:#1b5e20;
+
 }
 
-/* RESET */
-.actions{
-margin-top:30px;
+
+/* ================= RESET ================= */
+
+.reset-btn{
+
+    padding:10px 26px;
+
+    border:none;
+
+    border-radius:11px;
+
+    background:#d32f2f;
+
+    color:white;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
 }
 
-button{
-padding:10px 25px;
-border:none;
-border-radius:10px;
-background:#d32f2f;
-color:white;
-font-size:16px;
-cursor:pointer;
+.reset-btn:active{
+
+    transform:scale(0.96);
+
+}
+
+
+/* ================= INFORMATION ================= */
+
+.info-card{
+
+    background:#dcedc8;
+
+}
+
+.info-title{
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    color:#2e7d32;
+
+    margin-bottom:7px;
+
+}
+
+.info-text{
+
+    font-size:13px;
+
+    line-height:1.6;
+
+    color:#52796f;
+
+}
+
+
+/* ================= DARK MODE ================= */
+
+body.dark-mode{
+
+    background:#121212;
+
+    color:#f5f5f5;
+
+}
+
+body.dark-mode
+.zikr-card,
+body.dark-mode
+.target-card,
+body.dark-mode
+.counter-card{
+
+    background:#1e2a1f;
+
+    box-shadow:
+        0 3px 10px rgba(0,0,0,0.35);
+
+}
+
+body.dark-mode
+.info-card{
+
+    background:#1e2a1f;
+
+}
+
+body.dark-mode
+.section-label,
+body.dark-mode
+.counter-label,
+body.dark-mode
+.remaining,
+body.dark-mode
+.progress-text{
+
+    color:#a5d6a7;
+
+}
+
+body.dark-mode
+#zikrSelect{
+
+    background:#263b29;
+
+    border-color:#52796f;
+
+    color:#c8e6c9;
+
+}
+
+body.dark-mode
+.target-btn{
+
+    background:#263b29;
+
+    color:#c8e6c9;
+
+}
+
+body.dark-mode
+.target-btn.active{
+
+    background:#2e7d32;
+
+    color:white;
+
+}
+
+body.dark-mode
+.count-box{
+
+    color:#81c784;
+
+}
+
+body.dark-mode
+.progress-bar{
+
+    background:#263b29;
+
+}
+
+body.dark-mode
+.progress-fill{
+
+    background:#2e7d32;
+
+}
+
+body.dark-mode
+.info-title{
+
+    color:#81c784;
+
+}
+
+body.dark-mode
+.info-text{
+
+    color:#a5d6a7;
+
 }
