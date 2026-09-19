@@ -75,6 +75,12 @@
 
 <!-- ================= JS ================= -->
 <script src="js/home.js?v=51"></script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./pwabuilder-sw.js');
+}
+</script>    
     
 </body>
 </html>
