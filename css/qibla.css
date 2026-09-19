@@ -1,1 +1,341 @@
+/* ================= BASE ================= */
 
+body{
+margin:0;
+font-family:sans-serif;
+background:#eef7f0;
+color:#1b4332;
+}
+
+.qibla-page{
+min-height:100vh;
+box-sizing:border-box;
+padding-bottom:20px;
+}
+
+
+/* ================= TOP BAR ================= */
+
+.topbar{
+height:50px;
+background:#2e7d32;
+color:white;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+position:relative;
+
+font-size:18px;
+font-weight:bold;
+}
+
+.back-btn{
+position:absolute;
+left:12px;
+
+background:none;
+border:none;
+
+color:white;
+font-size:24px;
+
+cursor:pointer;
+}
+
+
+/* ================= LOCATION ================= */
+
+.location-card{
+margin:12px;
+padding:14px;
+
+background:#dcedc8;
+
+border-radius:16px;
+
+text-align:center;
+}
+
+#locationLabel{
+font-size:13px;
+font-weight:bold;
+color:#52796f;
+margin-bottom:5px;
+}
+
+#locationName{
+font-size:16px;
+font-weight:bold;
+color:#1b4332;
+}
+
+
+/* ================= COMPASS SECTION ================= */
+
+.compass-section{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+
+padding:10px 0 18px;
+}
+
+
+/* ================= COMPASS ================= */
+
+.compass{
+width:270px;
+height:270px;
+
+border-radius:50%;
+
+background:#dcedc8;
+
+border:8px solid #a5d6a7;
+
+box-shadow:
+0 5px 18px rgba(0,0,0,0.15);
+
+position:relative;
+
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+
+/* ================= DIRECTIONS ================= */
+
+.direction{
+position:absolute;
+
+font-size:20px;
+font-weight:bold;
+
+color:#1b5e20;
+
+z-index:5;
+}
+
+.north{
+top:12px;
+left:50%;
+transform:translateX(-50%);
+}
+
+.south{
+bottom:12px;
+left:50%;
+transform:translateX(-50%);
+}
+
+.east{
+right:14px;
+top:50%;
+transform:translateY(-50%);
+}
+
+.west{
+left:14px;
+top:50%;
+transform:translateY(-50%);
+}
+
+
+/* ================= INNER RING ================= */
+
+.compass-ring{
+width:210px;
+height:210px;
+
+border-radius:50%;
+
+border:3px dashed #81a684;
+
+position:relative;
+
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+
+/* ================= QIBLA ARROW ================= */
+
+.qibla-arrow{
+position:absolute;
+
+font-size:48px;
+
+top:10px;
+left:50%;
+
+transform:
+translateX(-50%)
+rotate(0deg);
+
+transform-origin:
+50% 100%;
+
+transition:transform 0.15s linear;
+
+z-index:10;
+}
+
+
+/* ================= CENTER ================= */
+
+.center-point{
+position:absolute;
+
+width:16px;
+height:16px;
+
+background:#d4af37;
+
+border:3px solid white;
+
+border-radius:50%;
+
+z-index:20;
+}
+
+
+/* ================= DEGREE ================= */
+
+.degree{
+font-size:30px;
+font-weight:bold;
+
+color:#2e7d32;
+
+margin-top:15px;
+}
+
+.direction-text{
+font-size:15px;
+font-weight:bold;
+
+color:#52796f;
+
+margin-top:3px;
+}
+
+
+/* ================= DISTANCE ================= */
+
+.info-card{
+margin:0 12px 14px;
+
+padding:14px;
+
+background:#dcedc8;
+
+border-radius:16px;
+
+text-align:center;
+}
+
+#distanceLabel{
+font-size:13px;
+font-weight:bold;
+color:#52796f;
+}
+
+#distance{
+font-size:20px;
+font-weight:bold;
+color:#1b4332;
+
+margin-top:5px;
+}
+
+
+/* ================= START BUTTON ================= */
+
+.start-btn{
+display:block;
+
+margin:5px auto 10px;
+
+padding:11px 22px;
+
+border:none;
+border-radius:12px;
+
+background:#2e7d32;
+color:white;
+
+font-size:15px;
+font-weight:bold;
+
+cursor:pointer;
+}
+
+.start-btn:active{
+transform:scale(0.96);
+}
+
+
+/* ================= MESSAGE ================= */
+
+.message{
+text-align:center;
+
+font-size:13px;
+
+color:#52796f;
+
+padding:0 15px;
+
+line-height:1.5;
+}
+
+
+/* ================= DARK MODE ================= */
+
+body.dark-mode{
+background:#121212;
+color:#f5f5f5;
+}
+
+body.dark-mode .location-card,
+body.dark-mode .info-card{
+background:#1e2a1f;
+}
+
+body.dark-mode #locationLabel,
+body.dark-mode #distanceLabel,
+body.dark-mode .direction-text,
+body.dark-mode .message{
+color:#a5d6a7;
+}
+
+body.dark-mode #locationName,
+body.dark-mode #distance{
+color:#c8e6c9;
+}
+
+body.dark-mode .compass{
+background:#1e2a1f;
+border-color:#2e7d32;
+}
+
+body.dark-mode .direction{
+color:#c8e6c9;
+}
+
+body.dark-mode .compass-ring{
+border-color:#52796f;
+}
+
+body.dark-mode .center-point{
+border-color:#1e2a1f;
+}
+
+body.dark-mode .degree{
+color:#c8e6c9;
+}
