@@ -71,12 +71,10 @@ function getLanguage(){
                 "appSettings"
             );
 
-
         if(saved){
 
             const settings =
                 JSON.parse(saved);
-
 
             if(
                 settings &&
@@ -846,57 +844,72 @@ function calculateDistance(){
        হাজারে দেখানো হবে।
     */
 
-if(km >= 1000){
+    if(km >= 1000){
 
-    const value =
-        (km / 1000).toFixed(1);
+        const value =
+            (km / 1000).toFixed(1);
 
-    const lang =
-        getLanguage();
 
-    let unit = "হাজার কিমি";
+        const lang =
+            getLanguage();
 
-    if(lang === "en"){
 
-        unit = "thousand km";
+        let unit =
+            "হাজার কিমি";
 
-    }else if(lang === "hi"){
 
-        unit = "हज़ार किमी";
+        if(lang === "en"){
+
+            unit =
+                "thousand km";
+
+        }else if(lang === "hi"){
+
+            unit =
+                "हज़ार किमी";
+        }
+
+
+        distance.innerText =
+
+            localNumber(value) +
+            " " +
+            unit;
+
+    }else{
+
+        const value =
+            km.toFixed(1);
+
+
+        const lang =
+            getLanguage();
+
+
+        let unit =
+            "কিমি";
+
+
+        if(lang === "en"){
+
+            unit =
+                "km";
+
+        }else if(lang === "hi"){
+
+            unit =
+                "किमी";
+        }
+
+
+        distance.innerText =
+
+            localNumber(value) +
+            " " +
+            unit;
     }
-
-    distance.innerText =
-
-        localNumber(value) +
-        " " +
-        unit;
-
-}else{
-
-    const value =
-        km.toFixed(1);
-
-    const lang =
-        getLanguage();
-
-    let unit = "কিমি";
-
-    if(lang === "en"){
-
-        unit = "km";
-
-    }else if(lang === "hi"){
-
-        unit = "किमी";
-    }
-
-    distance.innerText =
-
-        localNumber(value) +
-        " " +
-        unit;
 }
-}
+
 
 /* =========================================================
    ANGLE NORMALIZE
@@ -1253,6 +1266,8 @@ setInterval(
             ){
 
                 reverseLocation();
+
+                calculateDistance();
             }
         }
 
