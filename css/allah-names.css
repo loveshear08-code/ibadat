@@ -66,3 +66,26 @@ margin-bottom:6px;
 font-size:14px;
 color:#52796f;
 }
+
+/* ================= DARK MODE ================= */
+
+body.dark-mode{
+    background:#121212;
+}
+
+body.dark-mode .name-card{
+    background:#1e2a1f;
+    box-shadow:0 4px 12px rgba(0,0,0,0.35);
+}
+
+body.dark-mode .arabic{
+    color:#81c784;
+}
+
+body.dark-mode .pron{
+    color:#c8e6c9;
+}
+
+body.dark-mode .meaning{
+    color:#a5d6a7;
+}
