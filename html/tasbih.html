@@ -4,192 +4,243 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0">
 
-<title>Tasbih</title>
+<title>তসবিহ</title>
 
 <link rel="stylesheet"
       href="../css/tasbih.css">
 
 </head>
 
+
 <body>
 
 <div class="tasbih-page">
 
-    <!-- HEADER -->
-    <div class="topbar">
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="tasbih-header">
 
         <button id="backBtn"
                 class="back-btn">
+
             ←
+
         </button>
 
-        <div id="pageTitle">
+        <div id="pageTitle"
+             class="page-title">
+
             তসবিহ
+
         </div>
 
     </div>
 
 
-    <!-- MAIN CONTENT -->
-    <div class="tasbih-container">
+    <!-- ================= TOP AREA ================= -->
+
+    <div class="top-area">
 
 
-        <!-- ZIKR CARD -->
+        <!-- CURRENT ZIKR -->
+
         <div class="zikr-card">
 
-            <div class="section-label"
-                 id="zikrLabel">
-                জিকির
+            <div id="zikrLabel"
+                 class="small-label">
+
+                বর্তমান জিকির
+
             </div>
 
-            <select id="zikrSelect">
+            <div id="zikrArabic"
+                 class="zikr-arabic">
 
-                <option value="subhanallah">
-                    সুবহানাল্লাহ
-                </option>
+                سُبْحَانَ اللّٰهِ
 
-                <option value="alhamdulillah">
-                    আলহামদুলিল্লাহ
-                </option>
-
-                <option value="allahuakbar">
-                    আল্লাহু আকবার
-                </option>
-
-                <option value="astaghfirullah">
-                    আস্তাগফিরুল্লাহ
-                </option>
-
-                <option value="salawat">
-                    দরুদ শরীফ
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <!-- TARGET -->
-        <div class="target-card">
-
-            <div class="section-label"
-                 id="targetLabel">
-                লক্ষ্য
             </div>
 
-            <div class="target-buttons">
+            <div id="zikrName"
+                 class="zikr-name">
 
-                <button
-                    class="target-btn"
-                    data-target="33">
-                    33
-                </button>
+                সুবহানাল্লাহ
 
-                <button
-                    class="target-btn"
-                    data-target="99">
-                    99
-                </button>
+            </div>
 
-                <button
-                    class="target-btn"
-                    data-target="100">
-                    100
-                </button>
+            <div id="stepText"
+                 class="step-text">
+
+                ধাপ ১ / ৪
 
             </div>
 
         </div>
 
 
-        <!-- COUNTER -->
-        <div class="counter-card">
+        <!-- COUNT INFORMATION -->
 
-            <div class="counter-label"
-                 id="countLabel">
-                বর্তমান গণনা
-            </div>
-
-            <div class="count-box"
-                 id="count">
-                0
-            </div>
-
-            <div class="remaining"
-                 id="remaining">
-                বাকি: 33
-            </div>
+        <div class="count-info">
 
 
-            <!-- PROGRESS -->
-            <div class="progress-area">
+            <div class="count-card">
 
-                <div class="progress-bar">
+                <div id="stepCountLabel"
+                     class="small-label">
 
-                    <div class="progress-fill"
-                         id="progressFill">
-                    </div>
+                    বর্তমান ধাপ
 
                 </div>
 
-                <div class="progress-text"
-                     id="progressText">
-                    0%
+                <div id="stepCount"
+                     class="step-count">
+
+                    0 / 33
+
                 </div>
 
             </div>
 
 
-            <!-- TAP BUTTON -->
-            <button id="tapButton"
-                    class="tap-area">
+            <div class="count-card">
 
-                <span id="tapText">
-                    TAP
+                <div id="totalCountLabel"
+                     class="small-label">
+
+                    মোট কাউন্ট
+
+                </div>
+
+                <div id="totalCount"
+                     class="total-count">
+
+                    0 / 100
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- PROGRESS -->
+
+        <div class="progress-section">
+
+            <div class="progress-text">
+
+                <span id="progressLabel">
+                    অগ্রগতি
                 </span>
 
-            </button>
+                <span id="progressPercent">
+                    0%
+                </span>
 
-
-            <!-- RESET -->
-            <button id="resetBtn"
-                    class="reset-btn">
-
-                RESET
-
-            </button>
-
-        </div>
-
-
-        <!-- INFORMATION -->
-        <div class="info-card">
-
-            <div class="info-title"
-                 id="infoTitle">
-                তসবিহ সম্পর্কে
             </div>
 
-            <div class="info-text"
-                 id="infoText">
+            <div class="progress-bar">
 
-                জিকির নির্বাচন করে লক্ষ্য সংখ্যা নির্ধারণ করুন।
-                তারপর তসবিহ বাটনে চাপ দিয়ে গণনা করুন।
+                <div id="progressFill"
+                     class="progress-fill">
+
+                </div>
 
             </div>
 
         </div>
+
+
+        <!-- TODAY COMPLETE -->
+
+        <div class="today-card">
+
+            <div id="todayLabel"
+                 class="small-label">
+
+                আজ সম্পূর্ণ
+
+            </div>
+
+            <div>
+
+                <span id="todayComplete"
+                      class="today-number">
+
+                    0
+
+                </span>
+
+                <span id="todayTimes">
+
+                    বার
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- MESSAGE -->
+
+        <div id="completeMessage"
+             class="complete-message">
+
+        </div>
+
 
     </div>
+
+
+    <!-- ================= TAP AREA ================= -->
+
+    <div class="tap-area">
+
+
+        <button id="tapButton"
+                class="tap-button">
+
+            <span class="tap-text"
+                  id="tapText">
+
+                TAP
+
+            </span>
+
+            <span class="tap-number"
+                  id="tapNumber">
+
+                0
+
+            </span>
+
+        </button>
+
+
+        <button id="resetBtn"
+                class="reset-button">
+
+            ↺ <span id="resetText">রিসেট</span>
+
+        </button>
+
+
+    </div>
+
 
 </div>
 
 
-<script src="../js/tasbih.js?v=3"></script>
+<script src="../js/tasbih.js?v=4"></script>
+
 <script src="../js/theme.js"></script>
+
 
 </body>
 
