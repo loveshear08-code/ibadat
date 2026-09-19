@@ -6,5 +6,13 @@
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "orientation": "portrait",
-  "icons": []
+  "id": "com.ibadat.app",
+  "description": "IBADAT is an Islamic app for prayer times, Quran, duas, hadith, Qibla, Tasbih and daily worship.",
+  "dir": "auto",
+  "scope": "./",
+  "lang": "bn",
+  "prefer_related_applications": false,
+  "categories": [
+    "lifestyle"
+  ]
 }
