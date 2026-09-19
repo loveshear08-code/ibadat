@@ -1,119 +1,243 @@
 /* =========================================================
-   IBADAT TASBIH
+   IBADAT TASBIH - GUIDED 100
    ========================================================= */
 
 
-/* ================= DATA ================= */
+/* ================= STORAGE ================= */
 
-const zikrNames = {
+const STORAGE_KEY =
+    "tasbihData";
 
-    bn: {
+const OLD_STORAGE_KEY =
+    "tasbihCount";
 
-        subhanallah: "সুবহানাল্লাহ",
-        alhamdulillah: "আলহামদুলিল্লাহ",
-        allahuakbar: "আল্লাহু আকবার",
-        astaghfirullah: "আস্তাগফিরুল্লাহ",
-        salawat: "দরুদ শরীফ"
+const DAILY_KEY =
+    "tasbihDaily";
+
+
+/* ================= ZIKR ================= */
+
+const ZIKR = {
+
+    subhanallah: {
+
+        arabic:
+            "سُبْحَانَ اللّٰهِ",
+
+        bn:
+            "সুবহানাল্লাহ",
+
+        en:
+            "SubhanAllah",
+
+        hi:
+            "सुब्हानअल्लाह",
+
+        target:33
 
     },
 
-    en: {
 
-        subhanallah: "SubhanAllah",
-        alhamdulillah: "Alhamdulillah",
-        allahuakbar: "Allahu Akbar",
-        astaghfirullah: "Astaghfirullah",
-        salawat: "Salawat"
+    alhamdulillah: {
+
+        arabic:
+            "الْحَمْدُ لِلّٰهِ",
+
+        bn:
+            "আলহামদুলিল্লাহ",
+
+        en:
+            "Alhamdulillah",
+
+        hi:
+            "अल्हम्दुलिल्लाह",
+
+        target:33
 
     },
 
-    hi: {
 
-        subhanallah: "सुब्हानल्लाह",
-        alhamdulillah: "अल्हम्दुलिल्लाह",
-        allahuakbar: "अल्लाहु अकबर",
-        astaghfirullah: "अस्तग़फ़िरुल्लाह",
-        salawat: "दरूद शरीफ़"
+    allahuakbar: {
+
+        arabic:
+            "اللّٰهُ أَكْبَرُ",
+
+        bn:
+            "আল্লাহু আকবার",
+
+        en:
+            "Allahu Akbar",
+
+        hi:
+            "अल्लाहु अकबर",
+
+        target:33
+
+    },
+
+
+    final: {
+
+        arabic:
+            "لَا إِلٰهَ إِلَّا اللّٰهُ وَحْدَهُ لَا شَرِيكَ لَهُ",
+
+        bn:
+            "লা ইলাহা ইল্লাল্লাহু ওয়াহদাহু লা শারীকালাহু",
+
+        en:
+            "La ilaha illallahu wahdahu la sharika lah",
+
+        hi:
+            "ला इलाहा इल्लल्लाहु वहदहू ला शरीक लह",
+
+        target:1
 
     }
 
 };
 
 
-const texts = {
+/* ================= LANGUAGE ================= */
+
+const TEXT = {
 
     bn: {
 
-        title: "তসবিহ",
+        title:
+            "তসবিহ",
 
-        zikr: "জিকির",
+        current:
+            "বর্তমান জিকির",
 
-        target: "লক্ষ্য",
+        step:
+            "বর্তমান ধাপ",
 
-        count: "বর্তমান গণনা",
+        total:
+            "মোট কাউন্ট",
 
-        remaining: "বাকি",
+        progress:
+            "অগ্রগতি",
 
-        infoTitle: "তসবিহ সম্পর্কে",
+        today:
+            "আজ সম্পূর্ণ",
 
-        infoText:
-            "জিকির নির্বাচন করে লক্ষ্য সংখ্যা নির্ধারণ করুন। তারপর তসবিহ বাটনে চাপ দিয়ে গণনা করুন।",
+        times:
+            "বার",
 
-        reset: "RESET",
+        tap:
+            "TAP",
 
-        tap: "TAP",
+        reset:
+            "রিসেট",
 
-        done: "লক্ষ্য পূর্ণ হয়েছে"
+        complete:
+            "মাশাআল্লাহ! একটি সম্পূর্ণ তসবিহ শেষ হয়েছে।",
+
+        stepComplete:
+            "ধাপ সম্পূর্ণ",
+
+        confirm:
+            "তসবিহ রিসেট করবেন?",
+
+        yes:
+            "হ্যাঁ",
+
+        no:
+            "না"
 
     },
+
 
     en: {
 
-        title: "Tasbih",
+        title:
+            "Tasbih",
 
-        zikr: "Zikr",
+        current:
+            "Current Zikr",
 
-        target: "Target",
+        step:
+            "Current Step",
 
-        count: "Current Count",
+        total:
+            "Total Count",
 
-        remaining: "Remaining",
+        progress:
+            "Progress",
 
-        infoTitle: "About Tasbih",
+        today:
+            "Completed Today",
 
-        infoText:
-            "Select a Zikr, choose your target, then tap the Tasbih button to count.",
+        times:
+            "times",
 
-        reset: "RESET",
+        tap:
+            "TAP",
 
-        tap: "TAP",
+        reset:
+            "Reset",
 
-        done: "Target completed"
+        complete:
+            "MashaAllah! One complete Tasbih finished.",
+
+        stepComplete:
+            "Step completed",
+
+        confirm:
+            "Reset Tasbih?",
+
+        yes:
+            "Yes",
+
+        no:
+            "No"
 
     },
 
+
     hi: {
 
-        title: "तस्बीह",
+        title:
+            "तस्बीह",
 
-        zikr: "ज़िक्र",
+        current:
+            "वर्तमान ज़िक्र",
 
-        target: "लक्ष्य",
+        step:
+            "वर्तमान चरण",
 
-        count: "वर्तमान गिनती",
+        total:
+            "कुल काउंट",
 
-        remaining: "बाकी",
+        progress:
+            "प्रगति",
 
-        infoTitle: "तस्बीह के बारे में",
+        today:
+            "आज पूर्ण",
 
-        infoText:
-            "ज़िक्र चुनें, लक्ष्य संख्या निर्धारित करें और तस्बीह बटन दबाकर गिनती करें।",
+        times:
+            "बार",
 
-        reset: "RESET",
+        tap:
+            "TAP",
 
-        tap: "TAP",
+        reset:
+            "रीसेट",
 
-        done: "लक्ष्य पूरा हुआ"
+        complete:
+            "माशाअल्लाह! एक पूरी तस्बीह पूरी हुई।",
+
+        stepComplete:
+            "चरण पूरा हुआ",
+
+        confirm:
+            "तस्बीह रीसेट करें?",
+
+        yes:
+            "हाँ",
+
+        no:
+            "नहीं"
 
     }
 
@@ -122,40 +246,34 @@ const texts = {
 
 /* ================= STATE ================= */
 
-let count = 0;
+let totalCount = 0;
 
-let target = 33;
-
-let selectedZikr = "subhanallah";
+let dailyComplete = 0;
 
 
-const STORAGE_KEY =
-    "tasbihData";
-
-
-/* ================= SETTINGS ================= */
+/* ================= GET LANGUAGE ================= */
 
 function getLanguage(){
 
     try{
 
-        const saved =
-            localStorage.getItem("appSettings");
+        const raw =
+            localStorage.getItem(
+                "appSettings"
+            );
 
-        if(saved){
+        if(raw){
 
             const settings =
-                JSON.parse(saved);
+                JSON.parse(raw);
 
             if(
-                settings.lang === "en" ||
-                settings.lang === "hi"
+                settings.lang &&
+                TEXT[settings.lang]
             ){
 
                 return settings.lang;
-
             }
-
         }
 
     }catch(e){}
@@ -164,96 +282,269 @@ function getLanguage(){
 }
 
 
-/* ================= LOAD ================= */
+/* ================= TODAY KEY ================= */
+
+function getTodayKey(){
+
+    const now =
+        new Date();
+
+    return [
+
+        now.getFullYear(),
+
+        String(
+            now.getMonth() + 1
+        ).padStart(2,"0"),
+
+        String(
+            now.getDate()
+        ).padStart(2,"0")
+
+    ].join("-");
+}
+
+
+/* ================= LOAD DAILY ================= */
+
+function loadDaily(){
+
+    const today =
+        getTodayKey();
+
+    try{
+
+        const raw =
+            localStorage.getItem(
+                DAILY_KEY
+            );
+
+        if(!raw){
+
+            dailyComplete = 0;
+
+            saveDaily();
+
+            return;
+        }
+
+        const data =
+            JSON.parse(raw);
+
+        if(
+            data.date === today
+        ){
+
+            dailyComplete =
+                Number(
+                    data.count
+                ) || 0;
+
+        }else{
+
+            dailyComplete = 0;
+
+            saveDaily();
+        }
+
+    }catch(e){
+
+        dailyComplete = 0;
+
+        saveDaily();
+    }
+}
+
+
+/* ================= SAVE DAILY ================= */
+
+function saveDaily(){
+
+    localStorage.setItem(
+
+        DAILY_KEY,
+
+        JSON.stringify({
+
+            date:
+                getTodayKey(),
+
+            count:
+                dailyComplete
+
+        })
+
+    );
+}
+
+
+/* ================= LOAD TASBIH ================= */
 
 function loadTasbih(){
 
     try{
 
-        const saved =
-            localStorage.getItem(STORAGE_KEY);
+        const raw =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
 
-        if(saved){
+        if(raw){
 
             const data =
-                JSON.parse(saved);
+                JSON.parse(raw);
 
-            count =
-                Number(data.count) || 0;
-
-            target =
-                Number(data.target) || 33;
-
-            selectedZikr =
-                data.zikr ||
-                "subhanallah";
+            totalCount =
+                Number(
+                    data.totalCount
+                ) || 0;
 
         }else{
 
-            /* OLD VERSION SUPPORT */
-
-            const oldCount =
+            const old =
                 localStorage.getItem(
-                    "tasbihCount"
+                    OLD_STORAGE_KEY
                 );
 
-            count =
-                oldCount
-                    ? parseInt(oldCount)
-                    : 0;
+            if(old){
 
+                totalCount =
+                    Number(old) || 0;
+
+            }else{
+
+                totalCount = 0;
+            }
+
+            saveTasbih();
         }
 
     }catch(e){
 
-        count = 0;
+        totalCount = 0;
 
-        target = 33;
-
-        selectedZikr =
-            "subhanallah";
-
+        saveTasbih();
     }
 
 
-    updateLanguage();
+    /* Safety */
+
+    if(
+        totalCount < 0 ||
+        totalCount > 100
+    ){
+
+        totalCount = 0;
+    }
+
+
+    loadDaily();
 
     updateUI();
-
 }
 
 
-/* ================= SAVE ================= */
+/* ================= SAVE TASBIH ================= */
 
 function saveTasbih(){
-
-    const data = {
-
-        count: count,
-
-        target: target,
-
-        zikr: selectedZikr
-
-    };
 
     localStorage.setItem(
 
         STORAGE_KEY,
 
-        JSON.stringify(data)
+        JSON.stringify({
+
+            totalCount:
+                totalCount
+
+        })
 
     );
+}
 
-    /* Keep old storage updated too */
 
-    localStorage.setItem(
+/* ================= CURRENT STEP ================= */
 
-        "tasbihCount",
+function getStepInfo(){
 
-        count
+    if(totalCount < 33){
 
-    );
+        return {
+
+            key:
+                "subhanallah",
+
+            step:
+                1,
+
+            stepCount:
+                totalCount,
+
+            target:
+                33
+
+        };
+
+    }
+
+
+    if(totalCount < 66){
+
+        return {
+
+            key:
+                "alhamdulillah",
+
+            step:
+                2,
+
+            stepCount:
+                totalCount - 33,
+
+            target:
+                33
+
+        };
+
+    }
+
+
+    if(totalCount < 99){
+
+        return {
+
+            key:
+                "allahuakbar",
+
+            step:
+                3,
+
+            stepCount:
+                totalCount - 66,
+
+            target:
+                33
+
+        };
+
+    }
+
+
+    return {
+
+        key:
+            "final",
+
+        step:
+            4,
+
+        stepCount:
+            totalCount - 99,
+
+        target:
+            1
+
+    };
 
 }
 
@@ -266,15 +557,11 @@ function updateLanguage(){
         getLanguage();
 
     const t =
-        texts[lang] || texts.bn;
+        TEXT[lang] || TEXT.bn;
 
 
     document.documentElement.lang =
-        lang === "bn"
-            ? "bn"
-            : lang === "hi"
-                ? "hi"
-                : "en";
+        lang;
 
 
     setText(
@@ -284,22 +571,32 @@ function updateLanguage(){
 
     setText(
         "zikrLabel",
-        t.zikr
+        t.current
     );
 
     setText(
-        "targetLabel",
-        t.target
+        "stepCountLabel",
+        t.step
     );
 
     setText(
-        "countLabel",
-        t.count
+        "totalCountLabel",
+        t.total
     );
 
     setText(
-        "resetBtn",
-        t.reset
+        "progressLabel",
+        t.progress
+    );
+
+    setText(
+        "todayLabel",
+        t.today
+    );
+
+    setText(
+        "todayTimes",
+        t.times
     );
 
     setText(
@@ -308,60 +605,64 @@ function updateLanguage(){
     );
 
     setText(
-        "infoTitle",
-        t.infoTitle
-    );
-
-    setText(
-        "infoText",
-        t.infoText
+        "resetText",
+        t.reset
     );
 
 
-    updateZikrOptions(lang);
+    updateZikrText(lang);
 
+    updateCompleteMessage(lang);
 }
 
 
-/* ================= ZIKR OPTIONS ================= */
+/* ================= UPDATE ZIKR TEXT ================= */
 
-function updateZikrOptions(lang){
+function updateZikrText(lang){
 
-    const select =
-        document.getElementById(
-            "zikrSelect"
-        );
+    const info =
+        getStepInfo();
 
-    if(!select) return;
-
-
-    const names =
-        zikrNames[lang] ||
-        zikrNames.bn;
+    const zikr =
+        ZIKR[info.key];
 
 
-    Object.keys(names).forEach(
-        key => {
-
-            const option =
-                select.querySelector(
-                    `option[value="${key}"]`
-                );
-
-            if(option){
-
-                option.innerText =
-                    names[key];
-
-            }
-
-        }
+    setText(
+        "zikrArabic",
+        zikr.arabic
     );
 
 
-    select.value =
-        selectedZikr;
+    setText(
+        "zikrName",
+        zikr[lang] || zikr.bn
+    );
 
+
+    setText(
+
+        "stepText",
+
+        (
+            lang === "bn"
+                ? "ধাপ "
+                : lang === "hi"
+                    ? "चरण "
+                    : "Step "
+        ) +
+
+        info.step +
+
+        (
+
+            lang === "bn"
+                ? " / ৪"
+                : lang === "hi"
+                    ? " / 4"
+                    : " / 4"
+        )
+
+    );
 }
 
 
@@ -369,143 +670,108 @@ function updateZikrOptions(lang){
 
 function updateUI(){
 
-    const countElement =
-        document.getElementById(
-            "count"
-        );
+    updateLanguage();
 
-    const remainingElement =
-        document.getElementById(
-            "remaining"
-        );
 
-    const progressFill =
+    const info =
+        getStepInfo();
+
+
+    /* Current step */
+
+    setText(
+
+        "stepCount",
+
+        info.stepCount +
+        " / " +
+        info.target
+
+    );
+
+
+    /* Total */
+
+    setText(
+
+        "totalCount",
+
+        totalCount +
+        " / 100"
+
+    );
+
+
+    /* Tap number */
+
+    setText(
+
+        "tapNumber",
+
+        totalCount
+
+    );
+
+
+    /* Progress */
+
+    const percent =
+        totalCount;
+
+    const fill =
         document.getElementById(
             "progressFill"
         );
 
-    const progressText =
+    if(fill){
+
+        fill.style.width =
+            percent + "%";
+    }
+
+
+    setText(
+
+        "progressPercent",
+
+        percent + "%"
+
+    );
+
+
+    /* Daily */
+
+    setText(
+
+        "todayComplete",
+
+        dailyComplete
+
+    );
+
+
+    /* Complete button */
+
+    const tap =
         document.getElementById(
-            "progressText"
+            "tapButton"
         );
 
+    if(tap){
 
-    if(countElement){
+        if(totalCount >= 100){
 
-        countElement.innerText =
-            count;
-
-    }
-
-
-    let remaining =
-        target - count;
-
-    if(remaining < 0){
-
-        remaining = 0;
-
-    }
-
-
-    const lang =
-        getLanguage();
-
-    const t =
-        texts[lang] || texts.bn;
-
-
-    if(remainingElement){
-
-        if(count >= target){
-
-            remainingElement.innerText =
-                t.done;
-
-        }else{
-
-            remainingElement.innerText =
-                t.remaining +
-                ": " +
-                remaining;
-
-        }
-
-    }
-
-
-    let percentage =
-        (count / target) * 100;
-
-    if(percentage > 100){
-
-        percentage = 100;
-
-    }
-
-    if(percentage < 0){
-
-        percentage = 0;
-
-    }
-
-
-    if(progressFill){
-
-        progressFill.style.width =
-            percentage + "%";
-
-    }
-
-
-    if(progressText){
-
-        progressText.innerText =
-            Math.round(percentage) +
-            "%";
-
-    }
-
-
-    updateTargetButtons();
-
-}
-
-
-/* ================= TARGET BUTTON ================= */
-
-function updateTargetButtons(){
-
-    const buttons =
-        document.querySelectorAll(
-            ".target-btn"
-        );
-
-
-    buttons.forEach(button => {
-
-        const value =
-            parseInt(
-                button.dataset.target
-            );
-
-
-        if(value === target){
-
-            button.classList.add(
-                "active"
+            tap.classList.add(
+                "completed"
             );
 
         }else{
 
-            button.classList.remove(
-                "active"
+            tap.classList.remove(
+                "completed"
             );
-
         }
-
-    });
-
+    }
 }
 
 
@@ -513,14 +779,18 @@ function updateTargetButtons(){
 
 function increase(){
 
-    if(count < target){
+    /* Prevent extra tap after 100 */
 
-        count++;
+    if(totalCount >= 100){
 
+        return;
     }
 
 
-    /* vibration */
+    totalCount++;
+
+
+    /* Every normal tap */
 
     if(navigator.vibrate){
 
@@ -529,10 +799,242 @@ function increase(){
     }
 
 
+    /* 33 */
+
+    if(totalCount === 33){
+
+        stepComplete(
+            "subhanallah"
+        );
+
+        return;
+    }
+
+
+    /* 66 */
+
+    if(totalCount === 66){
+
+        stepComplete(
+            "alhamdulillah"
+        );
+
+        return;
+    }
+
+
+    /* 99 */
+
+    if(totalCount === 99){
+
+        stepComplete(
+            "allahuakbar"
+        );
+
+        return;
+    }
+
+
+    /* 100 */
+
+    if(totalCount === 100){
+
+        finishTasbih();
+
+        return;
+    }
+
+
+    saveTasbih();
+
+    updateUI();
+}
+
+
+/* ================= STEP COMPLETE ================= */
+
+function stepComplete(key){
+
+    if(navigator.vibrate){
+
+        navigator.vibrate(200);
+
+    }
+
+
     saveTasbih();
 
     updateUI();
 
+
+    showStepMessage(key);
+
+
+    setTimeout(
+
+        () => {
+
+            clearMessage();
+
+            updateUI();
+
+        },
+
+        1200
+
+    );
+}
+
+
+/* ================= SHOW STEP MESSAGE ================= */
+
+function showStepMessage(key){
+
+    const lang =
+        getLanguage();
+
+    const t =
+        TEXT[lang] || TEXT.bn;
+
+    const zikr =
+        ZIKR[key];
+
+
+    const message =
+
+        "✓ " +
+
+        (zikr[lang] || zikr.bn) +
+
+        " " +
+
+        t.stepComplete;
+
+
+    const el =
+        document.getElementById(
+            "completeMessage"
+        );
+
+    if(el){
+
+        el.innerText =
+            message;
+
+        el.classList.add(
+            "show"
+        );
+    }
+}
+
+
+/* ================= FINISH 100 ================= */
+
+function finishTasbih(){
+
+    saveTasbih();
+
+
+    /* Stronger completion vibration */
+
+    if(navigator.vibrate){
+
+        navigator.vibrate([
+            300,
+            100,
+            300
+        ]);
+
+    }
+
+
+    dailyComplete++;
+
+
+    saveDaily();
+
+
+    updateUI();
+
+
+    const lang =
+        getLanguage();
+
+    const t =
+        TEXT[lang] || TEXT.bn;
+
+
+    const message =
+        document.getElementById(
+            "completeMessage"
+        );
+
+
+    if(message){
+
+        message.innerText =
+            t.complete;
+
+        message.classList.add(
+            "show"
+        );
+    }
+
+
+    const tap =
+        document.getElementById(
+            "tapButton"
+        );
+
+    if(tap){
+
+        tap.classList.add(
+            "completed"
+        );
+    }
+
+
+    /* Wait, show completion,
+       then automatically start
+       a new 100-count cycle */
+
+    setTimeout(
+
+        () => {
+
+            totalCount = 0;
+
+            saveTasbih();
+
+            clearMessage();
+
+            updateUI();
+
+        },
+
+        2000
+
+    );
+}
+
+
+/* ================= CLEAR MESSAGE ================= */
+
+function clearMessage(){
+
+    const el =
+        document.getElementById(
+            "completeMessage"
+        );
+
+    if(el){
+
+        el.innerText = "";
+
+        el.classList.remove(
+            "show"
+        );
+    }
 }
 
 
@@ -543,80 +1045,29 @@ function resetTasbih(){
     const lang =
         getLanguage();
 
-
-    let message =
-        "Reset Tasbih?";
-
-
-    if(lang === "bn"){
-
-        message =
-            "তসবিহের গণনা কি রিসেট করবেন?";
-
-    }
-
-    if(lang === "hi"){
-
-        message =
-            "क्या तस्बीह की गिनती रीसेट करें?";
-
-    }
+    const t =
+        TEXT[lang] || TEXT.bn;
 
 
-    if(confirm(message)){
-
-        count = 0;
-
-        saveTasbih();
-
-        updateUI();
-
-    }
-
-}
-
-
-/* ================= TARGET ================= */
-
-function setTarget(value){
-
-    target =
-        parseInt(value);
-
-
-    count = 0;
-
-
-    saveTasbih();
-
-    updateUI();
-
-}
-
-
-/* ================= ZIKR ================= */
-
-function changeZikr(){
-
-    const select =
-        document.getElementById(
-            "zikrSelect"
+    const answer =
+        window.confirm(
+            t.confirm
         );
 
-    if(!select) return;
+
+    if(!answer){
+
+        return;
+    }
 
 
-    selectedZikr =
-        select.value;
-
-
-    count = 0;
-
+    totalCount = 0;
 
     saveTasbih();
 
-    updateUI();
+    clearMessage();
 
+    updateUI();
 }
 
 
@@ -624,94 +1075,113 @@ function changeZikr(){
 
 function setText(id,text){
 
-    const element =
+    const el =
         document.getElementById(id);
 
-    if(element){
+    if(el){
 
-        element.innerText =
+        el.innerText =
             text;
 
     }
+}
+
+
+/* ================= BACK ================= */
+
+function goBack(){
+
+    window.location.href =
+        "../index.html";
 
 }
 
 
-/* ================= NAVIGATION ================= */
+/* ================= LANGUAGE WATCHER ================= */
 
-function setupNavigation(){
-
-    const back =
-        document.getElementById(
-            "backBtn"
-        );
-
-    if(back){
-
-        back.addEventListener(
-            "click",
-            () => {
-
-                window.location.href =
-                    "../index.html";
-
-            }
-        );
-
-    }
-
-}
+let lastLanguage =
+    getLanguage();
 
 
-/* ================= TARGET EVENTS ================= */
+setInterval(
 
-function setupTargetButtons(){
+    () => {
 
-    const buttons =
-        document.querySelectorAll(
-            ".target-btn"
-        );
+        const currentLanguage =
+            getLanguage();
+
+        if(
+            currentLanguage !==
+            lastLanguage
+        ){
+
+            lastLanguage =
+                currentLanguage;
+
+            updateUI();
+        }
+
+    },
+
+    500
+
+);
 
 
-    buttons.forEach(button => {
+/* ================= MIDNIGHT CHECK ================= */
 
-        button.addEventListener(
-            "click",
-            () => {
+let lastDate =
+    getTodayKey();
 
-                setTarget(
-                    button.dataset.target
-                );
 
-            }
-        );
+setInterval(
 
-    });
+    () => {
 
-}
+        const today =
+            getTodayKey();
+
+
+        if(today !== lastDate){
+
+            lastDate =
+                today;
+
+            dailyComplete =
+                0;
+
+            saveDaily();
+
+            updateUI();
+
+        }
+
+    },
+
+    30000
+
+);
 
 
 /* ================= INIT ================= */
 
 document.addEventListener(
+
     "DOMContentLoaded",
+
     () => {
 
         loadTasbih();
 
-        setupNavigation();
 
-        setupTargetButtons();
-
-
-        const tapButton =
+        const tap =
             document.getElementById(
                 "tapButton"
             );
 
-        if(tapButton){
+        if(tap){
 
-            tapButton.addEventListener(
+            tap.addEventListener(
                 "click",
                 increase
             );
@@ -719,14 +1189,14 @@ document.addEventListener(
         }
 
 
-        const resetButton =
+        const reset =
             document.getElementById(
                 "resetBtn"
             );
 
-        if(resetButton){
+        if(reset){
 
-            resetButton.addEventListener(
+            reset.addEventListener(
                 "click",
                 resetTasbih
             );
@@ -734,19 +1204,20 @@ document.addEventListener(
         }
 
 
-        const zikrSelect =
+        const back =
             document.getElementById(
-                "zikrSelect"
+                "backBtn"
             );
 
-        if(zikrSelect){
+        if(back){
 
-            zikrSelect.addEventListener(
-                "change",
-                changeZikr
+            back.addEventListener(
+                "click",
+                goBack
             );
 
         }
 
     }
+
 );
