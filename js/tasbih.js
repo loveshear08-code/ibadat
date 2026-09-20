@@ -254,6 +254,27 @@ function getLanguage(){
     return "bn";
 }
 
+function localizeNumber(number, lang){
+
+    if(lang === "bn"){
+
+        return String(number).replace(
+            /\d/g,
+            d => "০১২৩৪৫৬৭৮৯"[d]
+        );
+    }
+
+    if(lang === "hi"){
+
+        return String(number).replace(
+            /\d/g,
+            d => "०१२३४५६७८९"[d]
+        );
+    }
+
+    return String(number);
+}
+
 
 /* ================= DATE ================= */
 
@@ -626,8 +647,9 @@ function updateUI(){
         "stepText",
 
         stepWord +
-        info.step +
-        " / 4"
+localizeNumber(info.step, lang) +
+" / " +
+localizeNumber(4, lang)
 
     );
 
@@ -680,9 +702,9 @@ function updateUI(){
 
         "stepCount",
 
-        info.stepCount +
-        " / " +
-        info.target
+        localizeNumber(info.stepCount, lang) +
+" / " +
+localizeNumber(info.target, lang)
 
     );
 
@@ -695,8 +717,9 @@ function updateUI(){
 
         "totalCount",
 
-        totalCount +
-        " / 100"
+        localizeNumber(totalCount, lang) +
+" / " +
+localizeNumber(100, lang)
 
     );
 
@@ -709,7 +732,7 @@ function updateUI(){
 
         "tapNumber",
 
-        totalCount
+        localizeNumber(totalCount, lang)
 
     );
 
@@ -723,8 +746,8 @@ function updateUI(){
 
         "progressPercent",
 
-        totalCount +
-        "%"
+        localizeNumber(totalCount, lang) +
+"%"
 
     );
 
@@ -754,7 +777,7 @@ function updateUI(){
 
         "todayComplete",
 
-        dailyComplete
+        localizeNumber(dailyComplete, lang)
 
     );
 
