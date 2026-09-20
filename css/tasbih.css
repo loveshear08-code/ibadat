@@ -1,9 +1,9 @@
 /* =========================================================
-   IBADAT TASBIH - FULL SCREEN
+   IBADAT TASBIH - FINAL FULL SCREEN
    ========================================================= */
 
 
-/* ================= BODY ================= */
+/* ================= BASIC ================= */
 
 html,
 body{
@@ -29,7 +29,7 @@ body{
 }
 
 
-/* ================= MAIN PAGE ================= */
+/* ================= PAGE ================= */
 
 .tasbih-page{
 
@@ -50,9 +50,9 @@ body{
 
 .tasbih-header{
 
-    height:55px;
+    height:54px;
 
-    min-height:55px;
+    min-height:54px;
 
     background:#1b5e20;
 
@@ -69,9 +69,9 @@ body{
 
 .back-btn{
 
-    width:48px;
+    width:50px;
 
-    height:48px;
+    height:50px;
 
     border:none;
 
@@ -82,6 +82,8 @@ body{
     font-size:30px;
 
     cursor:pointer;
+
+    -webkit-tap-highlight-color:transparent;
 
 }
 
@@ -98,28 +100,28 @@ body{
 
     font-weight:bold;
 
+    white-space:nowrap;
+
 }
 
 
-/* ================= TOP 2/3 AREA ================= */
+/* ================= TOP AREA ================= */
 
 .top-area{
 
-    height:calc(66.6667vh - 55px);
-
-    height:calc(66.6667dvh - 55px);
+    height:66.6667%;
 
     min-height:0;
 
     box-sizing:border-box;
 
-    padding:10px 14px 6px;
+    padding:10px 14px 5px;
 
     display:flex;
 
     flex-direction:column;
 
-    gap:8px;
+    gap:7px;
 
     overflow:hidden;
 
@@ -134,12 +136,14 @@ body{
 
     border-radius:16px;
 
-    padding:9px 10px;
+    padding:8px 10px;
 
     text-align:center;
 
     box-shadow:
-        0 3px 10px rgba(0,0,0,0.08);
+        0 3px 10px rgba(0,0,0,.08);
+
+    flex-shrink:0;
 
 }
 
@@ -161,7 +165,7 @@ body{
 
     font-weight:bold;
 
-    line-height:1.25;
+    line-height:1.35;
 
     color:#1b5e20;
 
@@ -192,7 +196,7 @@ body{
 }
 
 
-/* ================= COUNT INFO ================= */
+/* ================= COUNT ================= */
 
 .count-info{
 
@@ -201,6 +205,8 @@ body{
     grid-template-columns:1fr 1fr;
 
     gap:8px;
+
+    flex-shrink:0;
 
 }
 
@@ -211,19 +217,19 @@ body{
 
     border-radius:14px;
 
-    padding:8px;
+    padding:7px;
 
     text-align:center;
 
     box-shadow:
-        0 3px 8px rgba(0,0,0,0.07);
+        0 3px 8px rgba(0,0,0,.07);
 
 }
 
 
 .step-count{
 
-    font-size:23px;
+    font-size:22px;
 
     font-weight:bold;
 
@@ -234,7 +240,7 @@ body{
 
 .total-count{
 
-    font-size:23px;
+    font-size:22px;
 
     font-weight:bold;
 
@@ -251,10 +257,12 @@ body{
 
     border-radius:14px;
 
-    padding:8px 10px;
+    padding:7px 10px;
 
     box-shadow:
-        0 3px 8px rgba(0,0,0,0.07);
+        0 3px 8px rgba(0,0,0,.07);
+
+    flex-shrink:0;
 
 }
 
@@ -267,9 +275,9 @@ body{
 
     font-size:13px;
 
-    margin-bottom:5px;
-
     color:#555;
+
+    margin-bottom:5px;
 
 }
 
@@ -299,12 +307,13 @@ body{
 
     border-radius:20px;
 
-    transition:width .2s ease;
+    transition:
+        width .18s ease;
 
 }
 
 
-/* ================= TODAY ================= */
+/* ================= DAILY TOTAL ================= */
 
 .today-card{
 
@@ -312,19 +321,34 @@ body{
 
     border-radius:14px;
 
-    padding:7px;
+    padding:6px;
 
     text-align:center;
 
     box-shadow:
-        0 3px 8px rgba(0,0,0,0.07);
+        0 3px 8px rgba(0,0,0,.07);
+
+    flex-shrink:0;
+
+}
+
+
+.today-value{
+
+    display:flex;
+
+    align-items:baseline;
+
+    justify-content:center;
+
+    gap:5px;
 
 }
 
 
 .today-number{
 
-    font-size:22px;
+    font-size:23px;
 
     font-weight:bold;
 
@@ -337,7 +361,7 @@ body{
 
 .complete-message{
 
-    min-height:25px;
+    min-height:26px;
 
     text-align:center;
 
@@ -347,145 +371,11 @@ body{
 
     color:#2e7d32;
 
-}
-
-
-/* ================= TAP AREA ================= */
-
-.tap-area{
-
-    height:33.3333vh;
-
-    height:33.3333dvh;
-
-    min-height:0;
-
-    flex:1;
-
     display:flex;
-
-    flex-direction:column;
 
     align-items:center;
 
     justify-content:center;
-
-    position:relative;
-
-}
-
-
-/* ================= TAP BUTTON ================= */
-
-.tap-button{
-
-    width:min(70vw, 280px);
-
-    height:min(70vw, 280px);
-
-    max-height:calc(33.3333dvh - 55px);
-
-    max-width:calc(33.3333dvh - 55px);
-
-    min-width:160px;
-
-    min-height:160px;
-
-    border-radius:50%;
-
-    border:none;
-
-    background:#2e7d32;
-
-    color:white;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    justify-content:center;
-
-    box-shadow:
-        0 8px 20px rgba(0,0,0,0.20);
-
-    cursor:pointer;
-
-    -webkit-tap-highlight-color:transparent;
-
-    user-select:none;
-
-    transition:
-        transform .08s ease,
-        background .15s ease;
-
-}
-
-
-.tap-button:active{
-
-    transform:scale(.94);
-
-    background:#1b5e20;
-
-}
-
-
-.tap-text{
-
-    font-size:22px;
-
-    font-weight:bold;
-
-    letter-spacing:1px;
-
-}
-
-
-.tap-number{
-
-    font-size:48px;
-
-    font-weight:bold;
-
-    margin-top:2px;
-
-}
-
-
-/* ================= RESET ================= */
-
-.reset-button{
-
-    position:absolute;
-
-    bottom:5px;
-
-    right:14px;
-
-    border:none;
-
-    background:#d32f2f;
-
-    color:white;
-
-    border-radius:10px;
-
-    padding:7px 12px;
-
-    font-size:13px;
-
-    cursor:pointer;
-
-}
-
-
-/* ================= COMPLETE STATE ================= */
-
-.tap-button.completed{
-
-    background:#388e3c;
 
 }
 
@@ -515,6 +405,121 @@ body{
         opacity:1;
 
     }
+
+}
+
+
+/* ================= TAP AREA ================= */
+
+.tap-area{
+
+    height:33.3333%;
+
+    min-height:0;
+
+    flex:1;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    box-sizing:border-box;
+
+    padding:4px;
+
+}
+
+
+/* ================= TAP BUTTON ================= */
+
+.tap-button{
+
+    width:min(72vw, 300px);
+
+    height:min(72vw, 300px);
+
+    max-width:calc(33.3333vh - 18px);
+
+    max-height:calc(33.3333vh - 18px);
+
+    min-width:150px;
+
+    min-height:150px;
+
+    border-radius:50%;
+
+    border:none;
+
+    outline:none;
+
+    background:#2e7d32;
+
+    color:white;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    box-shadow:
+        0 8px 22px rgba(0,0,0,.22);
+
+    cursor:pointer;
+
+    -webkit-tap-highlight-color:transparent;
+
+    user-select:none;
+
+    touch-action:manipulation;
+
+    transition:
+        transform .08s ease,
+        background .12s ease;
+
+}
+
+
+.tap-button:active{
+
+    transform:scale(.93);
+
+    background:#1b5e20;
+
+}
+
+
+.tap-text{
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    letter-spacing:1px;
+
+}
+
+
+.tap-number{
+
+    font-size:48px;
+
+    font-weight:bold;
+
+    margin-top:2px;
+
+}
+
+
+/* ================= COMPLETE TAP ================= */
+
+.tap-button.completed{
+
+    background:#388e3c;
 
 }
 
@@ -649,23 +654,23 @@ body.dark-mode .tap-button:active{
 
     .top-area{
 
-        padding-top:6px;
+        padding-top:5px;
 
-        gap:5px;
+        gap:4px;
 
     }
 
 
     .zikr-card{
 
-        padding:5px;
+        padding:4px 7px;
 
     }
 
 
     .zikr-arabic{
 
-        font-size:24px;
+        font-size:23px;
 
     }
 
@@ -677,9 +682,16 @@ body.dark-mode .tap-button:active{
     }
 
 
+    .step-text{
+
+        font-size:11px;
+
+    }
+
+
     .count-card{
 
-        padding:5px;
+        padding:4px;
 
     }
 
@@ -687,44 +699,53 @@ body.dark-mode .tap-button:active{
     .step-count,
     .total-count{
 
-        font-size:19px;
+        font-size:18px;
 
     }
 
 
     .progress-section{
 
-        padding:5px 8px;
+        padding:4px 8px;
 
     }
 
 
     .today-card{
 
-        padding:5px;
+        padding:4px;
 
     }
 
 
     .today-number{
 
-        font-size:19px;
+        font-size:18px;
+
+    }
+
+
+    .complete-message{
+
+        min-height:21px;
+
+        font-size:12px;
 
     }
 
 
     .tap-button{
 
-        min-width:145px;
+        min-width:140px;
 
-        min-height:145px;
+        min-height:140px;
 
     }
 
 
     .tap-number{
 
-        font-size:40px;
+        font-size:38px;
 
     }
 
