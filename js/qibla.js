@@ -1,15 +1,13 @@
 /* =========================================================
-   IBADAT QIBLA - SHARED HOME LOCATION + AUTO COMPASS
+   IBADAT QIBLA - GPS + AUTOMATIC COMPASS
    ========================================================= */
 
 
 /* ================= CONSTANTS ================= */
 
 const KAABA_LAT = 21.422487;
-const KAABA_LON = 39.826206;
 
-const IBADAT_LOCATION_KEY =
-    "IBADAT_LOCATION";
+const KAABA_LON = 39.826206;
 
 
 /* ================= LANGUAGE ================= */
@@ -18,79 +16,112 @@ const QIBLA_TEXT = {
 
     bn: {
 
-        title: "কিবলা",
+        title:
+            "কিবলা",
 
-        location: "বর্তমান অবস্থান",
+        location:
+            "বর্তমান অবস্থান",
 
-        locating: "লোকেশন নেওয়া হচ্ছে...",
+        locating:
+            "লোকেশন নেওয়া হচ্ছে...",
 
-        qiblaDirection: "কিবলার দিক",
+        qiblaDirection:
+            "কিবলার দিক",
 
-        distance: "মক্কার দূরত্ব",
+        distance:
+            "মক্কার দূরত্ব",
 
-        start: "কম্পাস চালু করুন",
+        start:
+            "কম্পাস চালু করুন",
 
-        started: "কম্পাস চালু হয়েছে",
+        started:
+            "কম্পাস চালু হয়েছে",
 
-        permission: "কম্পাস ব্যবহারের অনুমতি দিন",
+        permission:
+            "কম্পাস ব্যবহারের অনুমতি দিন",
 
-        locationError: "লোকেশন পাওয়া যায়নি",
+        locationError:
+            "লোকেশন পাওয়া যায়নি",
 
-        compassError: "আপনার ডিভাইসে কম্পাস সাপোর্ট পাওয়া যায়নি",
+        compassError:
+            "আপনার ডিভাইসে কম্পাস সাপোর্ট পাওয়া যায়নি",
 
-        holdFlat: "ফোনটি সমতলভাবে ধরে ধীরে ঘোরান"
+        holdFlat:
+            "ফোনটি সমতলভাবে ধরে ধীরে ঘোরান"
     },
 
 
     en: {
 
-        title: "Qibla",
+        title:
+            "Qibla",
 
-        location: "Current Location",
+        location:
+            "Current Location",
 
-        locating: "Loading location...",
+        locating:
+            "Loading location...",
 
-        qiblaDirection: "Qibla Direction",
+        qiblaDirection:
+            "Qibla Direction",
 
-        distance: "Distance to Makkah",
+        distance:
+            "Distance to Makkah",
 
-        start: "Start Compass",
+        start:
+            "Start Compass",
 
-        started: "Compass started",
+        started:
+            "Compass started",
 
-        permission: "Allow compass permission",
+        permission:
+            "Allow compass permission",
 
-        locationError: "Location unavailable",
+        locationError:
+            "Location unavailable",
 
-        compassError: "Compass is not supported on this device",
+        compassError:
+            "Compass is not supported on this device",
 
-        holdFlat: "Hold the phone flat and rotate slowly"
+        holdFlat:
+            "Hold the phone flat and rotate slowly"
     },
 
 
     hi: {
 
-        title: "क़िबला",
+        title:
+            "क़िबला",
 
-        location: "वर्तमान स्थान",
+        location:
+            "वर्तमान स्थान",
 
-        locating: "स्थान लिया जा रहा है...",
+        locating:
+            "स्थान लिया जा रहा है...",
 
-        qiblaDirection: "क़िबला दिशा",
+        qiblaDirection:
+            "क़िबला दिशा",
 
-        distance: "मक्का की दूरी",
+        distance:
+            "मक्का की दूरी",
 
-        start: "कम्पास चालू करें",
+        start:
+            "कम्पास चालू करें",
 
-        started: "कम्पास चालू हो गया",
+        started:
+            "कम्पास चालू हो गया",
 
-        permission: "कम्पास की अनुमति दें",
+        permission:
+            "कम्पास की अनुमति दें",
 
-        locationError: "स्थान उपलब्ध नहीं",
+        locationError:
+            "स्थान उपलब्ध नहीं",
 
-        compassError: "इस डिवाइस में कम्पास उपलब्ध नहीं है",
+        compassError:
+            "इस डिवाइस में कम्पास उपलब्ध नहीं है",
 
-        holdFlat: "फ़ोन को समतल रखें और धीरे-धीरे घुमाएँ"
+        holdFlat:
+            "फ़ोन को समतल रखें और धीरे-धीरे घुमाएँ"
     }
 
 };
@@ -107,10 +138,12 @@ function getLanguage(){
                 "appSettings"
             );
 
+
         if(saved){
 
             const settings =
                 JSON.parse(saved);
+
 
             if(
                 settings &&
@@ -126,6 +159,7 @@ function getLanguage(){
         }
 
     }catch(e){}
+
 
     return "bn";
 }
@@ -146,50 +180,60 @@ const pageTitle =
         "pageTitle"
     );
 
+
 const locationLabel =
     document.getElementById(
         "locationLabel"
     );
+
 
 const locationName =
     document.getElementById(
         "locationName"
     );
 
+
 const distanceLabel =
     document.getElementById(
         "distanceLabel"
     );
+
 
 const distance =
     document.getElementById(
         "distance"
     );
 
+
 const directionText =
     document.getElementById(
         "directionText"
     );
+
 
 const qiblaDegree =
     document.getElementById(
         "qiblaDegree"
     );
 
+
 const startCompassBtn =
     document.getElementById(
         "startCompass"
     );
+
 
 const compassMessage =
     document.getElementById(
         "compassMessage"
     );
 
+
 const qiblaArrow =
     document.getElementById(
         "qiblaArrow"
     );
+
 
 const backBtn =
     document.getElementById(
@@ -263,18 +307,12 @@ function applyLanguage(){
     }
 
 
-    /*
-       Button আর ব্যবহার করা হবে না।
-       Compass automatically start হবে।
-    */
-
-
     updateDegreeText();
 }
 
 
 /* =========================================================
-   REMOVE COMPASS BUTTON
+   REMOVE START COMPASS BUTTON
    ========================================================= */
 
 function removeCompassButton(){
@@ -337,10 +375,10 @@ function localNumber(number){
 
 
 /* =========================================================
-   LOAD SHARED HOME LOCATION
+   CURRENT GPS LOCATION
    ========================================================= */
 
-function loadSharedLocation(){
+function getCurrentLocation(){
 
     if(locationName){
 
@@ -349,100 +387,187 @@ function loadSharedLocation(){
     }
 
 
-    try{
-
-        const saved =
-            localStorage.getItem(
-                IBADAT_LOCATION_KEY
-            );
-
-
-        if(!saved){
-
-            if(locationName){
-
-                locationName.innerText =
-                    getText().locationError;
-            }
-
-            return;
-        }
-
-
-        const data =
-            JSON.parse(saved);
-
-
-        if(
-            !data ||
-            typeof data.latitude !== "number" ||
-            typeof data.longitude !== "number"
-        ){
-
-            if(locationName){
-
-                locationName.innerText =
-                    getText().locationError;
-            }
-
-            return;
-        }
-
-
-        /*
-         * Home page-এ পাওয়া
-         * একই latitude / longitude ব্যবহার।
-         *
-         * এখানে কোনো নতুন GPS request নেই।
-         */
-
-        latitude =
-            data.latitude;
-
-
-        longitude =
-            data.longitude;
-
-
-        userLocationLoaded =
-            true;
-
-
-        /*
-         * Home page-এর saved city।
-         */
-
-        if(
-            data.city &&
-            locationName
-        ){
-
-            locationName.innerText =
-                data.city;
-
-        }else if(locationName){
-
-            locationName.innerText =
-                getText().locationError;
-        }
-
-
-        /*
-         * Shared Home location থেকে
-         * Qibla calculation।
-         */
-
-        calculateQibla();
-
-        calculateDistance();
-
-
-    }catch(e){
+    if(
+        !navigator.geolocation
+    ){
 
         if(locationName){
 
             locationName.innerText =
                 getText().locationError;
+        }
+
+        return;
+    }
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position){
+
+            latitude =
+                position.coords.latitude;
+
+
+            longitude =
+                position.coords.longitude;
+
+
+            userLocationLoaded =
+                true;
+
+
+            /*
+             * নতুন GPS location পাওয়া গেছে।
+             */
+
+            calculateQibla();
+
+            calculateDistance();
+
+
+            /*
+             * বর্তমান GPS location-এর
+             * শহরের নাম নেওয়া।
+             */
+
+            getLocationName(
+                latitude,
+                longitude
+            );
+
+
+            /*
+             * GPS পাওয়ার পর
+             * compass automatic start।
+             */
+
+            startCompass();
+
+        },
+
+
+        function(error){
+
+            if(locationName){
+
+                locationName.innerText =
+                    getText().locationError;
+            }
+
+
+            if(compassMessage){
+
+                compassMessage.innerText =
+                    getText().locationError;
+            }
+
+        },
+
+
+        {
+
+            enableHighAccuracy:
+                true,
+
+            timeout:
+                15000,
+
+            maximumAge:
+                0
+        }
+
+    );
+}
+
+
+/* =========================================================
+   REVERSE LOCATION
+   ========================================================= */
+
+async function getLocationName(
+    lat,
+    lon
+){
+
+    if(!locationName){
+
+        return;
+    }
+
+
+    try{
+
+        const language =
+            getLanguage();
+
+
+        const response =
+            await fetch(
+
+                "https://api.bigdatacloud.net/data/reverse-geocode-client" +
+
+                "?latitude=" +
+                encodeURIComponent(lat) +
+
+                "&longitude=" +
+                encodeURIComponent(lon) +
+
+                "&localityLanguage=" +
+                encodeURIComponent(language)
+
+            );
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "Location request failed"
+            );
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const city =
+
+            data.city ||
+
+            data.locality ||
+
+            data.principalSubdivision ||
+
+            data.countryName;
+
+
+        if(city){
+
+            locationName.innerText =
+                city;
+
+        }else{
+
+            locationName.innerText =
+                getText().locationError;
+        }
+
+
+    }catch(error){
+
+        /*
+         * GPS location পাওয়া গেছে,
+         * কিন্তু city name পাওয়া যায়নি।
+         *
+         * তাই location error না দেখিয়ে
+         * GPS location-টাই valid রাখা হচ্ছে।
+         */
+
+        if(locationName){
+
+            locationName.innerText =
+                "✓";
         }
     }
 }
@@ -521,11 +646,6 @@ function calculateQibla(){
     bearing =
         (bearing + 360) % 360;
 
-
-    /*
-     * Home location থেকে
-     * Kaaba-এর স্থির true bearing।
-     */
 
     qiblaBearing =
         bearing;
@@ -837,8 +957,8 @@ function handleOrientation(event){
 
 
     /*
-     * Qibla bearing স্থির থাকবে।
-     * শুধু arrow phone heading অনুযায়ী ঘুরবে।
+     * Qibla bearing স্থির।
+     * Phone heading অনুযায়ী arrow ঘুরবে।
      */
 
     const rotation =
@@ -875,10 +995,7 @@ async function startCompass(){
     try{
 
         /*
-         * iPhone / iPad
-         *
-         * কিছু iOS browser-এ orientation
-         * permission প্রয়োজন হতে পারে।
+         * iPhone / iPad permission
          */
 
         if(
@@ -893,10 +1010,6 @@ async function startCompass(){
             "function"
 
         ){
-
-            /*
-             * এখানে automatic request করা হচ্ছে।
-             */
 
             const permission =
 
@@ -963,7 +1076,7 @@ async function startCompass(){
         }
 
 
-    }catch(e){
+    }catch(error){
 
         if(compassMessage){
 
@@ -985,36 +1098,24 @@ document.addEventListener(
     function(){
 
         /*
-         * Language apply।
+         * Language
          */
 
         applyLanguage();
 
 
         /*
-         * HTML-এ button থাকলেও
-         * Qibla page-এ সেটি দেখানো হবে না।
+         * Start Compass button আর থাকবে না।
          */
 
         removeCompassButton();
 
 
         /*
-         * Home page-এর already saved
-         * location ব্যবহার।
-         *
-         * কোনো নতুন GPS search নেই।
+         * Qibla নিজের GPS location নেবে।
          */
 
-        loadSharedLocation();
-
-
-        /*
-         * Location load হওয়ার সঙ্গে সঙ্গে
-         * compass automatically start হবে।
-         */
-
-        startCompass();
+        getCurrentLocation();
 
     }
 );
@@ -1030,7 +1131,7 @@ window.currentQiblaLang =
 
 setInterval(
 
-    async () => {
+    function(){
 
         const newLang =
             getLanguage();
@@ -1049,8 +1150,8 @@ setInterval(
 
 
             /*
-             * একই Home location রেখে
-             * display update।
+             * একই current GPS location থেকে
+             * শুধু display update।
              */
 
             if(
