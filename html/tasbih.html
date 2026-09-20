@@ -25,15 +25,19 @@
 
     <div class="tasbih-header">
 
-        <button id="backBtn"
-                class="back-btn">
+        <button
+            id="backBtn"
+            class="back-btn"
+            onclick="goBack()">
 
             ←
 
         </button>
 
-        <div id="pageTitle"
-             class="page-title">
+
+        <div
+            id="pageTitle"
+            class="page-title">
 
             তসবিহ
 
@@ -42,7 +46,8 @@
     </div>
 
 
-    <!-- ================= TOP AREA ================= -->
+
+    <!-- ================= TOP 2/3 ================= -->
 
     <div class="top-area">
 
@@ -51,29 +56,36 @@
 
         <div class="zikr-card">
 
-            <div id="zikrLabel"
-                 class="small-label">
+            <div
+                id="zikrLabel"
+                class="small-label">
 
                 বর্তমান জিকির
 
             </div>
 
-            <div id="zikrArabic"
-                 class="zikr-arabic">
+
+            <div
+                id="zikrArabic"
+                class="zikr-arabic">
 
                 سُبْحَانَ اللّٰهِ
 
             </div>
 
-            <div id="zikrName"
-                 class="zikr-name">
+
+            <div
+                id="zikrName"
+                class="zikr-name">
 
                 সুবহানাল্লাহ
 
             </div>
 
-            <div id="stepText"
-                 class="step-text">
+
+            <div
+                id="stepText"
+                class="step-text">
 
                 ধাপ ১ / ৪
 
@@ -82,22 +94,26 @@
         </div>
 
 
-        <!-- COUNT INFORMATION -->
+
+        <!-- ================= COUNT ================= -->
 
         <div class="count-info">
 
 
             <div class="count-card">
 
-                <div id="stepCountLabel"
-                     class="small-label">
+                <div
+                    id="stepCountLabel"
+                    class="small-label">
 
                     বর্তমান ধাপ
 
                 </div>
 
-                <div id="stepCount"
-                     class="step-count">
+
+                <div
+                    id="stepCount"
+                    class="step-count">
 
                     0 / 33
 
@@ -106,17 +122,21 @@
             </div>
 
 
+
             <div class="count-card">
 
-                <div id="totalCountLabel"
-                     class="small-label">
+                <div
+                    id="totalCountLabel"
+                    class="small-label">
 
                     মোট কাউন্ট
 
                 </div>
 
-                <div id="totalCount"
-                     class="total-count">
+
+                <div
+                    id="totalCount"
+                    class="total-count">
 
                     0 / 100
 
@@ -124,11 +144,11 @@
 
             </div>
 
-
         </div>
 
 
-        <!-- PROGRESS -->
+
+        <!-- ================= PROGRESS ================= -->
 
         <div class="progress-section">
 
@@ -138,16 +158,19 @@
                     অগ্রগতি
                 </span>
 
+
                 <span id="progressPercent">
                     0%
                 </span>
 
             </div>
 
+
             <div class="progress-bar">
 
-                <div id="progressFill"
-                     class="progress-fill">
+                <div
+                    id="progressFill"
+                    class="progress-fill">
 
                 </div>
 
@@ -156,25 +179,30 @@
         </div>
 
 
-        <!-- TODAY COMPLETE -->
+
+        <!-- ================= DAILY TOTAL ================= -->
 
         <div class="today-card">
 
-            <div id="todayLabel"
-                 class="small-label">
+            <div
+                id="todayLabel"
+                class="small-label">
 
-                আজ সম্পূর্ণ
+                আজ মোট সম্পন্ন
 
             </div>
 
-            <div>
 
-                <span id="todayComplete"
-                      class="today-number">
+            <div class="today-value">
+
+                <span
+                    id="todayComplete"
+                    class="today-number">
 
                     0
 
                 </span>
+
 
                 <span id="todayTimes">
 
@@ -187,34 +215,44 @@
         </div>
 
 
-        <!-- MESSAGE -->
 
-        <div id="completeMessage"
-             class="complete-message">
+        <!-- ================= MESSAGE ================= -->
+
+        <div
+            id="completeMessage"
+            class="complete-message">
 
         </div>
-
 
     </div>
 
 
-    <!-- ================= TAP AREA ================= -->
+
+    <!-- ================= BOTTOM 1/3 ================= -->
 
     <div class="tap-area">
 
 
-        <button id="tapButton"
-                class="tap-button">
+        <!-- BIG TAP BUTTON -->
 
-            <span class="tap-text"
-                  id="tapText">
+        <button
+            id="tapButton"
+            class="tap-button"
+            onclick="increase()">
+
+
+            <span
+                id="tapText"
+                class="tap-text">
 
                 TAP
 
             </span>
 
-            <span class="tap-number"
-                  id="tapNumber">
+
+            <span
+                id="tapNumber"
+                class="tap-number">
 
                 0
 
@@ -222,22 +260,14 @@
 
         </button>
 
-
-        <button id="resetBtn"
-                class="reset-button">
-
-            ↺ <span id="resetText">রিসেট</span>
-
-        </button>
-
-
     </div>
 
 
 </div>
 
 
-<script src="../js/tasbih.js?v=4"></script>
+
+<script src="../js/tasbih.js?v=5"></script>
 
 <script src="../js/theme.js"></script>
 
