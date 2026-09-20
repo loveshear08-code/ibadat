@@ -1,313 +1,220 @@
-<!DOCTYPE html>
-<html lang="bn">
+<!DOCTYPE html><html lang="bn"><head><meta charset="UTF-8">
 
-<head>
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <meta charset="UTF-8">
+<title>IBADAT - নামাজ</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
+<link
+    rel="stylesheet"
+    href="../css/namaz-guide.css"
+>
+
+</head><body><header class="top-bar"><button id="backButton">←</button>
+
+<span id="pageTitle"></span>
+
+<span class="top-space"></span>
+
+</header><main class="main"><!-- =================================================
+     FIRST PAGE
+     ================================================= -->
+
+<section id="mainMenu">
+
+
+    <!-- ================= NAMAZ KI O KENO ================= -->
+
+    <div
+        class="namaz-info-card"
+        id="namazInfoCard"
     >
 
-    <title>IBADAT - নামাজ</title>
-
-    <link
-        rel="stylesheet"
-        href="../css/namaz-guide.css"
-    >
-
-</head>
-
-
-<body>
-
-<header class="top-bar">
-
-    <button id="backButton">←</button>
-
-    <span id="pageTitle"></span>
-
-    <span class="top-space"></span>
-
-</header>
-
-
-<main class="main">
-
-
-    <!-- ================= FIRST PAGE ================= -->
-
-    <section id="mainMenu">
-
-
-        <!-- NAMAZ KI O KENO -->
-
-        <div
-            class="namaz-info-card"
-            id="namazInfoCard"
-        >
-
-            <div class="info-icon">
-                🕌
-            </div>
-
-            <div
-                class="info-title"
-                id="infoTitle"
-            ></div>
-
-            <div
-                class="info-text"
-                id="infoText1"
-            ></div>
-
-            <div
-                class="info-text"
-                id="infoText2"
-            ></div>
-
-            <div
-                class="info-more"
-                id="infoMore"
-            ></div>
-
-        </div>
-
-
-        <!-- FOUR MAIN OPTIONS -->
-
-        <div class="guide-grid">
-
-
-            <div
-                class="guide-card"
-                data-section="purity"
-            >
-
-                <div class="guide-icon">
-                    🧼
-                </div>
-
-                <div
-                    class="guide-title"
-                    id="titlePurity"
-                ></div>
-
-                <div
-                    class="guide-desc"
-                    id="descPurity"
-                ></div>
-
-            </div>
-
-
-            <div
-                class="guide-card"
-                data-section="learn"
-            >
-
-                <div class="guide-icon">
-                    📖
-                </div>
-
-                <div
-                    class="guide-title"
-                    id="titleLearn"
-                ></div>
-
-                <div
-                    class="guide-desc"
-                    id="descLearn"
-                ></div>
-
-            </div>
-
-
-            <div
-                class="guide-card"
-                data-section="recitations"
-            >
-
-                <div class="guide-icon">
-                    🤲
-                </div>
-
-                <div
-                    class="guide-title"
-                    id="titleRecitations"
-                ></div>
-
-                <div
-                    class="guide-desc"
-                    id="descRecitations"
-                ></div>
-
-            </div>
-
-
-            <div
-                class="guide-card"
-                data-section="jamaat"
-            >
-
-                <div class="guide-icon">
-                    👥
-                </div>
-
-                <div
-                    class="guide-title"
-                    id="titleJamaat"
-                ></div>
-
-                <div
-                    class="guide-desc"
-                    id="descJamaat"
-                ></div>
-
-            </div>
-
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ================= SECOND PAGE ================= -->
-
-    <section
-        id="namazDetails"
-        class="inner-page hidden"
-    >
-
-
-        <div class="section-header">
-
-            <button id="namazDetailsBack">
-                ←
-            </button>
-
-            <span id="namazDetailsTitle"></span>
-
-        </div>
-
-
-
-        <div class="schedule-board-grid">
-
-
-            <!-- DAILY PRAYER BOARD -->
-
-            <div class="schedule-board daily-board">
-
-                <div
-                    class="schedule-board-title"
-                    id="dailyScheduleTitle"
-                ></div>
-
-
-                <div
-                    id="dailyPrayerList"
-                    class="daily-prayer-list"
-                ></div>
-
-            </div>
-
-
-
-            <!-- SPECIAL PRAYER BOARD -->
-
-            <div
-                class="schedule-board special-board"
-                id="specialScheduleCard"
-            >
-
-                <div
-                    class="schedule-board-title"
-                    id="specialScheduleTitle"
-                ></div>
-
-
-                <div
-                    id="featuredSpecialList"
-                    class="featured-special-list"
-                ></div>
-
-
-                <div
-                    class="special-more"
-                    id="specialMore"
-                ></div>
-
-            </div>
-
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ================= THIRD PAGE ================= -->
-
-    <section
-        id="specialDetailsPage"
-        class="inner-page hidden"
-    >
-
-
-        <div class="section-header">
-
-            <button id="specialDetailsBack">
-                ←
-            </button>
-
-            <span id="specialDetailsTitle"></span>
-
+        <div class="info-icon">
+            🕌
         </div>
 
 
         <div
-            id="remainingSpecialList"
-            class="special-details-list"
+            class="info-title"
+            id="infoTitle"
         ></div>
 
 
-    </section>
+        <div
+            class="info-text"
+            id="infoText1"
+        ></div>
+
+
+        <div
+            class="info-text"
+            id="infoText2"
+        ></div>
+
+
+        <!-- DAILY PRAYER SCHEDULE INSIDE SAME BOARD -->
+
+        <div class="daily-section">
+
+            <div
+                class="daily-section-title"
+                id="dailyScheduleTitle"
+            ></div>
+
+
+            <div
+                id="dailyPrayerList"
+                class="daily-prayer-list"
+            ></div>
+
+        </div>
+
+    </div>
 
 
 
-    <!-- ================= BLANK SECTION PAGE ================= -->
+    <!-- =================================================
+         FOUR MAIN OPTIONS
+         ================================================= -->
 
-    <section
-        id="sectionPage"
-        class="inner-page hidden"
-    >
+    <div class="guide-grid">
 
 
-        <div class="section-header">
+        <!-- 1. PURITY -->
 
-            <button id="sectionBackButton">
-                ←
-            </button>
+        <div
+            class="guide-card"
+            data-section="purity"
+        >
 
-            <span id="sectionTitle"></span>
+            <div class="guide-icon">
+                🧼
+            </div>
+
+            <div
+                class="guide-title"
+                id="titlePurity"
+            ></div>
+
+            <div
+                class="guide-desc"
+                id="descPurity"
+            ></div>
 
         </div>
 
 
-        <div id="sectionContent"></div>
+
+        <!-- 2. LEARN SALAH -->
+
+        <div
+            class="guide-card"
+            data-section="learn"
+        >
+
+            <div class="guide-icon">
+                📖
+            </div>
+
+            <div
+                class="guide-title"
+                id="titleLearn"
+            ></div>
+
+            <div
+                class="guide-desc"
+                id="descLearn"
+            ></div>
+
+        </div>
 
 
-    </section>
+
+        <!-- 3. RECITATIONS -->
+
+        <div
+            class="guide-card"
+            data-section="recitations"
+        >
+
+            <div class="guide-icon">
+                🤲
+            </div>
+
+            <div
+                class="guide-title"
+                id="titleRecitations"
+            ></div>
+
+            <div
+                class="guide-desc"
+                id="descRecitations"
+            ></div>
+
+        </div>
 
 
-</main>
+
+        <!-- 4. JAMAAT & SPECIAL -->
+
+        <div
+            class="guide-card"
+            data-section="jamaat"
+        >
+
+            <div class="guide-icon">
+                👥
+            </div>
+
+            <div
+                class="guide-title"
+                id="titleJamaat"
+            ></div>
+
+            <div
+                class="guide-desc"
+                id="descJamaat"
+            ></div>
+
+        </div>
+
+
+    </div>
+
+</section>
 
 
 
-<script src="../js/namaz-guide.js?v=10"></script>
+<!-- =================================================
+     BLANK SECTION PAGE
+     ================================================= -->
+
+<section
+    id="sectionPage"
+    class="inner-page hidden"
+>
+
+    <div class="section-header">
+
+        <button id="sectionBackButton">
+            ←
+        </button>
+
+        <span id="sectionTitle"></span>
+
+    </div>
+
+
+    <!-- INTENTIONALLY EMPTY -->
+
+    <div id="sectionContent"></div>
+
+</section>
+
+</main><script src="../js/namaz-guide.js?v=11"></script>
 
 </body>
 
