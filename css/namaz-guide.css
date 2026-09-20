@@ -1,578 +1,504 @@
 /* =====================================================
-IBADAT - NAMAZ GUIDE
-===================================================== */
+   IBADAT - NAMAZ GUIDE
+   COMPACT DISPLAY VERSION
+   ===================================================== */
 
 *{
-box-sizing:border-box;
+    box-sizing:border-box;
 }
+
 
 body{
-
-margin:0;
-
-font-family:sans-serif;
-
-background:#eef7f0;
-
-color:#1b1b1b;
-
+    margin:0;
+    font-family:sans-serif;
+    background:#eef7f0;
+    color:#1b1b1b;
 }
+
 
 /* =====================================================
-TOP BAR
-===================================================== */
+   TOP BAR
+   ===================================================== */
 
 .top-bar{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
 
-position:fixed;
+    height:50px;
 
-top:0;
-left:0;
-right:0;
+    background:#2e7d32;
+    color:#fff;
 
-height:50px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 
-background:#2e7d32;
+    padding:0 10px;
 
-color:#fff;
-
-display:flex;
-
-align-items:center;
-
-justify-content:space-between;
-
-padding:0 10px;
-
-z-index:100;
-
+    z-index:100;
 }
+
 
 .top-bar button,
 .section-header button{
+    width:38px;
+    height:38px;
 
-width:38px;
-height:38px;
+    border:none;
+    border-radius:50%;
 
-border:none;
+    background:transparent;
+    color:#fff;
 
-border-radius:50%;
+    font-size:25px;
 
-background:transparent;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-color:#fff;
-
-font-size:25px;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-cursor:pointer;
-
+    cursor:pointer;
 }
+
 
 #pageTitle{
+    flex:1;
+    text-align:center;
 
-flex:1;
-
-text-align:center;
-
-font-size:20px;
-
-font-weight:bold;
-
+    font-size:20px;
+    font-weight:bold;
 }
+
 
 .top-space{
-
-width:38px;
-
+    width:38px;
 }
 
+
 /* =====================================================
-MAIN
-===================================================== */
+   MAIN
+   ===================================================== */
 
 .main{
-
-padding:60px 10px 22px;
-
-min-height:100vh;
-
+    padding:58px 10px 12px;
+    min-height:100vh;
 }
 
+
 /* =====================================================
-NAMAZ KI O KENO BOARD
-===================================================== */
+   NAMAZ INFO BOARD
+   ===================================================== */
 
 .namaz-info-card{
+    background:#dcedc8;
 
-background:#dcedc8;
+    border-radius:16px;
 
-border-radius:16px;
+    padding:15px 12px;
 
-padding:20px 15px 18px;
+    margin-bottom:18px;
 
-margin-bottom:30px;
-
-text-align:center;
-
-/*
-   This board is informational only.
-   It is intentionally NOT clickable.
-*/
-
+    text-align:center;
 }
 
-/* =====================================================
-INFO CONTENT
-===================================================== */
+
+/* ICON */
 
 .info-icon{
-
-font-size:34px;
-
-margin-bottom:5px;
-
+    font-size:30px;
+    margin-bottom:3px;
 }
+
+
+/* TITLE */
 
 .info-title{
+    font-size:20px;
+    font-weight:bold;
 
-font-size:21px;
+    color:#1b5e20;
 
-font-weight:bold;
-
-color:#1b5e20;
-
-margin-bottom:10px;
-
+    margin-bottom:8px;
 }
+
+
+/* TEXT */
 
 .info-text{
-
-font-size:14px;
-
-line-height:1.55;
-
-font-weight:500;
-
-margin-bottom:8px;
-
-}
-
-/* =====================================================
-DAILY SCHEDULE INSIDE MAIN BOARD
-===================================================== */
-
-.daily-section{
-
-width:100%;
-
-margin-top:18px;
-
-padding-top:14px;
-
-border-top:
-    1px solid
-    rgba(46,125,50,.25);
-
-}
-
-.daily-section-title{
-
-text-align:center;
-
-font-size:19px;
-
-font-weight:bold;
-
-color:#1b5e20;
-
-margin-bottom:12px;
-
-}
-
-.daily-prayer-list{
-
-width:100%;
-
-}
-
-.daily-prayer-row{
-
-background:#a5d6a7;
-
-border-radius:10px;
-
-padding:8px 9px;
-
-margin-bottom:7px;
-
-font-size:13px;
-
-line-height:1.45;
-
-font-weight:500;
-
-text-align:left;
-
-}
-
-.daily-prayer-name{
-
-font-weight:bold;
-
-color:#1b5e20;
-
-margin-right:4px;
-
-}
-
-.daily-prayer-detail{
-
-font-weight:500;
-
-}
-
-.daily-prayer-extra{
-
-display:block;
-
-margin-left:0;
-
-margin-top:2px;
-
-font-size:12px;
-
-font-weight:500;
-
-}
-
-/* =====================================================
-FOUR GUIDE CARDS
-===================================================== */
-
-.guide-grid{
-
-display:grid;
-
-grid-template-columns:
-    repeat(2,1fr);
-
-gap:12px;
-
-/*
-   Keeps the four options in a clean 2 × 2 layout.
-*/
-
-}
-
-.guide-card{
-
-background:#a5d6a7;
-
-border-radius:14px;
-
-min-height:150px;
-
-padding:14px 10px;
-
-display:flex;
-
-flex-direction:column;
-
-align-items:center;
-
-justify-content:center;
-
-text-align:center;
-
-cursor:pointer;
-
-transition:
-    transform .15s ease,
-    box-shadow .15s ease;
-
-}
-
-.guide-card:active{
-
-transform:scale(.98);
-
-box-shadow:
-    0 3px 8px rgba(0,0,0,.12);
-
-}
-
-.guide-icon{
-
-font-size:32px;
-
-margin-bottom:8px;
-
-}
-
-.guide-title{
-
-font-size:17px;
-
-font-weight:bold;
-
-color:#1b5e20;
-
-margin-bottom:6px;
-
-}
-
-.guide-desc{
-
-font-size:13px;
-
-line-height:1.4;
-
-font-weight:500;
-
-}
-
-/* =====================================================
-HIDDEN
-===================================================== */
-
-.hidden{
-
-display:none !important;
-
-}
-
-.inner-page{
-
-width:100%;
-
-}
-
-/* =====================================================
-BLANK PAGE HEADER
-===================================================== */
-
-.section-header{
-
-background:#2e7d32;
-
-color:#fff;
-
-min-height:50px;
-
-display:flex;
-
-align-items:center;
-
-padding:0 10px;
-
-margin-bottom:12px;
-
-border-radius:
-    0 0 12px 12px;
-
-}
-
-.section-header span{
-
-flex:1;
-
-text-align:center;
-
-font-size:19px;
-
-font-weight:bold;
-
-padding-right:38px;
-
-}
-
-/*
-Intentionally empty.
-
-No text, message or content is shown
-after tapping one of the four options.
-*/
-
-#sectionContent{
-
-min-height:0;
-
-}
-
-/* =====================================================
-DARK MODE
-===================================================== */
-
-body.dark-mode{
-
-background:#121712;
-
-color:#eeeeee;
-
-}
-
-body.dark-mode .namaz-info-card{
-
-background:#263a28;
-
-}
-
-body.dark-mode .info-title{
-
-color:#a5d6a7;
-
-}
-
-body.dark-mode .daily-section{
-
-border-top-color:
-    rgba(165,214,167,.20);
-
-}
-
-body.dark-mode .daily-section-title{
-
-color:#c8e6c9;
-
-}
-
-body.dark-mode .guide-card{
-
-background:#355a3a;
-
-}
-
-body.dark-mode .guide-title{
-
-color:#c8e6c9;
-
-}
-
-body.dark-mode .daily-prayer-row{
-
-background:#355a3a;
-
-}
-
-body.dark-mode .daily-prayer-name{
-
-color:#c8e6c9;
-
-}
-
-/* =====================================================
-SMALL SCREEN
-===================================================== */
-
-@media(max-width:360px){
-
-.main{
-
-    padding-left:8px;
-
-    padding-right:8px;
-
-    padding-bottom:18px;
-}
-
-
-.namaz-info-card{
-
-    padding:17px 11px 16px;
-
-    margin-bottom:28px;
-}
-
-
-.info-icon{
-
-    font-size:31px;
-}
-
-
-.info-title{
-
-    font-size:19px;
-}
-
-
-.info-text{
-
     font-size:13px;
+    line-height:1.45;
 
-    line-height:1.5;
+    font-weight:500;
+
+    margin-bottom:5px;
 }
 
 
-.daily-section{
+/* =====================================================
+   DAILY SCHEDULE INSIDE MAIN BOARD
+   ===================================================== */
 
-    margin-top:15px;
+.daily-schedule-inside{
+    margin-top:10px;
+    padding-top:10px;
 
-    padding-top:12px;
+    border-top:1px solid rgba(46,125,50,.20);
 }
 
 
-.daily-section-title{
+.daily-schedule-title{
+    text-align:center;
 
-    font-size:18px;
+    font-size:16px;
+    font-weight:bold;
 
-    margin-bottom:10px;
-}
-
-
-.daily-prayer-row{
-
-    font-size:12px;
-
-    padding:7px 8px;
-
-    margin-bottom:6px;
-}
-
-
-.daily-prayer-extra{
-
-    font-size:11px;
-}
-
-
-.guide-grid{
-
-    gap:9px;
-}
-
-
-.guide-card{
-
-    min-height:140px;
-
-    padding:10px 7px;
-}
-
-
-.guide-icon{
-
-    font-size:28px;
+    color:#1b5e20;
 
     margin-bottom:7px;
 }
 
 
-.guide-title{
+/* =====================================================
+   DAILY PRAYER LIST - COMPACT FIVE LINES
+   ===================================================== */
 
-    font-size:15px;
+.daily-prayer-list{
+    width:100%;
 }
 
 
-.guide-desc{
+.daily-prayer-row{
+    width:100%;
+
+    background:#a5d6a7;
+
+    border-radius:7px;
+
+    padding:5px 8px;
+
+    margin-bottom:4px;
 
     font-size:12px;
+
+    line-height:1.35;
+
+    font-weight:500;
+
+    text-align:left;
 }
+
+
+.daily-prayer-row:last-child{
+    margin-bottom:0;
+}
+
+
+.daily-prayer-name{
+    font-weight:bold;
+
+    color:#1b5e20;
+
+    margin-right:3px;
+}
+
+
+.daily-prayer-detail{
+    font-weight:500;
+}
+
+
+.daily-prayer-extra{
+    display:inline;
+
+    margin-left:4px;
+
+    font-size:11px;
+
+    font-weight:500;
+}
+
+
+/* =====================================================
+   FOUR MAIN OPTIONS
+   ===================================================== */
+
+.guide-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:8px;
+}
+
+
+.guide-card{
+    background:#a5d6a7;
+
+    border-radius:12px;
+
+    height:125px;
+    min-height:125px;
+
+    padding:9px 7px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
+}
+
+
+.guide-card:active{
+    transform:scale(.98);
+
+    box-shadow:
+        0 3px 8px rgba(0,0,0,.12);
+}
+
+
+/* ICON */
+
+.guide-icon{
+    font-size:27px;
+
+    margin-bottom:5px;
+}
+
+
+/* TITLE */
+
+.guide-title{
+    font-size:15px;
+
+    font-weight:bold;
+
+    color:#1b5e20;
+
+    margin-bottom:4px;
+}
+
+
+/* DESCRIPTION */
+
+.guide-desc{
+    font-size:11.5px;
+
+    line-height:1.3;
+
+    font-weight:500;
+}
+
+
+/* =====================================================
+   HIDDEN
+   ===================================================== */
+
+.hidden{
+    display:none !important;
+}
+
+
+.inner-page{
+    width:100%;
+}
+
+
+/* =====================================================
+   INNER PAGE HEADER
+   ===================================================== */
+
+.section-header{
+    background:#2e7d32;
+
+    color:#fff;
+
+    min-height:50px;
+
+    display:flex;
+
+    align-items:center;
+
+    padding:0 10px;
+
+    margin-bottom:12px;
+
+    border-radius:
+        0 0 12px 12px;
+}
+
+
+.section-header span{
+    flex:1;
+
+    text-align:center;
+
+    font-size:19px;
+
+    font-weight:bold;
+
+    padding-right:38px;
+}
+
+
+/* =====================================================
+   BLANK SECTION PAGE
+   ===================================================== */
+
+#sectionContent{
+    min-height:calc(100vh - 120px);
+}
+
+
+/* =====================================================
+   DARK MODE
+   ===================================================== */
+
+body.dark-mode{
+    background:#121712;
+    color:#eeeeee;
+}
+
+
+body.dark-mode .namaz-info-card{
+    background:#263a28;
+}
+
+
+body.dark-mode .info-title{
+    color:#a5d6a7;
+}
+
+
+body.dark-mode .daily-schedule-inside{
+    border-top-color:rgba(165,214,167,.20);
+}
+
+
+body.dark-mode .daily-schedule-title{
+    color:#c8e6c9;
+}
+
+
+body.dark-mode .guide-card{
+    background:#355a3a;
+}
+
+
+body.dark-mode .guide-title{
+    color:#c8e6c9;
+}
+
+
+body.dark-mode .daily-prayer-row{
+    background:#355a3a;
+}
+
+
+body.dark-mode .daily-prayer-name{
+    color:#c8e6c9;
+}
+
+
+/* =====================================================
+   SMALL SCREEN
+   ===================================================== */
+
+@media(max-width:360px){
+
+    .main{
+        padding-left:8px;
+        padding-right:8px;
+        padding-top:57px;
+    }
+
+
+    .namaz-info-card{
+        padding:13px 9px;
+        margin-bottom:16px;
+    }
+
+
+    .info-icon{
+        font-size:28px;
+    }
+
+
+    .info-title{
+        font-size:18px;
+    }
+
+
+    .info-text{
+        font-size:12.5px;
+        line-height:1.4;
+    }
+
+
+    .daily-schedule-inside{
+        margin-top:8px;
+        padding-top:8px;
+    }
+
+
+    .daily-schedule-title{
+        font-size:15px;
+        margin-bottom:6px;
+    }
+
+
+    .daily-prayer-row{
+        font-size:11.5px;
+        padding:4px 6px;
+        margin-bottom:3px;
+    }
+
+
+    .daily-prayer-extra{
+        font-size:10.5px;
+    }
+
+
+    .guide-grid{
+        gap:7px;
+    }
+
+
+    .guide-card{
+        height:115px;
+        min-height:115px;
+
+        padding:7px 5px;
+    }
+
+
+    .guide-icon{
+        font-size:25px;
+        margin-bottom:4px;
+    }
+
+
+    .guide-title{
+        font-size:14px;
+        margin-bottom:3px;
+    }
+
+
+    .guide-desc{
+        font-size:11px;
+        line-height:1.25;
+    }
 
 }
