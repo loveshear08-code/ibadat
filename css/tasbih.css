@@ -361,11 +361,13 @@ body{
 
 .complete-message{
 
-    min-height:26px;
+    min-height:0;
+
+    margin-top:8px;
 
     text-align:center;
 
-    font-size:14px;
+    font-size:17px;
 
     font-weight:bold;
 
@@ -377,22 +379,29 @@ body{
 
     justify-content:center;
 
+    position:relative;
+
 }
 
+
+/* CELEBRATION GLOW */
 
 .complete-message.show{
 
     animation:
-        completePop .35s ease;
+        completePop .4s ease,
+        celebrationGlow 1.8s ease-out;
 
 }
 
+
+/* POP */
 
 @keyframes completePop{
 
     0%{
 
-        transform:scale(.8);
+        transform:scale(.7);
 
         opacity:0;
 
@@ -405,6 +414,66 @@ body{
         opacity:1;
 
     }
+
+}
+
+
+/* LIGHT BURST */
+
+@keyframes celebrationGlow{
+
+    0%{
+
+        text-shadow:
+            0 0 0 transparent;
+
+        filter:
+            brightness(1);
+
+    }
+
+    25%{
+
+        text-shadow:
+            0 0 8px #81c784,
+            0 0 18px #66bb6a,
+            0 0 30px #a5d6a7;
+
+        filter:
+            brightness(1.5);
+
+    }
+
+    55%{
+
+        text-shadow:
+            0 0 14px #81c784,
+            0 0 28px #66bb6a,
+            0 0 45px #c8e6c9;
+
+        filter:
+            brightness(1.7);
+
+    }
+
+    100%{
+
+        text-shadow:
+            0 0 0 transparent;
+
+        filter:
+            brightness(1);
+
+    }
+
+}
+
+
+/* DARK MODE */
+
+body.dark-mode .complete-message{
+
+    color:#81c784;
 
 }
 
