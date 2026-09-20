@@ -1187,17 +1187,6 @@ async function startCompass(){
 }
 
 
-/* ================= BUTTON ================= */
-
-if(startCompassBtn){
-
-    startCompassBtn.addEventListener(
-        "click",
-        startCompass
-    );
-}
-
-
 /* =========================================================
    INIT
    ========================================================= */
@@ -1265,9 +1254,13 @@ setInterval(
                 longitude !== null
             ){
 
-                reverseLocation();
+                await reverseLocation();
 
-                calculateDistance();
+calculateQibla();
+
+calculateDistance();
+
+startCompass();
             }
         }
 
