@@ -109,6 +109,7 @@ body{
 
 /* =========================================
    NAMAZ WHAT & WHY CARD
+   পুরো বোর্ড clickable
    ========================================= */
 
 .namaz-info-card{
@@ -119,14 +120,15 @@ body{
 
     padding:20px 15px;
 
-    margin-bottom:12px;
+    margin-bottom:14px;
 
     text-align:center;
 
     cursor:pointer;
 
-    transition:transform .15s ease,
-               box-shadow .15s ease;
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
 }
 
 
@@ -135,6 +137,10 @@ body{
     transform:scale(.985);
 }
 
+
+/* =========================================
+   INFO CONTENT
+   ========================================= */
 
 .info-icon{
 
@@ -272,6 +278,10 @@ body{
 }
 
 
+/* =========================================
+   INNER PAGE HEADER
+   ========================================= */
+
 .section-header{
 
     background:#2e7d32;
@@ -307,7 +317,77 @@ body{
 
 
 /* =========================================
-   DETAILS CARD
+   DAILY / SPECIAL SCHEDULE BOARDS
+   ========================================= */
+
+.schedule-card{
+
+    background:#dcedc8;
+
+    border-radius:16px;
+
+    padding:20px 15px;
+
+    margin-bottom:12px;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
+}
+
+
+.schedule-card:active{
+
+    transform:scale(.985);
+}
+
+
+.schedule-icon{
+
+    font-size:34px;
+
+    margin-bottom:7px;
+}
+
+
+.schedule-title{
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    color:#1b5e20;
+
+    margin-bottom:7px;
+}
+
+
+.schedule-desc{
+
+    font-size:13px;
+
+    line-height:1.5;
+
+    font-weight:500;
+}
+
+
+/* =========================================
+   SCHEDULE CONTENT
+   ========================================= */
+
+.schedule-content{
+
+    width:100%;
+}
+
+
+/* =========================================
+   DAILY PRAYER DETAILS
    ========================================= */
 
 .details-card{
@@ -369,40 +449,36 @@ body{
 
 
 /* =========================================
-   OTHER CONTENT
+   SPECIAL PRAYER PLACEHOLDER
    ========================================= */
 
-.content-card{
+.special-placeholder{
 
     background:#dcedc8;
 
     border-radius:14px;
 
-    padding:14px;
+    padding:20px 15px;
 
-    margin-bottom:10px;
-}
-
-
-.content-title{
-
-    font-size:18px;
-
-    font-weight:bold;
-
-    color:#1b5e20;
-
-    margin-bottom:7px;
-}
-
-
-.content-text{
+    text-align:center;
 
     font-size:14px;
 
     line-height:1.6;
 
     font-weight:500;
+}
+
+
+/* =========================================
+   FOUR OTHER OPTION PAGES
+
+   এখন blank থাকবে।
+   ========================================= */
+
+#sectionContent{
+
+    min-height:calc(100vh - 80px);
 }
 
 
@@ -459,6 +535,18 @@ body{
     .info-text{
 
         font-size:13px;
+    }
+
+
+    .schedule-card{
+
+        padding:17px 12px;
+    }
+
+
+    .schedule-title{
+
+        font-size:18px;
     }
 
 }
