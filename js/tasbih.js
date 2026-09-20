@@ -852,13 +852,6 @@ function increase(){
 
 
     /*
-     * Small vibration on normal tap.
-     */
-
-    shortVibration();
-
-
-    /*
      * 33 COMPLETE
      */
 
