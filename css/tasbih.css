@@ -505,9 +505,9 @@ body.dark-mode .complete-message{
 
 .tap-button{
 
-    width:min(72vw, 240px);
+    width:min(72vw, 180px);
 
-    height:min(72vw, 240px);
+    height:min(72vw, 180px);
 
     max-width:calc(33.3333vh - 28px);
 
