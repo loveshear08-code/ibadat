@@ -505,17 +505,17 @@ body.dark-mode .complete-message{
 
 .tap-button{
 
-    width:min(72vw, 300px);
+    width:min(72vw, 240px);
 
-    height:min(72vw, 300px);
+    height:min(72vw, 240px);
 
-    max-width:calc(33.3333vh - 18px);
+    max-width:calc(33.3333vh - 28px);
 
-    max-height:calc(33.3333vh - 18px);
+    max-height:calc(33.3333vh - 28px);
 
-    min-width:150px;
+    min-width:140px;
 
-    min-height:150px;
+    min-height:140px;
 
     border-radius:50%;
 
