@@ -33,7 +33,10 @@
     <section id="mainMenu">
 
 
-        <!-- NAMAZ WHAT & WHY -->
+        <!-- NAMAZ WHAT & WHY
+             পুরো বোর্ড clickable
+        -->
+
         <div class="namaz-info-card" id="namazInfoCard">
 
             <div class="info-icon">🕌</div>
@@ -49,7 +52,9 @@
         </div>
 
 
-        <!-- FOUR MAIN OPTIONS -->
+        <!-- =====================================
+             FOUR MAIN OPTIONS
+             ===================================== -->
 
         <div class="guide-grid">
 
@@ -105,10 +110,12 @@
 
 
     <!-- =========================================
-         NAMAZ DETAILS
+         NAMAZ DETAILS PAGE
+         "নামাজ কী ও কেন" বোর্ডে ক্লিক করলে
          ========================================= -->
 
     <section id="namazDetails" class="inner-page hidden">
+
 
         <div class="section-header">
 
@@ -119,20 +126,85 @@
         </div>
 
 
-        <div class="details-card">
+        <!-- DAILY NAMAZ SCHEDULE BOARD -->
 
-            <div class="details-heading" id="fivePrayersTitle"></div>
+        <div
+            class="schedule-card"
+            id="dailyScheduleCard"
+            data-schedule="daily"
+        >
 
-            <div id="prayerDetails"></div>
+            <div class="schedule-icon">🕋</div>
+
+            <div
+                class="schedule-title"
+                id="dailyScheduleTitle"
+            ></div>
+
+            <div
+                class="schedule-desc"
+                id="dailyScheduleDesc"
+            ></div>
 
         </div>
+
+
+        <!-- SPECIAL NAMAZ SCHEDULE BOARD -->
+
+        <div
+            class="schedule-card"
+            id="specialScheduleCard"
+            data-schedule="special"
+        >
+
+            <div class="schedule-icon">🌙</div>
+
+            <div
+                class="schedule-title"
+                id="specialScheduleTitle"
+            ></div>
+
+            <div
+                class="schedule-desc"
+                id="specialScheduleDesc"
+            ></div>
+
+        </div>
+
 
     </section>
 
 
 
     <!-- =========================================
-         OTHER SECTION PAGE
+         DAILY / SPECIAL SCHEDULE PAGE
+         ========================================= -->
+
+    <section id="schedulePage" class="inner-page hidden">
+
+        <div class="section-header">
+
+            <button id="scheduleBackButton">←</button>
+
+            <span id="schedulePageTitle"></span>
+
+        </div>
+
+
+        <div
+            id="scheduleContent"
+            class="schedule-content"
+        ></div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         FOUR OTHER OPTION PAGES
+
+         আপাতত blank থাকবে।
+         পরে আলাদা content/file যোগ করা হবে।
          ========================================= -->
 
     <section id="sectionPage" class="inner-page hidden">
@@ -154,8 +226,8 @@
 </main>
 
 
-<script src="../js/namaz-guide.js?v=6"></script>
+<script src="../js/namaz-guide.js?v=7"></script>
 
 </body>
 
-</html>
+                </html>
