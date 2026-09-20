@@ -1,776 +1,578 @@
 /* =====================================================
-   IBADAT - NAMAZ GUIDE
-   ===================================================== */
+IBADAT - NAMAZ GUIDE
+===================================================== */
 
 *{
-    box-sizing:border-box;
+box-sizing:border-box;
 }
-
 
 body{
-    margin:0;
-    font-family:sans-serif;
-    background:#eef7f0;
-    color:#1b1b1b;
-}
 
+margin:0;
+
+font-family:sans-serif;
+
+background:#eef7f0;
+
+color:#1b1b1b;
+
+}
 
 /* =====================================================
-   TOP BAR
-   ===================================================== */
+TOP BAR
+===================================================== */
 
 .top-bar{
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
 
-    height:50px;
+position:fixed;
 
-    background:#2e7d32;
-    color:#fff;
+top:0;
+left:0;
+right:0;
 
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+height:50px;
 
-    padding:0 10px;
+background:#2e7d32;
 
-    z-index:100;
+color:#fff;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:0 10px;
+
+z-index:100;
+
 }
-
 
 .top-bar button,
 .section-header button{
 
-    width:38px;
-    height:38px;
+width:38px;
+height:38px;
 
-    border:none;
-    border-radius:50%;
+border:none;
 
-    background:transparent;
-    color:#fff;
+border-radius:50%;
 
-    font-size:25px;
+background:transparent;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+color:#fff;
 
-    cursor:pointer;
+font-size:25px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+cursor:pointer;
+
 }
-
 
 #pageTitle{
 
-    flex:1;
+flex:1;
 
-    text-align:center;
+text-align:center;
 
-    font-size:20px;
-    font-weight:bold;
+font-size:20px;
+
+font-weight:bold;
+
 }
-
 
 .top-space{
-    width:38px;
+
+width:38px;
+
 }
 
-
 /* =====================================================
-   MAIN
-   ===================================================== */
+MAIN
+===================================================== */
 
 .main{
 
-    padding:60px 10px 15px;
+padding:60px 10px 22px;
 
-    min-height:100vh;
+min-height:100vh;
+
 }
 
-
 /* =====================================================
-   FIRST PAGE
-   ===================================================== */
+NAMAZ KI O KENO BOARD
+===================================================== */
 
 .namaz-info-card{
 
-    background:#dcedc8;
+background:#dcedc8;
 
-    border-radius:16px;
+border-radius:16px;
 
-    padding:20px 15px;
+padding:20px 15px 18px;
 
-    margin-bottom:12px;
+margin-bottom:30px;
 
-    text-align:center;
+text-align:center;
 
-    cursor:pointer;
+/*
+   This board is informational only.
+   It is intentionally NOT clickable.
+*/
 
-    transition:
-        transform .15s ease,
-        box-shadow .15s ease;
+}
+
+/* =====================================================
+INFO CONTENT
+===================================================== */
+
+.info-icon{
+
+font-size:34px;
+
+margin-bottom:5px;
+
+}
+
+.info-title{
+
+font-size:21px;
+
+font-weight:bold;
+
+color:#1b5e20;
+
+margin-bottom:10px;
+
+}
+
+.info-text{
+
+font-size:14px;
+
+line-height:1.55;
+
+font-weight:500;
+
+margin-bottom:8px;
+
+}
+
+/* =====================================================
+DAILY SCHEDULE INSIDE MAIN BOARD
+===================================================== */
+
+.daily-section{
+
+width:100%;
+
+margin-top:18px;
+
+padding-top:14px;
+
+border-top:
+    1px solid
+    rgba(46,125,50,.25);
+
+}
+
+.daily-section-title{
+
+text-align:center;
+
+font-size:19px;
+
+font-weight:bold;
+
+color:#1b5e20;
+
+margin-bottom:12px;
+
+}
+
+.daily-prayer-list{
+
+width:100%;
+
+}
+
+.daily-prayer-row{
+
+background:#a5d6a7;
+
+border-radius:10px;
+
+padding:8px 9px;
+
+margin-bottom:7px;
+
+font-size:13px;
+
+line-height:1.45;
+
+font-weight:500;
+
+text-align:left;
+
+}
+
+.daily-prayer-name{
+
+font-weight:bold;
+
+color:#1b5e20;
+
+margin-right:4px;
+
+}
+
+.daily-prayer-detail{
+
+font-weight:500;
+
+}
+
+.daily-prayer-extra{
+
+display:block;
+
+margin-left:0;
+
+margin-top:2px;
+
+font-size:12px;
+
+font-weight:500;
+
+}
+
+/* =====================================================
+FOUR GUIDE CARDS
+===================================================== */
+
+.guide-grid{
+
+display:grid;
+
+grid-template-columns:
+    repeat(2,1fr);
+
+gap:12px;
+
+/*
+   Keeps the four options in a clean 2 × 2 layout.
+*/
+
+}
+
+.guide-card{
+
+background:#a5d6a7;
+
+border-radius:14px;
+
+min-height:150px;
+
+padding:14px 10px;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+justify-content:center;
+
+text-align:center;
+
+cursor:pointer;
+
+transition:
+    transform .15s ease,
+    box-shadow .15s ease;
+
+}
+
+.guide-card:active{
+
+transform:scale(.98);
+
+box-shadow:
+    0 3px 8px rgba(0,0,0,.12);
+
+}
+
+.guide-icon{
+
+font-size:32px;
+
+margin-bottom:8px;
+
+}
+
+.guide-title{
+
+font-size:17px;
+
+font-weight:bold;
+
+color:#1b5e20;
+
+margin-bottom:6px;
+
+}
+
+.guide-desc{
+
+font-size:13px;
+
+line-height:1.4;
+
+font-weight:500;
+
+}
+
+/* =====================================================
+HIDDEN
+===================================================== */
+
+.hidden{
+
+display:none !important;
+
+}
+
+.inner-page{
+
+width:100%;
+
+}
+
+/* =====================================================
+BLANK PAGE HEADER
+===================================================== */
+
+.section-header{
+
+background:#2e7d32;
+
+color:#fff;
+
+min-height:50px;
+
+display:flex;
+
+align-items:center;
+
+padding:0 10px;
+
+margin-bottom:12px;
+
+border-radius:
+    0 0 12px 12px;
+
+}
+
+.section-header span{
+
+flex:1;
+
+text-align:center;
+
+font-size:19px;
+
+font-weight:bold;
+
+padding-right:38px;
+
+}
+
+/*
+Intentionally empty.
+
+No text, message or content is shown
+after tapping one of the four options.
+*/
+
+#sectionContent{
+
+min-height:0;
+
+}
+
+/* =====================================================
+DARK MODE
+===================================================== */
+
+body.dark-mode{
+
+background:#121712;
+
+color:#eeeeee;
+
+}
+
+body.dark-mode .namaz-info-card{
+
+background:#263a28;
+
+}
+
+body.dark-mode .info-title{
+
+color:#a5d6a7;
+
+}
+
+body.dark-mode .daily-section{
+
+border-top-color:
+    rgba(165,214,167,.20);
+
+}
+
+body.dark-mode .daily-section-title{
+
+color:#c8e6c9;
+
+}
+
+body.dark-mode .guide-card{
+
+background:#355a3a;
+
+}
+
+body.dark-mode .guide-title{
+
+color:#c8e6c9;
+
+}
+
+body.dark-mode .daily-prayer-row{
+
+background:#355a3a;
+
+}
+
+body.dark-mode .daily-prayer-name{
+
+color:#c8e6c9;
+
+}
+
+/* =====================================================
+SMALL SCREEN
+===================================================== */
+
+@media(max-width:360px){
+
+.main{
+
+    padding-left:8px;
+
+    padding-right:8px;
+
+    padding-bottom:18px;
 }
 
 
-.namaz-info-card:active{
+.namaz-info-card{
 
-    transform:scale(.99);
+    padding:17px 11px 16px;
 
-    box-shadow:
-        0 3px 10px rgba(0,0,0,.12);
+    margin-bottom:28px;
 }
 
 
 .info-icon{
 
-    font-size:34px;
-
-    margin-bottom:5px;
+    font-size:31px;
 }
 
 
 .info-title{
 
-    font-size:21px;
-
-    font-weight:bold;
-
-    color:#1b5e20;
-
-    margin-bottom:10px;
+    font-size:19px;
 }
 
 
 .info-text{
 
-    font-size:14px;
-
-    line-height:1.55;
-
-    font-weight:500;
-
-    margin-bottom:8px;
-}
-
-
-.info-more{
-
-    margin-top:12px;
-
     font-size:13px;
-
-    font-weight:bold;
-
-    color:#2e7d32;
-}
-
-
-/* =====================================================
-   FOUR GUIDE CARDS
-   ===================================================== */
-
-.guide-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(2,1fr);
-
-    gap:10px;
-}
-
-
-.guide-card{
-
-    background:#a5d6a7;
-
-    border-radius:14px;
-
-    min-height:155px;
-
-    padding:14px 10px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    justify-content:center;
-
-    text-align:center;
-
-    cursor:pointer;
-
-    transition:
-        transform .15s ease,
-        box-shadow .15s ease;
-}
-
-
-.guide-card:active{
-
-    transform:scale(.98);
-
-    box-shadow:
-        0 3px 8px rgba(0,0,0,.12);
-}
-
-
-.guide-icon{
-
-    font-size:32px;
-
-    margin-bottom:8px;
-}
-
-
-.guide-title{
-
-    font-size:17px;
-
-    font-weight:bold;
-
-    color:#1b5e20;
-
-    margin-bottom:6px;
-}
-
-
-.guide-desc{
-
-    font-size:13px;
-
-    line-height:1.4;
-
-    font-weight:500;
-}
-
-
-/* =====================================================
-   HIDDEN
-   ===================================================== */
-
-.hidden{
-    display:none !important;
-}
-
-
-.inner-page{
-    width:100%;
-}
-
-
-/* =====================================================
-   INNER PAGE HEADER
-   ===================================================== */
-
-.section-header{
-
-    background:#2e7d32;
-
-    color:#fff;
-
-    min-height:50px;
-
-    display:flex;
-
-    align-items:center;
-
-    padding:0 10px;
-
-    margin-bottom:12px;
-
-    border-radius:
-        0 0 12px 12px;
-}
-
-
-.section-header span{
-
-    flex:1;
-
-    text-align:center;
-
-    font-size:19px;
-
-    font-weight:bold;
-
-    padding-right:38px;
-}
-
-
-/* =====================================================
-   SECOND PAGE - TWO EQUAL BOARDS
-   ===================================================== */
-
-.schedule-board-grid{
-
-    display:grid;
-
-    grid-template-columns:1fr;
-
-    gap:12px;
-}
-
-
-/*
-   Both boards intentionally have the same minimum height.
-*/
-
-.schedule-board{
-
-    width:100%;
-
-    min-height:440px;
-
-    border-radius:16px;
-
-    padding:16px 13px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
-
-    position:relative;
-}
-
-
-/* DAILY BOARD */
-
-.daily-board{
-
-    background:#dcedc8;
-}
-
-
-/* SPECIAL BOARD */
-
-.special-board{
-
-    background:#c8e6c9;
-
-    cursor:pointer;
-
-    transition:
-        transform .15s ease,
-        box-shadow .15s ease;
-}
-
-
-.special-board:active{
-
-    transform:scale(.99);
-
-    box-shadow:
-        0 4px 12px rgba(0,0,0,.14);
-}
-
-
-/* =====================================================
-   BOARD TITLES
-   ===================================================== */
-
-.schedule-board-title{
-
-    text-align:center;
-
-    font-size:20px;
-
-    font-weight:bold;
-
-    color:#1b5e20;
-
-    margin-bottom:15px;
-}
-
-
-/* =====================================================
-   DAILY PRAYER LIST
-   ===================================================== */
-
-.daily-prayer-list{
-
-    width:100%;
-}
-
-
-.daily-prayer-row{
-
-    background:#a5d6a7;
-
-    border-radius:10px;
-
-    padding:8px 9px;
-
-    margin-bottom:7px;
-
-    font-size:13px;
-
-    line-height:1.45;
-
-    font-weight:500;
-}
-
-
-.daily-prayer-name{
-
-    font-weight:bold;
-
-    color:#1b5e20;
-
-    margin-right:4px;
-}
-
-
-.daily-prayer-detail{
-
-    font-weight:500;
-}
-
-
-.daily-prayer-extra{
-
-    display:block;
-
-    margin-left:0;
-
-    margin-top:2px;
-
-    font-size:12px;
-
-    font-weight:500;
-}
-
-
-/* =====================================================
-   FEATURED SPECIAL PRAYERS
-   ===================================================== */
-
-.featured-special-list{
-
-    width:100%;
-}
-
-
-.featured-special-item{
-
-    background:#a5d6a7;
-
-    border-radius:10px;
-
-    padding:9px 10px;
-
-    margin-bottom:8px;
-}
-
-
-.featured-special-name{
-
-    font-size:16px;
-
-    font-weight:bold;
-
-    color:#1b5e20;
-
-    margin-bottom:4px;
-}
-
-
-.featured-special-line{
-
-    font-size:12.5px;
-
-    line-height:1.45;
-
-    font-weight:500;
-
-    margin-bottom:2px;
-}
-
-
-.featured-special-label{
-
-    font-weight:bold;
-}
-
-
-/* =====================================================
-   SPECIAL MORE
-   ===================================================== */
-
-.special-more{
-
-    margin-top:8px;
-
-    text-align:center;
-
-    font-size:13px;
-
-    font-weight:bold;
-
-    color:#2e7d32;
-
-    padding-top:4px;
-}
-
-
-/* =====================================================
-   THIRD PAGE - REMAINING 7
-   ===================================================== */
-
-.special-details-list{
-
-    width:100%;
-}
-
-
-.special-detail-card{
-
-    background:#dcedc8;
-
-    border-radius:14px;
-
-    padding:14px;
-
-    margin-bottom:10px;
-}
-
-
-.special-detail-title{
-
-    font-size:19px;
-
-    font-weight:bold;
-
-    color:#1b5e20;
-
-    margin-bottom:9px;
-
-    text-align:center;
-}
-
-
-.special-detail-row{
-
-    background:#a5d6a7;
-
-    border-radius:9px;
-
-    padding:8px 10px;
-
-    margin-bottom:6px;
-
-    font-size:13.5px;
 
     line-height:1.5;
 }
 
 
-.special-detail-label{
+.daily-section{
 
-    font-weight:bold;
+    margin-top:15px;
 
-    color:#1b5e20;
+    padding-top:12px;
 }
 
 
-/* =====================================================
-   BLANK SECTION PAGE
-   ===================================================== */
+.daily-section-title{
 
-#sectionContent{
+    font-size:18px;
 
-    min-height:300px;
+    margin-bottom:10px;
 }
 
 
-/* =====================================================
-   DARK MODE
-   ===================================================== */
+.daily-prayer-row{
 
-body.dark-mode{
+    font-size:12px;
 
-    background:#121712;
+    padding:7px 8px;
 
-    color:#eeeeee;
+    margin-bottom:6px;
 }
 
 
-body.dark-mode .namaz-info-card{
+.daily-prayer-extra{
 
-    background:#263a28;
+    font-size:11px;
 }
 
 
-body.dark-mode .info-title{
+.guide-grid{
 
-    color:#a5d6a7;
+    gap:9px;
 }
 
 
-body.dark-mode .info-more{
+.guide-card{
 
-    color:#81c784;
+    min-height:140px;
+
+    padding:10px 7px;
 }
 
 
-body.dark-mode .guide-card{
+.guide-icon{
 
-    background:#355a3a;
+    font-size:28px;
+
+    margin-bottom:7px;
 }
 
 
-body.dark-mode .guide-title{
+.guide-title{
 
-    color:#c8e6c9;
+    font-size:15px;
 }
 
 
-body.dark-mode .schedule-board{
+.guide-desc{
 
-    background:#263a28;
+    font-size:12px;
 }
-
-
-body.dark-mode .special-board{
-
-    background:#29452d;
-}
-
-
-body.dark-mode .schedule-board-title{
-
-    color:#c8e6c9;
-}
-
-
-body.dark-mode .daily-prayer-row,
-body.dark-mode .featured-special-item,
-body.dark-mode .special-detail-row{
-
-    background:#355a3a;
-}
-
-
-body.dark-mode .daily-prayer-name,
-body.dark-mode .featured-special-name,
-body.dark-mode .special-detail-title,
-body.dark-mode .special-detail-label{
-
-    color:#c8e6c9;
-}
-
-
-body.dark-mode .special-more{
-
-    color:#a5d6a7;
-}
-
-
-body.dark-mode .special-detail-card{
-
-    background:#263a28;
-}
-
-
-/* =====================================================
-   SMALL SCREEN
-   ===================================================== */
-
-@media(max-width:360px){
-
-    .main{
-
-        padding-left:8px;
-        padding-right:8px;
-    }
-
-
-    .guide-grid{
-
-        gap:7px;
-    }
-
-
-    .guide-card{
-
-        min-height:145px;
-
-        padding:10px 7px;
-    }
-
-
-    .guide-icon{
-
-        font-size:28px;
-    }
-
-
-    .guide-title{
-
-        font-size:15px;
-    }
-
-
-    .guide-desc{
-
-        font-size:12px;
-    }
-
-
-    .namaz-info-card{
-
-        padding:16px 12px;
-    }
-
-
-    .info-title{
-
-        font-size:19px;
-    }
-
-
-    .info-text{
-
-        font-size:13px;
-    }
-
-
-    .schedule-board{
-
-        min-height:430px;
-
-        padding:
-            14px 10px;
-    }
-
-
-    .schedule-board-title{
-
-        font-size:18px;
-    }
-
-
-    .daily-prayer-row{
-
-        font-size:12px;
-    }
-
-
-    .featured-special-name{
-
-        font-size:15px;
-    }
-
-
-    .featured-special-line{
-
-        font-size:12px;
-    }
 
 }
