@@ -1183,7 +1183,32 @@ let homeAudio =
     new Audio();
 
 
-/* ================= AZAN CHECK ================= */
+/*
+   Azan trigger window.
+
+   Exact minute-এর বদলে prayer time পার হওয়ার
+   পর কয়েক মিনিটের মধ্যে check করা হবে।
+   এতে timer/background/API delay-এর কারণে
+   Azan miss হওয়ার সম্ভাবনা কমবে।
+*/
+
+const AZAN_TRIGGER_WINDOW_SECONDS =
+    180;
+
+
+/* =========================================================
+   AZAN KEY
+   ========================================================= */
+
+function getAzanStorageKey(){
+
+    return "IBADAT_LAST_AZAN_KEY";
+}
+
+
+/* =========================================================
+   AZAN CHECK
+   ========================================================= */
 
 function checkAzan(
     now,
@@ -1213,11 +1238,13 @@ function checkAzan(
     };
 
 
-    const minuteNow =
+    const nowSeconds =
 
-        now.getHours() * 60 +
+        now.getHours() * 3600 +
 
-        now.getMinutes();
+        now.getMinutes() * 60 +
+
+        now.getSeconds();
 
 
     const today =
@@ -1235,8 +1262,37 @@ function checkAzan(
             }
 
 
+            const prayerMinutes =
+                times[prayer];
+
+
+            const prayerSeconds =
+                prayerMinutes * 60;
+
+
+            const elapsed =
+                nowSeconds -
+                prayerSeconds;
+
+
+            /*
+               Prayer time এখনো আসেনি।
+            */
+
+            if(elapsed < 0){
+
+                return;
+            }
+
+
+            /*
+               Prayer time অনেকক্ষণ আগে হয়ে গেলে
+               Azan আর বাজানো হবে না।
+            */
+
             if(
-                times[prayer] !== minuteNow
+                elapsed >
+                AZAN_TRIGGER_WINDOW_SECONDS
             ){
 
                 return;
@@ -1250,6 +1306,10 @@ function checkAzan(
                 prayer;
 
 
+            /*
+               প্রথমে memory check।
+            */
+
             if(
                 lastAzanKey === key
             ){
@@ -1258,8 +1318,60 @@ function checkAzan(
             }
 
 
+            /*
+               Page reload হলেও একই prayer-এর
+               Azan যেন আবার না বাজে।
+            */
+
+            try{
+
+                const savedKey =
+                    sessionStorage.getItem(
+                        getAzanStorageKey()
+                    );
+
+
+                if(
+                    savedKey === key
+                ){
+
+                    lastAzanKey =
+                        key;
+
+                    return;
+                }
+
+            }catch(e){
+
+                /* sessionStorage না থাকলেও
+                   Azan system চলবে */
+            }
+
+
+            /*
+               Azan key আগে থেকেই mark করা হচ্ছে।
+               ফলে একই মুহূর্তে একাধিকবার
+               check হলেও duplicate হবে না।
+            */
+
             lastAzanKey =
                 key;
+
+
+            try{
+
+                sessionStorage.setItem(
+
+                    getAzanStorageKey(),
+
+                    key
+                );
+
+            }catch(e){
+
+                /* storage error হলে
+                   audio বন্ধ হবে না */
+            }
 
 
             const selected =
@@ -1288,17 +1400,53 @@ function checkAzan(
             }
 
 
-            homeAudio.pause();
+            /*
+               আগের audio বন্ধ করে
+               নতুন Azan শুরু।
+            */
 
-            homeAudio.src =
-                file;
+            try{
 
-            homeAudio.currentTime =
-                0;
+                homeAudio.pause();
+
+                homeAudio.currentTime =
+                    0;
+
+                homeAudio.src =
+                    file;
+
+                homeAudio.load();
 
 
-            homeAudio.play()
-                .catch(() => {});
+                const playPromise =
+                    homeAudio.play();
+
+
+                if(
+                    playPromise &&
+                    typeof playPromise.catch ===
+                    "function"
+                ){
+
+                    playPromise.catch(
+                        error => {
+
+                            console.warn(
+                                "Azan playback blocked:",
+                                error
+                            );
+                        }
+                    );
+                }
+
+            }catch(e){
+
+                console.warn(
+                    "Azan playback error:",
+                    e
+                );
+            }
+
         }
     );
 }
@@ -1935,6 +2083,27 @@ function syncHomeLanguage(){
 }
 
 
+/* =========================================================
+   PAGE VISIBILITY / RESUME
+   ========================================================= */
+
+function handleHomeResume(){
+
+    /*
+       Browser/app background থেকে ফিরে এলে
+       সঙ্গে সঙ্গে prayer status এবং Azan
+       আবার check করা হবে।
+    */
+
+    if(
+        Object.keys(prayerTimes).length > 0
+    ){
+
+        updateStatus();
+    }
+}
+
+
 /* ================= START ================= */
 
 function startHome(){
@@ -1966,9 +2135,37 @@ function startHome(){
 }
 
 
+/* ================= VISIBILITY ================= */
+
+document.addEventListener(
+    "visibilitychange",
+    () => {
+
+        if(
+            document.visibilityState ===
+            "visible"
+        ){
+
+            handleHomeResume();
+        }
+    }
+);
+
+
+/* ================= PAGE SHOW ================= */
+
+window.addEventListener(
+    "pageshow",
+    () => {
+
+        handleHomeResume();
+    }
+);
+
+
 /* ================= INIT ================= */
 
 document.addEventListener(
     "DOMContentLoaded",
     startHome
-);
+);  
