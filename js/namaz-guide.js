@@ -17,6 +17,10 @@ const TEXT = {
     bn: {
        
 
+       pageTitle:
+    "নামাজ",
+
+       
         infoTitle:
             "কী ও কেন?",
 
@@ -115,6 +119,10 @@ const TEXT = {
        ================================================= */
 
     en: {
+
+
+       pageTitle:
+    "Prayer",
        
 
         infoTitle:
@@ -215,6 +223,10 @@ const TEXT = {
        ================================================= */
 
     hi: {
+
+
+       pageTitle:
+    "नमाज़",
        
 
         infoTitle:
