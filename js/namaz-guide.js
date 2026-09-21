@@ -15,9 +15,7 @@ const TEXT = {
        ================================================= */
 
     bn: {
-
-        pageTitle:
-            "নামাজ",
+       
 
         infoTitle:
             "কী ও কেন?",
@@ -60,10 +58,6 @@ const TEXT = {
                 "জামাত ও বিশেষ নামাজ"
 
         },
-
-
-        dailyTitle:
-            "নামাজের সূচি",
 
 
         daily: [
@@ -121,9 +115,7 @@ const TEXT = {
        ================================================= */
 
     en: {
-
-        pageTitle:
-            "Prayer",
+       
 
         infoTitle:
             "What and Why?",
@@ -166,10 +158,6 @@ const TEXT = {
                 "Jamaat & Special Prayers"
 
         },
-
-
-        dailyTitle:
-            "Prayer Schedule",
 
 
         daily: [
@@ -227,9 +215,7 @@ const TEXT = {
        ================================================= */
 
     hi: {
-
-        pageTitle:
-            "नमाज़",
+       
 
         infoTitle:
             "क्या और क्यों?",
@@ -272,10 +258,6 @@ const TEXT = {
                 "जमाअत और विशेष नमाज़"
 
         },
-
-
-        dailyTitle:
-            "नमाज़ की सूची",
 
 
         daily: [
