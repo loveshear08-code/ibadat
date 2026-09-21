@@ -583,12 +583,6 @@ function applyLanguage(){
     );
 
 
-    setText(
-        "dailyScheduleTitle",
-        t.dailyTitle
-    );
-
-
     renderDailyPrayers(
         t.daily,
         lang
