@@ -20,7 +20,7 @@ const TEXT = {
             "নামাজ",
 
         infoTitle:
-            "নামাজ কী ও কেন?",
+            "কী ও কেন?",
 
         infoText1:
             "নামাজ বা সালাত হলো আল্লাহর নির্ধারিত ইবাদত। এটি আল্লাহকে স্মরণ ও তাঁর আনুগত্য করার গুরুত্বপূর্ণ মাধ্যম।",
@@ -32,29 +32,17 @@ const TEXT = {
         purityTitle:
             "পবিত্রতা ও প্রস্তুতি",
 
-        purityDesc:
-            "ওযু, গোসল, তায়াম্মুম ও নামাজের প্রস্তুতি।",
-
 
         learnTitle:
             "নামাজ শিক্ষা",
-
-        learnDesc:
-            "নামাজ শুরু থেকে সালাম পর্যন্ত ধাপে ধাপে শেখা।",
 
 
         recitationsTitle:
             "নামাজে যা পড়তে হয়",
 
-        recitationsDesc:
-            "সানা, সূরা, তাসবিহ, তাশাহহুদ, দরুদ ও দোয়া।",
-
 
         jamaatTitle:
             "জামাত ও বিশেষ নামাজ",
-
-        jamaatDesc:
-            "জামাত, বিতর, তাহাজ্জুদ, তারাবিহ, ঈদ, জানাজা ইত্যাদি।",
 
 
         sectionTitle: {
@@ -138,7 +126,7 @@ const TEXT = {
             "Prayer",
 
         infoTitle:
-            "What is Salah and Why?",
+            "What and Why?",
 
         infoText1:
             "Salah is the worship prescribed by Allah. It is an important means of remembering Allah and obeying Him.",
@@ -150,29 +138,17 @@ const TEXT = {
         purityTitle:
             "Purity & Preparation",
 
-        purityDesc:
-            "Wudu, ghusl, tayammum and preparation for Salah.",
-
 
         learnTitle:
             "Learn Salah",
-
-        learnDesc:
-            "Learn Salah step by step from beginning to salam.",
 
 
         recitationsTitle:
             "What to Recite in Salah",
 
-        recitationsDesc:
-            "Sana, surah, tasbih, tashahhud, durood and duas.",
-
 
         jamaatTitle:
             "Jamaat & Special Prayers",
-
-        jamaatDesc:
-            "Jamaat, Witr, Tahajjud, Tarawih, Eid, Janazah and more.",
 
 
         sectionTitle: {
@@ -256,7 +232,7 @@ const TEXT = {
             "नमाज़",
 
         infoTitle:
-            "नमाज़ क्या है और क्यों?",
+            "क्या और क्यों?",
 
         infoText1:
             "नमाज़ अल्लाह द्वारा निर्धारित इबादत है। यह अल्लाह को याद करने और उसकी आज्ञा मानने का महत्वपूर्ण माध्यम है।",
@@ -268,29 +244,17 @@ const TEXT = {
         purityTitle:
             "पवित्रता और तैयारी",
 
-        purityDesc:
-            "वुज़ू, ग़ुस्ल, तयम्मुम और नमाज़ की तैयारी।",
-
 
         learnTitle:
             "नमाज़ सीखें",
-
-        learnDesc:
-            "नमाज़ शुरू से सलाम तक चरण-दर-चरण सीखें।",
 
 
         recitationsTitle:
             "नमाज़ में क्या पढ़ें",
 
-        recitationsDesc:
-            "सना, सूरह, तस्बीह, तशह्हुद, दुरूद और दुआ।",
-
 
         jamaatTitle:
             "जमाअत और विशेष नमाज़",
-
-        jamaatDesc:
-            "जमाअत, वितर, तहज्जुद, तरावीह, ईद, जनाज़ा आदि।",
 
 
         sectionTitle: {
