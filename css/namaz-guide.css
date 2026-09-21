@@ -1,6 +1,6 @@
 /* =====================================================
    IBADAT - NAMAZ GUIDE
-   COMPACT DISPLAY VERSION
+   FINAL COMPACT VERSION
    ===================================================== */
 
 *{
@@ -64,6 +64,7 @@ body{
 
 #pageTitle{
     flex:1;
+
     text-align:center;
 
     font-size:20px;
@@ -82,6 +83,7 @@ body{
 
 .main{
     padding:58px 10px 12px;
+
     min-height:100vh;
 }
 
@@ -103,18 +105,24 @@ body{
 }
 
 
-/* ICON */
+/* =====================================================
+   INFO ICON
+   ===================================================== */
 
 .info-icon{
     font-size:30px;
+
     margin-bottom:3px;
 }
 
 
-/* TITLE */
+/* =====================================================
+   INFO TITLE
+   ===================================================== */
 
 .info-title{
     font-size:20px;
+
     font-weight:bold;
 
     color:#1b5e20;
@@ -123,10 +131,13 @@ body{
 }
 
 
-/* TEXT */
+/* =====================================================
+   INFO TEXT
+   ===================================================== */
 
 .info-text{
     font-size:13px;
+
     line-height:1.45;
 
     font-weight:500;
@@ -136,35 +147,28 @@ body{
 
 
 /* =====================================================
-   DAILY SCHEDULE INSIDE MAIN BOARD
+   DAILY PRAYER LIST
+   NO SEPARATE HEADING
    ===================================================== */
 
 .daily-schedule-inside{
-    margin-top:10px;
-    padding-top:10px;
+    margin-top:8px;
 
-    border-top:1px solid rgba(46,125,50,.20);
+    padding-top:0;
+
+    border-top:none;
 }
 
 
 .daily-schedule-title{
-    text-align:center;
-
-    font-size:16px;
-    font-weight:bold;
-
-    color:#1b5e20;
-
-    margin-bottom:7px;
+    display:none;
 }
 
 
-/* =====================================================
-   DAILY PRAYER LIST - COMPACT FIVE LINES
-   ===================================================== */
-
 .daily-prayer-list{
     width:100%;
+
+    margin-top:7px;
 }
 
 
@@ -239,6 +243,7 @@ body{
     border-radius:12px;
 
     height:125px;
+
     min-height:125px;
 
     padding:9px 7px;
@@ -269,7 +274,9 @@ body{
 }
 
 
-/* ICON */
+/* =====================================================
+   GUIDE ICON
+   ===================================================== */
 
 .guide-icon{
     font-size:27px;
@@ -278,7 +285,9 @@ body{
 }
 
 
-/* TITLE */
+/* =====================================================
+   GUIDE TITLE
+   ===================================================== */
 
 .guide-title{
     font-size:15px;
@@ -291,7 +300,9 @@ body{
 }
 
 
-/* DESCRIPTION */
+/* =====================================================
+   GUIDE DESCRIPTION
+   ===================================================== */
 
 .guide-desc{
     font-size:11.5px;
@@ -368,6 +379,7 @@ body{
 
 body.dark-mode{
     background:#121712;
+
     color:#eeeeee;
 }
 
@@ -383,12 +395,7 @@ body.dark-mode .info-title{
 
 
 body.dark-mode .daily-schedule-inside{
-    border-top-color:rgba(165,214,167,.20);
-}
-
-
-body.dark-mode .daily-schedule-title{
-    color:#c8e6c9;
+    border-top:none;
 }
 
 
@@ -420,13 +427,16 @@ body.dark-mode .daily-prayer-name{
 
     .main{
         padding-left:8px;
+
         padding-right:8px;
+
         padding-top:57px;
     }
 
 
     .namaz-info-card{
         padding:13px 9px;
+
         margin-bottom:16px;
     }
 
@@ -438,36 +448,52 @@ body.dark-mode .daily-prayer-name{
 
     .info-title{
         font-size:18px;
+
+        margin-bottom:7px;
     }
 
 
     .info-text{
         font-size:12.5px;
+
         line-height:1.4;
+
+        margin-bottom:4px;
     }
 
 
     .daily-schedule-inside{
-        margin-top:8px;
-        padding-top:8px;
+        margin-top:6px;
+
+        padding-top:0;
     }
 
 
     .daily-schedule-title{
-        font-size:15px;
-        margin-bottom:6px;
+        display:none;
+    }
+
+
+    .daily-prayer-list{
+        margin-top:5px;
     }
 
 
     .daily-prayer-row{
         font-size:11.5px;
+
         padding:4px 6px;
+
         margin-bottom:3px;
+
+        line-height:1.3;
     }
 
 
     .daily-prayer-extra{
         font-size:10.5px;
+
+        margin-left:3px;
     }
 
 
@@ -478,6 +504,7 @@ body.dark-mode .daily-prayer-name{
 
     .guide-card{
         height:115px;
+
         min-height:115px;
 
         padding:7px 5px;
@@ -486,18 +513,21 @@ body.dark-mode .daily-prayer-name{
 
     .guide-icon{
         font-size:25px;
+
         margin-bottom:4px;
     }
 
 
     .guide-title{
         font-size:14px;
+
         margin-bottom:3px;
     }
 
 
     .guide-desc{
         font-size:11px;
+
         line-height:1.25;
     }
 
