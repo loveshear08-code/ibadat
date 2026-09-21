@@ -834,6 +834,7 @@ document
                 )
                 .classList
                 .remove("hidden");
+           applyLanguage();
 
 
             window.scrollTo(
