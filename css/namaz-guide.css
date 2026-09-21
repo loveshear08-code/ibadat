@@ -136,9 +136,9 @@ body{
    ===================================================== */
 
 .info-text{
-    font-size:13px;
+    font-size:14px;
 
-    line-height:1.45;
+    line-height:1.5;
 
     font-weight:500;
 
@@ -187,7 +187,7 @@ body{
 
     margin-bottom:4px;
 
-    font-size:12px;
+    font-size:14px;
 
     line-height:1.35;
 
@@ -439,7 +439,7 @@ body.dark-mode .daily-prayer-name{
 
 
     .namaz-info-card{
-        padding:13px 9px;
+        padding:20px 12px;
 
         margin-bottom:16px;
     }
