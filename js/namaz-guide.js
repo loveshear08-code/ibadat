@@ -851,48 +851,42 @@ document
 */
 
 document
-    .getElementById(
-        "backButton"
-    )
+    .getElementById("backButton")
     .addEventListener(
         "click",
         () => {
 
-
-            /*
-               If one of the four blank pages
-               is currently open, return to
-               the Namaz main page.
-            */
-
             if(
                 !document
-                    .getElementById(
-                        "sectionPage"
-                    )
+                    .getElementById("sectionPage")
                     .classList
                     .contains("hidden")
             ){
 
                 hideAllPages();
 
-
                 document
-                    .getElementById(
-                        "mainMenu"
-                    )
+                    .getElementById("mainMenu")
                     .classList
                     .remove("hidden");
 
-
-                window.scrollTo(
-                    0,
-                    0
-                );
-
-
                 return;
             }
+
+
+            if(
+                !document
+                    .getElementById("mainMenu")
+                    .classList
+                    .contains("hidden")
+            ){
+
+                history.back();
+                return;
+            }
+
+        }
+    );
 
 
             /*
