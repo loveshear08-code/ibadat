@@ -112,7 +112,7 @@ body{
 .info-icon{
     font-size:30px;
 
-    margin-bottom:3px;
+    margin-bottom:8px;
 }
 
 
@@ -127,7 +127,7 @@ body{
 
     color:#1b5e20;
 
-    margin-bottom:8px;
+    margin-bottom:11px;
 }
 
 
@@ -152,11 +152,15 @@ body{
    ===================================================== */
 
 .daily-schedule-inside{
-    margin-top:8px;
+    margin-top:10px;
 
     padding-top:0;
 
     border-top:none;
+}
+
+.daily-section{
+    margin-top:12px;
 }
 
 
