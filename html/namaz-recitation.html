@@ -1,1 +1,287 @@
+<!DOCTYPE html>
+<html lang="bn">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>IBADAT - নামাজে যা পড়তে হয়</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/namaz-recitation.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================================
+         TOP BAR
+         ================================================= -->
+
+    <header class="top-bar">
+
+        <button id="backButton">
+            ←
+        </button>
+
+        <span id="pageTitle"></span>
+
+        <span class="top-space"></span>
+
+    </header>
+
+
+
+    <!-- =================================================
+         MAIN
+         ================================================= -->
+
+    <main class="main">
+
+
+        <!-- =================================================
+             MAIN RECITATION PAGE
+             ================================================= -->
+
+        <section id="mainPage">
+
+
+            <!-- INTRO CARD -->
+
+            <section class="intro-card">
+
+                <div class="intro-icon">
+                    🤲
+                </div>
+
+                <div
+                    class="intro-title"
+                    id="introTitle"
+                ></div>
+
+                <div
+                    class="intro-text"
+                    id="introText"
+                ></div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 EIGHT RECITATION CARDS
+                 ================================================= -->
+
+            <div class="topic-grid">
+
+
+                <!-- 1 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="takbir"
+                >
+
+                    <div class="topic-icon">
+                        🕌
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleTakbir"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 2 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="bismillah"
+                >
+
+                    <div class="topic-icon">
+                        📖
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleBismillah"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 3 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="short-surah"
+                >
+
+                    <div class="topic-icon">
+                        📜
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleShortSurah"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 4 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="ruku-dhikr"
+                >
+
+                    <div class="topic-icon">
+                        🙇
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleRukuDhikr"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 5 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="sajdah-dua"
+                >
+
+                    <div class="topic-icon">
+                        🤲
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleSajdahDua"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 6 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="tashahhud-durood"
+                >
+
+                    <div class="topic-icon">
+                        📿
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleTashahhudDurood"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 7 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="final-dua"
+                >
+
+                    <div class="topic-icon">
+                        🌙
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleFinalDua"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 8 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="qunut-other"
+                >
+
+                    <div class="topic-icon">
+                        📿
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleQunutOther"
+                    ></div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             BLANK TOPIC PAGE
+             ================================================= -->
+
+        <section
+            id="topicPage"
+            class="topic-page hidden"
+        >
+
+
+            <div class="topic-header">
+
+                <button id="topicBackButton">
+                    ←
+                </button>
+
+                <span id="topicPageTitle"></span>
+
+            </div>
+
+
+            <div id="topicContent"></div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <script src="../js/namaz-recitation.js"></script>
+
+</body>
+
+</html>
