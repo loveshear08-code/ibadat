@@ -1,1 +1,468 @@
+*{
+    box-sizing:border-box;
+}
 
+body{
+    margin:0;
+    font-family:sans-serif;
+    background:#eef7f0;
+    color:#1b1b1b;
+}
+
+
+/* =========================
+   TOP BAR
+========================= */
+
+.top-bar{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    height:50px;
+    background:#2e7d32;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 10px;
+    z-index:100;
+}
+
+.top-bar button{
+    width:38px;
+    height:38px;
+    border:none;
+    border-radius:50%;
+    background:transparent;
+    color:#fff;
+    font-size:25px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+}
+
+#pageTitle{
+    flex:1;
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.top-space{
+    width:38px;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    padding:58px 10px 15px;
+    min-height:100vh;
+}
+
+
+/* =========================
+   INTRO
+========================= */
+
+.intro-card{
+    background:#dcedc8;
+    border-radius:16px;
+    padding:18px 13px;
+    margin-bottom:15px;
+    text-align:center;
+}
+
+.intro-icon{
+    font-size:34px;
+    margin-bottom:7px;
+}
+
+.intro-title{
+    font-size:21px;
+    font-weight:bold;
+    color:#1b5e20;
+    margin-bottom:7px;
+}
+
+.intro-text{
+    font-size:13.5px;
+    line-height:1.5;
+    font-weight:500;
+}
+
+
+/* =========================
+   CHAPTER LIST
+========================= */
+
+.chapter-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.chapter-card{
+    width:100%;
+    background:#a5d6a7;
+    border-radius:12px;
+    padding:13px 12px;
+    display:flex;
+    align-items:center;
+    cursor:pointer;
+    transition:transform .15s ease,box-shadow .15s ease;
+}
+
+.chapter-card:active{
+    transform:scale(.98);
+    box-shadow:0 3px 8px rgba(0,0,0,.12);
+}
+
+.chapter-number{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:#2e7d32;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:15px;
+    font-weight:bold;
+    flex-shrink:0;
+    margin-right:10px;
+}
+
+.chapter-info{
+    flex:1;
+}
+
+.chapter-title{
+    font-size:15px;
+    font-weight:bold;
+    color:#1b5e20;
+    line-height:1.35;
+}
+
+.chapter-arrow{
+    font-size:22px;
+    color:#1b5e20;
+    margin-left:7px;
+}
+
+
+/* =========================
+   INNER HEADER
+========================= */
+
+.inner-header{
+    background:#2e7d32;
+    color:#fff;
+    min-height:50px;
+    display:flex;
+    align-items:center;
+    padding:0 8px;
+    margin:-8px -10px 12px;
+    border-radius:0 0 12px 12px;
+}
+
+.inner-header button{
+    width:38px;
+    height:38px;
+    border:none;
+    border-radius:50%;
+    background:transparent;
+    color:#fff;
+    font-size:25px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+}
+
+.inner-header span{
+    flex:1;
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+    padding-right:38px;
+}
+
+
+/* =========================
+   ENTRY LIST
+========================= */
+
+.entry-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.entry-card{
+    background:#a5d6a7;
+    border-radius:12px;
+    padding:13px 12px;
+    cursor:pointer;
+    transition:transform .15s ease,box-shadow .15s ease;
+}
+
+.entry-card:active{
+    transform:scale(.98);
+    box-shadow:0 3px 8px rgba(0,0,0,.12);
+}
+
+.entry-number{
+    font-size:11px;
+    font-weight:bold;
+    color:#2e7d32;
+    margin-bottom:4px;
+}
+
+.entry-title{
+    font-size:15px;
+    line-height:1.4;
+    font-weight:bold;
+    color:#1b5e20;
+}
+
+
+/* =========================
+   DUA CONTENT
+========================= */
+
+.dua-card{
+    background:#dcedc8;
+    border-radius:16px;
+    padding:16px 13px;
+    margin-bottom:12px;
+}
+
+.dua-title{
+    font-size:19px;
+    line-height:1.4;
+    font-weight:bold;
+    color:#1b5e20;
+    text-align:center;
+    margin-bottom:15px;
+}
+
+.dua-section-label{
+    font-size:12px;
+    font-weight:bold;
+    color:#2e7d32;
+    margin:12px 0 6px;
+}
+
+.dua-arabic{
+    direction:rtl;
+    text-align:right;
+    font-size:24px;
+    line-height:2;
+    font-family:serif;
+    margin:5px 0 14px;
+}
+
+.dua-transliteration{
+    font-size:14px;
+    line-height:1.7;
+    font-style:italic;
+    margin-bottom:13px;
+}
+
+.dua-translation{
+    font-size:14px;
+    line-height:1.65;
+    font-weight:500;
+}
+
+.dua-reference{
+    font-size:12px;
+    line-height:1.5;
+    margin-top:14px;
+    padding-top:10px;
+    border-top:1px solid rgba(27,94,32,.25);
+}
+
+.dua-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+    margin-top:10px;
+}
+
+.dua-tag{
+    background:#a5d6a7;
+    color:#1b5e20;
+    border-radius:20px;
+    padding:4px 8px;
+    font-size:10px;
+    font-weight:bold;
+}
+
+
+/* =========================
+   AUDIO
+========================= */
+
+.dua-audio{
+    width:100%;
+    margin-top:12px;
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.status-box{
+    background:#dcedc8;
+    border-radius:14px;
+    padding:22px 15px;
+    text-align:center;
+    font-size:14px;
+    font-weight:500;
+}
+
+.error-box{
+    color:#8b1e1e;
+    background:#ffebee;
+}
+
+.error-box button{
+    margin-top:12px;
+    border:none;
+    border-radius:8px;
+    padding:9px 15px;
+    background:#2e7d32;
+    color:#fff;
+    font-size:13px;
+    cursor:pointer;
+}
+
+
+/* =========================
+   HIDDEN
+========================= */
+
+.hidden{
+    display:none !important;
+}
+
+
+/* =========================
+   DARK MODE
+========================= */
+
+body.dark-mode{
+    background:#121712;
+    color:#eeeeee;
+}
+
+body.dark-mode .intro-card,
+body.dark-mode .dua-card,
+body.dark-mode .status-box{
+    background:#263a28;
+}
+
+body.dark-mode .intro-title,
+body.dark-mode .chapter-title,
+body.dark-mode .chapter-arrow,
+body.dark-mode .entry-title,
+body.dark-mode .dua-title{
+    color:#c8e6c9;
+}
+
+body.dark-mode .chapter-card,
+body.dark-mode .entry-card{
+    background:#355a3a;
+}
+
+body.dark-mode .chapter-number{
+    background:#2e7d32;
+}
+
+body.dark-mode .dua-section-label{
+    color:#a5d6a7;
+}
+
+body.dark-mode .dua-reference{
+    border-top-color:rgba(200,230,201,.25);
+}
+
+body.dark-mode .dua-tag{
+    background:#355a3a;
+    color:#c8e6c9;
+}
+
+body.dark-mode .error-box{
+    background:#3b2022;
+    color:#ffcdd2;
+}
+
+
+/* =========================
+   SMALL DEVICES
+========================= */
+
+@media(max-width:360px){
+
+    .main{
+        padding-left:8px;
+        padding-right:8px;
+        padding-top:57px;
+    }
+
+    .intro-card{
+        padding:15px 10px;
+    }
+
+    .intro-title{
+        font-size:19px;
+    }
+
+    .intro-text{
+        font-size:12.5px;
+    }
+
+    .chapter-card{
+        padding:11px 9px;
+    }
+
+    .chapter-number{
+        width:32px;
+        height:32px;
+        font-size:13px;
+        margin-right:8px;
+    }
+
+    .chapter-title{
+        font-size:14px;
+    }
+
+    .entry-title{
+        font-size:14px;
+    }
+
+    .dua-card{
+        padding:14px 10px;
+    }
+
+    .dua-title{
+        font-size:18px;
+    }
+
+    .dua-arabic{
+        font-size:21px;
+        line-height:1.9;
+    }
+
+    .dua-transliteration,
+    .dua-translation{
+        font-size:13px;
+    }
+}
