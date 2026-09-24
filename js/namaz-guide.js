@@ -837,9 +837,64 @@ function setupNavigation(){
                     "click",
                     () => {
 
-                        showBlankSection(
-                            card.dataset.section
-                        );
+                        const section =
+                            card.dataset.section;
+
+
+                        /* --------------------------------
+                           পবিত্রতা ও প্রস্তুতি
+                           -------------------------------- */
+
+                        if(section === "purity"){
+
+                            window.location.href =
+                                "pobitrota-prostuti.html";
+
+                            return;
+
+                        }
+
+
+                        /* --------------------------------
+                           নামাজ শিক্ষা
+                           -------------------------------- */
+
+                        if(section === "learn"){
+
+                            window.location.href =
+                                "namaz-shikha.html";
+
+                            return;
+
+                        }
+
+
+                        /* --------------------------------
+                           নামাজে যা পড়তে হয়
+                           -------------------------------- */
+
+                        if(section === "recitations"){
+
+                            window.location.href =
+                                "namaz-recitation.html";
+
+                            return;
+
+                        }
+
+
+                        /* --------------------------------
+                           জামাত ও বিশেষ নামাজ
+                           -------------------------------- */
+
+                        if(section === "jamaat"){
+
+                            window.location.href =
+                                "jamaat-special.html";
+
+                            return;
+
+                        }
 
                     }
                 );
@@ -849,7 +904,7 @@ function setupNavigation(){
 
 
     /* ================================================
-       BACK FROM BLANK SECTION
+       BACK FROM OLD BLANK SECTION
        ================================================ */
 
     const sectionBackButton =
@@ -895,8 +950,7 @@ function setupNavigation(){
 
 
                 /*
-                   If currently inside one of
-                   the four Namaz sections,
+                   If old blank section is open,
                    return to Namaz main page.
                 */
 
@@ -916,7 +970,7 @@ function setupNavigation(){
 
                 /*
                    If already on Namaz main page,
-                   return to the previous app page.
+                   return to previous app page.
                 */
 
                 const mainMenu =
