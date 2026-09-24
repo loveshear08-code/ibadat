@@ -1,1 +1,86 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>হাদিস</title>
+
+<link rel="stylesheet" href="hadith.css">
+
+</head>
+<body>
+
+<header class="top-bar">
+
+    <button
+        id="backButton"
+        class="back-button">
+
+        ←
+
+    </button>
+
+    <h1 id="pageTitle">
+        হাদিস
+    </h1>
+
+</header>
+
+
+<div
+    id="loadingBox"
+    class="status-box">
+
+    লোড হচ্ছে...
+
+</div>
+
+
+<div
+    id="errorBox"
+    class="status-box hidden">
+
+    <p id="errorText">
+        সমস্যা হয়েছে
+    </p>
+
+    <button
+        id="retryButton">
+
+        আবার চেষ্টা করুন
+
+    </button>
+
+</div>
+
+
+<div
+    id="hadithHome">
+
+    <div class="intro-card">
+
+        <h2>
+            হাদিস গ্রন্থসমূহ
+        </h2>
+
+        <p>
+            পছন্দের গ্রন্থ নির্বাচন করুন।
+        </p>
+
+    </div>
+
+    <div
+        id="bookList"
+        class="book-list">
+
+    </div>
+
+</div>
+
+
+<script src="hadith.js"></script>
+
+</body>
+</html>
