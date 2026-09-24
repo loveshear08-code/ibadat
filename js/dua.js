@@ -1,347 +1,254 @@
 const API_BASE = "https://api.opendua.org/v2";
 const COLLECTION_ID = "hisn-al-muslim";
 
+const TEXT = {
+    bn: {
+        pageTitle: "দোয়া",
+        introTitle: "দোয়া",
+        introText: "অনলাইন উৎস থেকে দোয়ার তথ্য দেখানো হচ্ছে।",
+        loading: "দোয়া লোড হচ্ছে...",
+        retry: "আবার চেষ্টা করুন",
+        error: "দোয়া লোড করা যাচ্ছে না। ইন্টারনেট সংযোগ পরীক্ষা করুন।",
+        noData: "কোনো দোয়া পাওয়া যায়নি।",
+        chapters: "দোয়ার অধ্যায়",
+        entries: "দোয়া",
+        arabic: "আরবি",
+        transliteration: "উচ্চারণ",
+        translation: "অর্থ",
+        reference: "সূত্র",
+        listen: "শুনুন"
+    },
+
+    en: {
+        pageTitle: "Dua",
+        introTitle: "Dua",
+        introText: "Dua information is loaded from the online source.",
+        loading: "Loading duas...",
+        retry: "Try Again",
+        error: "Unable to load duas. Please check your internet connection.",
+        noData: "No duas were found.",
+        chapters: "Dua Chapters",
+        entries: "Duas",
+        arabic: "Arabic",
+        transliteration: "Transliteration",
+        translation: "Meaning",
+        reference: "Reference",
+        listen: "Listen"
+    },
+
+    hi: {
+        pageTitle: "दुआ",
+        introTitle: "दुआ",
+        introText: "दुआ की जानकारी ऑनलाइन स्रोत से लाई जा रही है।",
+        loading: "दुआ लोड हो रही है...",
+        retry: "फिर प्रयास करें",
+        error: "दुआ लोड नहीं हो सकी। कृपया इंटरनेट कनेक्शन जाँचें।",
+        noData: "कोई दुआ नहीं मिली।",
+        chapters: "दुआ के अध्याय",
+        entries: "दुआ",
+        arabic: "अरबी",
+        transliteration: "उच्चारण",
+        translation: "अर्थ",
+        reference: "स्रोत",
+        listen: "सुनें"
+    }
+};
+
 let currentLanguage = "bn";
-
 let chapters = [];
-let currentChapter = null;
-let currentEntries = [];
-let currentEntry = null;
+let entries = [];
+let currentChapterId = "";
+let currentChapterTitle = "";
 
 
-/* =========================
+/* =========================================
    LANGUAGE
-========================= */
+========================================= */
 
-function getLanguage(){
+function getLanguage() {
+    try {
+        let saved = localStorage.getItem("ibadatSettings");
 
-    try{
+        if (!saved) {
+            saved = localStorage.getItem("appSettings");
+        }
 
-        const ibadatSettings =
-            localStorage.getItem("ibadatSettings");
+        if (saved) {
+            const settings = JSON.parse(saved);
 
-        if(ibadatSettings){
-
-            const settings =
-                JSON.parse(ibadatSettings);
-
-            if(
-                settings &&
-                ["bn","en","hi"].includes(settings.lang)
-            ){
+            if (
+                settings.lang === "bn" ||
+                settings.lang === "en" ||
+                settings.lang === "hi"
+            ) {
                 return settings.lang;
             }
         }
-
-    }catch(e){}
-
-
-    try{
-
-        const appSettings =
-            localStorage.getItem("appSettings");
-
-        if(appSettings){
-
-            const settings =
-                JSON.parse(appSettings);
-
-            if(
-                settings &&
-                ["bn","en","hi"].includes(settings.lang)
-            ){
-                return settings.lang;
-            }
-        }
-
-    }catch(e){}
-
+    } catch (error) {}
 
     return "bn";
 }
 
 
-currentLanguage = getLanguage();
+/* =========================================
+   TEXT HELPER
+========================================= */
 
+function setText(id, value) {
+    const element = document.getElementById(id);
 
-/* =========================
-   TEXT
-========================= */
-
-const TEXT = {
-
-    bn:{
-        title:"দোয়া",
-        loading:"দোয়া লোড হচ্ছে...",
-        retry:"আবার চেষ্টা করুন",
-        introTitle:"দোয়া",
-        introText:"অনলাইন উৎস থেকে দোয়া ও সংশ্লিষ্ট তথ্য দেখানো হচ্ছে।",
-        arabic:"আরবি",
-        pronunciation:"উচ্চারণ",
-        meaning:"অর্থ",
-        reference:"উৎস",
-        audio:"দোয়া শুনুন",
-        noDua:"কোনো দোয়া পাওয়া যায়নি।",
-        error:"দোয়া লোড করতে সমস্যা হয়েছে।"
-    },
-
-    en:{
-        title:"Dua",
-        loading:"Loading duas...",
-        retry:"Try again",
-        introTitle:"Dua",
-        introText:"Duas and related information are loaded from online sources.",
-        arabic:"Arabic",
-        pronunciation:"Pronunciation",
-        meaning:"Meaning",
-        reference:"Reference",
-        audio:"Listen to Dua",
-        noDua:"No dua found.",
-        error:"Unable to load duas."
-    },
-
-    hi:{
-        title:"दुआ",
-        loading:"दुआ लोड हो रही है...",
-        retry:"फिर कोशिश करें",
-        introTitle:"दुआ",
-        introText:"दुआ और संबंधित जानकारी ऑनलाइन स्रोत से दिखाई जा रही है।",
-        arabic:"अरबी",
-        pronunciation:"उच्चारण",
-        meaning:"अर्थ",
-        reference:"स्रोत",
-        audio:"दुआ सुनें",
-        noDua:"कोई दुआ नहीं मिली।",
-        error:"दुआ लोड करने में समस्या हुई।"
+    if (element) {
+        element.textContent = value;
     }
-
-};
-
-
-/* =========================
-   ELEMENTS
-========================= */
-
-const loadingBox =
-    document.getElementById("loadingBox");
-
-const errorBox =
-    document.getElementById("errorBox");
-
-const errorText =
-    document.getElementById("errorText");
-
-const retryButton =
-    document.getElementById("retryButton");
-
-const duaHome =
-    document.getElementById("duaHome");
-
-const entryPage =
-    document.getElementById("entryPage");
-
-const duaPage =
-    document.getElementById("duaPage");
-
-const chapterList =
-    document.getElementById("chapterList");
-
-const entryList =
-    document.getElementById("entryList");
-
-const duaContent =
-    document.getElementById("duaContent");
-
-const pageTitle =
-    document.getElementById("pageTitle");
-
-const introTitle =
-    document.getElementById("introTitle");
-
-const introText =
-    document.getElementById("introText");
-
-const entryPageTitle =
-    document.getElementById("entryPageTitle");
-
-const duaPageTitle =
-    document.getElementById("duaPageTitle");
-
-const backButton =
-    document.getElementById("backButton");
-
-const entryBackButton =
-    document.getElementById("entryBackButton");
-
-const duaBackButton =
-    document.getElementById("duaBackButton");
-
-
-/* =========================
-   INITIAL UI
-========================= */
-
-function setInitialTexts(){
-
-    const t = TEXT[currentLanguage];
-
-    pageTitle.textContent =
-        t.title;
-
-    introTitle.textContent =
-        t.introTitle;
-
-    introText.textContent =
-        t.introText;
-
-    loadingBox.textContent =
-        t.loading;
-
-    retryButton.textContent =
-        t.retry;
 }
 
 
-/* =========================
+/* =========================================
    SHOW / HIDE
-========================= */
+========================================= */
 
-function hideAll(){
+function hideAllPages() {
 
-    duaHome.classList.add("hidden");
-    entryPage.classList.add("hidden");
-    duaPage.classList.add("hidden");
+    const ids = [
+        "loadingBox",
+        "errorBox",
+        "duaHome",
+        "entryPage",
+        "duaPage"
+    ];
+
+    ids.forEach(id => {
+        const element = document.getElementById(id);
+
+        if (element) {
+            element.classList.add("hidden");
+        }
+    });
 }
 
 
-function showLoading(){
+/* =========================================
+   API
+========================================= */
 
-    hideAll();
+async function apiFetch(url) {
 
-    errorBox.classList.add("hidden");
+    const response = await fetch(url, {
+        method: "GET",
+        headers: {
+            "Accept": "application/json"
+        },
+        cache: "no-cache"
+    });
 
-    loadingBox.classList.remove("hidden");
-}
+    if (!response.ok) {
 
+        let message = "HTTP " + response.status;
 
-function hideLoading(){
+        try {
+            const errorData = await response.json();
 
-    loadingBox.classList.add("hidden");
-}
+            if (errorData && errorData.error) {
+                message = errorData.error;
+            }
+        } catch (error) {}
 
-
-function showError(message){
-
-    hideAll();
-
-    hideLoading();
-
-    errorBox.classList.remove("hidden");
-
-    errorText.textContent =
-        message ||
-        TEXT[currentLanguage].error;
-}
-
-
-/* =========================
-   FETCH JSON
-========================= */
-
-async function fetchJSON(url){
-
-    const response =
-        await fetch(url, {
-            method:"GET",
-            headers:{
-                "Accept":"application/json"
-            },
-            cache:"default"
-        });
-
-    if(!response.ok){
-
-        throw new Error(
-            "HTTP " + response.status
-        );
+        throw new Error(message);
     }
 
     return await response.json();
 }
 
 
-/* =========================
-   RESPONSE EXTRACTION
-========================= */
+/* =========================================
+   NORMALIZE API RESPONSE
+========================================= */
 
-function extractArray(data, possibleKeys){
+function getList(data, possibleKeys) {
 
-    if(Array.isArray(data)){
+    if (Array.isArray(data)) {
         return data;
     }
 
-
-    if(
-        data &&
-        Array.isArray(data.data)
-    ){
-        return data.data;
+    if (!data || typeof data !== "object") {
+        return [];
     }
 
+    for (const key of possibleKeys) {
 
-    if(
-        data &&
-        Array.isArray(data.items)
-    ){
-        return data.items;
+        if (Array.isArray(data[key])) {
+            return data[key];
+        }
     }
-
-
-    if(
-        data &&
-        Array.isArray(data.results)
-    ){
-        return data.results;
-    }
-
-
-    if(
-        data &&
-        Array.isArray(data.chapters)
-    ){
-        return data.chapters;
-    }
-
-
-    if(
-        data &&
-        Array.isArray(data.entries)
-    ){
-        return data.entries;
-    }
-
-
-    if(
-        data &&
-        Array.isArray(data[possibleKeys])
-    ){
-        return data[possibleKeys];
-    }
-
 
     return [];
 }
 
 
-/* =========================
+/* =========================================
+   CHAPTER TITLE
+========================================= */
+
+function getChapterTitle(chapter, index) {
+
+    if (!chapter) {
+        return "Chapter " + (index + 1);
+    }
+
+    return (
+        chapter.title ||
+        chapter.name ||
+        chapter.slug ||
+        ("Chapter " + (index + 1))
+    );
+}
+
+
+/* =========================================
+   ENTRY TITLE
+========================================= */
+
+function getEntryTitle(entry, index) {
+
+    if (!entry) {
+        return "Dua " + (index + 1);
+    }
+
+    return (
+        entry.title ||
+        entry.name ||
+        entry.slug ||
+        ("Dua " + (index + 1))
+    );
+}
+
+
+/* =========================================
    LOAD CHAPTERS
-========================= */
+========================================= */
 
-async function loadChapters(){
+async function loadChapters() {
 
-    showLoading();
+    currentLanguage = getLanguage();
 
-    try{
+    const t = TEXT[currentLanguage];
+
+    setText("pageTitle", t.pageTitle);
+    setText("introTitle", t.introTitle);
+    setText("introText", t.introText);
+    setText("retryButton", t.retry);
+
+    hideAllPages();
+
+    const loadingBox =
+        document.getElementById("loadingBox");
+
+    if (loadingBox) {
+        loadingBox.textContent = t.loading;
+        loadingBox.classList.remove("hidden");
+    }
+
+    try {
 
         const url =
             API_BASE +
@@ -349,386 +256,470 @@ async function loadChapters(){
             COLLECTION_ID +
             "/chapters";
 
-        console.log(
-            "Loading chapters:",
-            url
-        );
+        console.log("Dua chapters URL:", url);
 
+        const data = await apiFetch(url);
 
-        const data =
-            await fetchJSON(url);
+        console.log("Dua chapters response:", data);
 
+        chapters = getList(data, [
+            "chapters",
+            "data",
+            "items",
+            "results"
+        ]);
 
-        console.log(
-            "OpenDua chapter response:",
-            data
-        );
-
-
-        chapters =
-            extractArray(
-                data,
-                "chapters"
-            );
-
-
-        console.log(
-            "Chapters found:",
-            chapters.length
-        );
-
-
-        if(!chapters.length){
-
-            throw new Error(
-                "No chapters returned"
-            );
+        if (!chapters.length) {
+            throw new Error("EMPTY_CHAPTER_LIST");
         }
-
 
         renderChapters();
 
-        hideLoading();
+        hideAllPages();
 
-        duaHome.classList.remove(
-            "hidden"
-        );
+        const home =
+            document.getElementById("duaHome");
 
-    }catch(error){
+        if (home) {
+            home.classList.remove("hidden");
+        }
+
+        window.scrollTo(0, 0);
+
+    } catch (error) {
 
         console.error(
-            "Chapter loading error:",
+            "OpenDua chapter error:",
             error
         );
 
-        showError(
-            TEXT[currentLanguage].error
-        );
+        showError();
     }
 }
 
 
-/* =========================
+/* =========================================
    RENDER CHAPTERS
-========================= */
+========================================= */
 
-function renderChapters(){
+function renderChapters() {
 
-    chapterList.innerHTML = "";
+    const container =
+        document.getElementById("chapterList");
 
+    if (!container) return;
 
-    chapters.forEach(
-        (chapter,index) => {
+    container.innerHTML = "";
 
-            const card =
-                document.createElement("div");
+    const t = TEXT[currentLanguage];
 
-            card.className =
-                "chapter-card";
+    if (!chapters.length) {
 
+        const empty =
+            document.createElement("div");
 
-            const number =
-                document.createElement("div");
+        empty.className = "status-box";
+        empty.textContent = t.noData;
 
-            number.className =
-                "chapter-number";
+        container.appendChild(empty);
 
-            number.textContent =
-                index + 1;
+        return;
+    }
 
+    chapters.forEach((chapter, index) => {
 
-            const info =
-                document.createElement("div");
+        const card =
+            document.createElement("div");
 
-            info.className =
-                "chapter-info";
-
-
-            const title =
-                document.createElement("div");
-
-            title.className =
-                "chapter-title";
-
-            title.textContent =
-                chapter.title ||
-                chapter.name ||
-                ("Chapter " + (index + 1));
+        card.className = "chapter-card";
 
 
-            info.appendChild(
-                title
+        const number =
+            document.createElement("div");
+
+        number.className = "chapter-number";
+
+        number.textContent =
+            index + 1;
+
+
+        const info =
+            document.createElement("div");
+
+        info.className = "chapter-info";
+
+
+        const title =
+            document.createElement("div");
+
+        title.className = "chapter-title";
+
+        title.textContent =
+            getChapterTitle(
+                chapter,
+                index
             );
 
 
-            const arrow =
-                document.createElement("div");
-
-            arrow.className =
-                "chapter-arrow";
-
-            arrow.textContent =
-                "›";
+        info.appendChild(title);
 
 
-            card.appendChild(
-                number
-            );
+        const arrow =
+            document.createElement("div");
 
-            card.appendChild(
-                info
-            );
+        arrow.className =
+            "chapter-arrow";
 
-            card.appendChild(
-                arrow
-            );
+        arrow.textContent = "›";
 
 
-            card.addEventListener(
-                "click",
-                () => openChapter(chapter)
-            );
+        card.appendChild(number);
+        card.appendChild(info);
+        card.appendChild(arrow);
 
 
-            chapterList.appendChild(
-                card
-            );
+        card.addEventListener(
+            "click",
+            () => openChapter(chapter, index)
+        );
 
-        }
-    );
+
+        container.appendChild(card);
+    });
 }
 
 
-/* =========================
+/* =========================================
    OPEN CHAPTER
-========================= */
+========================================= */
 
-async function openChapter(chapter){
+async function openChapter(chapter, index) {
 
-    currentChapter =
-        chapter;
+    if (!chapter) return;
 
-
-    hideAll();
-
-    entryPage.classList.remove(
-        "hidden"
-    );
-
-
-    entryPageTitle.textContent =
-        chapter.title ||
-        chapter.name ||
+    currentChapterId =
+        chapter.id ||
+        chapter.chapterId ||
+        chapter.slug ||
         "";
 
+    currentChapterTitle =
+        getChapterTitle(
+            chapter,
+            index
+        );
 
-    entryList.innerHTML =
-        `<div class="status-box">
-            ${TEXT[currentLanguage].loading}
-        </div>`;
+
+    if (!currentChapterId) {
+        console.error(
+            "Chapter ID missing:",
+            chapter
+        );
+        return;
+    }
 
 
-    try{
+    hideAllPages();
+
+    const loadingBox =
+        document.getElementById("loadingBox");
+
+    if (loadingBox) {
+        loadingBox.textContent =
+            TEXT[currentLanguage].loading;
+
+        loadingBox.classList.remove("hidden");
+    }
+
+
+    try {
 
         const url =
             API_BASE +
             "/collections/" +
             COLLECTION_ID +
             "/chapters/" +
-            chapter.id +
+            encodeURIComponent(
+                currentChapterId
+            ) +
             "/entries";
 
-
         console.log(
-            "Loading entries:",
+            "Dua entries URL:",
             url
         );
 
 
         const data =
-            await fetchJSON(url);
+            await apiFetch(url);
 
 
         console.log(
-            "OpenDua entry response:",
+            "Dua entries response:",
             data
         );
 
 
-        currentEntries =
-            extractArray(
-                data,
-                "entries"
+        entries =
+            getList(data, [
+                "entries",
+                "data",
+                "items",
+                "results"
+            ]);
+
+
+        if (!entries.length) {
+            throw new Error(
+                "EMPTY_ENTRY_LIST"
             );
+        }
+
+
+        setText(
+            "entryPageTitle",
+            currentChapterTitle
+        );
 
 
         renderEntries();
 
 
-    }catch(error){
+        hideAllPages();
+
+        const entryPage =
+            document.getElementById(
+                "entryPage"
+            );
+
+        if (entryPage) {
+            entryPage.classList.remove(
+                "hidden"
+            );
+        }
+
+        window.scrollTo(0, 0);
+
+    } catch (error) {
 
         console.error(
-            "Entry loading error:",
+            "OpenDua entry error:",
             error
         );
 
-
-        entryList.innerHTML =
-            `<div class="status-box error-box">
-                ${TEXT[currentLanguage].error}
-            </div>`;
+        showError();
     }
 }
 
 
-/* =========================
+/* =========================================
    RENDER ENTRIES
-========================= */
+========================================= */
 
-function renderEntries(){
+function renderEntries() {
 
-    entryList.innerHTML = "";
+    const container =
+        document.getElementById(
+            "entryList"
+        );
+
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    const t = TEXT[currentLanguage];
 
 
-    if(!currentEntries.length){
+    if (!entries.length) {
 
-        entryList.innerHTML =
-            `<div class="status-box">
-                ${TEXT[currentLanguage].noDua}
-            </div>`;
+        const empty =
+            document.createElement("div");
+
+        empty.className =
+            "status-box";
+
+        empty.textContent =
+            t.noData;
+
+        container.appendChild(empty);
 
         return;
     }
 
 
-    currentEntries.forEach(
-        (entry,index) => {
+    entries.forEach((entry, index) => {
 
-            const card =
-                document.createElement("div");
+        const card =
+            document.createElement("div");
 
-            card.className =
-                "entry-card";
-
-
-            const number =
-                document.createElement("div");
-
-            number.className =
-                "entry-number";
-
-            number.textContent =
-                "Dua " +
-                (index + 1);
+        card.className =
+            "entry-card";
 
 
-            const title =
-                document.createElement("div");
+        const number =
+            document.createElement("div");
 
-            title.className =
-                "entry-title";
+        number.className =
+            "entry-number";
 
-            title.textContent =
-                entry.title ||
-                entry.name ||
-                "";
+        number.textContent =
+            "#" + (index + 1);
 
 
-            card.appendChild(
-                number
-            );
+        const title =
+            document.createElement("div");
 
-            card.appendChild(
-                title
+        title.className =
+            "entry-title";
+
+        title.textContent =
+            getEntryTitle(
+                entry,
+                index
             );
 
 
-            card.addEventListener(
-                "click",
-                () => openEntry(entry)
-            );
+        card.appendChild(number);
+        card.appendChild(title);
 
 
-            entryList.appendChild(
-                card
-            );
+        card.addEventListener(
+            "click",
+            () => openEntry(entry, index)
+        );
 
-        }
-    );
+
+        container.appendChild(card);
+    });
 }
 
 
-/* =========================
+/* =========================================
    OPEN ENTRY
-========================= */
+========================================= */
 
-async function openEntry(entry){
+async function openEntry(entry, index) {
 
-    hideAll();
-
-    duaPage.classList.remove(
-        "hidden"
-    );
+    if (!entry) return;
 
 
-    duaPageTitle.textContent =
-        entry.title ||
-        entry.name ||
+    const entryId =
+        entry.id ||
+        entry.entryId ||
         "";
 
 
-    duaContent.innerHTML =
-        `<div class="status-box">
-            ${TEXT[currentLanguage].loading}
-        </div>`;
+    if (!entryId) {
+
+        console.error(
+            "Entry ID missing:",
+            entry
+        );
+
+        return;
+    }
 
 
-    try{
+    hideAllPages();
+
+
+    const loadingBox =
+        document.getElementById(
+            "loadingBox"
+        );
+
+    if (loadingBox) {
+
+        loadingBox.textContent =
+            TEXT[currentLanguage].loading;
+
+        loadingBox.classList.remove(
+            "hidden"
+        );
+    }
+
+
+    try {
 
         const url =
             API_BASE +
             "/entries/" +
-            entry.id;
+            encodeURIComponent(
+                entryId
+            );
 
 
         console.log(
-            "Loading dua:",
+            "Dua detail URL:",
             url
         );
 
 
-        currentEntry =
-            await fetchJSON(url);
+        const data =
+            await apiFetch(url);
 
 
-        renderDua(
-            currentEntry
+        console.log(
+            "Dua detail response:",
+            data
         );
 
 
-    }catch(error){
+        setText(
+            "duaPageTitle",
+            getEntryTitle(
+                data,
+                index
+            )
+        );
+
+
+        renderDua(data);
+
+
+        hideAllPages();
+
+
+        const duaPage =
+            document.getElementById(
+                "duaPage"
+            );
+
+        if (duaPage) {
+            duaPage.classList.remove(
+                "hidden"
+            );
+        }
+
+
+        window.scrollTo(0, 0);
+
+    } catch (error) {
 
         console.error(
-            "Dua loading error:",
+            "OpenDua detail error:",
             error
         );
 
-
-        duaContent.innerHTML =
-            `<div class="status-box error-box">
-                ${TEXT[currentLanguage].error}
-            </div>`;
+        showError();
     }
 }
 
 
-/* =========================
-   RENDER DUA
-========================= */
+/* =========================================
+   RENDER COMPLETE DUA
+========================================= */
 
-function renderDua(entry){
+function renderDua(data) {
 
-    duaContent.innerHTML = "";
+    const container =
+        document.getElementById(
+            "duaContent"
+        );
+
+    if (!container) return;
+
+    container.innerHTML = "";
 
 
     const card =
@@ -745,460 +736,97 @@ function renderDua(entry){
         "dua-title";
 
     title.textContent =
-        entry.title ||
+        data.title ||
+        data.name ||
         "";
 
 
-    card.appendChild(
-        title
-    );
-
-
-    const variations =
-        entry.variations ||
-        [];
-
-
-    if(!variations.length){
-
-        duaContent.appendChild(
-            card
-        );
-
-        return;
-    }
-
-
-    variations.forEach(
-        variation => {
-
-            const steps =
-                variation.steps ||
-                [];
-
-
-            steps.forEach(
-                step => {
-
-                    const items =
-                        step.items ||
-                        [];
-
-
-                    items.forEach(
-                        item => {
-
-                            if(
-                                !item ||
-                                !item.dua
-                            ){
-                                return;
-                            }
-
-
-                            const dua =
-                                item.dua;
-
-
-                            /*
-                               ARABIC
-                            */
-
-                            addLabel(
-                                card,
-                                TEXT[currentLanguage].arabic
-                            );
-
-
-                            const arabic =
-                                document.createElement("div");
-
-                            arabic.className =
-                                "dua-arabic";
-
-                            arabic.textContent =
-                                dua.arabic ||
-                                "";
-
-
-                            card.appendChild(
-                                arabic
-                            );
-
-
-                            /*
-                               ENGLISH
-                            */
-
-                            if(
-                                currentLanguage === "en"
-                            ){
-
-                                addLabel(
-                                    card,
-                                    TEXT.en.pronunciation
-                                );
-
-
-                                const transliteration =
-                                    document.createElement("div");
-
-                                transliteration.className =
-                                    "dua-transliteration";
-
-                                transliteration.textContent =
-                                    dua.transliteration ||
-                                    "";
-
-
-                                card.appendChild(
-                                    transliteration
-                                );
-
-
-                                addLabel(
-                                    card,
-                                    TEXT.en.meaning
-                                );
-
-
-                                const translation =
-                                    document.createElement("div");
-
-                                translation.className =
-                                    "dua-translation";
-
-                                translation.textContent =
-                                    dua.translation ||
-                                    "";
-
-
-                                card.appendChild(
-                                    translation
-                                );
-                            }
-
-
-                            /*
-                               BENGALI
-                            */
-
-                            else if(
-                                currentLanguage === "bn"
-                            ){
-
-                                /*
-                                   আপাতত OpenDua-এর
-                                   English translation
-                                   fallback হিসেবে
-                                   দেখানো হচ্ছে।
-
-                                   বাংলা source পরে
-                                   আলাদা verified
-                                   mapping দিয়ে যোগ হবে।
-                                */
-
-                                addLabel(
-                                    card,
-                                    TEXT.bn.pronunciation
-                                );
-
-
-                                const transliteration =
-                                    document.createElement("div");
-
-                                transliteration.className =
-                                    "dua-transliteration";
-
-                                transliteration.textContent =
-                                    dua.transliteration ||
-                                    "";
-
-
-                                card.appendChild(
-                                    transliteration
-                                );
-
-
-                                addLabel(
-                                    card,
-                                    TEXT.bn.meaning
-                                );
-
-
-                                const translation =
-                                    document.createElement("div");
-
-                                translation.className =
-                                    "dua-translation";
-
-                                translation.textContent =
-                                    dua.translation ||
-                                    "";
-
-
-                                card.appendChild(
-                                    translation
-                                );
-                            }
-
-
-                            /*
-                               HINDI
-                            */
-
-                            else if(
-                                currentLanguage === "hi"
-                            ){
-
-                                addLabel(
-                                    card,
-                                    TEXT.hi.pronunciation
-                                );
-
-
-                                const transliteration =
-                                    document.createElement("div");
-
-                                transliteration.className =
-                                    "dua-transliteration";
-
-                                transliteration.textContent =
-                                    dua.transliteration ||
-                                    "";
-
-
-                                card.appendChild(
-                                    transliteration
-                                );
-
-
-                                addLabel(
-                                    card,
-                                    TEXT.hi.meaning
-                                );
-
-
-                                const translation =
-                                    document.createElement("div");
-
-                                translation.className =
-                                    "dua-translation";
-
-                                translation.textContent =
-                                    dua.translation ||
-                                    "";
-
-
-                                card.appendChild(
-                                    translation
-                                );
-                            }
-
+    card.appendChild(title);
+
+
+    /*
+     * OpenDua documented structure:
+     *
+     * data.variations[]
+     *      ↓
+     * steps[]
+     *      ↓
+     * items[]
+     *      ↓
+     * dua{}
+     */
+
+    if (
+        Array.isArray(data.variations) &&
+        data.variations.length
+    ) {
+
+        data.variations.forEach(
+            variation => {
+
+                if (
+                    !variation ||
+                    !Array.isArray(
+                        variation.steps
+                    )
+                ) {
+                    return;
+                }
+
+
+                variation.steps.forEach(
+                    step => {
+
+                        if (
+                            !step ||
+                            !Array.isArray(
+                                step.items
+                            )
+                        ) {
+                            return;
                         }
-                    );
-
-                }
-            );
-
-        }
-    );
 
 
-    /*
-       REFERENCES
-    */
+                        step.items.forEach(
+                            item => {
 
-        renderReferences(
-        card,
-        entry
-    );
+                                if (
+                                    item &&
+                                    item.dua
+                                ) {
 
+                                    renderDuaObject(
+                                        item.dua,
+                                        card
+                                    );
+                                }
 
-    /*
-       AUDIO
-    */
-
-    renderAudio(
-        card,
-        entry
-    );
+                            }
+                        );
 
 
-    /*
-       TAGS
-    */
+                        /*
+                         * Recordings belong to
+                         * the recitation step.
+                         */
 
-    renderTags(
-        card,
-        entry
-    );
+                        if (
+                            Array.isArray(
+                                step.recordings
+                            )
+                        ) {
 
-
-    duaContent.appendChild(
-        card
-    );
-}
-
-
-/* =========================
-   LABEL
-========================= */
-
-function addLabel(
-    parent,
-    text
-){
-
-    const label =
-        document.createElement("div");
-
-    label.className =
-        "dua-section-label";
-
-    label.textContent =
-        text;
-
-
-    parent.appendChild(
-        label
-    );
-}
-
-
-/* =========================
-   REFERENCES
-========================= */
-
-function renderReferences(
-    card,
-    entry
-){
-
-    const refs =
-        entry.references ||
-        [];
-
-
-    if(!refs.length){
-        return;
-    }
-
-
-    addLabel(
-        card,
-        TEXT[currentLanguage].reference
-    );
-
-
-    const ref =
-        document.createElement("div");
-
-    ref.className =
-        "dua-reference";
-
-
-    const texts =
-        refs.map(
-            item => {
-
-                if(
-                    typeof item === "string"
-                ){
-                    return item;
-                }
-
-
-                if(
-                    item &&
-                    item.text
-                ){
-                    return item.text;
-                }
-
-
-                if(
-                    item &&
-                    item.title
-                ){
-                    return item.title;
-                }
-
-
-                return "";
-            }
-        )
-        .filter(Boolean);
-
-
-    ref.textContent =
-        texts.join(" • ");
-
-
-    if(ref.textContent){
-
-        card.appendChild(
-            ref
-        );
-    }
-}
-
-
-/* =========================
-   AUDIO
-========================= */
-
-function renderAudio(
-    card,
-    entry
-){
-
-    const audioUrls =
-        [];
-
-
-    const variations =
-        entry.variations ||
-        [];
-
-
-    variations.forEach(
-        variation => {
-
-            const steps =
-                variation.steps ||
-                [];
-
-
-            steps.forEach(
-                step => {
-
-                    const items =
-                        step.items ||
-                        [];
-
-
-                    items.forEach(
-                        item => {
-
-                            const recordings =
-                                item.recordings ||
-                                [];
-
-
-                            recordings.forEach(
+                            step.recordings.forEach(
                                 recording => {
 
-                                    if(
+                                    if (
                                         recording &&
-                                        recording.url &&
-                                        !audioUrls.includes(
-                                            recording.url
-                                        )
-                                    ){
+                                        recording.url
+                                    ) {
 
-                                        audioUrls.push(
-                                            recording.url
+                                        addAudio(
+                                            recording.url,
+                                            card
                                         );
                                     }
 
@@ -1206,179 +834,591 @@ function renderAudio(
                             );
 
                         }
+
+                    }
+                );
+
+            }
+        );
+
+    } else {
+
+        /*
+         * Fallback if API returns
+         * a direct dua object.
+         */
+
+        renderDuaObject(
+            data,
+            card
+        );
+    }
+
+
+    /*
+     * Entry-level source reference
+     */
+
+    if (data.sourceReference) {
+
+        addReference(
+            TEXT[currentLanguage].reference +
+            ": " +
+            data.sourceReference,
+            card
+        );
+    }
+
+
+    /*
+     * Structured references
+     */
+
+    if (
+        Array.isArray(data.references) &&
+        data.references.length
+    ) {
+
+        data.references.forEach(
+            reference => {
+
+                const text =
+                    getReferenceText(
+                        reference
                     );
 
+                if (text) {
+                    addReference(
+                        text,
+                        card
+                    );
                 }
-            );
-
-        }
-    );
-
-
-    if(!audioUrls.length){
-        return;
+            }
+        );
     }
 
 
-    addLabel(
-        card,
-        TEXT[currentLanguage].audio
+    container.appendChild(card);
+}
+
+
+/* =========================================
+   RENDER DUA OBJECT
+========================================= */
+
+function renderDuaObject(
+    dua,
+    card
+) {
+
+    if (!dua) return;
+
+    const t =
+        TEXT[currentLanguage];
+
+
+    /*
+     * Arabic
+     */
+
+    if (dua.arabic) {
+
+        addLabel(
+            t.arabic,
+            card
+        );
+
+
+        const arabic =
+            document.createElement("div");
+
+        arabic.className =
+            "dua-arabic";
+
+        arabic.textContent =
+            dua.arabic;
+
+        card.appendChild(arabic);
+    }
+
+
+    /*
+     * Transliteration
+     */
+
+    if (dua.transliteration) {
+
+        addLabel(
+            t.transliteration,
+            card
+        );
+
+
+        const transliteration =
+            document.createElement(
+                "div"
+            );
+
+        transliteration.className =
+            "dua-transliteration";
+
+        transliteration.textContent =
+            dua.transliteration;
+
+        card.appendChild(
+            transliteration
+        );
+    }
+
+
+    /*
+     * English translation
+     */
+
+    if (dua.translation) {
+
+        addLabel(
+            t.translation,
+            card
+        );
+
+
+        const translation =
+            document.createElement(
+                "div"
+            );
+
+        translation.className =
+            "dua-translation";
+
+        translation.textContent =
+            dua.translation;
+
+        card.appendChild(
+            translation
+        );
+    }
+
+
+    /*
+     * Dua-level references
+     */
+
+    if (
+        Array.isArray(dua.references) &&
+        dua.references.length
+    ) {
+
+        dua.references.forEach(
+            reference => {
+
+                const text =
+                    getReferenceText(
+                        reference
+                    );
+
+                if (text) {
+
+                    addReference(
+                        text,
+                        card
+                    );
+                }
+            }
+        );
+    }
+}
+
+
+/* =========================================
+   LABEL
+========================================= */
+
+function addLabel(
+    text,
+    card
+) {
+
+    const label =
+        document.createElement(
+            "div"
+        );
+
+    label.className =
+        "dua-section-label";
+
+    label.textContent =
+        text;
+
+    card.appendChild(label);
+}
+
+
+/* =========================================
+   REFERENCE
+========================================= */
+
+function addReference(
+    text,
+    card
+) {
+
+    const reference =
+        document.createElement(
+            "div"
+        );
+
+    reference.className =
+        "dua-reference";
+
+    reference.textContent =
+        text;
+
+    card.appendChild(reference);
+}
+
+
+/* =========================================
+   REFERENCE TEXT
+========================================= */
+
+function getReferenceText(
+    reference
+) {
+
+    if (!reference) {
+        return "";
+    }
+
+
+    if (
+        typeof reference === "string"
+    ) {
+        return reference;
+    }
+
+
+    if (
+        typeof reference === "object"
+    ) {
+
+        return (
+            reference.text ||
+            reference.title ||
+            reference.name ||
+            reference.work ||
+            reference.id ||
+            ""
+        );
+    }
+
+
+    return "";
+}
+
+
+/* =========================================
+   AUDIO
+========================================= */
+
+function addAudio(
+    url,
+    card
+) {
+
+    const audio =
+        document.createElement(
+            "audio"
+        );
+
+    audio.className =
+        "dua-audio";
+
+    audio.controls = true;
+
+    audio.preload = "none";
+
+    audio.src = url;
+
+    card.appendChild(audio);
+}
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+function showError() {
+
+    hideAllPages();
+
+    const t =
+        TEXT[currentLanguage];
+
+
+    const errorBox =
+        document.getElementById(
+            "errorBox"
+        );
+
+    if (!errorBox) return;
+
+
+    setText(
+        "errorText",
+        t.error
     );
 
 
-    audioUrls.forEach(
-        url => {
+    const retryButton =
+        document.getElementById(
+            "retryButton"
+        );
 
-            const audio =
-                document.createElement("audio");
-
-            audio.className =
-                "dua-audio";
-
-            audio.controls =
-                true;
-
-            audio.preload =
-                "none";
-
-            audio.src =
-                url;
+    if (retryButton) {
+        retryButton.textContent =
+            t.retry;
+    }
 
 
-            card.appendChild(
-                audio
-            );
+    errorBox.classList.remove(
+        "hidden"
+    );
+}
+
+
+/* =========================================
+   HOME
+========================================= */
+
+function goHome() {
+
+    hideAllPages();
+
+    renderChapters();
+
+    const home =
+        document.getElementById(
+            "duaHome"
+        );
+
+    if (home) {
+        home.classList.remove(
+            "hidden"
+        );
+    }
+
+    window.scrollTo(0, 0);
+}
+
+
+/* =========================================
+   ENTRY LIST
+========================================= */
+
+function goEntries() {
+
+    hideAllPages();
+
+    setText(
+        "entryPageTitle",
+        currentChapterTitle
+    );
+
+    renderEntries();
+
+    const page =
+        document.getElementById(
+            "entryPage"
+        );
+
+    if (page) {
+        page.classList.remove(
+            "hidden"
+        );
+    }
+
+    window.scrollTo(0, 0);
+}
+
+
+/* =========================================
+   MAIN BACK
+========================================= */
+
+function setupBackButton() {
+
+    const button =
+        document.getElementById(
+            "backButton"
+        );
+
+    if (!button) return;
+
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            const duaPage =
+                document.getElementById(
+                    "duaPage"
+                );
+
+            const entryPage =
+                document.getElementById(
+                    "entryPage"
+                );
+
+
+            if (
+                duaPage &&
+                !duaPage.classList.contains(
+                    "hidden"
+                )
+            ) {
+
+                goEntries();
+                return;
+            }
+
+
+            if (
+                entryPage &&
+                !entryPage.classList.contains(
+                    "hidden"
+                )
+            ) {
+
+                goHome();
+                return;
+            }
+
+
+            history.back();
+        }
+    );
+}
+
+
+/* =========================================
+   ENTRY BACK
+========================================= */
+
+function setupEntryBack() {
+
+    const button =
+        document.getElementById(
+            "entryBackButton"
+        );
+
+    if (!button) return;
+
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            goHome();
 
         }
     );
 }
 
 
-/* =========================
-   TAGS
-========================= */
+/* =========================================
+   DUA BACK
+========================================= */
 
-function renderTags(
-    card,
-    entry
-){
+function setupDuaBack() {
 
-    const tags =
-        entry.tags ||
-        [];
+    const button =
+        document.getElementById(
+            "duaBackButton"
+        );
 
-
-    if(!tags.length){
-        return;
-    }
+    if (!button) return;
 
 
-    const container =
-        document.createElement("div");
+    button.addEventListener(
+        "click",
+        () => {
 
-    container.className =
-        "dua-tags";
-
-
-    tags.forEach(
-        tag => {
-
-            const item =
-                document.createElement("span");
-
-            item.className =
-                "dua-tag";
-
-            item.textContent =
-                tag;
-
-
-            container.appendChild(
-                item
-            );
+            goEntries();
 
         }
-    );
-
-
-    card.appendChild(
-        container
     );
 }
 
 
-/* =========================
-   BACK BUTTONS
-========================= */
-
-backButton.addEventListener(
-    "click",
-    () => {
-
-        window.history.back();
-
-    }
-);
-
-
-entryBackButton.addEventListener(
-    "click",
-    () => {
-
-        entryPage.classList.add(
-            "hidden"
-        );
-
-        duaHome.classList.remove(
-            "hidden"
-        );
-
-    }
-);
-
-
-duaBackButton.addEventListener(
-    "click",
-    () => {
-
-        duaPage.classList.add(
-            "hidden"
-        );
-
-        entryPage.classList.remove(
-            "hidden"
-        );
-
-    }
-);
-
-
-/* =========================
+/* =========================================
    RETRY
-========================= */
+========================================= */
 
-retryButton.addEventListener(
-    "click",
-    () => {
+function setupRetry() {
 
-        loadChapters();
+    const button =
+        document.getElementById(
+            "retryButton"
+        );
 
-    }
-);
+    if (!button) return;
 
 
-/* =========================
+    button.addEventListener(
+        "click",
+        () => {
+
+            loadChapters();
+
+        }
+    );
+}
+
+
+/* =========================================
+   LANGUAGE CHANGE
+========================================= */
+
+function setupLanguageWatcher() {
+
+    window.addEventListener(
+        "storage",
+        event => {
+
+            if (
+                event.key ===
+                    "ibadatSettings" ||
+                event.key ===
+                    "appSettings"
+            ) {
+
+                location.reload();
+
+            }
+
+        }
+    );
+}
+
+
+/* =========================================
    START
-========================= */
+========================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
     () => {
 
-        currentLanguage =
-            getLanguage();
+        setupBackButton();
 
-        setInitialTexts();
+        setupEntryBack();
+
+        setupDuaBack();
+
+        setupRetry();
+
+        setupLanguageWatcher();
 
         loadChapters();
 
