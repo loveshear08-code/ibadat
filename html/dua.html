@@ -1,1 +1,100 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>IBADAT - দোয়া</title>
+
+<link rel="stylesheet" href="../css/dua.css">
+</head>
+
+<body>
+
+<header class="top-bar">
+
+    <button id="backButton" aria-label="Back">←</button>
+
+    <span id="pageTitle"></span>
+
+    <span class="top-space"></span>
+
+</header>
+
+
+<main class="main">
+
+    <!-- Loading -->
+    <div id="loadingBox" class="status-box">
+        দোয়া লোড হচ্ছে...
+    </div>
+
+
+    <!-- Error -->
+    <div id="errorBox" class="status-box error-box hidden">
+        <div id="errorText"></div>
+        <button id="retryButton">আবার চেষ্টা করুন</button>
+    </div>
+
+
+    <!-- Collection / Chapter List -->
+    <section id="duaHome" class="hidden">
+
+        <div class="intro-card">
+
+            <div class="intro-icon">🤲</div>
+
+            <div id="introTitle" class="intro-title">
+                দোয়া
+            </div>
+
+            <div id="introText" class="intro-text">
+                অনলাইন উৎস থেকে দোয়া ও সংশ্লিষ্ট তথ্য দেখানো হচ্ছে।
+            </div>
+
+        </div>
+
+
+        <div id="chapterList" class="chapter-list"></div>
+
+    </section>
+
+
+    <!-- Entry List -->
+    <section id="entryPage" class="hidden">
+
+        <div class="inner-header">
+
+            <button id="entryBackButton" aria-label="Back">←</button>
+
+            <span id="entryPageTitle"></span>
+
+        </div>
+
+        <div id="entryList" class="entry-list"></div>
+
+    </section>
+
+
+    <!-- Single Dua -->
+    <section id="duaPage" class="hidden">
+
+        <div class="inner-header">
+
+            <button id="duaBackButton" aria-label="Back">←</button>
+
+            <span id="duaPageTitle"></span>
+
+        </div>
+
+        <div id="duaContent"></div>
+
+    </section>
+
+</main>
+
+
+<script src="../js/dua.js?v=1"></script>
+
+</body>
+</html>
