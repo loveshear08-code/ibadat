@@ -1,1 +1,287 @@
+<!DOCTYPE html>
+<html lang="bn">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>IBADAT - নামাজ শিক্ষা</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/namaz-shikha.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================================
+         TOP BAR
+         ================================================= -->
+
+    <header class="top-bar">
+
+        <button id="backButton">
+            ←
+        </button>
+
+        <span id="pageTitle"></span>
+
+        <span class="top-space"></span>
+
+    </header>
+
+
+
+    <!-- =================================================
+         MAIN
+         ================================================= -->
+
+    <main class="main">
+
+
+        <!-- =================================================
+             MAIN NAMAZ SHIKHA PAGE
+             ================================================= -->
+
+        <section id="mainPage">
+
+
+            <!-- INTRO CARD -->
+
+            <section class="intro-card">
+
+                <div class="intro-icon">
+                    📖
+                </div>
+
+                <div
+                    class="intro-title"
+                    id="introTitle"
+                ></div>
+
+                <div
+                    class="intro-text"
+                    id="introText"
+                ></div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 EIGHT TOPIC CARDS
+                 ================================================= -->
+
+            <div class="topic-grid">
+
+
+                <!-- 1 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="niyyah"
+                >
+
+                    <div class="topic-icon">
+                        🕋
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleNiyyah"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 2 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="qiyam"
+                >
+
+                    <div class="topic-icon">
+                        🧍
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleQiyam"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 3 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="ruku"
+                >
+
+                    <div class="topic-icon">
+                        🙇
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleRuku"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 4 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="sajdah"
+                >
+
+                    <div class="topic-icon">
+                        🤲
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleSajdah"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 5 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="final-sitting"
+                >
+
+                    <div class="topic-icon">
+                        🪑
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleFinalSitting"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 6 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="tashahhud"
+                >
+
+                    <div class="topic-icon">
+                        📿
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleTashahhud"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 7 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="salam"
+                >
+
+                    <div class="topic-icon">
+                        👋
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleSalam"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 8 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="complete"
+                >
+
+                    <div class="topic-icon">
+                        🕌
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleComplete"
+                    ></div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             BLANK TOPIC PAGE
+             ================================================= -->
+
+        <section
+            id="topicPage"
+            class="topic-page hidden"
+        >
+
+
+            <div class="topic-header">
+
+                <button id="topicBackButton">
+                    ←
+                </button>
+
+                <span id="topicPageTitle"></span>
+
+            </div>
+
+
+            <div id="topicContent"></div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <script src="../js/namaz-shikha.js"></script>
+
+</body>
+
+</html>
