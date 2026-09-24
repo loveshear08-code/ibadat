@@ -1,18 +1,12 @@
 const API_BASE = "https://api.opendua.org/v2";
 const COLLECTION_ID = "hisn-al-muslim";
 
-const BN_API_BASE = "https://dua-api.hisnul.workers.dev";
-
 let currentLanguage = "bn";
 
 let chapters = [];
 let currentChapter = null;
 let currentEntries = [];
-
 let currentEntry = null;
-
-let openDuaCatalogue = null;
-let bengaliDuas = null;
 
 
 /* =========================
@@ -87,9 +81,6 @@ const TEXT = {
         meaning:"অর্থ",
         reference:"উৎস",
         audio:"দোয়া শুনুন",
-        notAvailable:"এই ভাষায় তথ্য এখনো পাওয়া যায়নি।",
-        englishFallback:"ইংরেজি তথ্য দেখানো হচ্ছে।",
-        bengaliLoading:"বাংলা অর্থ লোড হচ্ছে...",
         noDua:"কোনো দোয়া পাওয়া যায়নি।",
         error:"দোয়া লোড করতে সমস্যা হয়েছে।"
     },
@@ -105,9 +96,6 @@ const TEXT = {
         meaning:"Meaning",
         reference:"Reference",
         audio:"Listen to Dua",
-        notAvailable:"Information is not available in this language yet.",
-        englishFallback:"",
-        bengaliLoading:"",
         noDua:"No dua found.",
         error:"Unable to load duas."
     },
@@ -123,9 +111,6 @@ const TEXT = {
         meaning:"अर्थ",
         reference:"स्रोत",
         audio:"दुआ सुनें",
-        notAvailable:"इस भाषा में जानकारी अभी उपलब्ध नहीं है।",
-        englishFallback:"अभी अंग्रेज़ी जानकारी दिखाई जा रही है।",
-        bengaliLoading:"",
         noDua:"कोई दुआ नहीं मिली।",
         error:"दुआ लोड करने में समस्या हुई।"
     }
@@ -200,7 +185,8 @@ function setInitialTexts(){
 
     const t = TEXT[currentLanguage];
 
-    pageTitle.textContent = t.title;
+    pageTitle.textContent =
+        t.title;
 
     introTitle.textContent =
         t.introTitle;
@@ -232,9 +218,9 @@ function showLoading(){
 
     hideAll();
 
-    loadingBox.classList.remove("hidden");
-
     errorBox.classList.add("hidden");
+
+    loadingBox.classList.remove("hidden");
 }
 
 
@@ -253,7 +239,8 @@ function showError(message){
     errorBox.classList.remove("hidden");
 
     errorText.textContent =
-        message || TEXT[currentLanguage].error;
+        message ||
+        TEXT[currentLanguage].error;
 }
 
 
@@ -268,7 +255,8 @@ async function fetchJSON(url){
             method:"GET",
             headers:{
                 "Accept":"application/json"
-            }
+            },
+            cache:"default"
         });
 
     if(!response.ok){
@@ -283,316 +271,70 @@ async function fetchJSON(url){
 
 
 /* =========================
-   LOAD OPEN DUA CATALOGUE
+   RESPONSE EXTRACTION
 ========================= */
 
-async function loadOpenDuaCatalogue(){
+function extractArray(data, possibleKeys){
 
-    if(openDuaCatalogue){
-        return openDuaCatalogue;
+    if(Array.isArray(data)){
+        return data;
     }
 
-    const url =
-        "https://opendua.org/v0.0.4/catalogue.json";
-
-    openDuaCatalogue =
-        await fetchJSON(url);
-
-    return openDuaCatalogue;
-}
-
-
-/* =========================
-   ARABIC NORMALIZATION
-========================= */
-
-function normalizeArabic(text){
-
-    if(!text){
-        return "";
-    }
-
-    return String(text)
-
-        // Remove tashkeel
-        .replace(
-            /[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED]/g,
-            ""
-        )
-
-        // Normalize Arabic letters
-        .replace(/[أإآٱ]/g,"ا")
-        .replace(/ى/g,"ي")
-        .replace(/ؤ/g,"و")
-        .replace(/ئ/g,"ي")
-
-        // Remove tatweel
-        .replace(/ـ/g,"")
-
-        // Remove punctuation
-        .replace(/[^\u0600-\u06FF0-9]/g,"")
-
-        // Normalize whitespace
-        .replace(/\s+/g,"")
-
-        .trim();
-}
-
-
-/* =========================
-   GET OPEN DUA ARABIC
-========================= */
-
-function getOpenDuaArabic(entry){
-
-    if(!entry){
-        return "";
-    }
-
-    const texts = [];
-
-    try{
-
-        const variations =
-            entry.variations || [];
-
-        variations.forEach(variation => {
-
-            const steps =
-                variation.steps || [];
-
-            steps.forEach(step => {
-
-                const items =
-                    step.items || [];
-
-                items.forEach(item => {
-
-                    if(
-                        item.dua &&
-                        item.dua.arabic
-                    ){
-
-                        texts.push(
-                            item.dua.arabic
-                        );
-                    }
-
-                });
-
-            });
-
-        });
-
-    }catch(e){}
-
-    return texts.join(" ");
-}
-
-
-/* =========================
-   GET BENGALI DUA DATA
-========================= */
-
-async function loadBengaliDuas(){
-
-    if(bengaliDuas){
-        return bengaliDuas;
-    }
-
-    const all = [];
-
-    for(let page = 1; page <= 10; page++){
-
-        const url =
-            BN_API_BASE +
-            "/api/books/1/duas?page=" +
-            page +
-            "&limit=100";
-
-        const result =
-            await fetchJSON(url);
-
-        const rows =
-            Array.isArray(result.data)
-                ? result.data
-                : [];
-
-        all.push(...rows);
-
-        const pagination =
-            result.pagination;
-
-        if(!pagination){
-            break;
-        }
-
-        if(page >= pagination.pages){
-            break;
-        }
-    }
-
-    bengaliDuas = all;
-
-    return bengaliDuas;
-}
-
-
-/* =========================
-   EXTRACT BENGALI ARABIC
-========================= */
-
-function getBengaliArabic(dua){
-
-    if(!dua){
-        return "";
-    }
-
-    const segments =
-        dua.segments || [];
-
-    return segments
-        .map(segment =>
-            segment && segment.arabic
-                ? segment.arabic
-                : ""
-        )
-        .filter(Boolean)
-        .join(" ");
-}
-
-
-/* =========================
-   EXTRACT BENGALI TRANSLATION
-========================= */
-
-function getBengaliTranslation(dua){
-
-    if(!dua){
-        return "";
-    }
-
-    const segments =
-        dua.segments || [];
-
-    return segments
-        .map(segment =>
-            segment && segment.translations
-                ? segment.translations
-                : ""
-        )
-        .filter(Boolean)
-        .join(" ");
-}
-
-
-/* =========================
-   EXTRACT BENGALI REFERENCE
-========================= */
-
-function getBengaliReference(dua){
-
-    if(!dua){
-        return "";
-    }
-
-    const segments =
-        dua.segments || [];
-
-    return segments
-        .map(segment =>
-            segment && segment.reference
-                ? segment.reference
-                : ""
-        )
-        .filter(Boolean)
-        .join(" • ");
-}
-
-
-/* =========================
-   MATCH BENGALI DUA
-========================= */
-
-function findBengaliMatch(openEntry){
 
     if(
-        !openEntry ||
-        !bengaliDuas ||
-        !Array.isArray(bengaliDuas)
+        data &&
+        Array.isArray(data.data)
     ){
-        return null;
-    }
-
-    const openArabic =
-        normalizeArabic(
-            getOpenDuaArabic(openEntry)
-        );
-
-    if(!openArabic){
-        return null;
+        return data.data;
     }
 
 
-    /*
-       1. First try exact Arabic match.
-    */
-
-    for(const dua of bengaliDuas){
-
-        const bnArabic =
-            normalizeArabic(
-                getBengaliArabic(dua)
-            );
-
-        if(
-            bnArabic &&
-            bnArabic === openArabic
-        ){
-            return dua;
-        }
+    if(
+        data &&
+        Array.isArray(data.items)
+    ){
+        return data.items;
     }
 
 
-    /*
-       2. Try containment.
-       This handles small punctuation /
-       segmentation differences.
-    */
-
-    for(const dua of bengaliDuas){
-
-        const bnArabic =
-            normalizeArabic(
-                getBengaliArabic(dua)
-            );
-
-        if(!bnArabic){
-            continue;
-        }
-
-        if(
-            bnArabic.length >= 25 &&
-            openArabic.includes(bnArabic)
-        ){
-            return dua;
-        }
-
-        if(
-            openArabic.length >= 25 &&
-            bnArabic.includes(openArabic)
-        ){
-            return dua;
-        }
+    if(
+        data &&
+        Array.isArray(data.results)
+    ){
+        return data.results;
     }
 
 
-    return null;
+    if(
+        data &&
+        Array.isArray(data.chapters)
+    ){
+        return data.chapters;
+    }
+
+
+    if(
+        data &&
+        Array.isArray(data.entries)
+    ){
+        return data.entries;
+    }
+
+
+    if(
+        data &&
+        Array.isArray(data[possibleKeys])
+    ){
+        return data[possibleKeys];
+    }
+
+
+    return [];
 }
 
 
 /* =========================
-   OPEN CHAPTERS
+   LOAD CHAPTERS
 ========================= */
 
 async function loadChapters(){
@@ -607,27 +349,57 @@ async function loadChapters(){
             COLLECTION_ID +
             "/chapters";
 
+        console.log(
+            "Loading chapters:",
+            url
+        );
+
+
         const data =
             await fetchJSON(url);
 
+
+        console.log(
+            "OpenDua chapter response:",
+            data
+        );
+
+
         chapters =
-            Array.isArray(data)
-                ? data
-                : (
-                    Array.isArray(data.data)
-                        ? data.data
-                        : []
-                );
+            extractArray(
+                data,
+                "chapters"
+            );
+
+
+        console.log(
+            "Chapters found:",
+            chapters.length
+        );
+
+
+        if(!chapters.length){
+
+            throw new Error(
+                "No chapters returned"
+            );
+        }
+
 
         renderChapters();
 
         hideLoading();
 
-        duaHome.classList.remove("hidden");
+        duaHome.classList.remove(
+            "hidden"
+        );
 
     }catch(error){
 
-        console.error(error);
+        console.error(
+            "Chapter loading error:",
+            error
+        );
 
         showError(
             TEXT[currentLanguage].error
@@ -644,59 +416,86 @@ function renderChapters(){
 
     chapterList.innerHTML = "";
 
-    chapters.forEach((chapter,index) => {
 
-        const card =
-            document.createElement("div");
+    chapters.forEach(
+        (chapter,index) => {
 
-        card.className =
-            "chapter-card";
+            const card =
+                document.createElement("div");
 
-        const number =
-            document.createElement("div");
+            card.className =
+                "chapter-card";
 
-        number.className =
-            "chapter-number";
 
-        number.textContent =
-            index + 1;
+            const number =
+                document.createElement("div");
 
-        const info =
-            document.createElement("div");
+            number.className =
+                "chapter-number";
 
-        info.className =
-            "chapter-info";
+            number.textContent =
+                index + 1;
 
-        const title =
-            document.createElement("div");
 
-        title.className =
-            "chapter-title";
+            const info =
+                document.createElement("div");
 
-        title.textContent =
-            chapter.title || "";
+            info.className =
+                "chapter-info";
 
-        info.appendChild(title);
 
-        const arrow =
-            document.createElement("div");
+            const title =
+                document.createElement("div");
 
-        arrow.className =
-            "chapter-arrow";
+            title.className =
+                "chapter-title";
 
-        arrow.textContent = "›";
+            title.textContent =
+                chapter.title ||
+                chapter.name ||
+                ("Chapter " + (index + 1));
 
-        card.appendChild(number);
-        card.appendChild(info);
-        card.appendChild(arrow);
 
-        card.addEventListener(
-            "click",
-            () => openChapter(chapter)
-        );
+            info.appendChild(
+                title
+            );
 
-        chapterList.appendChild(card);
-    });
+
+            const arrow =
+                document.createElement("div");
+
+            arrow.className =
+                "chapter-arrow";
+
+            arrow.textContent =
+                "›";
+
+
+            card.appendChild(
+                number
+            );
+
+            card.appendChild(
+                info
+            );
+
+            card.appendChild(
+                arrow
+            );
+
+
+            card.addEventListener(
+                "click",
+                () => openChapter(chapter)
+            );
+
+
+            chapterList.appendChild(
+                card
+            );
+
+        }
+    );
 }
 
 
@@ -709,17 +508,25 @@ async function openChapter(chapter){
     currentChapter =
         chapter;
 
+
     hideAll();
 
-    entryPage.classList.remove("hidden");
+    entryPage.classList.remove(
+        "hidden"
+    );
+
 
     entryPageTitle.textContent =
-        chapter.title || "";
+        chapter.title ||
+        chapter.name ||
+        "";
+
 
     entryList.innerHTML =
         `<div class="status-box">
             ${TEXT[currentLanguage].loading}
         </div>`;
+
 
     try{
 
@@ -731,23 +538,40 @@ async function openChapter(chapter){
             chapter.id +
             "/entries";
 
+
+        console.log(
+            "Loading entries:",
+            url
+        );
+
+
         const data =
             await fetchJSON(url);
 
+
+        console.log(
+            "OpenDua entry response:",
+            data
+        );
+
+
         currentEntries =
-            Array.isArray(data)
-                ? data
-                : (
-                    Array.isArray(data.data)
-                        ? data.data
-                        : []
-                );
+            extractArray(
+                data,
+                "entries"
+            );
+
 
         renderEntries();
 
+
     }catch(error){
 
-        console.error(error);
+        console.error(
+            "Entry loading error:",
+            error
+        );
+
 
         entryList.innerHTML =
             `<div class="status-box error-box">
@@ -765,6 +589,7 @@ function renderEntries(){
 
     entryList.innerHTML = "";
 
+
     if(!currentEntries.length){
 
         entryList.innerHTML =
@@ -776,42 +601,60 @@ function renderEntries(){
     }
 
 
-    currentEntries.forEach((entry,index) => {
+    currentEntries.forEach(
+        (entry,index) => {
 
-        const card =
-            document.createElement("div");
+            const card =
+                document.createElement("div");
 
-        card.className =
-            "entry-card";
+            card.className =
+                "entry-card";
 
-        const number =
-            document.createElement("div");
 
-        number.className =
-            "entry-number";
+            const number =
+                document.createElement("div");
 
-        number.textContent =
-            "Dua " + (index + 1);
+            number.className =
+                "entry-number";
 
-        const title =
-            document.createElement("div");
+            number.textContent =
+                "Dua " +
+                (index + 1);
 
-        title.className =
-            "entry-title";
 
-        title.textContent =
-            entry.title || "";
+            const title =
+                document.createElement("div");
 
-        card.appendChild(number);
-        card.appendChild(title);
+            title.className =
+                "entry-title";
 
-        card.addEventListener(
-            "click",
-            () => openEntry(entry)
-        );
+            title.textContent =
+                entry.title ||
+                entry.name ||
+                "";
 
-        entryList.appendChild(card);
-    });
+
+            card.appendChild(
+                number
+            );
+
+            card.appendChild(
+                title
+            );
+
+
+            card.addEventListener(
+                "click",
+                () => openEntry(entry)
+            );
+
+
+            entryList.appendChild(
+                card
+            );
+
+        }
+    );
 }
 
 
@@ -823,10 +666,16 @@ async function openEntry(entry){
 
     hideAll();
 
-    duaPage.classList.remove("hidden");
+    duaPage.classList.remove(
+        "hidden"
+    );
+
 
     duaPageTitle.textContent =
-        entry.title || "";
+        entry.title ||
+        entry.name ||
+        "";
+
 
     duaContent.innerHTML =
         `<div class="status-box">
@@ -841,45 +690,29 @@ async function openEntry(entry){
             "/entries/" +
             entry.id;
 
+
+        console.log(
+            "Loading dua:",
+            url
+        );
+
+
         currentEntry =
             await fetchJSON(url);
 
-        /*
-           Bengali mode needs the Bengali
-           source loaded and matched.
-        */
-
-        let bengaliMatch = null;
-
-        if(currentLanguage === "bn"){
-
-            try{
-
-                await loadBengaliDuas();
-
-                bengaliMatch =
-                    findBengaliMatch(
-                        currentEntry
-                    );
-
-            }catch(error){
-
-                console.warn(
-                    "Bengali API unavailable:",
-                    error
-                );
-            }
-        }
-
 
         renderDua(
-            currentEntry,
-            bengaliMatch
+            currentEntry
         );
+
 
     }catch(error){
 
-        console.error(error);
+        console.error(
+            "Dua loading error:",
+            error
+        );
+
 
         duaContent.innerHTML =
             `<div class="status-box error-box">
@@ -893,12 +726,10 @@ async function openEntry(entry){
    RENDER DUA
 ========================= */
 
-function renderDua(
-    entry,
-    bengaliMatch
-){
+function renderDua(entry){
 
     duaContent.innerHTML = "";
+
 
     const card =
         document.createElement("div");
@@ -914,208 +745,278 @@ function renderDua(
         "dua-title";
 
     title.textContent =
-        entry.title || "";
+        entry.title ||
+        "";
 
-    card.appendChild(title);
+
+    card.appendChild(
+        title
+    );
 
 
     const variations =
-        entry.variations || [];
+        entry.variations ||
+        [];
 
 
     if(!variations.length){
 
-        duaContent.appendChild(card);
+        duaContent.appendChild(
+            card
+        );
 
         return;
     }
 
 
     variations.forEach(
-        (variation,variationIndex) => {
+        variation => {
 
             const steps =
-                variation.steps || [];
+                variation.steps ||
+                [];
 
 
-            steps.forEach(step => {
+            steps.forEach(
+                step => {
 
-                const items =
-                    step.items || [];
-
-
-                items.forEach(item => {
-
-                    if(
-                        !item.dua
-                    ){
-                        return;
-                    }
+                    const items =
+                        step.items ||
+                        [];
 
 
-                    const dua =
-                        item.dua;
+                    items.forEach(
+                        item => {
+
+                            if(
+                                !item ||
+                                !item.dua
+                            ){
+                                return;
+                            }
 
 
-                    /*
-                       Arabic
-                    */
+                            const dua =
+                                item.dua;
 
-                    addLabel(
-                        card,
-                        TEXT[currentLanguage].arabic
+
+                            /*
+                               ARABIC
+                            */
+
+                            addLabel(
+                                card,
+                                TEXT[currentLanguage].arabic
+                            );
+
+
+                            const arabic =
+                                document.createElement("div");
+
+                            arabic.className =
+                                "dua-arabic";
+
+                            arabic.textContent =
+                                dua.arabic ||
+                                "";
+
+
+                            card.appendChild(
+                                arabic
+                            );
+
+
+                            /*
+                               ENGLISH
+                            */
+
+                            if(
+                                currentLanguage === "en"
+                            ){
+
+                                addLabel(
+                                    card,
+                                    TEXT.en.pronunciation
+                                );
+
+
+                                const transliteration =
+                                    document.createElement("div");
+
+                                transliteration.className =
+                                    "dua-transliteration";
+
+                                transliteration.textContent =
+                                    dua.transliteration ||
+                                    "";
+
+
+                                card.appendChild(
+                                    transliteration
+                                );
+
+
+                                addLabel(
+                                    card,
+                                    TEXT.en.meaning
+                                );
+
+
+                                const translation =
+                                    document.createElement("div");
+
+                                translation.className =
+                                    "dua-translation";
+
+                                translation.textContent =
+                                    dua.translation ||
+                                    "";
+
+
+                                card.appendChild(
+                                    translation
+                                );
+                            }
+
+
+                            /*
+                               BENGALI
+                            */
+
+                            else if(
+                                currentLanguage === "bn"
+                            ){
+
+                                /*
+                                   আপাতত OpenDua-এর
+                                   English translation
+                                   fallback হিসেবে
+                                   দেখানো হচ্ছে।
+
+                                   বাংলা source পরে
+                                   আলাদা verified
+                                   mapping দিয়ে যোগ হবে।
+                                */
+
+                                addLabel(
+                                    card,
+                                    TEXT.bn.pronunciation
+                                );
+
+
+                                const transliteration =
+                                    document.createElement("div");
+
+                                transliteration.className =
+                                    "dua-transliteration";
+
+                                transliteration.textContent =
+                                    dua.transliteration ||
+                                    "";
+
+
+                                card.appendChild(
+                                    transliteration
+                                );
+
+
+                                addLabel(
+                                    card,
+                                    TEXT.bn.meaning
+                                );
+
+
+                                const translation =
+                                    document.createElement("div");
+
+                                translation.className =
+                                    "dua-translation";
+
+                                translation.textContent =
+                                    dua.translation ||
+                                    "";
+
+
+                                card.appendChild(
+                                    translation
+                                );
+                            }
+
+
+                            /*
+                               HINDI
+                            */
+
+                            else if(
+                                currentLanguage === "hi"
+                            ){
+
+                                addLabel(
+                                    card,
+                                    TEXT.hi.pronunciation
+                                );
+
+
+                                const transliteration =
+                                    document.createElement("div");
+
+                                transliteration.className =
+                                    "dua-transliteration";
+
+                                transliteration.textContent =
+                                    dua.transliteration ||
+                                    "";
+
+
+                                card.appendChild(
+                                    transliteration
+                                );
+
+
+                                addLabel(
+                                    card,
+                                    TEXT.hi.meaning
+                                );
+
+
+                                const translation =
+                                    document.createElement("div");
+
+                                translation.className =
+                                    "dua-translation";
+
+                                translation.textContent =
+                                    dua.translation ||
+                                    "";
+
+
+                                card.appendChild(
+                                    translation
+                                );
+                            }
+
+                        }
                     );
 
-
-                    const arabic =
-                        document.createElement("div");
-
-                    arabic.className =
-                        "dua-arabic";
-
-                    arabic.textContent =
-                        dua.arabic || "";
-
-                    card.appendChild(arabic);
-
-
-                    /*
-                       Bengali
-                    */
-
-                    if(currentLanguage === "bn"){
-
-                        renderBengali(
-                            card,
-                            bengaliMatch
-                        );
-
-                    }
-
-                    /*
-                       English
-                    */
-
-                    else if(currentLanguage === "en"){
-
-                        addLabel(
-                            card,
-                            TEXT.en.pronunciation
-                        );
-
-                        const transliteration =
-                            document.createElement("div");
-
-                        transliteration.className =
-                            "dua-transliteration";
-
-                        transliteration.textContent =
-                            dua.transliteration || "";
-
-                        card.appendChild(
-                            transliteration
-                        );
-
-
-                        addLabel(
-                            card,
-                            TEXT.en.meaning
-                        );
-
-                        const translation =
-                            document.createElement("div");
-
-                        translation.className =
-                            "dua-translation";
-
-                        translation.textContent =
-                            dua.translation || "";
-
-                        card.appendChild(
-                            translation
-                        );
-
-                    }
-
-                    /*
-                       Hindi
-                    */
-
-                    else if(currentLanguage === "hi"){
-
-                        addLabel(
-                            card,
-                            TEXT.hi.pronunciation
-                        );
-
-                        const transliteration =
-                            document.createElement("div");
-
-                        transliteration.className =
-                            "dua-transliteration";
-
-                        transliteration.textContent =
-                            dua.transliteration || "";
-
-                        card.appendChild(
-                            transliteration
-                        );
-
-
-                        addLabel(
-                            card,
-                            TEXT.hi.meaning
-                        );
-
-                        const translation =
-                            document.createElement("div");
-
-                        translation.className =
-                            "dua-translation";
-
-                        translation.textContent =
-                            dua.translation || "";
-
-                        card.appendChild(
-                            translation
-                        );
-
-
-                        const note =
-                            document.createElement("div");
-
-                        note.className =
-                            "dua-reference";
-
-                        note.textContent =
-                            TEXT.hi.englishFallback;
-
-                        if(TEXT.hi.englishFallback){
-                            card.appendChild(note);
-                        }
-
-                    }
-
-                });
-
-            });
+                }
+            );
 
         }
     );
 
 
     /*
-       References
+       REFERENCES
     */
 
-    renderReferences(
+        renderReferences(
         card,
         entry
     );
 
 
     /*
-       Audio
+       AUDIO
     */
 
     renderAudio(
@@ -1125,7 +1026,7 @@ function renderDua(
 
 
     /*
-       Tags
+       TAGS
     */
 
     renderTags(
@@ -1134,114 +1035,9 @@ function renderDua(
     );
 
 
-    duaContent.appendChild(card);
-}
-
-
-/* =========================
-   BENGALI CONTENT
-========================= */
-
-function renderBengali(
-    card,
-    bengaliMatch
-){
-
-    if(!bengaliMatch){
-
-        addLabel(
-            card,
-            TEXT.bn.meaning
-        );
-
-        const unavailable =
-            document.createElement("div");
-
-        unavailable.className =
-            "dua-translation";
-
-        unavailable.textContent =
-            TEXT.bn.notAvailable;
-
-        card.appendChild(
-            unavailable
-        );
-
-        return;
-    }
-
-
-    const translation =
-        getBengaliTranslation(
-            bengaliMatch
-        );
-
-
-    if(translation){
-
-        addLabel(
-            card,
-            TEXT.bn.meaning
-        );
-
-        const meaning =
-            document.createElement("div");
-
-        meaning.className =
-            "dua-translation";
-
-        meaning.textContent =
-            translation;
-
-        card.appendChild(
-            meaning
-        );
-
-    }else{
-
-        addLabel(
-            card,
-            TEXT.bn.meaning
-        );
-
-        const unavailable =
-            document.createElement("div");
-
-        unavailable.className =
-            "dua-translation";
-
-        unavailable.textContent =
-            TEXT.bn.notAvailable;
-
-        card.appendChild(
-            unavailable
-        );
-    }
-
-
-    const reference =
-        getBengaliReference(
-            bengaliMatch
-        );
-
-    if(reference){
-
-        addLabel(
-            card,
-            TEXT.bn.reference
-        );
-
-        const ref =
-            document.createElement("div");
-
-        ref.className =
-            "dua-reference";
-
-        ref.textContent =
-            reference;
-
-        card.appendChild(ref);
-    }
+    duaContent.appendChild(
+        card
+    );
 }
 
 
@@ -1263,7 +1059,10 @@ function addLabel(
     label.textContent =
         text;
 
-    parent.appendChild(label);
+
+    parent.appendChild(
+        label
+    );
 }
 
 
@@ -1277,7 +1076,8 @@ function renderReferences(
 ){
 
     const refs =
-        entry.references || [];
+        entry.references ||
+        [];
 
 
     if(!refs.length){
@@ -1308,6 +1108,7 @@ function renderReferences(
                     return item;
                 }
 
+
                 if(
                     item &&
                     item.text
@@ -1315,12 +1116,14 @@ function renderReferences(
                     return item.text;
                 }
 
+
                 if(
                     item &&
                     item.title
                 ){
                     return item.title;
                 }
+
 
                 return "";
             }
@@ -1333,7 +1136,10 @@ function renderReferences(
 
 
     if(ref.textContent){
-        card.appendChild(ref);
+
+        card.appendChild(
+            ref
+        );
     }
 }
 
@@ -1347,75 +1153,66 @@ function renderAudio(
     entry
 ){
 
-    const audioUrls = [];
+    const audioUrls =
+        [];
 
 
-    try{
-
-        const variations =
-            entry.variations || [];
-
-
-        variations.forEach(
-            variation => {
-
-                const steps =
-                    variation.steps || [];
+    const variations =
+        entry.variations ||
+        [];
 
 
-                steps.forEach(
-                    step => {
+    variations.forEach(
+        variation => {
 
-                        const items =
-                            step.items || [];
-
-
-                        items.forEach(
-                            item => {
-
-                                const recordings =
-                                    item.recordings || [];
+            const steps =
+                variation.steps ||
+                [];
 
 
-                                recordings.forEach(
-                                    recording => {
+            steps.forEach(
+                step => {
 
-                                        if(
-                                            recording &&
+                    const items =
+                        step.items ||
+                        [];
+
+
+                    items.forEach(
+                        item => {
+
+                            const recordings =
+                                item.recordings ||
+                                [];
+
+
+                            recordings.forEach(
+                                recording => {
+
+                                    if(
+                                        recording &&
+                                        recording.url &&
+                                        !audioUrls.includes(
                                             recording.url
-                                        ){
+                                        )
+                                    ){
 
-                                            if(
-                                                !audioUrls.includes(
-                                                    recording.url
-                                                )
-                                            ){
-
-                                                audioUrls.push(
-                                                    recording.url
-                                                );
-                                            }
-                                        }
-
+                                        audioUrls.push(
+                                            recording.url
+                                        );
                                     }
-                                );
 
-                            }
-                        );
+                                }
+                            );
 
-                    }
-                );
+                        }
+                    );
 
-            }
-        );
+                }
+            );
 
-    }catch(error){
-
-        console.warn(
-            "Audio parsing error:",
-            error
-        );
-    }
+        }
+    );
 
 
     if(!audioUrls.length){
@@ -1438,13 +1235,20 @@ function renderAudio(
             audio.className =
                 "dua-audio";
 
-            audio.controls = true;
+            audio.controls =
+                true;
 
-            audio.preload = "none";
+            audio.preload =
+                "none";
 
-            audio.src = url;
+            audio.src =
+                url;
 
-            card.appendChild(audio);
+
+            card.appendChild(
+                audio
+            );
+
         }
     );
 }
@@ -1460,7 +1264,8 @@ function renderTags(
 ){
 
     const tags =
-        entry.tags || [];
+        entry.tags ||
+        [];
 
 
     if(!tags.length){
@@ -1475,23 +1280,30 @@ function renderTags(
         "dua-tags";
 
 
-    tags.forEach(tag => {
+    tags.forEach(
+        tag => {
 
-        const item =
-            document.createElement("span");
+            const item =
+                document.createElement("span");
 
-        item.className =
-            "dua-tag";
+            item.className =
+                "dua-tag";
 
-        item.textContent =
-            tag;
-
-        container.appendChild(item);
-
-    });
+            item.textContent =
+                tag;
 
 
-    card.appendChild(container);
+            container.appendChild(
+                item
+            );
+
+        }
+    );
+
+
+    card.appendChild(
+        container
+    );
 }
 
 
@@ -1513,9 +1325,13 @@ entryBackButton.addEventListener(
     "click",
     () => {
 
-        entryPage.classList.add("hidden");
+        entryPage.classList.add(
+            "hidden"
+        );
 
-        duaHome.classList.remove("hidden");
+        duaHome.classList.remove(
+            "hidden"
+        );
 
     }
 );
@@ -1525,9 +1341,13 @@ duaBackButton.addEventListener(
     "click",
     () => {
 
-        duaPage.classList.add("hidden");
+        duaPage.classList.add(
+            "hidden"
+        );
 
-        entryPage.classList.remove("hidden");
+        entryPage.classList.remove(
+            "hidden"
+        );
 
     }
 );
