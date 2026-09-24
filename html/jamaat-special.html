@@ -1,1 +1,287 @@
+<!DOCTYPE html>
+<html lang="bn">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>IBADAT - জামাত ও বিশেষ নামাজ</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/jamaat-special.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================================
+         TOP BAR
+         ================================================= -->
+
+    <header class="top-bar">
+
+        <button id="backButton">
+            ←
+        </button>
+
+        <span id="pageTitle"></span>
+
+        <span class="top-space"></span>
+
+    </header>
+
+
+
+    <!-- =================================================
+         MAIN
+         ================================================= -->
+
+    <main class="main">
+
+
+        <!-- =================================================
+             MAIN JAMAAT & SPECIAL PRAYERS PAGE
+             ================================================= -->
+
+        <section id="mainPage">
+
+
+            <!-- INTRO CARD -->
+
+            <section class="intro-card">
+
+                <div class="intro-icon">
+                    👥
+                </div>
+
+                <div
+                    class="intro-title"
+                    id="introTitle"
+                ></div>
+
+                <div
+                    class="intro-text"
+                    id="introText"
+                ></div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 EIGHT TOPIC CARDS
+                 ================================================= -->
+
+            <div class="topic-grid">
+
+
+                <!-- 1 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="jamaat-rules"
+                >
+
+                    <div class="topic-icon">
+                        👥
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleJamaatRules"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 2 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="imam-muqtadi"
+                >
+
+                    <div class="topic-icon">
+                        🕌
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleImamMuqtadi"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 3 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="missed-jamaat"
+                >
+
+                    <div class="topic-icon">
+                        ⏱️
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleMissedJamaat"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 4 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="imam-mistake"
+                >
+
+                    <div class="topic-icon">
+                        ⚠️
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleImamMistake"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 5 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="jumuah-eid"
+                >
+
+                    <div class="topic-icon">
+                        🌙
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleJumuahEid"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 6 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="tarawih-witr"
+                >
+
+                    <div class="topic-icon">
+                        🕌
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleTarawihWitr"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 7 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="tahajjud-nafl"
+                >
+
+                    <div class="topic-icon">
+                        🌙
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleTahajjudNafl"
+                    ></div>
+
+                </div>
+
+
+
+                <!-- 8 -->
+
+                <div
+                    class="topic-card"
+                    data-topic="janazah"
+                >
+
+                    <div class="topic-icon">
+                        🤲
+                    </div>
+
+                    <div
+                        class="topic-title"
+                        id="titleJanazah"
+                    ></div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             BLANK TOPIC PAGE
+             ================================================= -->
+
+        <section
+            id="topicPage"
+            class="topic-page hidden"
+        >
+
+
+            <div class="topic-header">
+
+                <button id="topicBackButton">
+                    ←
+                </button>
+
+                <span id="topicPageTitle"></span>
+
+            </div>
+
+
+            <div id="topicContent"></div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <script src="../js/jamaat-special.js"></script>
+
+</body>
+
+</html>
