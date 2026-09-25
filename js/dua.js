@@ -1,9 +1,7 @@
 const API_BASE = "https://api.opendua.org/v2";
 const COLLECTION_ID = "hisn-al-muslim";
 
-
 const TEXT = {
-
     bn: {
         pageTitle: "দোয়া",
         introTitle: "দোয়া",
@@ -19,10 +17,8 @@ const TEXT = {
         translation: "অর্থ",
         reference: "সূত্র",
         listen: "শুনুন",
-        previous: "আগের দোয়া",
-        next: "পরের দোয়া",
-        play: "চালান",
-        pause: "বিরতি"
+        part: "অংশ",
+        noAudio: "এই দোয়ার অডিও নেই।"
     },
 
     en: {
@@ -40,10 +36,8 @@ const TEXT = {
         translation: "Meaning",
         reference: "Reference",
         listen: "Listen",
-        previous: "Previous Dua",
-        next: "Next Dua",
-        play: "Play",
-        pause: "Pause"
+        part: "Part",
+        noAudio: "This dua has no audio."
     },
 
     hi: {
@@ -61,14 +55,15 @@ const TEXT = {
         translation: "अर्थ",
         reference: "स्रोत",
         listen: "सुनें",
-        previous: "पिछली दुआ",
-        next: "अगली दुआ",
-        play: "चलाएँ",
-        pause: "रोकें"
+        part: "भाग",
+        noAudio: "इस दुआ का ऑडियो उपलब्ध नहीं है।"
     }
-
 };
 
+
+/* =========================================================
+   GLOBAL STATE
+========================================================= */
 
 let currentLanguage = "bn";
 
@@ -79,32 +74,33 @@ let currentChapterId = "";
 let currentChapterTitle = "";
 
 let currentEntryIndex = -1;
+let currentPartIndex = -1;
+
+let currentEntryParts = [];
+
+let chapterAudioCache = new Map();
 
 let currentAudio = null;
-let currentAudioUrl = "";
 
-let isLoadingEntry = false;
+let audioPlayerCreated = false;
+let audioRequestId = 0;
+let isAudioLoading = false;
 
 
-/* =========================================
+/* =========================================================
    LANGUAGE
-========================================= */
+========================================================= */
 
 function getLanguage() {
 
     try {
 
         let saved =
-            localStorage.getItem(
-                "ibadatSettings"
-            );
+            localStorage.getItem("ibadatSettings");
 
         if (!saved) {
-
             saved =
-                localStorage.getItem(
-                    "appSettings"
-                );
+                localStorage.getItem("appSettings");
         }
 
         if (saved) {
@@ -117,7 +113,6 @@ function getLanguage() {
                 settings.lang === "en" ||
                 settings.lang === "hi"
             ) {
-
                 return settings.lang;
             }
         }
@@ -128,170 +123,112 @@ function getLanguage() {
 }
 
 
-/* =========================================
-   TEXT HELPER
-========================================= */
+/* =========================================================
+   BASIC HELPERS
+========================================================= */
 
-function setText(
-    id,
-    value
-) {
+function setText(id, value) {
 
     const element =
         document.getElementById(id);
 
     if (element) {
-
-        element.textContent =
-            value;
+        element.textContent = value;
     }
 }
 
 
-/* =========================================
-   SHOW / HIDE
-========================================= */
-
 function hideAllPages() {
 
     const ids = [
-
         "loadingBox",
         "errorBox",
         "duaHome",
         "entryPage",
         "duaPage"
-
     ];
 
+    ids.forEach(id => {
 
-    ids.forEach(
-        id => {
+        const element =
+            document.getElementById(id);
 
-            const element =
-                document.getElementById(
-                    id
-                );
-
-            if (element) {
-
-                element.classList.add(
-                    "hidden"
-                );
-            }
-
+        if (element) {
+            element.classList.add("hidden");
         }
-    );
+
+    });
 }
 
 
-/* =========================================
-   API
-========================================= */
-
-async function apiFetch(
-    url
-) {
+async function apiFetch(url) {
 
     const response =
-        await fetch(
-            url,
-            {
-                method: "GET",
-
-                headers: {
-                    "Accept":
-                        "application/json"
-                },
-
-                cache: "no-cache"
-            }
-        );
-
+        await fetch(url, {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            },
+            cache: "no-cache"
+        });
 
     if (!response.ok) {
 
         let message =
-            "HTTP " +
-            response.status;
-
+            "HTTP " + response.status;
 
         try {
 
             const errorData =
                 await response.json();
 
-
             if (
                 errorData &&
                 errorData.error
             ) {
-
                 message =
                     errorData.error;
             }
 
         } catch (error) {}
 
-
-        throw new Error(
-            message
-        );
+        throw new Error(message);
     }
-
 
     return await response.json();
 }
 
-
-/* =========================================
-   NORMALIZE API RESPONSE
-========================================= */
 
 function getList(
     data,
     possibleKeys
 ) {
 
-    if (
-        Array.isArray(data)
-    ) {
-
+    if (Array.isArray(data)) {
         return data;
     }
-
 
     if (
         !data ||
         typeof data !== "object"
     ) {
-
         return [];
     }
-
 
     for (
         const key of possibleKeys
     ) {
 
         if (
-            Array.isArray(
-                data[key]
-            )
+            Array.isArray(data[key])
         ) {
-
             return data[key];
         }
     }
 
-
     return [];
 }
 
-
-/* =========================================
-   CHAPTER TITLE
-========================================= */
 
 function getChapterTitle(
     chapter,
@@ -299,31 +236,17 @@ function getChapterTitle(
 ) {
 
     if (!chapter) {
-
-        return (
-            "Chapter " +
-            (index + 1)
-        );
+        return "Chapter " + (index + 1);
     }
 
-
     return (
-
         chapter.title ||
         chapter.name ||
         chapter.slug ||
-        (
-            "Chapter " +
-            (index + 1)
-        )
-
+        ("Chapter " + (index + 1))
     );
 }
 
-
-/* =========================================
-   ENTRY TITLE
-========================================= */
 
 function getEntryTitle(
     entry,
@@ -331,84 +254,1221 @@ function getEntryTitle(
 ) {
 
     if (!entry) {
-
-        return (
-            "Dua " +
-            (index + 1)
-        );
+        return "Dua " + (index + 1);
     }
 
-
     return (
-
         entry.title ||
         entry.name ||
         entry.slug ||
-        (
-            "Dua " +
-            (index + 1)
-        )
-
+        ("Dua " + (index + 1))
     );
 }
 
 
-/* =========================================
+/* =========================================================
+   AUDIO CORE
+========================================================= */
+
+function createAudioObject() {
+
+    if (currentAudio) {
+        return;
+    }
+
+    currentAudio =
+        new Audio();
+
+    currentAudio.preload =
+        "auto";
+
+    currentAudio.addEventListener(
+        "timeupdate",
+        updateAudioProgress
+    );
+
+    currentAudio.addEventListener(
+        "loadedmetadata",
+        updateAudioDuration
+    );
+
+    currentAudio.addEventListener(
+        "ended",
+        handleAudioEnded
+    );
+
+    currentAudio.addEventListener(
+        "play",
+        () => {
+            updatePlayButton(true);
+        }
+    );
+
+    currentAudio.addEventListener(
+        "pause",
+        () => {
+            updatePlayButton(false);
+        }
+    );
+
+    currentAudio.addEventListener(
+        "error",
+        handleAudioError
+    );
+}
+
+
+function stopCurrentAudio() {
+
+    audioRequestId++;
+
+    if (!currentAudio) {
+        return;
+    }
+
+    try {
+
+        currentAudio.pause();
+
+        currentAudio.currentTime = 0;
+
+        currentAudio.removeAttribute(
+            "src"
+        );
+
+        currentAudio.load();
+
+    } catch (error) {
+
+        console.error(
+            "Audio stop error:",
+            error
+        );
+    }
+
+    updatePlayButton(false);
+    resetAudioProgress();
+}
+
+
+function extractAudioParts(data) {
+
+    const parts = [];
+
+    if (
+        !data ||
+        !Array.isArray(data.variations)
+    ) {
+        return parts;
+    }
+
+    data.variations.forEach(
+        (variation, variationIndex) => {
+
+            if (
+                !variation ||
+                !Array.isArray(
+                    variation.steps
+                )
+            ) {
+                return;
+            }
+
+            variation.steps.forEach(
+                (step, stepIndex) => {
+
+                    if (
+                        !step ||
+                        !Array.isArray(
+                            step.recordings
+                        )
+                    ) {
+                        return;
+                    }
+
+                    step.recordings.forEach(
+                        (
+                            recording,
+                            recordingIndex
+                        ) => {
+
+                            if (
+                                recording &&
+                                recording.url
+                            ) {
+
+                                parts.push({
+                                    url: recording.url,
+
+                                    variationIndex:
+                                        variationIndex,
+
+                                    stepIndex:
+                                        stepIndex,
+
+                                    recordingIndex:
+                                        recordingIndex,
+
+                                    durationSeconds:
+                                        Number(
+                                            recording.durationSeconds
+                                        ) || 0
+                                });
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+    );
+
+    return parts;
+}
+
+
+async function loadEntryData(
+    entryIndex
+) {
+
+    if (
+        entryIndex < 0 ||
+        entryIndex >= entries.length
+    ) {
+        return null;
+    }
+
+    const cached =
+        chapterAudioCache.get(
+            entryIndex
+        );
+
+    if (cached && cached.data) {
+        return cached.data;
+    }
+
+    const entry =
+        entries[entryIndex];
+
+    if (!entry) {
+        return null;
+    }
+
+    const entryId =
+        entry.id ||
+        entry.entryId ||
+        "";
+
+    if (!entryId) {
+        return null;
+    }
+
+    const url =
+        API_BASE +
+        "/entries/" +
+        encodeURIComponent(
+            entryId
+        );
+
+    const data =
+        await apiFetch(url);
+
+    const parts =
+        extractAudioParts(data);
+
+    chapterAudioCache.set(
+        entryIndex,
+        {
+            data: data,
+            parts: parts
+        }
+    );
+
+    return data;
+}
+
+
+async function loadEntryParts(
+    entryIndex
+) {
+
+    if (
+        entryIndex < 0 ||
+        entryIndex >= entries.length
+    ) {
+        return [];
+    }
+
+    const cached =
+        chapterAudioCache.get(
+            entryIndex
+        );
+
+    if (cached) {
+        return cached.parts || [];
+    }
+
+    const data =
+        await loadEntryData(
+            entryIndex
+        );
+
+    if (!data) {
+        return [];
+    }
+
+    const parts =
+        extractAudioParts(data);
+
+    chapterAudioCache.set(
+        entryIndex,
+        {
+            data: data,
+            parts: parts
+        }
+    );
+
+    return parts;
+}
+
+
+/* =========================================================
+   PLAY SPECIFIC PART
+========================================================= */
+
+async function playAudioPart(
+    entryIndex,
+    partIndex,
+    autoPlay = true
+) {
+
+    if (isAudioLoading) {
+        return false;
+    }
+
+    isAudioLoading = true;
+
+    const requestId =
+        ++audioRequestId;
+
+    try {
+
+        const parts =
+            await loadEntryParts(
+                entryIndex
+            );
+
+        if (
+            requestId !==
+            audioRequestId
+        ) {
+            return false;
+        }
+
+        if (!parts.length) {
+            return false;
+        }
+
+        if (
+            partIndex < 0 ||
+            partIndex >= parts.length
+        ) {
+            return false;
+        }
+
+        const entry =
+            entries[entryIndex];
+
+        const title =
+            getEntryTitle(
+                entry,
+                entryIndex
+            );
+
+        const entryData =
+            await loadEntryData(
+                entryIndex
+            );
+
+        if (
+            requestId !==
+            audioRequestId
+        ) {
+            return false;
+        }
+
+        /*
+         * Stop current audio BEFORE
+         * assigning the new source.
+         */
+
+        if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+        }
+
+        currentEntryIndex =
+            entryIndex;
+
+        currentEntryParts =
+            parts;
+
+        currentPartIndex =
+            partIndex;
+
+        /*
+         * If we are moving to another
+         * Dua, update the visible
+         * Dua content too.
+         */
+
+        if (
+            entryData &&
+            entryIndex !==
+                getVisibleEntryIndex()
+        ) {
+
+            setText(
+                "duaPageTitle",
+                title
+            );
+
+            renderDua(
+                entryData
+            );
+        }
+
+        setText(
+            "duaPageTitle",
+            title
+        );
+
+        updateAudioPlayer(
+            title,
+            partIndex + 1,
+            parts.length
+        );
+
+        resetAudioProgress();
+
+        currentAudio.src =
+            parts[partIndex].url;
+
+        currentAudio.load();
+
+        if (autoPlay) {
+
+            try {
+
+                await currentAudio.play();
+
+            } catch (error) {
+
+                console.warn(
+                    "Audio autoplay/play blocked:",
+                    error
+                );
+
+                updatePlayButton(false);
+
+                return false;
+            }
+        }
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "Play audio part error:",
+            error
+        );
+
+        return false;
+
+    } finally {
+
+        isAudioLoading = false;
+    }
+}
+
+
+/* =========================================================
+   VISIBLE ENTRY
+========================================================= */
+
+function getVisibleEntryIndex() {
+
+    const titleElement =
+        document.getElementById(
+            "duaPageTitle"
+        );
+
+    if (!titleElement) {
+        return -1;
+    }
+
+    const currentTitle =
+        titleElement.textContent;
+
+    for (
+        let i = 0;
+        i < entries.length;
+        i++
+    ) {
+
+        if (
+            getEntryTitle(
+                entries[i],
+                i
+            ) === currentTitle
+        ) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+
+/* =========================================================
+   NEXT
+========================================================= */
+
+async function playNextPart() {
+
+    if (
+        currentEntryIndex < 0
+    ) {
+        return;
+    }
+
+    const parts =
+        currentEntryParts;
+
+    /*
+     * Same Dua → next Part
+     */
+
+    if (
+        currentPartIndex <
+        parts.length - 1
+    ) {
+
+        await playAudioPart(
+            currentEntryIndex,
+            currentPartIndex + 1,
+            true
+        );
+
+        return;
+    }
+
+    /*
+     * Current Dua finished.
+     * Move to next Dua.
+     */
+
+    const nextEntryIndex =
+        currentEntryIndex + 1;
+
+    if (
+        nextEntryIndex >=
+        entries.length
+    ) {
+
+        /*
+         * Last part of the last Dua.
+         */
+
+        stopCurrentAudio();
+
+        return;
+    }
+
+    await playNextEntry(
+        nextEntryIndex
+    );
+}
+
+
+async function playNextEntry(
+    startIndex
+) {
+
+    let index =
+        startIndex;
+
+    while (
+        index < entries.length
+    ) {
+
+        const parts =
+            await loadEntryParts(
+                index
+            );
+
+        if (parts.length) {
+
+            const data =
+                await loadEntryData(
+                    index
+                );
+
+            if (data) {
+
+                setText(
+                    "duaPageTitle",
+                    getEntryTitle(
+                        data,
+                        index
+                    )
+                );
+
+                renderDua(
+                    data
+                );
+            }
+
+            await playAudioPart(
+                index,
+                0,
+                true
+            );
+
+            return;
+        }
+
+        index++;
+    }
+
+    stopCurrentAudio();
+}
+
+
+/* =========================================================
+   PREVIOUS
+========================================================= */
+
+async function playPreviousPart() {
+
+    if (
+        currentEntryIndex < 0
+    ) {
+        return;
+    }
+
+    /*
+     * Same Dua → previous Part
+     */
+
+    if (
+        currentPartIndex > 0
+    ) {
+
+        await playAudioPart(
+            currentEntryIndex,
+            currentPartIndex - 1,
+            true
+        );
+
+        return;
+    }
+
+    /*
+     * We are at Part 1.
+     * Go to previous Dua's
+     * last available Part.
+     */
+
+    const previousEntryIndex =
+        currentEntryIndex - 1;
+
+    if (
+        previousEntryIndex < 0
+    ) {
+        return;
+    }
+
+    await playPreviousEntry(
+        previousEntryIndex
+    );
+}
+
+
+async function playPreviousEntry(
+    startIndex
+) {
+
+    let index =
+        startIndex;
+
+    while (
+        index >= 0
+    ) {
+
+        const parts =
+            await loadEntryParts(
+                index
+            );
+
+        if (parts.length) {
+
+            const data =
+                await loadEntryData(
+                    index
+                );
+
+            if (data) {
+
+                setText(
+                    "duaPageTitle",
+                    getEntryTitle(
+                        data,
+                        index
+                    )
+                );
+
+                renderDua(
+                    data
+                );
+            }
+
+            await playAudioPart(
+                index,
+                parts.length - 1,
+                true
+            );
+
+            return;
+        }
+
+        index--;
+    }
+}
+
+
+/* =========================================================
+   PLAY / PAUSE
+========================================================= */
+
+async function toggleAudioPlay() {
+
+    createAudioObject();
+
+    /*
+     * Nothing selected yet.
+     * Start from first available
+     * audio in the current chapter.
+     */
+
+    if (
+        currentEntryIndex < 0 ||
+        currentPartIndex < 0
+    ) {
+
+        await playNextEntry(0);
+
+        return;
+    }
+
+    if (
+        currentAudio.paused
+    ) {
+
+        try {
+
+            await currentAudio.play();
+
+        } catch (error) {
+
+            console.error(
+                "Play error:",
+                error
+            );
+        }
+
+    } else {
+
+        currentAudio.pause();
+    }
+}
+
+
+/* =========================================================
+   PLAYER UI
+========================================================= */
+
+function createAudioPlayer() {
+
+    if (audioPlayerCreated) {
+        return;
+    }
+
+    const player =
+        document.createElement("div");
+
+    player.id =
+        "duaAudioPlayer";
+
+    player.className =
+        "dua-audio-player hidden";
+
+    player.innerHTML = `
+        <div class="audio-player-info">
+
+            <div
+                id="audioPlayerTitle"
+                class="audio-player-title">
+                দোয়া
+            </div>
+
+            <div
+                id="audioPlayerPart"
+                class="audio-player-part">
+                অংশ 0/0
+            </div>
+
+        </div>
+
+        <div class="audio-player-time-row">
+
+            <span id="audioCurrentTime">
+                0:00
+            </span>
+
+            <span id="audioDuration">
+                0:00
+            </span>
+
+        </div>
+
+        <input
+            type="range"
+            id="audioProgress"
+            class="audio-progress"
+            min="0"
+            max="100"
+            value="0"
+            step="0.1"
+            aria-label="Audio progress"
+        >
+
+        <div class="audio-player-controls">
+
+            <button
+                id="audioPrevious"
+                type="button"
+                aria-label="Previous">
+                ⏮
+            </button>
+
+            <button
+                id="audioPlay"
+                type="button"
+                aria-label="Play or pause">
+                ▶
+            </button>
+
+            <button
+                id="audioNext"
+                type="button"
+                aria-label="Next">
+                ⏭
+            </button>
+
+        </div>
+    `;
+
+    document.body.appendChild(
+        player
+    );
+
+    const previousButton =
+        document.getElementById(
+            "audioPrevious"
+        );
+
+    const playButton =
+        document.getElementById(
+            "audioPlay"
+        );
+
+    const nextButton =
+        document.getElementById(
+            "audioNext"
+        );
+
+    const progress =
+        document.getElementById(
+            "audioProgress"
+        );
+
+    if (previousButton) {
+
+        previousButton.addEventListener(
+            "click",
+            async () => {
+
+                await playPreviousPart();
+
+            }
+        );
+    }
+
+    if (playButton) {
+
+        playButton.addEventListener(
+            "click",
+            async () => {
+
+                await toggleAudioPlay();
+
+            }
+        );
+    }
+
+    if (nextButton) {
+
+        nextButton.addEventListener(
+            "click",
+            async () => {
+
+                await playNextPart();
+
+            }
+        );
+    }
+
+    if (progress) {
+
+        progress.addEventListener(
+            "input",
+            seekAudio
+        );
+    }
+
+    audioPlayerCreated = true;
+}
+
+
+function showAudioPlayer() {
+
+    const player =
+        document.getElementById(
+            "duaAudioPlayer"
+        );
+
+    if (!player) {
+        return;
+    }
+
+    player.classList.remove(
+        "hidden"
+    );
+}
+
+
+function hideAudioPlayer() {
+
+    const player =
+        document.getElementById(
+            "duaAudioPlayer"
+        );
+
+    if (!player) {
+        return;
+    }
+
+    player.classList.add(
+        "hidden"
+    );
+}
+
+
+function updateAudioPlayer(
+    title,
+    partNumber,
+    totalParts
+) {
+
+    showAudioPlayer();
+
+    const titleElement =
+        document.getElementById(
+            "audioPlayerTitle"
+        );
+
+    const partElement =
+        document.getElementById(
+            "audioPlayerPart"
+        );
+
+    if (titleElement) {
+
+        titleElement.textContent =
+            title;
+    }
+
+    if (partElement) {
+
+        partElement.textContent =
+            TEXT[currentLanguage].part +
+            " " +
+            partNumber +
+            "/" +
+            totalParts;
+    }
+}
+
+
+function updatePlayButton(
+    playing
+) {
+
+    const button =
+        document.getElementById(
+            "audioPlay"
+        );
+
+    if (!button) {
+        return;
+    }
+
+    button.textContent =
+        playing ? "⏸" : "▶";
+}
+
+
+function updateAudioProgress() {
+
+    if (!currentAudio) {
+        return;
+    }
+
+    const progress =
+        document.getElementById(
+            "audioProgress"
+        );
+
+    const currentTime =
+        document.getElementById(
+            "audioCurrentTime"
+        );
+
+    if (
+        !progress ||
+        !currentTime
+    ) {
+        return;
+    }
+
+    const duration =
+        currentAudio.duration;
+
+    const time =
+        currentAudio.currentTime || 0;
+
+    if (
+        duration &&
+        isFinite(duration)
+    ) {
+
+        progress.value =
+            (
+                time / duration
+            ) * 100;
+    }
+
+    currentTime.textContent =
+        formatTime(time);
+}
+
+
+function updateAudioDuration() {
+
+    if (!currentAudio) {
+        return;
+    }
+
+    const durationElement =
+        document.getElementById(
+            "audioDuration"
+        );
+
+    if (!durationElement) {
+        return;
+    }
+
+    const duration =
+        currentAudio.duration;
+
+    durationElement.textContent =
+        formatTime(
+            isFinite(duration)
+                ? duration
+                : 0
+        );
+}
+
+
+function resetAudioProgress() {
+
+    const progress =
+        document.getElementById(
+            "audioProgress"
+        );
+
+    const currentTime =
+        document.getElementById(
+            "audioCurrentTime"
+        );
+
+    const duration =
+        document.getElementById(
+            "audioDuration"
+        );
+
+    if (progress) {
+        progress.value = 0;
+    }
+
+    if (currentTime) {
+        currentTime.textContent =
+            "0:00";
+    }
+
+    if (duration) {
+        duration.textContent =
+            "0:00";
+    }
+}
+
+
+function seekAudio(event) {
+
+    if (!currentAudio) {
+        return;
+    }
+
+    const duration =
+        currentAudio.duration;
+
+    if (
+        !duration ||
+        !isFinite(duration)
+    ) {
+        return;
+    }
+
+    const percent =
+        Number(
+            event.target.value
+        );
+
+    currentAudio.currentTime =
+        (
+            percent / 100
+        ) * duration;
+}
+
+
+function formatTime(seconds) {
+
+    if (
+        !seconds ||
+        !isFinite(seconds)
+    ) {
+        return "0:00";
+    }
+
+    const total =
+        Math.floor(seconds);
+
+    const minutes =
+        Math.floor(
+            total / 60
+        );
+
+    const remainingSeconds =
+        total % 60;
+
+    return (
+        minutes +
+        ":" +
+        String(
+            remainingSeconds
+        ).padStart(2, "0")
+    );
+}
+
+
+function handleAudioEnded() {
+
+    /*
+     * When one recording ends,
+     * automatically move to the
+     * next recording/part.
+     */
+
+    playNextPart();
+}
+
+
+function handleAudioError(event) {
+
+    console.error(
+        "Dua audio error:",
+        event
+    );
+
+    updatePlayButton(false);
+}
+
+
+/* =========================================================
    LOAD CHAPTERS
-========================================= */
+========================================================= */
 
 async function loadChapters() {
 
     currentLanguage =
         getLanguage();
 
-
     const t =
         TEXT[currentLanguage];
-
 
     setText(
         "pageTitle",
         t.pageTitle
     );
 
-
     setText(
         "introTitle",
         t.introTitle
     );
-
 
     setText(
         "introText",
         t.introText
     );
 
-
     setText(
         "retryButton",
         t.retry
     );
 
-
-    stopCurrentAudio();
-
-    removeAudioPlayer();
-
-
-    currentEntryIndex = -1;
-
-    entries = [];
-
+    hideAudioPlayer();
 
     hideAllPages();
-
 
     const loadingBox =
         document.getElementById(
             "loadingBox"
         );
-
 
     if (loadingBox) {
 
@@ -420,7 +1480,6 @@ async function loadChapters() {
         );
     }
 
-
     try {
 
         const url =
@@ -429,22 +1488,18 @@ async function loadChapters() {
             COLLECTION_ID +
             "/chapters";
 
-
         console.log(
             "Dua chapters URL:",
             url
         );
 
-
         const data =
             await apiFetch(url);
-
 
         console.log(
             "Dua chapters response:",
             data
         );
-
 
         chapters =
             getList(
@@ -457,28 +1512,20 @@ async function loadChapters() {
                 ]
             );
 
-
-        if (
-            !chapters.length
-        ) {
-
+        if (!chapters.length) {
             throw new Error(
                 "EMPTY_CHAPTER_LIST"
             );
         }
 
-
         renderChapters();
 
-
         hideAllPages();
-
 
         const home =
             document.getElementById(
                 "duaHome"
             );
-
 
         if (home) {
 
@@ -487,12 +1534,10 @@ async function loadChapters() {
             );
         }
 
-
         window.scrollTo(
             0,
             0
         );
-
 
     } catch (error) {
 
@@ -501,15 +1546,14 @@ async function loadChapters() {
             error
         );
 
-
         showError();
     }
 }
 
 
-/* =========================================
-   RENDER CHAPTERS
-========================================= */
+/* =========================================================
+   CHAPTER LIST
+========================================================= */
 
 function renderChapters() {
 
@@ -518,95 +1562,72 @@ function renderChapters() {
             "chapterList"
         );
 
-
     if (!container) {
         return;
     }
 
-
     container.innerHTML = "";
-
 
     const t =
         TEXT[currentLanguage];
 
-
-    if (
-        !chapters.length
-    ) {
+    if (!chapters.length) {
 
         const empty =
             document.createElement(
                 "div"
             );
 
-
         empty.className =
             "status-box";
 
-
         empty.textContent =
             t.noData;
-
 
         container.appendChild(
             empty
         );
 
-
         return;
     }
 
-
     chapters.forEach(
-        (
-            chapter,
-            index
-        ) => {
+        (chapter, index) => {
 
             const card =
                 document.createElement(
                     "div"
                 );
 
-
             card.className =
                 "chapter-card";
-
 
             const number =
                 document.createElement(
                     "div"
                 );
 
-
             number.className =
                 "chapter-number";
 
-
             number.textContent =
                 index + 1;
-
 
             const info =
                 document.createElement(
                     "div"
                 );
 
-
             info.className =
                 "chapter-info";
-
 
             const title =
                 document.createElement(
                     "div"
                 );
 
-
             title.className =
                 "chapter-title";
-
 
             title.textContent =
                 getChapterTitle(
@@ -614,63 +1635,56 @@ function renderChapters() {
                     index
                 );
 
-
             info.appendChild(
                 title
             );
-
 
             const arrow =
                 document.createElement(
                     "div"
                 );
 
-
             arrow.className =
                 "chapter-arrow";
 
-
             arrow.textContent =
                 "›";
-
 
             card.appendChild(
                 number
             );
 
-
             card.appendChild(
                 info
             );
-
 
             card.appendChild(
                 arrow
             );
 
-
             card.addEventListener(
                 "click",
-                () =>
+                () => {
+
                     openChapter(
                         chapter,
                         index
-                    )
-            );
+                    );
 
+                }
+            );
 
             container.appendChild(
                 card
             );
-
         }
     );
 }
 
 
-/* =========================================
+/* =========================================================
    OPEN CHAPTER
-========================================= */
+========================================================= */
 
 async function openChapter(
     chapter,
@@ -681,24 +1695,20 @@ async function openChapter(
         return;
     }
 
-
     stopCurrentAudio();
 
-    removeAudioPlayer();
-
-
     currentEntryIndex = -1;
+    currentPartIndex = -1;
+    currentEntryParts = [];
 
-    entries = [];
-
+    chapterAudioCache =
+        new Map();
 
     currentChapterId =
-
         chapter.id ||
         chapter.chapterId ||
         chapter.slug ||
         "";
-
 
     currentChapterTitle =
         getChapterTitle(
@@ -706,43 +1716,34 @@ async function openChapter(
             index
         );
 
-
-    if (
-        !currentChapterId
-    ) {
+    if (!currentChapterId) {
 
         console.error(
             "Chapter ID missing:",
             chapter
         );
 
-
         return;
     }
 
+    hideAudioPlayer();
 
     hideAllPages();
-
 
     const loadingBox =
         document.getElementById(
             "loadingBox"
         );
 
-
     if (loadingBox) {
 
         loadingBox.textContent =
-            TEXT[
-                currentLanguage
-            ].loading;
-
+            TEXT[currentLanguage].loading;
 
         loadingBox.classList.remove(
             "hidden"
         );
     }
-
 
     try {
 
@@ -756,24 +1757,18 @@ async function openChapter(
             ) +
             "/entries";
 
-
         console.log(
             "Dua entries URL:",
             url
         );
 
-
         const data =
-            await apiFetch(
-                url
-            );
-
+            await apiFetch(url);
 
         console.log(
             "Dua entries response:",
             data
         );
-
 
         entries =
             getList(
@@ -786,34 +1781,26 @@ async function openChapter(
                 ]
             );
 
-
-        if (
-            !entries.length
-        ) {
+        if (!entries.length) {
 
             throw new Error(
                 "EMPTY_ENTRY_LIST"
             );
         }
 
-
         setText(
             "entryPageTitle",
             currentChapterTitle
         );
 
-
         renderEntries();
 
-
         hideAllPages();
-
 
         const entryPage =
             document.getElementById(
                 "entryPage"
             );
-
 
         if (entryPage) {
 
@@ -822,12 +1809,10 @@ async function openChapter(
             );
         }
 
-
         window.scrollTo(
             0,
             0
         );
-
 
     } catch (error) {
 
@@ -836,15 +1821,14 @@ async function openChapter(
             error
         );
 
-
         showError();
     }
 }
 
 
-/* =========================================
-   RENDER ENTRIES
-========================================= */
+/* =========================================================
+   ENTRY LIST
+========================================================= */
 
 function renderEntries() {
 
@@ -853,86 +1837,64 @@ function renderEntries() {
             "entryList"
         );
 
-
     if (!container) {
         return;
     }
 
-
     container.innerHTML = "";
-
 
     const t =
         TEXT[currentLanguage];
 
-
-    if (
-        !entries.length
-    ) {
+    if (!entries.length) {
 
         const empty =
             document.createElement(
                 "div"
             );
 
-
         empty.className =
             "status-box";
 
-
         empty.textContent =
             t.noData;
-
 
         container.appendChild(
             empty
         );
 
-
         return;
     }
 
-
     entries.forEach(
-        (
-            entry,
-            index
-        ) => {
+        (entry, index) => {
 
             const card =
                 document.createElement(
                     "div"
                 );
 
-
             card.className =
                 "entry-card";
-
 
             const number =
                 document.createElement(
                     "div"
                 );
 
-
             number.className =
                 "entry-number";
 
-
             number.textContent =
-                "#" +
-                (index + 1);
-
+                "#" + (index + 1);
 
             const title =
                 document.createElement(
                     "div"
                 );
 
-
             title.className =
                 "entry-title";
-
 
             title.textContent =
                 getEntryTitle(
@@ -940,39 +1902,37 @@ function renderEntries() {
                     index
                 );
 
-
             card.appendChild(
                 number
             );
-
 
             card.appendChild(
                 title
             );
 
-
             card.addEventListener(
                 "click",
-                () =>
+                () => {
+
                     openEntry(
                         entry,
                         index
-                    )
-            );
+                    );
 
+                }
+            );
 
             container.appendChild(
                 card
             );
-
         }
     );
 }
 
 
-/* =========================================
+/* =========================================================
    OPEN ENTRY
-========================================= */
+========================================================= */
 
 async function openEntry(
     entry,
@@ -983,22 +1943,10 @@ async function openEntry(
         return;
     }
 
-
-    if (
-        index < 0 ||
-        index >= entries.length
-    ) {
-
-        return;
-    }
-
-
     const entryId =
-
         entry.id ||
         entry.entryId ||
         "";
-
 
     if (!entryId) {
 
@@ -1007,101 +1955,31 @@ async function openEntry(
             entry
         );
 
-
         return;
     }
 
+    stopCurrentAudio();
 
-    await loadEntry(
-        index,
-        true
-    );
-}
+    currentEntryIndex = index;
+    currentPartIndex = -1;
+    currentEntryParts = [];
 
+    hideAllPages();
 
-/* =========================================
-   LOAD ENTRY DETAIL
-========================================= */
-
-async function loadEntry(
-    index,
-    showPage = true,
-    autoPlay = false
-) {
-
-    if (
-        isLoadingEntry
-    ) {
-
-        return;
-    }
-
-
-    if (
-        index < 0 ||
-        index >= entries.length
-    ) {
-
-        return;
-    }
-
-
-    const entry =
-        entries[index];
-
-
-    if (!entry) {
-        return;
-    }
-
-
-    const entryId =
-
-        entry.id ||
-        entry.entryId ||
-        "";
-
-
-    if (!entryId) {
-
-        console.error(
-            "Entry ID missing:",
-            entry
+    const loadingBox =
+        document.getElementById(
+            "loadingBox"
         );
 
+    if (loadingBox) {
 
-        return;
+        loadingBox.textContent =
+            TEXT[currentLanguage].loading;
+
+        loadingBox.classList.remove(
+            "hidden"
+        );
     }
-
-
-    isLoadingEntry = true;
-
-
-    if (showPage) {
-
-        hideAllPages();
-
-
-        const loadingBox =
-            document.getElementById(
-                "loadingBox"
-            );
-
-
-        if (loadingBox) {
-
-            loadingBox.textContent =
-                TEXT[
-                    currentLanguage
-                ].loading;
-
-
-            loadingBox.classList.remove(
-                "hidden"
-            );
-        }
-    }
-
 
     try {
 
@@ -1112,28 +1990,34 @@ async function loadEntry(
                 entryId
             );
 
-
         console.log(
             "Dua detail URL:",
             url
         );
 
-
         const data =
-            await apiFetch(
-                url
-            );
-
+            await apiFetch(url);
 
         console.log(
             "Dua detail response:",
             data
         );
 
+        const parts =
+            extractAudioParts(
+                data
+            );
 
-        currentEntryIndex =
-            index;
+        chapterAudioCache.set(
+            index,
+            {
+                data: data,
+                parts: parts
+            }
+        );
 
+        currentEntryParts =
+            parts;
 
         setText(
             "duaPageTitle",
@@ -1143,68 +2027,53 @@ async function loadEntry(
             )
         );
 
-
         renderDua(
             data
         );
 
+        hideAllPages();
 
-        if (showPage) {
+        const duaPage =
+            document.getElementById(
+                "duaPage"
+            );
 
-            hideAllPages();
+        if (duaPage) {
 
-
-            const duaPage =
-                document.getElementById(
-                    "duaPage"
-                );
-
-
-            if (duaPage) {
-
-                duaPage.classList.remove(
-                    "hidden"
-                );
-            }
-
-
-            window.scrollTo(
-                0,
-                0
+            duaPage.classList.remove(
+                "hidden"
             );
         }
 
+        if (parts.length) {
 
-        const audioUrl =
-            getEntryAudioUrl(
-                data
+            currentPartIndex = 0;
+
+            updateAudioPlayer(
+                getEntryTitle(
+                    data,
+                    index
+                ),
+                1,
+                parts.length
             );
 
+            /*
+             * Player appears ready,
+             * but audio does NOT
+             * automatically start.
+             */
 
-        createAudioPlayer(
-            audioUrl,
-            index
+        } else {
+
+            hideAudioPlayer();
+
+        }
+
+        window.scrollTo(
+            0,
+            0
         );
-
-
-        if (
-            autoPlay &&
-            audioUrl
-        ) {
-
-            try {
-
-                await currentAudio.play();
-
-            } catch (error) {
-
-                console.log(
-                    "Audio autoplay blocked:",
-                    error
-                );
-            }
-        }
-
 
     } catch (error) {
 
@@ -1213,84 +2082,74 @@ async function loadEntry(
             error
         );
 
-
-        if (showPage) {
-
-            showError();
-        }
-
-    } finally {
-
-        isLoadingEntry =
-            false;
+        showError();
     }
 }
 
 
-/* =========================================
-   RENDER COMPLETE DUA
-========================================= */
+/* =========================================================
+   RENDER DUA
+========================================================= */
 
-function renderDua(
-    data
-) {
+function renderDua(data) {
 
     const container =
         document.getElementById(
             "duaContent"
         );
 
-
     if (!container) {
         return;
     }
 
-
     container.innerHTML = "";
-
 
     const card =
         document.createElement(
             "div"
         );
 
-
     card.className =
         "dua-card";
-
 
     const title =
         document.createElement(
             "div"
         );
 
-
     title.className =
         "dua-title";
 
-
     title.textContent =
-
         data.title ||
         data.name ||
         "";
-
 
     card.appendChild(
         title
     );
 
-
     /*
-     * OpenDua documented structure:
+     * OpenDua structure:
      *
-     * data.variations[]
-     *      ↓
+     * variations[]
+     *     ↓
      * steps[]
-     *      ↓
+     *     ↓
      * items[]
-     *      ↓
+     *     ↓
      * dua{}
+     *
+     * Audio:
+     *
+     * steps[]
+     *     ↓
+     * recordings[]
+     *
+     * IMPORTANT:
+     * Audio controls are NOT inserted
+     * here. The bottom player is
+     * the only audio controller.
      */
 
     if (
@@ -1309,10 +2168,8 @@ function renderDua(
                         variation.steps
                     )
                 ) {
-
                     return;
                 }
-
 
                 variation.steps.forEach(
                     step => {
@@ -1323,10 +2180,8 @@ function renderDua(
                                 step.items
                             )
                         ) {
-
                             return;
                         }
-
 
                         step.items.forEach(
                             item => {
@@ -1345,37 +2200,6 @@ function renderDua(
                             }
                         );
 
-
-                        /*
-                         * Existing inline audio.
-                         * Recordings belong to the
-                         * recitation step.
-                         */
-
-                        if (
-                            Array.isArray(
-                                step.recordings
-                            )
-                        ) {
-
-                            step.recordings.forEach(
-                                recording => {
-
-                                    if (
-                                        recording &&
-                                        recording.url
-                                    ) {
-
-                                        addAudio(
-                                            recording.url,
-                                            card
-                                        );
-                                    }
-
-                                }
-                            );
-                        }
-
                     }
                 );
 
@@ -1390,9 +2214,8 @@ function renderDua(
         );
     }
 
-
     /*
-     * Entry-level source reference
+     * Entry-level source
      */
 
     if (
@@ -1400,15 +2223,12 @@ function renderDua(
     ) {
 
         addReference(
-            TEXT[
-                currentLanguage
-            ].reference +
+            TEXT[currentLanguage].reference +
             ": " +
             data.sourceReference,
             card
         );
     }
-
 
     /*
      * Structured references
@@ -1429,7 +2249,6 @@ function renderDua(
                         reference
                     );
 
-
                 if (text) {
 
                     addReference(
@@ -1437,11 +2256,9 @@ function renderDua(
                         card
                     );
                 }
-
             }
         );
     }
-
 
     container.appendChild(
         card
@@ -1449,9 +2266,9 @@ function renderDua(
 }
 
 
-/* =========================================
+/* =========================================================
    RENDER DUA OBJECT
-========================================= */
+========================================================= */
 
 function renderDuaObject(
     dua,
@@ -1462,46 +2279,35 @@ function renderDuaObject(
         return;
     }
 
-
     const t =
-        TEXT[
-            currentLanguage
-        ];
-
+        TEXT[currentLanguage];
 
     /*
      * Arabic
      */
 
-    if (
-        dua.arabic
-    ) {
+    if (dua.arabic) {
 
         addLabel(
             t.arabic,
             card
         );
 
-
         const arabic =
             document.createElement(
                 "div"
             );
 
-
         arabic.className =
             "dua-arabic";
 
-
         arabic.textContent =
             dua.arabic;
-
 
         card.appendChild(
             arabic
         );
     }
-
 
     /*
      * Transliteration
@@ -1516,29 +2322,24 @@ function renderDuaObject(
             card
         );
 
-
         const transliteration =
             document.createElement(
                 "div"
             );
 
-
         transliteration.className =
             "dua-transliteration";
 
-
         transliteration.textContent =
             dua.transliteration;
-
 
         card.appendChild(
             transliteration
         );
     }
 
-
     /*
-     * English translation
+     * Translation
      */
 
     if (
@@ -1550,26 +2351,21 @@ function renderDuaObject(
             card
         );
 
-
         const translation =
             document.createElement(
                 "div"
             );
 
-
         translation.className =
             "dua-translation";
 
-
         translation.textContent =
             dua.translation;
-
 
         card.appendChild(
             translation
         );
     }
-
 
     /*
      * Dua-level references
@@ -1590,7 +2386,6 @@ function renderDuaObject(
                         reference
                     );
 
-
                 if (text) {
 
                     addReference(
@@ -1598,16 +2393,11 @@ function renderDuaObject(
                         card
                     );
                 }
-
             }
         );
     }
 }
 
-
-/* =========================================
-   LABEL
-========================================= */
 
 function addLabel(
     text,
@@ -1619,24 +2409,17 @@ function addLabel(
             "div"
         );
 
-
     label.className =
         "dua-section-label";
 
-
     label.textContent =
         text;
-
 
     card.appendChild(
         label
     );
 }
 
-
-/* =========================================
-   REFERENCE
-========================================= */
 
 function addReference(
     text,
@@ -1648,24 +2431,17 @@ function addReference(
             "div"
         );
 
-
     reference.className =
         "dua-reference";
 
-
     reference.textContent =
         text;
-
 
     card.appendChild(
         reference
     );
 }
 
-
-/* =========================================
-   REFERENCE TEXT
-========================================= */
 
 function getReferenceText(
     reference
@@ -1675,960 +2451,63 @@ function getReferenceText(
         return "";
     }
 
-
     if (
-        typeof reference ===
-        "string"
+        typeof reference === "string"
     ) {
-
         return reference;
     }
 
-
     if (
-        typeof reference ===
-        "object"
+        typeof reference === "object"
     ) {
 
         return (
-
             reference.text ||
             reference.title ||
             reference.name ||
             reference.work ||
             reference.id ||
             ""
-
         );
     }
-
 
     return "";
 }
 
 
-/* =========================================
-   EXISTING INLINE AUDIO
-========================================= */
-
-function addAudio(
-    url,
-    card
-) {
-
-    if (!url) {
-        return;
-    }
-
-
-    const audio =
-        document.createElement(
-            "audio"
-        );
-
-
-    audio.className =
-        "dua-audio";
-
-
-    audio.controls =
-        true;
-
-
-    audio.preload =
-        "none";
-
-
-    audio.src =
-        url;
-
-
-    card.appendChild(
-        audio
-    );
-}
-
-
-/* =========================================
-   GET ENTRY AUDIO URL
-========================================= */
-
-function getEntryAudioUrl(
-    data
-) {
-
-    if (!data) {
-        return "";
-    }
-
-
-    /*
-     * OpenDua:
-     *
-     * variations[]
-     *    ↓
-     * steps[]
-     *    ↓
-     * recordings[]
-     */
-
-    if (
-        Array.isArray(
-            data.variations
-        )
-    ) {
-
-        for (
-            const variation
-            of data.variations
-        ) {
-
-            if (
-                !variation ||
-                !Array.isArray(
-                    variation.steps
-                )
-            ) {
-
-                continue;
-            }
-
-
-            for (
-                const step
-                of variation.steps
-            ) {
-
-                if (
-                    !step ||
-                    !Array.isArray(
-                        step.recordings
-                    )
-                ) {
-
-                    continue;
-                }
-
-
-                for (
-                    const recording
-                    of step.recordings
-                ) {
-
-                    if (
-                        recording &&
-                        recording.url
-                    ) {
-
-                        return recording.url;
-                    }
-                }
-            }
-        }
-    }
-
-
-    /*
-     * Additional fallback:
-     * Some API responses may expose
-     * recording directly.
-     */
-
-    if (
-        Array.isArray(
-            data.recordings
-        )
-    ) {
-
-        for (
-            const recording
-            of data.recordings
-        ) {
-
-            if (
-                recording &&
-                recording.url
-            ) {
-
-                return recording.url;
-            }
-        }
-    }
-
-
-    return "";
-}
-
-
-/* =========================================
-   CREATE AUDIO PLAYER
-========================================= */
-
-function createAudioPlayer(
-    url,
-    index
-) {
-
-    removeAudioPlayer();
-
-
-    currentAudio = null;
-    currentAudioUrl = "";
-
-
-    const player =
-        document.createElement(
-            "div"
-        );
-
-
-    player.id =
-        "duaAudioPlayer";
-
-
-    player.className =
-        "dua-audio-player";
-
-
-    /*
-     * PLAYER TITLE
-     */
-
-    const title =
-        document.createElement(
-            "div"
-        );
-
-
-    title.className =
-        "audio-player-title";
-
-
-    title.id =
-        "audioPlayerTitle";
-
-
-    title.textContent =
-        getEntryTitle(
-            entries[index],
-            index
-        );
-
-
-    player.appendChild(
-        title
-    );
-
-
-    /*
-     * PROGRESS AREA
-     */
-
-    const progressRow =
-        document.createElement(
-            "div"
-        );
-
-
-    progressRow.className =
-        "audio-progress-row";
-
-
-    const currentTime =
-        document.createElement(
-            "span"
-        );
-
-
-    currentTime.id =
-        "audioCurrentTime";
-
-
-    currentTime.textContent =
-        "0:00";
-
-
-    const progress =
-        document.createElement(
-            "input"
-        );
-
-
-    progress.type =
-        "range";
-
-
-    progress.id =
-        "audioProgress";
-
-
-    progress.min =
-        "0";
-
-
-    progress.max =
-        "100";
-
-
-    progress.value =
-        "0";
-
-
-    progress.step =
-        "0.1";
-
-
-    progress.setAttribute(
-        "aria-label",
-        "Audio progress"
-    );
-
-
-    const duration =
-        document.createElement(
-            "span"
-        );
-
-
-    duration.id =
-        "audioDuration";
-
-
-    duration.textContent =
-        "0:00";
-
-
-    progressRow.appendChild(
-        currentTime
-    );
-
-
-    progressRow.appendChild(
-        progress
-    );
-
-
-    progressRow.appendChild(
-        duration
-    );
-
-
-    player.appendChild(
-        progressRow
-    );
-
-
-    /*
-     * CONTROL AREA
-     */
-
-    const controls =
-        document.createElement(
-            "div"
-        );
-
-
-    controls.className =
-        "audio-controls";
-
-
-    const previousButton =
-        document.createElement(
-            "button"
-        );
-
-
-    previousButton.id =
-        "audioPrevious";
-
-
-    previousButton.type =
-        "button";
-
-
-    previousButton.textContent =
-        "⏮";
-
-
-    previousButton.setAttribute(
-        "aria-label",
-        TEXT[
-            currentLanguage
-        ].previous
-    );
-
-
-    const playButton =
-        document.createElement(
-            "button"
-        );
-
-
-    playButton.id =
-        "audioPlayPause";
-
-
-    playButton.type =
-        "button";
-
-
-    playButton.textContent =
-        "▶";
-
-
-    playButton.setAttribute(
-        "aria-label",
-        TEXT[
-            currentLanguage
-        ].play
-    );
-
-
-    const nextButton =
-        document.createElement(
-            "button"
-        );
-
-
-    nextButton.id =
-        "audioNext";
-
-
-    nextButton.type =
-        "button";
-
-
-    nextButton.textContent =
-        "⏭";
-
-
-    nextButton.setAttribute(
-        "aria-label",
-        TEXT[
-            currentLanguage
-        ].next
-    );
-
-
-    controls.appendChild(
-        previousButton
-    );
-
-
-    controls.appendChild(
-        playButton
-    );
-
-
-    controls.appendChild(
-        nextButton
-    );
-
-
-    player.appendChild(
-        controls
-    );
-
-
-    document.body.appendChild(
-        player
-    );
-
-
-    /*
-     * AUDIO OBJECT
-     */
-
-    if (url) {
-
-        currentAudio =
-            new Audio();
-
-
-        currentAudio.preload =
-            "metadata";
-
-
-        currentAudio.src =
-            url;
-
-
-        currentAudioUrl =
-            url;
-
-
-        attachAudioEvents(
-            progress,
-            currentTime,
-            duration,
-            playButton
-        );
-    }
-
-
-    /*
-     * PLAY / PAUSE
-     */
-
-    playButton.addEventListener(
-        "click",
-        async () => {
-
-            if (!currentAudio) {
-                return;
-            }
-
-
-            if (
-                currentAudio.paused
-            ) {
-
-                try {
-
-                    await currentAudio.play();
-
-                } catch (error) {
-
-                    console.error(
-                        "Audio play error:",
-                        error
-                    );
-                }
-
-            } else {
-
-                currentAudio.pause();
-            }
-
-        }
-    );
-
-
-    /*
-     * PREVIOUS
-     */
-
-    previousButton.addEventListener(
-        "click",
-        () => {
-
-            playPreviousEntry();
-
-        }
-    );
-
-
-    /*
-     * NEXT
-     */
-
-    nextButton.addEventListener(
-        "click",
-        () => {
-
-            playNextEntry(
-                true
-            );
-
-        }
-    );
-
-
-    /*
-     * PROGRESS SEEK
-     */
-
-    progress.addEventListener(
-        "input",
-        () => {
-
-            if (
-                !currentAudio ||
-                !Number.isFinite(
-                    currentAudio.duration
-                )
-            ) {
-
-                return;
-            }
-
-
-            currentAudio.currentTime =
-
-                (
-                    Number(
-                        progress.value
-                    ) / 100
-                ) *
-                currentAudio.duration;
-
-        }
-    );
-}
-
-
-/* =========================================
-   AUDIO EVENTS
-========================================= */
-
-function attachAudioEvents(
-    progress,
-    currentTime,
-    duration,
-    playButton
-) {
-
-    if (!currentAudio) {
-        return;
-    }
-
-
-    currentAudio.addEventListener(
-        "loadedmetadata",
-        () => {
-
-            if (
-                Number.isFinite(
-                    currentAudio.duration
-                )
-            ) {
-
-                duration.textContent =
-                    formatAudioTime(
-                        currentAudio.duration
-                    );
-            }
-        }
-    );
-
-
-    currentAudio.addEventListener(
-        "timeupdate",
-        () => {
-
-            if (
-                Number.isFinite(
-                    currentAudio.duration
-                ) &&
-                currentAudio.duration > 0
-            ) {
-
-                const percent =
-
-                    (
-                        currentAudio.currentTime /
-                        currentAudio.duration
-                    ) *
-                    100;
-
-
-                progress.value =
-                    percent;
-            }
-
-
-            currentTime.textContent =
-                formatAudioTime(
-                    currentAudio.currentTime
-                );
-        }
-    );
-
-
-    currentAudio.addEventListener(
-        "play",
-        () => {
-
-            playButton.textContent =
-                "⏸";
-
-
-            playButton.setAttribute(
-                "aria-label",
-                TEXT[
-                    currentLanguage
-                ].pause
-            );
-        }
-    );
-
-
-    currentAudio.addEventListener(
-        "pause",
-        () => {
-
-            playButton.textContent =
-                "▶";
-
-
-            playButton.setAttribute(
-                "aria-label",
-                TEXT[
-                    currentLanguage
-                ].play
-            );
-        }
-    );
-
-
-    /*
-     * AUTO NEXT
-     */
-
-    currentAudio.addEventListener(
-        "ended",
-        () => {
-
-            playNextEntry(
-                true
-            );
-
-        }
-    );
-}
-
-
-/* =========================================
-   NEXT ENTRY
-========================================= */
-
-async function playNextEntry(
-    autoPlay = true
-) {
-
-    if (
-        currentEntryIndex < 0
-    ) {
-
-        return;
-    }
-
-
-    const nextIndex =
-        currentEntryIndex + 1;
-
-
-    /*
-     * Last entry
-     */
-
-    if (
-        nextIndex >= entries.length
-    ) {
-
-        if (currentAudio) {
-
-            currentAudio.currentTime =
-                0;
-        }
-
-
-        return;
-    }
-
-
-    await loadEntry(
-        nextIndex,
-        true,
-        autoPlay
-    );
-}
-
-
-/* =========================================
-   PREVIOUS ENTRY
-========================================= */
-
-async function playPreviousEntry() {
-
-    if (
-        currentEntryIndex < 0
-    ) {
-
-        return;
-    }
-
-
-    /*
-     * If current audio has played
-     * more than 3 seconds, previous
-     * button first restarts current audio.
-     */
-
-    if (
-        currentAudio &&
-        currentAudio.currentTime > 3
-    ) {
-
-        currentAudio.currentTime =
-            0;
-
-
-        return;
-    }
-
-
-    const previousIndex =
-        currentEntryIndex - 1;
-
-
-    if (
-        previousIndex < 0
-    ) {
-
-        if (currentAudio) {
-
-            currentAudio.currentTime =
-                0;
-        }
-
-
-        return;
-    }
-
-
-    await loadEntry(
-        previousIndex,
-        true,
-        true
-    );
-}
-
-
-/* =========================================
-   STOP CURRENT AUDIO
-========================================= */
-
-function stopCurrentAudio() {
-
-    if (currentAudio) {
-
-        try {
-
-            currentAudio.pause();
-
-            currentAudio.currentTime =
-                0;
-
-        } catch (error) {}
-    }
-
-
-    currentAudio =
-        null;
-
-
-    currentAudioUrl =
-        "";
-}
-
-
-/* =========================================
-   REMOVE PLAYER
-========================================= */
-
-function removeAudioPlayer() {
-
-    const player =
-        document.getElementById(
-            "duaAudioPlayer"
-        );
-
-
-    if (player) {
-
-        player.remove();
-    }
-}
-
-
-/* =========================================
-   AUDIO TIME FORMAT
-========================================= */
-
-function formatAudioTime(
-    seconds
-) {
-
-    if (
-        !Number.isFinite(
-            seconds
-        )
-    ) {
-
-        return "0:00";
-    }
-
-
-    const minutes =
-        Math.floor(
-            seconds / 60
-        );
-
-
-    const remainingSeconds =
-        Math.floor(
-            seconds % 60
-        );
-
-
-    return (
-
-        minutes +
-        ":" +
-        String(
-            remainingSeconds
-        ).padStart(
-            2,
-            "0"
-        )
-
-    );
-}
-
-
-/* =========================================
-   ERROR
-========================================= */
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
 function showError() {
 
     stopCurrentAudio();
 
-    removeAudioPlayer();
-
+    hideAudioPlayer();
 
     hideAllPages();
 
-
     const t =
-        TEXT[
-            currentLanguage
-        ];
-
+        TEXT[currentLanguage];
 
     const errorBox =
         document.getElementById(
             "errorBox"
         );
 
-
     if (!errorBox) {
         return;
     }
-
 
     setText(
         "errorText",
         t.error
     );
 
-
     const retryButton =
         document.getElementById(
             "retryButton"
         );
-
 
     if (retryButton) {
 
@@ -2636,39 +2515,30 @@ function showError() {
             t.retry;
     }
 
-
     errorBox.classList.remove(
         "hidden"
     );
 }
 
 
-/* =========================================
-   HOME
-========================================= */
-
 function goHome() {
 
     stopCurrentAudio();
 
-    removeAudioPlayer();
+    currentEntryIndex = -1;
+    currentPartIndex = -1;
+    currentEntryParts = [];
 
-
-    currentEntryIndex =
-        -1;
-
+    hideAudioPlayer();
 
     hideAllPages();
 
-
     renderChapters();
-
 
     const home =
         document.getElementById(
             "duaHome"
         );
-
 
     if (home) {
 
@@ -2677,7 +2547,6 @@ function goHome() {
         );
     }
 
-
     window.scrollTo(
         0,
         0
@@ -2685,38 +2554,29 @@ function goHome() {
 }
 
 
-/* =========================================
-   ENTRY LIST
-========================================= */
-
 function goEntries() {
 
     stopCurrentAudio();
 
-    removeAudioPlayer();
+    currentEntryIndex = -1;
+    currentPartIndex = -1;
+    currentEntryParts = [];
 
-
-    currentEntryIndex =
-        -1;
-
+    hideAudioPlayer();
 
     hideAllPages();
-
 
     setText(
         "entryPageTitle",
         currentChapterTitle
     );
 
-
     renderEntries();
-
 
     const page =
         document.getElementById(
             "entryPage"
         );
-
 
     if (page) {
 
@@ -2725,7 +2585,6 @@ function goEntries() {
         );
     }
 
-
     window.scrollTo(
         0,
         0
@@ -2733,9 +2592,9 @@ function goEntries() {
 }
 
 
-/* =========================================
-   MAIN BACK
-========================================= */
+/* =========================================================
+   BACK BUTTONS
+========================================================= */
 
 function setupBackButton() {
 
@@ -2744,11 +2603,9 @@ function setupBackButton() {
             "backButton"
         );
 
-
     if (!button) {
         return;
     }
-
 
     button.addEventListener(
         "click",
@@ -2759,12 +2616,10 @@ function setupBackButton() {
                     "duaPage"
                 );
 
-
             const entryPage =
                 document.getElementById(
                     "entryPage"
                 );
-
 
             if (
                 duaPage &&
@@ -2778,7 +2633,6 @@ function setupBackButton() {
                 return;
             }
 
-
             if (
                 entryPage &&
                 !entryPage.classList.contains(
@@ -2791,17 +2645,11 @@ function setupBackButton() {
                 return;
             }
 
-
             history.back();
-
         }
     );
 }
 
-
-/* =========================================
-   ENTRY BACK
-========================================= */
 
 function setupEntryBack() {
 
@@ -2810,11 +2658,9 @@ function setupEntryBack() {
             "entryBackButton"
         );
 
-
     if (!button) {
         return;
     }
-
 
     button.addEventListener(
         "click",
@@ -2827,10 +2673,6 @@ function setupEntryBack() {
 }
 
 
-/* =========================================
-   DUA BACK
-========================================= */
-
 function setupDuaBack() {
 
     const button =
@@ -2838,11 +2680,9 @@ function setupDuaBack() {
             "duaBackButton"
         );
 
-
     if (!button) {
         return;
     }
-
 
     button.addEventListener(
         "click",
@@ -2855,10 +2695,6 @@ function setupDuaBack() {
 }
 
 
-/* =========================================
-   RETRY
-========================================= */
-
 function setupRetry() {
 
     const button =
@@ -2866,11 +2702,9 @@ function setupRetry() {
             "retryButton"
         );
 
-
     if (!button) {
         return;
     }
-
 
     button.addEventListener(
         "click",
@@ -2883,9 +2717,9 @@ function setupRetry() {
 }
 
 
-/* =========================================
-   LANGUAGE CHANGE
-========================================= */
+/* =========================================================
+   LANGUAGE WATCHER
+========================================================= */
 
 function setupLanguageWatcher() {
 
@@ -2900,7 +2734,10 @@ function setupLanguageWatcher() {
                     "appSettings"
             ) {
 
+                stopCurrentAudio();
+
                 location.reload();
+
             }
 
         }
@@ -2908,23 +2745,9 @@ function setupLanguageWatcher() {
 }
 
 
-/* =========================================
-   PAGE EXIT
-========================================= */
-
-window.addEventListener(
-    "beforeunload",
-    () => {
-
-        stopCurrentAudio();
-
-    }
-);
-
-
-/* =========================================
+/* =========================================================
    START
-========================================= */
+========================================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -2939,6 +2762,10 @@ document.addEventListener(
         setupRetry();
 
         setupLanguageWatcher();
+
+        createAudioObject();
+
+        createAudioPlayer();
 
         loadChapters();
 
