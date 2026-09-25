@@ -90,6 +90,40 @@ let audioRequestId = 0;
 let isAudioLoading = false;
 
 
+function applyDuaTheme() {
+
+    try {
+
+        const raw =
+            localStorage.getItem("appSettings");
+
+        const settings =
+            raw
+                ? JSON.parse(raw)
+                : {};
+
+        if (settings.dark) {
+
+            document.body.classList.add(
+                "dark-mode"
+            );
+
+        } else {
+
+            document.body.classList.remove(
+                "dark-mode"
+            );
+        }
+
+    } catch (error) {
+
+        document.body.classList.remove(
+            "dark-mode"
+        );
+    }
+}
+
+
 /* =========================================================
    LANGUAGE
 ========================================================= */
@@ -2837,6 +2871,8 @@ document.addEventListener(
 
         currentLanguage =
             getLanguage();
+        
+        applyDuaTheme();
 
         setupBackButton();
 
