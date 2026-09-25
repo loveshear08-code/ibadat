@@ -749,103 +749,76 @@ async function playNextPart() {
     }
 
     const parts =
-        currentEntryParts;
+        currentEntryParts || [];
 
     /*
-     * Same Dua → next Part
+     * Same Dua → next audio part
      */
 
     if (
-        currentPartIndex <
-        parts.length - 1
+        currentPartIndex + 1 <
+        parts.length
     ) {
 
-        await playAudioPart(
-            currentEntryIndex,
-            currentPartIndex + 1,
-            true
-        );
-
-        return;
-    }
-
-    /*
-     * Current Dua finished.
-     * Move to next Dua.
-     */
-
-    const nextEntryIndex =
-        currentEntryIndex + 1;
-
-    if (
-        nextEntryIndex >=
-        entries.length
-    ) {
-
-        /*
-         * Last part of the last Dua.
-         */
-
-        stopCurrentAudio();
-
-        return;
-    }
-
-    await playNextEntry(
-        nextEntryIndex
-    );
-}
-
-
-async function playNextEntry(
-    startIndex
-) {
-
-    let index =
-        startIndex;
-
-    while (
-        index < entries.length
-    ) {
-
-        const parts =
-            await loadEntryParts(
-                index
-            );
-
-        if (parts.length) {
-
-            const data =
-                await loadEntryData(
-                    index
-                );
-
-            if (data) {
-
-                setText(
-                    "duaPageTitle",
-                    getEntryTitle(
-                        data,
-                        index
-                    )
-                );
-
-                renderDua(
-                    data
-                );
-            }
-
+        const played =
             await playAudioPart(
-                index,
-                0,
+                currentEntryIndex,
+                currentPartIndex + 1,
                 true
             );
 
+        if (played) {
             return;
         }
-
-        index++;
     }
+
+    /*
+     * Current Dua is completely finished.
+     * Find the next Dua that has audio.
+     */
+
+    let nextEntryIndex =
+        currentEntryIndex + 1;
+
+    while (
+        nextEntryIndex <
+        entries.length
+    ) {
+
+        const nextParts =
+            await loadEntryParts(
+                nextEntryIndex
+            );
+
+        if (
+            nextParts &&
+            nextParts.length
+        ) {
+
+            const played =
+                await playAudioPart(
+                    nextEntryIndex,
+                    0,
+                    true
+                );
+
+            if (played) {
+                return;
+            }
+        }
+
+        /*
+         * No usable audio in this Dua.
+         * Skip it and continue.
+         */
+
+        nextEntryIndex++;
+    }
+
+    /*
+     * No more audio anywhere
+     * in this chapter.
+     */
 
     stopCurrentAudio();
 }
@@ -1405,15 +1378,27 @@ function formatTime(seconds) {
 }
 
 
-function handleAudioEnded() {
+async function handleAudioEnded() {
 
     /*
-     * When one recording ends,
-     * automatically move to the
-     * next recording/part.
+     * One audio part has finished.
+     * Continue to the next part or
+     * the next Dua automatically.
      */
 
-    playNextPart();
+    try {
+
+        await playNextPart();
+
+    } catch (error) {
+
+        console.error(
+            "Auto next audio error:",
+            error
+        );
+
+        updatePlayButton(false);
+    }
 }
 
 
