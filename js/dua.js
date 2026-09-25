@@ -545,6 +545,8 @@ async function playAudioPart(
     autoPlay = true
 ) {
 
+    createAudioObject();
+
     if (isAudioLoading) {
         return false;
     }
@@ -959,25 +961,17 @@ async function toggleAudioPlay() {
 
     createAudioObject();
 
-    /*
-     * Nothing selected yet.
-     * Start from first available
-     * audio in the current chapter.
-     */
+    // No source loaded yet
+    if (!currentAudio.src) {
 
-    if (
-        currentEntryIndex < 0 ||
-        currentPartIndex < 0
-    ) {
+        currentEntryIndex = -1;
+        currentPartIndex = -1;
 
         await playNextEntry(0);
-
         return;
     }
 
-    if (
-        currentAudio.paused
-    ) {
+    if (currentAudio.paused) {
 
         try {
 
@@ -989,6 +983,11 @@ async function toggleAudioPlay() {
                 "Play error:",
                 error
             );
+
+            currentEntryIndex = -1;
+            currentPartIndex = -1;
+
+            await playNextEntry(0);
         }
 
     } else {
