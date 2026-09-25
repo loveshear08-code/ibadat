@@ -1,65 +1,163 @@
 const API_BASE = "https://api.opendua.org/v2";
 const COLLECTION_ID = "hisn-al-muslim";
 
+
+/* =========================================================
+   LANGUAGE TEXT
+========================================================= */
+
 const TEXT = {
+
     bn: {
+
         pageTitle: "দোয়া",
         introTitle: "দোয়া",
+
         loading: "দোয়া লোড হচ্ছে...",
         retry: "আবার চেষ্টা করুন",
-        error: "দোয়া লোড করা যাচ্ছে না। ইন্টারনেট সংযোগ পরীক্ষা করুন।",
-        noData: "কোনো দোয়া পাওয়া যায়নি।",
-        chapters: "দোয়ার অধ্যায়",
-        entries: "দোয়া",
-        arabic: "আরবি",
-        transliteration: "উচ্চারণ",
-        translation: "অর্থ",
-        reference: "সূত্র",
-        part: "অংশ",
-        previous: "আগের অংশ",
-        next: "পরের অংশ",
-        play: "প্লে",
-        pause: "পজ"
+
+        error:
+            "দোয়া লোড করা যাচ্ছে না। ইন্টারনেট সংযোগ পরীক্ষা করুন।",
+
+        noData:
+            "কোনো দোয়া পাওয়া যায়নি।",
+
+        chapters:
+            "দোয়ার অধ্যায়",
+
+        entries:
+            "দোয়া",
+
+        arabic:
+            "আরবি",
+
+        transliteration:
+            "উচ্চারণ",
+
+        translation:
+            "অর্থ",
+
+        reference:
+            "সূত্র",
+
+        part:
+            "অংশ",
+
+        previous:
+            "আগের অংশ",
+
+        next:
+            "পরের অংশ",
+
+        play:
+            "প্লে",
+
+        pause:
+            "পজ"
     },
+
 
     en: {
+
         pageTitle: "Dua",
         introTitle: "Dua",
-        loading: "Loading duas...",
-        retry: "Try Again",
-        error: "Unable to load duas. Please check your internet connection.",
-        noData: "No duas were found.",
-        chapters: "Dua Chapters",
-        entries: "Duas",
-        arabic: "Arabic",
-        transliteration: "Transliteration",
-        translation: "Meaning",
-        reference: "Reference",
-        part: "Part",
-        previous: "Previous",
-        next: "Next",
-        play: "Play",
-        pause: "Pause"
+
+        loading:
+            "Loading duas...",
+
+        retry:
+            "Try Again",
+
+        error:
+            "Unable to load duas. Please check your internet connection.",
+
+        noData:
+            "No duas were found.",
+
+        chapters:
+            "Dua Chapters",
+
+        entries:
+            "Duas",
+
+        arabic:
+            "Arabic",
+
+        transliteration:
+            "Transliteration",
+
+        translation:
+            "Meaning",
+
+        reference:
+            "Reference",
+
+        part:
+            "Part",
+
+        previous:
+            "Previous",
+
+        next:
+            "Next",
+
+        play:
+            "Play",
+
+        pause:
+            "Pause"
     },
 
+
     hi: {
+
         pageTitle: "दुआ",
         introTitle: "दुआ",
-        loading: "दुआ लोड हो रही है...",
-        retry: "फिर प्रयास करें",
-        error: "दुआ लोड नहीं हो सकी। कृपया इंटरनेट कनेक्शन जाँचें।",
-        noData: "कोई दुआ नहीं मिली।",
-        chapters: "दुआ के अध्याय",
-        entries: "दुआ",
-        arabic: "अरबी",
-        transliteration: "उच्चारण",
-        translation: "अर्थ",
-        reference: "स्रोत",
-        part: "भाग",
-        previous: "पिछला",
-        next: "अगला",
-        play: "प्ले",
-        pause: "रोकें"
+
+        loading:
+            "दुआ लोड हो रही है...",
+
+        retry:
+            "फिर प्रयास करें",
+
+        error:
+            "दुआ लोड नहीं हो सकी। कृपया इंटरनेट कनेक्शन जाँचें।",
+
+        noData:
+            "कोई दुआ नहीं मिली।",
+
+        chapters:
+            "दुआ के अध्याय",
+
+        entries:
+            "दुआ",
+
+        arabic:
+            "अरबी",
+
+        transliteration:
+            "उच्चारण",
+
+        translation:
+            "अर्थ",
+
+        reference:
+            "स्रोत",
+
+        part:
+            "भाग",
+
+        previous:
+            "पिछला",
+
+        next:
+            "अगला",
+
+        play:
+            "प्ले",
+
+        pause:
+            "रोकें"
     }
 };
 
@@ -79,23 +177,32 @@ let currentChapterTitle = "";
 
 let currentEntryIndex = -1;
 let currentPartIndex = -1;
+
 let currentEntryParts = [];
 
 let chapterAudioCache = new Map();
 
 let currentAudio = null;
+
 let audioPlayerCreated = false;
 
 let audioRequestId = 0;
+
 let isAudioLoading = false;
 
+
+/* =========================================================
+   DARK MODE
+========================================================= */
 
 function applyDuaTheme() {
 
     try {
 
         const raw =
-            localStorage.getItem("appSettings");
+            localStorage.getItem(
+                "appSettings"
+            );
 
         const settings =
             raw
@@ -132,20 +239,60 @@ function getLanguage() {
 
     try {
 
-        const raw =
-            localStorage.getItem("ibadatSettings") ||
-            localStorage.getItem("appSettings");
+        /*
+         * appSettings is the main
+         * settings storage used by
+         * the current Settings page.
+         */
 
-        if (raw) {
+        const appRaw =
+            localStorage.getItem(
+                "appSettings"
+            );
 
-            const settings = JSON.parse(raw);
+        if (appRaw) {
+
+            const settings =
+                JSON.parse(
+                    appRaw
+                );
 
             const language =
                 settings?.lang ||
                 settings?.language;
 
             if (
-                ["bn", "en", "hi"].includes(language)
+                ["bn", "en", "hi"]
+                    .includes(language)
+            ) {
+                return language;
+            }
+        }
+
+
+        /*
+         * Old compatibility storage.
+         */
+
+        const oldRaw =
+            localStorage.getItem(
+                "ibadatSettings"
+            );
+
+        if (oldRaw) {
+
+            const settings =
+                JSON.parse(
+                    oldRaw
+                );
+
+            const language =
+                settings?.lang ||
+                settings?.language;
+
+            if (
+                ["bn", "en", "hi"]
+                    .includes(language)
             ) {
                 return language;
             }
@@ -163,39 +310,59 @@ function getLanguage() {
 }
 
 
-function setText(id, value) {
+/* =========================================================
+   TEXT HELPER
+========================================================= */
+
+function setText(
+    id,
+    value
+) {
 
     const element =
-        document.getElementById(id);
+        document.getElementById(
+            id
+        );
 
     if (element) {
+
         element.textContent =
             value ?? "";
     }
 }
 
 
+/* =========================================================
+   APPLY LANGUAGE
+========================================================= */
+
 function applyLanguage() {
 
     const text =
-        TEXT[currentLanguage];
+        TEXT[currentLanguage] ||
+        TEXT.bn;
+
 
     document.documentElement.lang =
         currentLanguage;
 
+
     document.title =
         "IBADAT - " +
         text.pageTitle;
+
 
     setText(
         "introTitle",
         text.introTitle
     );
 
+
     setText(
         "loadingBox",
         text.loading
     );
+
 
     const retryButton =
         document.getElementById(
@@ -203,9 +370,122 @@ function applyLanguage() {
         );
 
     if (retryButton) {
+
         retryButton.textContent =
             text.retry;
     }
+
+
+    /*
+     * Update current chapter title
+     * if the page is already open.
+     */
+
+    if (
+        currentChapterIndex >= 0 &&
+        chapters[currentChapterIndex]
+    ) {
+
+        currentChapterTitle =
+            getChapterTitle(
+                chapters[
+                    currentChapterIndex
+                ],
+                currentChapterIndex
+            );
+
+        setText(
+            "entryPageTitle",
+            currentChapterTitle
+        );
+    }
+
+
+    /*
+     * Re-render lists when language changes.
+     */
+
+    if (
+        document.getElementById(
+            "chapterList"
+        )
+    ) {
+
+        renderChapters();
+    }
+
+
+    if (
+        document.getElementById(
+            "entryList"
+        )
+    ) {
+
+        renderEntries();
+    }
+
+
+    /*
+     * Re-render currently open Dua
+     * using the new language.
+     */
+
+    if (
+        currentEntryIndex >= 0 &&
+        entries[currentEntryIndex]
+    ) {
+
+        const cached =
+            chapterAudioCache.get(
+                currentEntryIndex
+            );
+
+        if (
+            cached &&
+            cached.data
+        ) {
+
+            setText(
+                "duaPageTitle",
+                getEntryTitle(
+                    entries[
+                        currentEntryIndex
+                    ],
+                    currentEntryIndex
+                )
+            );
+
+            renderDua(
+                cached.data
+            );
+        }
+    }
+
+
+    /*
+     * Update audio player text
+     * without stopping audio.
+     */
+
+    if (
+        currentEntryIndex >= 0 &&
+        entries[currentEntryIndex]
+    ) {
+
+        updateAudioPlayer(
+            getEntryTitle(
+                entries[
+                    currentEntryIndex
+                ],
+                currentEntryIndex
+            ),
+            currentPartIndex >= 0
+                ? currentPartIndex + 1
+                : 0,
+            currentEntryParts.length
+        );
+    }
+
 
     updatePlayButton(
         currentAudio &&
@@ -224,18 +504,22 @@ function hideAllPages() {
         "duaHome",
         "entryPage",
         "duaPage"
-    ].forEach((id) => {
+    ].forEach(
+        (id) => {
 
-        const element =
-            document.getElementById(id);
+            const element =
+                document.getElementById(
+                    id
+                );
 
-        if (element) {
-            element.classList.add(
-                "hidden"
-            );
+            if (element) {
+
+                element.classList.add(
+                    "hidden"
+                );
+            }
         }
-
-    });
+    );
 }
 
 
@@ -243,20 +527,26 @@ function hideAllPages() {
    API
 ========================================================= */
 
-async function apiFetch(url) {
+async function apiFetch(
+    url
+) {
 
     const response =
         await fetch(
             url,
             {
                 method: "GET",
+
                 headers: {
                     Accept:
                         "application/json"
                 },
-                cache: "no-store"
+
+                cache:
+                    "no-store"
             }
         );
+
 
     if (!response.ok) {
 
@@ -266,18 +556,26 @@ async function apiFetch(url) {
         );
     }
 
+
     return await response.json();
 }
 
+
+/* =========================================================
+   GET LIST
+========================================================= */
 
 function getList(
     data,
     possibleKeys = []
 ) {
 
-    if (Array.isArray(data)) {
+    if (
+        Array.isArray(data)
+    ) {
         return data;
     }
+
 
     if (
         !data ||
@@ -285,6 +583,7 @@ function getList(
     ) {
         return [];
     }
+
 
     for (
         const key of possibleKeys
@@ -299,15 +598,20 @@ function getList(
         }
     }
 
+
     if (
-        Array.isArray(data.data)
+        Array.isArray(
+            data.data
+        )
     ) {
         return data.data;
     }
 
+
     if (
         data.data &&
-        typeof data.data === "object"
+        typeof data.data ===
+            "object"
     ) {
 
         for (
@@ -319,17 +623,183 @@ function getList(
                     data.data[key]
                 )
             ) {
+
                 return data.data[key];
             }
         }
     }
+
 
     return [];
 }
 
 
 /* =========================================================
-   LOCALIZED TEXT
+   LOCALIZED VALUE
+========================================================= */
+
+function localizedValue(
+    value,
+    language
+) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+        return "";
+    }
+
+
+    if (
+        typeof value ===
+        "string"
+    ) {
+
+        return value.trim();
+    }
+
+
+    if (
+        Array.isArray(value)
+    ) {
+
+        for (
+            const item of value
+        ) {
+
+            const result =
+                localizedValue(
+                    item,
+                    language
+                );
+
+            if (result) {
+                return result;
+            }
+        }
+
+        return "";
+    }
+
+
+    if (
+        typeof value !==
+        "object"
+    ) {
+        return "";
+    }
+
+
+    /*
+     * Direct language keys.
+     */
+
+    const directKeys = [
+
+        language,
+
+        language === "bn"
+            ? "bangla"
+            : "",
+
+        language === "bn"
+            ? "bengali"
+            : "",
+
+        language === "hi"
+            ? "hindi"
+            : "",
+
+        language === "en"
+            ? "english"
+            : "",
+
+        "text",
+        "value",
+        "title",
+        "name"
+    ];
+
+
+    for (
+        const key of directKeys
+    ) {
+
+        if (!key) {
+            continue;
+        }
+
+        if (
+            Object.prototype
+                .hasOwnProperty
+                .call(
+                    value,
+                    key
+                )
+        ) {
+
+            const result =
+                localizedValue(
+                    value[key],
+                    language
+                );
+
+            if (result) {
+                return result;
+            }
+        }
+    }
+
+
+    /*
+     * Fallback order.
+     */
+
+    const fallbackKeys = [
+
+        "en",
+        "bn",
+        "hi",
+        "english",
+        "bengali",
+        "bangla",
+        "hindi"
+    ];
+
+
+    for (
+        const key of fallbackKeys
+    ) {
+
+        if (
+            Object.prototype
+                .hasOwnProperty
+                .call(
+                    value,
+                    key
+                )
+        ) {
+
+            const result =
+                localizedValue(
+                    value[key],
+                    language
+                );
+
+            if (result) {
+                return result;
+            }
+        }
+    }
+
+
+    return "";
+}
+
+
+/* =========================================================
+   LOCALIZED OBJECT FIELD
 ========================================================= */
 
 function localized(
@@ -342,43 +812,43 @@ function localized(
         return "";
     }
 
+
     for (
         const key of keys
     ) {
 
-        const value =
-            object[key];
-
         if (
-            typeof value === "string" &&
-            value.trim()
+            !Object.prototype
+                .hasOwnProperty
+                .call(
+                    object,
+                    key
+                )
         ) {
-            return value.trim();
+            continue;
         }
 
-        if (
-            value &&
-            typeof value === "object"
-        ) {
 
-            const translated =
-                value[language] ||
-                value.en ||
-                value.bn ||
-                value.hi;
+        const result =
+            localizedValue(
+                object[key],
+                language
+            );
 
-            if (
-                typeof translated === "string" &&
-                translated.trim()
-            ) {
-                return translated.trim();
-            }
+
+        if (result) {
+            return result;
         }
     }
+
 
     return "";
 }
 
+
+/* =========================================================
+   CHAPTER TITLE
+========================================================= */
 
 function getChapterTitle(
     chapter,
@@ -393,21 +863,30 @@ function getChapterTitle(
                 "title",
                 "name",
                 "chapterTitle",
+                "chapter_title",
+                "chapterName",
                 "chapter_name"
             ]
         );
+
 
     if (title) {
         return title;
     }
 
+
     return (
-        TEXT[currentLanguage].chapters +
+        TEXT[currentLanguage]
+            .chapters +
         " " +
         (index + 1)
     );
 }
 
+
+/* =========================================================
+   ENTRY TITLE
+========================================================= */
 
 function getEntryTitle(
     entry,
@@ -422,16 +901,21 @@ function getEntryTitle(
                 "title",
                 "name",
                 "entryTitle",
-                "entry_title"
+                "entry_title",
+                "entryName",
+                "entry_name"
             ]
         );
+
 
     if (title) {
         return title;
     }
 
+
     return (
-        TEXT[currentLanguage].entries +
+        TEXT[currentLanguage]
+            .entries +
         " " +
         (index + 1)
     );
@@ -448,40 +932,54 @@ function createAudioObject() {
         return;
     }
 
+
     currentAudio =
         new Audio();
 
+
     currentAudio.preload =
         "auto";
+
 
     currentAudio.addEventListener(
         "timeupdate",
         updateAudioProgress
     );
 
+
     currentAudio.addEventListener(
         "loadedmetadata",
         updateAudioDuration
     );
+
 
     currentAudio.addEventListener(
         "ended",
         handleAudioEnded
     );
 
+
     currentAudio.addEventListener(
         "play",
         () => {
-            updatePlayButton(true);
+
+            updatePlayButton(
+                true
+            );
         }
     );
+
 
     currentAudio.addEventListener(
         "pause",
         () => {
-            updatePlayButton(false);
+
+            updatePlayButton(
+                false
+            );
         }
     );
+
 
     currentAudio.addEventListener(
         "error",
@@ -490,23 +988,32 @@ function createAudioObject() {
 }
 
 
+/* =========================================================
+   STOP AUDIO
+========================================================= */
+
 function stopCurrentAudio() {
 
     audioRequestId++;
 
-    isAudioLoading = false;
+    isAudioLoading =
+        false;
+
 
     if (!currentAudio) {
         return;
     }
 
+
     try {
 
         currentAudio.pause();
 
+
         currentAudio.removeAttribute(
             "src"
         );
+
 
         currentAudio.load();
 
@@ -518,27 +1025,36 @@ function stopCurrentAudio() {
         );
     }
 
-    updatePlayButton(false);
+
+    updatePlayButton(
+        false
+    );
+
 
     resetAudioProgress();
 }
 
 
 /* =========================================================
-   AUDIO EXTRACTION
+   EXTRACT AUDIO PARTS
 ========================================================= */
 
-function extractAudioParts(data) {
+function extractAudioParts(
+    data
+) {
 
     const parts = [];
+
 
     if (
         !Array.isArray(
             data?.variations
         )
     ) {
+
         return parts;
     }
+
 
     data.variations.forEach(
         (
@@ -551,8 +1067,10 @@ function extractAudioParts(data) {
                     variation?.steps
                 )
             ) {
+
                 return;
             }
+
 
             variation.steps.forEach(
                 (
@@ -565,8 +1083,10 @@ function extractAudioParts(data) {
                             step?.recordings
                         )
                     ) {
+
                         return;
                     }
+
 
                     step.recordings.forEach(
                         (
@@ -594,7 +1114,8 @@ function extractAudioParts(data) {
 
                                     durationSeconds:
                                         Number(
-                                            recording.durationSeconds
+                                            recording
+                                                .durationSeconds
                                         ) || 0
                                 });
                             }
@@ -605,12 +1126,13 @@ function extractAudioParts(data) {
         }
     );
 
+
     return parts;
 }
 
 
 /* =========================================================
-   ENTRY DATA
+   LOAD ENTRY DATA
 ========================================================= */
 
 async function loadEntryData(
@@ -621,36 +1143,47 @@ async function loadEntryData(
         entryIndex < 0 ||
         entryIndex >= entries.length
     ) {
+
         return null;
     }
+
 
     const cached =
         chapterAudioCache.get(
             entryIndex
         );
 
+
     if (
         cached &&
         cached.data
     ) {
+
         return cached.data;
     }
 
+
     const entry =
-        entries[entryIndex];
+        entries[
+            entryIndex
+        ];
+
 
     if (!entry) {
         return null;
     }
+
 
     const entryId =
         entry.id ||
         entry.entryId ||
         "";
 
+
     if (!entryId) {
         return null;
     }
+
 
     const url =
         API_BASE +
@@ -659,25 +1192,38 @@ async function loadEntryData(
             entryId
         );
 
+
     const data =
-        await apiFetch(url);
+        await apiFetch(
+            url
+        );
+
 
     const parts =
         extractAudioParts(
             data
         );
 
+
     chapterAudioCache.set(
         entryIndex,
         {
-            data: data,
-            parts: parts
+            data:
+                data,
+
+            parts:
+                parts
         }
     );
+
 
     return data;
 }
 
+
+/* =========================================================
+   LOAD ENTRY AUDIO PARTS
+========================================================= */
 
 async function loadEntryParts(
     entryIndex
@@ -687,39 +1233,52 @@ async function loadEntryParts(
         entryIndex < 0 ||
         entryIndex >= entries.length
     ) {
+
         return [];
     }
+
 
     const cached =
         chapterAudioCache.get(
             entryIndex
         );
 
+
     if (cached) {
-        return cached.parts || [];
+
+        return cached.parts ||
+            [];
     }
+
 
     const data =
         await loadEntryData(
             entryIndex
         );
 
+
     if (!data) {
         return [];
     }
+
 
     const parts =
         extractAudioParts(
             data
         );
 
+
     chapterAudioCache.set(
         entryIndex,
         {
-            data: data,
-            parts: parts
+            data:
+                data,
+
+            parts:
+                parts
         }
     );
+
 
     return parts;
 }
@@ -737,14 +1296,19 @@ async function playAudioPart(
 
     createAudioObject();
 
+
     if (isAudioLoading) {
         return false;
     }
 
-    isAudioLoading = true;
+
+    isAudioLoading =
+        true;
+
 
     const requestId =
         ++audioRequestId;
+
 
     try {
 
@@ -753,65 +1317,84 @@ async function playAudioPart(
                 entryIndex
             );
 
+
         if (
             requestId !==
             audioRequestId
         ) {
+
             return false;
         }
+
 
         if (
             !parts.length
         ) {
+
             return false;
         }
+
 
         if (
             partIndex < 0 ||
             partIndex >= parts.length
         ) {
+
             return false;
         }
+
 
         const data =
             await loadEntryData(
                 entryIndex
             );
 
+
         if (
             requestId !==
             audioRequestId
         ) {
+
             return false;
         }
+
 
         if (!data) {
             return false;
         }
 
+
         currentEntryIndex =
             entryIndex;
+
 
         currentEntryParts =
             parts;
 
+
         currentPartIndex =
             partIndex;
 
+
         const title =
             getEntryTitle(
-                entries[entryIndex],
+                entries[
+                    entryIndex
+                ],
                 entryIndex
             );
+
 
         setText(
             "duaPageTitle",
             title
         );
 
+
         renderDua(
             data
         );
+
 
         updateAudioPlayer(
             title,
@@ -819,14 +1402,21 @@ async function playAudioPart(
             parts.length
         );
 
+
         resetAudioProgress();
+
 
         currentAudio.pause();
 
+
         currentAudio.src =
-            parts[partIndex].url;
+            parts[
+                partIndex
+            ].url;
+
 
         currentAudio.load();
+
 
         if (autoPlay) {
 
@@ -849,6 +1439,7 @@ async function playAudioPart(
             }
         }
 
+
         return true;
 
     } catch (error) {
@@ -862,7 +1453,8 @@ async function playAudioPart(
 
     } finally {
 
-        isAudioLoading = false;
+        isAudioLoading =
+            false;
     }
 }
 
@@ -876,15 +1468,20 @@ async function playNextPart() {
     if (
         currentEntryIndex < 0
     ) {
+
         return false;
     }
 
+
     /*
-     * 1. Next part of same Dua
+     * Same Dua:
+     * next audio part.
      */
 
     const parts =
-        currentEntryParts || [];
+        currentEntryParts ||
+        [];
+
 
     if (
         currentPartIndex + 1 <
@@ -898,6 +1495,7 @@ async function playNextPart() {
                 true
             );
 
+
         if (played) {
             return true;
         }
@@ -905,7 +1503,8 @@ async function playNextPart() {
 
 
     /*
-     * 2. Next Dua of same Chapter
+     * Same Chapter:
+     * next Dua with audio.
      */
 
     for (
@@ -922,6 +1521,7 @@ async function playNextPart() {
                 i
             );
 
+
         if (
             nextParts.length
         ) {
@@ -933,6 +1533,7 @@ async function playNextPart() {
                     true
                 );
 
+
             if (played) {
                 return true;
             }
@@ -941,8 +1542,7 @@ async function playNextPart() {
 
 
     /*
-     * 3. Current Chapter finished.
-     *    Move to next Chapter.
+     * Next Chapter.
      */
 
     return await playNextChapter();
@@ -958,12 +1558,14 @@ async function playPreviousPart() {
     if (
         currentEntryIndex < 0
     ) {
+
         return false;
     }
 
 
     /*
-     * Previous part of same Dua
+     * Same Dua:
+     * previous part.
      */
 
     if (
@@ -979,7 +1581,7 @@ async function playPreviousPart() {
 
 
     /*
-     * Previous Dua of same Chapter
+     * Previous Dua.
      */
 
     for (
@@ -996,6 +1598,7 @@ async function playPreviousPart() {
                 i
             );
 
+
         if (
             previousParts.length
         ) {
@@ -1010,8 +1613,7 @@ async function playPreviousPart() {
 
 
     /*
-     * Beginning of Chapter.
-     * Move to previous Chapter.
+     * Previous Chapter.
      */
 
     return await playPreviousChapter();
@@ -1027,11 +1629,15 @@ async function loadChapterEntries(
 ) {
 
     const chapter =
-        chapters[chapterIndex];
+        chapters[
+            chapterIndex
+        ];
+
 
     if (!chapter) {
         return [];
     }
+
 
     const chapterId =
         chapter.id ||
@@ -1039,9 +1645,11 @@ async function loadChapterEntries(
         chapter.slug ||
         "";
 
+
     if (!chapterId) {
         return [];
     }
+
 
     const url =
         API_BASE +
@@ -1053,10 +1661,12 @@ async function loadChapterEntries(
         ) +
         "/entries";
 
+
     const data =
         await apiFetch(
             url
         );
+
 
     return getList(
         data,
@@ -1093,14 +1703,18 @@ async function playNextChapter() {
                     chapterIndex
                 );
 
+
             if (
                 !newEntries.length
             ) {
+
                 continue;
             }
 
+
             currentChapterIndex =
                 chapterIndex;
+
 
             currentChapterId =
                 chapters[
@@ -1114,6 +1728,7 @@ async function playNextChapter() {
                 ].slug ||
                 "";
 
+
             currentChapterTitle =
                 getChapterTitle(
                     chapters[
@@ -1122,24 +1737,26 @@ async function playNextChapter() {
                     chapterIndex
                 );
 
+
             entries =
                 newEntries;
+
 
             chapterAudioCache =
                 new Map();
 
+
             currentEntryIndex =
                 -1;
+
 
             currentPartIndex =
                 -1;
 
+
             currentEntryParts =
                 [];
 
-            /*
-             * Find first Dua with audio.
-             */
 
             for (
                 let i = 0;
@@ -1154,22 +1771,27 @@ async function playNextChapter() {
                         i
                     );
 
+
                 if (
                     parts.length
                 ) {
 
                     hideAllPages();
 
+
                     const duaPage =
                         document.getElementById(
                             "duaPage"
                         );
 
+
                     if (duaPage) {
+
                         duaPage.classList.remove(
                             "hidden"
                         );
                     }
+
 
                     return await playAudioPart(
                         i,
@@ -1188,10 +1810,6 @@ async function playNextChapter() {
         }
     }
 
-
-    /*
-     * All chapters finished.
-     */
 
     stopCurrentAudio();
 
@@ -1221,14 +1839,18 @@ async function playPreviousChapter() {
                     chapterIndex
                 );
 
+
             if (
                 !newEntries.length
             ) {
+
                 continue;
             }
 
+
             currentChapterIndex =
                 chapterIndex;
+
 
             currentChapterId =
                 chapters[
@@ -1242,6 +1864,7 @@ async function playPreviousChapter() {
                 ].slug ||
                 "";
 
+
             currentChapterTitle =
                 getChapterTitle(
                     chapters[
@@ -1250,25 +1873,26 @@ async function playPreviousChapter() {
                     chapterIndex
                 );
 
+
             entries =
                 newEntries;
+
 
             chapterAudioCache =
                 new Map();
 
+
             currentEntryIndex =
                 -1;
+
 
             currentPartIndex =
                 -1;
 
+
             currentEntryParts =
                 [];
 
-            /*
-             * Search backwards for
-             * last Dua with audio.
-             */
 
             for (
                 let i =
@@ -1284,22 +1908,27 @@ async function playPreviousChapter() {
                         i
                     );
 
+
                 if (
                     parts.length
                 ) {
 
                     hideAllPages();
 
+
                     const duaPage =
                         document.getElementById(
                             "duaPage"
                         );
 
+
                     if (duaPage) {
+
                         duaPage.classList.remove(
                             "hidden"
                         );
                     }
+
 
                     return await playAudioPart(
                         i,
@@ -1317,6 +1946,7 @@ async function playPreviousChapter() {
             );
         }
     }
+
 
     return false;
 }
@@ -1356,8 +1986,7 @@ async function toggleAudioPlay() {
 
 
     /*
-     * If no source is loaded,
-     * start from current Dua.
+     * No audio source yet.
      */
 
     if (
@@ -1375,14 +2004,15 @@ async function toggleAudioPlay() {
                     true
                 );
 
+
             if (played) {
                 return;
             }
         }
 
+
         /*
-         * If current Dua has no audio,
-         * search forward.
+         * Search forward.
          */
 
         for (
@@ -1402,6 +2032,7 @@ async function toggleAudioPlay() {
                     i
                 );
 
+
             if (
                 parts.length
             ) {
@@ -1413,11 +2044,13 @@ async function toggleAudioPlay() {
                         true
                     );
 
+
                 if (played) {
                     return;
                 }
             }
         }
+
 
         await playNextChapter();
 
@@ -1426,7 +2059,7 @@ async function toggleAudioPlay() {
 
 
     /*
-     * Resume
+     * Resume.
      */
 
     if (
@@ -1457,7 +2090,7 @@ async function toggleAudioPlay() {
 
 
 /* =========================================================
-   AUDIO PLAYER UI
+   AUDIO PLAYER
 ========================================================= */
 
 function createAudioPlayer() {
@@ -1466,18 +2099,24 @@ function createAudioPlayer() {
         return;
     }
 
-    audioPlayerCreated = true;
+
+    audioPlayerCreated =
+        true;
+
 
     const player =
         document.createElement(
             "div"
         );
 
+
     player.id =
         "duaAudioPlayer";
 
+
     player.className =
         "dua-audio-player hidden";
+
 
     player.innerHTML = `
 
@@ -1497,6 +2136,7 @@ function createAudioPlayer() {
         <div
             class="dua-audio-progress-wrap"
         >
+
             <input
                 type="range"
                 id="audioProgress"
@@ -1505,18 +2145,25 @@ function createAudioPlayer() {
                 value="0"
                 step="0.1"
             >
+
         </div>
 
         <div
             class="dua-audio-time"
         >
-            <span id="audioCurrentTime">
+
+            <span
+                id="audioCurrentTime"
+            >
                 0:00
             </span>
 
-            <span id="audioDuration">
+            <span
+                id="audioDuration"
+            >
                 0:00
             </span>
+
         </div>
 
         <div
@@ -1550,6 +2197,7 @@ function createAudioPlayer() {
         </div>
     `;
 
+
     document.body.appendChild(
         player
     );
@@ -1560,15 +2208,18 @@ function createAudioPlayer() {
             "audioPrevious"
         );
 
+
     const playButton =
         document.getElementById(
             "audioPlay"
         );
 
+
     const nextButton =
         document.getElementById(
             "audioNext"
         );
+
 
     const progress =
         document.getElementById(
@@ -1640,14 +2291,20 @@ function createAudioPlayer() {
 }
 
 
+/* =========================================================
+   SHOW AUDIO PLAYER
+========================================================= */
+
 function showAudioPlayer() {
 
     createAudioPlayer();
+
 
     const player =
         document.getElementById(
             "duaAudioPlayer"
         );
+
 
     if (player) {
 
@@ -1658,12 +2315,17 @@ function showAudioPlayer() {
 }
 
 
+/* =========================================================
+   HIDE AUDIO PLAYER
+========================================================= */
+
 function hideAudioPlayer() {
 
     const player =
         document.getElementById(
             "duaAudioPlayer"
         );
+
 
     if (player) {
 
@@ -1672,9 +2334,14 @@ function hideAudioPlayer() {
         );
     }
 
+
     stopCurrentAudio();
 }
 
+
+/* =========================================================
+   UPDATE AUDIO PLAYER
+========================================================= */
 
 function updateAudioPlayer(
     title,
@@ -1684,13 +2351,16 @@ function updateAudioPlayer(
 
     showAudioPlayer();
 
+
     setText(
         "audioTitle",
         title
     );
 
+
     setText(
         "audioPart",
+
         TEXT[currentLanguage].part +
         " " +
         partNumber +
@@ -1699,6 +2369,10 @@ function updateAudioPlayer(
     );
 }
 
+
+/* =========================================================
+   PLAY BUTTON
+========================================================= */
 
 function updatePlayButton(
     playing
@@ -1709,17 +2383,21 @@ function updatePlayButton(
             "audioPlay"
         );
 
+
     if (!button) {
         return;
     }
+
 
     button.textContent =
         playing
             ? "❚❚"
             : "▶";
 
+
     button.setAttribute(
         "aria-label",
+
         playing
             ? TEXT[currentLanguage].pause
             : TEXT[currentLanguage].play
@@ -1727,21 +2405,28 @@ function updatePlayButton(
 }
 
 
+/* =========================================================
+   AUDIO PROGRESS
+========================================================= */
+
 function updateAudioProgress() {
 
     if (!currentAudio) {
         return;
     }
 
+
     const progress =
         document.getElementById(
             "audioProgress"
         );
 
+
     const currentTime =
         document.getElementById(
             "audioCurrentTime"
         );
+
 
     if (
         progress &&
@@ -1759,6 +2444,7 @@ function updateAudioProgress() {
             100;
     }
 
+
     if (currentTime) {
 
         currentTime.textContent =
@@ -1769,16 +2455,22 @@ function updateAudioProgress() {
 }
 
 
+/* =========================================================
+   AUDIO DURATION
+========================================================= */
+
 function updateAudioDuration() {
 
     if (!currentAudio) {
         return;
     }
 
+
     const duration =
         document.getElementById(
             "audioDuration"
         );
+
 
     if (duration) {
 
@@ -1790,6 +2482,10 @@ function updateAudioDuration() {
 }
 
 
+/* =========================================================
+   RESET AUDIO PROGRESS
+========================================================= */
+
 function resetAudioProgress() {
 
     const progress =
@@ -1797,33 +2493,48 @@ function resetAudioProgress() {
             "audioProgress"
         );
 
+
     const currentTime =
         document.getElementById(
             "audioCurrentTime"
         );
+
 
     const duration =
         document.getElementById(
             "audioDuration"
         );
 
+
     if (progress) {
-        progress.value = 0;
+
+        progress.value =
+            0;
     }
 
+
     if (currentTime) {
+
         currentTime.textContent =
             "0:00";
     }
 
+
     if (duration) {
+
         duration.textContent =
             "0:00";
     }
 }
 
 
-function seekAudio(event) {
+/* =========================================================
+   SEEK
+========================================================= */
+
+function seekAudio(
+    event
+) {
 
     if (
         !currentAudio ||
@@ -1831,8 +2542,10 @@ function seekAudio(event) {
             currentAudio.duration
         )
     ) {
+
         return;
     }
+
 
     currentAudio.currentTime =
         (
@@ -1845,24 +2558,36 @@ function seekAudio(event) {
 }
 
 
-function formatTime(seconds) {
+/* =========================================================
+   FORMAT TIME
+========================================================= */
+
+function formatTime(
+    seconds
+) {
 
     if (
-        !Number.isFinite(seconds) ||
+        !Number.isFinite(
+            seconds
+        ) ||
         seconds < 0
     ) {
+
         return "0:00";
     }
+
 
     const minutes =
         Math.floor(
             seconds / 60
         );
 
+
     const remainingSeconds =
         Math.floor(
             seconds % 60
         );
+
 
     return (
         minutes +
@@ -1877,6 +2602,10 @@ function formatTime(seconds) {
 }
 
 
+/* =========================================================
+   AUDIO ERROR
+========================================================= */
+
 function handleAudioError(
     event
 ) {
@@ -1886,10 +2615,11 @@ function handleAudioError(
         event
     );
 
+
     updatePlayButton(
         false
     );
-            }
+}
 
 
 /* =========================================================
@@ -1903,7 +2633,9 @@ async function loadChapters() {
         currentLanguage =
             getLanguage();
 
+
         applyLanguage();
+
 
         document
             .getElementById(
@@ -1947,7 +2679,9 @@ async function loadChapters() {
 
         renderChapters();
 
+
         hideAllPages();
+
 
         document
             .getElementById(
@@ -1956,6 +2690,7 @@ async function loadChapters() {
             ?.classList.remove(
                 "hidden"
             );
+
 
         document
             .getElementById(
@@ -1971,6 +2706,7 @@ async function loadChapters() {
             "loadChapters error:",
             error
         );
+
 
         showError();
     }
@@ -1988,11 +2724,15 @@ function renderChapters() {
             "chapterList"
         );
 
+
     if (!box) {
         return;
     }
 
-    box.innerHTML = "";
+
+    box.innerHTML =
+        "";
+
 
     chapters.forEach(
         (
@@ -2005,17 +2745,21 @@ function renderChapters() {
                     "button"
                 );
 
+
             button.type =
                 "button";
 
+
             button.className =
                 "chapter-item";
+
 
             button.textContent =
                 getChapterTitle(
                     chapter,
                     index
                 );
+
 
             button.addEventListener(
                 "click",
@@ -2027,6 +2771,7 @@ function renderChapters() {
                     );
                 }
             );
+
 
             box.appendChild(
                 button
@@ -2049,10 +2794,13 @@ async function openChapter(
         return;
     }
 
+
     stopCurrentAudio();
+
 
     currentChapterIndex =
         index;
+
 
     currentChapterId =
         chapter.id ||
@@ -2060,25 +2808,32 @@ async function openChapter(
         chapter.slug ||
         "";
 
+
     currentChapterTitle =
         getChapterTitle(
             chapter,
             index
         );
 
+
     currentEntryIndex =
         -1;
+
 
     currentPartIndex =
         -1;
 
+
     currentEntryParts =
         [];
+
 
     chapterAudioCache =
         new Map();
 
+
     hideAudioPlayer();
+
 
     hideAllPages();
 
@@ -2090,6 +2845,7 @@ async function openChapter(
                 index
             );
 
+
         if (
             !entries.length
         ) {
@@ -2099,12 +2855,15 @@ async function openChapter(
             );
         }
 
+
         setText(
             "entryPageTitle",
             currentChapterTitle
         );
 
+
         renderEntries();
+
 
         document
             .getElementById(
@@ -2120,6 +2879,7 @@ async function openChapter(
             "openChapter error:",
             error
         );
+
 
         showError();
     }
@@ -2137,11 +2897,15 @@ function renderEntries() {
             "entryList"
         );
 
+
     if (!box) {
         return;
     }
 
-    box.innerHTML = "";
+
+    box.innerHTML =
+        "";
+
 
     entries.forEach(
         (
@@ -2154,17 +2918,21 @@ function renderEntries() {
                     "button"
                 );
 
+
             button.type =
                 "button";
 
+
             button.className =
                 "entry-item";
+
 
             button.textContent =
                 getEntryTitle(
                     entry,
                     index
                 );
+
 
             button.addEventListener(
                 "click",
@@ -2176,6 +2944,7 @@ function renderEntries() {
                     );
                 }
             );
+
 
             box.appendChild(
                 button
@@ -2198,27 +2967,35 @@ async function openEntry(
         return;
     }
 
+
     const entryId =
         entry.id ||
         entry.entryId ||
         "";
 
+
     if (!entryId) {
         return;
     }
 
+
     stopCurrentAudio();
+
 
     currentEntryIndex =
         index;
 
+
     currentPartIndex =
         -1;
+
 
     currentEntryParts =
         [];
 
+
     hideAllPages();
+
 
     document
         .getElementById(
@@ -2236,6 +3013,7 @@ async function openEntry(
                 index
             );
 
+
         if (!data) {
 
             throw new Error(
@@ -2243,21 +3021,28 @@ async function openEntry(
             );
         }
 
+
         const parts =
             extractAudioParts(
                 data
             );
 
+
         chapterAudioCache.set(
             index,
             {
-                data: data,
-                parts: parts
+                data:
+                    data,
+
+                parts:
+                    parts
             }
         );
 
+
         currentEntryParts =
             parts;
+
 
         setText(
             "duaPageTitle",
@@ -2266,6 +3051,7 @@ async function openEntry(
                 index
             )
         );
+
 
         renderDua(
             data
@@ -2276,14 +3062,9 @@ async function openEntry(
             parts.length
         ) {
 
-            /*
-             * Important:
-             * -1 means no source loaded yet.
-             * Play button will load Part 1.
-             */
-
             currentPartIndex =
                 -1;
+
 
             updateAudioPlayer(
                 getEntryTitle(
@@ -2293,6 +3074,7 @@ async function openEntry(
                 0,
                 parts.length
             );
+
 
             updatePlayButton(
                 false
@@ -2310,6 +3092,7 @@ async function openEntry(
             error
         );
 
+
         showError();
     }
 }
@@ -2319,18 +3102,24 @@ async function openEntry(
    RENDER DUA
 ========================================================= */
 
-function renderDua(data) {
+function renderDua(
+    data
+) {
 
     const box =
         document.getElementById(
             "duaContent"
         );
 
+
     if (!box) {
         return;
     }
 
-    box.innerHTML = "";
+
+    box.innerHTML =
+        "";
+
 
     let rendered =
         false;
@@ -2343,40 +3132,53 @@ function renderDua(data) {
     ) {
 
         data.variations.forEach(
-            (variation) => {
+            (
+                variation
+            ) => {
 
                 if (
                     !Array.isArray(
                         variation?.steps
                     )
                 ) {
+
                     return;
                 }
 
+
                 variation.steps.forEach(
-                    (step) => {
+                    (
+                        step
+                    ) => {
 
                         if (
                             !Array.isArray(
                                 step?.items
                             )
                         ) {
+
                             return;
                         }
 
+
                         step.items.forEach(
-                            (item) => {
+                            (
+                                item
+                            ) => {
 
                                 if (
                                     !item?.dua
                                 ) {
+
                                     return;
                                 }
+
 
                                 const card =
                                     renderDuaObject(
                                         item.dua
                                     );
+
 
                                 if (card) {
 
@@ -2409,7 +3211,7 @@ function renderDua(data) {
 
 
 /* =========================================================
-   DUA CARD
+   DUA OBJECT
 ========================================================= */
 
 function renderDuaObject(
@@ -2420,21 +3222,39 @@ function renderDuaObject(
         return null;
     }
 
+
     const card =
         document.createElement(
             "div"
         );
 
+
     card.className =
         "dua-card";
 
 
-    const arabic =
-        dua.arabic ||
-        dua.textArabic ||
-        dua.text_ar ||
-        "";
+    /*
+     * Arabic
+     */
 
+    const arabic =
+        localized(
+            dua,
+            "ar",
+            [
+                "arabic",
+                "textArabic",
+                "text_ar",
+                "arabicText",
+                "text"
+            ]
+        );
+
+
+    /*
+     * Transliteration:
+     * Normally English/Latin based.
+     */
 
     const transliteration =
         localized(
@@ -2443,10 +3263,16 @@ function renderDuaObject(
             [
                 "transliteration",
                 "transliterationText",
-                "transliteration_en"
+                "transliteration_en",
+                "pronunciation"
             ]
         );
 
+
+    /*
+     * Translation / Meaning:
+     * Use currently selected language.
+     */
 
     const translation =
         localized(
@@ -2454,7 +3280,9 @@ function renderDuaObject(
             currentLanguage,
             [
                 "translation",
+                "translations",
                 "meaning",
+                "meanings",
                 "translationText",
                 "meaningText"
             ]
@@ -2465,19 +3293,24 @@ function renderDuaObject(
 
         addLabel(
             card,
-            TEXT[currentLanguage].arabic
+            TEXT[currentLanguage]
+                .arabic
         );
+
 
         const element =
             document.createElement(
                 "div"
             );
 
+
         element.className =
             "dua-arabic";
 
+
         element.textContent =
             arabic;
+
 
         card.appendChild(
             element
@@ -2489,19 +3322,24 @@ function renderDuaObject(
 
         addLabel(
             card,
-            TEXT[currentLanguage].transliteration
+            TEXT[currentLanguage]
+                .transliteration
         );
+
 
         const element =
             document.createElement(
                 "div"
             );
 
+
         element.className =
             "dua-transliteration";
 
+
         element.textContent =
             transliteration;
+
 
         card.appendChild(
             element
@@ -2513,19 +3351,24 @@ function renderDuaObject(
 
         addLabel(
             card,
-            TEXT[currentLanguage].translation
+            TEXT[currentLanguage]
+                .translation
         );
+
 
         const element =
             document.createElement(
                 "div"
             );
 
+
         element.className =
             "dua-translation";
 
+
         element.textContent =
             translation;
+
 
         card.appendChild(
             element
@@ -2538,23 +3381,29 @@ function renderDuaObject(
             dua
         );
 
+
     if (reference) {
 
         addLabel(
             card,
-            TEXT[currentLanguage].reference
+            TEXT[currentLanguage]
+                .reference
         );
+
 
         const element =
             document.createElement(
                 "div"
             );
 
+
         element.className =
             "dua-reference";
 
+
         element.textContent =
             reference;
+
 
         card.appendChild(
             element
@@ -2563,8 +3412,12 @@ function renderDuaObject(
 
 
     return card;
-}
+    }
 
+
+/* =========================================================
+   LABEL
+========================================================= */
 
 function addLabel(
     parent,
@@ -2576,17 +3429,24 @@ function addLabel(
             "div"
         );
 
+
     label.className =
         "dua-label";
 
+
     label.textContent =
         text;
+
 
     parent.appendChild(
         label
     );
 }
 
+
+/* =========================================================
+   REFERENCE
+========================================================= */
 
 function getReferenceText(
     dua
@@ -2598,28 +3458,36 @@ function getReferenceText(
         dua?.source ||
         "";
 
+
     if (
         typeof reference ===
         "string"
     ) {
+
         return reference;
     }
 
 
     if (
-        Array.isArray(reference)
+        Array.isArray(
+            reference
+        )
     ) {
 
         return reference
             .map(
-                (item) => {
+                (
+                    item
+                ) => {
 
                     if (
                         typeof item ===
                         "string"
                     ) {
+
                         return item;
                     }
+
 
                     return (
                         item?.text ||
@@ -2630,14 +3498,16 @@ function getReferenceText(
                 }
             )
             .filter(Boolean)
-            .join(" • ");
+            .join(
+                " • "
+            );
     }
 
 
     if (
         reference &&
         typeof reference ===
-        "object"
+            "object"
     ) {
 
         return (
@@ -2668,12 +3538,16 @@ function showError() {
             "hidden"
         );
 
+
     hideAllPages();
+
 
     setText(
         "errorText",
-        TEXT[currentLanguage].error
+        TEXT[currentLanguage]
+            .error
     );
+
 
     document
         .getElementById(
@@ -2686,25 +3560,31 @@ function showError() {
 
 
 /* =========================================================
-   NAVIGATION
+   HOME
 ========================================================= */
 
 function goHome() {
 
     stopCurrentAudio();
 
+
     currentEntryIndex =
         -1;
+
 
     currentPartIndex =
         -1;
 
+
     currentEntryParts =
         [];
 
+
     hideAudioPlayer();
 
+
     hideAllPages();
+
 
     document
         .getElementById(
@@ -2716,22 +3596,32 @@ function goHome() {
 }
 
 
+/* =========================================================
+   BACK TO ENTRY LIST
+========================================================= */
+
 function goEntries() {
 
     stopCurrentAudio();
 
+
     currentEntryIndex =
         -1;
+
 
     currentPartIndex =
         -1;
 
+
     currentEntryParts =
         [];
 
+
     hideAudioPlayer();
 
+
     hideAllPages();
+
 
     document
         .getElementById(
@@ -2741,10 +3631,12 @@ function goEntries() {
             "hidden"
         );
 
+
     setText(
         "entryPageTitle",
         currentChapterTitle
     );
+
 
     renderEntries();
 }
@@ -2760,6 +3652,7 @@ function setupBackButton() {
         document.getElementById(
             "entryBackButton"
         );
+
 
     if (button) {
 
@@ -2778,6 +3671,7 @@ function setupEntryBack() {
             "duaBackButton"
         );
 
+
     if (button) {
 
         button.addEventListener(
@@ -2789,6 +3683,7 @@ function setupEntryBack() {
 
 
 function setupDuaBack() {
+
     /*
      * Kept for compatibility.
      */
@@ -2801,6 +3696,7 @@ function setupRetry() {
         document.getElementById(
             "retryButton"
         );
+
 
     if (button) {
 
@@ -2816,6 +3712,7 @@ function setupRetry() {
                         "hidden"
                     );
 
+
                 loadChapters();
             }
         );
@@ -2829,35 +3726,92 @@ function setupRetry() {
 
 function setupLanguageWatcher() {
 
+    /*
+     * Storage event:
+     * useful when another tab/window
+     * changes the language.
+     */
+
     window.addEventListener(
         "storage",
-        (event) => {
+        (
+            event
+        ) => {
 
             if (
                 event.key !==
-                    "ibadatSettings" &&
+                    "appSettings" &&
                 event.key !==
-                    "appSettings"
+                    "ibadatSettings"
             ) {
+
                 return;
             }
 
-            const language =
-                getLanguage();
 
-            if (
-                language ===
-                currentLanguage
-            ) {
-                return;
-            }
-
-            currentLanguage =
-                language;
-
-            applyLanguage();
+            refreshLanguageIfChanged();
         }
     );
+
+
+    /*
+     * When returning to this page,
+     * check settings again.
+     */
+
+    window.addEventListener(
+        "pageshow",
+        () => {
+
+            refreshLanguageIfChanged();
+        }
+    );
+
+
+    document.addEventListener(
+        "visibilitychange",
+        () => {
+
+            if (
+                document.visibilityState ===
+                "visible"
+            ) {
+
+                refreshLanguageIfChanged();
+
+                applyDuaTheme();
+            }
+        }
+    );
+}
+
+
+/* =========================================================
+   REFRESH LANGUAGE IF CHANGED
+========================================================= */
+
+function refreshLanguageIfChanged() {
+
+    const language =
+        getLanguage();
+
+
+    if (
+        language ===
+        currentLanguage
+    ) {
+
+        applyDuaTheme();
+
+        return;
+    }
+
+
+    currentLanguage =
+        language;
+
+
+    applyLanguage();
 }
 
 
@@ -2871,22 +3825,34 @@ document.addEventListener(
 
         currentLanguage =
             getLanguage();
-        
+
+
         applyDuaTheme();
+
+
+        applyLanguage();
+
 
         setupBackButton();
 
+
         setupEntryBack();
+
 
         setupDuaBack();
 
+
         setupRetry();
+
 
         setupLanguageWatcher();
 
+
         createAudioObject();
 
+
         createAudioPlayer();
+
 
         loadChapters();
     }
