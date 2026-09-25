@@ -2,17 +2,20 @@
     box-sizing:border-box;
 }
 
+
 body{
     margin:0;
     font-family:sans-serif;
     background:#eef7f0;
     color:#1b1b1b;
+
+    padding-bottom:20px;
 }
 
 
-/* =========================
+/* =========================================
    MAIN
-========================= */
+========================================= */
 
 .main{
     padding:10px 10px 15px;
@@ -20,9 +23,9 @@ body{
 }
 
 
-/* =========================
+/* =========================================
    INTRO
-========================= */
+========================================= */
 
 .intro-card{
     background:#dcedc8;
@@ -32,10 +35,12 @@ body{
     text-align:center;
 }
 
+
 .intro-icon{
     font-size:34px;
     margin-bottom:7px;
 }
+
 
 .intro-title{
     font-size:21px;
@@ -44,14 +49,15 @@ body{
     margin-bottom:7px;
 }
 
+
 .intro-text{
     display:none;
 }
 
 
-/* =========================
+/* =========================================
    CHAPTER LIST
-========================= */
+========================================= */
 
 .chapter-list{
     display:flex;
@@ -59,40 +65,58 @@ body{
     gap:8px;
 }
 
+
 .chapter-card{
     width:100%;
     background:#a5d6a7;
     border-radius:12px;
     padding:13px 12px;
+
     display:flex;
     align-items:center;
+
     cursor:pointer;
-    transition:transform .15s ease,box-shadow .15s ease;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
 }
+
 
 .chapter-card:active{
     transform:scale(.98);
-    box-shadow:0 3px 8px rgba(0,0,0,.12);
+
+    box-shadow:
+        0 3px 8px rgba(0,0,0,.12);
 }
+
 
 .chapter-number{
     width:36px;
     height:36px;
+
     border-radius:50%;
+
     background:#2e7d32;
     color:#fff;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     font-size:15px;
     font-weight:bold;
+
     flex-shrink:0;
+
     margin-right:10px;
 }
+
 
 .chapter-info{
     flex:1;
 }
+
 
 .chapter-title{
     font-size:15px;
@@ -101,6 +125,7 @@ body{
     line-height:1.35;
 }
 
+
 .chapter-arrow{
     font-size:22px;
     color:#1b5e20;
@@ -108,47 +133,62 @@ body{
 }
 
 
-/* =========================
+/* =========================================
    INNER HEADER
-========================= */
+========================================= */
 
 .inner-header{
     background:#2e7d32;
     color:#fff;
+
     min-height:50px;
+
     display:flex;
     align-items:center;
+
     padding:0 8px;
+
     margin:-8px -10px 12px;
+
     border-radius:0 0 12px 12px;
 }
+
 
 .inner-header button{
     width:38px;
     height:38px;
+
     border:none;
     border-radius:50%;
+
     background:transparent;
     color:#fff;
+
     font-size:25px;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     cursor:pointer;
 }
 
+
 .inner-header span{
     flex:1;
+
     text-align:center;
+
     font-size:18px;
     font-weight:bold;
+
     padding-right:38px;
 }
 
 
-/* =========================
+/* =========================================
    ENTRY LIST
-========================= */
+========================================= */
 
 .entry-list{
     display:flex;
@@ -156,18 +196,29 @@ body{
     gap:8px;
 }
 
+
 .entry-card{
     background:#a5d6a7;
+
     border-radius:12px;
+
     padding:13px 12px;
+
     cursor:pointer;
-    transition:transform .15s ease,box-shadow .15s ease;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
 }
+
 
 .entry-card:active{
     transform:scale(.98);
-    box-shadow:0 3px 8px rgba(0,0,0,.12);
+
+    box-shadow:
+        0 3px 8px rgba(0,0,0,.12);
 }
+
 
 .entry-number{
     font-size:11px;
@@ -175,6 +226,7 @@ body{
     color:#2e7d32;
     margin-bottom:4px;
 }
+
 
 .entry-title{
     font-size:15px;
@@ -184,143 +236,328 @@ body{
 }
 
 
-/* =========================
+/* =========================================
    DUA CONTENT
-========================= */
+========================================= */
 
 .dua-card{
     background:#dcedc8;
+
     border-radius:16px;
+
     padding:16px 13px;
+
     margin-bottom:12px;
 }
+
 
 .dua-title{
     font-size:19px;
     line-height:1.4;
+
     font-weight:bold;
+
     color:#1b5e20;
+
     text-align:center;
+
     margin-bottom:15px;
 }
 
+
 .dua-section-label{
     font-size:12px;
+
     font-weight:bold;
+
     color:#2e7d32;
+
     margin:12px 0 6px;
 }
 
+
 .dua-arabic{
     direction:rtl;
+
     text-align:right;
+
     font-size:24px;
+
     line-height:2;
+
     font-family:serif;
+
     margin:5px 0 14px;
 }
 
+
 .dua-transliteration{
     font-size:14px;
+
     line-height:1.7;
+
     font-style:italic;
+
     margin-bottom:13px;
 }
 
+
 .dua-translation{
     font-size:14px;
+
     line-height:1.65;
+
     font-weight:500;
 }
 
+
 .dua-reference{
     font-size:12px;
+
     line-height:1.5;
+
     margin-top:14px;
+
     padding-top:10px;
-    border-top:1px solid rgba(27,94,32,.25);
+
+    border-top:
+        1px solid
+        rgba(27,94,32,.25);
 }
+
 
 .dua-tags{
     display:flex;
+
     flex-wrap:wrap;
+
     gap:5px;
+
     margin-top:10px;
 }
 
+
 .dua-tag{
     background:#a5d6a7;
+
     color:#1b5e20;
+
     border-radius:20px;
+
     padding:4px 8px;
+
     font-size:10px;
+
     font-weight:bold;
 }
 
 
-/* =========================
-   AUDIO
-========================= */
-
 .dua-audio{
     width:100%;
+
     margin-top:12px;
 }
 
 
-/* =========================
+/* =========================================
    STATUS
-========================= */
+========================================= */
 
 .status-box{
     background:#dcedc8;
+
     border-radius:14px;
+
     padding:22px 15px;
+
     text-align:center;
+
     font-size:14px;
+
     font-weight:500;
 }
 
+
 .error-box{
     color:#8b1e1e;
+
     background:#ffebee;
 }
 
+
 .error-box button{
     margin-top:12px;
+
     border:none;
+
     border-radius:8px;
+
     padding:9px 15px;
+
     background:#2e7d32;
+
     color:#fff;
+
     font-size:13px;
+
     cursor:pointer;
 }
 
-
-/* =========================
-   HIDDEN
-========================= */
 
 .hidden{
     display:none !important;
 }
 
 
-/* =========================
+/* =========================================
+   AUDIO PLAYER
+========================================= */
+
+.dua-audio-player{
+    position:fixed;
+
+    left:10px;
+    right:10px;
+    bottom:10px;
+
+    z-index:9999;
+
+    background:#2e7d32;
+
+    color:#fff;
+
+    border-radius:16px;
+
+    padding:10px 12px;
+
+    box-shadow:
+        0 4px 18px
+        rgba(0,0,0,.28);
+}
+
+
+.audio-player-title{
+    text-align:center;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    margin-bottom:7px;
+}
+
+
+.audio-progress-row{
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+}
+
+
+.audio-progress-row span{
+    font-size:10px;
+
+    min-width:32px;
+
+    text-align:center;
+}
+
+
+#audioProgress{
+    flex:1;
+
+    height:4px;
+
+    margin:0;
+
+    padding:0;
+
+    accent-color:#ffffff;
+
+    cursor:pointer;
+}
+
+
+.audio-controls{
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:18px;
+
+    margin-top:6px;
+}
+
+
+.audio-controls button{
+    border:none;
+
+    background:transparent;
+
+    color:#fff;
+
+    font-size:22px;
+
+    width:40px;
+    height:34px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    cursor:pointer;
+
+    padding:0;
+}
+
+
+.audio-controls button:active{
+    transform:scale(.90);
+}
+
+
+#audioPlayPause{
+    width:44px;
+    height:44px;
+
+    border-radius:50%;
+
+    background:#ffffff;
+
+    color:#2e7d32;
+
+    font-size:20px;
+}
+
+
+/* =========================================
    DARK MODE
-========================= */
+========================================= */
 
 body.dark-mode{
     background:#121712;
+
     color:#eeeeee;
 }
+
 
 body.dark-mode .intro-card,
 body.dark-mode .dua-card,
 body.dark-mode .status-box{
     background:#263a28;
 }
+
 
 body.dark-mode .intro-title,
 body.dark-mode .chapter-title,
@@ -330,92 +567,146 @@ body.dark-mode .dua-title{
     color:#c8e6c9;
 }
 
+
 body.dark-mode .chapter-card,
 body.dark-mode .entry-card{
     background:#355a3a;
 }
 
+
 body.dark-mode .chapter-number{
     background:#2e7d32;
 }
+
 
 body.dark-mode .dua-section-label{
     color:#a5d6a7;
 }
 
+
 body.dark-mode .dua-reference{
-    border-top-color:rgba(200,230,201,.25);
+    border-top-color:
+        rgba(200,230,201,.25);
 }
+
 
 body.dark-mode .dua-tag{
     background:#355a3a;
+
     color:#c8e6c9;
 }
 
+
 body.dark-mode .error-box{
     background:#3b2022;
+
     color:#ffcdd2;
 }
 
 
-/* =========================
-   SMALL DEVICES
-========================= */
+body.dark-mode .dua-audio-player{
+    background:#355a3a;
+}
+
+
+/* =========================================
+   SMALL SCREEN
+========================================= */
 
 @media(max-width:360px){
 
     .main{
         padding-left:8px;
         padding-right:8px;
-        padding-top:57px;
+        padding-top:10px;
     }
+
 
     .intro-card{
         padding:15px 10px;
     }
 
+
     .intro-title{
         font-size:19px;
     }
 
+
     .intro-text{
-        font-size:12.5px;
+        display:none;
     }
+
 
     .chapter-card{
         padding:11px 9px;
     }
 
+
     .chapter-number{
         width:32px;
         height:32px;
+
         font-size:13px;
+
         margin-right:8px;
     }
+
 
     .chapter-title{
         font-size:14px;
     }
 
+
     .entry-title{
         font-size:14px;
     }
+
 
     .dua-card{
         padding:14px 10px;
     }
 
+
     .dua-title{
         font-size:18px;
     }
 
+
     .dua-arabic{
         font-size:21px;
+
         line-height:1.9;
     }
+
 
     .dua-transliteration,
     .dua-translation{
         font-size:13px;
     }
+
+
+    .dua-audio-player{
+        left:7px;
+        right:7px;
+        bottom:7px;
+
+        padding:9px 9px;
+    }
+
+
+    .audio-controls{
+        gap:13px;
+    }
+
+
+    .audio-controls button{
+        font-size:20px;
+    }
+
+
+    #audioPlayPause{
+        width:40px;
+        height:40px;
+    }
+
 }
