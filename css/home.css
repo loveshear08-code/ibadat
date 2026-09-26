@@ -184,7 +184,7 @@ width:100%;
 }
 
 .prayer-box{
-background:rgba(255,255,255,.82);
+background:rgba(255,255,255,.65);
 
 border-radius:10px;
 padding:6px;
@@ -218,7 +218,8 @@ flex:1;
 }
 
 .feature{
-background:rgba(255,255,255,.82);
+background:#dcedc8;
+}
 
 border-radius:12px;
 padding:12px;
