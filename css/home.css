@@ -49,7 +49,7 @@ padding:8px;
 .card{
 background:#ffffff;
 border-radius:16px;
-padding:0;
+padding:4;
 display:flex;
 flex-direction:column;
 justify-content:center;
@@ -118,7 +118,7 @@ background-position:center;
 background-repeat:no-repeat;
 
 border-radius:12px;
-padding:12px;
+padding:4px;
 }
 
 .status-left,
@@ -184,8 +184,8 @@ padding:0px;
 .prayer-box{
 background:#a8d5a0;
 
-border-radius:14px;
-padding:6px;
+border-radius:12px;
+padding:4px;
 
 font-size:14px;
 font-weight:bold;
