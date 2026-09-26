@@ -7,21 +7,18 @@
     --primary:#0F5132;
     --primary-dark:#0B3D26;
 
-    --secondary:#DDEFD8;
-
-    --card:#CFE8C8;
-
     --bg:#F8F6EE;
+
+    --card:#FFFFFF;
+
+    --feature:#BFE4B7;
 
     --text:#1E4620;
 
     --gold:#D4AF37;
 
     --danger:#C62828;
-
-    --white:#FFFFFF;
 }
-
 
 /* ===================================================
    RESET
@@ -51,7 +48,6 @@ body{
 
     overflow:hidden;
 }
-
 
 /* ===================================================
    TOP BAR
@@ -107,7 +103,6 @@ body{
     font-weight:600;
 }
 
-
 /* ===================================================
    MAIN
    =================================================== */
@@ -116,8 +111,9 @@ body{
 
     position:fixed;
 
-    top:56px;
-    bottom:56px;
+    top:50px;
+
+    bottom:50px;
 
     left:0;
     right:0;
@@ -133,7 +129,6 @@ body{
     overflow:hidden;
 }
 
-
 /* ===================================================
    COMMON CARD
    =================================================== */
@@ -142,11 +137,11 @@ body{
 
     width:100%;
 
-    background:var(--secondary);
+    background:#FFFFFF;
 
-    border-radius:24px;
+    border-radius:22px;
 
-    border:1px solid rgba(15,81,50,.08);
+    border:1px solid rgba(15,81,50,.06);
 
     box-shadow:
 
@@ -155,32 +150,26 @@ body{
     0 8px 18px rgba(0,0,0,.03);
 }
 
-
 /* ===================================================
-   3 EQUAL BOARDS
+   3 TOP BOARDS
    =================================================== */
 
 .bismillah-card,
 .status-card,
 .prayer-card{
 
-     flex:0 0 18%;
+    flex:0 0 15%;
 
-    min-height:120px;
+    min-height:90px;
+
+    background:#FFFFFF;
 }
 
-
 /* ===================================================
-   BISMILLAH CARD
+   BISMILLAH
    =================================================== */
 
 .bismillah-card{
-
-    flex:1;
-
-    min-height:90px
-
-    padding:8px;
 
     display:flex;
 
@@ -192,12 +181,9 @@ body{
 
     text-align:center;
 
-    background:#FFFFFF;
-
-    background-size:cover;
-
-    background-position:center;
+    padding:8px;
 }
+
 .bismillah-ar{
 
     font-size:26px;
@@ -206,25 +192,24 @@ body{
 
     color:var(--gold);
 
-    margin-bottom:0;
+    line-height:1.3;
 
-    line-height:1.2;
+    margin:0;
 }
 
 #bismillahMeaning{
 
-    font-size:14px;
+    font-size:13px;
 
     font-weight:600;
 
-    color:var(--text);
+    margin-top:4px;
 
-    line-height:1.6;
+    color:var(--text);
 }
 
-
 /* ===================================================
-   STATUS CARD
+   STATUS
    =================================================== */
 
 .status-card{
@@ -247,32 +232,12 @@ body{
     display:flex;
 
     gap:10px;
-
-    align-items:center;
-}
-
-.status-left,
-.status-right{
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:space-between;
-
-    gap:12px;
-}
-
-.status-right{
-    text-align:right;
 }
 
 .status-left,
 .status-right{
 
     flex:1;
-
-    height:100%;
 
     display:flex;
 
@@ -281,23 +246,22 @@ body{
     justify-content:space-evenly;
 
     align-items:center;
-}
 
-.status-right div{
-    justify-content:flex-end;
+    text-align:center;
 }
 
 #todayDay,
 #weather{
 
-    font-size:20px;
-   font-weight:700;
+    font-size:18px;
+
+    font-weight:700;
 }
 
 #clock,
 #countdown{
 
-    font-size:28px;
+    font-size:24px;
 
     font-weight:800;
 }
@@ -313,12 +277,13 @@ body{
 #currentPrayerName,
 #nextPrayerName{
 
-    font-size:15px;
+    font-size:14px;
+
+    font-weight:600;
 }
 
-
 /* ===================================================
-   PRAYER CARD
+   PRAYER GRID
    =================================================== */
 
 .prayer-card{
@@ -344,16 +309,14 @@ body{
 
     grid-template-rows:repeat(2,1fr);
 
-    gap:10px;
+    gap:8px;
 }
 
 .prayer-box{
 
-    background:var(--card);
+    background:#D8EFD2;
 
-    border-radius:18px;
-
-    height:100px;
+    border-radius:16px;
 
     display:flex;
 
@@ -365,28 +328,18 @@ body{
 
     text-align:center;
 
-    padding:8px;
-
-    font-size:14px;
+    font-size:13px;
 
     font-weight:700;
 
     color:var(--text);
-
-    transition:.2s;
-}
-
-.prayer-box:active{
-
-    transform:scale(.97);
 }
 
 .sunrise-box{
 
     border:
-    2px solid rgba(212,175,55,.45);
+    2px solid rgba(212,175,55,.4);
 }
-
 
 /* ===================================================
    FEATURES
@@ -396,6 +349,8 @@ body{
 
     flex:1;
 
+    min-height:0;
+
     display:grid;
 
     grid-template-columns:repeat(2,1fr);
@@ -403,13 +358,11 @@ body{
     grid-template-rows:repeat(3,1fr);
 
     gap:10px;
-
-    min-height:0;
 }
 
 .feature-card{
 
-    background:#BFE4B7;
+    background:var(--feature);
 
     border-radius:18px;
 
@@ -421,22 +374,19 @@ body{
 
     text-align:center;
 
-    height:100%;
-
-    min-height:0;
-
     color:var(--text);
 
-    font-size:22px;
+    font-size:20px;
 
     font-weight:700;
+
+    padding:10px;
 }
 
 .feature-card:active{
 
     transform:scale(.97);
 }
-
 
 /* ===================================================
    BOTTOM BAR
@@ -487,7 +437,6 @@ body{
     }
 }
 
-
 /* ===================================================
    DARK MODE
    =================================================== */
@@ -510,14 +459,6 @@ body.dark-mode .feature-card{
     color:#DCEFD7;
 }
 
-body.dark-mode #bismillahMeaning,
-body.dark-mode #todayDay,
-body.dark-mode #currentPrayerName,
-body.dark-mode #nextPrayerName{
-
-    color:#DCEFD7;
-}
-
 body.dark-mode #clock{
 
     color:#9EE3A0;
@@ -528,7 +469,6 @@ body.dark-mode #countdown{
     color:#FF8A80;
 }
 
-
 /* ===================================================
    SMALL DEVICES
    =================================================== */
@@ -536,16 +476,15 @@ body.dark-mode #countdown{
 @media (max-width:360px){
 
     .bismillah-ar{
-        font-size:26px;
+        font-size:22px;
     }
 
     #clock,
     #countdown{
-        font-size:22px;
+        font-size:20px;
     }
 
     .feature-card{
-        height:100px;
-        font-size:17px;
+        font-size:16px;
     }
 }
