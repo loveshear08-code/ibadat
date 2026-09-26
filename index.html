@@ -1,86 +1,195 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>IBADAT</title>
 
-<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet"
+      href="css/home.css">
 
-<link rel="manifest" href="manifest.json">
+<link rel="manifest"
+      href="manifest.json">
+
+<meta name="theme-color"
+      content="#0F5132">
 
 </head>
 
 <body>
 
 <!-- ================= TOP BAR ================= -->
-<div class="top-bar">
-    <span id="city"></span>
-    <span id="date"></span>
-</div>
+
+<header class="top-bar">
+
+    <div id="city"
+         class="top-city">
+         ...
+    </div>
+
+    <div id="date"
+         class="top-date">
+         ...
+    </div>
+
+</header>
+
 
 <!-- ================= MAIN ================= -->
-<div class="main">
 
-    <!-- BISMILLAH -->
-    <div class="card bismillah-card" id="bismillahCard">
+<main class="main-container">
+
+
+    <!-- ================= BISMILLAH ================= -->
+
+    <section
+        id="bismillahCard"
+        class="card bismillah-card">
+
         <div class="bismillah-ar">
-            بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
-        </div>
-        <div id="bismillahMeaning"></div>
-    </div>
 
-    <!-- STATUS -->
-    <div class="card status-card">
+            بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
+
+        </div>
+
+        <div id="bismillahMeaning">
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= STATUS ================= -->
+
+    <section
+        class="card status-card">
+
         <div class="status">
 
+
+            <!-- LEFT -->
+
             <div class="status-left">
+
                 <div id="todayDay"></div>
+
                 <div id="clock"></div>
+
                 <div id="currentPrayerName"></div>
+
             </div>
+
+
+
+            <!-- RIGHT -->
 
             <div class="status-right">
+
                 <div id="weather"></div>
+
                 <div id="countdown"></div>
+
                 <div id="nextPrayerName"></div>
+
             </div>
 
+
         </div>
+
+    </section>
+
+
+
+    <!-- ================= PRAYER TIMES ================= -->
+
+    <section
+        class="card prayer-card">
+
+        <div id="prayerGrid"
+             class="prayer-grid">
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= FEATURES ================= -->
+
+    <section
+        class="feature-grid">
+
+
+        <div id="namaz"
+             class="feature-card">
+        </div>
+
+
+        <div id="quran"
+             class="feature-card">
+        </div>
+
+
+        <div id="dua"
+             class="feature-card">
+        </div>
+
+
+        <div id="hadith"
+             class="feature-card">
+        </div>
+
+
+        <div id="qibla"
+             class="feature-card">
+        </div>
+
+
+        <div id="tasbih"
+             class="feature-card">
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- ================= BOTTOM BAR ================= -->
+
+<footer class="bottom-bar">
+
+    <div id="bottomText">
+
     </div>
 
-    <!-- PRAYER GRID -->
-    <div class="card prayer-card">
-        <div class="grid" id="prayerGrid"></div>
-    </div>
+</footer>
 
-    <!-- FEATURES -->
-    <div class="feature-grid">
-        <div class="feature" id="namaz"></div>
-        <div class="feature" id="quran"></div>
-        <div class="feature" id="dua"></div>
-        <div class="feature" id="hadith"></div>
-        <div class="feature" id="qibla"></div>
-        <div class="feature" id="tasbih"></div>
-    </div>
 
-</div>
 
-<!-- ================= BOTTOM ================= -->
-<div class="bottom-bar">
-    <span id="bottomText"></span>
-</div>
+<!-- ================= SCRIPTS ================= -->
 
-<!-- ================= JS ================= -->
-<script src="js/home.js?v=5"></script>
+<script src="js/home.js?v=10"></script>
+
 <script src="js/theme.js"></script>
 
+
 <script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js');
+
+if ("serviceWorker" in navigator) {
+
+    navigator.serviceWorker.register(
+        "service-worker.js"
+    );
 }
+
 </script>
 
 </body>
