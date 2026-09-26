@@ -164,9 +164,9 @@ body{
 .status-card,
 .prayer-card{
 
-    flex:1;
+     flex:0 0 18%;
 
-    min-height:0;
+    min-height:120px;
 }
 
 
@@ -192,14 +192,7 @@ body{
 
     text-align:center;
 
-    background:
-
-    linear-gradient(
-    rgba(255,255,255,.82),
-    rgba(255,255,255,.82)
-    ),
-
-    url("../assets/bismillah.png");
+    background:#FFFFFF;
 
     background-size:cover;
 
@@ -401,7 +394,7 @@ body{
 
 .feature-grid{
 
-    flex:0.7;
+    flex:1;
 
     display:grid;
 
@@ -434,7 +427,7 @@ body{
 
     color:var(--text);
 
-    font-size:20px;
+    font-size:22px;
 
     font-weight:700;
 }
