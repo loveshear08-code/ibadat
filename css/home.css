@@ -288,3 +288,71 @@ body.dark-mode .prayer-box,
 body.dark-mode .feature{
 color:#c8e6c9;
 }
+
+/* =====================================================
+   IBADAT CUSTOM BACKGROUNDS
+   ===================================================== */
+
+/* BISMILLAH BOARD */
+
+.bismillah-card{
+background:
+linear-gradient(
+rgba(220,237,200,.90),
+rgba(220,237,200,.90)
+),
+url("../assets/bismillah-bg.png");
+
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+}
+
+/* STATUS BOARD */
+
+.status-card{
+background:
+linear-gradient(
+rgba(220,237,200,.88),
+rgba(220,237,200,.88)
+),
+url("../assets/status-bg.png");
+
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+}
+
+/* PRAYER TIME BOARD */
+
+.prayer-card{
+background:
+linear-gradient(
+rgba(220,237,200,.85),
+rgba(220,237,200,.85)
+),
+url("../assets/prayer-bg.png");
+
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+}
+
+/* GOLD ARABIC */
+
+.bismillah-ar{
+color:#d4af37;
+text-shadow:
+0 1px 2px rgba(0,0,0,.10);
+}
+
+/* TEXT */
+
+.prayer-box,
+.feature,
+#todayDay,
+#weather,
+#currentPrayerName,
+#nextPrayerName{
+color:#23422d;
+}
