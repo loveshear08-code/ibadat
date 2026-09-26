@@ -48,20 +48,17 @@ padding:8px;
 
 .card{
 background:#ffffff;
-
 border-radius:16px;
 padding:12px;
-
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
 flex:1;
+overflow:hidden;
 
 border:1px solid rgba(255,255,255,.65);
-
-backdrop-filter:blur(2px);
 
 box-shadow:
 0 2px 6px rgba(0,0,0,.04),
@@ -73,37 +70,33 @@ box-shadow:
 #bismillahCard{
 position:relative;
 overflow:hidden;
+
+background-image:url("../assets/bismillah-bg.png");
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
 }
 
 #bismillahCard::before{
 content:"";
 position:absolute;
-top:0;
-left:0;
-right:0;
-height:45%;
-
-background:
-radial-gradient(circle at 20% 30%, rgba(212,175,55,.10) 2px, transparent 3px),
-radial-gradient(circle at 80% 20%, rgba(212,175,55,.10) 2px, transparent 3px),
-radial-gradient(circle at 50% 15%, rgba(212,175,55,.08) 2px, transparent 3px);
-
+inset:0;
+background:rgba(255,255,255,.35);
 pointer-events:none;
 }
 
 .bismillah-ar{
 position:relative;
 z-index:2;
-
 color:#d4af37;
 font-size:40px;
 font-weight:bold;
-
-text-shadow:
-0 1px 2px rgba(0,0,0,.08);
+text-shadow:0 1px 2px rgba(0,0,0,.08);
 }
 
 #bismillahMeaning{
+position:relative;
+z-index:2;
 font-weight:bold;
 color:#23422d;
 }
@@ -114,28 +107,42 @@ color:#23422d;
 display:flex;
 width:100%;
 align-items:stretch;
-
 position:relative;
 overflow:hidden;
+
+background-image:url("../assets/status-bg.png");
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+
+border-radius:12px;
+padding:8px;
+}
+
+.status::before{
+content:"";
+position:absolute;
+inset:0;
+background:rgba(255,255,255,.35);
+pointer-events:none;
 }
 
 .status::after{
 content:"☪";
 position:absolute;
-
 right:12px;
 top:50%;
-
 transform:translateY(-50%);
-
 font-size:80px;
 opacity:.05;
-
 pointer-events:none;
 }
 
 .status-left,
 .status-right{
+position:relative;
+z-index:2;
+
 width:50%;
 display:flex;
 flex-direction:column;
@@ -181,17 +188,26 @@ display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:10px;
 width:100%;
+
+background-image:url("../assets/prayer-bg.png");
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+
+border-radius:12px;
+padding:10px;
 }
 
 .prayer-box{
-background:rgba(255,255,255,.65);
+background:rgba(255,255,255,.92);
 
-border-radius:10px;
+border-radius:14px;
 padding:6px;
 
 font-size:14px;
 font-weight:bold;
 text-align:center;
+color:#23422d;
 
 min-height:42px;
 
@@ -201,7 +217,8 @@ justify-content:center;
 align-items:center;
 gap:3px;
 
-box-shadow:0 2px 5px rgba(0,0,0,.04);
+box-shadow:
+0 2px 6px rgba(0,0,0,.06);
 }
 
 .sunrise-box{
@@ -219,15 +236,23 @@ flex:1;
 
 .feature{
 background:#dcedc8;
-}
 
-border-radius:12px;
+border-radius:16px;
+
 padding:12px;
 
-font-weight:bold;
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-weight:700;
+font-size:18px;
+
+color:#23422d;
 text-align:center;
 
-box-shadow:0 2px 5px rgba(0,0,0,.04);
+box-shadow:
+0 2px 6px rgba(0,0,0,.05);
 
 transition:.2s ease;
 }
@@ -288,72 +313,4 @@ body.dark-mode #nextPrayerName,
 body.dark-mode .prayer-box,
 body.dark-mode .feature{
 color:#c8e6c9;
-}
-
-/* =====================================================
-   IBADAT CUSTOM BACKGROUNDS
-   ===================================================== */
-
-/* BISMILLAH BOARD */
-
-.bismillah-card{
-background:
-linear-gradient(
-rgba(220,237,200,.90),
-rgba(220,237,200,.90)
-),
-url("../assets/bismillah-bg.png");
-
-background-size:cover;
-background-position:center;
-background-repeat:no-repeat;
-}
-
-/* STATUS BOARD */
-
-.status-card{
-background:
-linear-gradient(
-rgba(220,237,200,.88),
-rgba(220,237,200,.88)
-),
-url("../assets/status-bg.png");
-
-background-size:cover;
-background-position:center;
-background-repeat:no-repeat;
-}
-
-/* PRAYER TIME BOARD */
-
-.prayer-card{
-background:
-linear-gradient(
-rgba(220,237,200,.85),
-rgba(220,237,200,.85)
-),
-url("../assets/prayer-bg.png");
-
-background-size:cover;
-background-position:center;
-background-repeat:no-repeat;
-}
-
-/* GOLD ARABIC */
-
-.bismillah-ar{
-color:#d4af37;
-text-shadow:
-0 1px 2px rgba(0,0,0,.10);
-}
-
-/* TEXT */
-
-.prayer-box,
-.feature,
-#todayDay,
-#weather,
-#currentPrayerName,
-#nextPrayerName{
-color:#23422d;
 }
