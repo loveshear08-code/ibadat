@@ -47,9 +47,11 @@ padding:8px;
 /* CARD */
 
 .card{
-background:#dcedc8;
+background:rgba(255,255,255,.78);
+
 border-radius:16px;
 padding:12px;
+
 display:flex;
 flex-direction:column;
 justify-content:center;
@@ -57,7 +59,9 @@ align-items:center;
 text-align:center;
 flex:1;
 
-border:1px solid rgba(27,94,32,.08);
+border:1px solid rgba(255,255,255,.65);
+
+backdrop-filter:blur(2px);
 
 box-shadow:
 0 2px 6px rgba(0,0,0,.04),
@@ -180,10 +184,9 @@ width:100%;
 }
 
 .prayer-box{
-background:#a5d6a7;
+background:rgba(255,255,255,.82);
 
 border-radius:10px;
-
 padding:6px;
 
 font-size:14px;
@@ -198,8 +201,7 @@ justify-content:center;
 align-items:center;
 gap:3px;
 
-box-shadow:
-0 2px 5px rgba(0,0,0,.04);
+box-shadow:0 2px 5px rgba(0,0,0,.04);
 }
 
 .sunrise-box{
@@ -216,17 +218,15 @@ flex:1;
 }
 
 .feature{
-background:#a5d6a7;
+background:rgba(255,255,255,.82);
 
 border-radius:12px;
-
 padding:12px;
 
 font-weight:bold;
 text-align:center;
 
-box-shadow:
-0 2px 5px rgba(0,0,0,.04);
+box-shadow:0 2px 5px rgba(0,0,0,.04);
 
 transition:.2s ease;
 }
