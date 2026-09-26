@@ -71,7 +71,7 @@ box-shadow:
 position:relative;
 overflow:hidden;
 
-background-image:url("../assets/bismillah-bg.png");
+background-image:url("../assets/bismillah.png");
 background-size:cover;
 background-position:center;
 background-repeat:no-repeat;
@@ -110,7 +110,7 @@ align-items:stretch;
 position:relative;
 overflow:hidden;
 
-background-image:url("../assets/status-bg.png");
+background-image:url("../assets/status.png");
 background-size:100% 100%;
 background-position:center;
 background-repeat:no-repeat;
@@ -178,7 +178,7 @@ grid-template-columns:repeat(3,1fr);
 gap:10px;
 width:100%;
 
-background-image:url("../assets/prayer-bg.png");
+background-image:url("../assets/prayer.png");
 background-size:cover;
 background-position:center;
 background-repeat:no-repeat;
