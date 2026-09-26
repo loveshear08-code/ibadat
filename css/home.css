@@ -1,298 +1,502 @@
+/* ===================================================
+   IBADAT HOME FINAL CSS
+   =================================================== */
+
+:root{
+
+    --primary:#0F5132;
+    --primary-dark:#0B3D26;
+
+    --secondary:#DDEFD8;
+
+    --bg:#F8F6EE;
+
+    --text:#1E4620;
+
+    --gold:#D4AF37;
+
+    --danger:#C62828;
+
+    --white:#FFFFFF;
+
+}
+
+
+/* ===================================================
+   RESET
+   =================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
 body{
-margin:0;
-font-family:sans-serif;
-background:#f8f7f2;
+
+    background:var(--bg);
+
+    font-family:
+    "Noto Sans Bengali",
+    sans-serif;
+
+    color:var(--text);
+
+    overflow:hidden;
 }
 
-/* TOP + BOTTOM */
 
-.top-bar,
-.bottom-bar{
-position:fixed;
-width:100%;
-height:50px;
-background:#2e7d32;
-color:#fff;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 12px;
-box-sizing:border-box;
-z-index:100;
-}
+/* ===================================================
+   TOP BAR
+   =================================================== */
 
 .top-bar{
-top:0;
+
+    position:fixed;
+
+    top:0;
+    left:0;
+    right:0;
+
+    height:56px;
+
+    background:var(--primary);
+
+    color:#FFF8E8;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 14px;
+
+    z-index:1000;
+
+    box-shadow:
+    0 2px 10px rgba(0,0,0,.15);
 }
 
-.bottom-bar{
-bottom:0;
-justify-content:center;
+.top-city{
+
+    font-size:15px;
+
+    font-weight:600;
+
+    max-width:50%;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
 }
 
-/* MAIN */
+.top-date{
 
-.main{
-position:absolute;
-top:50px;
-bottom:50px;
-left:0;
-right:0;
-display:flex;
-flex-direction:column;
-gap:8px;
-padding:8px;
+    font-size:14px;
+
+    font-weight:600;
 }
 
-/* CARD */
+
+/* ===================================================
+   MAIN
+   =================================================== */
+
+.main-container{
+
+    position:fixed;
+
+    top:56px;
+    bottom:56px;
+
+    left:0;
+    right:0;
+
+    overflow-y:auto;
+
+    padding:10px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+}
+
+
+/* ===================================================
+   COMMON CARD
+   =================================================== */
 
 .card{
-background:#ffffff;
-border-radius:16px;
-padding:4;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-flex:1;
-overflow:hidden;
 
-border:1px solid rgba(255,255,255,.65);
+    background:var(--secondary);
 
-box-shadow:
-0 2px 6px rgba(0,0,0,.04),
-0 6px 14px rgba(0,0,0,.03);
+    border-radius:18px;
+
+    border:1px solid rgba(15,81,50,.08);
+
+    box-shadow:
+
+    0 2px 6px rgba(0,0,0,.04),
+
+    0 8px 18px rgba(0,0,0,.03);
 }
 
 
-/* ================= BISMILLAH ================= */
+/* ===================================================
+   BISMILLAH
+   =================================================== */
 
-#bismillahCard{
-position:relative;
-overflow:hidden;
-padding:12px;
+.bismillah-card{
 
-background-image:url("../assets/bismillah.png");
-background-size:cover;
-background-position:center;
-background-repeat:no-repeat;
-}
+    position:relative;
 
-#bismillahCard::before{
-content:"";
-position:absolute;
-inset:0;
-background:rgba(255,255,255,.35);
-pointer-events:none;
+    overflow:hidden;
+
+    padding:14px;
+
+    text-align:center;
+
+    background:
+
+    linear-gradient(
+    rgba(255,255,255,.75),
+    rgba(255,255,255,.75)
+    ),
+
+    url("../assets/bismillah.png");
+
+    background-size:cover;
+
+    background-position:center;
 }
 
 .bismillah-ar{
-position:relative;
-z-index:2;
-color:#d4af37;
-font-size:40px;
-font-weight:bold;
-text-shadow:0 1px 2px rgba(0,0,0,.08);
+
+    font-size:34px;
+
+    color:var(--gold);
+
+    font-weight:700;
+
+    margin-bottom:8px;
 }
 
 #bismillahMeaning{
-position:relative;
-z-index:2;
-font-weight:bold;
-color:#23422d;
+
+    color:var(--text);
+
+    font-size:14px;
+
+    font-weight:600;
 }
 
-/* ================= STATUS ================= */
+
+/* ===================================================
+   STATUS CARD
+   =================================================== */
+
+.status-card{
+
+    padding:10px;
+}
 
 .status{
-display:flex;
-width:100%;
-align-items:stretch;
-position:relative;
-overflow:hidden;
 
-background-image:url("../assets/status.png");
-background-size:100% 100%;
-background-position:center;
-background-repeat:no-repeat;
+    display:flex;
 
-border-radius:12px;
-padding:4px;
+    gap:10px;
+
+    align-items:stretch;
 }
 
 .status-left,
 .status-right{
-position:relative;
-z-index:2;
 
-width:50%;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:12px;
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
 }
 
 .status-left div,
 .status-right div{
-width:100%;
-min-height:24px;
 
-display:flex;
-align-items:center;
-justify-content:center;
+    width:100%;
 
-text-align:center;
+    min-height:28px;
 
-font-size:20px;
-font-weight:bold;
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    font-weight:700;
 }
 
-#todayDay,
-#weather,
-#currentPrayerName,
-#nextPrayerName{
-color:#23422d;
+#todayDay{
+    font-size:18px;
 }
 
 #clock{
-color:#1b5e20;
+
+    font-size:24px;
+
+    color:var(--primary);
+}
+
+#currentPrayerName,
+#nextPrayerName{
+
+    font-size:15px;
+}
+
+#weather{
+
+    font-size:22px;
 }
 
 #countdown{
-color:#d32f2f;
+
+    font-size:24px;
+
+    color:var(--danger);
 }
 
-/* ================= PRAYER GRID ================= */
 
-.grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px;
-width:100%;
+/* ===================================================
+   PRAYER GRID
+   =================================================== */
 
-background-image:url("../assets/prayer.png");
-background-size:cover;
-background-position:center;
-background-repeat:no-repeat;
+.prayer-card{
 
-border-radius:12px;
-padding:0px;
+    padding:10px;
+}
+
+.prayer-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:10px;
 }
 
 .prayer-box{
-background:#a8d5a0;
 
-border-radius:12px;
-padding:4px;
+    background:#BFE4B7;
 
-font-size:14px;
-font-weight:bold;
-text-align:center;
-color:#23422d;
+    border-radius:14px;
 
-min-height:42px;
+    padding:8px;
 
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-gap:3px;
+    min-height:64px;
 
-box-shadow:
-0 2px 6px rgba(0,0,0,.06);
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:4px;
+
+    color:var(--text);
+
+    font-size:14px;
+
+    font-weight:700;
+
+    transition:.2s;
+}
+
+.prayer-box:active{
+
+    transform:scale(.97);
 }
 
 .sunrise-box{
-cursor:pointer;
+
+    border:
+    2px solid rgba(212,175,55,.4);
 }
 
-/* ================= FEATURE GRID ================= */
+
+/* ===================================================
+   FEATURES
+   =================================================== */
 
 .feature-grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px;
-flex:1;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:10px;
+
+    flex:1;
 }
 
-.feature{
-background:#a8d5a0;
+.feature-card{
 
-border-radius:16px;
-padding:12px;
+    background:#BFE4B7;
 
-display:flex;
-justify-content:center;
-align-items:center;
+    border-radius:18px;
 
-font-weight:700;
-font-size:18px;
+    display:flex;
 
-color:#23422d;
-text-align:center;
+    justify-content:center;
 
-box-shadow:
-0 2px 6px rgba(0,0,0,.05);
+    align-items:center;
 
-transition:.2s ease;
+    text-align:center;
+
+    min-height:85px;
+
+    padding:10px;
+
+    color:var(--text);
+
+    font-size:18px;
+
+    font-weight:700;
+
+    transition:.2s;
 }
 
-.feature:active{
-transform:scale(.98);
+.feature-card:active{
+
+    transform:scale(.97);
 }
 
-/* ================= BOTTOM SCROLL ================= */
 
-.bottom-bar span{
-white-space:nowrap;
-padding-left:100%;
-animation:scroll 15s linear infinite;
+/* ===================================================
+   BOTTOM BAR
+   =================================================== */
+
+.bottom-bar{
+
+    position:fixed;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    height:56px;
+
+    background:var(--primary);
+
+    color:#FFF8E8;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 -2px 10px rgba(0,0,0,.15);
 }
 
-@keyframes scroll{
+#bottomText{
 
-0%{
-transform:translateX(0);
+    white-space:nowrap;
+
+    animation:
+    scrollText 18s linear infinite;
 }
 
-100%{
-transform:translateX(-100%);
+@keyframes scrollText{
+
+    from{
+        transform:translateX(100%);
+    }
+
+    to{
+        transform:translateX(-100%);
+    }
 }
 
-}
 
-/* ================= DARK MODE ================= */
+/* ===================================================
+   DARK MODE
+   =================================================== */
 
 body.dark-mode{
-background:#121212;
+
+    background:#101510;
 }
 
 body.dark-mode .card{
-background:#1e2a1f;
-border-color:rgba(255,255,255,.05);
+
+    background:#1D2D21;
 }
 
 body.dark-mode .prayer-box,
-body.dark-mode .feature{
-background:#263b29;
-}
+body.dark-mode .feature-card{
 
-body.dark-mode #clock{
-color:#81c784;
-}
+    background:#29402D;
 
-body.dark-mode #countdown{
-color:#ef5350;
+    color:#DCEFD7;
 }
 
 body.dark-mode #bismillahMeaning,
 body.dark-mode #todayDay,
-body.dark-mode #weather,
 body.dark-mode #currentPrayerName,
-body.dark-mode #nextPrayerName,
-body.dark-mode .prayer-box,
-body.dark-mode .feature{
-color:#c8e6c9;
+body.dark-mode #nextPrayerName{
+
+    color:#DCEFD7;
+}
+
+body.dark-mode #clock{
+
+    color:#9EE3A0;
+}
+
+body.dark-mode #countdown{
+
+    color:#FF8A80;
+}
+
+
+/* ===================================================
+   SMALL DEVICES
+   =================================================== */
+
+@media (max-width:360px){
+
+    .bismillah-ar{
+        font-size:28px;
+    }
+
+    #clock{
+        font-size:20px;
+    }
+
+    #countdown{
+        font-size:20px;
+    }
+
+    .feature-card{
+        font-size:16px;
+    }
 }
