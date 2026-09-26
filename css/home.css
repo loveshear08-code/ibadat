@@ -158,9 +158,9 @@ body{
 .status-card,
 .prayer-card{
 
-    flex:0 0 15%;
+    flex:0 0 17%;
 
-    min-height:90px;
+    min-height:110px;
 
     background:#FFFFFF;
 }
@@ -181,12 +181,12 @@ body{
 
     text-align:center;
 
-    padding:8px;
+    padding:4px;
 }
 
 .bismillah-ar{
 
-    font-size:26px;
+    font-size:24px;
 
     font-weight:700;
 
@@ -347,7 +347,7 @@ body{
 
 .feature-grid{
 
-    flex:1;
+   flex:0 0 42%;
 
     min-height:0;
 
