@@ -158,9 +158,9 @@ body{
 .status-card,
 .prayer-card{
 
-    flex:0 0 17%;
+    flex:0 0 20%;
 
-    min-height:110px;
+    min-height:130px;
 
     background:#FFFFFF;
 }
@@ -347,7 +347,7 @@ body{
 
 .feature-grid{
 
-   flex:0 0 42%;
+   flex:0 0 34%;
 
     min-height:0;
 
