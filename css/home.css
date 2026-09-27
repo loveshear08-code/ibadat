@@ -235,7 +235,15 @@ body{
 
     align-items:center;
 
-    padding:10px;
+    padding:0;
+   
+   background-image:url("../assets/status.png");
+   
+   background-position:center;
+
+    background-repeat:no-repeat;
+
+    background-size:status; 
 }
 
 .status{
@@ -309,7 +317,15 @@ body{
 
     align-items:center;
 
-    padding:10px;
+    padding:0;
+
+   background-image:url("../assets/prayer.png");
+
+    background-position:center;
+
+    background-repeat:no-repeat;
+
+    background-size:cover;
 }
 
 .prayer-grid{
