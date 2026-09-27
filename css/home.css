@@ -319,6 +319,8 @@ body{
 
     padding:10;
 
+   min-height:240px;
+
    background-image:url("../assets/prayer-w.png");
 
     background-position:center;
