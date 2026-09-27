@@ -317,9 +317,7 @@ body{
 
     align-items:center;
 
-    padding:10;
-
-   min-height:240px;
+    padding:0;
 
    background-image:url("../assets/prayer-w.png");
 
@@ -334,13 +332,15 @@ body{
 
     width:100%;
 
-   padding:10px;
-
     display:grid;
 
     grid-template-columns:repeat(3,1fr);
 
     gap:10px;
+
+   padding:12px;
+
+    box-sizing:border-box;
 }
 
 .prayer-box{
