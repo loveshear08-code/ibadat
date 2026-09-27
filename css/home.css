@@ -182,6 +182,14 @@ body{
     text-align:center;
 
     padding:4px;
+
+   background-image:url("assets/bismillah.png");
+
+    background-size:cover;
+
+    background-position:center;
+
+    background-repeat:no-repeat;
 }
 
 .bismillah-ar{
