@@ -185,14 +185,18 @@ body{
 
    background-image:url("../assets/bismillah.png");
 
-    background-size:cover;
-
     background-position:center;
 
     background-repeat:no-repeat;
+
+    background-size:90% auto;
 }
 
 .bismillah-ar{
+
+    position:relative;
+
+    z-index:2;
 
     font-size:24px;
 
@@ -203,6 +207,9 @@ body{
     line-height:1.3;
 
     margin:0;
+
+    text-shadow:
+    0 1px 2px rgba(255,255,255,.8);
 }
 
 #bismillahMeaning{
