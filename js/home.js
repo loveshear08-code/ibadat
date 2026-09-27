@@ -59,7 +59,6 @@ function localizeNumber(num){
     return Number(num)
         .toLocaleString(locale);
 }
-}
 
 
 /* ================= THEME ================= */
