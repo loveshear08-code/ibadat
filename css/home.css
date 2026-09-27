@@ -276,33 +276,45 @@ body{
 #todayDay,
 #weather{
 
-    font-size:18px;
+    font-size:22px;
 
     font-weight:700;
 }
 
-#clock,
+#clock{
+
+    font-size:24px;
+
+    font-weight:800;
+
+    color:var(--primary);
+}
+
 #countdown{
 
     font-size:24px;
 
     font-weight:800;
-}
 
-#clock{
-    color:var(--primary);
-}
-
-#countdown{
     color:var(--danger);
 }
 
 #currentPrayerName,
 #nextPrayerName{
 
-    font-size:14px;
+    display:flex;
 
-    font-weight:600;
+    align-items:center;
+
+    justify-content:center;
+
+    gap:6px;
+
+    white-space:nowrap;
+
+    font-size:22px;
+
+    font-weight:700;
 }
 
 /* ===================================================
@@ -392,7 +404,7 @@ body{
 
     gap:10px;
    
-   padding-bottom;10px;
+   padding-bottom:10px;
    
 }
 
