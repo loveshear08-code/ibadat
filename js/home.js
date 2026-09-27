@@ -1120,10 +1120,11 @@ async function loadWeather(){
     try{
 
         const res =
-            await fetch(
+    await fetch(
 
-`https://api.open-meteo.com/v1/forecast?latitude=${USER_LAT}&longitude=${USER_LON}&current=temperature_2m,`weather_code`
-            );
+`https://api.open-meteo.com/v1/forecast?latitude=${USER_LAT}&longitude=${USER_LON}&current=temperature_2m,weather_code`
+
+    );
 
         const data =
             await res.json();
