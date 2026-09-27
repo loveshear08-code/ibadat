@@ -394,7 +394,7 @@ const PRAYER_TEXT = {
         dhuhr:"যোহর",
         asr:"আসর",
         maghrib:"মাগরিব",
-        isha:"ইশা"
+        isha:"এশা"
     },
 
     en:{
@@ -663,11 +663,11 @@ function updatePrayerStatus(){
     currentEl.innerHTML =
 
     `
-    <span style="color:#198754;">
+    <span style="color:#00C853;">
     ●
     </span>
 
-    <span style="color:#0F5132;">
+    <span style="color:#FFFFFF;">
     ${current.name}
     </span>
     `;
@@ -678,11 +678,11 @@ if(nextEl){
     nextEl.innerHTML =
 
     `
-    <span style="color:#D4AF37;">
+    <span style="color:#FFD700;">
     ⏭
     </span>
 
-    <span style="color:#6B4F00;">
+    <span style="color:#FFFFFF;">
     ${next.name}
     </span>
     `;
