@@ -633,6 +633,7 @@ function updatePrayerStatus(){
 
             break;
         }
+    }
 
     const currentEl =
         document.getElementById(
@@ -672,6 +673,7 @@ if(nextEl){
     ${next.name}
     </span>
     `;
+}
 }
 
 
