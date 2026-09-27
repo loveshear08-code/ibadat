@@ -332,8 +332,6 @@ body{
 
     width:100%;
 
-    height:auto;
-
     display:grid;
 
     grid-template-columns:repeat(3,1fr);
@@ -347,7 +345,7 @@ body{
 
     border-radius:16px;
   
-   height:82px;
+   height:72px;
 
     display:flex;
 
