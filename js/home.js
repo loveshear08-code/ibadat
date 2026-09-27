@@ -690,7 +690,7 @@ color:#FFD700;
 font-size:24px;
 font-weight:bold;
 ">
-●
+⏭
 </span>
 
 <span style="
