@@ -764,27 +764,32 @@ function updateCountdown(){
     if(el){
 
     const locale =
-        LANG === "bn"
-        ? "bn-BD"
-        : LANG === "hi"
-        ? "hi-IN"
-        : "en-US";
+    LANG === "bn"
+    ? "bn-BD"
+    : LANG === "hi"
+    ? "hi-IN"
+    : "en-US";
 
-    const hh =
-        h.toLocaleString(locale)
-        .padStart(2,"0");
+const hh =
+    localizeNumber(h).padStart(2,
+        LANG === "bn" ? "০" :
+        LANG === "hi" ? "०" : "0"
+    );
 
-    const mm =
-        m.toLocaleString(locale)
-        .padStart(2,"0");
+const mm =
+    localizeNumber(m).padStart(2,
+        LANG === "bn" ? "০" :
+        LANG === "hi" ? "०" : "0"
+    );
 
-    const ss =
-        s.toLocaleString(locale)
-        .padStart(2,"0");
+const ss =
+    localizeNumber(s).padStart(2,
+        LANG === "bn" ? "০" :
+        LANG === "hi" ? "०" : "0"
+    );
 
-    el.innerText =
-        hh + ":" + mm + ":" + ss;
-    }
+el.innerText =
+    hh + ":" + mm + ":" + ss;
 }
 
 
