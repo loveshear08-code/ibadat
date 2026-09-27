@@ -750,25 +750,24 @@ function updateCountdown(){
 
     if(el){
 
-        el.innerText =
+        const timeText =
 
-        String(h)
-        .padStart(2,"0")
+String(h).padStart(2,"0")
++ ":"
++
+String(m).padStart(2,"0")
++ ":"
++
+String(s).padStart(2,"0");
 
-        + ":"
-
-        +
-
-        String(m)
-        .padStart(2,"0")
-
-        + ":"
-
-        +
-
-        String(s)
-        .padStart(2,"0");
-    }
+el.innerText =
+timeText.toLocaleString(
+    LANG==="bn"
+    ? "bn-BD"
+    : LANG==="hi"
+    ? "hi-IN"
+    : "en-US"
+);
 }
 
 
@@ -1082,7 +1081,7 @@ async function loadWeather(){
             );
 
         weather.innerText =
-            temp + "°";
+            localizeaNumber(temp) + "°";
 
     }catch(err){
 
