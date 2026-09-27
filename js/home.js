@@ -862,7 +862,11 @@ function loadFeatureNames(){
         }
     };
 
-    const t = names[LANG];
+    const lang =
+    getSettings().lang || "bn";
+
+const t =
+    names[lang];
 
     document.getElementById("namaz").innerText =
         t.namaz;
