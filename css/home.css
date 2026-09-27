@@ -332,13 +332,11 @@ body{
 
     width:100%;
 
-    height:100%;
+    height:auto;
 
     display:grid;
 
     grid-template-columns:repeat(3,1fr);
-
-    grid-template-rows:repeat(2,1fr);
 
     gap:10px;
 }
@@ -348,6 +346,8 @@ body{
     background:#D8EFD2;
 
     border-radius:16px;
+  
+   height:82px;
 
     display:flex;
 
