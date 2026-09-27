@@ -660,32 +660,46 @@ function updatePrayerStatus(){
 
     if(currentEl){
 
-    currentEl.innerHTML =
+currentEl.innerHTML =
 
-    `
-    <span style="color:#00C853;">
-    ●
-    </span>
+`
+<span style="
+color:#00E676;
+font-size:24px;
+font-weight:bold;
+">
+●
+</span>
 
-    <span style="color:#FFFFFF;">
-    ${current.name}
-    </span>
-    `;
-}
+<span style="
+color:#FFFFFF;
+font-weight:700;
+">
+${current.name}
+</span>
+`;
+    }
 
 if(nextEl){
 
-    nextEl.innerHTML =
+nextEl.innerHTML =
 
-    `
-    <span style="color:#FFD700;">
-    ⏭
-    </span>
+`
+<span style="
+color:#FFD700;
+font-size:24px;
+font-weight:bold;
+">
+●
+</span>
 
-    <span style="color:#FFFFFF;">
-    ${next.name}
-    </span>
-    `;
+<span style="
+color:#FFFFFF;
+font-weight:700;
+">
+${next.name}
+</span>
+`;
 }
 }
 
