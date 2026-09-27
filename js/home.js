@@ -47,6 +47,20 @@ const settings =
 const LANG =
     settings.lang || "bn";
 
+function localizeNumber(num){
+
+    const locale =
+        LANG === "bn"
+        ? "bn-BD"
+        : LANG === "hi"
+        ? "hi-IN"
+        : "en-US";
+
+    return Number(num)
+        .toLocaleString(locale);
+}
+}
+
 
 /* ================= THEME ================= */
 
@@ -750,24 +764,28 @@ function updateCountdown(){
 
     if(el){
 
-        const timeText =
+    const locale =
+        LANG === "bn"
+        ? "bn-BD"
+        : LANG === "hi"
+        ? "hi-IN"
+        : "en-US";
 
-String(h).padStart(2,"0")
-+ ":"
-+
-String(m).padStart(2,"0")
-+ ":"
-+
-String(s).padStart(2,"0");
+    const hh =
+        h.toLocaleString(locale)
+        .padStart(2,"0");
 
-el.innerText =
-timeText.toLocaleString(
-    LANG==="bn"
-    ? "bn-BD"
-    : LANG==="hi"
-    ? "hi-IN"
-    : "en-US"
-);
+    const mm =
+        m.toLocaleString(locale)
+        .padStart(2,"0");
+
+    const ss =
+        s.toLocaleString(locale)
+        .padStart(2,"0");
+
+    el.innerText =
+        hh + ":" + mm + ":" + ss;
+    }
 }
 
 
@@ -1081,7 +1099,7 @@ async function loadWeather(){
             );
 
         weather.innerText =
-            localizeaNumber(temp) + "°";
+            localizeNumber(temp) + "°";
 
     }catch(err){
 
