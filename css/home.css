@@ -239,11 +239,11 @@ body{
    
    background-image:url("../assets/status.png");
    
-   background-position:center;
+   background-position:left center;
 
     background-repeat:no-repeat;
 
-    background-size:status; 
+    background-size:cover;
 }
 
 .status{
