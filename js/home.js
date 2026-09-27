@@ -659,6 +659,7 @@ function updatePrayerStatus(){
     </span>
     `;
 }
+}
 
 if(nextEl){
 
