@@ -127,7 +127,7 @@ function loadDate(){
 
                 day:"numeric",
 
-                month:"short",
+                month:"long",
 
                 year:"numeric"
             }
@@ -223,16 +223,50 @@ function loadLocation(){
                 const data =
                     await res.json();
 
-                city.innerText =
+                const cityName =
 
-                    data.address.city ||
+    data.address.city ||
 
-                    data.address.town ||
+    data.address.town ||
 
-                    data.address.village ||
+    data.address.village ||
 
-                    "Unknown";
+    "Unknown";
 
+
+const lang =
+    getSettings().lang;
+
+
+const CITY_NAMES = {
+
+    Kolkata:{
+        bn:"কলকাতা",
+        en:"Kolkata",
+        hi:"कोलकाता"
+    },
+
+    Delhi:{
+        bn:"দিল্লি",
+        en:"Delhi",
+        hi:"दिल्ली"
+    },
+
+    Mumbai:{
+        bn:"মুম্বাই",
+        en:"Mumbai",
+        hi:"मुंबई"
+    }
+};
+
+
+city.innerText =
+
+    CITY_NAMES[cityName]?.[lang]
+
+    ||
+
+    cityName;
             }catch(e){
 
                 city.innerText =
@@ -794,6 +828,62 @@ function setupBoardNavigation(){
 }
 
 
+/* ================= FEATURE TEXT ================= */
+
+function loadFeatureNames(){
+
+    const names = {
+
+        bn:{
+            namaz:"নামাজ",
+            quran:"কুরআন",
+            dua:"দুয়া",
+            hadith:"হাদিস",
+            qibla:"কিবলা",
+            tasbih:"তাসবিহ"
+        },
+
+        en:{
+            namaz:"Prayer",
+            quran:"Quran",
+            dua:"Dua",
+            hadith:"Hadith",
+            qibla:"Qibla",
+            tasbih:"Tasbih"
+        },
+
+        hi:{
+            namaz:"नमाज़",
+            quran:"क़ुरआन",
+            dua:"दुआ",
+            hadith:"हदीस",
+            qibla:"क़िब्ला",
+            tasbih:"तस्बीह"
+        }
+    };
+
+    const t = names[LANG];
+
+    document.getElementById("namaz").innerText =
+        t.namaz;
+
+    document.getElementById("quran").innerText =
+        t.quran;
+
+    document.getElementById("dua").innerText =
+        t.dua;
+
+    document.getElementById("hadith").innerText =
+        t.hadith;
+
+    document.getElementById("qibla").innerText =
+        t.qibla;
+
+    document.getElementById("tasbih").innerText =
+        t.tasbih;
+}
+
+
 /* ================= FEATURE NAVIGATION ================= */
 
 function setupFeatureNavigation(){
@@ -956,7 +1046,9 @@ document.addEventListener(
 
     "DOMContentLoaded",
 
-    ()=>{
+    ()=>
+       
+       loadFeatureNames();
 
         setupBoardNavigation();
 
