@@ -647,20 +647,32 @@ function updatePrayerStatus(){
 
     if(currentEl){
 
-        currentEl.innerText =
-            current.name;
-    }
+    currentEl.innerHTML =
 
-    if(nextEl){
+    `
+    <span style="color:#198754;">
+    ●
+    </span>
 
-        nextEl.innerText =
+    <span style="color:#0F5132;">
+    ${current.name}
+    </span>
+    `;
+}
 
-        next.name +
+if(nextEl){
 
-        " " +
+    nextEl.innerHTML =
 
-        prayerTimes[next.key];
-    }
+    `
+    <span style="color:#D4AF37;">
+    ⏭
+    </span>
+
+    <span style="color:#6B4F00;">
+    ${next.name}
+    </span>
+    `;
 }
 
 
