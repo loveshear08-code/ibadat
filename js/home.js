@@ -1050,7 +1050,7 @@ document.addEventListener(
 
     "DOMContentLoaded",
 
-    ()=>
+    ()=>{
        
        loadFeatureNames();
 
