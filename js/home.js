@@ -1045,7 +1045,7 @@ function startQuotes(){
 
 /* ================= WEATHER PLACEHOLDER ================= */
 
-function loadWeather(){
+async function loadWeather(){
 
     const weather =
         document.getElementById(
@@ -1054,8 +1054,41 @@ function loadWeather(){
 
     if(!weather) return;
 
-    weather.innerText =
-        "--°";
+    if(!USER_LAT || !USER_LON){
+
+        setTimeout(
+            loadWeather,
+            2000
+        );
+
+        return;
+    }
+
+    try{
+
+        const res =
+            await fetch(
+
+`https://api.open-meteo.com/v1/forecast?latitude=${USER_LAT}&longitude=${USER_LON}&current=temperature_2m`
+
+            );
+
+        const data =
+            await res.json();
+
+        const temp =
+            Math.round(
+                data.current.temperature_2m
+            );
+
+        weather.innerText =
+            temp + "°";
+
+    }catch(err){
+
+        weather.innerText =
+            "--°";
+    }
 }
 
 
