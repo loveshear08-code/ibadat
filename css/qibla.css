@@ -1,19 +1,21 @@
 /* ================= BASE ================= */
 
 body{
-margin:0;
-font-family:sans-serif;
+    margin:0;
+    font-family:sans-serif;
 
-background-image:
-url("../assets/bg_pattern.png");
+    background:
+    linear-gradient(
+        rgba(255,251,244,.55),
+        rgba(255,251,244,.55)
+    ),
+    url("../assets/bg_pattern.png");
 
-background-repeat:repeat;
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
 
-background-size:600px auto;
-
-background-color:#F8F4EA;
-
-color:#1b4332;
+    color:#1b4332;
 }
 
 .qibla-page{
