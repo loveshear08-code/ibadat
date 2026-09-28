@@ -394,17 +394,15 @@ body{
 
     flex:1;
 
-    min-height:0;
-
     display:grid;
 
     grid-template-columns:repeat(2,1fr);
 
-    grid-template-rows:repeat(3,1fr;
+    grid-template-rows:repeat(3,1fr);
 
     gap:10px;
 
-   align-content:stretch;
+    min-height:0;
 }
 
 .feature-card{
@@ -423,22 +421,13 @@ body{
 
     padding-left:24px;
 
-    text-align:center;
-
     color:var(--text);
 
     font-size:18px;
 
     font-weight:700;
 
-    padding-top:4px;
-
-    padding-bottom:4px;
-}
-
-.feature-card:active{
-
-    transform:scale(.97);
+    height:100%;
 }
 
 .feature-icon{
