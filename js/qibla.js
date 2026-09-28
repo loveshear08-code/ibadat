@@ -656,6 +656,56 @@ function calculateQibla(){
 
 
 /* =========================================================
+   DIRECTION SHORT NAME
+   ========================================================= */
+
+function getDirectionShort(degree){
+
+    const lang =
+        getLanguage();
+
+    if(lang === "en"){
+
+        if(degree >= 315 || degree < 45)
+            return "N";
+
+        if(degree >= 45 && degree < 135)
+            return "E";
+
+        if(degree >= 135 && degree < 225)
+            return "S";
+
+        return "W";
+    }
+
+    if(lang === "hi"){
+
+        if(degree >= 315 || degree < 45)
+            return "उ";
+
+        if(degree >= 45 && degree < 135)
+            return "पू";
+
+        if(degree >= 135 && degree < 225)
+            return "द";
+
+        return "प";
+    }
+
+    if(degree >= 315 || degree < 45)
+        return "উ";
+
+    if(degree >= 45 && degree < 135)
+        return "পূ";
+
+    if(degree >= 135 && degree < 225)
+        return "দ";
+
+    return "প";
+}
+
+
+/* =========================================================
    DEGREE DISPLAY
    ========================================================= */
 
@@ -666,14 +716,29 @@ function updateDegreeText(){
         return;
     }
 
+    const degree =
+
+        Math.round(
+            qiblaBearing
+        );
+
+    const direction =
+
+        getDirectionShort(
+            degree
+        );
 
     qiblaDegree.innerText =
 
-        localNumber(
-            Math.round(qiblaBearing)
-        ) +
+        localNumber(degree)
 
-        "°";
+        +
+
+        "° "
+
+        +
+
+        direction;
 }
 
 
