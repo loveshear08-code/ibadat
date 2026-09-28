@@ -126,7 +126,7 @@ body{
 
     gap:10px;
 
-    overflow:auto;
+    overflow:hidden;
 }
 
 /* ===================================================
@@ -158,9 +158,9 @@ body{
 .status-card,
 .prayer-card{
 
-    flex:0 0 22%;
+    flex:0 0 20%;
 
-    min-height:145px;
+    min-height:130px;
 
     background:#FFFFFF;
 }
@@ -401,6 +401,8 @@ body{
     grid-template-rows:repeat(3,1fr);
 
     gap:10px;
+
+   min-height:0;
 }
 
 .feature-card{
