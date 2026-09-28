@@ -205,12 +205,6 @@ const distance =
     );
 
 
-const directionText =
-    document.getElementById(
-        "directionText"
-    );
-
-
 const qiblaDegree =
     document.getElementById(
         "qiblaDegree"
@@ -297,13 +291,6 @@ function applyLanguage(){
 
         distanceLabel.innerText =
             t.distance;
-    }
-
-
-    if(directionText){
-
-        directionText.innerText =
-            t.qiblaDirection;
     }
 
 
@@ -1036,7 +1023,7 @@ function handleOrientation(event){
 
         qiblaArrow.style.transform =
 
-            `translateX(-50%) rotate(${rotation}deg)`;
+            `translateX(-50%,-100%) rotate(${rotation}deg)`;
     }
 }
 
