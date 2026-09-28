@@ -394,8 +394,6 @@ body{
 
     flex:1;
 
-   min-height:220px;
-
     display:grid;
 
     grid-template-columns:repeat(2,1fr);
