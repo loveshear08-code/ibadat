@@ -420,7 +420,7 @@ body{
 
     align-items:center;
 
-   gap:12px;
+   gap:10px;
    
     text-align:center;
 
@@ -445,6 +445,7 @@ body{
     height:36px;
 
     object-fit:contain;
+   flex-shrink:0;
 }
 
 
