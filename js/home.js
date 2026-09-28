@@ -937,7 +937,7 @@ const t =
 
     document.getElementById("namaz").innerHTML =
 `
-<img src="assets/icon-namaz.png"
+<img src="assets/icon_namaz.png"
      class="feature-icon">
 
 <span>${t.namaz}</span>
@@ -945,7 +945,7 @@ const t =
 
 document.getElementById("quran").innerHTML =
 `
-<img src="assets/icon-quran.png"
+<img src="assets/icon_quran.png"
      class="feature-icon">
 
 <span>${t.quran}</span>
@@ -953,7 +953,7 @@ document.getElementById("quran").innerHTML =
 
 document.getElementById("dua").innerHTML =
 `
-<img src="assets/icon-dua.png"
+<img src="assets/icon_dua.png"
      class="feature-icon">
 
 <span>${t.dua}</span>
@@ -961,7 +961,7 @@ document.getElementById("dua").innerHTML =
 
 document.getElementById("hadith").innerHTML =
 `
-<img src="assets/icon-hadith.png"
+<img src="assets/icon_hadith.png"
      class="feature-icon">
 
 <span>${t.hadith}</span>
@@ -969,7 +969,7 @@ document.getElementById("hadith").innerHTML =
 
 document.getElementById("qibla").innerHTML =
 `
-<img src="assets/icon-qibla.png"
+<img src="assets/icon_qibla.png"
      class="feature-icon">
 
 <span>${t.qibla}</span>
@@ -977,7 +977,7 @@ document.getElementById("qibla").innerHTML =
 
 document.getElementById("tasbih").innerHTML =
 `
-<img src="assets/icon-tasbih.png"
+<img src="assets/icon_tasbih.png"
      class="feature-icon">
 
 <span>${t.tasbih}</span>
