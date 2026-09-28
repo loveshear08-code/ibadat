@@ -392,7 +392,7 @@ body{
 
 .feature-grid{
 
-   flex:1;
+    flex:1;
 
     min-height:0;
 
@@ -400,12 +400,11 @@ body{
 
     grid-template-columns:repeat(2,1fr);
 
-    grid-template-rows:repeat(3,1fr);
+    grid-template-rows:auto auto auto;
 
     gap:10px;
-   
-   padding-bottom:0;
-   
+
+    align-content:space-between;
 }
 
 .feature-card{
@@ -420,10 +419,10 @@ body{
 
     align-items:center;
 
-   gap:10px;
+    gap:10px;
 
-   padding-left:24px;
-   
+    padding-left:24px;
+
     text-align:center;
 
     color:var(--text);
@@ -432,11 +431,11 @@ body{
 
     font-weight:700;
 
-   min-height:68px;
+    min-height:68px;
 
     padding-top:4px;
 
-   padding-bottom:4px;
+    padding-bottom:4px;
 }
 
 .feature-card:active{
@@ -451,7 +450,8 @@ body{
     height:30px;
 
     object-fit:contain;
-   flex-shrink:0;
+
+    flex-shrink:0;
 }
 
 
