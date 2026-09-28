@@ -551,7 +551,7 @@ function buildPrayerGrid(){
             box.onclick=()=>{
 
                 window.location.href =
-                "settings.html";
+                "html/settings.html";
             };
         }
 
