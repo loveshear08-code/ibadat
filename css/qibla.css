@@ -3,7 +3,16 @@
 body{
 margin:0;
 font-family:sans-serif;
-background:#eef7f0;
+
+background-image:
+url("../assets/bg_pattern.png");
+
+background-repeat:repeat;
+
+background-size:600px auto;
+
+background-color:#F8F4EA;
+
 color:#1b4332;
 }
 
