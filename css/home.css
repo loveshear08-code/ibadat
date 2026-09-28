@@ -446,9 +446,9 @@ body{
 
 .feature-icon{
 
-    width:50px;
+    width:30px;
 
-    height:50px;
+    height:30px;
 
     object-fit:contain;
    flex-shrink:0;
