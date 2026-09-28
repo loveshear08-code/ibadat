@@ -551,7 +551,7 @@ function buildPrayerGrid(){
             box.onclick=()=>{
 
                 window.location.href =
-                "setting.html";
+                "settings.html";
             };
         }
 
@@ -888,23 +888,6 @@ function setupBoardNavigation(){
 
             window.location.href =
             "html/calendar.html";
-
-        };
-    }
-
-
-    /* SUNRISE */
-    const sunriseBox =
-        document.querySelector(
-            ".sunrise-box"
-        );
-
-    if(sunriseBox){
-
-        sunriseBox.onclick = () => {
-
-            window.location.href =
-            "html/settings.html";
 
         };
     }
