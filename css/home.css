@@ -404,7 +404,7 @@ body{
 
     gap:10px;
    
-   padding-bottom:10px;
+   padding-bottom:16px;
    
 }
 
@@ -416,11 +416,13 @@ body{
 
     display:flex;
 
-    justify-content:center;
+    justify-content:flex-start;
 
     align-items:center;
 
    gap:10px;
+
+   padding-left:24px;
    
     text-align:center;
 
@@ -430,7 +432,9 @@ body{
 
     font-weight:700;
 
-    padding:6px;
+    padding-top:6px;
+
+   padding-bottom:6px;
 }
 
 .feature-card:active{
