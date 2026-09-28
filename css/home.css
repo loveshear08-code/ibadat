@@ -229,6 +229,8 @@ body{
 
 .status-card{
 
+   position:relative;
+
     display:flex;
 
     justify-content:center;
@@ -246,7 +248,25 @@ body{
     background-size:cover;
 }
 
+.status-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    rgba(255,248,232,0.22);
+
+    z-index:1;
+}
+
 .status{
+
+   position:relative;
+
+    z-index:2;
 
     width:100%;
 
@@ -323,6 +343,8 @@ body{
 
 .prayer-card{
 
+   position:relative;
+
     display:flex;
 
     justify-content:center;
@@ -330,6 +352,8 @@ body{
     align-items:center;
 
     padding:0;
+
+   overflow:hidden;
 
    background-image:url("../assets/prayer-w.png");
 
@@ -340,7 +364,25 @@ body{
     background-size:cover;
 }
 
+.prayer-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    rgba(255,248,232,0.28);
+
+    z-index:1;
+}
+
 .prayer-grid{
+
+   position:relative;
+
+    z-index:2;
 
     width:100%;
 
