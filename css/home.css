@@ -98,7 +98,7 @@ body{
 
 .top-date{
 
-    font-size:14px;
+    font-size:15px;
 
     font-weight:600;
 }
@@ -452,6 +452,8 @@ body{
     background:var(--feature);
 
     border-radius:22px;
+
+   border:1px solid rgba(212,175,55,.4);
 
     display:flex;
 
