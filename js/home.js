@@ -59,7 +59,21 @@ function localizeNumber(num){
     return Number(num)
         .toLocaleString(locale);
 }
+function localizeTime(time){
 
+    const maps = {
+
+        bn:['০','১','২','৩','৪','৫','৬','৭','৮','৯'],
+
+        hi:['०','१','२','३','४','५','६','७','८','९']
+    };
+
+    if(LANG === "en") return time;
+
+    return time.replace(/\d/g, d =>
+        maps[LANG][d]
+    );
+}
 
 /* ================= THEME ================= */
 
@@ -543,12 +557,14 @@ function buildPrayerGrid(){
 
         box.innerHTML =
 
-        `
-        <div>${item.text}</div>
-        <div>
-        ${prayerTimes[item.key]}
-        </div>
-        `;
+`
+<div>${item.text}</div>
+<div>
+${localizeTime(
+    prayerTimes[item.key]
+)}
+</div>
+`;
 
         grid.appendChild(box);
     });
