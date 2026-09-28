@@ -1111,22 +1111,22 @@ function setupFeatureNavigation(){
     const pages = {
 
         namaz:
-        "namaz.html",
+        "html/namaz-shikha.html",
 
         quran:
-        "quran.html",
+        "html/quran.html",
 
         dua:
-        "dua.html",
+        "html/dua.html",
 
         hadith:
-        "hadith.html",
+        "html/hadith.html",
 
         qibla:
-        "qibla.html",
+        "html/qibla.html",
 
         tasbih:
-        "tasbih.html"
+        "html/tasbih.html"
     };
 
     Object.keys(pages)
