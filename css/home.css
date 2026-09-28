@@ -126,7 +126,7 @@ body{
 
     gap:10px;
 
-    overflow:hidden;
+    overflow:auto;
 }
 
 /* ===================================================
@@ -394,6 +394,8 @@ body{
 
     flex:1;
 
+   min-height:220px;
+
     display:grid;
 
     grid-template-columns:repeat(2,1fr);
@@ -401,8 +403,6 @@ body{
     grid-template-rows:repeat(3,1fr);
 
     gap:10px;
-
-    min-height:0;
 }
 
 .feature-card{
