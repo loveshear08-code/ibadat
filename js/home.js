@@ -935,23 +935,53 @@ function loadFeatureNames(){
 const t =
     names[lang];
 
-    document.getElementById("namaz").innerText =
-        t.namaz;
+    document.getElementById("namaz").innerHTML =
+`
+<img src="assets/icon-namaz.png"
+     class="feature-icon">
 
-    document.getElementById("quran").innerText =
-        t.quran;
+<span>${t.namaz}</span>
+`;
 
-    document.getElementById("dua").innerText =
-        t.dua;
+document.getElementById("quran").innerHTML =
+`
+<img src="assets/icon-quran.png"
+     class="feature-icon">
 
-    document.getElementById("hadith").innerText =
-        t.hadith;
+<span>${t.quran}</span>
+`;
 
-    document.getElementById("qibla").innerText =
-        t.qibla;
+document.getElementById("dua").innerHTML =
+`
+<img src="assets/icon-dua.png"
+     class="feature-icon">
 
-    document.getElementById("tasbih").innerText =
-        t.tasbih;
+<span>${t.dua}</span>
+`;
+
+document.getElementById("hadith").innerHTML =
+`
+<img src="assets/icon-hadith.png"
+     class="feature-icon">
+
+<span>${t.hadith}</span>
+`;
+
+document.getElementById("qibla").innerHTML =
+`
+<img src="assets/icon-qibla.png"
+     class="feature-icon">
+
+<span>${t.qibla}</span>
+`;
+
+document.getElementById("tasbih").innerHTML =
+`
+<img src="assets/icon-tasbih.png"
+     class="feature-icon">
+
+<span>${t.tasbih}</span>
+`;
 }
 
 
