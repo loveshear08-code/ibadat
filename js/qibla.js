@@ -1023,7 +1023,7 @@ function handleOrientation(event){
 
         qiblaArrow.style.transform =
 
-            `translateX(-50%,-100%) rotate(${rotation}deg)`;
+            `translate(-50%,-100%) rotate(${rotation}deg)`;
     }
 }
 
