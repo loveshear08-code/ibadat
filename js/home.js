@@ -857,11 +857,9 @@ setTimeout(
    NAVIGATION + QUOTES
 ===================================================== */
 
-
-/* ================= BISMILLAH CLICK ================= */
-
 function setupBoardNavigation(){
 
+    /* BISMILLAH */
     const bismillahCard =
         document.getElementById(
             "bismillahCard"
@@ -869,15 +867,16 @@ function setupBoardNavigation(){
 
     if(bismillahCard){
 
-        bismillahCard.onclick =
-        ()=>{
+        bismillahCard.onclick = () => {
 
             window.location.href =
-            "allah-name.html";
+            "html/allah-names.html";
+
         };
     }
 
 
+    /* STATUS */
     const statusCard =
         document.querySelector(
             ".status-card"
@@ -885,13 +884,133 @@ function setupBoardNavigation(){
 
     if(statusCard){
 
-        statusCard.onclick =
-        ()=>{
+        statusCard.onclick = () => {
 
             window.location.href =
-            "calendar.html";
+            "html/calendar.html";
+
         };
     }
+
+
+    /* SUNRISE */
+    const sunriseBox =
+        document.querySelector(
+            ".sunrise-box"
+        );
+
+    if(sunriseBox){
+
+        sunriseBox.onclick = () => {
+
+            window.location.href =
+            "html/settings.html";
+
+        };
+    }
+
+
+    /* NAMAZ */
+    const namaz =
+        document.getElementById(
+            "namaz"
+        );
+
+    if(namaz){
+
+        namaz.onclick = () => {
+
+            window.location.href =
+            "html/namaz-shikha.html";
+
+        };
+    }
+
+
+    /* QURAN */
+    const quran =
+        document.getElementById(
+            "quran"
+        );
+
+    if(quran){
+
+        quran.onclick = () => {
+
+            window.location.href =
+            "html/quran.html";
+
+        };
+    }
+
+
+    /* DUA */
+    const dua =
+        document.getElementById(
+            "dua"
+        );
+
+    if(dua){
+
+        dua.onclick = () => {
+
+            window.location.href =
+            "html/dua.html";
+
+        };
+    }
+
+
+    /* HADITH */
+    const hadith =
+        document.getElementById(
+            "hadith"
+        );
+
+    if(hadith){
+
+        hadith.onclick = () => {
+
+            window.location.href =
+            "html/hadith.html";
+
+        };
+    }
+
+
+    /* QIBLA */
+    const qibla =
+        document.getElementById(
+            "qibla"
+        );
+
+    if(qibla){
+
+        qibla.onclick = () => {
+
+            window.location.href =
+            "html/qibla.html";
+
+        };
+    }
+
+
+    /* TASBIH */
+    const tasbih =
+        document.getElementById(
+            "tasbih"
+        );
+
+    if(tasbih){
+
+        tasbih.onclick = () => {
+
+            window.location.href =
+            "html/tasbih.html";
+
+        };
+    }
+
 }
 
 
@@ -1210,7 +1329,6 @@ weather.innerText =
             "--°";
     }
 }
-
 
 /* ================= FINAL INIT ================= */
 
