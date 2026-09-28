@@ -907,7 +907,7 @@ function loadFeatureNames(){
             dua:"দুয়া",
             hadith:"হাদিস",
             qibla:"কিবলা",
-            tasbih:"তাসবিহ"
+            tasbih:"তসবিহ"
         },
 
         en:{
