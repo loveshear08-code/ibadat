@@ -404,7 +404,7 @@ body{
 
     gap:10px;
    
-   padding-bottom:50px;
+   padding-bottom:10px;
    
 }
 
@@ -431,6 +431,8 @@ body{
     font-size:18px;
 
     font-weight:700;
+
+   min-hight:72px;
 
     padding-top:4px;
 
