@@ -392,7 +392,7 @@ body{
 
 .feature-grid{
 
-   flex:1.1;
+   flex:none;
 
     min-height:0;
 
@@ -432,7 +432,7 @@ body{
 
     font-weight:700;
 
-   min-hight:72px;
+   min-height:72px;
 
     padding-top:4px;
 
