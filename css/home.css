@@ -432,9 +432,9 @@ body{
 
     font-weight:700;
 
-    padding-top:6px;
+    padding-top:4px;
 
-   padding-bottom:6px;
+   padding-bottom:4px;
 }
 
 .feature-card:active{
@@ -444,9 +444,9 @@ body{
 
 .feature-icon{
 
-    width:36px;
+    width:6px;
 
-    height:36px;
+    height:32px;
 
     object-fit:contain;
    flex-shrink:0;
