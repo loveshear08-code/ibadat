@@ -400,9 +400,11 @@ body{
 
     grid-template-columns:repeat(2,1fr);
 
-    grid-template-rows:auto auto auto;
+    grid-template-rows:repeat(3,1fr;
 
     gap:10px;
+
+   align-content:stretch;
 }
 
 .feature-card{
@@ -428,8 +430,6 @@ body{
     font-size:18px;
 
     font-weight:700;
-
-    min-height:68px;
 
     padding-top:4px;
 
