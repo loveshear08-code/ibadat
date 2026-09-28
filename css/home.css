@@ -420,6 +420,8 @@ body{
 
     align-items:center;
 
+   gap:12px;
+   
     text-align:center;
 
     color:var(--text);
@@ -435,6 +437,16 @@ body{
 
     transform:scale(.97);
 }
+
+.feature-icon{
+
+    width:48px;
+
+    height:48px;
+
+    object-fit:contain;
+}
+
 
 /* ===================================================
    BOTTOM BAR
