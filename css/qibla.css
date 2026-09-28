@@ -312,10 +312,12 @@ margin-top:3px;
 
 .info-card{
 
-margin-top:auto;
+width:calc(100% - 24px);
 
 margin-left:12px;
 margin-right:12px;
+
+margin-top:auto;
 margin-bottom:14px;
 
 padding:14px;
@@ -323,6 +325,8 @@ padding:14px;
 background:#dcedc8;
 
 border-radius:16px;
+
+box-sizing:border-box;
 
 text-align:center;
 }
