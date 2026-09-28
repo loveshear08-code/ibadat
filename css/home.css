@@ -426,7 +426,7 @@ body{
 
     color:var(--text);
 
-    font-size:20px;
+    font-size:18px;
 
     font-weight:700;
 
@@ -440,9 +440,9 @@ body{
 
 .feature-icon{
 
-    width:48px;
+    width:20px;
 
-    height:48px;
+    height:30px;
 
     object-fit:contain;
 }
