@@ -403,8 +403,6 @@ body{
     grid-template-rows:auto auto auto;
 
     gap:10px;
-
-    align-content:space-between;
 }
 
 .feature-card{
