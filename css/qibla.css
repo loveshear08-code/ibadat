@@ -90,14 +90,16 @@ color:#1b4332;
 /* ================= COMPASS SECTION ================= */
 
 .compass-section{
-    flex:1;
-    
-    display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
 
-padding:10px 0 18px;
+    flex:1;
+
+    display:flex;
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:40px 0 18px;
 
     position:relative;
 }
@@ -108,6 +110,8 @@ padding:10px 0 18px;
 .compass{
 width:270px;
 height:270px;
+
+    margin-top:25px;
 
 border-radius:50%;
 
