@@ -229,6 +229,12 @@ const qiblaArrow =
     );
 
 
+const kaabaMarker =
+    document.getElementById(
+        "kaabaMarker"
+    );
+
+
 const backBtn =
     document.getElementById(
         "backBtn"
@@ -1025,6 +1031,34 @@ function handleOrientation(event){
 
             `translate(-50%,-100%) rotate(${rotation}deg)`;
     }
+
+   
+   if(kaabaMarker){
+
+    const radius = 165;
+
+    const rad =
+        rotation *
+        Math.PI /
+        180;
+
+    const x =
+        Math.sin(rad) *
+        radius;
+
+    const y =
+        -Math.cos(rad) *
+        radius;
+
+    kaabaMarker.style.left =
+        `calc(50% + ${x}px)`;
+
+    kaabaMarker.style.top =
+        `calc(50% + ${y}px)`;
+
+    kaabaMarker.style.transform =
+        "translate(-50%, -50%)";
+   }
 }
 
 
