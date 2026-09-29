@@ -931,7 +931,7 @@ function smoothHeading(
         normalizeAngle(
 
             lastHeading +
-            difference * 0.25
+            difference * 0.12
         );
 
 
