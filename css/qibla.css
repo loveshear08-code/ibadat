@@ -141,9 +141,7 @@ z-index:40;
 
 pointer-events:none;
 
-transition:
-left .30s linear,
-top .30s linear;
+transition:none;
 }
 
 
