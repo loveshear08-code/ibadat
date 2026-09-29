@@ -1035,7 +1035,18 @@ function handleOrientation(event){
    
    if(kaabaMarker){
 
-    const radius = 165;
+    const compass =
+        document.querySelector(".compass");
+
+    if(!compass) return;
+
+    const compassRadius =
+        compass.offsetWidth / 2;
+
+    const gap = 25;
+
+    const orbitRadius =
+        compassRadius + gap;
 
     const rad =
         rotation *
@@ -1044,11 +1055,11 @@ function handleOrientation(event){
 
     const x =
         Math.sin(rad) *
-        radius;
+        orbitRadius;
 
     const y =
         -Math.cos(rad) *
-        radius;
+        orbitRadius;
 
     kaabaMarker.style.left =
         `calc(50% + ${x}px)`;
