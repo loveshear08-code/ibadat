@@ -654,47 +654,78 @@ function calculateQibla(){
 
 function getDirectionShort(degree){
 
-    const lang =
-        getLanguage();
+    const lang = getLanguage();
+
+    let directions;
 
     if(lang === "en"){
 
-        if(degree >= 315 || degree < 45)
-            return "N";
+        directions = [
+            "N",
+            "NNE",
+            "NE",
+            "ENE",
+            "E",
+            "ESE",
+            "SE",
+            "SSE",
+            "S",
+            "SSW",
+            "SW",
+            "WSW",
+            "W",
+            "WNW",
+            "NW",
+            "NNW"
+        ];
 
-        if(degree >= 45 && degree < 135)
-            return "E";
+    }else if(lang === "hi"){
 
-        if(degree >= 135 && degree < 225)
-            return "S";
+        directions = [
+            "उ",
+            "उ-उपू",
+            "उपू",
+            "पू-उपू",
+            "पू",
+            "पू-दपू",
+            "दपू",
+            "द-दपू",
+            "द",
+            "द-दप",
+            "दप",
+            "प-दप",
+            "प",
+            "प-उप",
+            "उप",
+            "उ-उप"
+        ];
 
-        return "W";
+    }else{
+
+        directions = [
+            "উ",
+            "উ-উপূ",
+            "উপূ",
+            "পূ-উপূ",
+            "পূ",
+            "পূ-দপূ",
+            "দপূ",
+            "দ-দপূ",
+            "দ",
+            "দ-দপ",
+            "দপ",
+            "প-দপ",
+            "প",
+            "প-উপ",
+            "উপ",
+            "উ-উপ"
+        ];
     }
 
-    if(lang === "hi"){
+    const index =
+        Math.round(degree / 22.5) % 16;
 
-        if(degree >= 315 || degree < 45)
-            return "उ";
-
-        if(degree >= 45 && degree < 135)
-            return "पू";
-
-        if(degree >= 135 && degree < 225)
-            return "द";
-
-        return "प";
-    }
-
-    if(degree >= 315 || degree < 45)
-        return "উ";
-
-    if(degree >= 45 && degree < 135)
-        return "পূ";
-
-    if(degree >= 135 && degree < 225)
-        return "দ";
-
-    return "প";
+    return directions[index];
 }
 
 
