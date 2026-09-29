@@ -1043,7 +1043,7 @@ function handleOrientation(event){
     const compassRadius =
         compass.offsetWidth / 2;
 
-    const gap = 45;
+    const gap = 42;
 
     const orbitRadius =
         compassRadius + gap;
