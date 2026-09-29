@@ -811,69 +811,31 @@ function calculateDistance(){
         getLanguage();
 
 
-    if(km >= 1000){
+    const value =
+    Math.round(km);
 
-        const value =
-            (km / 1000).toFixed(1);
+let unit =
+    "কিমি";
 
+if(lang === "en"){
 
-        let unit =
-            "হাজার কিমি";
+    unit =
+        "km";
 
+}else if(lang === "hi"){
 
-        if(lang === "en"){
+    unit =
+        "किमी";
+}
 
-            unit =
-                "thousand km";
+if(distance){
 
-        }else if(lang === "hi"){
+    distance.innerText =
 
-            unit =
-                "हज़ार किमी";
-        }
-
-
-        if(distance){
-
-            distance.innerText =
-
-                localNumber(value) +
-                " " +
-                unit;
-        }
-
-
-    }else{
-
-        const value =
-            km.toFixed(1);
-
-
-        let unit =
-            "কিমি";
-
-
-        if(lang === "en"){
-
-            unit =
-                "km";
-
-        }else if(lang === "hi"){
-
-            unit =
-                "किमी";
-        }
-
-
-        if(distance){
-
-            distance.innerText =
-
-                localNumber(value) +
-                " " +
-                unit;
-        }
-    }
+        localNumber(value) +
+        " " +
+        unit;
+}
 }
 
 
