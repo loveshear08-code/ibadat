@@ -80,7 +80,7 @@ color:#1b4332;
 /* ================= COMPASS SECTION ================= */
 
 .compass-section{
-    flex:0 0 auto;
+    flex:1;
 
     display:flex;
     align-items:center;
@@ -90,8 +90,8 @@ color:#1b4332;
 
     min-height:0;
 
-    margin-top:8px;
-    margin-bottom:8px;
+    margin-top:0px;
+    margin-bottom:0px;
 }
 
 
