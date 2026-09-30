@@ -1,47 +1,93 @@
-// This is the "Offline page" service worker
+const CACHE_NAME = "ibadat-v1";
 
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
+const FILES_TO_CACHE = [
+  "/",
+  "/index.html",
+  "/manifest.json",
 
-const CACHE = "pwabuilder-page";
+  "/css/home.css",
 
-// TODO: replace the following with the correct offline fallback page i.e.: const offlineFallbackPage = "offline.html";
-const offlineFallbackPage = "ToDo-replace-this-name.html";
+  "/js/home.js",
+  "/js/theme.js",
 
-self.addEventListener("message", (event) => {
-  if (event.data && event.data.type === "SKIP_WAITING") {
-    self.skipWaiting();
-  }
-});
+  "/html/qibla.html",
+  "/html/dua.html",
+  "/html/hadith.html",
+  "/html/calendar.html",
+  "/html/settings.html",
+  "/html/tasbih.html",
+  "/html/allah-names.html",
+  "/html/namaz-guide.html",
+  "/html/namaz-recitation.html",
+  "/html/namaz-shikha.html",
+  "/html/jamaat-special.html",
+  "/html/pobitrota-prostuti.html",
 
-self.addEventListener('install', async (event) => {
+  "/dua.json",
+  "/hadith.json",
+
+  "/assets/bismillah.png",
+  "/assets/status.png",
+  "/assets/prayer-w.png",
+
+  "/assets/icon_namaz.png",
+  "/assets/icon_quran.png",
+  "/assets/icon_dua.png",
+  "/assets/icon_hadith.png",
+  "/assets/icon_qibla.png",
+  "/assets/icon_tasbih.png"
+];
+
+self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE)
-      .then((cache) => cache.add(offlineFallbackPage))
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(FILES_TO_CACHE))
+      .then(() => self.skipWaiting())
   );
 });
 
-if (workbox.navigationPreload.isSupported()) {
-  workbox.navigationPreload.enable();
-}
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(
+        keys.map(key => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      )
+    )
+  );
 
-self.addEventListener('fetch', (event) => {
-  if (event.request.mode === 'navigate') {
-    event.respondWith((async () => {
-      try {
-        const preloadResp = await event.preloadResponse;
+  self.clients.claim();
+});
 
-        if (preloadResp) {
-          return preloadResp;
+self.addEventListener("fetch", event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        return response || fetch(event.request)
+          .then(networkResponse => {
+
+            if (
+              event.request.method === "GET" &&
+              networkResponse.status === 200
+            ) {
+              const responseClone = networkResponse.clone();
+
+              caches.open(CACHE_NAME)
+                .then(cache => {
+                  cache.put(event.request, responseClone);
+                });
+            }
+
+            return networkResponse;
+          });
+      })
+      .catch(() => {
+        if (event.request.destination === "document") {
+          return caches.match("/index.html");
         }
-
-        const networkResp = await fetch(event.request);
-        return networkResp;
-      } catch (error) {
-
-        const cache = await caches.open(CACHE);
-        const cachedResp = await cache.match(offlineFallbackPage);
-        return cachedResp;
-      }
-    })());
-  }
+      })
+  );
 });
