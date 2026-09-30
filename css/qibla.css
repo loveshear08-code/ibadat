@@ -76,18 +76,18 @@ color:#1b4332;
 /* ================= COMPASS SECTION ================= */
 
 .compass-section{
-    flex:1;
-
     display:flex;
     align-items:center;
     justify-content:center;
 
     position:relative;
 
-    min-height:0;
+    min-height:270px;
 
-    margin-top:0px;
-    margin-bottom:0px;
+    margin-top:15px;
+    margin-bottom:15px;
+
+    flex-shrink:0;
 }
 
 
@@ -302,22 +302,25 @@ margin-top:3px;
 
 .info-card{
 
-width:calc(100% - 24px);
+    width:calc(100% - 24px);
 
-margin-left:12px;
-margin-right:12px;
-    
-margin-bottom:18;
+    margin-left:12px;
+    margin-right:12px;
 
-padding:14px;
+    margin-top:0;
+    margin-bottom:4px;
 
-background:#dcedc8;
+    padding:14px;
 
-border-radius:16px;
+    background:#dcedc8;
 
-box-sizing:border-box;
+    border-radius:16px;
 
-text-align:center;
+    box-sizing:border-box;
+
+    text-align:center;
+
+    flex-shrink:0;
 }
 
 #distanceLabel{
