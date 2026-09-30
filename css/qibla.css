@@ -1,5 +1,6 @@
 body{
     margin:0;
+    overflow:hidden;
     font-family:sans-serif;
 
     background:
@@ -16,17 +17,17 @@ body{
 
 .qibla-page{
     height:100vh;
+    overflow:hidden;
 
     display:flex;
     flex-direction:column;
 }
 
 .location-card{
-    margin:12px;
-    padding:14px;
+    margin:8px 12px;
+    padding:10px;
 
     background:#dcedc8;
-
     border-radius:16px;
 
     text-align:center;
@@ -41,9 +42,9 @@ body{
 }
 
 #locationName{
-    margin-top:6px;
+    margin-top:4px;
 
-    font-size:16px;
+    font-size:18px;
     font-weight:700;
 
     color:#1b4332;
@@ -52,19 +53,20 @@ body{
 .compass-wrapper{
     flex:1;
 
+    min-height:0;
+
     display:flex;
-    align-items:center;
     justify-content:center;
+    align-items:center;
 }
 
 .compass{
-    width:270px;
-    height:270px;
+    width:230px;
+    height:230px;
 
     border-radius:50%;
 
     background:#dcedc8;
-
     border:8px solid #a5d6a7;
 
     position:relative;
@@ -73,7 +75,7 @@ body{
 .direction{
     position:absolute;
 
-    font-size:20px;
+    font-size:18px;
     font-weight:700;
 
     color:#1b5e20;
@@ -104,8 +106,8 @@ body{
 }
 
 .compass-ring{
-    width:210px;
-    height:210px;
+    width:180px;
+    height:180px;
 
     border-radius:50%;
 
@@ -140,21 +142,21 @@ body{
 .degree{
     position:absolute;
 
-    bottom:38px;
+    bottom:34px;
 
     left:50%;
 
     transform:translateX(-50%);
 
-    font-size:22px;
+    font-size:20px;
     font-weight:700;
 
     color:#2e7d32;
 }
 
 .info-card{
-    margin:12px;
-    padding:14px;
+    margin:8px 12px;
+    padding:10px;
 
     background:#dcedc8;
 
@@ -173,9 +175,9 @@ body{
 }
 
 #distance{
-    margin-top:6px;
+    margin-top:4px;
 
-    font-size:20px;
+    font-size:18px;
     font-weight:700;
 
     color:#1b4332;
