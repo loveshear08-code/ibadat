@@ -49,19 +49,6 @@ font-size:18px;
 font-weight:bold;
 }
 
-.back-btn{
-position:absolute;
-left:12px;
-
-background:none;
-border:none;
-
-color:white;
-font-size:24px;
-
-cursor:pointer;
-}
-
 
 /* ================= LOCATION ================= */
 
@@ -93,19 +80,12 @@ color:#1b4332;
 /* ================= COMPASS SECTION ================= */
 
 .compass-section{
-
     flex:1;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     position:relative;
-
     min-height:0;
-
-    padding-top:20px;
-    padding-bottom:20px;
 }
 
 
@@ -137,7 +117,7 @@ position:absolute;
 left:50%;
 top:50%;
 
-font-size:34px;
+font-size:38px;
 
 z-index:40;
 
@@ -233,7 +213,7 @@ content:"";
 
 position:absolute;
 
-top:-22px;
+top:-14px;
 left:50%;
 
 transform:translateX(-50%);
@@ -253,7 +233,7 @@ content:"";
 
 position:absolute;
 
-top:8px;
+top:-2px;
 left:50%;
 
 transform:translateX(-50%);
@@ -324,8 +304,7 @@ width:calc(100% - 24px);
 
 margin-left:12px;
 margin-right:12px;
-
-margin-top:auto;
+    
 margin-bottom:12px;
 
 padding:14px;
