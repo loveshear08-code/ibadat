@@ -1,3 +1,5 @@
+/* ================= BASE ================= */
+
 html,
 body{
     margin:0;
@@ -5,6 +7,7 @@ body{
     width:100%;
     height:100%;
     overflow:hidden;
+
     font-family:sans-serif;
 
     background:
@@ -17,17 +20,26 @@ body{
     background-size:cover;
     background-position:center;
     background-attachment:fixed;
+
+    color:#1b4332;
 }
+
+/* ================= PAGE ================= */
 
 .qibla-page{
-    height:100dvh;
+    height:100vh;
+
     display:flex;
     flex-direction:column;
+
+    overflow:hidden;
 }
 
+/* ================= LOCATION CARD ================= */
+
 .location-card{
-    margin:10px 12px 8px;
-    padding:14px;
+    margin:8px 12px;
+    padding:10px;
 
     background:#dcedc8;
 
@@ -41,17 +53,20 @@ body{
 #locationLabel{
     font-size:13px;
     font-weight:700;
+
     color:#52796f;
 }
 
 #locationName{
-    margin-top:6px;
+    margin-top:4px;
 
     font-size:16px;
     font-weight:700;
 
     color:#1b4332;
 }
+
+/* ================= COMPASS AREA ================= */
 
 .compass-wrapper{
     flex:1;
@@ -64,8 +79,8 @@ body{
 }
 
 .compass{
-    width:240px;
-    height:240px;
+    width:220px;
+    height:220px;
 
     border-radius:50%;
 
@@ -73,45 +88,55 @@ body{
 
     border:8px solid #a5d6a7;
 
+    box-shadow:
+    0 5px 18px rgba(0,0,0,.15);
+
     position:relative;
+
+    flex-shrink:0;
 }
+
+/* ================= 16 DIRECTIONS ================= */
 
 .direction{
     position:absolute;
 
-    font-size:20px;
+    font-size:10px;
     font-weight:700;
 
     color:#1b5e20;
+
+    transform:translate(-50%,-50%);
 }
 
-.north{
-    top:8px;
-    left:50%;
-    transform:translateX(-50%);
-}
+.n   { top:10px; left:50%; font-size:14px; }
+.nne { top:28px; left:68%; }
+.ne  { top:48px; left:82%; }
+.ene { top:78px; left:92%; }
 
-.south{
-    bottom:8px;
-    left:50%;
-    transform:translateX(-50%);
-}
+.e   { top:50%; left:95%; font-size:14px; }
 
-.east{
-    right:12px;
-    top:50%;
-    transform:translateY(-50%);
-}
+.ese { top:142px; left:92%; }
+.se  { top:172px; left:82%; }
+.sse { top:192px; left:68%; }
 
-.west{
-    left:12px;
-    top:50%;
-    transform:translateY(-50%);
-}
+.s   { top:95%; left:50%; font-size:14px; }
+
+.ssw { top:192px; left:32%; }
+.sw  { top:172px; left:18%; }
+.wsw { top:142px; left:8%; }
+
+.w   { top:50%; left:5%; font-size:14px; }
+
+.wnw { top:78px; left:8%; }
+.nw  { top:48px; left:18%; }
+.nnw { top:28px; left:32%; }
+
+/* ================= INNER RING ================= */
 
 .compass-ring{
-    width:185px;
-    height:185px;
+    width:170px;
+    height:170px;
 
     border-radius:50%;
 
@@ -125,13 +150,15 @@ body{
     transform:translate(-50%,-50%);
 }
 
+/* ================= CENTER POINT ================= */
+
 .center-point{
-    width:18px;
-    height:18px;
+    width:16px;
+    height:16px;
 
     background:#d4af37;
 
-    border:4px solid #fff;
+    border:3px solid #ffffff;
 
     border-radius:50%;
 
@@ -143,25 +170,28 @@ body{
     transform:translate(-50%,-50%);
 }
 
+/* ================= DEGREE ================= */
+
 .degree{
     position:absolute;
 
-    bottom:28px;
+    bottom:24px;
 
     left:50%;
 
     transform:translateX(-50%);
 
-    font-size:22px;
+    font-size:18px;
     font-weight:700;
 
     color:#2e7d32;
 }
 
+/* ================= DISTANCE CARD ================= */
+
 .info-card{
     margin:8px 12px 10px;
-
-    padding:14px;
+    padding:10px;
 
     background:#dcedc8;
 
@@ -180,10 +210,52 @@ body{
 }
 
 #distance{
-    margin-top:6px;
+    margin-top:4px;
 
-    font-size:20px;
+    font-size:18px;
     font-weight:700;
 
     color:#1b4332;
+}
+
+/* ================= DARK MODE ================= */
+
+body.dark-mode{
+    color:#f5f5f5;
+}
+
+body.dark-mode .location-card,
+body.dark-mode .info-card{
+    background:#1e2a1f;
+}
+
+body.dark-mode #locationLabel,
+body.dark-mode #distanceLabel{
+    color:#a5d6a7;
+}
+
+body.dark-mode #locationName,
+body.dark-mode #distance{
+    color:#c8e6c9;
+}
+
+body.dark-mode .compass{
+    background:#1e2a1f;
+    border-color:#2e7d32;
+}
+
+body.dark-mode .compass-ring{
+    border-color:#52796f;
+}
+
+body.dark-mode .direction{
+    color:#c8e6c9;
+}
+
+body.dark-mode .center-point{
+    border-color:#1e2a1f;
+}
+
+body.dark-mode .degree{
+    color:#c8e6c9;
 }
