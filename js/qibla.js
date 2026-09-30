@@ -235,12 +235,6 @@ const kaabaMarker =
     );
 
 
-const backBtn =
-    document.getElementById(
-        "backBtn"
-    );
-
-
 /* ================= LOCATION STATE ================= */
 
 let latitude = null;
@@ -314,20 +308,6 @@ function removeCompassButton(){
 
         startCompassBtn.remove();
     }
-}
-
-
-/* =========================================================
-   BACK
-   ========================================================= */
-
-if(backBtn){
-
-    backBtn.onclick = function(){
-
-        window.location.href =
-            "../index.html";
-    };
 }
 
 
@@ -1036,7 +1016,7 @@ function handleOrientation(event){
     const compassRadius =
         compass.offsetWidth / 2;
 
-    const gap = 36;
+    const gap = 28;
 
     const orbitRadius =
         compassRadius + gap;
