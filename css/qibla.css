@@ -15,31 +15,14 @@ body{
 }
 
 .qibla-page{
-    min-height:100vh;
+    height:100vh;
 
     display:flex;
     flex-direction:column;
 }
 
-.topbar{
-    height:50px;
-
-    background:#2e7d32;
-    color:#fff;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:18px;
-    font-weight:700;
-
-    flex-shrink:0;
-}
-
 .location-card{
     margin:12px;
-
     padding:14px;
 
     background:#dcedc8;
@@ -72,12 +55,6 @@ body{
     display:flex;
     align-items:center;
     justify-content:center;
-}
-
-.compass-section{
-    display:flex;
-    justify-content:center;
-    align-items:center;
 }
 
 .compass{
@@ -177,8 +154,6 @@ body{
 
 .info-card{
     margin:12px;
-}
-
     padding:14px;
 
     background:#dcedc8;
