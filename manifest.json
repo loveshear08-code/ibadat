@@ -1,18 +1,41 @@
 {
   "name": "IBADAT",
   "short_name": "IBADAT",
+  "id": "com.ibadat.app",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "portrait",
   "background_color": "#f8f6ee",
   "theme_color": "#0f5132",
-  "orientation": "portrait",
-  "id": "com.ibadat.app",
-  "description": "IBADAT is an Islamic app for prayer times, Quran, duas, hadith, Qibla, Tasbih and daily worship.",
-  "dir": "auto",
-  "scope": "./",
   "lang": "en",
+  "dir": "auto",
   "prefer_related_applications": false,
+
+  "description": "IBADAT is an Islamic app for prayer times, Quran, duas, hadith, Qibla, Tasbih and daily worship.",
+
   "categories": [
-    "lifestyle"
+    "lifestyle",
+    "education",
+    "productivity"
+  ],
+
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
   ]
 }
