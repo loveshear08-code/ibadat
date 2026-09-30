@@ -49,8 +49,8 @@ font-weight:bold;
 /* ================= LOCATION ================= */
 
 .location-card{
-margin:12px;
-padding:14px;
+    margin:12px 12px 8px 12px;
+    padding:14px;
 
 background:#dcedc8;
 
@@ -82,8 +82,8 @@ color:#1b4332;
 
     position:relative;
 
-    margin-top:0;
-    margin-bottom:0;
+    margin-top:8;
+    margin-bottom:8;
 
     flex-shrink:0;
 }
@@ -359,21 +359,6 @@ cursor:pointer;
 
 .start-btn:active{
 transform:scale(0.96);
-}
-
-
-/* ================= MESSAGE ================= */
-
-.message{
-text-align:center;
-
-font-size:13px;
-
-color:#52796f;
-
-padding:0 15px;
-
-line-height:1.5;
 }
 
 
