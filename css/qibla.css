@@ -76,6 +76,8 @@ body{
     align-items:center;
 
     min-height:0;
+
+    margin-top:-35px;
 }
 
 .compass{
@@ -175,16 +177,18 @@ body{
 .degree{
     position:absolute;
 
-    bottom:24px;
-
     left:50%;
+    top:68%;
 
-    transform:translateX(-50%);
+    transform:translate(-50%,-50%);
 
-    font-size:18px;
+    font-size:22px;
     font-weight:700;
 
-    color:#2e7d32;
+    color:#0F5132;
+
+    text-align:center;
+    white-space:nowrap;
 }
 
 /* ================= DISTANCE CARD ================= */
