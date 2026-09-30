@@ -1,5 +1,9 @@
+html,
 body{
     margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
     overflow:hidden;
     font-family:sans-serif;
 
@@ -16,18 +20,17 @@ body{
 }
 
 .qibla-page{
-    height:100vh;
-    overflow:hidden;
-
+    height:100dvh;
     display:flex;
     flex-direction:column;
 }
 
 .location-card{
-    margin:8px 12px;
-    padding:10px;
+    margin:10px 12px 8px;
+    padding:14px;
 
     background:#dcedc8;
+
     border-radius:16px;
 
     text-align:center;
@@ -42,9 +45,9 @@ body{
 }
 
 #locationName{
-    margin-top:4px;
+    margin-top:6px;
 
-    font-size:18px;
+    font-size:16px;
     font-weight:700;
 
     color:#1b4332;
@@ -53,20 +56,21 @@ body{
 .compass-wrapper{
     flex:1;
 
-    min-height:0;
-
     display:flex;
     justify-content:center;
     align-items:center;
+
+    min-height:0;
 }
 
 .compass{
-    width:230px;
-    height:230px;
+    width:240px;
+    height:240px;
 
     border-radius:50%;
 
     background:#dcedc8;
+
     border:8px solid #a5d6a7;
 
     position:relative;
@@ -75,20 +79,20 @@ body{
 .direction{
     position:absolute;
 
-    font-size:18px;
+    font-size:20px;
     font-weight:700;
 
     color:#1b5e20;
 }
 
 .north{
-    top:10px;
+    top:8px;
     left:50%;
     transform:translateX(-50%);
 }
 
 .south{
-    bottom:10px;
+    bottom:8px;
     left:50%;
     transform:translateX(-50%);
 }
@@ -106,8 +110,8 @@ body{
 }
 
 .compass-ring{
-    width:180px;
-    height:180px;
+    width:185px;
+    height:185px;
 
     border-radius:50%;
 
@@ -142,21 +146,22 @@ body{
 .degree{
     position:absolute;
 
-    bottom:34px;
+    bottom:28px;
 
     left:50%;
 
     transform:translateX(-50%);
 
-    font-size:20px;
+    font-size:22px;
     font-weight:700;
 
     color:#2e7d32;
 }
 
 .info-card{
-    margin:8px 12px;
-    padding:10px;
+    margin:8px 12px 10px;
+
+    padding:14px;
 
     background:#dcedc8;
 
@@ -175,9 +180,9 @@ body{
 }
 
 #distance{
-    margin-top:4px;
+    margin-top:6px;
 
-    font-size:18px;
+    font-size:20px;
     font-weight:700;
 
     color:#1b4332;
