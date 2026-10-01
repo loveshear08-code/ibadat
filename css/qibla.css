@@ -18,15 +18,13 @@ body{
 
     background-size:cover;
     background-position:center;
-
-    overflow:hidden;
 }
 
 /* ================= PAGE ================= */
 
 .qibla-page{
 
-    min-height:100dvh;
+    height:100%;
 
     display:grid;
 
@@ -213,7 +211,7 @@ body{
     margin-left:0;
     margin-right:0;
 
-    margin-bottom:8px;
+    margin-bottom:12px;
 
     padding:12px;
 
