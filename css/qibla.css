@@ -32,11 +32,9 @@ body{
 
     flex-direction:column;
 
-    padding:12px;
+    padding:8px 12px;
     
     box-sizing:border-box;
-
-    overflow:hidden;
 }
 
 /* ================= LOCATION ================= */
@@ -83,8 +81,6 @@ body{
     justify-content:center;
 
     align-items:center;
-
-    min-height:0;
 }
 
 /* ================= COMPASS ================= */
