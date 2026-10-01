@@ -29,6 +29,7 @@ body{
     min-height:100dvh;
 
     display:flex;
+
     flex-direction:column;
 
     padding:8px 12px 12px;
@@ -73,15 +74,10 @@ body{
 
 .compass-wrapper{
 
+    flex:1; 
     display:flex;
-
     justify-content:center;
-
     align-items:center;
-
-    padding:35px 0 25px;
-
-    flex-shrink:0;
 }
 
 /* ================= COMPASS ================= */
@@ -208,17 +204,22 @@ body{
 
 .info-card{
 
+    margin-top:auto;
+
+    margin-left:0;
+    margin-right:0;
+
+    margin-bottom:8px;
+
+    padding:12px;
+
     background:#dcedc8;
 
     border-radius:18px;
 
-    padding:12px;
-
     text-align:center;
 
     flex-shrink:0;
-
-    margin-top:10px;
 }
 
 #distanceLabel{
