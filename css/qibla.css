@@ -33,7 +33,7 @@ body{
         1fr
         auto;
 
-    padding:8px 12px 12px;
+    padding:8px 12px 4px;
 
     box-sizing:border-box;
 }
@@ -211,7 +211,7 @@ body{
     margin-left:0;
     margin-right:0;
 
-    margin-bottom:12px;
+    margin-bottom:0;
 
     padding:12px;
 
