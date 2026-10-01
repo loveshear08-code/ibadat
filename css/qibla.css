@@ -6,7 +6,6 @@ body{
     padding:0;
     width:100%;
     height:100%;
-    overflow:hidden;
 
     font-family:sans-serif;
 
@@ -19,33 +18,33 @@ body{
 
     background-size:cover;
     background-position:center;
-    background-attachment:fixed;
 
-    color:#1b4332;
+    overflow:hidden;
 }
 
 /* ================= PAGE ================= */
 
 .qibla-page{
-    height:100vh;
+
+    min-height:100dvh;
 
     display:flex;
     flex-direction:column;
 
-    overflow:hidden;
+    padding:8px 12px 12px;
 
-    justify-content:flex-start;
+    box-sizing:border-box;
 }
 
-/* ================= LOCATION CARD ================= */
+/* ================= LOCATION ================= */
 
 .location-card{
-    margin:8px 12px;
-    padding:10px;
 
     background:#dcedc8;
 
-    border-radius:16px;
+    border-radius:18px;
+
+    padding:12px;
 
     text-align:center;
 
@@ -53,98 +52,109 @@ body{
 }
 
 #locationLabel{
-    font-size:13px;
+
+    font-size:14px;
     font-weight:700;
 
     color:#52796f;
 }
 
 #locationName{
-    margin-top:4px;
 
-    font-size:16px;
+    margin-top:6px;
+
+    font-size:18px;
     font-weight:700;
 
-    color:#1b4332;
+    color:#0F5132;
 }
 
 /* ================= COMPASS AREA ================= */
 
 .compass-wrapper{
-    flex:1;
-    
+
     display:flex;
+
     justify-content:center;
+
     align-items:center;
 
-    min-height:0;
+    padding:35px 0 25px;
 
-    padding:10px 0;
+    flex-shrink:0;
 }
 
+/* ================= COMPASS ================= */
+
 .compass{
-    width:220px;
-    height:220px;
+
+    width:240px;
+    height:240px;
+
+    position:relative;
 
     border-radius:50%;
 
     background:#dcedc8;
 
-    border:8px solid #a5d6a7;
+    border:10px solid #a5d6a7;
 
     box-shadow:
-    0 5px 18px rgba(0,0,0,.15);
-
-    position:relative;
-
-    flex-shrink:0;
+    0 6px 20px rgba(0,0,0,.12);
 }
 
-/* ================= 16 DIRECTIONS ================= */
+/* ================= DIRECTIONS ================= */
 
 .direction{
+
     position:absolute;
 
-    font-size:10px;
-    font-weight:700;
+    transform:translate(-50%,-50%);
 
     color:#1b5e20;
 
-    transform:translate(-50%,-50%);
+    font-weight:700;
+
+    font-size:11px;
 }
 
-.n   { top:10px; left:50%; font-size:14px; }
-.nne { top:28px; left:68%; }
-.ne  { top:48px; left:82%; }
-.ene { top:78px; left:92%; }
+.n,.e,.s,.w{
+    font-size:18px;
+}
 
-.e   { top:50%; left:95%; font-size:14px; }
+.n{top:10px;left:50%;}
+.nne{top:28px;left:68%;}
+.ne{top:48px;left:82%;}
+.ene{top:78px;left:92%;}
 
-.ese { top:142px; left:92%; }
-.se  { top:172px; left:82%; }
-.sse { top:192px; left:68%; }
+.e{top:50%;left:95%;}
 
-.s   { top:95%; left:50%; font-size:14px; }
+.ese{top:162px;left:92%;}
+.se{top:192px;left:82%;}
+.sse{top:212px;left:68%;}
 
-.ssw { top:192px; left:32%; }
-.sw  { top:172px; left:18%; }
-.wsw { top:142px; left:8%; }
+.s{top:95%;left:50%;}
 
-.w   { top:50%; left:5%; font-size:14px; }
+.ssw{top:212px;left:32%;}
+.sw{top:192px;left:18%;}
+.wsw{top:162px;left:8%;}
 
-.wnw { top:78px; left:8%; }
-.nw  { top:48px; left:18%; }
-.nnw { top:28px; left:32%; }
+.w{top:50%;left:5%;}
+
+.wnw{top:78px;left:8%;}
+.nw{top:48px;left:18%;}
+.nnw{top:28px;left:32%;}
 
 /* ================= INNER RING ================= */
 
 .compass-ring{
-    width:170px;
-    height:170px;
+
+    width:185px;
+    height:185px;
+
+    border:4px dashed #81a684;
 
     border-radius:50%;
-
-    border:3px dashed #81a684;
 
     position:absolute;
 
@@ -154,15 +164,16 @@ body{
     transform:translate(-50%,-50%);
 }
 
-/* ================= CENTER POINT ================= */
+/* ================= CENTER ================= */
 
 .center-point{
-    width:16px;
-    height:16px;
 
-    background:#d4af37;
+    width:20px;
+    height:20px;
 
-    border:3px solid #ffffff;
+    background:#D4AF37;
+
+    border:4px solid #ffffff;
 
     border-radius:50%;
 
@@ -177,6 +188,7 @@ body{
 /* ================= DEGREE ================= */
 
 .degree{
+
     position:absolute;
 
     left:50%;
@@ -184,84 +196,45 @@ body{
 
     transform:translate(-50%,-50%);
 
-    font-size:22px;
+    font-size:24px;
     font-weight:700;
 
     color:#0F5132;
 
-    text-align:center;
     white-space:nowrap;
 }
 
-/* ================= DISTANCE CARD ================= */
+/* ================= DISTANCE ================= */
 
 .info-card{
-    margin:4px 12px 8px;
-    padding:10px;
 
     background:#dcedc8;
 
-    border-radius:16px;
+    border-radius:18px;
+
+    padding:12px;
 
     text-align:center;
 
     flex-shrink:0;
+
+    margin-top:10px;
 }
 
 #distanceLabel{
-    font-size:13px;
+
+    font-size:14px;
     font-weight:700;
 
     color:#52796f;
 }
 
 #distance{
-    margin-top:4px;
 
-    font-size:18px;
+    margin-top:6px;
+
+    font-size:22px;
     font-weight:700;
 
-    color:#1b4332;
-}
-
-/* ================= DARK MODE ================= */
-
-body.dark-mode{
-    color:#f5f5f5;
-}
-
-body.dark-mode .location-card,
-body.dark-mode .info-card{
-    background:#1e2a1f;
-}
-
-body.dark-mode #locationLabel,
-body.dark-mode #distanceLabel{
-    color:#a5d6a7;
-}
-
-body.dark-mode #locationName,
-body.dark-mode #distance{
-    color:#c8e6c9;
-}
-
-body.dark-mode .compass{
-    background:#1e2a1f;
-    border-color:#2e7d32;
-}
-
-body.dark-mode .compass-ring{
-    border-color:#52796f;
-}
-
-body.dark-mode .direction{
-    color:#c8e6c9;
-}
-
-body.dark-mode .center-point{
-    border-color:#1e2a1f;
-}
-
-body.dark-mode .degree{
-    color:#c8e6c9;
+    color:#0F5132;
 }
