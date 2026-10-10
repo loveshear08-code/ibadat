@@ -239,6 +239,14 @@ function loadLocation(){
 
             USER_LON =
                 pos.coords.longitude;
+           
+            localStorage.setItem(
+                "ibadatUserLocation",
+                JSON.stringify({
+                    lat: USER_LAT,
+                    lon: USER_LON
+                })
+            );
 
             try{
 
