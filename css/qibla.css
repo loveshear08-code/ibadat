@@ -179,25 +179,47 @@ z-index: 1;
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 3px;
-    height: 16px;
+    width: 4px;
+    height: 18px;
     background: #C62828;
     border-radius: 2px;
-    transform-origin: center center;
-    z-index: 3;
+    z-index: 4;
     pointer-events: none;
 }
 
-/* Eight major directions */
+/* Place each red tick in the gap between rings */
 
-.tick-n  { transform: translate(-50%, -50%) rotate(0deg) translateY(-91px); }
-.tick-ne { transform: translate(-50%, -50%) rotate(45deg) translateY(-91px); }
-.tick-e  { transform: translate(-50%, -50%) rotate(90deg) translateY(-91px); }
-.tick-se { transform: translate(-50%, -50%) rotate(135deg) translateY(-91px); }
-.tick-s  { transform: translate(-50%, -50%) rotate(180deg) translateY(-91px); }
-.tick-sw { transform: translate(-50%, -50%) rotate(225deg) translateY(-91px); }
-.tick-w  { transform: translate(-50%, -50%) rotate(270deg) translateY(-91px); }
-.tick-nw { transform: translate(-50%, -50%) rotate(315deg) translateY(-91px); }
+.tick-n {
+    transform: translate(-50%, -50%) translateY(-92px);
+}
+
+.tick-ne {
+    transform: translate(-50%, -50%) rotate(45deg) translateY(-92px);
+}
+
+.tick-e {
+    transform: translate(-50%, -50%) rotate(90deg) translateY(-92px);
+}
+
+.tick-se {
+    transform: translate(-50%, -50%) rotate(135deg) translateY(-92px);
+}
+
+.tick-s {
+    transform: translate(-50%, -50%) rotate(180deg) translateY(-92px);
+}
+
+.tick-sw {
+    transform: translate(-50%, -50%) rotate(225deg) translateY(-92px);
+}
+
+.tick-w {
+    transform: translate(-50%, -50%) rotate(270deg) translateY(-92px);
+}
+
+.tick-nw {
+    transform: translate(-50%, -50%) rotate(315deg) translateY(-92px);
+}
 
 /* ================= CENTER ================= */
 
