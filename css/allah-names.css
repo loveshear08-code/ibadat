@@ -203,23 +203,14 @@ body {
 /* NUMBER BADGE */
 
 .name-number {
-    align-self: flex-start;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    min-width: 26px;
-    height: 26px;
-    padding: 0 7px;
-
-    color: var(--bg);
-    background: var(--primary);
-    border: 1px solid var(--gold);
-    border-radius: 50%;
-
-    font-size: 13px;
+    color: #D64545;
+    font-size: inherit;
     font-weight: 700;
+}
+
+.arabic-name {
+    color: #D4AF37;
+    font-family: serif;
 }
 
 /* DARK MODE */
