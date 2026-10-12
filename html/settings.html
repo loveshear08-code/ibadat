@@ -1,135 +1,114 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bn">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1F6B3A">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
 
-<title>Settings</title>
-
-<link rel="stylesheet" href="../css/settings.css">
-
+    <link rel="stylesheet" href="../css/settings.css">
 </head>
 
 <body>
 
 <div class="container">
 
-    <!-- TITLE -->
+    <!-- ================= TITLE ================= -->
 
     <h2 id="settingsTitle">⚙️ সেটিংস</h2>
 
-
     <div class="content">
 
-        <!-- ================= AZAN ================= -->
+        <!-- ================= AZAN SETTINGS ================= -->
 
         <div class="card">
 
-            <h3 id="azanTitle">
-                আজান সেটিং
-            </h3>
+            <h3 id="azanTitle">আজান সেটিং</h3>
 
-            <p id="azanDesc">
-                কোন ওয়াক্তে কোন আজান বাজবে
-            </p>
-
+            <p id="azanDesc">কোন ওয়াক্তে কোন আজান বাজবে</p>
 
             <!-- FAJR -->
 
             <div class="azan-row">
 
-                <span id="prayer_fajr">
-                    ফজর
-                </span>
+                <span id="prayer_fajr">ফজর</span>
 
-                <select id="azan_fajr"></select>
+                <select id="azan_fajr" aria-label="Fajr Azan"></select>
 
                 <button
-                    onclick="playAzan(
-                        document.getElementById('azan_fajr').value
-                    )">
+                    type="button"
+                    aria-label="Play Fajr Azan"
+                    onclick="playAzan(document.getElementById('azan_fajr').value)">
                     ▶️
                 </button>
 
             </div>
-
 
             <!-- DHUHR -->
 
             <div class="azan-row">
 
-                <span id="prayer_dhuhr">
-                    জোহর
-                </span>
+                <span id="prayer_dhuhr">জোহর</span>
 
-                <select id="azan_dhuhr"></select>
+                <select id="azan_dhuhr" aria-label="Dhuhr Azan"></select>
 
                 <button
-                    onclick="playAzan(
-                        document.getElementById('azan_dhuhr').value
-                    )">
+                    type="button"
+                    aria-label="Play Dhuhr Azan"
+                    onclick="playAzan(document.getElementById('azan_dhuhr').value)">
                     ▶️
                 </button>
 
             </div>
-
 
             <!-- ASR -->
 
             <div class="azan-row">
 
-                <span id="prayer_asr">
-                    আসর
-                </span>
+                <span id="prayer_asr">আসর</span>
 
-                <select id="azan_asr"></select>
+                <select id="azan_asr" aria-label="Asr Azan"></select>
 
                 <button
-                    onclick="playAzan(
-                        document.getElementById('azan_asr').value
-                    )">
+                    type="button"
+                    aria-label="Play Asr Azan"
+                    onclick="playAzan(document.getElementById('azan_asr').value)">
                     ▶️
                 </button>
 
             </div>
-
 
             <!-- MAGHRIB -->
 
             <div class="azan-row">
 
-                <span id="prayer_maghrib">
-                    মাগরিব
-                </span>
+                <span id="prayer_maghrib">মাগরিব</span>
 
-                <select id="azan_maghrib"></select>
+                <select id="azan_maghrib" aria-label="Maghrib Azan"></select>
 
                 <button
-                    onclick="playAzan(
-                        document.getElementById('azan_maghrib').value
-                    )">
+                    type="button"
+                    aria-label="Play Maghrib Azan"
+                    onclick="playAzan(document.getElementById('azan_maghrib').value)">
                     ▶️
                 </button>
 
             </div>
-
 
             <!-- ISHA -->
 
             <div class="azan-row">
 
-                <span id="prayer_isha">
-                    এশা
-                </span>
+                <span id="prayer_isha">এশা</span>
 
-                <select id="azan_isha"></select>
+                <select id="azan_isha" aria-label="Isha Azan"></select>
 
                 <button
-                    onclick="playAzan(
-                        document.getElementById('azan_isha').value
-                    )">
+                    type="button"
+                    aria-label="Play Isha Azan"
+                    onclick="playAzan(document.getElementById('azan_isha').value)">
                     ▶️
                 </button>
 
@@ -137,51 +116,37 @@
 
         </div>
 
-
         <!-- ================= LANGUAGE ================= -->
 
         <div class="card">
 
-            <h3 id="langTitle">
-                ভাষা
-            </h3>
+            <h3 id="langTitle">ভাষা</h3>
 
-            <select id="langSelect">
+            <select id="langSelect" aria-label="Language">
 
-                <option value="bn">
-                    বাংলা
-                </option>
+                <option value="bn">বাংলা</option>
 
-                <option value="en">
-                    English
-                </option>
+                <option value="en">English</option>
 
-                <option value="hi">
-                    हिन्दी
-                </option>
+                <option value="hi">हिन्दी</option>
 
             </select>
 
         </div>
 
-
         <!-- ================= THEME ================= -->
 
         <div class="card">
 
-            <h3 id="themeTitle">
-                থিম
-            </h3>
+            <h3 id="themeTitle">থিম</h3>
 
-            <label>
+            <label for="darkMode">
 
                 <input
                     type="checkbox"
                     id="darkMode">
 
-                <span id="darkLabel">
-                    ডার্ক মোড
-                </span>
+                <span id="darkLabel">ডার্ক মোড</span>
 
             </label>
 
@@ -189,12 +154,12 @@
 
     </div>
 
-
     <!-- ================= SAVE ================= -->
 
     <div class="btn-box">
 
         <button
+            type="button"
             id="saveBtn"
             onclick="saveSettings()">
 
@@ -206,8 +171,9 @@
 
 </div>
 
+<!-- ================= JAVASCRIPT ================= -->
 
-<script src="../js/settings.js?v=20"></script>
+<script src="../js/settings.js?v=21"></script>
 
 </body>
-</html>      
+</html>
