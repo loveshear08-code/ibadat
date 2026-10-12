@@ -182,7 +182,7 @@ z-index: 1;
     width: 2px;
     height: 26px;
     background: #C62828;
-    border-radius: 2px;
+    border-radius: 1px;
     z-index: 4;
     pointer-events: none;
 }
