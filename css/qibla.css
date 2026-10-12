@@ -34,6 +34,7 @@ body {
 
 .location-card {
     background: #CFE8C8;
+    border: 1px solid #D8D39A;
     border-radius: 18px;
     padding: 12px;
     text-align: center;
@@ -266,6 +267,7 @@ z-index: 1;
     margin-bottom: 0;
     padding: 12px;
     background: #CFE8C8;
+    border: 1px solid #D8D39A;
     border-radius: 18px;
     text-align: center;
 }
