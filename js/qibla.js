@@ -175,29 +175,26 @@
 
     needle.appendChild(tip);
     compass.appendChild(needle);
+    
+/* ---------- REALISTIC 3D KAABA MARKER ---------- */
 
-    /* ---------- KAABA MARKER ---------- */
+const marker = document.createElement("img");
 
-const marker = document.createElement("div");
+marker.src = "../assets/kaaba-3d.png";
+marker.alt = "Kaaba";
 
 Object.assign(marker.style, {
     position: "absolute",
     zIndex: "5",
     left: "50%",
     top: "50%",
-    width: "38px",
-    height: "38px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: "34px",
-    lineHeight: "1",
+    width: "52px",
+    height: "52px",
+    objectFit: "contain",
     transform: "translate(-50%, -50%)",
     pointerEvents: "none",
-    filter: "drop-shadow(0 2px 2px rgba(0,0,0,.22))"
+    filter: "drop-shadow(0 2px 4px rgba(0,0,0,.25))"
 });
-
-marker.textContent = "🕋";
 
 compass.appendChild(marker);
 
