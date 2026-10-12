@@ -178,60 +178,28 @@
 
     /* ---------- KAABA MARKER ---------- */
 
-    const marker = document.createElement("div");
+const marker = document.createElement("div");
 
-    Object.assign(marker.style, {
-        position: "absolute",
-        zIndex: "5",
-        left: "50%",
-        top: "50%",
-        width: "30px",
-        height: "34px",
-        transform: "translate(-50%, -50%)",
-        pointerEvents: "none",
-        filter: "drop-shadow(0 2px 2px rgba(0,0,0,.22))"
-    });
+Object.assign(marker.style, {
+    position: "absolute",
+    zIndex: "5",
+    left: "50%",
+    top: "50%",
+    width: "38px",
+    height: "38px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "34px",
+    lineHeight: "1",
+    transform: "translate(-50%, -50%)",
+    pointerEvents: "none",
+    filter: "drop-shadow(0 2px 2px rgba(0,0,0,.22))"
+});
 
-    const roof = document.createElement("div");
-    const body = document.createElement("div");
-    const band = document.createElement("div");
+marker.textContent = "🕋";
 
-    Object.assign(roof.style, {
-        position: "absolute",
-        left: "0",
-        top: "1px",
-        width: "100%",
-        height: "10px",
-        background: "#242424",
-        borderTop: "2px solid #D4AF37",
-        transform: "skewY(-10deg)"
-    });
-
-    Object.assign(body.style, {
-        position: "absolute",
-        left: "0",
-        top: "8px",
-        width: "100%",
-        height: "25px",
-        boxSizing: "border-box",
-        background: "linear-gradient(90deg,#292929,#080808,#303030)",
-        border: "1px solid #555"
-    });
-
-    Object.assign(band.style, {
-        position: "absolute",
-        left: "0",
-        top: "14px",
-        width: "100%",
-        height: "5px",
-        boxSizing: "border-box",
-        background: "#D4AF37",
-        borderTop: "1px solid #F3D36A",
-        borderBottom: "1px solid #8F6D12"
-    });
-
-    marker.append(roof, body, band);
-    compass.appendChild(marker);
+compass.appendChild(marker);
 
     /* ---------- LOCATION AND BEARING ---------- */
 
