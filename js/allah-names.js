@@ -24,21 +24,23 @@ document.title = TITLE[lang];
 // ================= BISMILLAH =================
 
 const BISMILLAH = {
-bn:{
-ar:"﷽",
-text:"بِسْمِ ٱللَّٰهِ",
-meaning:"পরম করুণাময় আল্লাহর নামে"
-},
-en:{
-ar:"﷽",
-text:"Bismillah",
-meaning:"In the name of Allah"
-},
-hi:{
-ar:"﷽",
-text:"बिस्मिल्लाह",
-meaning:"अल्लाह के नाम से"
-}
+    bn: {
+        ar: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+        text: "বিসমিল্লাহির রাহমানির রাহিম",
+        meaning: "পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে"
+    },
+
+    en: {
+        ar: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+        text: "Bismillahir Rahmanir Raheem",
+        meaning: "In the name of Allah, the Most Gracious, the Most Merciful"
+    },
+
+    hi: {
+        ar: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+        text: "बिस्मिल्लाहिर रहमानिर रहीम",
+        meaning: "परम कृपाशील, अत्यंत दयालु अल्लाह के नाम से"
+    }
 };
 
 // ================= DATA =================
@@ -251,24 +253,22 @@ const container = document.getElementById("namesContainer");
 
 let html = "";
 
-// 🔥 BISMILLAH FIRST
+// BISMILLAH CARD — NO NUMBER
 
 html += `
-<div class="name-card" style="
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-background:#a5d6a7;
-">
+<div class="bismillah-card">
 
-<div style="font-size:32px;color:#1b5e20;">${BISMILLAH[lang].ar}</div>
-<div style="margin-top:10px;font-weight:bold;color:#1b4332;">
-${BISMILLAH[lang].text}
-</div>
-<div style="font-size:12px;color:#52796f;margin-top:6px;">
-${BISMILLAH[lang].meaning}
-</div>
+    <div class="arabic" lang="ar" dir="rtl">
+        ${BISMILLAH[lang].ar}
+    </div>
+
+    <div class="pron">
+        ${BISMILLAH[lang].text}
+    </div>
+
+    <div class="meaning">
+        ${BISMILLAH[lang].meaning}
+    </div>
 
 </div>
 `;
