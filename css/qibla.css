@@ -104,63 +104,85 @@ body{
 
 /* ================= DIRECTIONS ================= */
 
-.direction{
-
-    position:absolute;
-
-    transform:translate(-50%,-50%);
-
-    color:#1b5e20;
-
-    font-weight:700;
-
-    font-size:11px;
+.direction {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    color: #D4AF37;
+    font-weight: 700;
+    font-size: 11px;
 }
 
-.n,.e,.s,.w{
-    font-size:18px;
+.n, .e, .s, .w {
+    font-size: 18px;
 }
 
-.n{top:10px;left:50%;}
-.nne{top:28px;left:68%;}
-.ne{top:48px;left:82%;}
-.ene{top:78px;left:92%;}
+.n   { top: 10px; left: 50%; }
+.nne { top: 28px; left: 68%; }
+.ne  { top: 48px; left: 82%; }
+.ene { top: 78px; left: 92%; }
 
-.e{top:50%;left:95%;}
+.e   { top: 50%; left: 95%; }
 
-.ese{top:162px;left:92%;}
-.se{top:192px;left:82%;}
-.sse{top:212px;left:68%;}
+.ese { top: 162px; left: 92%; }
+.se  { top: 192px; left: 82%; }
+.sse { top: 212px; left: 68%; }
 
-.s{top:95%;left:50%;}
+.s   { top: 95%; left: 50%; }
 
-.ssw{top:212px;left:32%;}
-.sw{top:192px;left:18%;}
-.wsw{top:162px;left:8%;}
+.ssw { top: 212px; left: 32%; }
+.sw  { top: 192px; left: 18%; }
+.wsw { top: 162px; left: 8%; }
 
-.w{top:50%;left:5%;}
+.w   { top: 50%; left: 5%; }
 
-.wnw{top:78px;left:8%;}
-.nw{top:48px;left:18%;}
-.nnw{top:28px;left:32%;}
+.wnw { top: 78px; left: 8%; }
+.nw  { top: 48px; left: 18%; }
+.nnw { top: 28px; left: 32%; }
 
 /* ================= INNER RING ================= */
 
-.compass-ring{
+.compass-ring {
+    width: 165px;
+    height: 165px;
+    box-sizing: border-box;
 
-    width:185px;
-    height:185px;
+    border: 3px solid #0F5132;
+    border-radius: 50%;
 
-    border:4px dashed #81a684;
+    position: absolute;
+    top: 50%;
+    left: 50%;
 
-    border-radius:50%;
+    transform: translate(-50%, -50%);
+}
 
-    position:absolute;
+/* ================= FIXED COMPASS TICKS ================= */
 
-    top:50%;
-    left:50%;
+.compass-ticks {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    pointer-events: none;
 
-    transform:translate(-50%,-50%);
+    background: repeating-conic-gradient(
+        from 0deg,
+        #0F5132 0deg 0.8deg,
+        transparent 0.8deg 9deg
+    );
+
+    -webkit-mask: radial-gradient(
+        circle,
+        transparent 0 84px,
+        #000 85px 103px,
+        transparent 104px
+    );
+
+    mask: radial-gradient(
+        circle,
+        transparent 0 84px,
+        #000 85px 103px,
+        transparent 104px
+    );
 }
 
 /* ================= CENTER ================= */
