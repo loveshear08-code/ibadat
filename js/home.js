@@ -217,29 +217,23 @@ let USER_LON = null;
 function loadLocation(){
 
     const city =
-        document.getElementById(
-            "city"
-        );
+        document.getElementById("city");
+
+    if(!city) return;
 
     if(!navigator.geolocation){
 
-        city.innerText =
-            "Location";
-
+        city.innerText = "Location";
         return;
     }
 
-    navigator.geolocation
-    .getCurrentPosition(
+    navigator.geolocation.getCurrentPosition(
 
-        async(pos)=>{
+        async (pos) => {
 
-            USER_LAT =
-                pos.coords.latitude;
+            USER_LAT = pos.coords.latitude;
+            USER_LON = pos.coords.longitude;
 
-            USER_LON =
-                pos.coords.longitude;
-           
             localStorage.setItem(
                 "ibadatUserLocation",
                 JSON.stringify({
@@ -248,74 +242,74 @@ function loadLocation(){
                 })
             );
 
-            try{
+            try {
 
-                const res =
-                    await fetch(
-
+                const res = await fetch(
                     `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${USER_LAT}&lon=${USER_LON}`
+                );
 
-                    );
+                if(!res.ok){
+                    throw new Error("Location lookup failed");
+                }
 
-                const data =
-                    await res.json();
+                const data = await res.json();
+                const address = data.address || {};
 
                 const cityName =
+                    address.city ||
+                    address.town ||
+                    address.village ||
+                    address.municipality ||
+                    address.city_district ||
+                    address.suburb ||
+                    address.county ||
+                    "Unknown";
 
-    data.address.city ||
+                const CITY_NAMES = {
+                    "Kolkata": {
+                        bn: "কলকাতা",
+                        en: "Kolkata",
+                        hi: "कोलकाता"
+                    },
+                    "Delhi": {
+                        bn: "দিল্লি",
+                        en: "Delhi",
+                        hi: "दिल्ली"
+                    },
+                    "New Delhi": {
+                        bn: "নয়াদিল্লি",
+                        en: "New Delhi",
+                        hi: "नई दिल्ली"
+                    },
+                    "Mumbai": {
+                        bn: "মুম্বাই",
+                        en: "Mumbai",
+                        hi: "मुंबई"
+                    }
+                };
 
-    data.address.town ||
+                const lang =
+                    getSettings().lang || "bn";
 
-    data.address.village ||
+                const displayCity =
+                    CITY_NAMES[cityName]?.[lang] ||
+                    cityName;
 
-    "Unknown";
+                city.innerText = displayCity;
 
+                localStorage.setItem(
+                    "ibadatCityName",
+                    displayCity
+                );
 
-const lang =
-    getSettings().lang;
+            } catch(e) {
 
-
-const CITY_NAMES = {
-
-    Kolkata:{
-        bn:"কলকাতা",
-        en:"Kolkata",
-        hi:"कोलकाता"
-    },
-
-    Delhi:{
-        bn:"দিল্লি",
-        en:"Delhi",
-        hi:"दिल्ली"
-    },
-
-    Mumbai:{
-        bn:"মুম্বাই",
-        en:"Mumbai",
-        hi:"मुंबई"
-    }
-};
-
-
-city.innerText =
-
-    CITY_NAMES[cityName]?.[lang]
-
-    ||
-
-    cityName;
-            }catch(e){
-
-                city.innerText =
-                    "Location";
+                city.innerText = "Location";
             }
-
         },
 
-        ()=>{
-
-            city.innerText =
-                "Location";
+        () => {
+            city.innerText = "Location";
         }
     );
 }
