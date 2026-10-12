@@ -767,7 +767,10 @@ const ss =
     );
 
 el.innerText =
-    hh + ":" + mm + ":" + ss;
+    localizeTime(
+        hh + ":" + mm + ":" + ss
+    );
+
     }
 }
 
