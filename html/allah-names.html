@@ -1,27 +1,53 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Allah Names</title>
+    <meta name="theme-color" content="#1F6B3A">
+    <title>Allah 99 Names</title>
 
-<link rel="stylesheet" href="../css/allah-names.css?v=1">
+    <link rel="stylesheet" href="../css/allah-names.css?v=2">
 </head>
 
 <body>
 
-<!-- TOP BAR -->
-<div class="topbar">
-<span id="pageTitle">Allah 99 Names</span>
-</div>
+    <!-- Hidden title: kept for existing JavaScript compatibility -->
+    <span id="pageTitle" hidden></span>
 
-<!-- GRID -->
-<div class="names-container" id="namesContainer"></div>
+    <!-- ALLAH NAMES PAGE -->
+    <main class="names-page">
 
-<script src="../js/allah-names.js?v=1"></script>
-<script src="../js/theme.js"></script>
+        <!-- INTRODUCTION BOARD -->
+        <section class="intro-board" aria-label="Allah's beautiful names">
+
+            <div class="intro-arabic" lang="ar" dir="rtl">
+                أَسْمَاءُ اللَّهِ الْحُسْنَى
+            </div>
+
+            <div class="intro-title" id="introTitle">
+                আল্লাহর ৯৯টি সুন্দর নাম
+            </div>
+
+            <div class="intro-divider" aria-hidden="true">
+                <span></span>
+                <span class="divider-ornament">❈</span>
+                <span></span>
+            </div>
+
+        </section>
+
+        <!-- ALL CARDS ARE RENDERED BY JAVASCRIPT -->
+        <section
+            class="names-container"
+            id="namesContainer"
+            aria-label="Allah's 99 names">
+        </section>
+
+    </main>
+
+    <script src="../js/allah-names.js?v=2"></script>
+    <script src="../js/theme.js"></script>
 
 </body>
 </html>
