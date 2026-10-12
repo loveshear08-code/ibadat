@@ -167,46 +167,37 @@ function loadDate(){
 function startClock(){
 
     const clock =
-        document.getElementById(
-            "clock"
-        );
+        document.getElementById("clock");
 
     if(!clock) return;
 
     function update(){
 
-        let locale = "bn-BD";
+        const now = new Date();
 
-        if(LANG==="en")
-            locale="en-US";
+        const hh = String(
+            now.getHours()
+        ).padStart(2, "0");
 
-        if(LANG==="hi")
-            locale="hi-IN";
+        const mm = String(
+            now.getMinutes()
+        ).padStart(2, "0");
+
+        const ss = String(
+            now.getSeconds()
+        ).padStart(2, "0");
 
         clock.innerText =
-            new Date()
-            .toLocaleTimeString(
-                locale,
-                {
-
-                    hour:"2-digit",
-
-                    minute:"2-digit",
-
-                    second:"2-digit",
-
-                   hour12:false       
-                }
+            localizeTime(
+                `${hh}:${mm}:${ss}`
             );
     }
 
     update();
 
-    setInterval(
-        update,
-        1000
-    );
+    setInterval(update, 1000);
 }
+
 
 /* ================= LOCATION ================= */
 
