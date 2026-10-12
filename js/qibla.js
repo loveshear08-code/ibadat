@@ -100,18 +100,19 @@
     }
 
     function number(n) {
-    const locale = language === "bn"
-        ? "bn-BD"
-        : language === "hi"
-            ? "hi-IN"
-            : "en-US";
+    const value = Math.round(Number(n));
 
-    const digits = Number(n).toLocaleString(locale, {
-        useGrouping: false,
-        maximumFractionDigits: 0
-    });
+    const digits = {
+        bn: "০১২৩৪৫৬৭৮৯",
+        hi: "०१२३४५६७८९",
+        en: "0123456789"
+    };
 
-    return digits;
+    const formatted = value.toLocaleString("en-US");
+
+    return formatted.replace(/[0-9]/g, digit =>
+        digits[language][Number(digit)]
+    );
 }
 
     function directionName(deg) {
