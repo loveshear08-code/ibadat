@@ -1,192 +1,410 @@
+/* =====================================================
+   IBADAT SETTINGS — FINAL CSS
+   Floral Background + Unified Islamic Theme
+===================================================== */
+
+/* ================= COLOR THEME ================= */
+
+:root {
+    --primary: #1F6B3A;
+    --primary-dark: #174F2C;
+
+    --pistachio: #CFE8C8;
+    --cream: #F8F6F0;
+    --gold: #D4AF37;
+    --red: #D64545;
+
+    --text: #1E4620;
+    --muted: #52705A;
+
+    --card: rgba(255, 255, 255, 0.94);
+    --input-bg: #F4F8F0;
+    --border: #D5E3D1;
+
+    --shadow: 0 3px 8px rgba(20, 60, 30, 0.08);
+}
+
 /* ================= BASE ================= */
 
-*{
-box-sizing:border-box;
+* {
+    box-sizing: border-box;
 }
 
-body{
-margin:0;
-font-family:sans-serif;
-background:#eef5ef;
-color:#222;
-height:100dvh;
-overflow:hidden;
+html {
+    min-height: 100%;
 }
 
+body {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
 
-/* ================= MAIN ================= */
+    font-family: sans-serif;
+    color: var(--text);
 
-.container{
-height:100dvh;
-display:flex;
-flex-direction:column;
-justify-content:space-between;
-padding:12px;
-max-width:500px;
-margin:auto;
+    /* SAME FLORAL BACKGROUND USED IN OTHER PAGES */
+    background:
+        linear-gradient(
+            rgba(248, 246, 240, 0.76),
+            rgba(248, 246, 240, 0.76)
+        ),
+        url("../assets/bg_pattern.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
+/* ================= MAIN CONTAINER ================= */
 
-/* ================= TITLE ================= */
+.container {
+    height: 100vh;
+    height: 100dvh;
 
-h2{
-text-align:center;
-color:#2e7d32;
-margin:5px 0 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding: 12px;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
+/* ================= PAGE TITLE ================= */
 
-/* ================= CONTENT ================= */
+#settingsTitle {
+    flex-shrink: 0;
 
-.content{
-flex:1;
-display:flex;
-flex-direction:column;
-gap:10px;
-overflow:auto;
-padding-bottom:8px;
+    text-align: center;
+    color: var(--primary);
+
+    margin: 5px 0 10px;
+
+    font-size: 22px;
+    font-weight: 700;
 }
 
+/* ================= CONTENT AREA ================= */
 
-/* ================= CARD ================= */
+.content {
+    flex: 1;
+    min-height: 0;
 
-.card{
-background:#ffffff;
-padding:12px;
-border-radius:12px;
-box-shadow:0 3px 8px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+
+    padding-bottom: 8px;
 }
 
-.card h3{
-margin:0 0 8px;
+/* ================= SETTINGS CARDS ================= */
+
+.card {
+    flex-shrink: 0;
+
+    background: var(--card);
+
+    padding: 12px;
+    border-radius: 14px;
+
+    border: 1px solid rgba(31, 107, 58, 0.08);
+    box-shadow: var(--shadow);
 }
 
-.card p{
-margin:0 0 8px;
-font-size:13px;
+.card h3 {
+    margin: 0 0 8px;
+
+    color: var(--primary-dark);
+
+    font-size: 17px;
+    font-weight: 700;
 }
 
+.card p {
+    margin: 0 0 8px;
 
-/* ================= AZAN ROW ================= */
+    color: var(--muted);
 
-.azan-row{
-display:grid;
-grid-template-columns:80px 1fr 42px;
-gap:8px;
-align-items:center;
-
-padding:8px;
-
-background:#e8f5e9;
-
-border-radius:10px;
-
-margin-top:6px;
+    font-size: 13px;
+    line-height: 1.5;
 }
 
+/* ================= AZAN ROWS ================= */
 
-/* ================= SELECT ================= */
+.azan-row {
+    display: grid;
+    grid-template-columns: 80px minmax(0, 1fr) 42px;
 
-select{
-width:100%;
-padding:8px;
+    gap: 8px;
+    align-items: center;
 
-border-radius:8px;
+    padding: 8px;
+    margin-top: 6px;
 
-border:1px solid #c8e6c9;
+    background: var(--pistachio);
+    border: 1px solid rgba(31, 107, 58, 0.06);
+    border-radius: 10px;
 
-background:#e8f5e9;
-
-font-size:14px;
+    color: var(--primary-dark);
 }
 
-
-/* ================= BUTTON ================= */
-
-button{
-border:none;
-
-background:#2e7d32;
-
-color:white;
-
-border-radius:6px;
-
-padding:7px 8px;
-
-cursor:pointer;
+.azan-row span {
+    font-size: 14px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
 }
 
+/* ================= SELECT MENUS ================= */
 
-/* ================= LABEL ================= */
+select {
+    width: 100%;
+    min-width: 0;
 
-label{
-display:flex;
-align-items:center;
-gap:8px;
+    padding: 8px;
+
+    border-radius: 8px;
+    border: 1px solid var(--border);
+
+    background: var(--input-bg);
+    color: var(--text);
+
+    font-family: inherit;
+    font-size: 14px;
 }
 
-
-/* ================= SAVE ================= */
-
-.btn-box{
-padding-top:8px;
+select:focus-visible {
+    outline: 2px solid rgba(31, 107, 58, 0.25);
+    outline-offset: 1px;
+    border-color: var(--primary);
 }
 
-#saveBtn{
-width:100%;
+/* ================= AZAN PLAY BUTTONS ================= */
 
-padding:12px;
+button {
+    border: none;
 
-font-size:16px;
+    background: var(--primary);
+    color: var(--cream);
 
-border-radius:12px;
+    border-radius: 8px;
+    padding: 7px 8px;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease;
 }
 
+.azan-row button {
+    width: 42px;
+    min-height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+button:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+}
+
+/* ================= LANGUAGE ================= */
+
+#langSelect {
+    margin-top: 2px;
+}
+
+/* ================= DARK MODE CONTROL ================= */
+
+label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    min-height: 30px;
+
+    color: var(--text);
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+#darkMode {
+    width: 18px;
+    height: 18px;
+
+    margin: 0;
+    flex-shrink: 0;
+
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+
+/* ================= SAVE BUTTON ================= */
+
+.btn-box {
+    flex-shrink: 0;
+    padding-top: 8px;
+}
+
+#saveBtn {
+    width: 100%;
+
+    padding: 12px;
+
+    background: var(--primary);
+    color: var(--cream);
+
+    font-size: 16px;
+    font-weight: 700;
+
+    border-radius: 12px;
+
+    box-shadow: 0 3px 8px rgba(20, 60, 30, 0.12);
+}
+
+#saveBtn:active {
+    background: var(--primary-dark);
+}
 
 /* ================= DARK MODE ================= */
 
-body.dark-mode{
-background:#121212;
-color:#ffffff;
+body.dark-mode {
+    --text: #E2EDE2;
+    --muted: #C1D1C0;
+
+    --card: rgba(30, 42, 31, 0.96);
+    --input-bg: #263529;
+    --border: #405744;
+
+    --shadow: 0 3px 10px rgba(0, 0, 0, 0.28);
+
+    color: var(--text);
+
+    /* SAME IMAGE WITH A DARK OVERLAY */
+    background:
+        linear-gradient(
+            rgba(18, 24, 19, 0.88),
+            rgba(18, 24, 19, 0.88)
+        ),
+        url("../assets/bg_pattern.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
-body.dark-mode h2{
-color:#81c784;
+/* Dark page title */
+
+body.dark-mode #settingsTitle {
+    color: var(--pistachio);
 }
 
-body.dark-mode .card{
-background:#1e1e1e;
-color:#ffffff;
+/* Dark cards */
+
+body.dark-mode .card {
+    background: var(--card);
+    border-color: rgba(207, 232, 200, 0.08);
+    color: var(--text);
 }
 
-body.dark-mode .azan-row{
-background:#2a2a2a;
+body.dark-mode .card h3 {
+    color: var(--pistachio);
 }
 
-body.dark-mode select{
-background:#2a2a2a;
-color:#ffffff;
-border-color:#444;
+body.dark-mode .card p {
+    color: var(--muted);
 }
 
-body.dark-mode .card p{
-color:#dddddd;
+/* Dark Azan rows */
+
+body.dark-mode .azan-row {
+    background: #263B29;
+    border-color: rgba(207, 232, 200, 0.08);
+    color: var(--pistachio);
 }
 
+/* Dark select menus */
 
-/* ================= MOBILE ================= */
-
-@media(max-width:360px){
-
-.azan-row{
-grid-template-columns:65px 1fr 40px;
-gap:5px;
-font-size:13px;
+body.dark-mode select {
+    background: var(--input-bg);
+    color: var(--text);
+    border-color: var(--border);
+    color-scheme: dark;
 }
 
-select{
-font-size:12px;
+body.dark-mode select:focus-visible {
+    border-color: var(--pistachio);
 }
 
+/* Dark Mode label and checkbox */
+
+body.dark-mode label {
+    color: var(--text);
+}
+
+body.dark-mode #darkMode {
+    accent-color: var(--pistachio);
+}
+
+/* Dark buttons */
+
+body.dark-mode button {
+    background: var(--primary);
+    color: var(--cream);
+}
+
+body.dark-mode #saveBtn {
+    background: var(--primary);
+    color: var(--cream);
+}
+
+/* ================= SMALL SCREENS ================= */
+
+@media (max-width: 360px) {
+
+    .container {
+        padding: 10px;
+    }
+
+    #settingsTitle {
+        font-size: 20px;
+    }
+
+    .card {
+        padding: 10px;
+    }
+
+    .azan-row {
+        grid-template-columns: 65px minmax(0, 1fr) 40px;
+        gap: 5px;
+        padding: 7px;
+    }
+
+    .azan-row span {
+        font-size: 13px;
+    }
+
+    .azan-row button {
+        width: 40px;
+    }
+
+    select {
+        padding: 7px 5px;
+        font-size: 12px;
+    }
 }
