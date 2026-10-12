@@ -114,7 +114,7 @@
         digits[language][Number(digit)]
     );
 }
-
+   
     function directionName(deg) {
         return T.directions[
             Math.round(norm(deg) / 22.5) % 16
