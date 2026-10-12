@@ -284,3 +284,65 @@ z-index: 1;
     font-weight: 700;
     color: #0F5132;
 }
+
+
+/* ================= DARK MODE ================= */
+
+body.dark-mode {
+    background:
+        linear-gradient(
+            rgba(12, 24, 18, 0.94),
+            rgba(12, 24, 18, 0.94)
+        ),
+        url("../assets/bg_pattern.png");
+
+    background-size: cover;
+    background-position: center;
+}
+
+/* Location and distance cards */
+body.dark-mode .location-card,
+body.dark-mode .info-card {
+    background: #1E2A1F;
+    border-color: #8A8550;
+}
+
+/* Card labels */
+body.dark-mode #locationLabel,
+body.dark-mode #distanceLabel {
+    color: #B7C9B5;
+}
+
+/* Location name and distance */
+body.dark-mode #locationName,
+body.dark-mode #distance {
+    color: #CFE8C8;
+}
+
+/* Compass background */
+body.dark-mode .compass {
+    background: #1E2A1F;
+}
+
+/* Inner ring background */
+body.dark-mode .compass-ring {
+    background:
+        linear-gradient(
+            rgba(18, 28, 21, 0.94),
+            rgba(18, 28, 21, 0.94)
+        ),
+        url("../assets/bg_pattern.png");
+
+    background-size: cover;
+    background-position: center;
+}
+
+/* Degree display */
+body.dark-mode .degree {
+    color: #CFE8C8;
+}
+
+/* Center point */
+body.dark-mode .center-point {
+    border-color: #E0E0E0;
+}
