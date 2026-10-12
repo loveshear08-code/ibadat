@@ -168,16 +168,16 @@ z-index: 1;
 
     -webkit-mask: radial-gradient(
         circle,
-        transparent 0 90px,
-        #000 91px 103px,
-        transparent 104px
+        transparent 0 84px,
+        #000 85px 96px,
+        transparent 97px
     );
 
     mask: radial-gradient(
         circle,
-        transparent 0 90px,
-        #000 91px 103px,
-        transparent 104px
+        transparent 0 84px,
+        #000 85px 96px,
+        transparent 97px
     );
 }
 
