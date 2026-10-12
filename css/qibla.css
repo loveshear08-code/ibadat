@@ -86,6 +86,7 @@ body {
     font-weight: 700;
     font-size: 11px;
     z-index: 2;
+    white-space: nowrap;
 }
 
 .n, .e, .s, .w {
@@ -114,6 +115,13 @@ body {
 .wnw { top: 78px; left: 8%; }
 .nw  { top: 48px; left: 18%; }
 .nnw { top: 28px; left: 32%; }
+
+/* Keep east direction labels on one line */
+.ene,
+.ese {
+    font-size: 9px;
+    white-space: nowrap;
+}
 
 /* ================= INNER RING ================= */
 
@@ -160,15 +168,15 @@ z-index: 1;
 
     -webkit-mask: radial-gradient(
         circle,
-        transparent 0 84px,
-        #000 85px 103px,
+        transparent 0 90px,
+        #000 91px 103px,
         transparent 104px
     );
 
     mask: radial-gradient(
         circle,
-        transparent 0 84px,
-        #000 85px 103px,
+        transparent 0 90px,
+        #000 91px 103px,
         transparent 104px
     );
 }
