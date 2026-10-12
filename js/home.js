@@ -208,29 +208,22 @@ function startClock(){
     );
 }
 
-
 /* ================= LOCATION ================= */
 
 let USER_LAT = null;
 let USER_LON = null;
 
-function loadLocation(){
+function loadLocation() {
+    const city = document.getElementById("city");
+    if (!city) return;
 
-    const city =
-        document.getElementById("city");
-
-    if(!city) return;
-
-    if(!navigator.geolocation){
-
+    if (!navigator.geolocation) {
         city.innerText = "Location";
         return;
     }
 
     navigator.geolocation.getCurrentPosition(
-
         async (pos) => {
-
             USER_LAT = pos.coords.latitude;
             USER_LON = pos.coords.longitude;
 
@@ -243,12 +236,16 @@ function loadLocation(){
             );
 
             try {
+                const lang = getSettings().lang || "bn";
+                const locale =
+                    lang === "bn" ? "bn" :
+                    lang === "hi" ? "hi" : "en";
 
-                const res = await fetch(
-                    `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${USER_LAT}&lon=${USER_LON}`
-                );
+                const url =
+                    `https://nominatim.openstreetmap.org/reverse?format=jsonv2&accept-language=${locale}&lat=${USER_LAT}&lon=${USER_LON}`;
 
-                if(!res.ok){
+                const res = await fetch(url);
+                if (!res.ok) {
                     throw new Error("Location lookup failed");
                 }
 
@@ -265,55 +262,21 @@ function loadLocation(){
                     address.county ||
                     "Unknown";
 
-                const CITY_NAMES = {
-                    "Kolkata": {
-                        bn: "কলকাতা",
-                        en: "Kolkata",
-                        hi: "कोलकाता"
-                    },
-                    "Delhi": {
-                        bn: "দিল্লি",
-                        en: "Delhi",
-                        hi: "दिल्ली"
-                    },
-                    "New Delhi": {
-                        bn: "নয়াদিল্লি",
-                        en: "New Delhi",
-                        hi: "नई दिल्ली"
-                    },
-                    "Mumbai": {
-                        bn: "মুম্বাই",
-                        en: "Mumbai",
-                        hi: "मुंबई"
-                    }
-                };
+                city.innerText = cityName;
 
-                const lang =
-                    getSettings().lang || "bn";
+                // Save the name in the currently selected language.
+                localStorage.setItem("ibadatCityName", cityName);
 
-                const displayCity =
-                    CITY_NAMES[cityName]?.[lang] ||
-                    cityName;
-
-                city.innerText = displayCity;
-
-                localStorage.setItem(
-                    "ibadatCityName",
-                    displayCity
-                );
-
-            } catch(e) {
-
+            } catch (e) {
+                console.error("Location lookup failed:", e);
                 city.innerText = "Location";
             }
         },
-
         () => {
             city.innerText = "Location";
         }
     );
 }
-
 
 /* ================= DAY NAME ================= */
 
