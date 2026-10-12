@@ -1,34 +1,40 @@
 <!DOCTYPE html>
 <html lang="bn">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta name="theme-color" content="#1F6B3A">
-    <title>Allah 99 Names</title>
 
+    <title>Allah Names</title>
+
+    <!-- Allah Names CSS -->
     <link rel="stylesheet" href="../css/allah-names.css?v=2">
 </head>
 
 <body>
 
-    <!-- Hidden title: kept for existing JavaScript compatibility -->
+    <!-- Hidden title for JavaScript compatibility -->
     <span id="pageTitle" hidden></span>
 
-    <!-- ALLAH NAMES PAGE -->
+    <!-- MAIN PAGE -->
     <main class="names-page">
 
         <!-- INTRODUCTION BOARD -->
-        <section class="intro-board" aria-label="Allah's beautiful names">
+        <section class="intro-board">
 
+            <!-- Arabic Heading -->
             <div class="intro-arabic" lang="ar" dir="rtl">
-                أَسْمَاءُ اللَّهِ الْحُسْنَى
+                أَسْمَاءُ اللَّهِ
             </div>
 
+            <!-- Localized Heading -->
             <div class="intro-title" id="introTitle">
-                আল্লাহর ৯৯টি সুন্দর নাম
+                আল্লাহর নামসমূহ
             </div>
 
+            <!-- Gold Decorative Divider -->
             <div class="intro-divider" aria-hidden="true">
                 <span></span>
                 <span class="divider-ornament">❈</span>
@@ -37,17 +43,21 @@
 
         </section>
 
-        <!-- ALL CARDS ARE RENDERED BY JAVASCRIPT -->
+        <!-- BISMILLAH AND 99 NAMES -->
         <section
             class="names-container"
             id="namesContainer"
-            aria-label="Allah's 99 names">
+            aria-label="Allah's names">
         </section>
 
     </main>
 
+    <!-- Allah Names JavaScript -->
     <script src="../js/allah-names.js?v=2"></script>
+
+    <!-- Theme JavaScript -->
     <script src="../js/theme.js"></script>
 
 </body>
+
 </html>
