@@ -1,277 +1,394 @@
+/* ================= COLOR THEME ================= */
+
+:root {
+    --primary: #1F6B3A;
+    --primary-dark: #174F2C;
+    --pistachio: #CFE8C8;
+    --cream: #F8F6F0;
+    --gold: #D4AF37;
+    --red: #D64545;
+
+    --text: #1E4620;
+    --muted: #52705A;
+    --card: rgba(255, 255, 255, 0.94);
+    --line: #91B493;
+}
+
 /* ================= BASE ================= */
 
-body{
-margin:0;
-font-family:sans-serif;
-background:#eef7f0;
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: sans-serif;
+    color: var(--text);
+
+    background:
+        linear-gradient(
+            rgba(248, 246, 240, 0.78),
+            rgba(248, 246, 240, 0.78)
+        ),
+        url("../assets/bg_pattern.png");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 /* ================= MAIN ================= */
 
-.calendar{
-max-width:500px;
-margin:auto;
-padding:8px 6px 20px;
+.calendar {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 8px 6px 20px;
 }
 
 /* ================= HEADER ================= */
 
-.header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:8px;
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
 }
 
-.header button{
-background:#2e7d32;
-border:none;
-color:white;
-font-size:14px;
-padding:7px 12px;
-border-radius:12px;
-cursor:pointer;
-transition:0.2s;
+.header button {
+    flex-shrink: 0;
+    background: var(--primary);
+    border: none;
+    color: var(--cream);
+    font-size: 14px;
+    padding: 7px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
 }
 
-.header button:active{
-transform:scale(0.92);
+.header button:active {
+    transform: scale(0.92);
 }
 
-#monthTitle{
-font-size:18px;
-font-weight:700;
-color:#1b5e20;
+.header button:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+}
+
+#monthTitle {
+    margin: 0;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary);
 }
 
 /* ================= DAY NAMES ================= */
 
-.day-names{
-display:grid;
-grid-template-columns:repeat(7,1fr);
-text-align:center;
-font-weight:600;
-font-size:12px;
-margin-bottom:6px;
-color:#2e7d32;
+.day-names {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    text-align: center;
+    font-weight: 600;
+    font-size: 12px;
+    margin-bottom: 6px;
+    color: var(--primary);
+}
+
+.day-names > div {
+    min-width: 0;
 }
 
 /* ================= GRID ================= */
 
-.grid{
-display:grid;
-grid-template-columns:repeat(7,1fr);
-gap:6px;
-
-/* 🔥 FIX GAP ISSUE */
-justify-content:start;
-align-content:start;
+.grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 6px;
+    justify-content: start;
+    align-content: start;
 }
 
 /* ================= DAY BOX ================= */
 
-.day{
-background:#ffffff;
-border-radius:12px;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-height:48px;
-box-shadow:0 2px 6px rgba(0,0,0,0.08);
-transition:0.2s ease;
+.day {
+    min-width: 0;
+    height: 48px;
+    background: var(--card);
+    border: 1px solid rgba(31, 107, 58, 0.08);
+    border-radius: 12px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: background 0.2s, transform 0.2s;
 }
 
-/* TOUCH EFFECT */
-.day:active{
-background:#e8f5e9;
-transform:scale(0.95);
+.day:active {
+    background: var(--pistachio);
+    transform: scale(0.95);
 }
 
 /* ================= DATE ================= */
 
-.eng{
-font-size:14px;
-font-weight:700;
-color:#1b5e20;
+.eng {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--primary-dark);
 }
 
-/* (Future use – Bangla / extra line থাকলে ready থাকবে) */
-.bangla{
-font-size:10px;
-color:#2e7d32;
-line-height:1;
+.bangla {
+    font-size: 10px;
+    color: var(--primary);
+    line-height: 1;
 }
 
 /* ================= TODAY ================= */
 
-.today{
-background:#2e7d32 !important;
-color:white;
+.today {
+    background: var(--primary) !important;
+    border-color: var(--primary);
+    color: var(--cream);
 }
 
-.today .eng{
-color:white;
+.today .eng {
+    color: var(--cream);
 }
 
-.today .bangla{
-color:#c8e6c9;
+.today .bangla {
+    color: var(--pistachio);
 }
 
-/* ================= EMPTY ================= */
+/* ================= EMPTY GRID CELLS ================= */
 
-.grid div:empty{
-background:transparent;
-box-shadow:none;
+.grid > div:empty {
+    background: transparent;
+    border: none;
+    box-shadow: none;
 }
 
 /* ================= ISLAMIC EVENTS ================= */
 
-.events-section{
-margin-top:18px;
-padding:14px 10px 18px;
-background:#dcedc8;
-border-radius:18px;
-box-shadow:0 3px 10px rgba(0,0,0,0.08);
+.events-section {
+    margin-top: 18px;
+    padding: 14px 10px 18px;
+    background: rgba(207, 232, 200, 0.96);
+    border: 1px solid rgba(31, 107, 58, 0.08);
+    border-radius: 18px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
 }
 
-.events-title{
-text-align:center;
-font-size:16px;
-font-weight:700;
-color:#1b5e20;
-margin-bottom:16px;
+.events-title {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 16px;
 }
 
-.events-timeline{
-position:relative;
-padding-left:24px;
+.events-timeline {
+    position: relative;
+    padding-left: 24px;
 }
 
-.events-timeline::before{
-content:"";
-position:absolute;
-left:7px;
-top:5px;
-bottom:5px;
-width:2px;
-background:#81a684;
+.events-timeline::before {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 5px;
+    bottom: 5px;
+    width: 2px;
+    background: var(--line);
 }
 
-.event-item{
-position:relative;
-padding:0 0 16px 14px;
+.event-item {
+    position: relative;
+    padding: 0 0 16px 14px;
 }
 
-.event-item:last-child{
-padding-bottom:2px;
+.event-item:last-child {
+    padding-bottom: 2px;
 }
 
-.event-dot{
-position:absolute;
-left:-21px;
-top:3px;
-width:12px;
-height:12px;
-border-radius:50%;
-background:#d4af37;
-border:3px solid #dcedc8;
-box-sizing:border-box;
+.event-dot {
+    position: absolute;
+    left: -21px;
+    top: 3px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 3px solid var(--pistachio);
 }
 
-.event-date{
-font-size:12px;
-font-weight:700;
-color:#2e7d32;
-margin-bottom:3px;
+.event-date {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 3px;
 }
 
-.event-name{
-font-size:14px;
-font-weight:700;
-color:#1b4332;
-line-height:1.4;
+.event-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    line-height: 1.5;
+    overflow-wrap: anywhere;
 }
 
-.event-empty{
-text-align:center;
-font-size:13px;
-color:#52796f;
-padding:8px 4px;
+.event-empty,
+.event-loading,
+.event-error {
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 8px 4px;
+}
+
+.event-empty {
+    color: var(--muted);
+}
+
+.event-loading {
+    color: var(--primary);
+}
+
+.event-error {
+    color: var(--red);
 }
 
 /* ================= DARK MODE ================= */
 
-body.dark-mode{
-    background:#121212;
-    color:#f5f5f5;
+body.dark-mode {
+    --text: #E2EDE2;
+    --muted: #B8CDBA;
+    --card: rgba(30, 42, 31, 0.96);
+    --line: #52796F;
+
+    color: var(--text);
+
+    background:
+        linear-gradient(
+            rgba(18, 24, 19, 0.88),
+            rgba(18, 24, 19, 0.88)
+        ),
+        url("../assets/bg_pattern.png");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
-body.dark-mode #monthTitle{
-    color:#c8e6c9;
+body.dark-mode #monthTitle {
+    color: var(--pistachio);
 }
 
-body.dark-mode .day-names{
-    color:#c8e6c9;
+body.dark-mode .day-names {
+    color: var(--pistachio);
 }
 
-body.dark-mode .day{
-    background:#1e2a1f;
-    box-shadow:0 2px 6px rgba(0,0,0,0.35);
+body.dark-mode .header button {
+    background: var(--primary);
+    color: var(--cream);
 }
 
-body.dark-mode .eng{
-    color:#c8e6c9;
+body.dark-mode .day {
+    background: var(--card);
+    border-color: rgba(207, 232, 200, 0.08);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
 }
 
-body.dark-mode .bangla{
-    color:#a5d6a7;
+body.dark-mode .eng {
+    color: var(--pistachio);
 }
 
-body.dark-mode .day:active{
-    background:#263b29;
+body.dark-mode .bangla {
+    color: #A5D6A7;
 }
 
-body.dark-mode .today{
-    background:#2e7d32 !important;
-    color:white;
+body.dark-mode .day:active {
+    background: #263B29;
 }
 
-body.dark-mode .today .eng{
-    color:white;
+body.dark-mode .today {
+    background: var(--primary) !important;
+    border-color: var(--primary);
 }
 
-body.dark-mode .today .bangla{
-    color:#c8e6c9;
+body.dark-mode .today .eng {
+    color: var(--cream);
 }
 
-/* ISLAMIC EVENTS */
-
-body.dark-mode .events-section{
-    background:#1e2a1f;
-    box-shadow:0 3px 10px rgba(0,0,0,0.35);
+body.dark-mode .today .bangla {
+    color: var(--pistachio);
 }
 
-body.dark-mode .events-title{
-    color:#c8e6c9;
+body.dark-mode .events-section {
+    background: rgba(30, 42, 31, 0.97);
+    border-color: rgba(207, 232, 200, 0.08);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
 }
 
-body.dark-mode .events-timeline::before{
-    background:#52796f;
+body.dark-mode .events-title {
+    color: var(--pistachio);
 }
 
-body.dark-mode .event-dot{
-    border-color:#1e2a1f;
+body.dark-mode .events-timeline::before {
+    background: var(--line);
 }
 
-body.dark-mode .event-date{
-    color:#a5d6a7;
+body.dark-mode .event-dot {
+    border-color: #1E2A1F;
 }
 
-body.dark-mode .event-name{
-    color:#c8e6c9;
+body.dark-mode .event-date {
+    color: #F08A8A;
 }
 
-body.dark-mode .event-empty{
-    color:#a5d6a7;
+body.dark-mode .event-name {
+    color: #E2EDE2;
+}
+
+body.dark-mode .event-empty {
+    color: #B8CDBA;
+}
+
+body.dark-mode .event-loading {
+    color: var(--pistachio);
+}
+
+body.dark-mode .event-error {
+    color: #F08A8A;
+}
+
+/* ================= SMALL SCREENS ================= */
+
+@media (max-width: 360px) {
+    .calendar {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .grid {
+        gap: 4px;
+    }
+
+    .day {
+        height: 46px;
+        border-radius: 10px;
+    }
+
+    #monthTitle {
+        font-size: 16px;
+    }
+
+    .day-names {
+        font-size: 11px;
+    }
 }
