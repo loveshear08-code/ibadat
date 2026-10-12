@@ -362,120 +362,122 @@
 
     /* ---------- DEVICE ORIENTATION ---------- */
 
-let absoluteSensorAvailable = false;
-let fallbackTimer = null;
+    let absoluteSensorAvailable = false;
+    let fallbackTimer = null;
 
-function showStatus(message) {
-    console.info("IBADAT Qibla:", message);
-}
-
-function applyHeading(raw) {
-    if (!Number.isFinite(raw)) return;
-
-    heading = norm(raw);
-    previousHeading = heading;
-
-    updateCompass();
-}
-
-function onAbsoluteOrientation(event) {
-    if (!Number.isFinite(event.alpha)) return;
-
-    absoluteSensorAvailable = true;
-
-    if (fallbackTimer !== null) {
-        clearTimeout(fallbackTimer);
-        fallbackTimer = null;
+    function showStatus(message) {
+        console.info("IBADAT Qibla:", message);
     }
 
-    // Absolute orientation is the preferred source.
-    applyHeading(360 - event.alpha);
-    showStatus(T.active);
-}
+    function applyHeading(raw) {
+        if (!Number.isFinite(raw)) return;
 
-function onFallbackOrientation(event) {
-    // Never mix fallback values with absolute sensor values.
-    if (absoluteSensorAvailable) return;
-
-    if (Number.isFinite(event.webkitCompassHeading)) {
-        applyHeading(event.webkitCompassHeading);
-        showStatus(T.active);
-        return;
+        heading = norm(raw);
+        previousHeading = heading;
+        updateCompass();
     }
 
-    if (!Number.isFinite(event.alpha)) return;
+    function onAbsoluteOrientation(event) {
+        if (!Number.isFinite(event.alpha)) return;
 
-    applyHeading(360 - event.alpha);
-    showStatus(T.waiting);
-}
+        absoluteSensorAvailable = true;
 
-function startSensors() {
-    if (sensorStarted) return;
-
-    if (!("DeviceOrientationEvent" in window)) {
-        showStatus(T.unavailable);
-        return;
-    }
-
-    sensorStarted = true;
-    absoluteSensorAvailable = false;
-
-    window.addEventListener(
-        "deviceorientationabsolute",
-        onAbsoluteOrientation,
-        true
-    );
-
-    window.addEventListener(
-        "deviceorientation",
-        onFallbackOrientation,
-        true
-    );
-
-    // Give the absolute sensor time to provide its first reading.
-    fallbackTimer = window.setTimeout(() => {
-        fallbackTimer = null;
-
-        if (!absoluteSensorAvailable && heading === null) {
-            showStatus(T.unavailable);
+        if (fallbackTimer !== null) {
+            clearTimeout(fallbackTimer);
+            fallbackTimer = null;
         }
-    }, 3000);
-}
 
-function setupSensors() {
-    if (!("DeviceOrientationEvent" in window)) {
-        showStatus(T.unavailable);
-        return;
+        applyHeading(360 - event.alpha);
+        showStatus(T.active);
     }
 
-    if (
-        typeof DeviceOrientationEvent.requestPermission !== "function"
-    ) {
-        startSensors();
-        return;
+    function onFallbackOrientation(event) {
+        if (absoluteSensorAvailable) return;
+
+        if (Number.isFinite(event.webkitCompassHeading)) {
+            applyHeading(event.webkitCompassHeading);
+            showStatus(T.active);
+            return;
+        }
+
+        if (!Number.isFinite(event.alpha)) return;
+
+        applyHeading(360 - event.alpha);
+        showStatus(T.waiting);
     }
 
-    compass.addEventListener("click", async function requestSensor() {
-        if (permissionRequested) return;
-        permissionRequested = true;
+    function startSensors() {
+        if (sensorStarted) return;
 
-        try {
-            const result =
-                await DeviceOrientationEvent.requestPermission(true);
+        if (!("DeviceOrientationEvent" in window)) {
+            showStatus(T.unavailable);
+            return;
+        }
 
-            if (result === "granted") {
-                startSensors();
-            } else {
+        sensorStarted = true;
+        absoluteSensorAvailable = false;
+
+        window.addEventListener(
+            "deviceorientationabsolute",
+            onAbsoluteOrientation,
+            true
+        );
+
+        window.addEventListener(
+            "deviceorientation",
+            onFallbackOrientation,
+            true
+        );
+
+        fallbackTimer = window.setTimeout(() => {
+            fallbackTimer = null;
+
+            if (!absoluteSensorAvailable && heading === null) {
+                showStatus(T.unavailable);
+            }
+        }, 3000);
+    }
+
+    function setupSensors() {
+        if (!("DeviceOrientationEvent" in window)) {
+            showStatus(T.unavailable);
+            return;
+        }
+
+        if (
+            typeof DeviceOrientationEvent.requestPermission !== "function"
+        ) {
+            // Android and browsers that do not require explicit permission.
+            startSensors();
+            return;
+        }
+
+        // Some browsers require a user gesture before granting sensor access.
+        compass.addEventListener("click", async function requestSensor() {
+            if (permissionRequested) return;
+
+            permissionRequested = true;
+
+            try {
+                const result =
+                    await DeviceOrientationEvent.requestPermission();
+
+                if (result === "granted") {
+                    startSensors();
+                } else {
+                    showStatus(T.denied);
+                    permissionRequested = false;
+                }
+            } catch (error) {
+                console.warn(
+                    "Qibla sensor permission error:",
+                    error
+                );
                 showStatus(T.denied);
                 permissionRequested = false;
             }
-        } catch (error) {
-            console.warn("Qibla sensor permission error:", error);
-            showStatus(T.denied);
-            permissionRequested = false;
-        }
-    });
-}
+        });
+    }
 
     /* ---------- LANGUAGE ---------- */
 
