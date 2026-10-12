@@ -362,128 +362,120 @@
 
     /* ---------- DEVICE ORIENTATION ---------- */
 
-    function showStatus(message) {
-        // Keep the distance card free of status text.
-        console.info("IBADAT Qibla:", message);
+let absoluteSensorAvailable = false;
+let fallbackTimer = null;
+
+function showStatus(message) {
+    console.info("IBADAT Qibla:", message);
+}
+
+function applyHeading(raw) {
+    if (!Number.isFinite(raw)) return;
+
+    heading = norm(raw);
+    previousHeading = heading;
+
+    updateCompass();
+}
+
+function onAbsoluteOrientation(event) {
+    if (!Number.isFinite(event.alpha)) return;
+
+    absoluteSensorAvailable = true;
+
+    if (fallbackTimer !== null) {
+        clearTimeout(fallbackTimer);
+        fallbackTimer = null;
     }
 
-    function onOrientation(event) {
-        let raw;
-        let absolute = false;
+    // Absolute orientation is the preferred source.
+    applyHeading(360 - event.alpha);
+    showStatus(T.active);
+}
 
-        // iOS Safari may provide a direct compass heading.
-        if (Number.isFinite(event.webkitCompassHeading)) {
-            raw = event.webkitCompassHeading;
-            absolute = true;
-        } else if (Number.isFinite(event.alpha)) {
-            raw = 360 - event.alpha;
+function onFallbackOrientation(event) {
+    // Never mix fallback values with absolute sensor values.
+    if (absoluteSensorAvailable) return;
 
-            absolute =
-                event.absolute === true ||
-                event.type === "deviceorientationabsolute";
-        } else {
-            return;
-        }
-
-        /*
-         * Account for screen rotation on browsers whose
-         * orientation values follow the screen coordinates.
-         */
-        if (!Number.isFinite(event.webkitCompassHeading)) {
-            const screenAngle =
-                window.screen?.orientation?.angle ??
-                window.orientation ??
-                0;
-
-            raw += Number(screenAngle) || 0;
-        }
-
-        raw = norm(raw);
-
-        if (heading === null || previousHeading === null) {
-            heading = raw;
-        } else {
-            const delta =
-                ((raw - previousHeading + 540) % 360) - 180;
-
-            heading = norm(heading + delta * 0.35);
-        }
-
-        previousHeading = raw;
-        updateCompass();
-
-        showStatus(
-            absolute ? T.active : T.waiting
-        );
+    if (Number.isFinite(event.webkitCompassHeading)) {
+        applyHeading(event.webkitCompassHeading);
+        showStatus(T.active);
+        return;
     }
 
-    function startSensors() {
-        if (sensorStarted) return;
+    if (!Number.isFinite(event.alpha)) return;
 
-        if (!("DeviceOrientationEvent" in window)) {
+    applyHeading(360 - event.alpha);
+    showStatus(T.waiting);
+}
+
+function startSensors() {
+    if (sensorStarted) return;
+
+    if (!("DeviceOrientationEvent" in window)) {
+        showStatus(T.unavailable);
+        return;
+    }
+
+    sensorStarted = true;
+    absoluteSensorAvailable = false;
+
+    window.addEventListener(
+        "deviceorientationabsolute",
+        onAbsoluteOrientation,
+        true
+    );
+
+    window.addEventListener(
+        "deviceorientation",
+        onFallbackOrientation,
+        true
+    );
+
+    // Give the absolute sensor time to provide its first reading.
+    fallbackTimer = window.setTimeout(() => {
+        fallbackTimer = null;
+
+        if (!absoluteSensorAvailable && heading === null) {
             showStatus(T.unavailable);
-            return;
         }
+    }, 3000);
+}
 
-        sensorStarted = true;
-
-        window.addEventListener(
-            "deviceorientationabsolute",
-            onOrientation,
-            true
-        );
-
-        window.addEventListener(
-            "deviceorientation",
-            onOrientation,
-            true
-        );
-
-        showStatus(T.waiting);
-
-        window.setTimeout(() => {
-            if (heading === null) {
-                showStatus(T.unavailable);
-            }
-        }, 7000);
+function setupSensors() {
+    if (!("DeviceOrientationEvent" in window)) {
+        showStatus(T.unavailable);
+        return;
     }
 
-    function setupSensors() {
-        if (!("DeviceOrientationEvent" in window)) {
-            showStatus(T.unavailable);
-            return;
-        }
+    if (
+        typeof DeviceOrientationEvent.requestPermission !== "function"
+    ) {
+        startSensors();
+        return;
+    }
 
-        if (
-            typeof DeviceOrientationEvent.requestPermission !== "function"
-        ) {
-            startSensors();
-            return;
-        }
+    compass.addEventListener("click", async function requestSensor() {
+        if (permissionRequested) return;
+        permissionRequested = true;
 
-        // Browsers requiring permission need a user gesture.
-        compass.addEventListener("click", async function requestSensor() {
-            if (permissionRequested) return;
-            permissionRequested = true;
+        try {
+            const result =
+                await DeviceOrientationEvent.requestPermission(true);
 
-            try {
-                const result =
-                    await DeviceOrientationEvent.requestPermission(true);
-
-                if (result === "granted") {
-                    startSensors();
-                } else {
-                    showStatus(T.denied);
-                }
-            } catch (error) {
-                console.warn(
-                    "Qibla sensor permission request failed:",
-                    error
-                );
+            if (result === "granted") {
+                startSensors();
+            } else {
                 showStatus(T.denied);
+                permissionRequested = false;
             }
-        });
-    }
+        } catch (error) {
+            console.warn("Qibla sensor permission error:", error);
+            showStatus(T.denied);
+            permissionRequested = false;
+        }
+    });
+}
 
     /* ---------- LANGUAGE ---------- */
 
