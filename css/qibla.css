@@ -190,35 +190,35 @@ z-index: 1;
 /* Place each red tick in the gap between rings */
 
 .tick-n {
-    transform: translate(-50%, -50%) translateY(-92px);
+    transform: translate(-50%, -50%) translateY(-96px);
 }
 
 .tick-ne {
-    transform: translate(-50%, -50%) rotate(45deg) translateY(-92px);
+    transform: translate(-50%, -50%) rotate(45deg) translateY(-96px);
 }
 
 .tick-e {
-    transform: translate(-50%, -50%) rotate(90deg) translateY(-92px);
+    transform: translate(-50%, -50%) rotate(90deg) translateY(-96px);
 }
 
 .tick-se {
-    transform: translate(-50%, -50%) rotate(135deg) translateY(-92px);
+    transform: translate(-50%, -50%) rotate(135deg) translateY(-96px);
 }
 
 .tick-s {
-    transform: translate(-50%, -50%) rotate(180deg) translateY(-92px);
+    transform: translate(-50%, -50%) rotate(180deg) translateY(-96px);
 }
 
 .tick-sw {
-    transform: translate(-50%, -50%) rotate(225deg) translateY(-92px);
+    transform: translate(-50%, -50%) rotate(225deg) translateY(-96px);
 }
 
 .tick-w {
-    transform: translate(-50%, -50%) rotate(270deg) translateY(-92px);
+    transform: translate(-50%, -50%) rotate(270deg) translateY(-96px);
 }
 
 .tick-nw {
-    transform: translate(-50%, -50%) rotate(315deg) translateY(-92px);
+    transform: translate(-50%, -50%) rotate(315deg) translateY(-96px);
 }
 
 /* ================= CENTER ================= */
