@@ -1150,7 +1150,7 @@ getWeatherIcon(code);
 
 weather.innerText =
 
-`${icon} ${localizeNumber(temp)}° ${CELSIUS_TEXT[LANG]}`;
+`${icon} ${localizeTime(String(temp))}° ${CELSIUS_TEXT[LANG]}`;
 
     }catch(err){
 
