@@ -130,35 +130,27 @@ function loadBismillahMeaning(){
 function loadDate(){
 
     const el =
-        document.getElementById(
-            "date"
-        );
+        document.getElementById("date");
 
     if(!el) return;
 
+    const now = new Date();
+
     let locale = "bn-BD";
 
-    if(LANG === "en")
-        locale = "en-US";
+    if(LANG === "en") locale = "en-US";
+    if(LANG === "hi") locale = "hi-IN";
 
-    if(LANG === "hi")
-        locale = "hi-IN";
+    const formatted = now.toLocaleDateString(
+        locale,
+        {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        }
+    );
 
-    const now =
-        new Date();
-
-    el.innerText =
-        now.toLocaleDateString(
-            locale,
-            {
-
-                day:"numeric",
-
-                month:"long",
-
-                year:"numeric"
-            }
-        );
+    el.innerText = localizeTime(formatted);
 }
 
 
