@@ -13,13 +13,24 @@ const lang = s.lang || "bn";
 // ================= TITLE =================
 
 const TITLE = {
-bn: "আল্লাহর ৯৯টি নাম",
-en: "Allah 99 Names",
-hi: "अल्लाह के 99 नाम"
+    bn: "আল্লাহর নামসমূহ",
+    en: "Names of Allah",
+    hi: "अल्लाह के नाम"
 };
 
-document.getElementById("pageTitle").innerText = TITLE[lang];
-document.title = TITLE[lang];
+const pageTitle = document.getElementById("pageTitle");
+
+if (pageTitle) {
+    pageTitle.innerText = TITLE[lang] || TITLE.bn;
+}
+
+document.title = TITLE[lang] || TITLE.en;
+
+const introTitle = document.getElementById("introTitle");
+
+if (introTitle) {
+    introTitle.innerText = TITLE[lang] || TITLE.bn;
+}
 
 // ================= BISMILLAH =================
 
@@ -289,12 +300,15 @@ const serial =
 
 html += `
 <div class="name-card">
-<div class="arabic">${serial}. ${item.ar}</div>
-<div class="pron">${name}</div>
-<div class="meaning">${meaning}</div>
+    <div class="arabic">
+        <span class="name-number">${serial}.</span>
+        <span class="arabic-name" lang="ar" dir="rtl">${item.ar}</span>
+    </div>
+    <div class="pron">${name}</div>
+    <div class="meaning">${meaning}</div>
 </div>
 `;
-
+    
 });
 
 container.innerHTML = html;
