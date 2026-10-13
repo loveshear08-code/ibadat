@@ -213,17 +213,21 @@ body {
 /* ================= COMPLETION MESSAGE ================= */
 
 .complete-message {
-    min-height: 0;
+    min-height: 24px;
+    flex-shrink: 0;
     margin-top: 3px;
+    padding: 2px 4px;
+
     text-align: center;
     font-size: 15px;
     font-weight: bold;
     line-height: 1.4;
+
     color: var(--primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+    display: block;
     overflow-wrap: anywhere;
+    word-break: normal;
 }
 
 .complete-message.show {
@@ -443,7 +447,9 @@ body.dark-mode .tap-button {
     }
 
     .complete-message {
+       main-height:22px;
         font-size: 12px;
+       line-height:1.35;
     }
 
     .tap-button {
