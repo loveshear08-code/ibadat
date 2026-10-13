@@ -1,6 +1,6 @@
 /* =========================================
    IBADAT - HADITH PAGE
-   Complete CSS
+   Complete Responsive CSS
    ========================================= */
 
 /* ---------- Theme Colors ---------- */
@@ -20,9 +20,9 @@
   --danger: #D64545;
 
   --border: rgba(31, 107, 58, 0.16);
-  --shadow: 0 4px 14px rgba(20, 65, 35, 0.08);
+  --shadow: 0 3px 10px rgba(20, 65, 35, 0.08);
 
-  --radius-large: 20px;
+  --radius-large: 18px;
   --radius-medium: 15px;
   --radius-small: 11px;
 }
@@ -37,26 +37,35 @@
 
 html {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
-  min-height: 100vh;
-  min-height: 100dvh;
-  font-family: Arial, "Noto Sans Bengali", "Noto Sans Devanagari",
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+
+  font-family:
+    Arial,
+    "Noto Sans Bengali",
+    "Noto Sans Devanagari",
     sans-serif;
+
   color: var(--text);
   background-color: var(--bg);
+
   background-image:
     linear-gradient(
-      rgba(248, 246, 240, 0.78),
-      rgba(248, 246, 240, 0.88)
+      rgba(248, 246, 240, 0.76),
+      rgba(248, 246, 240, 0.84)
     ),
     url("../assets/bg_pattern.png");
+
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
+
   overflow-x: hidden;
 }
 
@@ -74,8 +83,8 @@ button {
 button:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 3px solid var(--gold);
-  outline-offset: 3px;
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
 }
 
 button:disabled {
@@ -92,158 +101,141 @@ button:disabled {
 .hadith-page {
   width: 100%;
   max-width: 900px;
-  min-height: 100vh;
-  min-height: 100dvh;
+
+  height: 100vh;
+  height: 100dvh;
+
+  min-height: 0;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
+
+  display: grid;
+  grid-template-rows: 68px minmax(0, 1fr) 64px;
+
+  overflow: hidden;
 }
 
 /* ---------- Header ---------- */
 
 .hadith-header {
-  position: sticky;
-  top: 0;
-  z-index: 20;
+  position: relative;
+  z-index: 5;
 
   width: 100%;
-  min-height: 72px;
-  padding: 12px 16px;
+  height: 68px;
+  min-height: 0;
 
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  background: var(--primary);
-  color: #FFFDF6;
-
-  border-bottom: 2px solid var(--gold);
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
-}
-
-.back-button,
-.language-button {
-  min-width: 42px;
-  min-height: 42px;
-  flex-shrink: 0;
+  padding: 7px 12px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: 13px;
-
-  background: rgba(255, 255, 255, 0.10);
+  background: var(--primary);
   color: #FFFDF6;
 
-  font-size: 23px;
-  font-weight: 700;
-
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease;
+  border-bottom: 2px solid var(--gold);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
 }
 
-.back-button:hover,
-.language-button:hover {
-  background: rgba(255, 255, 255, 0.20);
-}
+/* Header has no Back or Language button */
 
-.back-button:active,
-.language-button:active {
-  transform: scale(0.96);
-}
-
-.header-title {
-  flex: 1;
+.hadith-header .header-title {
+  width: 100%;
   min-width: 0;
   text-align: center;
 }
 
-.header-title h1 {
+.hadith-header .header-title h1 {
   color: #FFFDF6;
-  font-size: 21px;
+
+  font-size: 22px;
   font-weight: 800;
   line-height: 1.3;
 }
 
-.header-title p {
+.hadith-header .header-title p {
   margin-top: 3px;
-  color: #E7EEDC;
-  font-size: 11px;
-  line-height: 1.4;
-}
 
-.language-button {
-  min-width: 42px;
-  padding: 0 7px;
-  font-size: 13px;
+  color: #E7EEDC;
+  font-size: 12px;
+  line-height: 1.4;
 }
 
 /* ---------- Main Content ---------- */
 
 .hadith-content {
   width: 100%;
-  flex: 1;
-  padding: 18px 15px 24px;
+  height: 100%;
+  min-height: 0;
+
+  padding: 10px 12px;
+
+  overflow: hidden;
 }
 
 .screen {
   width: 100%;
-  animation: screenFadeIn 0.22s ease;
+  min-width: 0;
+  min-height: 0;
 }
 
 .screen.active {
   display: block;
 }
 
-@keyframes screenFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
+/* ---------- Books Screen ---------- */
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+#booksScreen {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
 }
 
 /* ---------- Welcome Card ---------- */
 
 .welcome-card {
+  width: 100%;
+  min-width: 0;
+
+  flex: 0 0 auto;
+
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 
-  padding: 19px 17px;
-  margin-bottom: 23px;
+  padding: 12px;
+  margin-bottom: 12px;
 
   background: var(--primary);
   color: #FFFDF6;
 
   border: 1px solid var(--gold);
   border-radius: var(--radius-large);
+
   box-shadow: var(--shadow);
 }
 
 .welcome-icon {
-  width: 53px;
-  height: 53px;
-  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border-radius: 50%;
   border: 1px solid var(--gold);
+  border-radius: 50%;
 
   background: rgba(255, 255, 255, 0.10);
   color: var(--gold);
 
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
 }
 
@@ -254,49 +246,61 @@ button:disabled {
 
 .welcome-text h2 {
   color: #FFFDF6;
-  font-size: 19px;
+
+  font-size: 17px;
   font-weight: 800;
   line-height: 1.4;
 }
 
 .welcome-text p {
-  margin-top: 5px;
+  margin-top: 4px;
+
   color: #E7EEDC;
-  font-size: 13px;
-  line-height: 1.7;
+
+  font-size: 12px;
+  line-height: 1.55;
 }
 
 /* ---------- Section Heading ---------- */
 
 .section-heading {
+  width: 100%;
+  min-width: 0;
+
+  flex: 0 0 auto;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 8px;
 
-  margin-bottom: 13px;
+  margin-bottom: 9px;
 }
 
 .section-heading h2 {
   color: var(--primary);
+
   font-size: 19px;
   font-weight: 800;
+  line-height: 1.4;
 }
 
 .book-count {
-  min-width: 29px;
-  min-height: 29px;
+  min-width: 30px;
+  min-height: 30px;
   padding: 4px 8px;
+
+  flex: 0 0 auto;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  border: 1px solid var(--gold);
-  border-radius: 50%;
-
   background: var(--feature);
   color: var(--primary-dark);
+
+  border: 1px solid var(--gold);
+  border-radius: 50%;
 
   font-size: 12px;
   font-weight: 800;
@@ -305,73 +309,100 @@ button:disabled {
 /* ---------- Book Grid ---------- */
 
 .book-grid {
+  width: 100%;
+  flex: 1 1 auto;
+
+  min-height: 0;
+  min-width: 0;
+
   display: grid;
+
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 13px;
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+
+  gap: 10px;
+
+  overflow: hidden;
 }
 
-/*
-  These styles also support book cards
-  generated dynamically by JavaScript.
-*/
+/* ---------- Book Cards ---------- */
 
 .book-card {
   position: relative;
+
+  width: 100%;
+  height: 100%;
+
   min-width: 0;
-  min-height: 132px;
-  padding: 17px 14px;
+  min-height: 0;
+
+  padding: 10px 12px;
 
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: 9px;
+  gap: 6px;
 
   background: var(--feature);
   color: var(--text);
 
   border: 1px solid rgba(31, 107, 58, 0.12);
-  border-left: 5px solid var(--primary);
-  border-radius: var(--radius-medium);
+  border-left: 6px solid var(--primary);
+
+  border-radius: var(--radius-large);
 
   text-align: left;
   box-shadow: var(--shadow);
 
+  overflow: hidden;
+
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease;
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .book-card:hover {
-  transform: translateY(-2px);
   border-color: var(--gold);
-  box-shadow: 0 7px 18px rgba(20, 65, 35, 0.12);
+  box-shadow: 0 4px 12px rgba(20, 65, 35, 0.12);
 }
 
 .book-card:active {
-  transform: scale(0.98);
+  transform: scale(0.99);
 }
 
 .book-card h3,
 .book-card .book-name {
+  width: 100%;
+  min-width: 0;
+
   color: var(--primary-dark);
-  font-size: 15px;
+
+  font-size: 14px;
   font-weight: 800;
-  line-height: 1.5;
+  line-height: 1.45;
+
   overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .book-card p,
 .book-card .book-description {
+  width: 100%;
+  min-width: 0;
+
   color: var(--text-muted);
-  font-size: 12px;
-  line-height: 1.6;
+
+  font-size: 11px;
+  line-height: 1.45;
+
+  overflow-wrap: anywhere;
 }
 
 .book-card .book-icon {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
 
   display: flex;
   align-items: center;
@@ -380,74 +411,139 @@ button:disabled {
   border: 1px solid var(--gold);
   border-radius: 50%;
 
-  background: rgba(255, 255, 255, 0.60);
+  background: rgba(255, 255, 255, 0.62);
   color: var(--primary);
 
-  font-size: 19px;
+  font-size: 18px;
 }
 
-/* ---------- List Header Card ---------- */
+/* ---------- Loading and Error Messages ---------- */
+
+.status-message {
+  flex: 0 0 auto;
+
+  padding: 12px;
+  margin: 8px 0;
+
+  background: var(--card);
+  color: var(--text-muted);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-medium);
+
+  text-align: center;
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.error-message {
+  background: rgba(214, 69, 69, 0.08);
+  color: var(--danger);
+
+  border-color: rgba(214, 69, 69, 0.30);
+}
+
+.retry-button {
+  padding: 9px 16px;
+  margin-top: 8px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: var(--primary);
+  color: #FFFDF6;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ---------- List Screen ---------- */
+
+#listScreen,
+#detailScreen {
+  height: 100%;
+  min-height: 0;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+#listScreen::-webkit-scrollbar,
+#detailScreen::-webkit-scrollbar {
+  display: none;
+}
 
 .list-header-card,
 .detail-header-card {
-  padding: 19px 16px;
-  margin-bottom: 17px;
+  padding: 16px 13px;
+  margin-bottom: 12px;
 
   background: var(--primary);
   color: #FFFDF6;
 
   border: 1px solid var(--gold);
   border-radius: var(--radius-large);
-  box-shadow: var(--shadow);
 
   text-align: center;
+  box-shadow: var(--shadow);
 }
 
 .list-header-card h2,
 .detail-header-card h2 {
   color: #FFFDF6;
-  font-size: 20px;
+
+  font-size: 19px;
   font-weight: 800;
   line-height: 1.5;
+
   overflow-wrap: anywhere;
 }
 
 .list-header-card p,
 .detail-header-card p {
   margin-top: 5px;
+
   color: #E7EEDC;
-  font-size: 13px;
-  line-height: 1.7;
+
+  font-size: 12px;
+  line-height: 1.6;
 }
 
 /* ---------- Search ---------- */
 
 .search-container {
+  min-height: 46px;
+
   display: flex;
   align-items: center;
   gap: 10px;
 
-  min-height: 49px;
-  padding: 0 14px;
-  margin-bottom: 14px;
+  padding: 0 12px;
+  margin-bottom: 12px;
 
   background: var(--card);
+
   border: 1px solid var(--border);
   border-radius: var(--radius-medium);
+
   box-shadow: var(--shadow);
 }
 
 .search-icon {
-  flex-shrink: 0;
+  flex: 0 0 auto;
+
   color: var(--primary);
-  font-size: 25px;
-  transform: rotate(-20deg);
+  font-size: 23px;
 }
 
 .search-container input {
   width: 100%;
   min-width: 0;
-  min-height: 45px;
+  min-height: 42px;
 
   border: none;
   outline: none;
@@ -458,12 +554,12 @@ button:disabled {
   font-size: 14px;
 }
 
-.search-container input::placeholder {
-  color: #899589;
-}
-
 .search-container input:focus-visible {
   outline: none;
+}
+
+.search-container input::placeholder {
+  color: #899589;
 }
 
 /* ---------- Translation Controls ---------- */
@@ -472,47 +568,52 @@ button:disabled {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
 
-  padding: 12px 14px;
-  margin-bottom: 15px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
 
   background: var(--feature);
+
   border: 1px solid var(--border);
   border-radius: var(--radius-small);
 }
 
 .list-controls label {
   color: var(--primary-dark);
-  font-size: 13px;
+
+  font-size: 12px;
   font-weight: 700;
 }
 
 .list-controls select {
   max-width: 60%;
-  min-height: 36px;
-  padding: 6px 10px;
+  min-height: 34px;
 
-  border: 1px solid rgba(31, 107, 58, 0.30);
-  border-radius: 9px;
+  padding: 5px 8px;
 
   background: var(--card);
   color: var(--text);
 
-  font-size: 13px;
+  border: 1px solid rgba(31, 107, 58, 0.30);
+  border-radius: 8px;
+
+  font-size: 12px;
 }
 
-/* ---------- Hadith List ---------- */
+/* ---------- Hadith List Items ---------- */
 
 .hadith-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .hadith-list-item {
   width: 100%;
-  padding: 16px;
+  min-width: 0;
+
+  padding: 13px;
 
   display: block;
 
@@ -521,102 +622,53 @@ button:disabled {
 
   border: 1px solid rgba(31, 107, 58, 0.12);
   border-left: 5px solid var(--primary);
+
   border-radius: var(--radius-medium);
 
   text-align: left;
   box-shadow: var(--shadow);
-
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.hadith-list-item:hover {
-  transform: translateY(-1px);
-  border-color: var(--gold);
-}
-
-.hadith-list-item:active {
-  transform: scale(0.99);
 }
 
 .hadith-list-item h3,
 .hadith-list-item .hadith-item-title {
-  margin-bottom: 7px;
+  margin-bottom: 6px;
 
   color: var(--primary-dark);
-  font-size: 15px;
+
+  font-size: 14px;
   font-weight: 800;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 .hadith-list-item p,
 .hadith-list-item .hadith-item-preview {
   color: var(--text);
+
   font-size: 13px;
-  line-height: 1.9;
+  line-height: 1.8;
 
   overflow-wrap: anywhere;
 }
 
 .hadith-list-item .hadith-item-number {
   display: inline-block;
-  margin-bottom: 8px;
-  padding: 4px 9px;
+
+  padding: 4px 8px;
+  margin-bottom: 7px;
 
   background: var(--primary);
   color: #FFFDF6;
 
-  border-radius: 8px;
+  border-radius: 7px;
+
   font-size: 11px;
   font-weight: 700;
 }
 
-/* ---------- Loading / Error Messages ---------- */
-
-.status-message {
-  padding: 20px 15px;
-  margin: 12px 0;
-
-  background: var(--card);
-  color: var(--text-muted);
-
-  border: 1px solid var(--border);
-  border-radius: var(--radius-medium);
-
-  text-align: center;
-  font-size: 14px;
-  line-height: 1.8;
-}
-
-.error-message {
-  background: rgba(214, 69, 69, 0.08);
-  color: var(--danger);
-  border-color: rgba(214, 69, 69, 0.30);
-}
-
-.retry-button {
-  margin-top: 12px;
-  padding: 10px 19px;
-
-  border: none;
-  border-radius: 10px;
-
-  background: var(--primary);
-  color: #FFFDF6;
-
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.retry-button:hover {
-  background: var(--primary-dark);
-}
-
-/* ---------- Detail Header ---------- */
+/* ---------- Detail Screen ---------- */
 
 .detail-header-card {
-  margin-bottom: 17px;
+  margin-bottom: 12px;
 }
 
 .detail-header-card > p:first-child {
@@ -627,8 +679,9 @@ button:disabled {
 
 .hadith-number {
   display: inline-block;
-  margin-top: 12px;
-  padding: 7px 13px;
+
+  padding: 6px 11px;
+  margin-top: 10px;
 
   background: rgba(255, 255, 255, 0.10);
   color: #FFFDF6;
@@ -636,68 +689,69 @@ button:disabled {
   border: 1px solid var(--gold);
   border-radius: 20px;
 
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
 }
 
-/* ---------- Hadith Detail Card ---------- */
-
 .hadith-detail-card {
-  padding: 20px 17px;
+  padding: 17px 14px;
 
   background: var(--card);
   color: var(--text);
 
   border: 1px solid var(--border);
   border-left: 5px solid var(--primary);
-  border-radius: var(--radius-large);
 
+  border-radius: var(--radius-large);
   box-shadow: var(--shadow);
 }
 
 .detail-section {
   width: 100%;
+  min-width: 0;
 }
 
 .detail-section h3 {
   display: inline-block;
-  margin-bottom: 13px;
-  padding: 7px 12px;
+
+  padding: 6px 10px;
+  margin-bottom: 10px;
 
   background: var(--feature);
   color: var(--primary-dark);
 
-  border: 1px solid rgba(31, 107, 58, 0.12);
-  border-radius: 9px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
 
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 800;
 }
 
 .arabic-text {
-  padding: 10px 2px;
+  padding: 8px 2px;
 
   color: var(--primary-dark);
 
   font-family: "Noto Naskh Arabic", "Amiri", serif;
   font-size: 25px;
-  line-height: 2.2;
+  line-height: 2.1;
 
   text-align: right;
   overflow-wrap: anywhere;
-  word-break: normal;
 }
 
 .translation-text {
   color: var(--text);
-  font-size: 15px;
-  line-height: 2;
+
+  font-size: 14px;
+  line-height: 1.9;
+
   overflow-wrap: anywhere;
 }
 
 .detail-divider {
   height: 1px;
-  margin: 21px 0;
+  margin: 17px 0;
 
   background: linear-gradient(
     to right,
@@ -709,8 +763,9 @@ button:disabled {
 
 .reference-section p {
   color: var(--text-muted);
-  font-size: 13px;
-  line-height: 1.8;
+  font-size: 12px;
+  line-height: 1.7;
+
   overflow-wrap: anywhere;
 }
 
@@ -719,51 +774,50 @@ button:disabled {
 .hadith-navigation {
   display: flex;
   align-items: stretch;
-  justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
 
-  margin-top: 18px;
+  margin-top: 14px;
 }
 
 .navigation-button {
   flex: 1;
   min-width: 0;
-  min-height: 46px;
-  padding: 10px 12px;
+  min-height: 43px;
 
-  border: 1px solid var(--gold);
-  border-radius: 12px;
+  padding: 9px;
 
   background: var(--primary);
   color: #FFFDF6;
 
-  font-size: 13px;
-  font-weight: 700;
+  border: 1px solid var(--gold);
+  border-radius: 10px;
 
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .navigation-button:hover:not(:disabled) {
   background: var(--primary-dark);
 }
 
-.navigation-button:active:not(:disabled) {
-  transform: scale(0.98);
-}
-
-/* ---------- Empty Results ---------- */
-
 #emptySearchMessage {
-  margin-top: 12px;
+  margin-top: 10px;
 }
 
 /* ---------- Footer ---------- */
 
 .hadith-footer {
-  padding: 17px 15px;
-  margin-top: auto;
+  width: 100%;
+  height: 64px;
+  min-height: 0;
+
+  padding: 7px 10px;
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   background: var(--primary);
   color: #FFFDF6;
@@ -775,6 +829,7 @@ button:disabled {
 
 .hadith-footer p {
   color: #FFFDF6;
+
   font-size: 14px;
   font-weight: 800;
   letter-spacing: 2px;
@@ -782,145 +837,210 @@ button:disabled {
 
 .hadith-footer span {
   display: block;
-  margin-top: 5px;
+
+  margin-top: 4px;
 
   color: #E7EEDC;
+
   font-size: 11px;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
 }
 
-/* ---------- Tablet ---------- */
-
-@media (min-width: 600px) {
-  .hadith-content {
-    padding: 24px 22px 30px;
-  }
-
-  .hadith-header {
-    padding: 14px 22px;
-  }
-
-  .book-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 15px;
-  }
-
-  .book-card {
-    min-height: 145px;
-    padding: 19px 16px;
-  }
-
-  .welcome-card {
-    padding: 23px;
-  }
-
-  .welcome-text h2 {
-    font-size: 21px;
-  }
-
-  .hadith-detail-card {
-    padding: 26px;
-  }
-
-  .arabic-text {
-    font-size: 29px;
-  }
-
-  .translation-text {
-    font-size: 16px;
-  }
-}
-
-/* ---------- Large Screens ---------- */
-
-@media (min-width: 850px) {
-  .hadith-content {
-    padding: 28px 28px 35px;
-  }
-
-  .book-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 17px;
-  }
-}
-
-/* ---------- Small Mobile ---------- */
+/* ---------- Compact Phones ---------- */
 
 @media (max-width: 380px) {
+  .hadith-page {
+    grid-template-rows: 60px minmax(0, 1fr) 56px;
+  }
+
   .hadith-header {
-    min-height: 64px;
-    padding: 9px 10px;
-    gap: 8px;
+    height: 60px;
   }
 
-  .back-button,
-  .language-button {
-    min-width: 37px;
-    min-height: 37px;
-    border-radius: 10px;
+  .hadith-header .header-title h1 {
+    font-size: 19px;
   }
 
-  .header-title h1 {
-    font-size: 18px;
-  }
-
-  .header-title p {
+  .hadith-header .header-title p {
     font-size: 10px;
   }
 
   .hadith-content {
-    padding: 14px 10px 20px;
+    padding: 7px 8px;
   }
 
   .welcome-card {
-    padding: 14px 12px;
-    gap: 10px;
+    gap: 8px;
+    padding: 9px;
+    margin-bottom: 8px;
   }
 
   .welcome-icon {
-    width: 43px;
-    height: 43px;
-    font-size: 23px;
+    width: 35px;
+    height: 35px;
+    flex-basis: 35px;
+    font-size: 19px;
   }
 
   .welcome-text h2 {
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .welcome-text p {
-    font-size: 12px;
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  .section-heading {
+    margin-bottom: 6px;
+  }
+
+  .section-heading h2 {
+    font-size: 16px;
+  }
+
+  .book-count {
+    min-width: 25px;
+    min-height: 25px;
   }
 
   .book-grid {
-    gap: 9px;
+    gap: 7px;
   }
 
   .book-card {
-    min-height: 120px;
-    padding: 12px 10px;
+    padding: 7px 8px;
+    gap: 4px;
+    border-left-width: 5px;
+    border-radius: 13px;
+  }
+
+  .book-card .book-icon {
+    width: 29px;
+    height: 29px;
+    flex-basis: 29px;
+    font-size: 15px;
   }
 
   .book-card h3,
   .book-card .book-name {
-    font-size: 13px;
+    font-size: 12px;
   }
 
-  .hadith-detail-card {
-    padding: 15px 12px;
+  .book-card p,
+  .book-card .book-description {
+    font-size: 10px;
   }
 
-  .arabic-text {
-    font-size: 22px;
-    line-height: 2.1;
+  .hadith-footer {
+    height: 56px;
   }
 
-  .translation-text {
+  .hadith-footer p {
+    font-size: 12px;
+  }
+
+  .hadith-footer span {
+    font-size: 10px;
+  }
+}
+
+/* ---------- Short Screens ---------- */
+
+@media (max-height: 740px) {
+  .hadith-page {
+    grid-template-rows: 58px minmax(0, 1fr) 52px;
+  }
+
+  .hadith-header {
+    height: 58px;
+  }
+
+  .hadith-header .header-title h1 {
+    font-size: 19px;
+  }
+
+  .hadith-content {
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+
+  .welcome-card {
+    padding: 8px 10px;
+    margin-bottom: 7px;
+    gap: 8px;
+  }
+
+  .welcome-icon {
+    width: 33px;
+    height: 33px;
+    flex-basis: 33px;
+    font-size: 18px;
+  }
+
+  .welcome-text h2 {
     font-size: 14px;
   }
 
-  .navigation-button {
-    padding: 9px 7px;
+  .welcome-text p {
+    margin-top: 2px;
+    font-size: 10px;
+    line-height: 1.35;
+  }
+
+  .section-heading {
+    margin-bottom: 5px;
+  }
+
+  .section-heading h2 {
+    font-size: 16px;
+  }
+
+  .book-count {
+    min-width: 24px;
+    min-height: 24px;
+  }
+
+  .book-grid {
+    gap: 6px;
+  }
+
+  .book-card {
+    padding: 6px 8px;
+    gap: 3px;
+  }
+
+  .book-card .book-icon {
+    width: 27px;
+    height: 27px;
+    flex-basis: 27px;
+    font-size: 14px;
+  }
+
+  .book-card h3,
+  .book-card .book-name {
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
+  .book-card p,
+  .book-card .book-description {
+    font-size: 9px;
+    line-height: 1.3;
+  }
+
+  .hadith-footer {
+    height: 52px;
+    padding: 5px;
+  }
+
+  .hadith-footer p {
     font-size: 12px;
+  }
+
+  .hadith-footer span {
+    margin-top: 2px;
+    font-size: 10px;
   }
 }
 
@@ -935,9 +1055,10 @@ body.dark-mode {
   --text-muted: #B0C0B2;
 
   --border: rgba(180, 220, 185, 0.16);
-  --shadow: 0 4px 14px rgba(0, 0, 0, 0.20);
+  --shadow: 0 3px 10px rgba(0, 0, 0, 0.20);
 
   background-color: var(--bg);
+
   background-image:
     linear-gradient(
       rgba(18, 26, 20, 0.88),
