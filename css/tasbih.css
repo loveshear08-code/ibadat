@@ -213,30 +213,6 @@ body {
 
 /* ================= COMPLETION MESSAGE ================= */
 
-.complete-message {
-    min-height: 24px;
-    flex-shrink: 0;
-    margin-top: 3px;
-    padding: 2px 4px;
-
-    text-align: center;
-    font-size: 15px;
-    font-weight: bold;
-    line-height: 1.4;
-
-    color: var(--primary);
-
-    display: block;
-    overflow-wrap: anywhere;
-    word-break: normal;
-}
-
-.complete-message.show {
-    animation:
-        completePop 0.4s ease,
-        celebrationGlow 1.8s ease-out;
-}
-
 @keyframes completePop {
     0% {
         transform: scale(0.7);
@@ -479,4 +455,49 @@ body.dark-mode .tap-button {
     .total-count {
         font-size: 20px;
     }
+}
+
+/* ===== COMPLETION MESSAGE ABOVE TASBIH BUTTON ===== */
+
+.tasbih-page {
+    position: relative;
+}
+
+.complete-message {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: calc(33.3333% - 4px);
+    transform: translateY(50%);
+
+    min-height: 0;
+    margin: 0;
+    padding: 4px 8px;
+
+    display: block;
+    text-align: center;
+    line-height: 1.4;
+    font-size: 14px;
+    font-weight: bold;
+
+    color: var(--primary);
+    overflow-wrap: anywhere;
+
+    z-index: 5;
+    pointer-events: none;
+}
+
+.complete-message:not(.show) {
+    visibility: hidden;
+}
+
+.complete-message.show {
+    visibility: visible;
+    animation:
+        completePop 0.4s ease,
+        celebrationGlow 1.8s ease-out;
+}
+
+body.dark-mode .complete-message {
+    color: var(--primary);
 }
