@@ -943,7 +943,7 @@ function setupFeatureNavigation(){
     const pages = {
 
         namaz:
-        "html/namaz-shikha.html",
+        "html/namaz.html",
 
         quran:
         "html/quran.html",
