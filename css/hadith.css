@@ -1,30 +1,22 @@
 /* =========================================
    IBADAT - HADITH PAGE
-   Complete Responsive CSS
+   Final Responsive Layout
    ========================================= */
 
-/* ---------- Theme Colors ---------- */
+/* ---------- Theme ---------- */
 
 :root {
   --primary: #1F6B3A;
   --primary-dark: #164D2B;
-
   --bg: #F8F6F0;
   --card: #FFFFFF;
   --feature: #CFE8C8;
-
   --text: #1E4620;
   --text-muted: #657765;
-
   --gold: #D4AF37;
   --danger: #D64545;
-
   --border: rgba(31, 107, 58, 0.16);
   --shadow: 0 3px 10px rgba(20, 65, 35, 0.08);
-
-  --radius-large: 18px;
-  --radius-medium: 15px;
-  --radius-small: 11px;
 }
 
 /* ---------- Reset ---------- */
@@ -37,14 +29,15 @@
 
 html {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
   width: 100%;
-  min-height: 100%;
-  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
 
   font-family:
     Arial,
@@ -65,8 +58,6 @@ body {
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
-
-  overflow-x: hidden;
 }
 
 button,
@@ -96,35 +87,33 @@ button:disabled {
   display: none !important;
 }
 
-/* ---------- Main Page ---------- */
+/* ---------- Main Layout ---------- */
 
 .hadith-page {
   width: 100%;
   max-width: 900px;
-
   height: 100vh;
   height: 100dvh;
-
   min-height: 0;
+
   margin: 0 auto;
 
   display: grid;
-  grid-template-rows: 68px minmax(0, 1fr) 64px;
+  grid-template-rows: 76px minmax(0, 1fr) 64px;
 
   overflow: hidden;
 }
 
-/* ---------- Header ---------- */
+/* ---------- Main Header ---------- */
 
 .hadith-header {
   position: relative;
   z-index: 5;
 
   width: 100%;
-  height: 68px;
+  height: 76px;
   min-height: 0;
-
-  padding: 7px 12px;
+  padding: 8px 12px;
 
   display: flex;
   align-items: center;
@@ -137,8 +126,6 @@ button:disabled {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
 }
 
-/* Header has no Back or Language button */
-
 .hadith-header .header-title {
   width: 100%;
   min-width: 0;
@@ -147,26 +134,25 @@ button:disabled {
 
 .hadith-header .header-title h1 {
   color: #FFFDF6;
-
   font-size: 22px;
   font-weight: 800;
-  line-height: 1.3;
+  line-height: 1.35;
 }
 
 .hadith-header .header-title p {
   margin-top: 3px;
-
   color: #E7EEDC;
   font-size: 12px;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
-/* ---------- Main Content ---------- */
+/* ---------- Content Area ---------- */
 
 .hadith-content {
   width: 100%;
   height: 100%;
   min-height: 0;
+  min-width: 0;
 
   padding: 10px 12px;
 
@@ -189,6 +175,7 @@ button:disabled {
   width: 100%;
   height: 100%;
   min-height: 0;
+  min-width: 0;
 
   display: flex;
   flex-direction: column;
@@ -196,77 +183,17 @@ button:disabled {
   overflow: hidden;
 }
 
-/* ---------- Welcome Card ---------- */
+/* The welcome card is no longer part of the design */
 
-.welcome-card {
-  width: 100%;
-  min-width: 0;
-
-  flex: 0 0 auto;
-
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  padding: 12px;
-  margin-bottom: 12px;
-
-  background: var(--primary);
-  color: #FFFDF6;
-
-  border: 1px solid var(--gold);
-  border-radius: var(--radius-large);
-
-  box-shadow: var(--shadow);
+#booksScreen .welcome-card {
+  display: none !important;
 }
 
-.welcome-icon {
-  width: 44px;
-  height: 44px;
-  flex: 0 0 44px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: 1px solid var(--gold);
-  border-radius: 50%;
-
-  background: rgba(255, 255, 255, 0.10);
-  color: var(--gold);
-
-  font-size: 24px;
-  font-weight: 700;
-}
-
-.welcome-text {
-  flex: 1;
-  min-width: 0;
-}
-
-.welcome-text h2 {
-  color: #FFFDF6;
-
-  font-size: 17px;
-  font-weight: 800;
-  line-height: 1.4;
-}
-
-.welcome-text p {
-  margin-top: 4px;
-
-  color: #E7EEDC;
-
-  font-size: 12px;
-  line-height: 1.55;
-}
-
-/* ---------- Section Heading ---------- */
+/* ---------- Books Heading ---------- */
 
 .section-heading {
   width: 100%;
   min-width: 0;
-
   flex: 0 0 auto;
 
   display: flex;
@@ -274,12 +201,11 @@ button:disabled {
   justify-content: space-between;
   gap: 8px;
 
-  margin-bottom: 9px;
+  margin: 0 0 9px;
 }
 
 .section-heading h2 {
   color: var(--primary);
-
   font-size: 19px;
   font-weight: 800;
   line-height: 1.4;
@@ -306,17 +232,55 @@ button:disabled {
   font-weight: 800;
 }
 
-/* ---------- Book Grid ---------- */
+/* ---------- Loading and Error ---------- */
+
+.status-message {
+  flex: 0 0 auto;
+
+  padding: 12px;
+  margin: 8px 0;
+
+  background: var(--card);
+  color: var(--text-muted);
+
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.error-message {
+  background: rgba(214, 69, 69, 0.08);
+  color: var(--danger);
+  border-color: rgba(214, 69, 69, 0.30);
+}
+
+.retry-button {
+  padding: 9px 16px;
+  margin-top: 8px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: var(--primary);
+  color: #FFFDF6;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ---------- Books Grid ---------- */
 
 .book-grid {
   width: 100%;
-  flex: 1 1 auto;
-
-  min-height: 0;
   min-width: 0;
+  min-height: 0;
+
+  flex: 1 1 0;
 
   display: grid;
-
   grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-template-rows: repeat(4, minmax(0, 1fr));
 
@@ -325,14 +289,13 @@ button:disabled {
   overflow: hidden;
 }
 
-/* ---------- Book Cards ---------- */
+/* ---------- Individual Book Card ---------- */
 
 .book-card {
   position: relative;
 
   width: 100%;
   height: 100%;
-
   min-width: 0;
   min-height: 0;
 
@@ -349,8 +312,7 @@ button:disabled {
 
   border: 1px solid rgba(31, 107, 58, 0.12);
   border-left: 6px solid var(--primary);
-
-  border-radius: var(--radius-large);
+  border-radius: 18px;
 
   text-align: left;
   box-shadow: var(--shadow);
@@ -383,7 +345,6 @@ button:disabled {
   line-height: 1.45;
 
   overflow-wrap: anywhere;
-  word-break: normal;
 }
 
 .book-card p,
@@ -417,53 +378,14 @@ button:disabled {
   font-size: 18px;
 }
 
-/* ---------- Loading and Error Messages ---------- */
-
-.status-message {
-  flex: 0 0 auto;
-
-  padding: 12px;
-  margin: 8px 0;
-
-  background: var(--card);
-  color: var(--text-muted);
-
-  border: 1px solid var(--border);
-  border-radius: var(--radius-medium);
-
-  text-align: center;
-
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-.error-message {
-  background: rgba(214, 69, 69, 0.08);
-  color: var(--danger);
-
-  border-color: rgba(214, 69, 69, 0.30);
-}
-
-.retry-button {
-  padding: 9px 16px;
-  margin-top: 8px;
-
-  border: none;
-  border-radius: 9px;
-
-  background: var(--primary);
-  color: #FFFDF6;
-
-  font-size: 12px;
-  font-weight: 700;
-}
-
-/* ---------- List Screen ---------- */
+/* ---------- List and Detail Screens ---------- */
 
 #listScreen,
 #detailScreen {
+  width: 100%;
   height: 100%;
   min-height: 0;
+  min-width: 0;
 
   overflow-x: hidden;
   overflow-y: auto;
@@ -486,7 +408,7 @@ button:disabled {
   color: #FFFDF6;
 
   border: 1px solid var(--gold);
-  border-radius: var(--radius-large);
+  border-radius: 18px;
 
   text-align: center;
   box-shadow: var(--shadow);
@@ -495,20 +417,16 @@ button:disabled {
 .list-header-card h2,
 .detail-header-card h2 {
   color: #FFFDF6;
-
   font-size: 19px;
   font-weight: 800;
   line-height: 1.5;
-
   overflow-wrap: anywhere;
 }
 
 .list-header-card p,
 .detail-header-card p {
   margin-top: 5px;
-
   color: #E7EEDC;
-
   font-size: 12px;
   line-height: 1.6;
 }
@@ -526,16 +444,14 @@ button:disabled {
   margin-bottom: 12px;
 
   background: var(--card);
-
   border: 1px solid var(--border);
-  border-radius: var(--radius-medium);
+  border-radius: 14px;
 
   box-shadow: var(--shadow);
 }
 
 .search-icon {
   flex: 0 0 auto;
-
   color: var(--primary);
   font-size: 23px;
 }
@@ -554,15 +470,15 @@ button:disabled {
   font-size: 14px;
 }
 
-.search-container input:focus-visible {
-  outline: none;
-}
-
 .search-container input::placeholder {
   color: #899589;
 }
 
-/* ---------- Translation Controls ---------- */
+.search-container input:focus-visible {
+  outline: none;
+}
+
+/* ---------- Translation Selection ---------- */
 
 .list-controls {
   display: flex;
@@ -574,14 +490,12 @@ button:disabled {
   margin-bottom: 12px;
 
   background: var(--feature);
-
   border: 1px solid var(--border);
-  border-radius: var(--radius-small);
+  border-radius: 11px;
 }
 
 .list-controls label {
   color: var(--primary-dark);
-
   font-size: 12px;
   font-weight: 700;
 }
@@ -589,7 +503,6 @@ button:disabled {
 .list-controls select {
   max-width: 60%;
   min-height: 34px;
-
   padding: 5px 8px;
 
   background: var(--card);
@@ -601,7 +514,7 @@ button:disabled {
   font-size: 12px;
 }
 
-/* ---------- Hadith List Items ---------- */
+/* ---------- Hadith List ---------- */
 
 .hadith-list {
   display: flex;
@@ -622,8 +535,7 @@ button:disabled {
 
   border: 1px solid rgba(31, 107, 58, 0.12);
   border-left: 5px solid var(--primary);
-
-  border-radius: var(--radius-medium);
+  border-radius: 15px;
 
   text-align: left;
   box-shadow: var(--shadow);
@@ -634,7 +546,6 @@ button:disabled {
   margin-bottom: 6px;
 
   color: var(--primary-dark);
-
   font-size: 14px;
   font-weight: 800;
   line-height: 1.5;
@@ -643,16 +554,13 @@ button:disabled {
 .hadith-list-item p,
 .hadith-list-item .hadith-item-preview {
   color: var(--text);
-
   font-size: 13px;
   line-height: 1.8;
-
   overflow-wrap: anywhere;
 }
 
 .hadith-list-item .hadith-item-number {
   display: inline-block;
-
   padding: 4px 8px;
   margin-bottom: 7px;
 
@@ -660,16 +568,11 @@ button:disabled {
   color: #FFFDF6;
 
   border-radius: 7px;
-
   font-size: 11px;
   font-weight: 700;
 }
 
-/* ---------- Detail Screen ---------- */
-
-.detail-header-card {
-  margin-bottom: 12px;
-}
+/* ---------- Hadith Detail ---------- */
 
 .detail-header-card > p:first-child {
   margin: 0 0 5px;
@@ -679,7 +582,6 @@ button:disabled {
 
 .hadith-number {
   display: inline-block;
-
   padding: 6px 11px;
   margin-top: 10px;
 
@@ -701,8 +603,8 @@ button:disabled {
 
   border: 1px solid var(--border);
   border-left: 5px solid var(--primary);
+  border-radius: 18px;
 
-  border-radius: var(--radius-large);
   box-shadow: var(--shadow);
 }
 
@@ -713,7 +615,6 @@ button:disabled {
 
 .detail-section h3 {
   display: inline-block;
-
   padding: 6px 10px;
   margin-bottom: 10px;
 
@@ -742,10 +643,8 @@ button:disabled {
 
 .translation-text {
   color: var(--text);
-
   font-size: 14px;
   line-height: 1.9;
-
   overflow-wrap: anywhere;
 }
 
@@ -765,17 +664,15 @@ button:disabled {
   color: var(--text-muted);
   font-size: 12px;
   line-height: 1.7;
-
   overflow-wrap: anywhere;
 }
 
-/* ---------- Previous / Next ---------- */
+/* ---------- Previous and Next ---------- */
 
 .hadith-navigation {
   display: flex;
   align-items: stretch;
   gap: 10px;
-
   margin-top: 14px;
 }
 
@@ -783,7 +680,6 @@ button:disabled {
   flex: 1;
   min-width: 0;
   min-height: 43px;
-
   padding: 9px;
 
   background: var(--primary);
@@ -810,7 +706,6 @@ button:disabled {
   width: 100%;
   height: 64px;
   min-height: 0;
-
   padding: 7px 10px;
   margin: 0;
 
@@ -823,13 +718,11 @@ button:disabled {
   color: #FFFDF6;
 
   border-top: 2px solid var(--gold);
-
   text-align: center;
 }
 
 .hadith-footer p {
   color: #FFFDF6;
-
   font-size: 14px;
   font-weight: 800;
   letter-spacing: 2px;
@@ -837,24 +730,23 @@ button:disabled {
 
 .hadith-footer span {
   display: block;
-
   margin-top: 4px;
 
   color: #E7EEDC;
-
   font-size: 11px;
   letter-spacing: 0.2px;
 }
 
-/* ---------- Compact Phones ---------- */
+/* ---------- Compact Width ---------- */
 
 @media (max-width: 380px) {
   .hadith-page {
-    grid-template-rows: 60px minmax(0, 1fr) 56px;
+    grid-template-rows: 68px minmax(0, 1fr) 56px;
   }
 
   .hadith-header {
-    height: 60px;
+    height: 68px;
+    padding: 6px 8px;
   }
 
   .hadith-header .header-title h1 {
@@ -867,28 +759,6 @@ button:disabled {
 
   .hadith-content {
     padding: 7px 8px;
-  }
-
-  .welcome-card {
-    gap: 8px;
-    padding: 9px;
-    margin-bottom: 8px;
-  }
-
-  .welcome-icon {
-    width: 35px;
-    height: 35px;
-    flex-basis: 35px;
-    font-size: 19px;
-  }
-
-  .welcome-text h2 {
-    font-size: 14px;
-  }
-
-  .welcome-text p {
-    font-size: 10px;
-    line-height: 1.4;
   }
 
   .section-heading {
@@ -934,6 +804,7 @@ button:disabled {
 
   .hadith-footer {
     height: 56px;
+    padding: 5px;
   }
 
   .hadith-footer p {
@@ -949,43 +820,24 @@ button:disabled {
 
 @media (max-height: 740px) {
   .hadith-page {
-    grid-template-rows: 58px minmax(0, 1fr) 52px;
+    grid-template-rows: 64px minmax(0, 1fr) 52px;
   }
 
   .hadith-header {
-    height: 58px;
+    height: 64px;
   }
 
   .hadith-header .header-title h1 {
     font-size: 19px;
   }
 
+  .hadith-header .header-title p {
+    font-size: 11px;
+  }
+
   .hadith-content {
     padding-top: 7px;
     padding-bottom: 7px;
-  }
-
-  .welcome-card {
-    padding: 8px 10px;
-    margin-bottom: 7px;
-    gap: 8px;
-  }
-
-  .welcome-icon {
-    width: 33px;
-    height: 33px;
-    flex-basis: 33px;
-    font-size: 18px;
-  }
-
-  .welcome-text h2 {
-    font-size: 14px;
-  }
-
-  .welcome-text p {
-    margin-top: 2px;
-    font-size: 10px;
-    line-height: 1.35;
   }
 
   .section-heading {
@@ -1074,7 +926,6 @@ body.dark-mode .hadith-footer {
   background: #123D25;
 }
 
-body.dark-mode .welcome-card,
 body.dark-mode .list-header-card,
 body.dark-mode .detail-header-card {
   background: #16472B;
@@ -1195,7 +1046,7 @@ body.dark-mode .detail-divider {
   );
 }
 
-/* ---------- Reduced Motion ---------- */
+/* ---------- Accessibility ---------- */
 
 @media (prefers-reduced-motion: reduce) {
   *,
