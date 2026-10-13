@@ -67,7 +67,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 7px;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /* ================= PISTACHIO BOARDS ================= */
