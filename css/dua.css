@@ -1,7 +1,29 @@
+
 /* =========================================================
-   IBADAT - DUA
-   Complete Mobile-First CSS
+   IBADAT — DUA
+   Unified Islamic Green Theme
 ========================================================= */
+
+:root {
+    --primary: #1F6B3A;
+    --primary-dark: #0F5132;
+    --primary-deep: #0B3D26;
+
+    --bg: #F8F6F0;
+    --card: #FFFFFF;
+    --pistachio: #CFE8C8;
+
+    --text: #1E4620;
+    --text-muted: #59645B;
+
+    --gold: #D4AF37;
+    --danger: #D64545;
+
+    --border: rgba(31, 107, 58, 0.16);
+    --shadow: 0 3px 12px rgba(15, 81, 50, 0.09);
+
+    --radius: 18px;
+}
 
 * {
     box-sizing: border-box;
@@ -10,11 +32,16 @@
 html {
     margin: 0;
     padding: 0;
+    min-height: 100%;
+    scroll-behavior: smooth;
 }
 
 body {
     margin: 0;
-    padding: 0 0 125px 0;
+    padding: 0 0 170px;
+
+    min-height: 100vh;
+    min-height: 100dvh;
 
     font-family:
         system-ui,
@@ -23,10 +50,19 @@ body {
         "Segoe UI",
         sans-serif;
 
-    background: #f5f7f5;
-    color: #202520;
+    background-color: var(--bg);
+    background-image:
+        linear-gradient(
+            rgba(248, 246, 240, 0.82),
+            rgba(248, 246, 240, 0.82)
+        ),
+        url("../assets/bg_pattern.png");
 
-    min-height: 100vh;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+
+    color: var(--text);
 }
 
 button,
@@ -34,9 +70,18 @@ input {
     font: inherit;
 }
 
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+input:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+}
 
 /* =========================================================
-   MAIN
+   MAIN LAYOUT
 ========================================================= */
 
 .main {
@@ -44,73 +89,53 @@ input {
     max-width: 720px;
 
     margin: 0 auto;
-
-    padding:
-        10px
-        10px
-        20px;
+    padding: 12px 12px 24px;
 }
-
-
-/* =========================================================
-   HIDDEN
-========================================================= */
 
 .hidden {
     display: none !important;
 }
 
-
 /* =========================================================
-   STATUS / LOADING / ERROR
+   LOADING AND ERROR
 ========================================================= */
 
 .status-box {
     width: 100%;
-
+    margin-bottom: 12px;
     padding: 18px 14px;
 
-    margin-bottom: 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
 
-    border-radius: 14px;
-
-    background: #ffffff;
+    background: var(--card);
+    color: var(--text);
 
     text-align: center;
-
     font-size: 15px;
-    line-height: 1.6;
+    line-height: 1.7;
 
-    box-shadow:
-        0 2px 8px rgba(
-            0,
-            0,
-            0,
-            0.06
-        );
+    box-shadow: var(--shadow);
 }
 
 .error-box {
-    color: #a12626;
+    color: var(--danger);
+    border-color: rgba(214, 69, 69, 0.35);
 }
 
 #errorBox button {
     margin-top: 10px;
+    padding: 10px 18px;
 
-    padding:
-        9px
-        16px;
+    border: 0;
+    border-radius: 12px;
 
-    border: none;
+    background: var(--primary);
+    color: #F8F6F0;
 
-    border-radius: 9px;
-
-    background: #16834a;
-    color: #ffffff;
-
+    font-weight: 700;
     cursor: pointer;
 }
-
 
 /* =========================================================
    INTRO CARD
@@ -118,507 +143,320 @@ input {
 
 .intro-card {
     width: 100%;
+    margin-bottom: 14px;
+    padding: 18px 14px;
 
-    margin-bottom: 12px;
+    border: 1px solid var(--gold);
+    border-radius: var(--radius);
 
-    padding: 16px 14px;
-
-    border-radius: 15px;
-
-    background: #ffffff;
+    background: var(--primary);
+    color: #F8F6F0;
 
     text-align: center;
-
-    box-shadow:
-        0 2px 9px rgba(
-            0,
-            0,
-            0,
-            0.07
-        );
+    box-shadow: var(--shadow);
 }
 
 .intro-icon {
+    margin-bottom: 8px;
     font-size: 30px;
-
-    line-height: 1;
-
-    margin-bottom: 7px;
+    line-height: 1.2;
 }
 
 .intro-title {
-    font-size: 21px;
-
-    font-weight: 700;
-
-    color: #137642;
+    color: var(--gold);
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.5;
 }
 
 .intro-text {
     display: none;
 }
 
-
 /* =========================================================
    CHAPTER LIST
 ========================================================= */
 
-.chapter-list {
+.chapter-list,
+.entry-list {
     display: flex;
-
     flex-direction: column;
-
-    gap: 9px;
+    gap: 10px;
 }
 
-
-/* JS uses .chapter-item */
-
-.chapter-item {
-    display: flex;
-
-    align-items: center;
-
-    width: 100%;
-
-    min-height: 62px;
-
-    padding:
-        10px
-        14px;
-
-    border: none;
-
-    border-radius: 13px;
-
-    background: #16834a;
-
-    color: #ffffff;
-
-    cursor: pointer;
-
-    user-select: none;
-
-    text-align: left;
-
-    font-size: 15px;
-
-    font-weight: 600;
-
-    line-height: 1.45;
-
-    box-shadow:
-        0 2px 8px rgba(
-            0,
-            0,
-            0,
-            0.10
-        );
-
-    transition:
-        transform 0.12s ease,
-        opacity 0.12s ease;
-}
-
-.chapter-item:active {
-    transform: scale(0.985);
-
-    opacity: 0.9;
-}
-
-
-/* =========================================================
-   OLD CHAPTER CLASSES
-   Kept for compatibility
-========================================================= */
-
+.chapter-item,
 .chapter-card {
     display: flex;
-
     align-items: center;
 
     width: 100%;
-
     min-height: 62px;
+    padding: 12px 15px;
 
-    padding:
-        10px
-        12px;
+    border: 1px solid var(--gold);
+    border-left: 4px solid var(--primary);
+    border-radius: 16px;
 
-    border-radius: 13px;
+    background: var(--pistachio);
+    color: var(--text);
 
-    background: #16834a;
-
-    color: #ffffff;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.55;
 
     cursor: pointer;
-
     user-select: none;
+
+    box-shadow: var(--shadow);
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
+.chapter-item:active,
 .chapter-card:active {
     transform: scale(0.985);
-
-    opacity: 0.9;
 }
+
+/* Compatibility with existing chapter markup */
 
 .chapter-number {
     display: flex;
-
     align-items: center;
     justify-content: center;
 
     flex: 0 0 36px;
-
     width: 36px;
     height: 36px;
-
     margin-right: 11px;
 
-    border-radius: 10px;
+    border: 1px solid var(--gold);
+    border-radius: 11px;
 
-    background: rgba(
-        255,
-        255,
-        255,
-        0.18
-    );
+    background: var(--primary);
+    color: var(--gold);
 
     font-size: 14px;
-
-    font-weight: 700;
+    font-weight: 800;
 }
 
 .chapter-info {
-    min-width: 0;
-
     flex: 1;
+    min-width: 0;
 }
 
 .chapter-title {
     font-size: 15px;
-
-    line-height: 1.45;
-
-    font-weight: 600;
-
-    word-break: break-word;
+    line-height: 1.5;
+    font-weight: 700;
+    overflow-wrap: anywhere;
 }
 
 .chapter-arrow {
     flex: 0 0 auto;
-
     margin-left: 8px;
 
-    font-size: 26px;
-
-    line-height: 1;
-
-    opacity: 0.9;
+    color: var(--primary);
+    font-size: 25px;
 }
 
-
 /* =========================================================
-   INNER HEADER
+   INNER PAGE HEADER
 ========================================================= */
 
 .inner-header {
     display: flex;
-
     align-items: center;
+    gap: 5px;
 
     width: 100%;
+    min-height: 54px;
+    margin-bottom: 12px;
+    padding: 7px;
 
-    margin-bottom: 10px;
+    border: 1px solid var(--gold);
+    border-radius: 16px;
 
-    padding:
-        8px
-        4px;
+    background: var(--primary);
+    color: #F8F6F0;
 
-    border-radius: 12px;
-
-    background: #16834a;
-
-    color: #ffffff;
+    box-shadow: var(--shadow);
 }
 
 .inner-header button {
-    flex: 0 0 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    width: 38px;
-    height: 38px;
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
 
-    border: none;
-
-    border-radius: 9px;
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    border-radius: 12px;
 
     background: transparent;
+    color: var(--gold);
 
-    color: #ffffff;
-
-    font-size: 25px;
-
+    font-size: 27px;
     line-height: 1;
 
     cursor: pointer;
 }
 
 .inner-header span {
-    min-width: 0;
-
     flex: 1;
+    min-width: 0;
+    padding: 0 8px;
 
-    padding:
-        0
-        7px;
-
+    color: #F8F6F0;
     font-size: 16px;
-
     font-weight: 700;
+    line-height: 1.5;
 
-    line-height: 1.4;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
+    white-space: normal;
+    overflow-wrap: anywhere;
 }
-
 
 /* =========================================================
    ENTRY LIST
 ========================================================= */
 
-.entry-list {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 9px;
-}
-
-
-/* JS uses .entry-item */
-
-.entry-item {
-    display: flex;
-
-    align-items: center;
-
-    width: 100%;
-
-    min-height: 58px;
-
-    padding:
-        11px
-        14px;
-
-    border: none;
-
-    border-radius: 13px;
-
-    background: #16834a;
-
-    color: #ffffff;
-
-    box-shadow:
-        0 2px 8px rgba(
-            0,
-            0,
-            0,
-            0.10
-        );
-
-    cursor: pointer;
-
-    text-align: left;
-
-    font-size: 15px;
-
-    font-weight: 600;
-
-    line-height: 1.5;
-
-    word-break: break-word;
-
-    transition:
-        transform 0.12s ease,
-        opacity 0.12s ease;
-}
-
-.entry-item:active {
-    transform: scale(0.985);
-
-    opacity: 0.9;
-}
-
-
-/* =========================================================
-   OLD ENTRY CLASSES
-   Kept for compatibility
-========================================================= */
-
+.entry-item,
 .entry-card {
     display: flex;
-
     align-items: center;
 
     width: 100%;
-
     min-height: 58px;
+    padding: 12px 15px;
 
-    padding:
-        10px
-        12px;
+    border: 1px solid var(--gold);
+    border-left: 4px solid var(--primary);
+    border-radius: 16px;
 
-    border-radius: 13px;
+    background: var(--pistachio);
+    color: var(--text);
 
-    background: #ffffff;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.55;
 
-    box-shadow:
-        0 2px 8px rgba(
-            0,
-            0,
-            0,
-            0.06
-        );
-
+    overflow-wrap: anywhere;
     cursor: pointer;
 
-    transition:
-        transform 0.12s ease;
+    box-shadow: var(--shadow);
+
+    transition: transform 0.15s ease;
 }
 
+.entry-item:active,
 .entry-card:active {
     transform: scale(0.985);
 }
 
 .entry-number {
     display: flex;
-
     align-items: center;
     justify-content: center;
 
     flex: 0 0 38px;
-
     width: 38px;
-    height: 34px;
-
+    height: 36px;
     margin-right: 10px;
 
-    border-radius: 9px;
+    border: 1px solid var(--gold);
+    border-radius: 10px;
 
-    background: #e8f5ed;
-
-    color: #137642;
+    background: var(--primary);
+    color: var(--gold);
 
     font-size: 13px;
-
-    font-weight: 700;
+    font-weight: 800;
 }
 
 .entry-title {
+    flex: 1;
     min-width: 0;
 
-    flex: 1;
-
+    color: var(--text);
     font-size: 15px;
+    font-weight: 700;
+    line-height: 1.55;
 
-    line-height: 1.5;
-
-    font-weight: 600;
-
-    word-break: break-word;
+    overflow-wrap: anywhere;
 }
 
-
 /* =========================================================
-   DUA PAGE
+   SINGLE DUA PAGE
 ========================================================= */
 
 #duaContent {
     width: 100%;
+    min-width: 0;
 }
 
 .dua-card {
     width: 100%;
+    min-width: 0;
+    margin-bottom: 12px;
+    padding: 18px 15px;
 
-    margin-bottom: 10px;
+    border: 1px solid var(--gold);
+    border-radius: var(--radius);
 
-    padding:
-        17px
-        14px;
+    background: var(--card);
+    color: var(--text);
 
-    border-radius: 15px;
+    box-shadow: var(--shadow);
 
-    background: #ffffff;
-
-    box-shadow:
-        0 2px 9px rgba(
-            0,
-            0,
-            0,
-            0.07
-        );
+    overflow-wrap: anywhere;
 }
+
+/* Dua title, when supplied by the content */
 
 .dua-title {
     margin-bottom: 17px;
+    padding-bottom: 11px;
 
-    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
 
-    border-bottom:
-        1px solid
-        #e3e8e4;
-
-    color: #137642;
-
+    color: var(--primary);
     font-size: 19px;
-
-    font-weight: 700;
-
-    line-height: 1.5;
-
+    font-weight: 800;
+    line-height: 1.6;
     text-align: center;
 }
 
-.dua-section-label {
-    margin-top: 15px;
-
-    margin-bottom: 7px;
-
-    color: #137642;
-
-    font-size: 13px;
-
-    font-weight: 700;
-}
-
-
 /* =========================================================
-   DUA LABEL
+   FIELD LABELS
 ========================================================= */
 
-.dua-label {
-    margin-top: 12px;
+.dua-label,
+.dua-section-label {
+    margin-top: 14px;
+    margin-bottom: 7px;
 
-    margin-bottom: 6px;
-
-    color: #137642;
-
+    color: var(--primary);
     font-size: 13px;
-
-    font-weight: 700;
+    font-weight: 800;
+    line-height: 1.5;
+    letter-spacing: 0.15px;
 }
 
+.dua-card .dua-label:first-child {
+    margin-top: 0;
+}
 
 /* =========================================================
-   ARABIC
+   ARABIC TEXT
 ========================================================= */
 
 .dua-arabic {
-    margin-bottom: 12px;
+    margin-bottom: 15px;
 
     font-family:
         "Noto Naskh Arabic",
@@ -626,204 +464,144 @@ input {
         "Scheherazade New",
         serif;
 
-    font-size: 25px;
-
-    line-height: 2.05;
+    color: #A77C12;
+    font-size: 27px;
+    font-weight: 600;
+    line-height: 2.15;
 
     text-align: right;
-
     direction: rtl;
 
-    color: #151a16;
+    overflow-wrap: anywhere;
 }
 
-
 /* =========================================================
-   TRANSLITERATION
+   PRONUNCIATION
 ========================================================= */
 
 .dua-transliteration {
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 
+    color: #303B32;
     font-size: 15px;
+    line-height: 1.9;
 
-    line-height: 1.8;
-
-    color: #353b36;
+    overflow-wrap: anywhere;
 }
 
-
 /* =========================================================
-   TRANSLATION
+   MEANING
 ========================================================= */
 
 .dua-translation {
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 
+    color: #303B32;
     font-size: 15px;
+    line-height: 1.85;
 
-    line-height: 1.75;
-
-    color: #303630;
+    overflow-wrap: anywhere;
 }
-
 
 /* =========================================================
    REFERENCE
 ========================================================= */
 
 .dua-reference {
-    margin-top: 10px;
+    margin-top: 12px;
+    padding-top: 10px;
 
-    padding-top: 9px;
+    border-top: 1px solid var(--border);
 
-    border-top:
-        1px solid
-        #e5e9e6;
-
+    color: var(--text-muted);
     font-size: 12px;
+    line-height: 1.65;
 
-    line-height: 1.55;
-
-    color: #68716b;
+    overflow-wrap: anywhere;
 }
 
-
 /* =========================================================
-   BOTTOM AUDIO PLAYER
+   FIXED AUDIO PLAYER
 ========================================================= */
 
 .dua-audio-player {
     position: fixed;
-
     left: 0;
     right: 0;
-
     bottom: 0;
 
     z-index: 9999;
 
     width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
 
     padding:
-        9px
-        12px
-        calc(
-            9px +
-            env(
-                safe-area-inset-bottom
-            )
-        );
+        10px
+        14px
+        calc(10px + env(safe-area-inset-bottom));
 
-    border-radius:
-        15px
-        15px
-        0
-        0;
+    border: 1px solid var(--gold);
+    border-bottom: 0;
+    border-radius: 18px 18px 0 0;
 
-    background: #ffffff;
+    background: var(--card);
+    color: var(--text);
 
-    color: #202520;
-
-    box-shadow:
-        0 -4px 18px rgba(
-            0,
-            0,
-            0,
-            0.16
-        );
-
-    border-top:
-        1px solid
-        rgba(
-            0,
-            0,
-            0,
-            0.08
-        );
+    box-shadow: 0 -4px 18px rgba(15, 81, 50, 0.15);
 }
 
-
-/* =========================================================
-   AUDIO TITLE
-   JS uses #audioTitle
-========================================================= */
+/* Player title */
 
 #audioTitle {
     width: 100%;
+    margin: 0;
 
+    color: var(--primary);
     text-align: center;
 
     font-size: 13px;
+    font-weight: 800;
+    line-height: 1.5;
 
-    line-height: 1.4;
-
-    font-weight: 700;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
+    white-space: normal;
+    overflow-wrap: anywhere;
 }
 
-
-/* =========================================================
-   AUDIO PART
-   JS uses #audioPart
-========================================================= */
+/* Part indicator */
 
 #audioPart {
-    margin-top: 2px;
+    margin-top: 3px;
 
+    color: var(--text-muted);
     text-align: center;
 
     font-size: 11px;
-
-    line-height: 1.3;
-
-    opacity: 0.65;
+    line-height: 1.4;
 }
 
-
-/* =========================================================
-   AUDIO PROGRESS
-   JS uses #audioProgress
-========================================================= */
+/* Progress slider */
 
 #audioProgress {
     display: block;
 
     width: 100%;
+    height: 5px;
 
-    height: 4px;
-
-    margin:
-        7px
-        0
-        4px;
-
+    margin: 8px 0 5px;
     padding: 0;
 
-    accent-color: #16834a;
-
+    accent-color: var(--primary);
     cursor: pointer;
 }
 
-
-/* =========================================================
-   AUDIO TIME
-========================================================= */
+/* Audio time */
 
 #audioCurrentTime,
 #audioDuration {
+    color: var(--text-muted);
     font-size: 10px;
-
-    opacity: 0.65;
 }
-
-
-/* Put time values on same line */
 
 #audioCurrentTime {
     float: left;
@@ -833,262 +611,226 @@ input {
     float: right;
 }
 
-
-/* Clear floats before controls */
-
 .dua-audio-player::after {
     content: "";
-
     display: block;
-
     clear: both;
 }
 
-
-/* =========================================================
-   AUDIO CONTROLS
-========================================================= */
+/* Audio controls */
 
 .dua-audio-controls {
     display: flex;
-
     align-items: center;
     justify-content: center;
 
     gap: 22px;
-
     width: 100%;
-
-    margin-top: 3px;
+    margin-top: 4px;
 }
-
-
-/* =========================================================
-   AUDIO BUTTONS
-========================================================= */
 
 .dua-audio-controls button {
     display: flex;
-
     align-items: center;
     justify-content: center;
 
     width: 44px;
-    height: 38px;
-
+    height: 40px;
     padding: 0;
 
-    border: none;
-
-    border-radius: 10px;
+    border: 1px solid transparent;
+    border-radius: 12px;
 
     background: transparent;
-
-    color: #16834a;
+    color: var(--primary);
 
     font-size: 22px;
-
     line-height: 1;
 
     cursor: pointer;
-
-    -webkit-tap-highlight-color:
-        transparent;
 }
 
 .dua-audio-controls button:active {
-    transform: scale(0.92);
-
-    background:
-        rgba(
-            22,
-            131,
-            74,
-            0.08
-        );
+    transform: scale(0.93);
 }
 
-
-/* =========================================================
-   MAIN PLAY BUTTON
-========================================================= */
+/* Main play/pause button */
 
 #audioPlay {
-    width: 46px;
-    height: 42px;
+    width: 48px;
+    height: 44px;
 
+    border: 1px solid var(--gold);
     border-radius: 50%;
 
-    background: #16834a;
-
-    color: #ffffff;
+    background: var(--primary);
+    color: #F8F6F0;
 
     font-size: 21px;
 
-    box-shadow:
-        0 2px 7px rgba(
-            22,
-            131,
-            74,
-            0.25
-        );
+    box-shadow: 0 2px 7px rgba(15, 81, 50, 0.2);
 }
-
 
 /* =========================================================
    DARK MODE
 ========================================================= */
 
 body.dark-mode {
-    background: #111511;
+    --bg: #121A14;
+    --card: #1B2920;
+    --pistachio: #263B2D;
 
-    color: #eeeeee;
+    --text: #F0F2E9;
+    --text-muted: #B9C6BB;
+
+    --border: rgba(212, 175, 55, 0.25);
+    --shadow: 0 3px 12px rgba(0, 0, 0, 0.28);
+
+    background-color: var(--bg);
+
+    background-image:
+        linear-gradient(
+            rgba(18, 26, 20, 0.84),
+            rgba(18, 26, 20, 0.84)
+        ),
+        url("../assets/bg_pattern.png");
+
+    color: var(--text);
 }
 
+body.dark-mode .intro-card,
+body.dark-mode .inner-header {
+    background: var(--primary-deep);
+    color: #F8F6F0;
+    border-color: var(--gold);
+}
+
+body.dark-mode .chapter-item,
+body.dark-mode .chapter-card,
+body.dark-mode .entry-item,
+body.dark-mode .entry-card {
+    background: #263B2D;
+    color: #F0F2E9;
+    border-color: #B99A42;
+}
+
+body.dark-mode .entry-title,
+body.dark-mode .chapter-title {
+    color: #F0F2E9;
+}
+
+body.dark-mode .chapter-number,
+body.dark-mode .entry-number {
+    background: var(--primary-deep);
+    color: #E2C15B;
+    border-color: var(--gold);
+}
 
 body.dark-mode .status-box,
 body.dark-mode .intro-card,
-body.dark-mode .entry-card,
 body.dark-mode .dua-card {
-    background: #1b201c;
-
-    color: #eeeeee;
-
-    box-shadow:
-        0 2px 9px rgba(
-            0,
-            0,
-            0,
-            0.35
-        );
+    background: var(--card);
+    color: var(--text);
+    border-color: #B99A42;
 }
-
-
-/* Green chapter/entry list remains green in dark mode */
-
-body.dark-mode .chapter-item,
-body.dark-mode .entry-item {
-    background: #16834a;
-
-    color: #ffffff;
-}
-
 
 body.dark-mode .intro-title {
-    color: #73d79d;
+    color: #E2C15B;
 }
-
-
-body.dark-mode .entry-number {
-    background: #26372c;
-
-    color: #73d79d;
-}
-
 
 body.dark-mode .dua-title,
-body.dark-mode .dua-section-label,
-body.dark-mode .dua-label {
-    color: #73d79d;
+body.dark-mode .dua-label,
+body.dark-mode .dua-section-label {
+    color: #8ED0A0;
 }
-
 
 body.dark-mode .dua-arabic {
-    color: #ffffff;
+    color: #E2C15B;
 }
-
 
 body.dark-mode .dua-transliteration,
 body.dark-mode .dua-translation {
-    color: #e1e6e2;
+    color: #F0F2E9;
 }
-
 
 body.dark-mode .dua-reference {
-    color: #aeb8b1;
-
-    border-top-color:
-        #343c36;
+    color: #C5CEC6;
+    border-top-color: #465348;
 }
-
 
 body.dark-mode .dua-title {
-    border-bottom-color:
-        #343c36;
+    border-bottom-color: #465348;
 }
-
-
-/* =========================================================
-   DARK AUDIO PLAYER
-========================================================= */
 
 body.dark-mode .dua-audio-player {
-    background: #1b201c;
-
-    color: #eeeeee;
-
-    border-top-color:
-        rgba(
-            255,
-            255,
-            255,
-            0.08
-        );
-
-    box-shadow:
-        0 -4px 20px rgba(
-            0,
-            0,
-            0,
-            0.55
-        );
+    background: #1B2920;
+    color: #F0F2E9;
+    border-color: #B99A42;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
 }
 
-
-body.dark-mode
-.dua-audio-controls button {
-    color: #73d79d;
+body.dark-mode #audioTitle {
+    color: #8ED0A0;
 }
 
-
-body.dark-mode
-#audioPlay {
-    background: #16834a;
-
-    color: #ffffff;
+body.dark-mode #audioPart,
+body.dark-mode #audioCurrentTime,
+body.dark-mode #audioDuration {
+    color: #B9C6BB;
 }
 
+body.dark-mode .dua-audio-controls button {
+    color: #8ED0A0;
+}
+
+body.dark-mode #audioPlay {
+    background: var(--primary);
+    color: #FFFFFF;
+    border-color: var(--gold);
+}
+
+body.dark-mode #audioProgress {
+    accent-color: #8ED0A0;
+}
+
+body.dark-mode #errorBox {
+    color: #FF8888;
+}
 
 /* =========================================================
-   SMALL DEVICES
+   SMALL SCREENS
 ========================================================= */
 
-@media (
-    max-width: 360px
-) {
-
+@media (max-width: 360px) {
     .main {
-        padding:
-            8px
-            8px
-            20px;
+        padding: 9px 8px 20px;
+    }
+
+    .intro-card {
+        padding: 15px 11px;
+    }
+
+    .chapter-item,
+    .chapter-card,
+    .entry-item,
+    .entry-card {
+        padding: 11px 12px;
+        font-size: 14px;
     }
 
     .dua-card {
-        padding:
-            15px
-            12px;
+        padding: 15px 12px;
     }
 
     .dua-arabic {
-        font-size: 23px;
-
-        line-height: 1.95;
+        font-size: 24px;
+        line-height: 2.05;
     }
 
     .dua-transliteration,
     .dua-translation {
         font-size: 14px;
+        line-height: 1.85;
     }
 
     .dua-audio-controls {
@@ -1096,27 +838,21 @@ body.dark-mode
     }
 
     .dua-audio-player {
-        padding-left: 9px;
-        padding-right: 9px;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 }
 
-
 /* =========================================================
-   REDUCE MOTION
+   ACCESSIBILITY
 ========================================================= */
 
-@media (
-    prefers-reduced-motion: reduce
-) {
-
+@media (prefers-reduced-motion: reduce) {
     *,
     *::before,
     *::after {
         scroll-behavior: auto !important;
-
         transition: none !important;
-
         animation: none !important;
     }
 }
