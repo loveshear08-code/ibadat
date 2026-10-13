@@ -399,7 +399,10 @@ button:disabled {
   display: none;
 }
 
-.list-header-card,
+.list-header-card {
+  display: none !important;
+}
+
 .detail-header-card {
   padding: 16px 13px;
   margin-bottom: 12px;
@@ -478,41 +481,7 @@ button:disabled {
   outline: none;
 }
 
-/* ---------- Translation Selection ---------- */
 
-.list-controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-
-  padding: 10px 12px;
-  margin-bottom: 12px;
-
-  background: var(--feature);
-  border: 1px solid var(--border);
-  border-radius: 11px;
-}
-
-.list-controls label {
-  color: var(--primary-dark);
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.list-controls select {
-  max-width: 60%;
-  min-height: 34px;
-  padding: 5px 8px;
-
-  background: var(--card);
-  color: var(--text);
-
-  border: 1px solid rgba(31, 107, 58, 0.30);
-  border-radius: 8px;
-
-  font-size: 12px;
-}
 
 /* ---------- Hadith List ---------- */
 
@@ -741,11 +710,11 @@ button:disabled {
 
 @media (max-width: 380px) {
   .hadith-page {
-    grid-template-rows: 68px minmax(0, 1fr) 56px;
+    grid-template-rows: 78px minmax(0, 1fr) 56px;
   }
 
   .hadith-header {
-    height: 68px;
+    height: 78px;
     padding: 6px 8px;
   }
 
