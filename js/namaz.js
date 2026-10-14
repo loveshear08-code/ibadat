@@ -11,7 +11,7 @@
   const ASSET_PATH = "../assets/";
 
   /* =========================================
-     APP SETTINGS & LANGUAGE
+     APP SETTINGS
      ========================================= */
 
   function getAppSettings() {
@@ -36,6 +36,7 @@
 
   /* =========================================
      ALL 14 LEARNING TOPICS
+     Existing IDs, icons and order preserved
      ========================================= */
 
   const topics = [
@@ -167,35 +168,64 @@
     }
   ];
 
- /* =========================================
-   INTRODUCTION TEXT
-   ========================================= */
+  /* =========================================
+     INTRODUCTION
+     User-approved wording in all 3 languages
+     ========================================= */
 
-const introduction = {
-  bn: {
-    heading: "কী ও কেন ?",
-    paragraph1:
-      "নামাজ ইসলামের অন্যতম প্রধান ইবাদত। আল্লাহর স্মরণ, হৃদয়ের গভীর প্রশান্তি ও আল্লাহর নৈকট্য লাভের মাধ্যম।",
-    paragraph2: ""
-  },
+  const introduction = {
+    bn: {
+      heading: "কী ও কেন?",
+      paragraph1:
+        "নামাজ ইসলামের অন্যতম প্রধান ইবাদত, যা আল্লাহর স্মরণে হৃদয়কে প্রশান্ত করে। এটি মুমিনের জীবনে শৃঙ্খলা আনে এবং সৃষ্টিকর্তার নৈকট্য লাভের পথ সুগম করে।"
+    },
 
-  en: {
-    heading: "What & Why?",
-    paragraph1:
-      "Salah is one of the most important acts of worship in Islam. It is a remembrance of Allah, a source of deep peace, and a means of attaining closeness to Him.",
-    paragraph2: ""
-  },
+    en: {
+      heading: "What & Why?",
+      paragraph1:
+        "Salah is a central act of worship in Islam. It brings the heart peace through remembrance of Allah, builds discipline, and helps believers grow closer to their Creator."
+    },
 
-  hi: {
-    heading: "क्या और क्यों?",
-    paragraph1:
-      "नमाज़ इस्लाम की प्रमुख इबादतों में से एक है। यह अल्लाह की याद, दिल का सुकून और उसकी निकटता पाने का माध्यम है।",
-    paragraph2: ""
-  }
-}; 
+    hi: {
+      heading: "क्या और क्यों?",
+      paragraph1:
+        "नमाज़ इस्लाम की प्रमुख इबादतों में से एक है। यह अल्लाह की याद से दिल को सुकून देती है, जीवन में अनुशासन लाती है और अपने रब के करीब होने का माध्यम बनती है।"
+    }
+  };
 
   /* =========================================
-     HELPER FUNCTIONS
+     FIVE DAILY PRAYERS & RAKATS
+     Displayed in the selected language
+     ========================================= */
+
+  const prayerRakat = {
+    bn: [
+      "ফজর — ২ সুন্নত + ২ ফরজ",
+      "যোহর — ৪ সুন্নত + ৪ ফরজ + ২ সুন্নত + ২ নফল",
+      "আসর — ৪ সুন্নত + ৪ ফরজ",
+      "মাগরিব — ৩ ফরজ + ২ সুন্নত + ২ নফল",
+      "এশা — ৪ সুন্নত + ৪ ফরজ + ২ সুন্নত + ২ নফল + ৩ বিতর + ২ নফল"
+    ],
+
+    en: [
+      "Fajr — 2 Sunnah + 2 Fard",
+      "Dhuhr — 4 Sunnah + 4 Fard + 2 Sunnah + 2 Nafl",
+      "Asr — 4 Sunnah + 4 Fard",
+      "Maghrib — 3 Fard + 2 Sunnah + 2 Nafl",
+      "Isha — 4 Sunnah + 4 Fard + 2 Sunnah + 2 Nafl + 3 Witr + 2 Nafl"
+    ],
+
+    hi: [
+      "फ़ज्र — 2 सुन्नत + 2 फ़र्ज़",
+      "ज़ुहर — 4 सुन्नत + 4 फ़र्ज़ + 2 सुन्नत + 2 नफ़्ल",
+      "असर — 4 सुन्नत + 4 फ़र्ज़",
+      "मग़रिब — 3 फ़र्ज़ + 2 सुन्नत + 2 नफ़्ल",
+      "इशा — 4 सुन्नत + 4 फ़र्ज़ + 2 सुन्नत + 2 नफ़्ल + 3 वितर + 2 नफ़्ल"
+    ]
+  };
+
+  /* =========================================
+     HELPERS
      ========================================= */
 
   function getText(textObject) {
@@ -216,45 +246,61 @@ const introduction = {
   }
 
   /* =========================================
-     BUILD INTRODUCTION
+     BUILD INTRODUCTION AND PRAYER LIST
      ========================================= */
 
   function buildIntroduction() {
     const heading = document.getElementById("intro-title");
-    const paragraph1 = document.getElementById(
+
+    const paragraph = document.getElementById(
       "intro-paragraph-1"
     );
-    const paragraph2 = document.getElementById(
-      "intro-paragraph-2"
+
+    const list = document.getElementById(
+      "prayer-rakat-list"
     );
 
     const intro =
       introduction[currentLanguage] ||
       introduction.bn;
 
+    const prayerItems =
+      prayerRakat[currentLanguage] ||
+      prayerRakat.bn;
+
     if (heading) {
       heading.textContent = intro.heading;
     }
 
-    if (paragraph1) {
-      paragraph1.textContent = intro.paragraph1;
+    if (paragraph) {
+      paragraph.textContent = intro.paragraph1;
     }
 
-    if (paragraph2) {
-      paragraph2.textContent = intro.paragraph2;
+    /*
+     * Build the list only if the matching HTML
+     * container exists. This avoids breaking
+     * the rest of the page if HTML is not updated.
+     */
+
+    if (list) {
+      const fragment = document.createDocumentFragment();
+
+      prayerItems.forEach((item) => {
+        const row = document.createElement("p");
+        row.textContent = item;
+        fragment.appendChild(row);
+      });
+
+      list.replaceChildren(fragment);
     }
   }
 
   /* =========================================
      OPEN SELECTED TOPIC
+     Existing detail-page URL preserved
      ========================================= */
 
   function openTopic(topic) {
-    /*
-     * Uses the existing shared lesson page.
-     * Topic IDs are passed through the URL.
-     */
-
     const destination = new URL(
       "namaz-detail.html",
       window.location.href
@@ -274,7 +320,8 @@ const introduction = {
   }
 
   /* =========================================
-     BUILD ALL 14 OPTION CARDS
+     BUILD ALL 14 TOPIC CARDS
+     Existing order, IDs and assets preserved
      ========================================= */
 
   function buildLearningGrid() {
@@ -337,7 +384,7 @@ const introduction = {
 
       button.append(icon, label);
 
-      /* Open the lesson */
+      /* Open the existing lesson page */
 
       button.addEventListener("click", () => {
         openTopic(topic);
@@ -366,14 +413,14 @@ const introduction = {
   }
 
   /*
-   * Other app scripts can call:
-   * window.refreshNamazLanguage()
+   * Preserve the existing public refresh function.
    */
 
-  window.refreshNamazLanguage =
-    refreshNamazLanguage;
+  window.refreshNamazLanguage = refreshNamazLanguage;
 
-  /* Update when settings change in another tab */
+  /*
+   * Refresh when settings change in another tab.
+   */
 
   window.addEventListener("storage", (event) => {
     if (event.key === SETTINGS_KEY) {
@@ -382,7 +429,7 @@ const introduction = {
   });
 
   /* =========================================
-     INITIALIZE PAGE
+     INITIALIZE
      ========================================= */
 
   function initializeNamazPage() {
