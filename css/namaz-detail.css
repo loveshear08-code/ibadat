@@ -1,197 +1,483 @@
 /* =========================================
    IBADAT — NAMAZ DETAIL PAGE
-   Matching the existing Namaz page theme
+   Complete responsive stylesheet
+   Bengali / English / Hindi
+   Light theme + Dark theme
+   Background: bg_pattern.png
+   ========================================= */
+
+
+/* =========================================
+   1. THEME COLORS
    ========================================= */
 
 :root {
   --primary: #0F5132;
   --primary-dark: #0B3D26;
+  --primary-light: #1C6845;
 
   --bg: #F8F6EE;
-  --card: #FFFFFF;
+  --card: rgba(255, 255, 255, 0.94);
   --feature: #BFE4B7;
 
   --text: #1E4620;
+  --text-secondary: #365B3A;
+
   --gold: #D4AF37;
   --danger: #C62828;
 
-  --border: rgba(15, 81, 50, 0.15);
-  --soft-shadow: 0 4px 14px rgba(15, 81, 50, 0.10);
+  --border: rgba(15, 81, 50, 0.16);
+  --card-shadow: 0 4px 16px rgba(15, 81, 50, 0.10);
+
+  --page-padding: 12px;
+  --card-radius: 20px;
+  --card-padding: 19px;
+
+  --body-font:
+    Arial,
+    "Noto Sans Bengali",
+    "Noto Sans Devanagari",
+    sans-serif;
 }
 
-/* Basic reset */
+
+/* =========================================
+   2. RESET
+   ========================================= */
+
 * {
   box-sizing: border-box;
 }
 
 html {
   min-height: 100%;
+  width: 100%;
+
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
+  width: 100%;
   min-height: 100vh;
+  min-height: 100dvh;
+
   margin: 0;
+  padding: 0;
 
-  font-family: Arial, "Noto Sans Bengali", sans-serif;
   color: var(--text);
-  line-height: 1.75;
+  background-color: var(--bg);
 
-  /* SAME PATTERN AND LIGHT OVERLAY AS THE EXISTING PAGE */
-  background:
+  font-family: var(--body-font);
+  font-size: 16px;
+  line-height: 1.8;
+
+  overflow-x: hidden;
+
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+
+  /* Same patterned background as the existing Namaz page */
+  background-image:
     linear-gradient(
       rgba(255, 251, 244, 0.70),
       rgba(255, 251, 244, 0.70)
     ),
-    url("../assets/bg_pattern.png") center center / cover fixed;
+    url("../assets/bg_pattern.png");
 
-  background-color: var(--bg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
-/* Top header */
-.detail-header {
-  position: sticky;
-  top: 0;
-  z-index: 20;
 
-  width: 100%;
-  min-height: 50px;
-  padding: 6px 12px;
+/* =========================================
+   3. MAIN PAGE
+   No header and no previous/next buttons
+   ========================================= */
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-
-  background: var(--primary);
-  color: #FFFFFF;
-
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.13);
-}
-
-.back-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-
-  min-height: 36px;
-  padding: 5px 10px;
-
-  border: 1px solid rgba(255, 255, 255, 0.32);
-  border-radius: 10px;
-
-  background: transparent;
-  color: #FFFFFF;
-
-  font: inherit;
-  font-size: 14px;
-  font-weight: 700;
-
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.back-arrow {
-  font-size: 22px;
-  line-height: 1;
-}
-
-.brand-name {
-  color: #FFFFFF;
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: 1.2px;
-}
-
-/* Main page layout */
 .detail-page {
+  display: block;
+
   width: 100%;
   max-width: 850px;
-  min-height: calc(100vh - 50px);
+
+  min-height: 100vh;
+  min-height: 100dvh;
 
   margin: 0 auto;
-  padding: 12px 12px 24px;
+  padding:
+    var(--page-padding)
+    var(--page-padding)
+    28px;
 }
 
-/* Main lesson board */
+
+/* =========================================
+   4. LESSON BOARD
+   ========================================= */
+
 .lesson-card {
+  display: block;
+
   width: 100%;
   min-width: 0;
 
-  padding: 19px 17px;
+  margin: 0 auto;
+  padding: var(--card-padding);
 
-  background: rgba(255, 255, 255, 0.94);
+  color: var(--text);
+  background: var(--card);
+
   border: 1px solid var(--border);
-  border-radius: 20px;
+  border-radius: var(--card-radius);
 
-  box-shadow: var(--soft-shadow);
+  box-shadow: var(--card-shadow);
+
   overflow-wrap: anywhere;
+  word-wrap: break-word;
 }
 
-/* Topic number */
+
+/* =========================================
+   5. TOPIC NUMBER BADGE
+   Example: নামাজ শিক্ষা · 1/14
+   ========================================= */
+
 .lesson-topline {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+
+  width: 100%;
+  min-width: 0;
+
+  margin: 0 0 12px;
 }
 
 .lesson-badge {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
 
-  min-height: 29px;
-  padding: 3px 11px;
+  max-width: 100%;
+  min-height: 32px;
 
-  background: var(--feature);
+  padding: 5px 13px;
+
   color: var(--primary-dark);
+  background: var(--feature);
 
-  border: 1px solid rgba(15, 81, 50, 0.10);
-  border-radius: 20px;
+  border: 1px solid rgba(15, 81, 50, 0.12);
+  border-radius: 24px;
 
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 800;
   line-height: 1.5;
-}
-
-/* Lesson heading */
-.lesson-card h1 {
-  margin: 12px 0 9px;
-
-  color: var(--primary);
-  font-size: clamp(23px, 5.8vw, 32px);
-  font-weight: 800;
-  line-height: 1.45;
 
   overflow-wrap: anywhere;
 }
 
-/* Golden separator */
-.gold-divider {
-  width: 100%;
-  height: 3px;
 
-  margin: 12px 0 17px;
+/* =========================================
+   6. MAIN TOPIC TITLE
+   ========================================= */
+
+.lesson-card h1 {
+  display: block;
+
+  width: 100%;
+  min-width: 0;
+
+  margin: 10px 0 12px;
+  padding: 0;
+
+  color: var(--primary);
+
+  font-family: var(--body-font);
+  font-size: clamp(25px, 5.8vw, 33px);
+  font-weight: 800;
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+
+/* =========================================
+   7. GOLD DIVIDER
+   ========================================= */
+
+.gold-divider {
+  display: block;
+
+  width: 100%;
+  height: 4px;
+
+  margin: 14px 0 20px;
 
   background: var(--gold);
-  border-radius: 4px;
+  border-radius: 10px;
 }
 
-/* Short introduction */
+
+/* =========================================
+   8. TOPIC INTRODUCTION
+   ========================================= */
+
 .lesson-intro {
-  margin: 0 0 17px;
+  display: block;
+
+  width: 100%;
+  min-width: 0;
+
+  margin: 0 0 21px;
+  padding: 0;
+
   color: var(--text);
+
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.95;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================
+   9. MAIN LEARNING CONTENT
+   Long content scrolls naturally
+   ========================================= */
+
+.lesson-content {
+  display: block;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+
+  margin: 0;
+  padding: 0;
+
+  color: var(--text);
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.95;
+
+  overflow-wrap: anywhere;
+  word-wrap: break-word;
+}
+
+
+/* =========================================
+   10. SECTION HEADINGS
+   Example:
+   পাক-পবিত্রতা কেন জরুরি
+   ========================================= */
+
+.lesson-content h2 {
+  display: block;
+
+  width: 100%;
+  min-width: 0;
+
+  margin: 27px 0 10px;
+  padding: 1px 0 1px 12px;
+
+  color: var(--primary);
+
+  border-left: 5px solid var(--gold);
+  border-radius: 1px;
+
+  font-family: var(--body-font);
+  font-size: clamp(19px, 4.8vw, 23px);
+  font-weight: 800;
+  line-height: 1.65;
+
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* No unnecessary gap before the first section */
+.lesson-content h2:first-child {
+  margin-top: 0;
+}
+
+
+/* =========================================
+   11. SUBSECTION HEADINGS
+   ========================================= */
+
+.lesson-content h3 {
+  display: block;
+
+  width: 100%;
+  min-width: 0;
+
+  margin: 21px 0 8px;
+  padding: 0;
+
+  color: var(--primary-dark);
+
+  font-family: var(--body-font);
+  font-size: clamp(17px, 4.3vw, 20px);
+  font-weight: 800;
+  line-height: 1.7;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================
+   12. PARAGRAPHS
+   ========================================= */
+
+.lesson-content p {
+  display: block;
+
+  width: 100%;
+  min-width: 0;
+
+  margin: 8px 0 17px;
+  padding: 0;
+
+  color: var(--text);
+
+  font-size: inherit;
+  line-height: inherit;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================
+   13. LISTS
+   For step-by-step learning content
+   ========================================= */
+
+.lesson-content ul,
+.lesson-content ol {
+  width: 100%;
+  min-width: 0;
+
+  margin: 10px 0 22px;
+  padding-left: 25px;
+
+  color: var(--text);
+
+  line-height: 1.95;
+}
+
+.lesson-content ul {
+  list-style-type: disc;
+}
+
+.lesson-content ol {
+  list-style-type: decimal;
+}
+
+.lesson-content li {
+  margin: 0 0 11px;
+  padding-left: 3px;
+
+  line-height: 1.9;
+}
+
+.lesson-content li:last-child {
+  margin-bottom: 0;
+}
+
+.lesson-content li::marker {
+  color: var(--primary);
+  font-weight: 800;
+}
+
+
+/* =========================================
+   14. IMPORTANT / BOLD TEXT
+   ========================================= */
+
+.lesson-content strong,
+.lesson-content b {
+  color: var(--primary-dark);
+  font-weight: 800;
+}
+
+
+/* =========================================
+   15. ARABIC TEXT
+   For duas, takbir and prayer recitations
+   ========================================= */
+
+.lesson-content .arabic {
+  display: block;
+
+  width: 100%;
+  min-width: 0;
+
+  margin: 14px 0 17px;
+  padding: 14px 12px;
+
+  color: #9A7410;
+  background: rgba(191, 228, 183, 0.32);
+
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  border-radius: 12px;
+
+  direction: rtl;
+  text-align: right;
+
+  font-family:
+    "Noto Naskh Arabic",
+    "Amiri",
+    serif;
+
+  font-size: clamp(25px, 6.2vw, 34px);
+  font-weight: 500;
+  line-height: 2.1;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================
+   16. TRANSLITERATION
+   ========================================= */
+
+.lesson-content .transliteration {
+  display: block;
+
+  margin: 8px 0 13px;
+  padding: 0;
+
+  color: var(--primary-dark);
 
   font-size: 15px;
-  font-weight: 600;
-  line-height: 1.85;
+  font-style: italic;
+  line-height: 1.9;
 }
 
-/* Lesson content */
-.lesson-content {
+
+/* =========================================
+   17. TRANSLATION / MEANING
+   ========================================= */
+
+.lesson-content .meaning {
+  display: block;
+
+  width: 100%;
   min-width: 0;
+
+  margin: 10px 0 18px;
+  padding: 12px 14px;
+
   color: var(--text);
+  background: rgba(191, 228, 183, 0.28);
+
+  border-radius: 11px;
 
   font-size: 15px;
   line-height: 1.9;
@@ -199,202 +485,320 @@ body {
   overflow-wrap: anywhere;
 }
 
-.lesson-content h2 {
-  margin: 24px 0 8px;
-  padding-left: 10px;
 
-  border-left: 4px solid var(--gold);
+/* =========================================
+   18. NUMBERED STEPS
+   Optional class for lesson instructions
+   ========================================= */
 
-  color: var(--primary);
-  font-size: 19px;
-  font-weight: 800;
-  line-height: 1.55;
-}
+.lesson-content .lesson-step {
+  display: block;
 
-.lesson-content h2:first-child {
-  margin-top: 0;
-}
-
-.lesson-content h3 {
-  margin: 17px 0 6px;
-  color: var(--primary-dark);
-  font-size: 17px;
-  line-height: 1.6;
-}
-
-.lesson-content p {
-  margin: 7px 0 13px;
-}
-
-.lesson-content ul,
-.lesson-content ol {
-  padding-left: 23px;
-  margin: 8px 0 16px;
-}
-
-.lesson-content li {
-  margin-bottom: 9px;
-  padding-left: 2px;
-}
-
-.lesson-content strong {
-  color: var(--primary-dark);
-  font-weight: 800;
-}
-
-/* Arabic text when included in a lesson */
-.lesson-content .arabic {
-  margin: 12px 0;
-  padding: 13px 10px;
-
-  background: rgba(191, 228, 183, 0.32);
-  border-radius: 12px;
-
-  color: #9A7410;
-  direction: rtl;
-  text-align: right;
-
-  font-family: "Noto Naskh Arabic", "Amiri", serif;
-  font-size: clamp(24px, 6vw, 31px);
-  line-height: 2;
-}
-
-/* Transliteration */
-.lesson-content .transliteration {
-  color: var(--primary-dark);
-  font-style: italic;
-}
-
-/* Meaning */
-.lesson-content .meaning {
-  padding: 10px 12px;
-
-  background: rgba(191, 228, 183, 0.28);
-  border-radius: 10px;
-}
-
-/* Important note */
-.lesson-note {
-  margin-top: 23px;
-  padding: 12px 13px;
-
-  background: rgba(191, 228, 183, 0.55);
-  border-left: 4px solid var(--gold);
-  border-radius: 10px;
+  margin: 15px 0;
+  padding: 13px 14px;
 
   color: var(--text);
-  font-size: 13px;
-  line-height: 1.8;
+  background: rgba(191, 228, 183, 0.22);
+
+  border-left: 4px solid var(--gold);
+  border-radius: 10px;
+
+  line-height: 1.9;
 }
 
-/* Previous and next topic buttons */
-.lesson-navigation {
-  display: flex;
-  align-items: stretch;
-  gap: 10px;
 
-  margin-top: 13px;
+/* =========================================
+   19. TABLES
+   For rakats or comparison information
+   ========================================= */
+
+.lesson-content .table-wrapper {
+  display: block;
+
+  width: 100%;
+  max-width: 100%;
+
+  margin: 15px 0 22px;
+
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  border: 1px solid var(--border);
+  border-radius: 10px;
 }
 
-.lesson-navigation button {
-  flex: 1;
-  min-width: 0;
-  min-height: 44px;
+.lesson-content table {
+  width: 100%;
+  min-width: 300px;
 
-  padding: 10px 8px;
+  border-collapse: collapse;
 
-  background: var(--primary);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.65);
+
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.lesson-content th,
+.lesson-content td {
+  padding: 10px 11px;
+
+  border-bottom: 1px solid var(--border);
+
+  text-align: left;
+  vertical-align: top;
+}
+
+.lesson-content th {
   color: #FFFFFF;
+  background: var(--primary);
+
+  font-weight: 800;
+}
+
+.lesson-content tr:last-child td {
+  border-bottom: 0;
+}
+
+
+/* =========================================
+   20. LINKS INSIDE LESSONS
+   ========================================= */
+
+.lesson-content a {
+  color: var(--primary);
+  font-weight: 700;
+
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+
+  overflow-wrap: anywhere;
+}
+
+.lesson-content a:active {
+  color: var(--primary-dark);
+}
+
+
+/* =========================================
+   21. IMAGES INSIDE LEARNING CONTENT
+   ========================================= */
+
+.lesson-content img {
+  display: block;
+
+  max-width: 100%;
+  height: auto;
+
+  margin: 15px auto;
+
+  border-radius: 12px;
+}
+
+
+/* =========================================
+   22. HORIZONTAL RULES
+   ========================================= */
+
+.lesson-content hr {
+  height: 2px;
+
+  margin: 22px 0;
 
   border: 0;
-  border-radius: 12px;
+  border-radius: 2px;
 
-  font: inherit;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1.5;
-
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
+  background: rgba(212, 175, 55, 0.65);
 }
 
-.lesson-navigation button:active {
-  background: var(--primary-dark);
-  transform: scale(0.985);
+
+/* =========================================
+   23. SELECTION
+   ========================================= */
+
+::selection {
+  color: #FFFFFF;
+  background: var(--primary);
 }
 
-.lesson-navigation button:disabled {
-  opacity: 0.42;
-  cursor: not-allowed;
-  transform: none;
-}
 
-/* Keyboard accessibility */
-button:focus-visible {
-  outline: 3px solid var(--gold);
-  outline-offset: 3px;
-}
+/* =========================================
+   24. DARK THEME
+   Reads body.dark-mode from app settings
+   ========================================= */
 
-/* Dark theme */
 body.dark-mode {
   --bg: #121212;
-  --card: #1E2A1F;
+
+  --card: rgba(30, 42, 31, 0.96);
   --feature: #263B29;
 
   --text: #E6F0E6;
-  --border: rgba(191, 228, 183, 0.16);
+  --text-secondary: #C6D8C6;
 
-  background:
+  --border: rgba(191, 228, 183, 0.16);
+  --card-shadow: 0 4px 18px rgba(0, 0, 0, 0.24);
+
+  color: var(--text);
+  background-color: #121212;
+
+  background-image:
     linear-gradient(
       rgba(18, 18, 18, 0.80),
       rgba(18, 18, 18, 0.80)
     ),
-    url("../assets/bg_pattern.png") center center / cover fixed;
+    url("../assets/bg_pattern.png");
 
-  background-color: #121212;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
+
+
+/* Dark lesson board */
 
 body.dark-mode .lesson-card {
-  background: rgba(30, 42, 31, 0.96);
+  color: var(--text);
+  background: var(--card);
+  border-color: var(--border);
+  box-shadow: var(--card-shadow);
 }
 
+
+/* Dark headings */
+
 body.dark-mode .lesson-card h1,
-body.dark-mode .lesson-content h2,
-body.dark-mode .lesson-content h3,
-body.dark-mode .lesson-content strong {
+body.dark-mode .lesson-content h2 {
   color: #BFE4B7;
 }
 
+body.dark-mode .lesson-content h3 {
+  color: #D1E9C9;
+}
+
+
+/* Dark paragraphs and introduction */
+
+body.dark-mode .lesson-intro,
+body.dark-mode .lesson-content,
+body.dark-mode .lesson-content p,
+body.dark-mode .lesson-content li {
+  color: var(--text);
+}
+
+
+/* Dark badge */
+
 body.dark-mode .lesson-badge {
   color: #E6F0E6;
+  background: #263B29;
+  border-color: rgba(191, 228, 183, 0.20);
 }
+
+
+/* Dark bold text */
+
+body.dark-mode .lesson-content strong,
+body.dark-mode .lesson-content b {
+  color: #C8E8BD;
+}
+
+
+/* Dark Arabic text */
 
 body.dark-mode .lesson-content .arabic {
-  background: rgba(38, 59, 41, 0.85);
   color: #E5C76B;
-}
-
-body.dark-mode .lesson-content .meaning {
-  background: rgba(38, 59, 41, 0.70);
-}
-
-body.dark-mode .lesson-note {
   background: rgba(38, 59, 41, 0.85);
-  color: #E6F0E6;
+  border-color: rgba(212, 175, 55, 0.24);
 }
+
+
+/* Dark transliteration */
 
 body.dark-mode .lesson-content .transliteration {
   color: #BFE4B7;
 }
 
-/* Small phones */
-@media (max-width: 380px) {
-  .detail-header {
-    padding: 5px 8px;
+
+/* Dark meaning and steps */
+
+body.dark-mode .lesson-content .meaning,
+body.dark-mode .lesson-content .lesson-step {
+  color: var(--text);
+  background: rgba(38, 59, 41, 0.76);
+}
+
+
+/* Dark tables */
+
+body.dark-mode .lesson-content table {
+  color: var(--text);
+  background: rgba(30, 42, 31, 0.92);
+}
+
+body.dark-mode .lesson-content th {
+  color: #FFFFFF;
+  background: #0F5132;
+}
+
+body.dark-mode .lesson-content td {
+  border-color: var(--border);
+}
+
+
+/* Dark links */
+
+body.dark-mode .lesson-content a {
+  color: #BFE4B7;
+}
+
+
+/* Dark selection */
+
+body.dark-mode ::selection {
+  color: #121212;
+  background: #BFE4B7;
+}
+
+
+/* =========================================
+   25. TABLET AND DESKTOP
+   ========================================= */
+
+@media (min-width: 600px) {
+  .detail-page {
+    padding: 22px 20px 35px;
   }
 
+  .lesson-card {
+    padding: 25px 26px;
+    border-radius: 22px;
+  }
+
+  .lesson-content {
+    font-size: 17px;
+    line-height: 1.95;
+  }
+
+  .lesson-intro {
+    font-size: 18px;
+  }
+
+  .lesson-content h2 {
+    margin-top: 30px;
+  }
+}
+
+
+/* =========================================
+   26. SMALL PHONES
+   ========================================= */
+
+@media (max-width: 380px) {
   .detail-page {
-    padding: 8px 8px 18px;
+    padding: 8px 8px 20px;
   }
 
   .lesson-card {
@@ -402,10 +806,75 @@ body.dark-mode .lesson-content .transliteration {
     border-radius: 16px;
   }
 
-  .lesson-card h1 {
-    font-size: 23px;
+  .lesson-topline {
+    margin-bottom: 9px;
   }
 
+  .lesson-badge {
+    min-height: 29px;
+    padding: 4px 10px;
+    font-size: 12px;
+  }
+
+  .lesson-card h1 {
+    margin-top: 8px;
+    font-size: 23px;
+    line-height: 1.5;
+  }
+
+  .gold-divider {
+    height: 3px;
+    margin: 11px 0 16px;
+  }
+
+  .lesson-intro {
+    margin-bottom: 17px;
+    font-size: 15px;
+    line-height: 1.9;
+  }
+
+  .lesson-content {
+    font-size: 14px;
+    line-height: 1.9;
+  }
+
+  .lesson-content h2 {
+    margin-top: 23px;
+    padding-left: 9px;
+    border-left-width: 4px;
+    font-size: 18px;
+  }
+
+  .lesson-content h3 {
+    font-size: 16px;
+  }
+
+  .lesson-content .arabic {
+    padding: 11px 9px;
+    font-size: 25px;
+  }
+}
+
+
+/* =========================================
+   27. VERY NARROW SCREENS
+   ========================================= */
+
+@media (max-width: 320px) {
+  .detail-page {
+    padding-right: 6px;
+    padding-left: 6px;
+  }
+
+  .lesson-card {
+    padding: 12px 10px;
+  }
+
+  .lesson-card h1 {
+    font-size: 21px;
+  }
+
+  .lesson-intro,
   .lesson-content {
     font-size: 14px;
   }
@@ -413,18 +882,30 @@ body.dark-mode .lesson-content .transliteration {
   .lesson-content h2 {
     font-size: 17px;
   }
+}
 
-  .lesson-navigation {
-    gap: 7px;
+
+/* =========================================
+   28. LANDSCAPE PHONE LAYOUT
+   ========================================= */
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .detail-page {
+    padding-top: 8px;
+    padding-bottom: 16px;
   }
 
-  .lesson-navigation button {
-    padding: 9px 5px;
-    font-size: 12px;
+  .lesson-card {
+    padding-top: 14px;
+    padding-bottom: 14px;
   }
 }
 
-/* Respect reduced-motion preferences */
+
+/* =========================================
+   29. REDUCED MOTION
+   ========================================= */
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -433,6 +914,13 @@ body.dark-mode .lesson-content .transliteration {
   *,
   *::before,
   *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* =========================================
+   END OF NAMAZ DETAIL CSS
+   ========================================= */
