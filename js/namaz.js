@@ -1,38 +1,42 @@
 /* =========================================
-   IBADAT - NAMAZ LEARNING
-   Bengali / English / Hindi
+   IBADAT — NAMAZ LEARNING PAGE
+   14 Topics | Bengali / English / Hindi
+   Light & Dark Theme
    ========================================= */
 
 "use strict";
 
 (() => {
   const SETTINGS_KEY = "appSettings";
+  const ASSET_PATH = "../assets/";
 
-  /* -----------------------------------------
-     LANGUAGE SETTINGS
-     ----------------------------------------- */
+  /* =========================================
+     APP SETTINGS & LANGUAGE
+     ========================================= */
 
   function getAppSettings() {
     try {
       const saved = localStorage.getItem(SETTINGS_KEY);
       return saved ? JSON.parse(saved) : {};
     } catch (error) {
+      console.warn("Namaz: Could not read app settings.", error);
       return {};
     }
   }
 
-  const settings = getAppSettings();
-
-  function getLanguage() {
-    const language = settings.lang || "bn";
-    return ["bn", "en", "hi"].includes(language) ? language : "bn";
+  function normalizeLanguage(language) {
+    return ["bn", "en", "hi"].includes(language)
+      ? language
+      : "bn";
   }
 
-  let currentLanguage = getLanguage();
+  let currentLanguage = normalizeLanguage(
+    getAppSettings().lang || "bn"
+  );
 
-  /* -----------------------------------------
-     12 LEARNING TOPICS
-     ----------------------------------------- */
+  /* =========================================
+     ALL 14 LEARNING TOPICS
+     ========================================= */
 
   const topics = [
     {
@@ -60,6 +64,24 @@
         bn: "নামাজের শর্ত",
         en: "Prayer Conditions",
         hi: "नमाज़ की शर्तें"
+      }
+    },
+    {
+      id: "times-rakats",
+      icon: "prayer-times-rakats.png",
+      title: {
+        bn: "ওয়াক্ত ও রাকাত",
+        en: "Prayer Times & Rakats",
+        hi: "नमाज़ के वक़्त और रकअत"
+      }
+    },
+    {
+      id: "fard-wajib-sunnah",
+      icon: "farz-wajib-sunnah.png",
+      title: {
+        bn: "ফরজ, ওয়াজিব ও সুন্নত",
+        en: "Fard, Wajib & Sunnah",
+        hi: "फ़र्ज़, वाजिब और सुन्नत"
       }
     },
     {
@@ -117,12 +139,12 @@
       }
     },
     {
-      id: "times-rakats",
-      icon: "prayer-times-rakats.png",
+      id: "complete",
+      icon: "complete-namaz.png",
       title: {
-        bn: "ওয়াক্ত ও রাকাত",
-        en: "Prayer Times & Rakats",
-        hi: "नमाज़ के वक़्त और रकअत"
+        bn: "সম্পূর্ণ নামাজ",
+        en: "Complete Prayer",
+        hi: "पूरी नमाज़"
       }
     },
     {
@@ -135,19 +157,19 @@
       }
     },
     {
-      id: "complete",
-      icon: "complete-namaz.png",
+      id: "jamaat-special",
+      icon: "jamaat-special-namaz.png",
       title: {
-        bn: "সম্পূর্ণ নামাজ",
-        en: "Complete Prayer",
-        hi: "पूरी नमाज़"
+        bn: "জামাত ও বিশেষ নামাজ",
+        en: "Jamaat & Special Prayers",
+        hi: "जमाअत और विशेष नमाज़ें"
       }
     }
   ];
 
-  /* -----------------------------------------
+  /* =========================================
      INTRODUCTION TEXT
-     ----------------------------------------- */
+     ========================================= */
 
   const introduction = {
     bn: {
@@ -175,9 +197,9 @@
     }
   };
 
-  /* -----------------------------------------
-     HELPERS
-     ----------------------------------------- */
+  /* =========================================
+     HELPER FUNCTIONS
+     ========================================= */
 
   function getText(textObject) {
     return (
@@ -187,160 +209,187 @@
     );
   }
 
-  function findElement(selectors) {
-    for (const selector of selectors) {
-      const element = document.querySelector(selector);
-      if (element) return element;
-    }
-    return null;
+  function applySavedTheme() {
+    const settings = getAppSettings();
+
+    document.body.classList.toggle(
+      "dark-mode",
+      Boolean(settings.dark)
+    );
   }
 
-  /* -----------------------------------------
-     BUILD INTRODUCTION BOARD
-     ----------------------------------------- */
+  /* =========================================
+     BUILD INTRODUCTION
+     ========================================= */
 
   function buildIntroduction() {
-    const heading = findElement([
-      ".intro-content h1",
-      "#introHeading",
-      "[data-namaz-heading]"
-    ]);
-
-    const paragraphs = document.querySelectorAll(
-      ".intro-content p"
+    const heading = document.getElementById("intro-title");
+    const paragraph1 = document.getElementById(
+      "intro-paragraph-1"
+    );
+    const paragraph2 = document.getElementById(
+      "intro-paragraph-2"
     );
 
-    const intro = introduction[currentLanguage];
+    const intro =
+      introduction[currentLanguage] ||
+      introduction.bn;
 
     if (heading) {
       heading.textContent = intro.heading;
     }
 
-    if (paragraphs[0]) {
-      paragraphs[0].textContent = intro.paragraph1;
+    if (paragraph1) {
+      paragraph1.textContent = intro.paragraph1;
     }
 
-    if (paragraphs[1]) {
-      paragraphs[1].textContent = intro.paragraph2;
-    }
-
-    const divider = document.querySelector(".intro-divider");
-
-    if (divider) {
-      divider.setAttribute("aria-hidden", "true");
+    if (paragraph2) {
+      paragraph2.textContent = intro.paragraph2;
     }
   }
 
-  /* -----------------------------------------
-     BUILD THE 12 OPTION CARDS
-     ----------------------------------------- */
-
-  function buildLearningGrid() {
-    const grid = findElement([
-      ".learning-grid",
-      "#learningGrid",
-      "#namazOptions"
-    ]);
-
-    if (!grid) {
-      console.error(
-        "Namaz: learning grid not found. Check namaz.html."
-      );
-      return;
-    }
-
-    grid.replaceChildren();
-
-    topics.forEach((topic) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "learning-card";
-      button.dataset.topic = topic.id;
-      button.setAttribute("aria-label", getText(topic.title));
-
-      const icon = document.createElement("img");
-      icon.className = "topic-icon";
-      icon.src = `../assets/${topic.icon}`;
-      icon.alt = "";
-      icon.loading = "eager";
-      icon.draggable = false;
-
-      icon.addEventListener("error", () => {
-        console.error(
-          `Namaz icon not found: ../assets/${topic.icon}`
-        );
-      });
-
-      const label = document.createElement("span");
-      label.textContent = getText(topic.title);
-
-      button.append(icon, label);
-
-      button.addEventListener("click", () => {
-        openTopic(topic);
-      });
-
-      grid.appendChild(button);
-    });
-  }
-
-  /* -----------------------------------------
-     OPEN TOPIC
-     ----------------------------------------- */
+  /* =========================================
+     OPEN SELECTED TOPIC
+     ========================================= */
 
   function openTopic(topic) {
     /*
-      Each option passes its topic ID to the shared
-      content page. That page can display the selected
-      lesson and provide a Back button.
-
-      The destination file will be namaz-detail.html.
-    */
+     * Uses the existing shared lesson page.
+     * Topic IDs are passed through the URL.
+     */
 
     const destination = new URL(
       "namaz-detail.html",
       window.location.href
     );
 
-    destination.searchParams.set("topic", topic.id);
-    destination.searchParams.set("lang", currentLanguage);
+    destination.searchParams.set(
+      "topic",
+      topic.id
+    );
+
+    destination.searchParams.set(
+      "lang",
+      currentLanguage
+    );
 
     window.location.href = destination.href;
   }
 
-  /* -----------------------------------------
-     LANGUAGE CHANGE SUPPORT
-     ----------------------------------------- */
+  /* =========================================
+     BUILD ALL 14 OPTION CARDS
+     ========================================= */
 
-  function refreshLanguage() {
-    const updatedSettings = getAppSettings();
-    const newLanguage = updatedSettings.lang || currentLanguage;
+  function buildLearningGrid() {
+    const grid = document.getElementById(
+      "learning-grid"
+    );
 
-    if (["bn", "en", "hi"].includes(newLanguage)) {
-      currentLanguage = newLanguage;
+    if (!grid) {
+      console.error(
+        "Namaz: #learning-grid was not found. Check namaz.html."
+      );
+      return;
     }
 
+    const fragment = document.createDocumentFragment();
+
+    topics.forEach((topic) => {
+      const button = document.createElement("button");
+
+      button.type = "button";
+      button.className = "learning-card";
+      button.dataset.topic = topic.id;
+
+      button.setAttribute(
+        "aria-label",
+        getText(topic.title)
+      );
+
+      /* Topic icon */
+
+      const icon = document.createElement("img");
+
+      icon.className = "topic-icon";
+      icon.src = ASSET_PATH + topic.icon;
+      icon.alt = "";
+      icon.loading = "eager";
+      icon.decoding = "async";
+      icon.draggable = false;
+
+      icon.addEventListener(
+        "error",
+        () => {
+          console.error(
+            "Namaz icon not found: " +
+            ASSET_PATH +
+            topic.icon
+          );
+
+          button.classList.add("icon-missing");
+        },
+        { once: true }
+      );
+
+      /* Topic label */
+
+      const label = document.createElement("span");
+
+      label.textContent = getText(topic.title);
+      label.dataset.label = topic.id;
+
+      button.append(icon, label);
+
+      /* Open the lesson */
+
+      button.addEventListener("click", () => {
+        openTopic(topic);
+      });
+
+      fragment.appendChild(button);
+    });
+
+    grid.replaceChildren(fragment);
+  }
+
+  /* =========================================
+     REFRESH LANGUAGE & THEME
+     ========================================= */
+
+  function refreshNamazLanguage() {
+    const settings = getAppSettings();
+
+    currentLanguage = normalizeLanguage(
+      settings.lang || currentLanguage
+    );
+
+    applySavedTheme();
     buildIntroduction();
     buildLearningGrid();
   }
 
+  /*
+   * Other app scripts can call:
+   * window.refreshNamazLanguage()
+   */
+
+  window.refreshNamazLanguage =
+    refreshNamazLanguage;
+
+  /* Update when settings change in another tab */
+
   window.addEventListener("storage", (event) => {
     if (event.key === SETTINGS_KEY) {
-      refreshLanguage();
+      refreshNamazLanguage();
     }
   });
 
-  /*
-    Other app code can call this after changing
-    the language without reloading the page.
-  */
-  window.refreshNamazLanguage = refreshLanguage;
-
-  /* -----------------------------------------
-     INITIALIZE
-     ----------------------------------------- */
+  /* =========================================
+     INITIALIZE PAGE
+     ========================================= */
 
   function initializeNamazPage() {
+    applySavedTheme();
     buildIntroduction();
     buildLearningGrid();
   }
