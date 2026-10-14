@@ -167,35 +167,32 @@
     }
   ];
 
-  /* =========================================
-     INTRODUCTION TEXT
-     ========================================= */
+ /* =========================================
+   INTRODUCTION TEXT
+   ========================================= */
 
-  const introduction = {
-    bn: {
-      heading: "কী ও কেন?",
-      paragraph1:
-        "নামাজ ইসলামের অন্যতম প্রধান ইবাদত। আল্লাহর সন্তুষ্টি অর্জনের জন্য প্রত্যেক মুসলিমের নামাজ আদায় করা গুরুত্বপূর্ণ।",
-      paragraph2:
-        "পাক-পবিত্রতা থেকে সালাম পর্যন্ত নামাজের নিয়ম, দোয়া ও প্রয়োজনীয় বিষয়গুলো ধাপে ধাপে শিখুন।"
-    },
+const introduction = {
+  bn: {
+    heading: "কী ও কেন ?",
+    paragraph1:
+      "নামাজ ইসলামের অন্যতম প্রধান ইবাদত। আল্লাহর স্মরণ, হৃদয়ের গভীর প্রশান্তি ও আল্লাহর নৈকট্য লাভের মাধ্যম।",
+    paragraph2: ""
+  },
 
-    en: {
-      heading: "What & Why?",
-      paragraph1:
-        "Salah is one of the most important acts of worship in Islam. Performing Salah is essential for a Muslim seeking the pleasure of Allah.",
-      paragraph2:
-        "Learn the steps of prayer, from purification to Salam, including essential rules and duas."
-    },
+  en: {
+    heading: "What & Why?",
+    paragraph1:
+      "Salah is one of the most important acts of worship in Islam. It is a remembrance of Allah, a source of deep peace, and a means of attaining closeness to Him.",
+    paragraph2: ""
+  },
 
-    hi: {
-      heading: "क्या और क्यों?",
-      paragraph1:
-        "नमाज़ इस्लाम की सबसे महत्वपूर्ण इबादतों में से एक है। अल्लाह की रज़ा पाने के लिए नमाज़ अदा करना ज़रूरी है।",
-      paragraph2:
-        "पाक-सफ़ाई से सलाम तक नमाज़ के तरीक़े, दुआएँ और ज़रूरी बातें चरणबद्ध तरीके से सीखें।"
-    }
-  };
+  hi: {
+    heading: "क्या और क्यों?",
+    paragraph1:
+      "नमाज़ इस्लाम की प्रमुख इबादतों में से एक है। यह अल्लाह की याद, दिल का सुकून और उसकी निकटता पाने का माध्यम है।",
+    paragraph2: ""
+  }
+}; 
 
   /* =========================================
      HELPER FUNCTIONS
