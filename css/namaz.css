@@ -36,15 +36,27 @@ body {
   height: 100%;
   min-height: 0;
   overflow: hidden;
+
   color: var(--text);
-  font-family: "Noto Sans Bengali", "Nirmala UI", "Noto Sans Devanagari", Arial, sans-serif;
-  background-color: var(--page-bg);
+  font-family:
+    "Noto Sans Bengali",
+    "Nirmala UI",
+    "Noto Sans Devanagari",
+    Arial,
+    sans-serif;
+
+  background-color: #F8F6EE;
   background-image:
-    linear-gradient(rgba(255, 251, 244, 0.22), rgba(255, 251, 244, 0.22)),
+    linear-gradient(
+      rgba(255, 251, 244, 0.82),
+      rgba(255, 251, 244, 0.82)
+    ),
     url("../assets/bg_pattern.png");
+
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+
   overscroll-behavior: none;
 }
 
