@@ -1,24 +1,23 @@
-/* ========================================
-   IBADAT - NAMAZ LEARNING PAGE
-   ======================================== */
+/* =========================================
+   IBADAT — NAMAZ LEARNING PAGE
+   14 topics | BN / EN / HI | light & dark
+   ========================================= */
 
 :root {
   --primary: #0F5132;
   --primary-dark: #0B3D26;
-
   --page-bg: #F8F6EE;
   --card-bg: #BFE4B7;
   --card-bg-hover: #AED9A5;
-
   --text: #1E4620;
   --gold: #D4AF37;
-  --border: rgba(15, 81, 50, 0.18);
-
-  --page-padding: 10px;
+  --border: rgba(15, 81, 50, 0.20);
+  --page-padding-x: 10px;
+  --page-padding-y: 8px;
+  --grid-gap: 7px;
   --card-radius: 16px;
 }
 
-/* Basic reset */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -37,214 +36,167 @@ body {
   height: 100%;
   min-height: 0;
   overflow: hidden;
-
   color: var(--text);
-  font-family:
-    "Noto Sans Bengali",
-    "Nirmala UI",
-    "Noto Sans Devanagari",
-    Arial,
-    sans-serif;
-
+  font-family: "Noto Sans Bengali", "Nirmala UI", "Noto Sans Devanagari", Arial, sans-serif;
   background-color: var(--page-bg);
-  background-image: url("../assets/bg_pattern.png");
+  background-image:
+    linear-gradient(rgba(255, 251, 244, 0.22), rgba(255, 251, 244, 0.22)),
+    url("../assets/bg_pattern.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-
   overscroll-behavior: none;
 }
 
-/* Main page: no header or footer bars */
+/* No top or bottom app bars on this page */
 .namaz-page {
   width: 100%;
   height: 100%;
   height: 100dvh;
   min-height: 0;
-
   display: grid;
-  grid-template-rows: minmax(0, 0.95fr) minmax(0, 1.65fr);
-  gap: 10px;
-
+  grid-template-rows: minmax(0, 0.78fr) minmax(0, 2.22fr);
+  gap: 8px;
   padding:
-    max(var(--page-padding), env(safe-area-inset-top))
-    var(--page-padding)
-    max(var(--page-padding), env(safe-area-inset-bottom));
-
+    max(var(--page-padding-y), env(safe-area-inset-top))
+    var(--page-padding-x)
+    max(var(--page-padding-y), env(safe-area-inset-bottom));
   overflow: hidden;
 }
 
-/* ========================================
-   INTRODUCTION BOARD
-   ======================================== */
-
+/* Intro board: compact height, same cream/gold/mosque style */
 .intro-board {
   position: relative;
   isolation: isolate;
-
   width: 100%;
   min-height: 0;
   overflow: hidden;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  border: 1px solid rgba(212, 175, 55, 0.75);
+  border: 1px solid rgba(212, 175, 55, 0.78);
   border-radius: 20px;
-
-  background-color: #E9E4D4;
+  background-color: #F8F4E8;
   background-image:
-    linear-gradient(
-      rgba(255, 252, 242, 0.84),
-      rgba(255, 252, 242, 0.84)
-    ),
+    linear-gradient(rgba(255, 252, 242, 0.79), rgba(255, 252, 242, 0.79)),
     url("../assets/prayer-learning-bg.png");
-
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
   box-shadow: 0 3px 10px rgba(11, 61, 38, 0.12);
 }
 
 .intro-content {
   position: relative;
   z-index: 1;
-
   width: 100%;
   max-height: 100%;
   overflow: hidden;
-
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
-
-  padding: 12px 15px;
-  gap: 7px;
+  padding: 8px 14px;
+  gap: 5px;
 }
 
-/* Only heading inside the board */
 .intro-content h1 {
   color: var(--primary);
-  font-size: clamp(19px, 5vw, 25px);
-  font-weight: 800;
-  line-height: 1.3;
+  font-size: clamp(21px, 5.3vw, 27px);
+  font-weight: 900;
+  line-height: 1.25;
   text-align: center;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
+  letter-spacing: 0;
 }
 
-/* Introduction paragraphs */
 .intro-content p {
   color: #1E4620;
-  font-size: clamp(11px, 2.9vw, 14px);
-  font-weight: 500;
-  line-height: 1.55;
-  text-align: justify;
-
+  font-size: clamp(12px, 3.15vw, 15px);
+  font-weight: 650;
+  line-height: 1.48;
+  text-align: start;
   margin: 0;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 
-/* Single straight divider below both paragraphs */
 .intro-divider {
   flex: 0 0 auto;
   width: 100%;
-  height: 2px;
-  margin-top: 3px;
-
+  height: 3px;
+  margin-top: 2px;
   background: var(--gold);
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
-/* ========================================
-   12 LEARNING OPTIONS
-   ======================================== */
-
+/* 14 topics: two columns and seven balanced rows */
 .learning-grid {
   width: 100%;
   height: 100%;
   min-height: 0;
   min-width: 0;
-
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(6, minmax(0, 1fr));
-
-  gap: 8px;
+  grid-template-rows: repeat(7, minmax(0, 1fr));
+  gap: var(--grid-gap);
   overflow: hidden;
 }
 
-/* Individual option cards */
+/* Option cards */
 .learning-card {
   position: relative;
-
   width: 100%;
   height: 100%;
   min-height: 0;
   min-width: 0;
-
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-
-  gap: 8px;
-  padding: 5px 8px;
-
+  gap: 7px;
+  padding: 5px 7px;
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: var(--card-radius);
-
   color: var(--text);
   font-family: inherit;
-  font-size: clamp(11px, 3vw, 15px);
-  font-weight: 700;
-  line-height: 1.3;
+  font-size: clamp(12px, 3.15vw, 16px);
+  font-weight: 800;
+  line-height: 1.28;
   text-align: center;
-
   cursor: pointer;
   overflow: hidden;
-
-  box-shadow: 0 2px 4px rgba(15, 81, 50, 0.08);
-
-  transition:
-    background-color 0.18s ease,
-    transform 0.18s ease,
-    box-shadow 0.18s ease;
+  box-shadow: 0 2px 4px rgba(15, 81, 50, 0.09);
+  transition: background-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
 }
 
-/* PNG icon */
 .topic-icon {
   display: block;
-
-  width: clamp(30px, 9vw, 46px);
-  height: clamp(30px, 9vw, 46px);
-
+  width: clamp(38px, 10.8vw, 52px);
+  height: clamp(38px, 10.8vw, 52px);
   flex: 0 0 auto;
   object-fit: contain;
   object-position: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
 }
 
-/* Option title */
 .learning-card span {
   flex: 1;
   min-width: 0;
-
   color: var(--text);
   font-size: inherit;
-  font-weight: 700;
-  line-height: 1.3;
+  font-weight: 800;
+  line-height: 1.28;
   text-align: center;
-
   overflow-wrap: anywhere;
+  word-break: normal;
 }
 
-/* Touch and keyboard feedback */
 .learning-card:active {
   background: var(--card-bg-hover);
-  transform: scale(0.98);
+  transform: scale(0.985);
 }
 
 .learning-card:focus-visible {
@@ -252,15 +204,29 @@ body {
   outline-offset: -3px;
 }
 
-/* ========================================
-   SMALL MOBILE SCREENS
-   ======================================== */
+.learning-card[aria-disabled="true"] {
+  cursor: default;
+}
 
-@media (max-width: 360px) {
+@media (hover: hover) {
+  .learning-card:hover {
+    background: var(--card-bg-hover);
+    box-shadow: 0 3px 7px rgba(15, 81, 50, 0.13);
+  }
+}
+
+/* Compact phones: keep all 14 options visible and labels legible */
+@media (max-width: 380px) {
+  :root {
+    --page-padding-x: 7px;
+    --page-padding-y: 6px;
+    --grid-gap: 5px;
+    --card-radius: 13px;
+  }
+
   .namaz-page {
-    gap: 7px;
-    padding-left: 7px;
-    padding-right: 7px;
+    gap: 6px;
+    grid-template-rows: minmax(0, 0.76fr) minmax(0, 2.24fr);
   }
 
   .intro-board {
@@ -268,61 +234,81 @@ body {
   }
 
   .intro-content {
-    padding: 8px 10px;
-    gap: 5px;
+    padding: 6px 9px;
+    gap: 4px;
   }
 
   .intro-content h1 {
-    font-size: 18px;
+    font-size: clamp(19px, 5vw, 22px);
   }
 
   .intro-content p {
-    font-size: 10.5px;
-    line-height: 1.4;
-  }
-
-  .learning-grid {
-    gap: 6px;
+    font-size: clamp(11px, 2.9vw, 13px);
+    line-height: 1.38;
   }
 
   .learning-card {
-    gap: 5px;
-    padding: 4px 5px;
-    font-size: 10.5px;
-    border-radius: 13px;
+    gap: 4px;
+    padding: 3px 4px;
+    font-size: clamp(11px, 3vw, 13px);
+    border-radius: 12px;
   }
 
   .topic-icon {
-    width: 29px;
-    height: 29px;
+    width: clamp(33px, 9.3vw, 40px);
+    height: clamp(33px, 9.3vw, 40px);
   }
 }
 
-/* ========================================
-   DARK THEME
-   ======================================== */
+/* Short screens: prioritize the option grid while keeping intro readable */
+@media (max-height: 740px) {
+  .namaz-page {
+    grid-template-rows: minmax(0, 0.68fr) minmax(0, 2.32fr);
+    gap: 6px;
+    padding-top: max(5px, env(safe-area-inset-top));
+    padding-bottom: max(5px, env(safe-area-inset-bottom));
+  }
 
+  .intro-content {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    gap: 4px;
+  }
+
+  .intro-content h1 {
+    font-size: clamp(18px, 4.8vw, 23px);
+  }
+
+  .intro-content p {
+    font-size: clamp(10.5px, 2.8vw, 13px);
+    line-height: 1.34;
+  }
+
+  .topic-icon {
+    width: clamp(32px, 8.8vw, 44px);
+    height: clamp(32px, 8.8vw, 44px);
+  }
+}
+
+/* Dark theme */
 body.dark-mode {
   --page-bg: #121A15;
   --card-bg: #263B29;
   --card-bg-hover: #304A34;
-
   --text: #E7F0E4;
-  --border: rgba(190, 228, 183, 0.2);
-
+  --border: rgba(190, 228, 183, 0.22);
   background-color: var(--page-bg);
+  background-image:
+    linear-gradient(rgba(12, 24, 18, 0.86), rgba(12, 24, 18, 0.86)),
+    url("../assets/bg_pattern.png");
   color: var(--text);
 }
 
 body.dark-mode .intro-board {
-  border-color: rgba(212, 175, 55, 0.6);
-
+  border-color: rgba(212, 175, 55, 0.62);
   background-color: #1E2A22;
   background-image:
-    linear-gradient(
-      rgba(13, 28, 19, 0.78),
-      rgba(13, 28, 19, 0.78)
-    ),
+    linear-gradient(rgba(13, 28, 19, 0.78), rgba(13, 28, 19, 0.78)),
     url("../assets/prayer-learning-bg.png");
 }
 
@@ -334,15 +320,11 @@ body.dark-mode .intro-content p {
   color: #F0F0E8;
 }
 
-body.dark-mode .learning-card {
-  color: var(--text);
-}
-
+body.dark-mode .learning-card,
 body.dark-mode .learning-card span {
   color: var(--text);
 }
 
-/* Respect reduced-motion preference */
 @media (prefers-reduced-motion: reduce) {
   .learning-card {
     transition: none;
