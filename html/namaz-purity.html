@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0F5132">
+  <meta name="description" content="IBADAT — পাক-পবিত্রতা শেখার সম্পূর্ণ নির্দেশিকা">
+  <meta name="color-scheme" content="light dark">
+  <title>পাক-পবিত্রতা | IBADAT</title>
+
+  <link rel="stylesheet" href="../css/namaz-purity.css">
+  <script src="../js/namaz-purity.js" defer></script>
+</head>
+<body>
+  <header class="page-header">
+    <a class="back-link" href="namaz.html" aria-label="নামাজ শিক্ষায় ফিরে যান">
+      <span aria-hidden="true">←</span>
+      <span data-i18n="back">ফিরে যান</span>
+    </a>
+
+    <div class="header-title">
+      <span class="brand-mark" aria-hidden="true">۞</span>
+      <span>IBADAT</span>
+    </div>
+
+    <label class="language-control">
+      <span class="sr-only" data-i18n="languageLabel">ভাষা</span>
+      <select id="language-select" aria-label="Choose language">
+        <option value="bn">বাংলা</option>
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+      </select>
+    </label>
+  </header>
+
+  <main class="page-container">
+    <section class="hero-card" aria-labelledby="page-title">
+      <div class="hero-icon" aria-hidden="true">
+        <svg viewBox="0 0 64 64" role="img">
+          <path d="M32 5 53 13v16c0 14-9 23-21 30C20 52 11 43 11 29V13Z"
+                fill="none" stroke="currentColor" stroke-width="3"/>
+          <path d="m21 31 7 7 15-16" fill="none"
+                stroke="currentColor" stroke-width="3.5"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <p class="eyebrow" data-i18n="eyebrow">নামাজ শিক্ষা · প্রথম অধ্যায়</p>
+      <h1 id="page-title" data-i18n="title">পাক-পবিত্রতা</h1>
+      <p class="hero-description" data-i18n="heroDescription">
+        নামাজের আগে শরীর, পোশাক ও স্থান পবিত্র রাখা এবং পবিত্রতা অর্জনের নিয়ম শিখুন।
+      </p>
+
+      <div class="hero-meta">
+        <span>📖 <span data-i18n="lessonCount">১০টি অধ্যায়</span></span>
+        <span>🌐 বাংলা · English · हिन्दी</span>
+      </div>
+
+      <div class="progress-track" role="progressbar"
+           aria-label="পাঠের অগ্রগতি" aria-valuemin="0"
+           aria-valuemax="10" aria-valuenow="0" id="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <p class="progress-label" id="progress-label" aria-live="polite">
+        ১০টি অধ্যায় পড়ুন
+      </p>
+    </section>
+
+    <nav class="chapter-index" aria-labelledby="index-title">
+      <h2 id="index-title" data-i18n="indexTitle">এই অধ্যায়ে যা শিখবেন</h2>
+      <p class="muted" data-i18n="indexDescription">
+        যেকোনো শিরোনামে চাপ দিলে সেই অংশে যেতে পারবেন। পুরো পাঠ একই পেজে রয়েছে।
+      </p>
+      <ol id="chapter-index-list" class="index-list"></ol>
+    </nav>
+
+    <div class="lesson-list" id="lesson-list" aria-live="polite"></div>
+
+    <section class="quiz-card" id="quiz" aria-labelledby="quiz-title">
+      <p class="eyebrow" data-i18n="quizEyebrow">নিজেকে যাচাই করুন</p>
+      <h2 id="quiz-title" data-i18n="quizTitle">পাক-পবিত্রতা কুইজ</h2>
+      <p class="muted" data-i18n="quizDescription">
+        অধ্যায়গুলো পড়ে প্রশ্নগুলোর উত্তর দিন।
+      </p>
+      <div id="quiz-container"></div>
+      <button class="primary-button" id="check-quiz" type="button"
+              data-i18n="checkAnswers">উত্তর যাচাই করুন</button>
+      <div id="quiz-result" class="quiz-result" aria-live="polite"></div>
+    </section>
+
+    <section class="checklist-card" aria-labelledby="checklist-title">
+      <h2 id="checklist-title" data-i18n="checklistTitle">
+        নামাজের আগে পবিত্রতা যাচাই
+      </h2>
+      <p class="muted" data-i18n="checklistDescription">
+        নামাজের প্রস্তুতির সময় এই তালিকাটি ব্যবহার করুন।
+      </p>
+      <div id="checklist-container" class="checklist"></div>
+    </section>
+
+    <section class="completion-card">
+      <span class="completion-icon" aria-hidden="true">✓</span>
+      <h2 data-i18n="completionTitle">প্রথম অধ্যায় সম্পূর্ণ?</h2>
+      <p data-i18n="completionDescription">
+        পড়া শেষ হলে পরের বিষয় ওজু শিখতে এগিয়ে যান।
+      </p>
+      <a class="primary-button next-link" href="namaz-wudu.html">
+        <span data-i18n="nextLesson">পরবর্তী অধ্যায়: ওজু</span>
+        <span aria-hidden="true">→</span>
+      </a>
+      <a class="secondary-link" href="namaz.html" data-i18n="allLessons">
+        সব নামাজ শিক্ষার বিষয়
+      </a>
+    </section>
+
+    <button id="back-to-top" class="back-to-top" type="button"
+            aria-label="উপরে ফিরে যান" data-i18n="backToTop">↑</button>
+  </main>
+
+  <footer class="page-footer">
+    <p>IBADAT · <span data-i18n="footerText">ইবাদত শিখুন, বুঝে আমল করুন</span></p>
+  </footer>
+</body>
+</html>
