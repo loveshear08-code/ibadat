@@ -1062,18 +1062,24 @@ document.querySelectorAll(".lesson ol").forEach(function (list) {
         );
 
 
-        /* FOOTER AND DISCLAIMER */
+       /* FOOTER AND DISCLAIMER */
 
-        setText(
-            "disclaimer",
-            data.disclaimer
-        );
+setText(
+"disclaimer",
+data.disclaimer
+);
 
-        setText(
-            "footer-text",
-            data.footerText
-        );
+/* Update bottom footer message */
+setText(
+"footerMessage",
+data.footerText
+);
 
+/* Keep IBADAT brand visible */
+setText(
+"footerBrand",
+"IBADAT"
+);
     }
 
 
