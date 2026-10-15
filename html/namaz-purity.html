@@ -1,123 +1,20 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#0F5132">
-  <meta name="description" content="IBADAT — পাক-পবিত্রতা শেখার সম্পূর্ণ নির্দেশিকা">
-  <meta name="color-scheme" content="light dark">
-  <title>পাক-পবিত্রতা | IBADAT</title>
-
-  <link rel="stylesheet" href="../css/namaz-purity.css">
-  <script src="../js/namaz-purity.js" defer></script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0F5132"><title>পবিত্রতা | IBADAT</title>
+<link rel="stylesheet" href="../css/namaz-purity.css">
 </head>
 <body>
-  <header class="page-header">
-    <a class="back-link" href="namaz.html" aria-label="নামাজ শিক্ষায় ফিরে যান">
-      <span aria-hidden="true">←</span>
-      <span data-i18n="back">ফিরে যান</span>
-    </a>
-
-    <div class="header-title">
-      <span class="brand-mark" aria-hidden="true">۞</span>
-      <span>IBADAT</span>
-    </div>
-
-    <label class="language-control">
-      <span class="sr-only" data-i18n="languageLabel">ভাষা</span>
-      <select id="language-select" aria-label="Choose language">
-        <option value="bn">বাংলা</option>
-        <option value="en">English</option>
-        <option value="hi">हिन्दी</option>
-      </select>
-    </label>
-  </header>
-
-  <main class="page-container">
-    <section class="hero-card" aria-labelledby="page-title">
-      <div class="hero-icon" aria-hidden="true">
-        <svg viewBox="0 0 64 64" role="img">
-          <path d="M32 5 53 13v16c0 14-9 23-21 30C20 52 11 43 11 29V13Z"
-                fill="none" stroke="currentColor" stroke-width="3"/>
-          <path d="m21 31 7 7 15-16" fill="none"
-                stroke="currentColor" stroke-width="3.5"
-                stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <p class="eyebrow" data-i18n="eyebrow">নামাজ শিক্ষা · প্রথম অধ্যায়</p>
-      <h1 id="page-title" data-i18n="title">পাক-পবিত্রতা</h1>
-      <p class="hero-description" data-i18n="heroDescription">
-        নামাজের আগে শরীর, পোশাক ও স্থান পবিত্র রাখা এবং পবিত্রতা অর্জনের নিয়ম শিখুন।
-      </p>
-
-      <div class="hero-meta">
-        <span>📖 <span data-i18n="lessonCount">১০টি অধ্যায়</span></span>
-        <span>🌐 বাংলা · English · हिन्दी</span>
-      </div>
-
-      <div class="progress-track" role="progressbar"
-           aria-label="পাঠের অগ্রগতি" aria-valuemin="0"
-           aria-valuemax="10" aria-valuenow="0" id="progress-track">
-        <div class="progress-fill" id="progress-fill"></div>
-      </div>
-      <p class="progress-label" id="progress-label" aria-live="polite">
-        ১০টি অধ্যায় পড়ুন
-      </p>
-    </section>
-
-    <nav class="chapter-index" aria-labelledby="index-title">
-      <h2 id="index-title" data-i18n="indexTitle">এই অধ্যায়ে যা শিখবেন</h2>
-      <p class="muted" data-i18n="indexDescription">
-        যেকোনো শিরোনামে চাপ দিলে সেই অংশে যেতে পারবেন। পুরো পাঠ একই পেজে রয়েছে।
-      </p>
-      <ol id="chapter-index-list" class="index-list"></ol>
-    </nav>
-
-    <div class="lesson-list" id="lesson-list" aria-live="polite"></div>
-
-    <section class="quiz-card" id="quiz" aria-labelledby="quiz-title">
-      <p class="eyebrow" data-i18n="quizEyebrow">নিজেকে যাচাই করুন</p>
-      <h2 id="quiz-title" data-i18n="quizTitle">পাক-পবিত্রতা কুইজ</h2>
-      <p class="muted" data-i18n="quizDescription">
-        অধ্যায়গুলো পড়ে প্রশ্নগুলোর উত্তর দিন।
-      </p>
-      <div id="quiz-container"></div>
-      <button class="primary-button" id="check-quiz" type="button"
-              data-i18n="checkAnswers">উত্তর যাচাই করুন</button>
-      <div id="quiz-result" class="quiz-result" aria-live="polite"></div>
-    </section>
-
-    <section class="checklist-card" aria-labelledby="checklist-title">
-      <h2 id="checklist-title" data-i18n="checklistTitle">
-        নামাজের আগে পবিত্রতা যাচাই
-      </h2>
-      <p class="muted" data-i18n="checklistDescription">
-        নামাজের প্রস্তুতির সময় এই তালিকাটি ব্যবহার করুন।
-      </p>
-      <div id="checklist-container" class="checklist"></div>
-    </section>
-
-    <section class="completion-card">
-      <span class="completion-icon" aria-hidden="true">✓</span>
-      <h2 data-i18n="completionTitle">প্রথম অধ্যায় সম্পূর্ণ?</h2>
-      <p data-i18n="completionDescription">
-        পড়া শেষ হলে পরের বিষয় ওজু শিখতে এগিয়ে যান।
-      </p>
-      <a class="primary-button next-link" href="namaz-wudu.html">
-        <span data-i18n="nextLesson">পরবর্তী অধ্যায়: ওজু</span>
-        <span aria-hidden="true">→</span>
-      </a>
-      <a class="secondary-link" href="namaz.html" data-i18n="allLessons">
-        সব নামাজ শিক্ষার বিষয়
-      </a>
-    </section>
-
-    <button id="back-to-top" class="back-to-top" type="button"
-            aria-label="উপরে ফিরে যান" data-i18n="backToTop">↑</button>
-  </main>
-
-  <footer class="page-footer">
-    <p>IBADAT · <span data-i18n="footerText">ইবাদত শিখুন, বুঝে আমল করুন</span></p>
-  </footer>
-</body>
-</html>
+<main class="purity-page">
+<header class="hero"><span class="ornament">✦</span><p id="eyebrow">IBADAT • নামাজ শিক্ষা</p><h1 id="pageTitle">পবিত্রতা</h1><p id="subtitle">ইবাদতের আগে পরিচ্ছন্নতা ও পবিত্রতার সহজ পাঠ</p></header>
+<section class="intro panel"><div class="art" aria-hidden="true"><svg viewBox="0 0 220 150"><rect width="220" height="150" rx="18" fill="#F7EED6"/><path d="M15 140V65Q15 20 58 20T101 65V140M28 140V68Q28 34 58 34T88 68V140" fill="#DCEED4" stroke="#CBA94D" stroke-width="2"/><path d="M112 140V82Q112 55 140 55T168 82V140" fill="#E7D9AD" stroke="#CBA94D" stroke-width="2"/><path d="M178 140V96L193 80L208 96V140" fill="#DCEED4" stroke="#7BA77B" stroke-width="2"/><path d="M5 140H215" stroke="#BCA45B" stroke-width="2"/><path d="M40 112Q58 102 76 112L73 126Q58 132 43 126Z" fill="#D4AF37" stroke="#8D7434"/><circle cx="58" cy="91" r="6" fill="#E6C76B"/></svg></div><div><span class="kicker" id="introKicker">শুরু করি</span><h2 id="introTitle">পবিত্রতা কী ও কেন?</h2><p id="introText">পবিত্রতা হলো শরীর, পোশাক ও নামাজের স্থান পরিচ্ছন্ন রাখা এবং ইবাদতের জন্য প্রয়োজনীয় ধর্মীয় পবিত্রতা অর্জন করা।</p></div></section>
+<nav class="contents panel"><h2 id="contentsTitle">এই পেজে যা শিখবে</h2><div id="contentsLinks"><a href="#wudu">অজু</a><a href="#ghusl">গোসল</a><a href="#tayammum">তায়াম্মুম</a><a href="#cleanliness">নাপাকি ও পরিচ্ছন্নতা</a></div></nav>
+<section class="panel lesson" id="wudu"><div class="section-title"><b>১</b><div><span class="kicker" id="wuduKicker">প্রথম পাঠ</span><h2 id="wuduTitle">অজু (ওযু)</h2></div></div><div class="art wide"><svg viewBox="0 0 320 140" aria-hidden="true"><rect width="320" height="140" rx="18" fill="#F7EED6"/><path d="M18 118H302" stroke="#B6CFA9" stroke-width="3"/><path d="M220 24H264V42H220ZM232 42V57Q232 64 242 64T252 57V42" fill="#D6E8D0" stroke="#6D9C78" stroke-width="3"/><path d="M242 67C232 80 234 85 242 87C250 85 252 80 242 67Z" fill="#79C8E6"/><path d="M60 75Q72 60 86 68L125 85Q136 91 129 99Q124 104 114 98L91 88L78 105Q72 111 64 104Q59 99 66 90Z" fill="#F0C7A4" stroke="#A66E51" stroke-width="2"/><path d="M142 80Q153 67 166 74L197 90Q206 95 200 103Q195 108 186 103L166 94L154 108Q148 113 141 106Q137 101 143 92Z" fill="#F0C7A4" stroke="#A66E51" stroke-width="2"/><path d="M124 112C116 123 120 128 125 128S132 123 124 112ZM146 112C138 123 142 128 147 128S154 123 146 112Z" fill="#79C8E6"/></svg></div><p class="lead" id="wuduIntro">অজু হলো নির্দিষ্ট অঙ্গ পানি দিয়ে ধোয়া ও মাসেহ করার মাধ্যমে নামাজের জন্য পবিত্রতা অর্জনের একটি পদ্ধতি।</p><h3 id="wuduStepsTitle">অজুর সাধারণ ধাপ</h3><ol id="wuduSteps"><li>নিয়ত করে বিসমিল্লাহ বলা।</li><li>দুই হাত কবজি পর্যন্ত ধোয়া।</li><li>কুলি করা ও নাকে পানি দেওয়া।</li><li>সম্পূর্ণ মুখ ধোয়া।</li><li>দুই হাত কনুইসহ ধোয়া।</li><li>ভেজা হাত দিয়ে মাথা মাসেহ করা।</li><li>দুই পা টাখনুসহ ধোয়া।</li></ol><aside class="note"><strong id="wuduNoteTitle">মনে রাখবে</strong><p id="wuduNote">ফরজের সংখ্যা, ক্রম এবং কিছু সুন্নত ও মাসেহের বিস্তারিত বিধানে ফিকহি মতভেদ রয়েছে। নিজের অনুসৃত নির্ভরযোগ্য আলেমের নির্দেশনা অনুযায়ী শিখবে।</p></aside><h3 id="wuduBreakTitle">অজু ভঙ্গের কারণ</h3><ul id="wuduBreaks"><li>প্রস্রাব, পায়খানা বা বায়ু নির্গত হওয়া।</li><li>গভীর ঘুম বা চেতনা হারানোর কিছু অবস্থা।</li><li>কিছু বিষয়ে মাজহাবভেদে বিধান আলাদা হতে পারে।</li></ul></section>
+<section class="panel lesson" id="ghusl"><div class="section-title"><b>২</b><div><span class="kicker" id="ghuslKicker">দ্বিতীয় পাঠ</span><h2 id="ghuslTitle">গোসল</h2></div></div><div class="art wide"><svg viewBox="0 0 320 140" aria-hidden="true"><rect width="320" height="140" rx="18" fill="#F5EEDB"/><path d="M20 115H300" stroke="#B5CDA9" stroke-width="3"/><path d="M220 24H263V40H220ZM231 40V53Q231 61 241 61T251 53V40" fill="#D9EAD2" stroke="#6D9C78" stroke-width="3"/><path d="M241 64C230 77 232 83 241 85S252 77 241 64Z" fill="#83CDE8"/><circle cx="132" cy="40" r="15" fill="#E9B995" stroke="#A66E51" stroke-width="2"/><path d="M118 38Q122 21 138 24Q149 27 147 39L140 32L126 34Z" fill="#4D4236"/><path d="M116 61Q132 53 148 62L166 99Q172 109 162 111H108Q101 108 107 98Z" fill="#E8C9A9" stroke="#A66E51" stroke-width="2"/><path d="M178 54C171 65 175 69 180 69S187 65 178 54ZM194 72C187 83 191 87 196 87S202 83 194 72Z" fill="#83CDE8"/></svg></div><p class="lead" id="ghuslIntro">গোসল হলো পুরো শরীরে পানি পৌঁছে দিয়ে বড় অপবিত্রতা থেকে পবিত্রতা অর্জনের নির্দিষ্ট পদ্ধতি।</p><h3 id="ghuslWhenTitle">কখন গোসল ফরজ হতে পারে?</h3><ul id="ghuslWhen"><li>দাম্পত্য মিলনের পর।</li><li>যৌনস্রাব নির্গমনের নির্দিষ্ট অবস্থায়।</li><li>ঋতুস্রাব বা প্রসব-পরবর্তী রক্তস্রাব শেষ হলে।</li></ul><h3 id="ghuslStepsTitle">গোসলের সাধারণ পদ্ধতি</h3><ol id="ghuslSteps"><li>পবিত্রতার নিয়ত করা।</li><li>শরীরে নাপাকি থাকলে তা পরিষ্কার করা।</li><li>সুন্নাহসম্মতভাবে অজু করা।</li><li>মাথা ও পুরো শরীরে পানি পৌঁছানো; কোনো অংশ শুকনো না রাখা।</li></ol><aside class="note"><strong id="ghuslNoteTitle">গুরুত্বপূর্ণ</strong><p id="ghuslNote">গোসলের ফরজ ও পদ্ধতির বিস্তারিত বিধান মাজহাবভেদে ভিন্ন হতে পারে। ব্যক্তিগত পরিস্থিতির জন্য বিশ্বস্ত আলেমের পরামর্শ নাও।</p></aside></section>
+<section class="panel lesson" id="tayammum"><div class="section-title"><b>৩</b><div><span class="kicker" id="tayammumKicker">তৃতীয় পাঠ</span><h2 id="tayammumTitle">তায়াম্মুম</h2></div></div><div class="art wide"><svg viewBox="0 0 320 140" aria-hidden="true"><rect width="320" height="140" rx="18" fill="#F7EBD1"/><circle cx="265" cy="32" r="13" fill="#E6C76B"/><path d="M12 110Q82 78 148 102T308 98V130H12Z" fill="#D8C49B"/><path d="M100 75Q115 62 132 70L170 89Q180 95 173 103Q167 108 157 102L129 90L115 106Q107 113 99 105Q94 99 101 90Z" fill="#EFC7A4" stroke="#A66E51" stroke-width="2"/><path d="M47 113L58 102M65 119L77 105M85 118L95 108" stroke="#A58C61" stroke-width="2" stroke-linecap="round"/></svg></div><p class="lead" id="tayammumIntro">পানি না পাওয়া গেলে বা পানি ব্যবহার ক্ষতিকর হলে নির্দিষ্ট শর্তে তায়াম্মুম করা যায়।</p><h3 id="tayammumWhenTitle">কখন তায়াম্মুম করা যায়?</h3><ul id="tayammumWhen"><li>পানি না পাওয়া গেলে।</li><li>পানি ব্যবহার করলে অসুস্থতা বাড়ার বাস্তব আশঙ্কা থাকলে।</li><li>অন্যান্য শর্ত পূরণ হলে।</li></ul><h3 id="tayammumStepsTitle">সাধারণ ধাপ</h3><ol id="tayammumSteps"><li>তায়াম্মুমের নিয়ত করা।</li><li>শরিয়তসম্মত পবিত্র মাটিজাত উপাদান ব্যবহার করা।</li><li>মুখ মাসেহ করা।</li><li>নির্ভরযোগ্য নির্দেশনা অনুযায়ী হাত মাসেহ করা।</li></ol><aside class="note"><strong id="tayammumNoteTitle">সতর্কতা</strong><p id="tayammumNote">উপকরণ, হাত মাসেহের সীমা ও শর্তে ফিকহি মতভেদ রয়েছে; এই সংক্ষিপ্ত তালিকাকে পূর্ণ ফতোয়া মনে করবে না।</p></aside></section>
+<section class="panel lesson" id="cleanliness"><div class="section-title"><b>৪</b><div><span class="kicker" id="cleanKicker">চতুর্থ পাঠ</span><h2 id="cleanTitle">নাপাকি ও পরিচ্ছন্নতা</h2></div></div><div class="art wide"><svg viewBox="0 0 320 140" aria-hidden="true"><rect width="320" height="140" rx="18" fill="#F5EEDB"/><path d="M28 112H292" stroke="#A7C99C" stroke-width="3"/><path d="M55 43Q55 32 66 32H110Q121 32 121 43V106H55Z" fill="#DCEBD4" stroke="#7DA77A" stroke-width="2"/><path d="M68 52H106M68 63H106M68 74H101" stroke="#9EBB8F" stroke-width="2"/><path d="M164 43Q164 33 174 33H232Q242 33 242 43V105H164Z" fill="#FFF9E9" stroke="#C6AC62" stroke-width="2"/><path d="M177 52H229M177 63H229M177 74H218" stroke="#D8C47F" stroke-width="2"/><path d="M260 35C248 51 250 59 260 61S272 51 260 35Z" fill="#82C9E5"/><circle cx="143" cy="94" r="12" fill="#E6C76B"/><path d="M137 94L142 99L150 88" fill="none" stroke="#FFF9E9" stroke-width="2.5"/></svg></div><p class="lead" id="cleanIntro">নামাজের আগে শরীর, পোশাক ও নামাজের স্থান পবিত্র থাকা জরুরি। সন্দেহ আর নিশ্চিত নাপাকির মধ্যে পার্থক্য বুঝে চলতে হবে।</p><h3 id="cleanCheckTitle">নামাজের আগে যাচাই করো</h3><ul id="cleanChecks"><li>শরীর ও পোশাকের পবিত্রতা নিশ্চিত করা।</li><li>নামাজের স্থান পরিষ্কার রাখা।</li><li>নাপাকি থাকলে উপযুক্তভাবে তা দূর করা।</li><li>শুধু সন্দেহের কারণে বারবার কষ্টে না পড়ে নির্ভরযোগ্য বিধান শেখা।</li></ul></section>
+<section class="panel recap"><div class="section-title"><b>✓</b><div><span class="kicker" id="recapKicker">শেষে মনে রাখো</span><h2 id="recapTitle">সংক্ষিপ্ত পুনরালোচনা</h2></div></div><ul id="recapList"><li>নামাজের আগে প্রয়োজনীয় পবিত্রতা অর্জন করো।</li><li>অজু, গোসল ও তায়াম্মুমের নিয়ম আলাদা করে শেখো।</li><li>শরীর, পোশাক ও নামাজের স্থান পরিষ্কার রাখো।</li><li>যে বিষয়ে নিশ্চিত নও, বিশ্বস্ত আলেমের কাছে জেনে নাও।</li></ul><p class="disclaimer" id="disclaimer">শিক্ষামূলক সংক্ষিপ্তসার: বিস্তারিত ধর্মীয় বিধান ও ব্যক্তিগত পরিস্থিতির জন্য নির্ভরযোগ্য আলেমের পরামর্শ নাও।</p></section>
+<footer>✦ <span id="footerText">IBADAT • জ্ঞান অর্জন করো, সুন্দরভাবে আমল করো</span> ✦</footer>
+</main><script src="../js/namaz-purity.js"></script>
+</body></html>
