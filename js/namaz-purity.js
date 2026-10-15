@@ -269,28 +269,8 @@
             purityRulesNote:
                 "পবিত্রতার কিছু বিধান পরিস্থিতি ও ফিকহি মতভেদ অনুযায়ী ভিন্ন হতে পারে। এখানে দেওয়া তথ্য শিক্ষামূলক সংক্ষিপ্তসার; ব্যক্তিগত সমস্যায় নির্ভরযোগ্য আলেমের পরামর্শ নাও।",
 
-
-            /* RECAP */
-
-            recapKicker:
-                "শেষে মনে রাখো",
-
-            recapTitle:
-                "সংক্ষিপ্ত পুনরালোচনা",
-
-            recapList: [
-                "নামাজের আগে প্রয়োজনীয় পবিত্রতা অর্জন করো।",
-                "অজু, গোসল ও তায়াম্মুমের নিয়ম আলাদা করে শেখো।",
-                "শরীর, পোশাক ও নামাজের স্থান পরিষ্কার রাখো।",
-                "শুধু সন্দেহের কারণে অযথা দুশ্চিন্তা না করে নির্ভরযোগ্য বিধান শেখো।",
-                "যে বিষয়ে নিশ্চিত নও, বিশ্বস্ত আলেমের কাছে জেনে নাও।"
-            ],
-
-            disclaimer:
-                "শিক্ষামূলক সংক্ষিপ্তসার: বিস্তারিত ধর্মীয় বিধান ও ব্যক্তিগত পরিস্থিতির জন্য নির্ভরযোগ্য আলেমের পরামর্শ নাও।",
-
-            footerText:
-                "IBADAT • জ্ঞান অর্জন করো, সুন্দরভাবে আমল করো"
+           footerText:
+                " জ্ঞান অর্জন করো, সুন্দরভাবে আমল করো"
 
         },
 
@@ -488,28 +468,8 @@
             purityRulesNote:
                 "Some purity rulings differ according to circumstances and legal schools. This is an educational overview, not a complete legal ruling. Consult a reliable scholar for personal concerns.",
 
-
-            /* RECAP */
-
-            recapKicker:
-                "KEY POINTS",
-
-            recapTitle:
-                "Quick Review",
-
-            recapList: [
-                "Attain the purification required before prayer.",
-                "Learn wudu, ghusl and tayammum as separate topics.",
-                "Keep the body, clothing and prayer place clean.",
-                "Learn reliable guidance instead of worrying unnecessarily over doubts.",
-                "Ask a trusted scholar about matters you are unsure of."
-            ],
-
-            disclaimer:
-                "Educational overview: consult a qualified, trusted scholar for detailed rulings and personal circumstances.",
-
             footerText:
-                "IBADAT • Learn with care, practice with sincerity"
+                "Learn with care, practice with sincerity"
 
         },
 
@@ -707,28 +667,8 @@
             purityRulesNote:
                 "पवित्रता के कुछ नियम परिस्थितियों और फ़िक़्ही मत के अनुसार अलग हो सकते हैं। यह शैक्षिक सारांश है, पूर्ण फ़तवा नहीं। निजी स्थिति के लिए भरोसेमंद विद्वान से सलाह लें।",
 
-
-            /* RECAP */
-
-            recapKicker:
-                "याद रखने योग्य",
-
-            recapTitle:
-                "संक्षिप्त दोहराव",
-
-            recapList: [
-                "नमाज़ से पहले आवश्यक पवित्रता प्राप्त करें।",
-                "वुज़ू, ग़ुस्ल और तयम्मुम के नियम अलग-अलग सीखें।",
-                "शरीर, कपड़े और नमाज़ की जगह साफ़ रखें।",
-                "केवल संदेह के कारण अनावश्यक चिंता करने के बजाय भरोसेमंद मार्गदर्शन सीखें।",
-                "जिस बात में यक़ीन न हो, भरोसेमंद विद्वान से पूछें।"
-            ],
-
-            disclaimer:
-                "शैक्षिक सारांश: विस्तृत धार्मिक नियमों और व्यक्तिगत परिस्थितियों के लिए योग्य, भरोसेमंद विद्वान से सलाह लें।",
-
             footerText:
-                "IBADAT • ज्ञान सीखें, ईमानदारी से अमल करें"
+                "ज्ञान सीखें, ईमानदारी से अमल करें"
 
         }
 
