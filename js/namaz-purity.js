@@ -813,6 +813,19 @@
       }
     });
 
+       /* UPDATE ORDERED-LIST NUMBERS BY LANGUAGE */
+
+const listNumberStyles = {
+  bn: "bengali",
+  en: "decimal",
+  hi: "devanagari"
+};
+
+document.querySelectorAll(".lesson ol").forEach(function (list) {
+  list.style.listStyleType =
+    listNumberStyles[lang] || "bengali";
+});
+
         /* PAGE HEADER */
 
         setText(
