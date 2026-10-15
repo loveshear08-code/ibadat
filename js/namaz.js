@@ -1,6 +1,6 @@
 /* =========================================
    IBADAT — NAMAZ LEARNING PAGE
-   14 Topics | Bengali / English / Hindi
+   18 Topics | Bengali / English / Hindi
    Light & Dark Theme
    ========================================= */
 
@@ -35,8 +35,8 @@
   );
 
   /* =========================================
-     ALL 14 LEARNING TOPICS
-     Existing IDs, icons and order preserved
+     18 LEARNING TOPICS
+     The order matches the agreed final list.
      ========================================= */
 
   const topics = [
@@ -44,18 +44,9 @@
       id: "purity",
       icon: "purity.png",
       title: {
-        bn: "পাক-পবিত্রতা",
+        bn: "পবিত্রতা",
         en: "Purification",
-        hi: "पाक-सफ़ाई"
-      }
-    },
-    {
-      id: "wudu",
-      icon: "wudu.png",
-      title: {
-        bn: "ওজু",
-        en: "Wudu",
-        hi: "वुज़ू"
+        hi: "पवित्रता"
       }
     },
     {
@@ -80,9 +71,9 @@
       id: "fard-wajib-sunnah",
       icon: "farz-wajib-sunnah.png",
       title: {
-        bn: "ফরজ, ওয়াজিব ও সুন্নত",
-        en: "Fard, Wajib & Sunnah",
-        hi: "फ़र्ज़, वाजिब और सुन्नत"
+        bn: "নামাজের বিধান",
+        en: "Prayer Rulings",
+        hi: "नमाज़ के नियम"
       }
     },
     {
@@ -134,7 +125,7 @@
       id: "after-prayer",
       icon: "salam-after-prayer.png",
       title: {
-        bn: "সালাম ও পরের আমল",
+        bn: "সালাম ও পরবর্তী আমল",
         en: "Salam & After Prayer",
         hi: "सलाम और बाद के अमल"
       }
@@ -149,10 +140,19 @@
       }
     },
     {
+      id: "gender-prayer",
+      icon: "gender-prayer.png",
+      title: {
+        bn: "নারী-পুরুষের নামাজ",
+        en: "Men's & Women's Prayer",
+        hi: "पुरुषों और महिलाओं की नमाज़"
+      }
+    },
+    {
       id: "mistakes",
       icon: "prayer-mistakes.png",
       title: {
-        bn: "ভুল ও সংশোধন",
+        bn: "ভুল সংশোধন",
         en: "Mistakes & Corrections",
         hi: "गलतियाँ और सुधार"
       }
@@ -165,12 +165,49 @@
         en: "Jamaat & Special Prayers",
         hi: "जमाअत और विशेष नमाज़ें"
       }
+    },
+    {
+      id: "kalima-aqeedah",
+      icon: "kalima-aqeedah.png",
+      title: {
+        bn: "কলিমা ও আকিদা",
+        en: "Kalima & Aqeedah",
+        hi: "कलिमा और अकीदा"
+      }
+    },
+    {
+      id: "daily-amal",
+      icon: "daily-amal.png",
+      title: {
+        bn: "দৈনন্দিন আমল",
+        en: "Daily Amal",
+        hi: "दैनिक अमल"
+      }
+    },
+    {
+      id: "qaida-arabic-reading",
+      icon: "qaida-arabic-reading.png",
+      title: {
+        bn: "কায়দা ও আরবি পাঠ",
+        en: "Qaida & Arabic Reading",
+        hi: "क़ायदा और अरबी पढ़ना"
+      }
+    },
+    {
+      id: "islamic-rulings",
+      icon: "islamic-rulings.png",
+      title: {
+        bn: "ইসলামি বিধান",
+        en: "Islamic Rulings",
+        hi: "इस्लामी नियम"
+      }
     }
   ];
 
   /* =========================================
-     INTRODUCTION
-     User-approved wording in all 3 languages
+     INTRODUCTION BOARD
+     The approved heading and paragraph remain.
+     Rakat rows are no longer shown on this board.
      ========================================= */
 
   const introduction = {
@@ -195,34 +232,88 @@
 
   /* =========================================
      FIVE DAILY PRAYERS & RAKATS
-     Displayed in the selected language
+     Kept as lesson data for the
+     "Prayer Times & Rakats" topic.
+     These rows are NOT rendered on the board.
      ========================================= */
 
   const prayerRakat = {
     bn: [
-      "ফজর — ২ সুন্নত + ২ ফরজ",
-      "যোহর — ৪ সুন্নত + ৪ ফরজ + ২ সুন্নত + ২ নফল",
-      "আসর — ৪ সুন্নত + ৪ ফরজ",
-      "মাগরিব — ৩ ফরজ + ২ সুন্নত + ২ নফল",
-      "এশা — ৪ সুন্নত + ৪ ফরজ + ২ সুন্নত + ২ নফল + ৩ বিতর + ২ নফল"
+      {
+        prayer: "ফজর",
+        details: "২ সুন্নত + ২ ফরজ"
+      },
+      {
+        prayer: "যোহর",
+        details: "৪ সুন্নত + ৪ ফরজ + ২ সুন্নত + ২ নফল"
+      },
+      {
+        prayer: "আসর",
+        details: "৪ সুন্নত + ৪ ফরজ"
+      },
+      {
+        prayer: "মাগরিব",
+        details: "৩ ফরজ + ২ সুন্নত + ২ নফল"
+      },
+      {
+        prayer: "এশা",
+        details: "৪ সুন্নত + ৪ ফরজ + ২ সুন্নত + ২ নফল + ৩ বিতর + ২ নফল"
+      }
     ],
 
     en: [
-      "Fajr — 2 Sunnah + 2 Fard",
-      "Dhuhr — 4 Sunnah + 4 Fard + 2 Sunnah + 2 Nafl",
-      "Asr — 4 Sunnah + 4 Fard",
-      "Maghrib — 3 Fard + 2 Sunnah + 2 Nafl",
-      "Isha — 4 Sunnah + 4 Fard + 2 Sunnah + 2 Nafl + 3 Witr + 2 Nafl"
+      {
+        prayer: "Fajr",
+        details: "2 Sunnah + 2 Fard"
+      },
+      {
+        prayer: "Dhuhr",
+        details: "4 Sunnah + 4 Fard + 2 Sunnah + 2 Nafl"
+      },
+      {
+        prayer: "Asr",
+        details: "4 Sunnah + 4 Fard"
+      },
+      {
+        prayer: "Maghrib",
+        details: "3 Fard + 2 Sunnah + 2 Nafl"
+      },
+      {
+        prayer: "Isha",
+        details: "4 Sunnah + 4 Fard + 2 Sunnah + 2 Nafl + 3 Witr + 2 Nafl"
+      }
     ],
 
-   hi: [
-  "फ़ज्र — २ सुन्नत + २ फ़र्ज़",
-  "ज़ुहर — ४ सुन्नत + ४ फ़र्ज़ + २ सुन्नत + २ नफ़्ल",
-  "असर — ४ सुन्नत + ४ फ़र्ज़",
-  "मग़रिब — ३ फ़र्ज़ + २ सुन्नत + २ नफ़्ल",
-  "इशा — ४ सुन्नत + ४ फ़र्ज़ + २ सुन्नत + २ नफ़्ल + ३ वितर + २ नफ़्ल"
-],
- 
+    hi: [
+      {
+        prayer: "फ़ज्र",
+        details: "२ सुन्नत + २ फ़र्ज़"
+      },
+      {
+        prayer: "ज़ुहर",
+        details: "४ सुन्नत + ४ फ़र्ज़ + २ सुन्नत + २ नफ़्ल"
+      },
+      {
+        prayer: "असर",
+        details: "४ सुन्नत + ४ फ़र्ज़"
+      },
+      {
+        prayer: "मग़रिब",
+        details: "३ फ़र्ज़ + २ सुन्नत + २ नफ़्ल"
+      },
+      {
+        prayer: "इशा",
+        details: "४ सुन्नत + ४ फ़र्ज़ + २ सुन्नत + २ नफ़्ल + ३ वितर + २ नफ़्ल"
+      }
+    ]
+  };
+
+  /*
+   * Make the rakats available for the lesson page
+   * when we build it in a later step.
+   */
+  window.namazLessonData = {
+    prayerRakat
   };
 
   /* =========================================
@@ -247,27 +338,17 @@
   }
 
   /* =========================================
-     BUILD INTRODUCTION AND PRAYER LIST
+     BUILD INTRODUCTION
+     No prayer/rakat list is rendered here.
      ========================================= */
 
   function buildIntroduction() {
     const heading = document.getElementById("intro-title");
-
-    const paragraph = document.getElementById(
-      "intro-paragraph-1"
-    );
-
-    const list = document.getElementById(
-      "prayer-rakat-list"
-    );
+    const paragraph = document.getElementById("intro-paragraph-1");
 
     const intro =
       introduction[currentLanguage] ||
       introduction.bn;
-
-    const prayerItems =
-      prayerRakat[currentLanguage] ||
-      prayerRakat.bn;
 
     if (heading) {
       heading.textContent = intro.heading;
@@ -276,29 +357,12 @@
     if (paragraph) {
       paragraph.textContent = intro.paragraph1;
     }
-
-    /*
-     * Build the list only if the matching HTML
-     * container exists. This avoids breaking
-     * the rest of the page if HTML is not updated.
-     */
-
-    if (list) {
-      const fragment = document.createDocumentFragment();
-
-      prayerItems.forEach((item) => {
-        const row = document.createElement("p");
-        row.textContent = item;
-        fragment.appendChild(row);
-      });
-
-      list.replaceChildren(fragment);
-    }
   }
 
   /* =========================================
      OPEN SELECTED TOPIC
-     Existing detail-page URL preserved
+     Keep the existing destination convention.
+     Individual lesson pages will be built later.
      ========================================= */
 
   function openTopic(topic) {
@@ -307,28 +371,18 @@
       window.location.href
     );
 
-    destination.searchParams.set(
-      "topic",
-      topic.id
-    );
-
-    destination.searchParams.set(
-      "lang",
-      currentLanguage
-    );
+    destination.searchParams.set("topic", topic.id);
+    destination.searchParams.set("lang", currentLanguage);
 
     window.location.href = destination.href;
   }
 
   /* =========================================
-     BUILD ALL 14 TOPIC CARDS
-     Existing order, IDs and assets preserved
+     BUILD ALL 18 TOPIC CARDS
      ========================================= */
 
   function buildLearningGrid() {
-    const grid = document.getElementById(
-      "learning-grid"
-    );
+    const grid = document.getElementById("learning-grid");
 
     if (!grid) {
       console.error(
@@ -346,10 +400,8 @@
       button.className = "learning-card";
       button.dataset.topic = topic.id;
 
-      button.setAttribute(
-        "aria-label",
-        getText(topic.title)
-      );
+      const title = getText(topic.title);
+      button.setAttribute("aria-label", title);
 
       /* Topic icon */
 
@@ -380,12 +432,12 @@
 
       const label = document.createElement("span");
 
-      label.textContent = getText(topic.title);
+      label.textContent = title;
       label.dataset.label = topic.id;
 
       button.append(icon, label);
 
-      /* Open the existing lesson page */
+      /* Open the selected lesson */
 
       button.addEventListener("click", () => {
         openTopic(topic);
@@ -413,15 +465,9 @@
     buildLearningGrid();
   }
 
-  /*
-   * Preserve the existing public refresh function.
-   */
-
   window.refreshNamazLanguage = refreshNamazLanguage;
 
-  /*
-   * Refresh when settings change in another tab.
-   */
+  /* Refresh when settings change in another tab */
 
   window.addEventListener("storage", (event) => {
     if (event.key === SETTINGS_KEY) {
