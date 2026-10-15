@@ -81,8 +81,8 @@ body {
   display: grid;
 
   grid-template-rows:
-    minmax(0, 0.95fr)
-    minmax(0, 2.05fr);
+    minmax(0, 0.72fr)
+    minmax(0, 2.28fr);
 
   gap: 8px;
 
@@ -145,8 +145,8 @@ body {
   align-items: stretch;
   justify-content: center;
 
-  padding: 8px 14px;
-  gap: 6px;
+  padding: 5px 12px;
+  gap: 4px;
 }
 
 /* Heading */
@@ -172,15 +172,17 @@ body {
 
   font-size: clamp(13px, 3.5vw, 16px);
   font-weight: 650;
-  line-height: 1.48;
+  line-height: 1.38;
 
   text-align: center;
 
-  margin: 0;
+  max-width: 100%;
+  margin: 0 auto;
   flex: 0 0 auto;
 
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
   word-break: normal;
+  text-wrap: pretty;
 }
 
 /* =========================================
