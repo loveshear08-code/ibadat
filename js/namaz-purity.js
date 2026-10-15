@@ -795,6 +795,23 @@
 
         document.documentElement.lang = lang;
 
+           /* UPDATE LESSON NUMBERS BY LANGUAGE */
+       
+    const lessonNumbers = {
+      bn: ["১", "২", "৩", "৪", "৫"],
+      en: ["1", "2", "3", "4", "5"],
+      hi: ["१", "२", "३", "४", "५"]
+    };
+
+    const numbers = lessonNumbers[lang] || lessonNumbers.bn;
+
+    document.querySelectorAll(
+      ".lesson .section-title > b"
+    ).forEach(function (badge, index) {
+      if (index < numbers.length) {
+        badge.textContent = numbers[index];
+      }
+    });
 
         /* PAGE HEADER */
 
