@@ -1,52 +1,72 @@
-/* =========================================
+/* =====================================================
    IBADAT — NAMAZ LEARNING PAGE
    18 Topics | Bengali / English / Hindi
-   Light & Dark Theme
-   ========================================= */
+   Light & Dark Theme | Central Route Map
+   ===================================================== */
 
 "use strict";
 
 (() => {
   const SETTINGS_KEY = "appSettings";
-  const ASSET_PATH = "../assets/";
+  const ASSET_BASE = "../assets/";
 
-  /* =========================================
-     APP SETTINGS
-     ========================================= */
+  /* ---------- SETTINGS ---------- */
 
   function getAppSettings() {
     try {
-      const saved = localStorage.getItem(SETTINGS_KEY);
-      return saved ? JSON.parse(saved) : {};
+      return JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{}");
     } catch (error) {
-      console.warn("Namaz: Could not read app settings.", error);
+      console.warn("Could not read app settings:", error);
       return {};
     }
   }
 
   function normalizeLanguage(language) {
-    return ["bn", "en", "hi"].includes(language)
-      ? language
-      : "bn";
+    return ["bn", "en", "hi"].includes(language) ? language : "bn";
   }
 
   let currentLanguage = normalizeLanguage(
     getAppSettings().lang || "bn"
   );
 
-  /* =========================================
-     18 LEARNING TOPICS
-     The order matches the agreed final list.
-     ========================================= */
+  /* ---------- CENTRAL ROUTE MAP ---------- */
+
+  /*
+    Every topic has its own destination.
+    Create the remaining HTML pages later using these filenames.
+  */
+
+  const NAMAZ_ROUTES = {
+    "purity": "namaz-purity.html",
+    "conditions": "namaz-conditions.html",
+    "times-rakats": "namaz-times-rakats.html",
+    "fard-wajib-sunnah": "namaz-rulings.html",
+    "start": "namaz-start.html",
+    "qirat": "namaz-qirat.html",
+    "ruku": "namaz-ruku.html",
+    "sujood": "namaz-sujood.html",
+    "tashahhud": "namaz-tashahhud.html",
+    "after-prayer": "namaz-after-prayer.html",
+    "complete": "namaz-complete.html",
+    "gender-prayer": "namaz-gender-prayer.html",
+    "mistakes": "namaz-mistakes.html",
+    "jamaat-special": "namaz-jamaat-special.html",
+    "kalima-aqeedah": "namaz-kalima-aqeedah.html",
+    "daily-amal": "namaz-daily-amal.html",
+    "qaida-arabic-reading": "namaz-qaida-arabic.html",
+    "islamic-rulings": "namaz-islamic-rulings.html"
+  };
+
+  /* ---------- 18 LEARNING TOPICS ---------- */
 
   const topics = [
     {
       id: "purity",
       icon: "purity.png",
       title: {
-        bn: "পবিত্রতা",
+        bn: "পাক-পবিত্রতা",
         en: "Purification",
-        hi: "पवित्रता"
+        hi: "पाक-सफ़ाई"
       }
     },
     {
@@ -71,9 +91,9 @@
       id: "fard-wajib-sunnah",
       icon: "farz-wajib-sunnah.png",
       title: {
-        bn: "নামাজের বিধান",
-        en: "Prayer Rulings",
-        hi: "नमाज़ के नियम"
+        bn: "ফরজ, ওয়াজিব ও সুন্নত",
+        en: "Fard, Wajib & Sunnah",
+        hi: "फ़र्ज़, वाजिब और सुन्नत"
       }
     },
     {
@@ -125,7 +145,7 @@
       id: "after-prayer",
       icon: "salam-after-prayer.png",
       title: {
-        bn: "সালাম ও পরবর্তী আমল",
+        bn: "সালাম ও পরের আমল",
         en: "Salam & After Prayer",
         hi: "सलाम और बाद के अमल"
       }
@@ -141,10 +161,10 @@
     },
     {
       id: "gender-prayer",
-      icon: "gender-prayer.png",
+      icon: "men-women-prayer.png",
       title: {
         bn: "নারী-পুরুষের নামাজ",
-        en: "Men's & Women's Prayer",
+        en: "Prayer for Men & Women",
         hi: "पुरुषों और महिलाओं की नमाज़"
       }
     },
@@ -152,7 +172,7 @@
       id: "mistakes",
       icon: "prayer-mistakes.png",
       title: {
-        bn: "ভুল সংশোধন",
+        bn: "ভুল ও সংশোধন",
         en: "Mistakes & Corrections",
         hi: "गलतियाँ और सुधार"
       }
@@ -170,7 +190,7 @@
       id: "kalima-aqeedah",
       icon: "kalima-aqeedah.png",
       title: {
-        bn: "কলিমা ও আকিদা",
+        bn: "কালিমা ও আকিদা",
         en: "Kalima & Aqeedah",
         hi: "कलिमा और अकीदा"
       }
@@ -180,7 +200,7 @@
       icon: "daily-amal.png",
       title: {
         bn: "দৈনন্দিন আমল",
-        en: "Daily Amal",
+        en: "Daily Practices",
         hi: "दैनिक अमल"
       }
     },
@@ -188,7 +208,7 @@
       id: "qaida-arabic-reading",
       icon: "qaida-arabic-reading.png",
       title: {
-        bn: "কায়দা ও আরবি পাঠ",
+        bn: "কায়দা ও আরবি পড়া",
         en: "Qaida & Arabic Reading",
         hi: "क़ायदा और अरबी पढ़ना"
       }
@@ -204,129 +224,42 @@
     }
   ];
 
-  /* =========================================
-     INTRODUCTION BOARD
-     The approved heading and paragraph remain.
-     Rakat rows are no longer shown on this board.
-     ========================================= */
+  /* ---------- INTRODUCTION BOARD TEXT ---------- */
 
   const introduction = {
     bn: {
-      heading: "কী ও কেন ?",
+      heading: "কী ও কেন?",
       paragraph1:
-        "নামাজ ইসলামের অন্যতম প্রধান ইবাদত, যা আল্লাহর স্মরণে হৃদয়কে প্রশান্ত করে। এটি মুমিনের জীবনে শৃঙ্খলা আনে এবং সৃষ্টিকর্তার নৈকট্য লাভের পথ সুগম করে।"
+        "নামাজ ইসলামের অন্যতম প্রধান ইবাদত। আল্লাহর সন্তুষ্টি অর্জনের জন্য প্রত্যেক মুসলিমের নামাজ আদায় করা গুরুত্বপূর্ণ।",
+      paragraph2:
+        "পাক-পবিত্রতা থেকে সালাম পর্যন্ত নামাজের নিয়ম, দোয়া ও প্রয়োজনীয় বিষয়গুলো ধাপে ধাপে শিখুন।",
+      ariaLabel: "নামাজ সম্পর্কে পরিচিতি পড়ুন"
     },
 
     en: {
-      heading: "What & Why ?",
+      heading: "What & Why?",
       paragraph1:
-        "Salah is a central act of worship in Islam. It brings the heart peace through remembrance of Allah, builds discipline, and helps believers grow closer to their Creator."
+        "Salah is one of the most important acts of worship in Islam. Performing Salah is essential for a Muslim seeking the pleasure of Allah.",
+      paragraph2:
+        "Learn the steps of prayer, from purification to Salam, including essential rules and duas.",
+      ariaLabel: "Open the prayer introduction"
     },
 
     hi: {
-      heading: "क्या और क्यों ?",
+      heading: "क्या और क्यों?",
       paragraph1:
-        "नमाज़ इस्लाम की प्रमुख इबादतों में से एक है। यह अल्लाह की याद से दिल को सुकून देती है, जीवन में अनुशासन लाती है और अपने रब के करीब होने का माध्यम बनती है।"
+        "नमाज़ इस्लाम की सबसे महत्वपूर्ण इबादतों में से एक है। अल्लाह की रज़ा पाने के लिए नमाज़ अदा करना ज़रूरी है।",
+      paragraph2:
+        "पाक-सफ़ाई से सलाम तक नमाज़ के तरीक़े, दुआएँ और ज़रूरी बातें चरणबद्ध तरीके से सीखें।",
+      ariaLabel: "नमाज़ का परिचय खोलें"
     }
   };
 
-  /* =========================================
-     FIVE DAILY PRAYERS & RAKATS
-     Kept as lesson data for the
-     "Prayer Times & Rakats" topic.
-     These rows are NOT rendered on the board.
-     ========================================= */
-
-  const prayerRakat = {
-    bn: [
-      {
-        prayer: "ফজর",
-        details: "২ সুন্নত + ২ ফরজ"
-      },
-      {
-        prayer: "যোহর",
-        details: "৪ সুন্নত + ৪ ফরজ + ২ সুন্নত + ২ নফল"
-      },
-      {
-        prayer: "আসর",
-        details: "৪ সুন্নত + ৪ ফরজ"
-      },
-      {
-        prayer: "মাগরিব",
-        details: "৩ ফরজ + ২ সুন্নত + ২ নফল"
-      },
-      {
-        prayer: "এশা",
-        details: "৪ সুন্নত + ৪ ফরজ + ২ সুন্নত + ২ নফল + ৩ বিতর + ২ নফল"
-      }
-    ],
-
-    en: [
-      {
-        prayer: "Fajr",
-        details: "2 Sunnah + 2 Fard"
-      },
-      {
-        prayer: "Dhuhr",
-        details: "4 Sunnah + 4 Fard + 2 Sunnah + 2 Nafl"
-      },
-      {
-        prayer: "Asr",
-        details: "4 Sunnah + 4 Fard"
-      },
-      {
-        prayer: "Maghrib",
-        details: "3 Fard + 2 Sunnah + 2 Nafl"
-      },
-      {
-        prayer: "Isha",
-        details: "4 Sunnah + 4 Fard + 2 Sunnah + 2 Nafl + 3 Witr + 2 Nafl"
-      }
-    ],
-
-    hi: [
-      {
-        prayer: "फ़ज्र",
-        details: "२ सुन्नत + २ फ़र्ज़"
-      },
-      {
-        prayer: "ज़ुहर",
-        details: "४ सुन्नत + ४ फ़र्ज़ + २ सुन्नत + २ नफ़्ल"
-      },
-      {
-        prayer: "असर",
-        details: "४ सुन्नत + ४ फ़र्ज़"
-      },
-      {
-        prayer: "मग़रिब",
-        details: "३ फ़र्ज़ + २ सुन्नत + २ नफ़्ल"
-      },
-      {
-        prayer: "इशा",
-        details: "४ सुन्नत + ४ फ़र्ज़ + २ सुन्नत + २ नफ़्ल + ३ वितर + २ नफ़्ल"
-      }
-    ]
-  };
-
-  /*
-   * Make the rakats available for the lesson page
-   * when we build it in a later step.
-   */
-  window.namazLessonData = {
-    prayerRakat
-  };
-
-  /* =========================================
-     HELPERS
-     ========================================= */
-
   function getText(textObject) {
-    return (
-      textObject[currentLanguage] ||
-      textObject.bn ||
-      ""
-    );
+    return textObject[currentLanguage] || textObject.bn || "";
   }
+
+  /* ---------- THEME ---------- */
 
   function applySavedTheme() {
     const settings = getAppSettings();
@@ -337,78 +270,133 @@
     );
   }
 
-  /* =========================================
-     BUILD INTRODUCTION
-     No prayer/rakat list is rendered here.
-     ========================================= */
+  /* ---------- BUILD INTRODUCTION ---------- */
 
   function buildIntroduction() {
-    const heading = document.getElementById("intro-title");
-    const paragraph = document.getElementById("intro-paragraph-1");
-
     const intro =
-      introduction[currentLanguage] ||
-      introduction.bn;
+      introduction[currentLanguage] || introduction.bn;
+
+    const heading = document.getElementById("intro-title");
+    const paragraph1 =
+      document.getElementById("intro-paragraph-1");
+    const paragraph2 =
+      document.getElementById("intro-paragraph-2");
 
     if (heading) {
       heading.textContent = intro.heading;
     }
 
-    if (paragraph) {
-      paragraph.textContent = intro.paragraph1;
+    if (paragraph1) {
+      paragraph1.textContent = intro.paragraph1;
+    }
+
+    if (paragraph2) {
+      paragraph2.textContent = intro.paragraph2;
+    }
+
+    const board = document.querySelector(".intro-board");
+
+    if (board) {
+      board.setAttribute("aria-label", intro.ariaLabel);
     }
   }
 
-  /* =========================================
-     OPEN SELECTED TOPIC
-     Keep the existing destination convention.
-     Individual lesson pages will be built later.
-     ========================================= */
+  /* ---------- OPEN TOPIC PAGE ---------- */
 
   function openTopic(topic) {
+    const page = NAMAZ_ROUTES[topic.id];
+
+    if (!page) {
+      console.error(
+        "IBADAT Namaz: No route configured for topic:",
+        topic.id
+      );
+      return;
+    }
+
     const destination = new URL(
-      "namaz-detail.html",
+      page,
       window.location.href
     );
 
-    destination.searchParams.set("topic", topic.id);
     destination.searchParams.set("lang", currentLanguage);
 
     window.location.href = destination.href;
   }
 
-  /* =========================================
-     BUILD ALL 18 TOPIC CARDS
-     ========================================= */
+  /* ---------- OPEN INTRODUCTION PAGE ---------- */
+
+  function openIntroductionBoard() {
+    const destination = new URL(
+      "namaz-intro.html",
+      window.location.href
+    );
+
+    destination.searchParams.set("lang", currentLanguage);
+
+    window.location.href = destination.href;
+  }
+
+  function setupIntroductionBoard() {
+    const board = document.querySelector(".intro-board");
+
+    if (!board) {
+      console.warn(
+        "IBADAT Namaz: Introduction board was not found."
+      );
+      return;
+    }
+
+    board.style.cursor = "pointer";
+    board.setAttribute("role", "link");
+    board.setAttribute("tabindex", "0");
+
+    board.addEventListener(
+      "click",
+      openIntroductionBoard
+    );
+
+    board.addEventListener("keydown", function (event) {
+      if (
+        event.key === "Enter" ||
+        event.key === " "
+      ) {
+        event.preventDefault();
+        openIntroductionBoard();
+      }
+    });
+  }
+
+  /* ---------- BUILD THE 18 TOPIC CARDS ---------- */
 
   function buildLearningGrid() {
     const grid = document.getElementById("learning-grid");
 
     if (!grid) {
       console.error(
-        "Namaz: #learning-grid was not found. Check namaz.html."
+        "IBADAT Namaz: #learning-grid was not found."
       );
       return;
     }
 
     const fragment = document.createDocumentFragment();
 
-    topics.forEach((topic) => {
+    topics.forEach(function (topic) {
       const button = document.createElement("button");
 
       button.type = "button";
       button.className = "learning-card";
       button.dataset.topic = topic.id;
 
-      const title = getText(topic.title);
-      button.setAttribute("aria-label", title);
-
-      /* Topic icon */
+      button.setAttribute(
+        "aria-label",
+        getText(topic.title)
+      );
 
       const icon = document.createElement("img");
 
       icon.className = "topic-icon";
-      icon.src = ASSET_PATH + topic.icon;
+      icon.src = ASSET_BASE + topic.icon;
       icon.alt = "";
       icon.loading = "eager";
       icon.decoding = "async";
@@ -416,11 +404,10 @@
 
       icon.addEventListener(
         "error",
-        () => {
-          console.error(
-            "Namaz icon not found: " +
-            ASSET_PATH +
-            topic.icon
+        function () {
+          console.warn(
+            "IBADAT Namaz: Icon not found:",
+            ASSET_BASE + topic.icon
           );
 
           button.classList.add("icon-missing");
@@ -428,18 +415,14 @@
         { once: true }
       );
 
-      /* Topic label */
-
       const label = document.createElement("span");
 
-      label.textContent = title;
+      label.textContent = getText(topic.title);
       label.dataset.label = topic.id;
 
       button.append(icon, label);
 
-      /* Open the selected lesson */
-
-      button.addEventListener("click", () => {
+      button.addEventListener("click", function () {
         openTopic(topic);
       });
 
@@ -449,9 +432,7 @@
     grid.replaceChildren(fragment);
   }
 
-  /* =========================================
-     REFRESH LANGUAGE & THEME
-     ========================================= */
+  /* ---------- REFRESH LANGUAGE AND THEME ---------- */
 
   function refreshNamazLanguage() {
     const settings = getAppSettings();
@@ -467,22 +448,19 @@
 
   window.refreshNamazLanguage = refreshNamazLanguage;
 
-  /* Refresh when settings change in another tab */
-
-  window.addEventListener("storage", (event) => {
+  window.addEventListener("storage", function (event) {
     if (event.key === SETTINGS_KEY) {
       refreshNamazLanguage();
     }
   });
 
-  /* =========================================
-     INITIALIZE
-     ========================================= */
+  /* ---------- INITIALIZE PAGE ---------- */
 
   function initializeNamazPage() {
     applySavedTheme();
     buildIntroduction();
     buildLearningGrid();
+    setupIntroductionBoard();
   }
 
   if (document.readyState === "loading") {
