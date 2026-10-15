@@ -872,3 +872,87 @@ body.dark-mode .disclaimer {
         animation-iteration-count: 1 !important;
     }
 }
+
+/* =========================================
+IBADAT — BOTTOM FOOTER BAR
+========================================= */
+
+.purity-footer {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 3px;
+width: 100%;
+margin: 18px 0 0;
+padding: 14px 10px 12px;
+background: #0B3D26;
+color: #FFFFFF;
+text-align: center;
+border-top: 3px solid #D4AF37;
+border-radius: 12px 12px 0 0;
+box-shadow: 0 -3px 12px rgba(11, 61, 38, 0.12);
+}
+
+.purity-footer-message {
+display: flex;
+flex-wrap: nowrap;
+align-items: center;
+justify-content: center;
+gap: 7px;
+width: 100%;
+color: #FFFFFF;
+font-family: "Noto Sans Bengali", "Noto Sans Devanagari",
+"Nirmala UI", Arial, sans-serif;
+font-size: clamp(12px, 3.4vw, 15px);
+font-weight: 800;
+line-height: 1.5;
+white-space: nowrap;
+}
+
+.purity-footer .footer-star {
+flex: 0 0 auto;
+color: #D4AF37;
+font-size: 15px;
+line-height: 1;
+}
+
+.purity-footer-brand {
+color: #E6C75A;
+font-family: Arial, sans-serif;
+font-size: 12px;
+font-weight: 900;
+letter-spacing: 2px;
+line-height: 1.5;
+}
+
+/* Dark theme */
+body.dark-mode .purity-footer {
+background: #082F1E;
+color: #FFFFFF;
+border-top-color: #D4AF37;
+}
+
+body.dark-mode .purity-footer-message {
+color: #FFFFFF;
+}
+
+body.dark-mode .purity-footer-brand {
+color: #E6C75A;
+}
+
+/* Small mobile screens */
+@media (max-width: 360px) {
+.purity-footer {
+padding: 12px 5px 10px;
+}
+
+.purity-footer-message {
+gap: 4px;
+font-size: 11px;
+}
+
+.purity-footer .footer-star {
+font-size: 12px;
+}
+}
