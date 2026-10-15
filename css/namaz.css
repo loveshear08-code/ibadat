@@ -1,8 +1,7 @@
 /* =========================================
    IBADAT — NAMAZ LEARNING PAGE
-   14 Topics | Bengali / English / Hindi
+   18 Topics | Bengali / English / Hindi
    Light & Dark Theme
-   Preserve existing layout, icons and links
    ========================================= */
 
 :root {
@@ -71,7 +70,6 @@ body {
 
 /* =========================================
    MAIN PAGE
-   Keep the page full-screen without app bars
    ========================================= */
 
 .namaz-page {
@@ -82,7 +80,6 @@ body {
 
   display: grid;
 
-  /* Slightly more space for the introduction */
   grid-template-rows:
     minmax(0, 0.95fr)
     minmax(0, 2.05fr);
@@ -99,7 +96,6 @@ body {
 
 /* =========================================
    INTRODUCTION BOARD
-   Cream background, mosque pattern and gold
    ========================================= */
 
 .intro-board {
@@ -134,8 +130,6 @@ body {
   box-shadow: 0 3px 10px rgba(11, 61, 38, 0.12);
 }
 
-/* Content stays within the existing board */
-
 .intro-content {
   position: relative;
   z-index: 1;
@@ -155,10 +149,7 @@ body {
   gap: 6px;
 }
 
-/* =========================================
-   INTRODUCTION HEADING
-   Signing/deep gold
-   ========================================= */
+/* Heading */
 
 .intro-content h1 {
   color: var(--heading-gold);
@@ -174,10 +165,7 @@ body {
   flex: 0 0 auto;
 }
 
-/* =========================================
-   MAIN EXPLANATION
-   Slightly larger and comfortable to read
-   ========================================= */
+/* Introduction paragraph */
 
 .intro-content > p {
   color: #1E4620;
@@ -196,58 +184,8 @@ body {
 }
 
 /* =========================================
-   OPTIONAL GOLD DIVIDER
-   Preserved for existing HTML if used
-   ========================================= */
-
-.intro-divider {
-  flex: 0 0 auto;
-
-  width: 100%;
-  height: 3px;
-
-  margin-top: 2px;
-
-  background: var(--gold);
-  border-radius: 3px;
-}
-
-/* =========================================
-   PRAYER & RAKAT LIST
-   Smaller text to give more space to intro
-   ========================================= */
-
-.prayer-rakat-list {
-  width: 100%;
-  min-width: 0;
-
-  display: flex;
-  flex-direction: column;
-
-  gap: 2px;
-  margin-top: 3px;
-
-  flex: 0 1 auto;
-}
-
-.prayer-rakat-list p {
-  color: #1E4620;
-
-  font-size: clamp(10px, 2.65vw, 12px);
-  font-weight: 650;
-  line-height: 1.3;
-
-  text-align: start;
-
-  margin: 0;
-
-  overflow-wrap: anywhere;
-  word-break: normal;
-}
-
-/* =========================================
-   LEARNING GRID
-   Keep 14 cards in two columns and seven rows
+   LEARNING GRID — 18 CARDS
+   Two columns × nine rows
    ========================================= */
 
 .learning-grid {
@@ -260,7 +198,7 @@ body {
   display: grid;
 
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(7, minmax(0, 1fr));
+  grid-template-rows: repeat(9, minmax(0, 1fr));
 
   gap: var(--grid-gap);
 
@@ -269,7 +207,6 @@ body {
 
 /* =========================================
    TOPIC CARDS
-   Preserve existing sizes, colors and behavior
    ========================================= */
 
 .learning-card {
@@ -298,9 +235,9 @@ body {
   color: var(--text);
 
   font-family: inherit;
-  font-size: clamp(12px, 3.15vw, 16px);
+  font-size: clamp(11px, 2.9vw, 15px);
   font-weight: 800;
-  line-height: 1.28;
+  line-height: 1.22;
 
   text-align: center;
   cursor: pointer;
@@ -320,8 +257,8 @@ body {
 .topic-icon {
   display: block;
 
-  width: clamp(38px, 10.8vw, 52px);
-  height: clamp(38px, 10.8vw, 52px);
+  width: clamp(30px, 8.3vw, 44px);
+  height: clamp(30px, 8.3vw, 44px);
 
   flex: 0 0 auto;
 
@@ -344,7 +281,7 @@ body {
 
   font-size: inherit;
   font-weight: 800;
-  line-height: 1.28;
+  line-height: 1.22;
 
   text-align: center;
 
@@ -371,15 +308,12 @@ body {
 @media (hover: hover) {
   .learning-card:hover {
     background: var(--card-bg-hover);
-
-    box-shadow:
-      0 3px 7px rgba(15, 81, 50, 0.13);
+    box-shadow: 0 3px 7px rgba(15, 81, 50, 0.13);
   }
 }
 
 /* =========================================
    COMPACT PHONES
-   Keep every card visible
    ========================================= */
 
 @media (max-width: 380px) {
@@ -387,7 +321,7 @@ body {
     --page-padding-x: 7px;
     --page-padding-y: 6px;
     --grid-gap: 5px;
-    --card-radius: 13px;
+    --card-radius: 12px;
   }
 
   .namaz-page {
@@ -416,33 +350,22 @@ body {
     line-height: 1.38;
   }
 
-  .prayer-rakat-list {
-    gap: 1px;
-    margin-top: 2px;
-  }
-
-  .prayer-rakat-list p {
-    font-size: clamp(9px, 2.5vw, 11px);
-    line-height: 1.24;
-  }
-
   .learning-card {
     gap: 4px;
     padding: 3px 4px;
 
-    font-size: clamp(11px, 3vw, 13px);
-    border-radius: 12px;
+    font-size: clamp(10px, 2.8vw, 12px);
+    border-radius: 11px;
   }
 
   .topic-icon {
-    width: clamp(33px, 9.3vw, 40px);
-    height: clamp(33px, 9.3vw, 40px);
+    width: clamp(28px, 7.8vw, 36px);
+    height: clamp(28px, 7.8vw, 36px);
   }
 }
 
 /* =========================================
    SHORT SCREENS
-   Preserve the full grid and compact spacing
    ========================================= */
 
 @media (max-height: 740px) {
@@ -472,25 +395,19 @@ body {
     line-height: 1.34;
   }
 
-  .prayer-rakat-list {
-    gap: 1px;
-    margin-top: 2px;
-  }
-
-  .prayer-rakat-list p {
-    font-size: clamp(9px, 2.5vw, 11px);
-    line-height: 1.22;
+  .learning-card {
+    gap: 4px;
+    padding: 3px 4px;
   }
 
   .topic-icon {
-    width: clamp(32px, 8.8vw, 44px);
-    height: clamp(32px, 8.8vw, 44px);
+    width: clamp(27px, 7.6vw, 39px);
+    height: clamp(27px, 7.6vw, 39px);
   }
 }
 
 /* =========================================
    DARK THEME
-   Keep gold heading and readable text
    ========================================= */
 
 body.dark-mode {
@@ -528,8 +445,7 @@ body.dark-mode .intro-content h1 {
   color: #E7D18A;
 }
 
-body.dark-mode .intro-content > p,
-body.dark-mode .prayer-rakat-list p {
+body.dark-mode .intro-content > p {
   color: #F0F0E8;
 }
 
