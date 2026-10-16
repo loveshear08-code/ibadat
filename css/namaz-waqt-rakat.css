@@ -1,17 +1,15 @@
-/* =========================================
+/* =====================================
    IBADAT — Waqt o Rakat
-   Responsive, cream + green + gold theme
-========================================= */
+===================================== */
 
 :root {
-  --page-bg: #f8f5e8;
-  --card-bg: rgba(255, 255, 250, 0.94);
+  --page-bg: #faf7eb;
+  --card-bg: rgba(255, 255, 249, 0.95);
   --green: #07543b;
-  --green-dark: #033e2b;
-  --green-soft: #e4efdc;
+  --green-dark: #03442e;
+  --green-soft: #dff0d9;
   --gold: #c99b28;
-  --gold-light: #e8d38a;
-  --text: #23382e;
+  --text: #26392e;
   --muted: #5c6b60;
   --border: #dedcc4;
   --shadow: 0 3px 12px rgba(42, 60, 35, 0.09);
@@ -23,7 +21,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 18px;
+  scroll-padding-top: 16px;
 }
 
 body {
@@ -31,14 +29,14 @@ body {
   color: var(--text);
   background-color: var(--page-bg);
   background-image:
-    radial-gradient(ellipse at 10% 12%, rgba(213, 195, 123, 0.13), transparent 38%),
-    radial-gradient(ellipse at 92% 45%, rgba(105, 148, 98, 0.10), transparent 35%),
+    radial-gradient(ellipse at 8% 12%, rgba(213, 195, 123, .17), transparent 38%),
+    radial-gradient(ellipse at 92% 45%, rgba(105, 148, 98, .12), transparent 35%),
     repeating-linear-gradient(
       135deg,
       transparent 0,
-      transparent 35px,
-      rgba(185, 168, 103, 0.025) 36px,
-      transparent 38px
+      transparent 32px,
+      rgba(185, 168, 103, .035) 33px,
+      transparent 35px
     );
   font-family: "Noto Sans Bengali", "Hind Siliguri", sans-serif;
   line-height: 1.75;
@@ -46,22 +44,15 @@ body {
 
 body.dark-mode {
   --page-bg: #101e18;
-  --card-bg: rgba(24, 42, 33, 0.97);
+  --card-bg: rgba(24, 42, 33, .97);
   --green: #a8d8b8;
   --green-dark: #d0e9d3;
   --green-soft: #263f31;
   --gold: #e5c66b;
-  --gold-light: #8b793d;
   --text: #edf2e8;
   --muted: #c2cdbf;
   --border: #405446;
-  --shadow: 0 3px 14px rgba(0, 0, 0, 0.22);
-}
-
-body.dark-mode .hero-board {
-  background-image:
-    linear-gradient(90deg, rgba(8, 35, 25, 0.91), rgba(8, 35, 25, 0.64)),
-    url("../images/shart-intro.png");
+  --shadow: 0 3px 14px rgba(0, 0, 0, .22);
 }
 
 .waqt-page {
@@ -87,11 +78,11 @@ body.dark-mode .hero-board {
   background-image:
     linear-gradient(
       90deg,
-      rgba(255, 252, 229, 0.90),
-      rgba(255, 252, 229, 0.78),
-      rgba(255, 252, 229, 0.52)
+      rgba(255, 252, 229, .91),
+      rgba(255, 252, 229, .78),
+      rgba(255, 252, 229, .53)
     ),
-    url("../images/shart-intro.png");
+    url("../assets/prayer-learning-bg.png");
   background-size: cover;
   background-position: center;
   box-shadow: var(--shadow);
@@ -108,6 +99,16 @@ body.dark-mode .hero-board {
   pointer-events: none;
 }
 
+body.dark-mode .hero-board {
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(8, 35, 25, .91),
+      rgba(8, 35, 25, .70)
+    ),
+    url("../assets/prayer-learning-bg.png");
+}
+
 .hero-content {
   width: min(100%, 760px);
 }
@@ -116,9 +117,8 @@ body.dark-mode .hero-board {
   display: inline-block;
   margin-bottom: 5px;
   color: var(--green);
-  font-size: 0.9rem;
+  font-size: .9rem;
   font-weight: 800;
-  letter-spacing: 0.04em;
 }
 
 .hero-board h1 {
@@ -132,9 +132,9 @@ body.dark-mode .hero-board {
 .hero-board p {
   max-width: 710px;
   margin: 0 auto;
-  color: #263d30;
-  font-size: clamp(0.98rem, 2.2vw, 1.12rem);
-  font-weight: 600;
+  color: var(--text);
+  font-size: clamp(.98rem, 2.2vw, 1.12rem);
+  font-weight: 650;
   line-height: 1.9;
 }
 
@@ -144,9 +144,9 @@ body.dark-mode .hero-board {
   padding: 7px 20px;
   border: 1px solid var(--gold);
   border-radius: 999px;
-  background: rgba(255, 252, 233, 0.94);
-  color: var(--green-dark);
-  font-size: 0.91rem;
+  background: rgba(255, 252, 233, .96);
+  color: #03442e;
+  font-size: .91rem;
   font-weight: 800;
 }
 
@@ -192,9 +192,9 @@ body.dark-mode .hero-board {
   color: var(--green-dark);
   text-align: center;
   text-decoration: none;
-  font-size: 0.92rem;
+  font-size: .92rem;
   font-weight: 800;
-  transition: transform 160ms ease, border-color 160ms ease;
+  transition: transform .16s ease, border-color .16s ease;
 }
 
 .topic-list a:hover,
@@ -231,12 +231,11 @@ body.dark-mode .hero-board {
   height: 54px;
   border: 2px solid var(--gold);
   border-radius: 50%;
-  background: var(--green);
+  background: #07543b;
   color: #fffdf0;
   font-size: 1.65rem;
   font-weight: 900;
   line-height: 1;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
 
 .prayer-content {
@@ -268,7 +267,7 @@ body.dark-mode .hero-board {
   background: var(--green-soft);
 }
 
-.note-icon {
+.time-note > span {
   flex: 0 0 auto;
   color: var(--green);
   font-size: 1.35rem;
@@ -278,7 +277,7 @@ body.dark-mode .hero-board {
 .time-note p {
   margin: 0;
   color: var(--text);
-  font-size: 0.94rem;
+  font-size: .94rem;
   line-height: 1.75;
 }
 
@@ -286,7 +285,7 @@ body.dark-mode .hero-board {
   color: var(--green);
 }
 
-/* শেষের রাকাত বোর্ড */
+/* রাকাতের সারসংক্ষেপ */
 
 .summary-board {
   margin-top: 21px;
@@ -325,7 +324,7 @@ body.dark-mode .hero-board {
 .summary-heading p {
   margin: 0;
   color: var(--muted);
-  font-size: 0.97rem;
+  font-size: .97rem;
   line-height: 1.8;
 }
 
@@ -340,11 +339,11 @@ table {
   border-collapse: collapse;
   background: var(--card-bg);
   text-align: center;
-  font-size: 0.94rem;
+  font-size: .94rem;
 }
 
 thead {
-  background: var(--green);
+  background: #07543b;
   color: #fffdf1;
 }
 
@@ -374,16 +373,16 @@ tbody tr:nth-child(even) {
 .table-footnote {
   margin: 12px 0 0;
   color: var(--muted);
-  font-size: 0.86rem;
+  font-size: .86rem;
   line-height: 1.8;
 }
 
 .important-note {
   margin-top: 16px;
   padding: 14px 16px;
-  border: 1px solid var(--gold-light);
+  border: 1px solid var(--gold);
   border-radius: 13px;
-  background: rgba(205, 177, 91, 0.10);
+  background: rgba(205, 177, 91, .10);
 }
 
 .important-note strong {
@@ -395,14 +394,13 @@ tbody tr:nth-child(even) {
 
 .important-note p {
   margin: 0;
-  font-size: 0.94rem;
+  font-size: .94rem;
   line-height: 1.85;
 }
 
 /* ফুটার */
 
 .page-footer {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -425,17 +423,12 @@ tbody tr:nth-child(even) {
 }
 
 .page-footer strong {
-  color: var(--gold-light);
+  color: var(--gold);
   font-size: 1.1rem;
-  letter-spacing: 0.15em;
+  letter-spacing: .15em;
 }
 
-.footer-star {
-  color: var(--gold-light);
-  font-size: 1.2rem;
-}
-
-/* ছোট স্ক্রিন */
+/* মোবাইল */
 
 @media (max-width: 760px) {
   .waqt-page {
@@ -447,7 +440,6 @@ tbody tr:nth-child(even) {
     min-height: 245px;
     padding: 25px 17px;
     border-radius: 22px;
-    background-position: center;
   }
 
   .hero-board::before {
@@ -461,7 +453,7 @@ tbody tr:nth-child(even) {
 
   .hero-ribbon {
     padding: 7px 12px;
-    font-size: 0.82rem;
+    font-size: .82rem;
   }
 
   .topic-board {
@@ -503,7 +495,7 @@ tbody tr:nth-child(even) {
   }
 
   .prayer-content > p {
-    font-size: 0.94rem;
+    font-size: .94rem;
     line-height: 1.85;
   }
 
@@ -514,7 +506,7 @@ tbody tr:nth-child(even) {
   }
 
   .time-note p {
-    font-size: 0.88rem;
+    font-size: .88rem;
   }
 
   .summary-board {
@@ -539,7 +531,7 @@ tbody tr:nth-child(even) {
 
   table {
     min-width: 460px;
-    font-size: 0.87rem;
+    font-size: .87rem;
   }
 
   thead th,
@@ -550,7 +542,7 @@ tbody tr:nth-child(even) {
 
   .table-footnote,
   .important-note p {
-    font-size: 0.84rem;
+    font-size: .84rem;
   }
 }
 
@@ -576,8 +568,6 @@ tbody tr:nth-child(even) {
   }
 }
 
-/* ব্যবহারকারীর motion preference */
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -586,6 +576,6 @@ tbody tr:nth-child(even) {
   *,
   *::before,
   *::after {
-    transition-duration: 0.01ms !important;
+    transition-duration: .01ms !important;
   }
 }
