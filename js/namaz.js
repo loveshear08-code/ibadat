@@ -39,7 +39,7 @@
   const NAMAZ_ROUTES = {
     "purity": "namaz-purity.html",
     "conditions": "namaz-conditions.html",
-    "times-rakats": "namaz-waqt-rakats.html",
+    "times-rakats": "namaz-waqt-rakat.html",
     "fard-wajib-sunnah": "namaz-rulings.html",
     "start": "namaz-start.html",
     "qirat": "namaz-qirat.html",
