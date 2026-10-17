@@ -1,958 +1,1400 @@
-/* =========================================
+/* =========================================================
    IBADAT — NAMAZ PURITY PAGE
-   File: css/namaz-purity.css
+   Theme: Islamic Green • Cream • Gold
+   Responsive • Light/Dark Mode • SVG Sketch Illustrations
+========================================================= */
 
-   Design:
-   Cream White + Islamic Green + Gold
-
-   Support:
-   Bengali / English / Hindi
-   Light Mode / Dark Mode
-   Mobile / Tablet / Desktop
-   ========================================= */
-
-
-/* =========================================
-   1. COLOR VARIABLES
-   ========================================= */
+/* -------------------- 1. ROOT VARIABLES -------------------- */
 
 :root {
-    --primary: #0F5132;
-    --primary-dark: #0B3D26;
+  color-scheme: light;
 
-    --page-bg: #F8F6EE;
-    --card-bg: #FFFFFF;
-    --feature: #BFE4B7;
+  --primary: #0f5132;
+  --primary-dark: #0b3d26;
+  --primary-light: #e6f0e8;
 
-    --text: #1E4620;
-    --muted: #526B53;
+  --gold: #d4af37;
+  --gold-dark: #a98520;
+  --gold-soft: #f5e8b5;
 
-    --gold: #D4AF37;
-    --heading-gold: #B08D23;
+  --page-bg: #f8f6ee;
+  --surface: #ffffff;
+  --surface-soft: #fbfaf5;
 
-    --border: rgba(15, 81, 50, 0.20);
-    --shadow: 0 3px 12px rgba(15, 81, 50, 0.08);
+  --text: #26342b;
+  --text-soft: #59665c;
+  --heading: #174b38;
 
-    --radius-page: 22px;
-    --radius-card: 19px;
-    --radius-image: 16px;
+  --border: #e6dfc9;
+  --border-strong: #d7c68d;
 
-    --page-width: 760px;
+  --shadow:
+    0 8px 28px rgba(29, 65, 43, 0.07);
+
+  --shadow-hover:
+    0 12px 32px rgba(29, 65, 43, 0.12);
+
+  --radius-small: 12px;
+  --radius-medium: 18px;
+  --radius-large: 26px;
+
+  --page-width: 1000px;
+  --board-padding: clamp(18px, 4vw, 32px);
+
+  --transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
 }
 
 
-/* =========================================
-   2. GLOBAL RESET
-   ========================================= */
+/* -------------------- 2. DARK MODE -------------------- */
+
+/* Supports common theme classes and data attributes. */
+
+html.dark,
+html.dark-mode,
+html[data-theme="dark"],
+body.dark,
+body.dark-mode,
+body[data-theme="dark"],
+html[data-theme="dark"] body {
+  color-scheme: dark;
+
+  --primary: #6bc49a;
+  --primary-dark: #a0dfba;
+  --primary-light: #203b2d;
+
+  --gold: #e7c75b;
+  --gold-dark: #e5c65c;
+  --gold-soft: #3c3520;
+
+  --page-bg: #111b16;
+  --surface: #19251e;
+  --surface-soft: #202d24;
+
+  --text: #e7eee8;
+  --text-soft: #b8c7bc;
+  --heading: #a9dfbd;
+
+  --border: #34483a;
+  --border-strong: #76652d;
+
+  --shadow:
+    0 8px 28px rgba(0, 0, 0, 0.20);
+
+  --shadow-hover:
+    0 12px 32px rgba(0, 0, 0, 0.32);
+}
+
+
+/* -------------------- 3. RESET & BASE -------------------- */
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-
-    -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
 }
 
 html {
-    min-height: 100%;
-
-    scroll-behavior: smooth;
-    scroll-padding-top: 12px;
+  scroll-behavior: smooth;
+  scroll-padding-top: 24px;
 }
 
 body {
-    min-height: 100vh;
+  margin: 0;
+  min-width: 320px;
 
-    color: var(--text);
+  background: var(--page-bg);
+  color: var(--text);
 
-    font-family:
-        "Noto Sans Bengali",
-        "Nirmala UI",
-        "Noto Sans Devanagari",
-        Arial,
-        sans-serif;
+  font-family:
+    "Noto Sans Bengali",
+    "Hind Siliguri",
+    "Noto Sans Devanagari",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 
-    font-size: 16px;
-    line-height: 1.7;
+  font-size: 16px;
+  line-height: 1.8;
 
-    background-color: var(--page-bg);
-
-    background-image:
-        linear-gradient(
-            rgba(255, 251, 244, 0.83),
-            rgba(255, 251, 244, 0.83)
-        ),
-        url("../assets/bg_pattern.png");
-
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
+  transition: var(--transition);
 }
 
-img {
-    display: block;
-    max-width: 100%;
-}
-
-a {
-    color: inherit;
-}
-
+body,
 button,
 input,
 textarea,
 select {
-    font: inherit;
+  font-family:
+    "Noto Sans Bengali",
+    "Hind Siliguri",
+    "Noto Sans Devanagari",
+    system-ui,
+    sans-serif;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+img {
+  display: block;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--gold-dark);
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 4px;
+}
+
+p {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin-top: 0;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+li {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: var(--gold-soft);
+  color: var(--text);
 }
 
 
-/* =========================================
-   3. MAIN PAGE
-   ========================================= */
+/* -------------------- 4. ACCESSIBILITY -------------------- */
+
+.skip-link {
+  position: absolute;
+  z-index: 1000;
+  top: 10px;
+  left: 10px;
+
+  padding: 10px 16px;
+
+  color: #ffffff;
+  background: var(--primary);
+
+  border-radius: var(--radius-small);
+
+  transform: translateY(-160%);
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+
+/* -------------------- 5. SITE HEADER -------------------- */
+
+.site-header {
+  width: 100%;
+  min-height: 76px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+
+  padding: 14px clamp(16px, 4vw, 36px);
+
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+
+  box-shadow: 0 3px 14px rgba(25, 60, 40, 0.035);
+}
+
+.site-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  color: var(--primary);
+
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.site-brand:hover {
+  color: var(--primary);
+}
+
+.brand-mark {
+  width: 35px;
+  height: 35px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--gold-dark);
+  background: var(--surface-soft);
+
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+
+  font-size: 20px;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.header-nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 38px;
+  padding: 6px 15px;
+
+  color: var(--text-soft);
+
+  border: 1px solid transparent;
+  border-radius: 30px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: var(--transition);
+}
+
+.header-nav a:hover {
+  color: var(--primary);
+  background: var(--primary-light);
+  border-color: var(--border);
+}
+
+
+/* -------------------- 6. PAGE LAYOUT -------------------- */
 
 .purity-page {
-    width: 100%;
-    max-width: var(--page-width);
+  width: min(var(--page-width), calc(100% - 32px));
+  margin: 30px auto 46px;
 
-    margin: 0 auto;
-
-    padding: 12px 12px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 
-/* =========================================
-   4. HERO / HEADER
-   ========================================= */
+/* -------------------- 7. COMMON BOARD STYLE -------------------- */
 
-.hero {
-    position: relative;
+.panel {
+  position: relative;
+  min-width: 0;
 
-    overflow: hidden;
+  padding: var(--board-padding);
 
-    margin-bottom: 14px;
-    padding: 22px 17px 24px;
+  color: var(--text);
+  background: var(--surface);
 
-    text-align: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
 
-    border: 1px solid rgba(212, 175, 55, 0.75);
-    border-radius: var(--radius-page);
+  box-shadow: var(--shadow);
 
-    background-image:
-        linear-gradient(
-            rgba(255, 252, 242, 0.77),
-            rgba(255, 252, 242, 0.84)
-        ),
-        url("../assets/prayer-learning-bg.png");
-
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-
-    box-shadow: var(--shadow);
+  transition: var(--transition);
 }
 
-.ornament {
-    display: block;
-
-    margin-bottom: 3px;
-
-    color: var(--gold);
-
-    font-size: 23px;
-    line-height: 1.3;
+.panel:hover {
+  box-shadow: var(--shadow-hover);
 }
 
-.hero h1 {
-    margin: 0 0 7px;
 
-    color: var(--heading-gold);
+/* -------------------- 8. HERO BOARD -------------------- */
 
-    font-size: clamp(31px, 7vw, 40px);
-    font-weight: 900;
-    line-height: 1.25;
+.purity-hero {
+  overflow: hidden;
+
+  padding:
+    clamp(26px, 5vw, 44px)
+    clamp(20px, 5vw, 48px);
+
+  text-align: center;
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(212, 175, 55, 0.11),
+      transparent 48%
+    ),
+    var(--surface);
+
+  border-top: 4px solid var(--gold);
+}
+
+.hero-ornament {
+  margin-bottom: 8px;
+
+  color: var(--gold-dark);
+
+  font-size: 27px;
+  line-height: 1.3;
+}
+
+.eyebrow {
+  margin-bottom: 8px;
+
+  color: var(--gold-dark);
+
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.purity-hero h1 {
+  margin-bottom: 16px;
+
+  color: var(--heading);
+
+  font-size: clamp(30px, 5vw, 46px);
+  font-weight: 800;
+  letter-spacing: 0.2px;
 }
 
 .hero-intro {
-    max-width: 620px;
+  max-width: 700px;
+  margin: 0 auto;
 
-    margin: 0 auto 9px;
+  color: var(--text-soft);
 
-    color: var(--text);
-
-    font-size: clamp(15px, 4vw, 18px);
-    font-weight: 750;
-    line-height: 1.75;
-
-    overflow-wrap: anywhere;
-}
-
-.hero-subtitle {
-    max-width: 560px;
-
-    margin: 0 auto;
-
-    color: var(--primary);
-
-    font-size: clamp(14px, 3.8vw, 17px);
-    font-weight: 750;
-    line-height: 1.65;
+  font-size: clamp(15px, 2vw, 17px);
+  line-height: 1.95;
 }
 
 
-/* =========================================
-   5. COMMON CARDS
-   ========================================= */
+/* -------------------- 9. CONTENTS BOARD -------------------- */
 
-.panel {
-    margin-bottom: 13px;
-    padding: 15px;
+.contents-panel {
+  padding: clamp(20px, 4vw, 30px);
 
-    background: rgba(255, 255, 255, 0.94);
-
-    border: 1px solid var(--border);
-    border-radius: var(--radius-card);
-
-    box-shadow: var(--shadow);
+  background: var(--surface-soft);
 }
 
-.panel h2,
-.panel h3 {
-    overflow-wrap: anywhere;
-}
+.contents-panel h2 {
+  margin-bottom: 20px;
 
-.kicker {
-    display: block;
+  color: var(--heading);
 
-    margin-bottom: 2px;
-
-    color: var(--primary);
-
-    font-size: 13px;
-    font-weight: 850;
-    line-height: 1.5;
-}
-
-
-/* =========================================
-   6. LESSON CONTENTS
-   ========================================= */
-
-.contents h2 {
-    margin-bottom: 10px;
-
-    color: var(--text);
-
-    font-size: clamp(18px, 4.8vw, 22px);
-    font-weight: 900;
-    line-height: 1.4;
+  font-size: clamp(19px, 3vw, 25px);
+  font-weight: 750;
+  text-align: center;
 }
 
 .contents-links {
-    display: flex;
-    flex-wrap: wrap;
-
-    gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .contents-links a {
-    display: inline-flex;
+  min-width: 0;
+  min-height: 52px;
 
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    min-height: 40px;
+  padding: 11px 14px;
 
-    padding: 7px 13px;
+  color: var(--primary);
+  background: var(--surface);
 
-    color: var(--text);
-    background: var(--feature);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-small);
 
-    border: 1px solid var(--border);
-    border-radius: 999px;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.6;
+  text-align: center;
 
-    font-size: 13px;
-    font-weight: 800;
-    line-height: 1.5;
-
-    text-align: center;
-    text-decoration: none;
-
-    transition:
-        background-color 0.2s ease,
-        border-color 0.2s ease;
+  transition: var(--transition);
 }
 
-.contents-links a:focus-visible {
-    outline: 3px solid var(--gold);
-    outline-offset: 3px;
-}
+.contents-links a:hover {
+  color: var(--primary);
+  background: var(--primary-light);
 
-@media (hover: hover) {
-    .contents-links a:hover {
-        background: #D3EBCB;
-        border-color: rgba(15, 81, 50, 0.38);
-    }
+  border-color: var(--gold);
+  transform: translateY(-2px);
 }
 
 
-/* =========================================
-   7. LESSON CARDS
-   ========================================= */
+/* -------------------- 10. LESSON MAIN BOARDS -------------------- */
+
+/*
+  সব মেইন বোর্ডের প্রস্থ, বর্ডার, প্যাডিং ও স্টাইল একই।
+  কনটেন্টের পরিমাণ আলাদা হওয়ায় বোর্ডের উচ্চতা স্বাভাবিকভাবে
+  পরিবর্তিত হবে; সব বোর্ডে একই মাপের মূল ছবির এলাকা থাকবে।
+*/
 
 .lesson {
-    scroll-margin-top: 12px;
+  min-width: 0;
+  width: 100%;
+
+  padding: var(--board-padding);
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 20px;
+
+  scroll-margin-top: 22px;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+
+  box-shadow: var(--shadow);
 }
 
-.section-title {
-    display: flex;
+.lesson-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 
-    align-items: center;
+  padding-bottom: 15px;
 
-    gap: 11px;
-
-    margin-bottom: 12px;
+  border-bottom: 1px solid var(--border);
 }
 
-.section-title > b {
-    display: inline-flex;
+.lesson-heading h2 {
+  margin: 0;
 
-    flex: 0 0 40px;
+  color: var(--heading);
 
-    width: 40px;
-    height: 40px;
+  font-size: clamp(23px, 3.5vw, 31px);
+  font-weight: 800;
+  line-height: 1.45;
+}
 
+.lesson-number {
+  width: 43px;
+  height: 43px;
+  min-width: 43px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--primary-dark);
+  background: var(--gold-soft);
+
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1;
+
+  box-shadow: 0 3px 10px rgba(150, 120, 30, 0.09);
+}
+
+
+/* -------------------- 11. MAIN ILLUSTRATION BOARDS -------------------- */
+
+/*
+  প্রতিটি পার্টের বড় ছবির জন্য একই রকম বোর্ড।
+  মূল ছবিগুলো HTML-এর নির্দিষ্ট assets path থেকেই আসবে।
+*/
+
+.lesson-art {
+  width: 100%;
+  height: clamp(220px, 34vw, 310px);
+  min-height: 220px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0;
+  padding: 12px;
+
+  overflow: hidden;
+
+  background: var(--surface-soft);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-medium);
+}
+
+.lesson-art img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: contain;
+  object-position: center;
+
+  border-radius: 10px;
+}
+
+/* মূল ছবিতে অতিরিক্ত ফাঁকা জায়গা থাকলেও ছবি কেটে যাবে না। */
+
+
+/* -------------------- 12. LESSON INTRO -------------------- */
+
+.lesson-intro {
+  margin: 0;
+
+  padding: 17px 19px;
+
+  color: var(--text);
+
+  background: var(--primary-light);
+
+  border-left: 4px solid var(--primary);
+  border-radius: 0 var(--radius-small) var(--radius-small) 0;
+
+  font-size: 15px;
+  line-height: 1.95;
+}
+
+
+/* -------------------- 13. LESSON SUBSECTIONS -------------------- */
+
+.lesson-subsection {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  padding: 20px;
+
+  background: var(--surface-soft);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-medium);
+}
+
+.lesson-subsection h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: 0;
+
+  color: var(--heading);
+
+  font-size: clamp(18px, 2.8vw, 22px);
+  font-weight: 750;
+  line-height: 1.55;
+}
+
+.lesson-subsection h3::before {
+  content: "";
+
+  width: 5px;
+  min-width: 5px;
+  height: 24px;
+
+  background: var(--gold);
+  border-radius: 10px;
+}
+
+.lesson-subsection p {
+  margin: 0;
+
+  color: var(--text-soft);
+
+  font-size: 15px;
+  line-height: 1.95;
+}
+
+
+/* -------------------- 14. STEP-BY-STEP GRID -------------------- */
+
+.step-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+
+  min-width: 0;
+}
+
+.step-card {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  overflow: hidden;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-medium);
+
+  transition: var(--transition);
+}
+
+.step-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 6px 18px rgba(25, 60, 40, 0.07);
+
+  transform: translateY(-2px);
+}
+
+.step-copy {
+  min-width: 0;
+
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.step-copy h4 {
+  margin: 0;
+
+  color: var(--heading);
+
+  font-size: 17px;
+  font-weight: 750;
+  line-height: 1.6;
+}
+
+.step-copy p {
+  margin: 0;
+
+  color: var(--text-soft);
+
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+
+/* -------------------- 15. SVG SKETCH BOARDS -------------------- */
+
+/*
+  ছোট হাতের রেখাচিত্রগুলো SVG দিয়ে HTML-এর ভেতরেই তৈরি।
+  নতুন PNG/JPG ফাইলের দরকার নেই।
+*/
+
+.step-sketch {
+  width: 100%;
+  height: 150px;
+  min-height: 150px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 12px;
+
+  color: var(--primary);
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(212, 175, 55, 0.07),
+      transparent 72%
+    ),
+    var(--surface-soft);
+
+  border-bottom: 1px solid var(--border);
+}
+
+.step-sketch svg {
+  width: 100%;
+  height: 100%;
+
+  max-width: 220px;
+
+  display: block;
+  overflow: visible;
+}
+
+.step-sketch .sketch-line {
+  color: var(--primary);
+}
+
+/* SVG-তে fill="none" এবং stroke="currentColor" থাকায়
+   স্কেচের রেখা থিম অনুযায়ী রং বদলাতে পারবে। */
+
+
+/* -------------------- 16. COMPACT STEP GRIDS -------------------- */
+
+.step-grid-compact {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.step-grid-compact .step-sketch {
+  height: 135px;
+  min-height: 135px;
+}
+
+
+/* -------------------- 17. CLEAN LISTS -------------------- */
+
+.clean-list {
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+
+  list-style: none;
+}
+
+.clean-list li {
+  position: relative;
+
+  margin: 0;
+  padding: 0 0 0 30px;
+
+  color: var(--text-soft);
+
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.clean-list li::before {
+  content: "✓";
+
+  position: absolute;
+  top: 1px;
+  left: 0;
+
+  width: 21px;
+  height: 21px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--primary-dark);
+  background: var(--gold-soft);
+
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+
+/* -------------------- 18. WUDU DUA BOARD -------------------- */
+
+.dua-panel {
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(212, 175, 55, 0.09),
+      transparent 45%
+    ),
+    var(--surface-soft);
+
+  border-color: var(--border-strong);
+}
+
+.dua-panel .dua-arabic {
+  margin: 0;
+  padding: 20px 16px;
+
+  color: var(--heading);
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-small);
+
+  font-family:
+    "Noto Naskh Arabic",
+    "Amiri",
+    "Traditional Arabic",
+    serif;
+
+  font-size: clamp(23px, 4vw, 31px);
+  font-weight: 500;
+  line-height: 2.1;
+
+  text-align: center;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.dua-panel p:not(.dua-arabic) {
+  line-height: 1.95;
+}
+
+.dua-panel strong {
+  color: var(--heading);
+  font-weight: 750;
+}
+
+
+/* -------------------- 19. FOOTER BOARD -------------------- */
+
+/*
+  একটিমাত্র গাঢ় সবুজ ও সোনালি বোর্ড।
+  IBADAT-এর দুই পাশে অলংকার থাকবে।
+  নিচে থাকবে শুধু একটি বাক্য।
+*/
+
+.purity-footer {
+  width: min(var(--page-width), calc(100% - 32px));
+
+  margin: 0 auto 28px;
+  padding: 28px 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  color: #ffffff;
+  background: #0b3d26;
+
+  border: 1px solid var(--gold);
+  border-radius: var(--radius-large);
+
+  box-shadow: var(--shadow);
+
+  text-align: center;
+}
+
+.footer-brand-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+
+  margin: 0;
+}
+
+.footer-brand {
+  color: var(--gold);
+
+  font-size: clamp(23px, 4vw, 30px);
+  font-weight: 850;
+  letter-spacing: 2px;
+  line-height: 1.5;
+}
+
+.footer-star {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--gold);
+
+  font-size: 21px;
+  line-height: 1;
+}
+
+.purity-footer p {
+  max-width: 100%;
+
+  margin: 0;
+
+  color: #f6f2df;
+
+  font-size: 14px;
+  line-height: 1.8;
+  text-align: center;
+}
+
+
+/* -------------------- 20. DARK MODE COMPONENT TUNING -------------------- */
+
+html.dark .lesson-intro,
+html.dark-mode .lesson-intro,
+html[data-theme="dark"] .lesson-intro,
+body.dark .lesson-intro,
+body.dark-mode .lesson-intro,
+body[data-theme="dark"] .lesson-intro {
+  color: var(--text);
+}
+
+html.dark .clean-list li::before,
+html.dark-mode .clean-list li::before,
+html[data-theme="dark"] .clean-list li::before,
+body.dark .clean-list li::before,
+body.dark-mode .clean-list li::before,
+body[data-theme="dark"] .clean-list li::before {
+  color: var(--primary-dark);
+}
+
+html.dark .purity-footer,
+html.dark-mode .purity-footer,
+html[data-theme="dark"] .purity-footer,
+body.dark .purity-footer,
+body.dark-mode .purity-footer,
+body[data-theme="dark"] .purity-footer {
+  color: #ffffff;
+  background: #0b3020;
+
+  border-color: var(--gold);
+}
+
+html.dark .purity-footer p,
+html.dark-mode .purity-footer p,
+html[data-theme="dark"] .purity-footer p,
+body.dark .purity-footer p,
+body.dark-mode .purity-footer p,
+body[data-theme="dark"] .purity-footer p {
+  color: #f6f2df;
+}
+
+
+/* -------------------- 21. RESPONSIVE: TABLET -------------------- */
+
+@media (max-width: 760px) {
+  .purity-page {
+    width: min(100% - 24px, var(--page-width));
+    margin-top: 22px;
+    margin-bottom: 32px;
+    gap: 19px;
+  }
+
+  .site-header {
+    min-height: 68px;
+    padding: 12px 18px;
+  }
+
+  .site-brand {
+    font-size: 19px;
+  }
+
+  .header-nav {
+    gap: 4px;
+  }
+
+  .header-nav a {
+    padding: 6px 11px;
+    font-size: 13px;
+  }
+
+  .contents-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lesson {
+    gap: 17px;
+  }
+
+  .lesson-art {
+    height: 250px;
+    min-height: 210px;
+  }
+
+  .step-sketch {
+    height: 140px;
+    min-height: 140px;
+  }
+
+  .step-copy {
+    padding: 14px;
+  }
+
+  .lesson-subsection {
+    padding: 17px;
+  }
+
+  .purity-footer {
+    width: calc(100% - 24px);
+    margin-bottom: 20px;
+  }
+}
+
+
+/* -------------------- 22. RESPONSIVE: MOBILE -------------------- */
+
+@media (max-width: 520px) {
+  body {
+    font-size: 15px;
+  }
+
+  .site-header {
     align-items: center;
-    justify-content: center;
+    gap: 8px;
 
-    color: #FFF9E9;
-    background: var(--primary);
+    padding: 11px 13px;
+  }
 
-    border: 2px solid var(--gold);
-    border-radius: 50%;
-
+  .site-brand {
+    gap: 7px;
     font-size: 17px;
-    font-weight: 900;
-    line-height: 1;
-}
+    letter-spacing: 0.6px;
+  }
 
-.section-title > div {
-    flex: 1;
-    min-width: 0;
-}
+  .brand-mark {
+    width: 30px;
+    height: 30px;
+    font-size: 17px;
+  }
 
-.section-title h2 {
-    margin: 0;
+  .header-nav {
+    gap: 2px;
+  }
 
-    color: var(--text);
+  .header-nav a {
+    min-height: 34px;
+    padding: 5px 8px;
+    font-size: 12px;
+  }
 
-    font-size: clamp(21px, 5vw, 27px);
-    font-weight: 900;
-    line-height: 1.4;
-}
+  .purity-page {
+    width: calc(100% - 20px);
+    margin-top: 16px;
+    margin-bottom: 24px;
+    gap: 15px;
+  }
 
-.section-title .kicker {
-    margin-bottom: 2px;
-}
+  .panel {
+    border-radius: 19px;
+  }
 
+  .purity-hero {
+    padding: 24px 17px;
+    border-top-width: 3px;
+  }
 
-/* =========================================
-   8. SKETCH IMAGES
-   ========================================= */
+  .hero-ornament {
+    margin-bottom: 5px;
+    font-size: 23px;
+  }
 
-/*
-   Keep the original image proportions.
-   Do not crop the illustration into a square.
-   Center each image inside a cream card.
-*/
+  .eyebrow {
+    font-size: 12px;
+  }
 
-.art {
-    overflow: hidden;
+  .purity-hero h1 {
+    margin-bottom: 11px;
+    font-size: 31px;
+  }
 
-    background: #F7EED6;
-
-    border: 1px solid rgba(212, 175, 55, 0.32);
-    border-radius: var(--radius-image);
-}
-
-.art img {
-    display: block;
-
-    width: 100%;
-    height: auto;
-
-    margin: 0 auto;
-
-    object-fit: contain;
-    object-position: center;
-
-    background: #FFF9E9;
-}
-
-.art.wide {
-    width: 100%;
-    max-width: 430px;
-
-    margin: 0 auto 13px;
-}
-
-/*
-   The five illustrations are square assets.
-   Their width is limited so they do not occupy
-   the entire mobile screen height.
-*/
-
-.art.wide img {
-    width: 100%;
-    height: auto;
-
-    aspect-ratio: 1 / 1;
-
-    object-fit: contain;
-}
-
-
-/* =========================================
-   9. LESSON INTRODUCTION
-   ========================================= */
-
-.lead {
-    margin: 7px 0 12px;
-
-    color: var(--text);
-
-    font-size: 15px;
-    font-weight: 650;
-    line-height: 1.8;
-
-    overflow-wrap: anywhere;
-}
-
-
-/* =========================================
-   10. LESSON SUBHEADINGS
-   ========================================= */
-
-.panel h3 {
-    margin: 15px 0 7px;
-
-    color: var(--primary);
-
-    font-size: clamp(17px, 4.3vw, 20px);
-    font-weight: 900;
-    line-height: 1.5;
-}
-
-.panel h3:first-child {
-    margin-top: 0;
-}
-
-
-/* =========================================
-   11. LESSON LISTS
-   ========================================= */
-
-.panel ol,
-.panel ul {
-    margin: 6px 0 12px;
-
-    padding-left: 24px;
-}
-
-.panel li {
-    padding: 3px 0 4px 2px;
-
-    color: var(--text);
-
+  .hero-intro {
     font-size: 14px;
-    line-height: 1.8;
+    line-height: 1.9;
+  }
 
-    overflow-wrap: anywhere;
-}
+  .contents-panel {
+    padding: 18px 14px;
+  }
 
-.panel li::marker {
-    color: var(--heading-gold);
-    font-weight: 800;
-}
+  .contents-panel h2 {
+    margin-bottom: 15px;
+    font-size: 18px;
+  }
 
+  .contents-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
 
-/* =========================================
-   12. IMPORTANT NOTES
-   ========================================= */
+  .contents-links a {
+    min-height: 47px;
+    padding: 9px 8px;
+    font-size: 12px;
+    line-height: 1.6;
+  }
 
-.note {
-    margin: 12px 0 7px;
-    padding: 12px 13px;
+  .lesson {
+    padding: 17px 13px;
+    gap: 15px;
+    border-radius: 19px;
+  }
 
-    background: #F8F3E3;
+  .lesson-heading {
+    gap: 10px;
+    padding-bottom: 12px;
+  }
 
-    border-left: 4px solid var(--gold);
-    border-radius: 11px;
-}
+  .lesson-heading h2 {
+    font-size: 22px;
+  }
 
-.note strong {
-    display: block;
+  .lesson-number {
+    width: 37px;
+    height: 37px;
+    min-width: 37px;
+    font-size: 17px;
+  }
 
-    margin-bottom: 4px;
+  .lesson-art {
+    height: 215px;
+    min-height: 190px;
+    padding: 8px;
+    border-radius: 14px;
+  }
 
-    color: var(--primary);
+  .lesson-intro {
+    padding: 13px 14px;
+    font-size: 14px;
+    line-height: 1.9;
+  }
 
+  .lesson-subsection {
+    padding: 14px 12px;
+    gap: 10px;
+    border-radius: 14px;
+  }
+
+  .lesson-subsection h3 {
+    gap: 8px;
+    font-size: 18px;
+  }
+
+  .lesson-subsection h3::before {
+    width: 4px;
+    min-width: 4px;
+    height: 21px;
+  }
+
+  .lesson-subsection p,
+  .clean-list li {
+    font-size: 14px;
+    line-height: 1.9;
+  }
+
+  .clean-list {
+    gap: 9px;
+  }
+
+  .clean-list li {
+    padding-left: 27px;
+  }
+
+  .clean-list li::before {
+    width: 19px;
+    height: 19px;
+    font-size: 11px;
+  }
+
+  .step-grid,
+  .step-grid-compact {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .step-card {
+    display: grid;
+    grid-template-columns: 115px minmax(0, 1fr);
+    align-items: stretch;
+    border-radius: 13px;
+  }
+
+  .step-sketch,
+  .step-grid-compact .step-sketch {
+    width: 100%;
+    height: 100%;
+    min-height: 125px;
+
+    padding: 7px;
+
+    border-bottom: none;
+    border-right: 1px solid var(--border);
+  }
+
+  .step-sketch svg {
+    width: 100%;
+    max-height: 125px;
+  }
+
+  .step-copy {
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 10px;
+  }
+
+  .step-copy h4 {
     font-size: 15px;
-    font-weight: 900;
-}
+    line-height: 1.6;
+  }
 
-.note p {
-    color: var(--text);
-
+  .step-copy p {
     font-size: 13px;
     line-height: 1.8;
+  }
 
-    overflow-wrap: anywhere;
-}
+  .dua-panel .dua-arabic {
+    padding: 15px 10px;
+    font-size: 23px;
+    line-height: 2;
+  }
 
+  .purity-footer {
+    width: calc(100% - 20px);
+    margin-bottom: 14px;
+    padding: 22px 14px;
+    gap: 8px;
+    border-radius: 19px;
+  }
 
-/* =========================================
-   13. FINAL RECAP
-   ========================================= */
+  .footer-brand-line {
+    gap: 11px;
+  }
 
-.recap {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.97),
-            rgba(232, 244, 222, 0.96)
-        );
-}
+  .footer-brand {
+    font-size: 24px;
+    letter-spacing: 1.5px;
+  }
 
-.recap .section-title {
-    margin-bottom: 10px;
-}
+  .footer-star {
+    font-size: 18px;
+  }
 
-.recap ul {
-    margin-top: 8px;
-    margin-bottom: 12px;
-}
-
-.disclaimer {
-    margin-top: 13px;
-    padding-top: 11px;
-
-    color: var(--muted);
-
-    border-top: 1px solid var(--border);
-
+  .purity-footer p {
     font-size: 12px;
     line-height: 1.8;
-
-    overflow-wrap: anywhere;
+  }
 }
 
 
-/* =========================================
-   14. FOOTER
-   ========================================= */
+/* -------------------- 23. VERY SMALL MOBILE -------------------- */
 
-footer {
-    display: flex;
+@media (max-width: 360px) {
+  .site-header {
+    padding-right: 9px;
+    padding-left: 9px;
+  }
 
-    align-items: center;
-    justify-content: center;
+  .site-brand {
+    font-size: 15px;
+  }
 
-    gap: 9px;
-
-    padding: 10px 4px 3px;
-
-    color: var(--primary);
-
+  .header-nav a {
+    padding-right: 6px;
+    padding-left: 6px;
     font-size: 11px;
-    font-weight: 850;
-    line-height: 1.8;
+  }
 
-    text-align: center;
-}
+  .contents-links {
+    grid-template-columns: minmax(0, 1fr);
+  }
 
-footer > span:first-child,
-footer > span:last-child {
-    flex: 0 0 auto;
+  .lesson {
+    padding: 14px 10px;
+  }
 
-    color: var(--gold);
+  .lesson-heading h2 {
+    font-size: 20px;
+  }
 
+  .step-card {
+    grid-template-columns: 96px minmax(0, 1fr);
+  }
+
+  .step-copy {
+    padding: 10px 8px;
+  }
+
+  .step-copy h4 {
     font-size: 14px;
+  }
+
+  .step-copy p {
+    font-size: 12px;
+  }
+
+  .step-sketch {
+    padding: 5px;
+  }
 }
 
 
-/* =========================================
-   15. DARK MODE
-   ========================================= */
-
-body.dark-mode {
-    --page-bg: #121A15;
-    --card-bg: #1E2A22;
-    --feature: #263B29;
-
-    --text: #E7F0E4;
-    --muted: #C1D0BE;
-
-    --gold: #D4AF37;
-    --heading-gold: #E7D18A;
-
-    --border: rgba(190, 228, 183, 0.22);
-    --shadow: 0 3px 14px rgba(0, 0, 0, 0.16);
-
-    color: var(--text);
-
-    background-color: #121A15;
-
-    background-image:
-        linear-gradient(
-            rgba(12, 24, 18, 0.87),
-            rgba(12, 24, 18, 0.87)
-        ),
-        url("../assets/bg_pattern.png");
-}
-
-body.dark-mode .hero {
-    background-image:
-        linear-gradient(
-            rgba(13, 28, 19, 0.79),
-            rgba(13, 28, 19, 0.86)
-        ),
-        url("../assets/prayer-learning-bg.png");
-}
-
-body.dark-mode .panel {
-    background: rgba(30, 42, 34, 0.96);
-}
-
-body.dark-mode .recap {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(30, 42, 34, 0.97),
-            rgba(38, 59, 41, 0.97)
-        );
-}
-
-body.dark-mode .hero h1 {
-    color: var(--heading-gold);
-}
-
-body.dark-mode .hero-intro,
-body.dark-mode .hero-subtitle,
-body.dark-mode .hero .ornament {
-    color: #D7E9D2;
-}
-
-body.dark-mode .kicker,
-body.dark-mode .panel h3,
-body.dark-mode .note strong,
-body.dark-mode footer {
-    color: #CDE5C7;
-}
-
-body.dark-mode .contents-links a {
-    color: var(--text);
-    background: #263B29;
-    border-color: var(--border);
-}
-
-body.dark-mode .art {
-    background: #26352A;
-    border-color: rgba(212, 175, 55, 0.35);
-}
-
-body.dark-mode .art img {
-    background: #F7EED6;
-}
-
-body.dark-mode .note {
-    background: #26352A;
-    border-left-color: var(--gold);
-}
-
-body.dark-mode .note p {
-    color: var(--text);
-}
-
-body.dark-mode .section-title > b {
-    color: #FFF9E9;
-    background: #0F5132;
-    border-color: var(--gold);
-}
-
-body.dark-mode .disclaimer {
-    color: var(--muted);
-    border-top-color: var(--border);
-}
-
-
-/* =========================================
-   16. SMALL MOBILE SCREENS
-   ========================================= */
-
-@media (max-width: 420px) {
-
-    .purity-page {
-        padding: 8px 9px 22px;
-    }
-
-    .hero {
-        padding: 17px 12px 19px;
-
-        border-radius: 18px;
-    }
-
-    .hero h1 {
-        margin-bottom: 7px;
-
-        font-size: clamp(30px, 8vw, 36px);
-    }
-
-    .hero-intro {
-        margin-bottom: 8px;
-
-        font-size: 14px;
-        line-height: 1.8;
-    }
-
-    .hero-subtitle {
-        font-size: 14px;
-        line-height: 1.7;
-    }
-
-    .panel {
-        margin-bottom: 10px;
-        padding: 12px;
-
-        border-radius: 16px;
-    }
-
-    .contents-links {
-        gap: 7px;
-    }
-
-    .contents-links a {
-        min-height: 38px;
-
-        padding: 7px 10px;
-
-        font-size: 12px;
-    }
-
-    .section-title {
-        gap: 9px;
-
-        margin-bottom: 10px;
-    }
-
-    .section-title > b {
-        flex-basis: 36px;
-
-        width: 36px;
-        height: 36px;
-
-        font-size: 16px;
-    }
-
-    .section-title h2 {
-        font-size: clamp(20px, 5.4vw, 24px);
-    }
-
-    .kicker {
-        font-size: 12px;
-    }
-
-    .art.wide {
-        margin-bottom: 11px;
-
-        border-radius: 14px;
-    }
-
-    .lead {
-        margin: 7px 0 11px;
-
-        font-size: 14px;
-        line-height: 1.8;
-    }
-
-    .panel h3 {
-        margin-top: 13px;
-
-        font-size: 17px;
-    }
-
-    .panel ol,
-    .panel ul {
-        padding-left: 22px;
-    }
-
-    .panel li {
-        font-size: 13.5px;
-        line-height: 1.8;
-    }
-
-    .note {
-        padding: 10px 11px;
-    }
-
-    .note strong {
-        font-size: 14px;
-    }
-
-    .note p {
-        font-size: 12.5px;
-        line-height: 1.8;
-    }
-
-    .disclaimer {
-        font-size: 12px;
-    }
-
-    footer {
-        gap: 6px;
-
-        font-size: 10.5px;
-    }
-}
-
-
-/* =========================================
-   17. TABLET AND DESKTOP
-   ========================================= */
-
-@media (min-width: 600px) {
-
-    .purity-page {
-        padding-top: 16px;
-        padding-bottom: 34px;
-    }
-
-    .hero {
-        padding: 26px 24px 28px;
-    }
-
-    .panel {
-        padding: 20px;
-    }
-
-    .art.wide {
-        max-width: 430px;
-    }
-
-    .panel li {
-        font-size: 15px;
-    }
-
-    .lead {
-        font-size: 16px;
-    }
-}
-
-
-/* =========================================
-   18. ACCESSIBILITY
-   ========================================= */
-
-:focus-visible {
-    outline: 3px solid var(--gold);
-    outline-offset: 3px;
-}
+/* -------------------- 24. REDUCED MOTION -------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-
-    html {
-        scroll-behavior: auto;
-    }
-
-    *,
-    *::before,
-    *::after {
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-    }
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
-/* =========================================
-IBADAT — BOTTOM FOOTER BAR
-========================================= */
 
-.purity-footer {
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-gap: 3px;
-width: 100%;
-margin: 18px 0 0;
-padding: 14px 10px 12px;
-background: #0B3D26;
-color: #FFFFFF;
-text-align: center;
-border-top: 3px solid #D4AF37;
-border-radius: 12px 12px 0 0;
-box-shadow: 0 -3px 12px rgba(11, 61, 38, 0.12);
-}
+/* -------------------- 25. PRINT -------------------- */
 
-.purity-footer-message {
-display: flex;
-flex-wrap: nowrap;
-align-items: center;
-justify-content: center;
-gap: 7px;
-width: 100%;
-color: #FFFFFF;
-font-family: "Noto Sans Bengali", "Noto Sans Devanagari",
-"Nirmala UI", Arial, sans-serif;
-font-size: clamp(12px, 3.4vw, 15px);
-font-weight: 800;
-line-height: 1.5;
-white-space: nowrap;
-}
+@media print {
+  body {
+    color: #222222;
+    background: #ffffff;
+  }
 
-.purity-footer .footer-star {
-flex: 0 0 auto;
-color: #D4AF37;
-font-size: 15px;
-line-height: 1;
-}
+  .site-header,
+  .skip-link,
+  .contents-panel {
+    display: none !important;
+  }
 
-.purity-footer-brand {
-color: #E6C75A;
-font-family: Arial, sans-serif;
-font-size: 12px;
-font-weight: 900;
-letter-spacing: 2px;
-line-height: 1.5;
-}
+  .purity-page {
+    width: 100%;
+    margin: 0;
+    gap: 14px;
+  }
 
-/* Dark theme */
-body.dark-mode .purity-footer {
-background: #082F1E;
-color: #FFFFFF;
-border-top-color: #D4AF37;
-}
+  .panel,
+  .lesson,
+  .lesson-subsection,
+  .step-card {
+    color: #222222;
+    background: #ffffff;
 
-body.dark-mode .purity-footer-message {
-color: #FFFFFF;
-}
+    box-shadow: none;
+    break-inside: avoid;
+  }
 
-body.dark-mode .purity-footer-brand {
-color: #E6C75A;
-}
+  .lesson-art {
+    height: 220px;
+  }
 
-/* Small mobile screens */
-@media (max-width: 360px) {
-.purity-footer {
-padding: 12px 5px 10px;
-}
+  .purity-footer {
+    color: #ffffff;
+    background: #0b3d26;
 
-.purity-footer-message {
-gap: 4px;
-font-size: 11px;
-}
-
-.purity-footer .footer-star {
-font-size: 12px;
-}
+    break-inside: avoid;
+  }
 }
