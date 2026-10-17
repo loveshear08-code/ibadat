@@ -1,25 +1,24 @@
 /* =========================================
-   IBADAT — NAMAZ PURITY PAGE
+   IBADAT — PURITY PAGE
    File: css/namaz-purity.css
    ========================================= */
 
 :root {
   --primary: #0f5132;
   --primary-dark: #0b3d26;
-  --primary-soft: #eaf4e8;
   --page-bg: #fbf8ef;
   --card-bg: #fffdf7;
   --text: #24452e;
   --muted: #617362;
   --gold: #d4af37;
   --gold-dark: #a98520;
-  --border: rgba(15, 81, 50, 0.2);
+  --border: rgba(15, 81, 50, 0.20);
   --shadow: 0 3px 12px rgba(15, 81, 50, 0.09);
   --radius-card: 18px;
   --page-width: 760px;
 }
 
-/* ---------- Page background ---------- */
+/* ---------- Base ---------- */
 
 * {
   box-sizing: border-box;
@@ -43,7 +42,7 @@ body {
     "Nirmala UI", sans-serif;
   line-height: 1.75;
 
-  /* Flower-pattern background */
+  /* Actual project background image */
   background-color: var(--page-bg);
   background-image:
     linear-gradient(
@@ -62,13 +61,6 @@ img {
   max-width: 100%;
 }
 
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
-
 h1,
 h2,
 h3,
@@ -80,7 +72,7 @@ p {
   margin-top: 0;
 }
 
-/* ---------- Main page wrapper ---------- */
+/* ---------- Page wrapper ---------- */
 
 .purity-page {
   width: 100%;
@@ -90,17 +82,17 @@ p {
   padding: 14px 12px 20px;
 }
 
-/* ---------- Hero / mosque background ---------- */
+/* ---------- Hero: title + four paragraphs only ---------- */
 
 .hero {
   position: relative;
   isolation: isolate;
-  width: 100%;
-  min-width: 0;
-  min-height: 220px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 220px;
   overflow: hidden;
   margin: 0 0 22px;
   padding: 28px 18px;
@@ -127,14 +119,6 @@ p {
   max-width: 590px;
   min-width: 0;
   margin: 0 auto;
-}
-
-.hero-eyebrow {
-  margin: 0 0 5px;
-  color: var(--primary);
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
 }
 
 .hero h1 {
@@ -164,7 +148,7 @@ p {
   margin-bottom: 0;
 }
 
-/* ---------- Sections: keep background visible ---------- */
+/* ---------- Content spacing ---------- */
 
 .purity-content {
   display: flex;
@@ -174,8 +158,8 @@ p {
   min-width: 0;
 }
 
-/* Section wrapper stays transparent:
-   do not turn the entire lesson into one big card. */
+/* Keep section wrappers transparent so the
+   patterned background remains visible. */
 
 .panel.lesson {
   width: 100%;
@@ -188,7 +172,7 @@ p {
   box-shadow: none;
 }
 
-/* ---------- Section heading ---------- */
+/* ---------- Section headings ---------- */
 
 .section-title {
   display: flex;
@@ -220,8 +204,7 @@ p {
   line-height: 1;
 }
 
-.section-title > div,
-.section-title > .section-heading-copy {
+.section-title > div {
   flex: 1 1 auto;
   min-width: 0;
 }
@@ -241,13 +224,13 @@ p {
   line-height: 1.5;
 }
 
-/* ---------- Separate content boards ---------- */
+/* ---------- Separate content cards ---------- */
 
 .content-board {
   width: 100%;
   min-width: 0;
   margin: 0 0 11px;
-  padding: 15px 15px;
+  padding: 15px;
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
   background: rgba(255, 253, 247, 0.97);
@@ -278,8 +261,6 @@ p {
   margin-top: 9px;
 }
 
-/* Highlight / note boards */
-
 .content-board.note {
   border-left: 4px solid var(--gold);
   background: rgba(246, 241, 218, 0.97);
@@ -289,23 +270,30 @@ p {
   color: var(--gold-dark);
 }
 
-/* ---------- Main section illustrations ---------- */
+/* ---------- Main section images ---------- */
 
 .main-illustration {
   width: 100%;
   max-width: 430px;
-  height: auto;
-  max-height: 270px;
-  object-fit: contain;
+  min-width: 0;
   margin: 0 auto 12px;
   padding: 8px;
+  overflow: hidden;
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
   background: rgba(255, 253, 247, 0.97);
   box-shadow: var(--shadow);
 }
 
-/* ---------- Wudu lesson steps ---------- */
+.main-illustration img {
+  width: 100%;
+  height: auto;
+  max-height: 270px;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+/* ---------- Wudu steps ---------- */
 
 .step-list {
   display: flex;
@@ -363,33 +351,28 @@ p {
   line-height: 1.8;
 }
 
-/* ---------- Guidance lists ---------- */
+/* Number of repetitions shown beside each step */
 
-.guidance-list {
-  margin: 0;
-  padding: 0 22px 0 0;
-  color: var(--text);
-  font-size: 0.95rem;
-  line-height: 1.9;
+.step-copy .step-count {
+  display: inline-block;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 8px;
+  padding: 3px 10px;
+  border: 1px solid rgba(15, 81, 50, 0.16);
+  border-radius: 999px;
+  color: var(--primary-dark);
+  background: #eaf4e8;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.7;
 }
 
-.guidance-list li {
-  margin: 0 0 7px;
-  padding-right: 2px;
-}
-
-.guidance-list li:last-child {
-  margin-bottom: 0;
-}
-
-.guidance-list li::marker {
-  color: var(--primary);
+.step-count strong {
   font-weight: 800;
 }
 
-/* ---------- Tayammum step images/cards ----------
-   These styles apply when the three images are
-   included in the tayammum HTML. ---------- */
+/* ---------- Tayammum's three illustrated steps ---------- */
 
 .tayammum-step-list {
   display: flex;
@@ -441,11 +424,36 @@ p {
 
 .tayammum-step-copy p {
   margin: 0;
+  color: var(--text);
   font-size: 0.93rem;
   line-height: 1.8;
 }
 
-/* ---------- Footer: one line only ---------- */
+/* ---------- Lists ---------- */
+
+.guidance-list {
+  margin: 0;
+  padding: 0 22px 0 0;
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.9;
+}
+
+.guidance-list li {
+  margin: 0 0 7px;
+  padding-right: 2px;
+}
+
+.guidance-list li:last-child {
+  margin-bottom: 0;
+}
+
+.guidance-list li::marker {
+  color: var(--primary);
+  font-weight: 800;
+}
+
+/* ---------- Footer: one line ---------- */
 
 .purity-footer {
   width: 100%;
@@ -474,7 +482,6 @@ body.dark-mode {
   --card-bg: #1b2a20;
   --text: #e3ecdf;
   --muted: #b6c6b5;
-  --primary-soft: #243c2b;
   --border: rgba(180, 211, 181, 0.2);
   --shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
 
@@ -507,7 +514,6 @@ body.dark-mode .hero h1 {
   color: #efd47a;
 }
 
-body.dark-mode .hero-eyebrow,
 body.dark-mode .hero-description {
   color: #edf3e7;
 }
@@ -515,7 +521,8 @@ body.dark-mode .hero-description {
 body.dark-mode .section-title,
 body.dark-mode .content-board,
 body.dark-mode .step-card,
-body.dark-mode .tayammum-step-card {
+body.dark-mode .tayammum-step-card,
+body.dark-mode .main-illustration {
   background: rgba(27, 42, 32, 0.97);
   border-color: var(--border);
 }
@@ -547,15 +554,16 @@ body.dark-mode .content-board.note h3 {
   color: #efd47a;
 }
 
-body.dark-mode .main-illustration {
-  background: rgba(27, 42, 32, 0.97);
-  border-color: var(--border);
-}
-
 body.dark-mode .step-image,
 body.dark-mode .tayammum-step-image {
   background: #25352a;
   border-color: var(--border);
+}
+
+body.dark-mode .step-copy .step-count {
+  color: #e4f1df;
+  background: #294632;
+  border-color: rgba(180, 211, 181, 0.25);
 }
 
 body.dark-mode .purity-footer {
@@ -675,9 +683,13 @@ body.dark-mode .purity-footer {
     font-size: 0.85rem;
   }
 
-  .main-illustration {
+  .step-copy .step-count {
+    font-size: 0.8rem;
+    padding: 3px 8px;
+  }
+
+  .main-illustration img {
     max-height: 220px;
-    padding: 6px;
   }
 
   .purity-footer {
@@ -690,7 +702,7 @@ body.dark-mode .purity-footer {
   }
 }
 
-/* ---------- Accessibility / motion ---------- */
+/* ---------- Reduced motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
   html {
