@@ -1,692 +1,699 @@
-/* =========================================================
+/* =========================================
    IBADAT — NAMAZ PURITY PAGE
    File: css/namaz-purity.css
-   ========================================================= */
+   ========================================= */
 
-/* ---------- 1. Basic reset ---------- */
+:root {
+  --primary: #0f5132;
+  --primary-dark: #0b3d26;
+  --primary-soft: #eaf4e8;
+  --page-bg: #fbf8ef;
+  --card-bg: #fffdf7;
+  --text: #24452e;
+  --muted: #617362;
+  --gold: #d4af37;
+  --gold-dark: #a98520;
+  --border: rgba(15, 81, 50, 0.2);
+  --shadow: 0 3px 12px rgba(15, 81, 50, 0.09);
+  --radius-card: 18px;
+  --page-width: 760px;
+}
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
+/* ---------- Page background ---------- */
+
+* {
+  box-sizing: border-box;
 }
 
 html {
-    min-height: 100%;
-    scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%;
+  width: 100%;
+  min-height: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 16px;
 }
 
 body {
-    margin: 0;
-    min-height: 100vh;
-    color: #344638;
-    font-family:
-        "Noto Sans Bengali",
-        "Hind Siliguri",
-        "Nirmala UI",
-        sans-serif;
-    font-size: 16px;
-    line-height: 1.8;
+  width: 100%;
+  min-width: 0;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  color: var(--text);
+  font-family: "Noto Sans Bengali", "Hind Siliguri",
+    "Nirmala UI", sans-serif;
+  line-height: 1.75;
 
-    /* Keep the patterned background visible between boards */
-    background-color: #f6f0df;
-    background-image: url("../assets/bg_pattern.png");
-    background-position: center top;
-    background-repeat: repeat;
-    background-attachment: fixed;
-    background-size: auto;
+  /* Flower-pattern background */
+  background-color: var(--page-bg);
+  background-image:
+    linear-gradient(
+      rgba(255, 251, 242, 0.70),
+      rgba(255, 251, 242, 0.70)
+    ),
+    url("../assets/bg_pattern.png");
+  background-repeat: repeat, repeat;
+  background-position: center top, center top;
+  background-size: auto, 300px auto;
+  background-attachment: scroll, fixed;
 }
 
 img {
-    display: block;
-    max-width: 100%;
+  display: block;
+  max-width: 100%;
 }
 
 button,
 input,
 textarea,
 select {
-    font: inherit;
+  font: inherit;
 }
 
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-p,
 h1,
 h2,
 h3,
-h4 {
-    margin-top: 0;
+p {
+  overflow-wrap: anywhere;
 }
 
-p:last-child {
-    margin-bottom: 0;
+p {
+  margin-top: 0;
 }
 
-/* ---------- 2. Main page layout ---------- */
+/* ---------- Main page wrapper ---------- */
+
+.purity-page {
+  width: 100%;
+  max-width: var(--page-width);
+  min-width: 0;
+  margin: 0 auto;
+  padding: 14px 12px 20px;
+}
+
+/* ---------- Hero / mosque background ---------- */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-width: 0;
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: 0 0 22px;
+  padding: 28px 18px;
+  border: 1px solid rgba(169, 133, 32, 0.42);
+  border-radius: 22px;
+  text-align: center;
+  background-color: #f4edda;
+  background-image:
+    linear-gradient(
+      rgba(255, 251, 239, 0.70),
+      rgba(255, 251, 239, 0.78)
+    ),
+    url("../assets/prayer-learning-bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: var(--shadow);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 590px;
+  min-width: 0;
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  margin: 0 0 5px;
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.hero h1 {
+  margin: 0 0 12px;
+  color: var(--gold-dark);
+  font-size: clamp(2rem, 7vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+.hero-description {
+  width: 100%;
+  max-width: 530px;
+  margin: 0 auto;
+  color: #294c35;
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.9;
+}
+
+.hero-description p {
+  margin: 0 0 4px;
+}
+
+.hero-description p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- Sections: keep background visible ---------- */
 
 .purity-content {
-    width: min(100% - 32px, 1000px);
-    margin: 0 auto;
-    padding: 20px 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+  min-width: 0;
 }
 
-/* ---------- 3. Hero board ---------- */
-
-.purity-hero {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-
-    width: 100%;
-    min-height: 220px;
-    margin: 0 auto 22px;
-    padding: 30px 28px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-
-    background-color: #f8f0dc;
-    background-image: url("../assets/prayer-learning-bg.png");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-
-    border: 1px solid #d8bd7d;
-    border-radius: 20px;
-    box-shadow: 0 5px 16px rgba(79, 64, 30, 0.10);
-}
-
-.purity-hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: rgba(255, 250, 235, 0.84);
-}
-
-.purity-hero h1,
-.purity-hero h2 {
-    margin: 0 0 10px;
-    color: #9b7629;
-    font-size: clamp(28px, 5vw, 40px);
-    font-weight: 750;
-    line-height: 1.45;
-}
-
-.purity-hero p {
-    width: min(100%, 760px);
-    margin: 0 auto;
-    color: #405441;
-    font-size: clamp(14px, 2.1vw, 17px);
-    font-weight: 500;
-    line-height: 1.9;
-}
-
-/* ---------- 4. Separate lesson boards ---------- */
+/* Section wrapper stays transparent:
+   do not turn the entire lesson into one big card. */
 
 .panel.lesson {
-    position: relative;
-    width: 100%;
-    min-width: 0;
-    margin: 0 0 22px;
-    padding: clamp(18px, 3.5vw, 30px);
-
-    background: rgba(255, 253, 246, 0.97);
-    border: 1px solid #e1d3ad;
-    border-radius: 18px;
-    box-shadow: 0 5px 15px rgba(67, 59, 36, 0.08);
-
-    overflow-wrap: anywhere;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
-/* Consistent heading style across all boards */
+/* ---------- Section heading ---------- */
 
-.lesson-heading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-
-    margin: 0 0 18px;
-    padding: 0 0 12px;
-
-    color: #28583c;
-    text-align: center;
-    font-size: clamp(21px, 3.3vw, 28px);
-    font-weight: 750;
-    line-height: 1.55;
-
-    border-bottom: 1px solid #e8d9b2;
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+  margin: 0 0 12px;
+  padding: 13px 14px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  border-radius: 15px;
+  background: rgba(255, 253, 247, 0.96);
+  box-shadow: var(--shadow);
 }
 
-.lesson-heading > * {
-    min-width: 0;
+.section-number {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #fffdf4;
+  background: var(--primary);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1;
 }
 
-.lesson-heading .section-number {
-    flex: 0 0 auto;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    min-width: 34px;
-    height: 34px;
-    padding: 0 8px;
-
-    color: #fffaf0;
-    background: #39704b;
-    border-radius: 50%;
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 1;
+.section-title > div,
+.section-title > .section-heading-copy {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
-/* ---------- 5. Main illustration ---------- */
-
-.lesson-art {
-    width: 100%;
-    max-width: 520px;
-    margin: 0 auto 20px;
-    padding: 10px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #f8f2e4;
-    border: 1px solid #e5d6b2;
-    border-radius: 14px;
+.kicker {
+  margin: 0 0 2px;
+  color: var(--gold-dark);
+  font-size: 0.78rem;
+  font-weight: 800;
 }
 
-.lesson-art img {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    max-height: 340px;
-    object-fit: contain;
-    object-position: center;
-    border-radius: 9px;
+.section-title h2 {
+  margin: 0;
+  color: var(--primary-dark);
+  font-size: clamp(1.15rem, 4.5vw, 1.45rem);
+  font-weight: 800;
+  line-height: 1.5;
 }
 
-/* ---------- 6. Introductory text ---------- */
+/* ---------- Separate content boards ---------- */
 
-.lesson-intro {
-    max-width: 850px;
-    margin: 0 auto 20px;
-
-    color: #465747;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.95;
-    text-align: center;
+.content-board {
+  width: 100%;
+  min-width: 0;
+  margin: 0 0 11px;
+  padding: 15px 15px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: rgba(255, 253, 247, 0.97);
+  box-shadow: var(--shadow);
 }
 
-/* ---------- 7. Subsection headings and text ---------- */
-
-.lesson-subsection {
-    margin: 22px 0 0;
-    padding: 17px 18px;
-
-    background: #faf6e9;
-    border: 1px solid #e8d9b5;
-    border-radius: 12px;
+.content-board:last-child {
+  margin-bottom: 0;
 }
 
-.lesson-subsection h3,
-.lesson-subsection h4 {
-    margin: 0 0 10px;
-    color: #326044;
-    font-size: clamp(17px, 2.6vw, 21px);
-    font-weight: 750;
-    line-height: 1.6;
+.content-board h3 {
+  margin: 0 0 7px;
+  color: var(--primary);
+  font-size: 1.02rem;
+  font-weight: 800;
+  line-height: 1.55;
 }
 
-.lesson-subsection p {
-    margin: 0 0 10px;
-    color: #475648;
-    line-height: 1.9;
+.content-board p {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.96rem;
+  font-weight: 500;
+  line-height: 1.9;
 }
 
-.lesson-subsection p:last-child {
-    margin-bottom: 0;
+.content-board p + p {
+  margin-top: 9px;
 }
 
-/* ---------- 8. Step-by-step cards ---------- */
+/* Highlight / note boards */
 
-.step-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
+.content-board.note {
+  border-left: 4px solid var(--gold);
+  background: rgba(246, 241, 218, 0.97);
+}
 
-    width: 100%;
-    margin: 18px 0 0;
+.content-board.note h3 {
+  color: var(--gold-dark);
+}
+
+/* ---------- Main section illustrations ---------- */
+
+.main-illustration {
+  width: 100%;
+  max-width: 430px;
+  height: auto;
+  max-height: 270px;
+  object-fit: contain;
+  margin: 0 auto 12px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: rgba(255, 253, 247, 0.97);
+  box-shadow: var(--shadow);
+}
+
+/* ---------- Wudu lesson steps ---------- */
+
+.step-list {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  width: 100%;
+  min-width: 0;
+  margin: 0 0 12px;
+  padding: 0;
 }
 
 .step-card {
-    min-width: 0;
-    padding: 15px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-
-    background: #fffdf7;
-    border: 1px solid #e4d6b4;
-    border-radius: 14px;
-    box-shadow: 0 3px 9px rgba(76, 64, 35, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: rgba(255, 253, 247, 0.97);
+  box-shadow: var(--shadow);
 }
 
 .step-image {
-    width: 100%;
-    height: 170px;
-    margin: 0 0 12px;
-    padding: 8px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #f6f0e1;
-    border: 1px solid #ece0c3;
-    border-radius: 10px;
-}
-
-.step-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-    border-radius: 6px;
-}
-
-.step-card h3,
-.step-card h4 {
-    margin: 0 0 7px;
-    color: #2e6041;
-    font-size: 18px;
-    font-weight: 750;
-    line-height: 1.6;
-}
-
-.step-card p {
-    margin: 0;
-    color: #4a584b;
-    font-size: 15px;
-    line-height: 1.85;
+  flex: 0 0 104px;
+  width: 104px;
+  height: 104px;
+  object-fit: contain;
+  padding: 5px;
+  border: 1px solid rgba(15, 81, 50, 0.13);
+  border-radius: 13px;
+  background: #f5f5e9;
 }
 
 .step-copy {
-    min-width: 0;
-    flex: 1;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
-/* ---------- 9. Clean lists ---------- */
-
-.clean-list {
-    margin: 10px 0 0;
-    padding: 0 24px 0 0;
-    list-style: none;
+.step-copy h3 {
+  margin: 0 0 5px;
+  color: var(--primary);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.55;
 }
 
-.clean-list li {
-    position: relative;
-    margin: 0 0 10px;
-    padding: 0 22px 0 0;
-
-    color: #455647;
-    line-height: 1.9;
+.step-copy p {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.93rem;
+  font-weight: 500;
+  line-height: 1.8;
 }
 
-.clean-list li::before {
-    content: "";
-    position: absolute;
-    top: 0.8em;
-    right: 0;
+/* ---------- Guidance lists ---------- */
 
-    width: 8px;
-    height: 8px;
-
-    background: #b89443;
-    border-radius: 50%;
-    transform: translateY(-50%);
+.guidance-list {
+  margin: 0;
+  padding: 0 22px 0 0;
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.9;
 }
 
-.clean-list li:last-child {
-    margin-bottom: 0;
+.guidance-list li {
+  margin: 0 0 7px;
+  padding-right: 2px;
 }
 
-/* ---------- 10. Important notes ---------- */
-
-.purity-note {
-    margin: 18px 0 0;
-    padding: 14px 16px;
-
-    color: #5e4b24;
-    background: #fbf2d9;
-    border: 1px solid #e7d29b;
-    border-right: 4px solid #bd9742;
-    border-radius: 10px;
-
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 1.9;
+.guidance-list li:last-child {
+  margin-bottom: 0;
 }
 
-/* ---------- 11. Dua / special information panel ---------- */
-
-.dua-panel {
-    margin: 20px 0 0;
-    padding: 18px;
-
-    text-align: center;
-    background: #f4f5e9;
-    border: 1px solid #d6dfc4;
-    border-radius: 13px;
+.guidance-list li::marker {
+  color: var(--primary);
+  font-weight: 800;
 }
 
-.dua-panel h3,
-.dua-panel h4 {
-    margin: 0 0 10px;
-    color: #2c6040;
-    font-size: 19px;
-    font-weight: 750;
-    line-height: 1.6;
+/* ---------- Tayammum step images/cards ----------
+   These styles apply when the three images are
+   included in the tayammum HTML. ---------- */
+
+.tayammum-step-list {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  width: 100%;
+  min-width: 0;
+  margin: 0 0 12px;
+  padding: 0;
 }
 
-.dua-panel p {
-    margin: 0 0 10px;
-    color: #435546;
-    line-height: 1.95;
+.tayammum-step-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: rgba(255, 253, 247, 0.97);
+  box-shadow: var(--shadow);
 }
 
-.dua-panel p:last-child {
-    margin-bottom: 0;
+.tayammum-step-image {
+  flex: 0 0 104px;
+  width: 104px;
+  height: 104px;
+  object-fit: contain;
+  padding: 5px;
+  border: 1px solid rgba(15, 81, 50, 0.13);
+  border-radius: 13px;
+  background: #f5f5e9;
 }
 
-/* ---------- 12. Footer board ---------- */
+.tayammum-step-copy {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.tayammum-step-copy h3 {
+  margin: 0 0 5px;
+  color: var(--primary);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+.tayammum-step-copy p {
+  margin: 0;
+  font-size: 0.93rem;
+  line-height: 1.8;
+}
+
+/* ---------- Footer: one line only ---------- */
 
 .purity-footer {
-    width: 100%;
-    margin: 0;
-    padding: 20px 18px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: #f9e8b3;
-    text-align: center;
-    font-size: clamp(15px, 2.5vw, 19px);
-    font-weight: 700;
-    line-height: 1.8;
-
-    background: #24523a;
-    border: 1px solid #c7a75b;
-    border-radius: 15px;
-    box-shadow: 0 5px 14px rgba(40, 58, 40, 0.12);
+  width: 100%;
+  min-width: 0;
+  margin: 22px 0 0;
+  padding: 15px 12px;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  border-radius: 16px;
+  background: var(--primary);
+  box-shadow: var(--shadow);
+  text-align: center;
 }
 
 .purity-footer p {
-    margin: 0;
+  margin: 0;
+  color: #fff9df;
+  font-size: 0.96rem;
+  font-weight: 800;
+  line-height: 1.8;
 }
 
-/* ---------- 13. Prevent oversized content ---------- */
+/* ---------- Dark mode ---------- */
 
-.panel.lesson > *,
-.lesson-subsection > *,
-.step-card > * {
-    max-width: 100%;
+body.dark-mode {
+  --page-bg: #101c15;
+  --card-bg: #1b2a20;
+  --text: #e3ecdf;
+  --muted: #b6c6b5;
+  --primary-soft: #243c2b;
+  --border: rgba(180, 211, 181, 0.2);
+  --shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+
+  color: var(--text);
+  background-color: var(--page-bg);
+  background-image:
+    linear-gradient(
+      rgba(13, 25, 17, 0.76),
+      rgba(13, 25, 17, 0.76)
+    ),
+    url("../assets/bg_pattern.png");
+  background-repeat: repeat, repeat;
+  background-position: center top, center top;
+  background-size: auto, 300px auto;
+  background-attachment: scroll, fixed;
 }
 
-.lesson-art img,
-.step-image img {
-    flex-shrink: 0;
+body.dark-mode .hero {
+  background-color: #25392b;
+  background-image:
+    linear-gradient(
+      rgba(16, 34, 22, 0.70),
+      rgba(16, 34, 22, 0.78)
+    ),
+    url("../assets/prayer-learning-bg.png");
+  border-color: rgba(212, 175, 55, 0.38);
 }
 
-/* ---------- 14. Tablet layout ---------- */
-
-@media (max-width: 760px) {
-    .purity-content {
-        width: min(100% - 24px, 680px);
-        padding-top: 14px;
-        padding-bottom: 20px;
-    }
-
-    .purity-hero {
-        min-height: 190px;
-        margin-bottom: 16px;
-        padding: 24px 18px;
-        border-radius: 16px;
-    }
-
-    .panel.lesson {
-        margin-bottom: 16px;
-        padding: 20px;
-        border-radius: 15px;
-    }
-
-    .lesson-heading {
-        margin-bottom: 15px;
-        padding-bottom: 10px;
-    }
-
-    .lesson-art {
-        max-width: 460px;
-        margin-bottom: 16px;
-    }
-
-    .lesson-art img {
-        max-height: 290px;
-    }
-
-    .step-grid {
-        gap: 12px;
-    }
-
-    .step-card {
-        padding: 12px;
-    }
-
-    .step-image {
-        height: 145px;
-    }
+body.dark-mode .hero h1 {
+  color: #efd47a;
 }
 
-/* ---------- 15. Mobile layout ---------- */
-
-@media (max-width: 480px) {
-    body {
-        font-size: 15px;
-        line-height: 1.8;
-    }
-
-    .purity-content {
-        width: calc(100% - 20px);
-        padding-top: 10px;
-        padding-bottom: 16px;
-    }
-
-    .purity-hero {
-        min-height: 165px;
-        margin-bottom: 13px;
-        padding: 20px 14px;
-        border-radius: 14px;
-    }
-
-    .purity-hero h1,
-    .purity-hero h2 {
-        margin-bottom: 8px;
-        font-size: 29px;
-    }
-
-    .purity-hero p {
-        font-size: 14px;
-        line-height: 1.85;
-    }
-
-    .panel.lesson {
-        margin-bottom: 13px;
-        padding: 15px 13px;
-        border-radius: 13px;
-    }
-
-    .lesson-heading {
-        gap: 8px;
-        margin-bottom: 13px;
-        padding-bottom: 9px;
-        font-size: 21px;
-    }
-
-    .lesson-heading .section-number {
-        min-width: 29px;
-        height: 29px;
-        padding: 0 6px;
-        font-size: 13px;
-    }
-
-    .lesson-art {
-        margin-bottom: 14px;
-        padding: 7px;
-        border-radius: 11px;
-    }
-
-    .lesson-art img {
-        max-height: 230px;
-    }
-
-    .lesson-intro {
-        margin-bottom: 14px;
-        font-size: 14px;
-        line-height: 1.9;
-    }
-
-    .lesson-subsection {
-        margin-top: 15px;
-        padding: 13px 12px;
-        border-radius: 10px;
-    }
-
-    .lesson-subsection h3,
-    .lesson-subsection h4 {
-        margin-bottom: 8px;
-        font-size: 17px;
-    }
-
-    .lesson-subsection p {
-        font-size: 14px;
-        line-height: 1.85;
-    }
-
-    .step-grid {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 12px;
-        margin-top: 13px;
-    }
-
-    .step-card {
-        padding: 12px;
-        border-radius: 12px;
-    }
-
-    .step-image {
-        height: 190px;
-        margin-bottom: 10px;
-    }
-
-    .step-card h3,
-    .step-card h4 {
-        font-size: 17px;
-    }
-
-    .step-card p {
-        font-size: 14px;
-        line-height: 1.85;
-    }
-
-    .clean-list {
-        padding-right: 20px;
-    }
-
-    .clean-list li {
-        margin-bottom: 8px;
-        padding-right: 18px;
-        font-size: 14px;
-        line-height: 1.85;
-    }
-
-    .purity-note {
-        margin-top: 13px;
-        padding: 11px 12px;
-        font-size: 14px;
-        line-height: 1.85;
-    }
-
-    .dua-panel {
-        margin-top: 14px;
-        padding: 13px 11px;
-    }
-
-    .dua-panel h3,
-    .dua-panel h4 {
-        font-size: 17px;
-    }
-
-    .dua-panel p {
-        font-size: 14px;
-        line-height: 1.9;
-    }
-
-    .purity-footer {
-        padding: 15px 12px;
-        border-radius: 12px;
-        font-size: 15px;
-    }
+body.dark-mode .hero-eyebrow,
+body.dark-mode .hero-description {
+  color: #edf3e7;
 }
 
-/* ---------- 16. Very small screens ---------- */
-
-@media (max-width: 340px) {
-    .purity-content {
-        width: calc(100% - 14px);
-    }
-
-    .purity-hero {
-        padding: 17px 10px;
-    }
-
-    .panel.lesson {
-        padding: 12px 10px;
-    }
-
-    .lesson-heading {
-        font-size: 19px;
-    }
-
-    .step-image {
-        height: 160px;
-    }
+body.dark-mode .section-title,
+body.dark-mode .content-board,
+body.dark-mode .step-card,
+body.dark-mode .tayammum-step-card {
+  background: rgba(27, 42, 32, 0.97);
+  border-color: var(--border);
 }
 
-/* ---------- 17. Motion accessibility ---------- */
+body.dark-mode .section-title h2,
+body.dark-mode .content-board h3,
+body.dark-mode .step-copy h3,
+body.dark-mode .tayammum-step-copy h3 {
+  color: #c6e6c2;
+}
+
+body.dark-mode .kicker {
+  color: #efd47a;
+}
+
+body.dark-mode .content-board p,
+body.dark-mode .step-copy p,
+body.dark-mode .tayammum-step-copy p,
+body.dark-mode .guidance-list {
+  color: var(--text);
+}
+
+body.dark-mode .content-board.note {
+  background: rgba(58, 52, 29, 0.97);
+  border-left-color: var(--gold);
+}
+
+body.dark-mode .content-board.note h3 {
+  color: #efd47a;
+}
+
+body.dark-mode .main-illustration {
+  background: rgba(27, 42, 32, 0.97);
+  border-color: var(--border);
+}
+
+body.dark-mode .step-image,
+body.dark-mode .tayammum-step-image {
+  background: #25352a;
+  border-color: var(--border);
+}
+
+body.dark-mode .purity-footer {
+  background: #17452d;
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+/* ---------- Tablet ---------- */
+
+@media (min-width: 600px) {
+  .purity-page {
+    padding: 20px 16px 26px;
+  }
+
+  .hero {
+    min-height: 250px;
+    padding: 34px 28px;
+    margin-bottom: 24px;
+  }
+
+  .purity-content {
+    gap: 24px;
+  }
+
+  .section-title {
+    padding: 15px 18px;
+    margin-bottom: 14px;
+  }
+
+  .content-board {
+    padding: 17px 19px;
+    margin-bottom: 13px;
+  }
+
+  .step-card,
+  .tayammum-step-card {
+    gap: 16px;
+    padding: 14px;
+  }
+
+  .step-image,
+  .tayammum-step-image {
+    flex-basis: 118px;
+    width: 118px;
+    height: 118px;
+  }
+}
+
+/* ---------- Small phones ---------- */
+
+@media (max-width: 380px) {
+  .purity-page {
+    padding: 9px 8px 16px;
+  }
+
+  .hero {
+    min-height: 190px;
+    margin-bottom: 17px;
+    padding: 22px 12px;
+    border-radius: 17px;
+  }
+
+  .hero-description {
+    font-size: 0.89rem;
+  }
+
+  .purity-content {
+    gap: 18px;
+  }
+
+  .section-title {
+    gap: 9px;
+    padding: 11px 10px;
+  }
+
+  .section-number {
+    flex-basis: 34px;
+    width: 34px;
+    height: 34px;
+    font-size: 0.9rem;
+  }
+
+  .content-board {
+    padding: 12px 11px;
+    margin-bottom: 9px;
+    border-radius: 15px;
+  }
+
+  .content-board p,
+  .guidance-list {
+    font-size: 0.9rem;
+  }
+
+  .step-card,
+  .tayammum-step-card {
+    align-items: flex-start;
+    gap: 9px;
+    padding: 9px;
+    border-radius: 15px;
+  }
+
+  .step-image,
+  .tayammum-step-image {
+    flex-basis: 82px;
+    width: 82px;
+    height: 82px;
+    padding: 3px;
+  }
+
+  .step-copy h3,
+  .tayammum-step-copy h3 {
+    font-size: 0.91rem;
+  }
+
+  .step-copy p,
+  .tayammum-step-copy p {
+    font-size: 0.85rem;
+  }
+
+  .main-illustration {
+    max-height: 220px;
+    padding: 6px;
+  }
+
+  .purity-footer {
+    margin-top: 18px;
+    padding: 12px 9px;
+  }
+
+  .purity-footer p {
+    font-size: 0.88rem;
+  }
+}
+
+/* ---------- Accessibility / motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
-    html {
-        scroll-behavior: auto;
-    }
-
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
+  html {
+    scroll-behavior: auto;
+  }
 }
