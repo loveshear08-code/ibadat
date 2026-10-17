@@ -137,7 +137,7 @@
         "তায়াম্মুমের বিস্তারিত পদ্ধতিতে মাজহাবভেদে কিছু পার্থক্য রয়েছে। নিজের অনুসৃত নির্ভরযোগ্য আলেমের নির্দেশনা অনুসরণ করো।",
 
       guidanceKicker: "পঞ্চম পাঠ",
-      guidanceTitle: "মনে রাখার গুরুত্বপূর্ণ বিষয়",
+      guidanceTitle: "গুরুত্বপূর্ণ সতর্কতা",
       guidanceIntro:
         "পবিত্রতার নিয়ম বুঝে আমল করো। কোনো বিষয়ে সন্দেহ হলে নির্ভরযোগ্য আলেমের কাছে জেনে নাও।",
       guidanceCards: [
@@ -304,7 +304,7 @@
         "Some details of tayammum differ among schools of Islamic law. Follow a trusted scholar in your tradition.",
 
       guidanceKicker: "Lesson Five",
-      guidanceTitle: "Important Things to Remember",
+      guidanceTitle: "Important Warnings",
       guidanceIntro:
         "Learn the rules of purity and practise them carefully. Ask a trusted scholar when unsure.",
       guidanceCards: [
@@ -471,7 +471,7 @@
         "तयम्मुम के कुछ विवरण फ़िक़्ही मतों के अनुसार अलग हो सकते हैं। अपने विश्वसनीय आलिम की सलाह लें।",
 
       guidanceKicker: "पाँचवाँ पाठ",
-      guidanceTitle: "याद रखने योग्य महत्वपूर्ण बातें",
+      guidanceTitle: "महत्वपूर्ण सावधानियाँ",
       guidanceIntro:
         "पवित्रता के नियम समझकर अमल करें। संदेह होने पर विश्वसनीय आलिम से पूछें।",
       guidanceCards: [
