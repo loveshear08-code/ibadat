@@ -1,1031 +1,970 @@
-/* ==================================================
-   IBADAT — PURITY PAGE
-   Cream • Islamic Green • Gold
-   Responsive • Dark Mode
-================================================== */
 
-/* ---------- 1. VARIABLES ---------- */
+/* =========================================
+   IBADAT — NAMAZ PURITY PAGE
+   File: namaz-purity.css
+========================================= */
 
 :root {
-  color-scheme: light;
-
-  --green: #17583e;
-  --green-dark: #0c3e2b;
-  --green-soft: #e5f0df;
-
-  --gold: #c9a43b;
-  --gold-light: #e5d69a;
-
-  --cream: #fffaf0;
-  --board: rgba(255, 253, 246, 0.94);
-  --board-soft: rgba(249, 246, 234, 0.96);
-
-  --text: #28382d;
-  --text-soft: #59665b;
-
-  --border: #e5d9b5;
-  --shadow: 0 8px 28px rgba(35, 67, 44, 0.10);
-
-  --radius: 22px;
-  --page-width: 1000px;
-  --page-padding: clamp(15px, 4vw, 32px);
+    --purity-green: #174d3a;
+    --purity-green-dark: #103a2c;
+    --purity-green-light: #e8f1e8;
+    --purity-gold: #c6a04a;
+    --purity-gold-light: #e7d39b;
+    --purity-cream: #fffaf0;
+    --purity-paper: #fffdf7;
+    --purity-text: #263b30;
+    --purity-muted: #68766b;
+    --purity-border: rgba(198, 160, 74, 0.42);
+    --purity-shadow: 0 10px 30px rgba(29, 58, 42, 0.09);
+    --purity-radius: 22px;
 }
 
-/* ---------- 2. DARK MODE ---------- */
-
-html.dark,
-html.dark-mode,
-html[data-theme="dark"],
-body.dark,
-body.dark-mode,
-body[data-theme="dark"] {
-  color-scheme: dark;
-
-  --green: #9bd8b2;
-  --green-dark: #0c3022;
-  --green-soft: #233d2d;
-
-  --gold: #e7c65d;
-  --gold-light: #8d7738;
-
-  --cream: #172019;
-  --board: rgba(28, 42, 32, 0.96);
-  --board-soft: rgba(34, 48, 37, 0.97);
-
-  --text: #e7eee7;
-  --text-soft: #c0cec2;
-
-  --border: #465642;
-  --shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
-}
-
-/* ---------- 3. RESET ---------- */
+/* ---------- Reset ---------- */
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 18px;
+    min-height: 100%;
+    scroll-behavior: smooth;
+    background: var(--purity-cream);
 }
 
 body {
-  margin: 0;
-  min-width: 320px;
-
-  color: var(--text);
-  background-color: var(--cream);
-
-  /*
-    পুরো পেজের ব্যাকগ্রাউন্ড।
-    bg_pattern.png ফাইলটি assets ফোল্ডারে থাকবে।
-  */
-  background-image:
-    linear-gradient(
-      rgba(255, 250, 240, 0.30),
-      rgba(255, 250, 240, 0.30)
-    ),
-    url("../assets/bg_pattern.png");
-
-  background-position: center top;
-  background-size: auto, 650px auto;
-  background-repeat: repeat;
-
-  font-family:
-    "Noto Sans Bengali",
-    "Hind Siliguri",
-    "Noto Sans Devanagari",
-    system-ui,
-    sans-serif;
-
-  font-size: 16px;
-  line-height: 1.85;
-
-  transition:
-    background-color 0.25s ease,
-    color 0.25s ease;
-}
-
-img,
-svg {
-  max-width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    color: var(--purity-text);
+    font-family:
+        "Noto Sans Bengali",
+        "Hind Siliguri",
+        "Noto Sans Devanagari",
+        "Segoe UI",
+        sans-serif;
+    line-height: 1.75;
+    background-color: var(--purity-cream);
+    background-image: url("../assets/bg_pattern.png");
+    background-repeat: repeat;
+    background-position: center top;
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
 }
 
 img {
-  display: block;
-}
-
-a {
-  color: var(--green);
-  text-decoration: none;
-  -webkit-tap-highlight-color: transparent;
+    display: block;
+    max-width: 100%;
 }
 
 button,
 a {
-  -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: transparent;
 }
 
-a:focus-visible {
-  outline: 3px solid var(--gold);
-  outline-offset: 4px;
+a {
+    color: inherit;
 }
 
-p,
-h1,
-h2,
-h3,
-h4 {
-  overflow-wrap: anywhere;
+button {
+    font: inherit;
 }
 
-h1,
-h2,
-h3,
-h4 {
-  line-height: 1.5;
-}
-
-p {
-  margin-top: 0;
-}
-
-::selection {
-  color: var(--green-dark);
-  background: var(--gold-light);
-}
-
-/* ---------- 4. ACCESSIBILITY ---------- */
-
-.skip-link {
-  position: absolute;
-  z-index: 1000;
-  top: 10px;
-  left: 10px;
-
-  padding: 9px 15px;
-
-  color: #fff;
-  background: var(--green-dark);
-  border-radius: 10px;
-
-  transform: translateY(-160%);
-}
-
-.skip-link:focus {
-  transform: translateY(0);
-}
-
-/* ---------- 5. PAGE LAYOUT ---------- */
+/* ---------- Main Page ---------- */
 
 .purity-page {
-  width: min(var(--page-width), calc(100% - 32px));
-
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-
-  margin: 28px auto 45px;
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: clip;
+    background: transparent;
 }
 
-/* ---------- 6. HERO BOARD ---------- */
+.purity-container {
+    width: min(1120px, calc(100% - 36px));
+    margin-inline: auto;
+}
+
+/* ---------- Hero Section ---------- */
 
 .purity-hero {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-
-  padding: clamp(27px, 5vw, 46px)
-           clamp(19px, 5vw, 48px);
-
-  text-align: center;
-
-  /*
-    উপরের বোর্ডের নিজস্ব ব্যাকগ্রাউন্ড।
-    prayer-learning-bg.png ফাইলটি assets-এ থাকবে।
-  */
-  background-color: #fffaf0;
-  background-image:
-    linear-gradient(
-      rgba(255, 250, 240, 0.14),
-      rgba(255, 250, 240, 0.14)
-    ),
-    url("../assets/prayer-learning-bg.png");
-
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-
-  border: 1px solid var(--gold-light);
-  border-top: 4px solid var(--gold);
-  border-radius: var(--radius);
-
-  box-shadow: var(--shadow);
-}
-
-.purity-hero::before,
-.purity-hero::after {
-  position: absolute;
-  z-index: -1;
-
-  color: var(--gold);
-  font-size: 20px;
-
-  content: "✦";
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 310px;
+    padding: 58px 20px 52px;
+    overflow: hidden;
+    text-align: center;
+    background-color: rgba(255, 250, 240, 0.78);
+    background-image:
+        linear-gradient(
+            180deg,
+            rgba(255, 251, 241, 0.84),
+            rgba(255, 250, 240, 0.92)
+        ),
+        url("../assets/prayer-learning-bg.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .purity-hero::before {
-  top: 12px;
-  left: 17px;
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    content: "";
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255, 255, 255, 0.5),
+            transparent 65%
+        );
+    pointer-events: none;
 }
 
 .purity-hero::after {
-  top: 12px;
-  right: 17px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    content: "";
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--purity-gold),
+        transparent
+    );
 }
 
-.hero-ornament {
-  margin-bottom: 5px;
+.purity-hero-content {
+    position: relative;
+    z-index: 1;
+    width: min(760px, 100%);
+    margin-inline: auto;
+}
 
-  color: var(--gold);
-  font-size: 27px;
-  line-height: 1.3;
+.purity-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 0 0 12px;
+    color: var(--purity-green);
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.purity-eyebrow::before,
+.purity-eyebrow::after {
+    width: 24px;
+    height: 1px;
+    content: "";
+    background: var(--purity-gold);
 }
 
 .purity-hero h1 {
-  margin: 0 0 13px;
-
-  color: #bd9630;
-
-  font-size: clamp(31px, 5vw, 46px);
-  font-weight: 850;
-  letter-spacing: 0.3px;
-
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+    margin: 0;
+    color: var(--purity-green-dark);
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 800;
+    line-height: 1.35;
+    text-wrap: balance;
 }
 
-.hero-intro {
-  max-width: 760px;
-  margin: 0 auto;
-
-  color: #34483a;
-
-  font-size: clamp(14px, 2vw, 17px);
-  line-height: 2;
+.purity-hero-description {
+    max-width: 650px;
+    margin: 16px auto 0;
+    color: #45594b;
+    font-size: clamp(0.98rem, 2vw, 1.12rem);
+    line-height: 1.9;
+    text-wrap: pretty;
 }
 
-/* ---------- 7. LESSON BOARDS ---------- */
+/* ---------- Content Sections ---------- */
 
-.panel,
-.lesson {
-  min-width: 0;
-  width: 100%;
+.purity-content {
+    position: relative;
+    padding: 36px 0 52px;
+    background: transparent;
 }
 
-.lesson {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 21px;
-
-  padding: var(--page-padding);
-
-  scroll-margin-top: 18px;
-
-  background: var(--board);
-
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-
-  box-shadow: var(--shadow);
-
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+.purity-section {
+    position: relative;
+    margin: 0 auto 34px;
+    background: transparent;
 }
 
-/* ---------- 8. LESSON HEADINGS ---------- */
-
-.lesson-heading {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-
-  padding-bottom: 14px;
-
-  border-bottom: 1px solid var(--border);
+.purity-section:last-child {
+    margin-bottom: 0;
 }
 
-.lesson-heading h2 {
-  margin: 0;
+.purity-section-heading {
+    margin: 0 0 22px;
+    text-align: center;
+}
 
-  color: var(--green);
+.purity-section-heading h2 {
+    margin: 0;
+    color: var(--purity-green);
+    font-size: clamp(1.45rem, 3.5vw, 2rem);
+    font-weight: 800;
+    line-height: 1.5;
+    text-wrap: balance;
+}
 
-  font-size: clamp(23px, 3.5vw, 31px);
-  font-weight: 850;
-  line-height: 1.5;
+.purity-section-heading p {
+    max-width: 720px;
+    margin: 8px auto 0;
+    color: var(--purity-muted);
+    font-size: 0.98rem;
+    line-height: 1.85;
+}
+
+/* ---------- Lesson Board Grid ---------- */
+
+.purity-lessons {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 24px;
+}
+
+.purity-lesson-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 100%;
+    padding: 25px;
+    overflow: hidden;
+    border: 1px solid var(--purity-border);
+    border-radius: var(--purity-radius);
+    background: rgba(255, 253, 247, 0.96);
+    box-shadow: var(--purity-shadow);
+    transition:
+        transform 220ms ease,
+        box-shadow 220ms ease,
+        border-color 220ms ease;
+}
+
+.purity-lesson-card::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 4px;
+    content: "";
+    background: linear-gradient(
+        90deg,
+        var(--purity-green),
+        var(--purity-gold),
+        var(--purity-green)
+    );
+}
+
+.purity-lesson-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(198, 160, 74, 0.72);
+    box-shadow: 0 15px 36px rgba(29, 58, 42, 0.13);
+}
+
+.lesson-card-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 17px;
 }
 
 .lesson-number {
-  width: 43px;
-  height: 43px;
-  min-width: 43px;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  color: var(--green-dark);
-  background: #f4e6b8;
-
-  border: 1px solid var(--gold);
-  border-radius: 50%;
-
-  font-size: 18px;
-  font-weight: 850;
-  line-height: 1;
+    display: inline-flex;
+    flex: 0 0 46px;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border: 1px solid rgba(198, 160, 74, 0.6);
+    border-radius: 50%;
+    color: var(--purity-green);
+    background: var(--purity-green-light);
+    font-size: 1.15rem;
+    font-weight: 800;
 }
 
-/* ---------- 9. MAIN IMAGE BOARDS ---------- */
-
-.lesson-art {
-  width: 100%;
-  height: clamp(220px, 35vw, 315px);
-  min-height: 200px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  margin: 0;
-  padding: 12px;
-
-  overflow: hidden;
-
-  background: var(--board-soft);
-
-  border: 1px solid var(--border);
-  border-radius: 17px;
+.lesson-card-title {
+    min-width: 0;
+    margin: 0;
+    color: var(--purity-green-dark);
+    font-size: 1.3rem;
+    font-weight: 800;
+    line-height: 1.5;
 }
 
-.lesson-art img {
-  width: 100%;
-  height: 100%;
-
-  object-fit: contain;
-  object-position: center;
-
-  border-radius: 10px;
+.lesson-card-description {
+    margin: 0 0 18px;
+    color: var(--purity-muted);
+    font-size: 0.96rem;
+    line-height: 1.9;
 }
 
-/* ---------- 10. INTRO TEXT ---------- */
+/* ---------- Lesson Images ---------- */
 
-.lesson-intro {
-  margin: 0;
-  padding: 16px 18px;
-
-  color: var(--text);
-
-  background: var(--green-soft);
-
-  border-left: 4px solid var(--green);
-  border-radius: 0 13px 13px 0;
-
-  font-size: 15px;
-  line-height: 1.95;
+.lesson-image-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 220px;
+    margin: 0 0 18px;
+    padding: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(198, 160, 74, 0.24);
+    border-radius: 16px;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(232, 241, 232, 0.75),
+            rgba(255, 250, 240, 0.7)
+        );
 }
 
-/* ---------- 11. SUBSECTIONS ---------- */
-
-.lesson-subsection {
-  min-width: 0;
-
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-
-  padding: clamp(15px, 3vw, 21px);
-
-  background: var(--board-soft);
-
-  border: 1px solid var(--border);
-  border-radius: 17px;
+.lesson-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
 }
 
-.lesson-subsection h3 {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  margin: 0;
-
-  color: var(--green);
-
-  font-size: clamp(18px, 2.8vw, 22px);
-  font-weight: 800;
-  line-height: 1.6;
+.lesson-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 12px;
 }
 
-.lesson-subsection h3::before {
-  content: "";
-
-  width: 5px;
-  min-width: 5px;
-  height: 23px;
-
-  background: var(--gold);
-  border-radius: 8px;
+.purity-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 10px 19px;
+    border: 1px solid var(--purity-green);
+    border-radius: 999px;
+    color: #fff;
+    background: var(--purity-green);
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        background-color 180ms ease,
+        border-color 180ms ease,
+        transform 180ms ease;
 }
 
-.lesson-subsection p {
-  margin: 0;
-
-  color: var(--text-soft);
-
-  font-size: 15px;
-  line-height: 1.95;
+.purity-button:hover {
+    border-color: var(--purity-green-dark);
+    background: var(--purity-green-dark);
+    transform: translateY(-1px);
 }
 
-/* ---------- 12. STEP GRID ---------- */
-
-.step-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 15px;
-
-  min-width: 0;
+.purity-button:focus-visible,
+.purity-link:focus-visible,
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid rgba(198, 160, 74, 0.8);
+    outline-offset: 4px;
 }
 
-.step-grid-compact {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+.purity-button-secondary {
+    border-color: var(--purity-border);
+    color: var(--purity-green);
+    background: var(--purity-paper);
 }
 
-/* ---------- 13. STEP CARDS ---------- */
+.purity-button-secondary:hover {
+    border-color: var(--purity-gold);
+    color: var(--purity-green-dark);
+    background: var(--purity-green-light);
+}
+
+/* ---------- Detail Boards ---------- */
+
+.purity-detail-board {
+    position: relative;
+    margin: 0 0 28px;
+    padding: clamp(20px, 4vw, 34px);
+    border: 1px solid var(--purity-border);
+    border-radius: var(--purity-radius);
+    background: rgba(255, 253, 247, 0.97);
+    box-shadow: var(--purity-shadow);
+}
+
+.purity-detail-board:last-child {
+    margin-bottom: 0;
+}
+
+.purity-detail-board h3 {
+    margin: 0 0 14px;
+    color: var(--purity-green);
+    font-size: clamp(1.2rem, 2.8vw, 1.55rem);
+    font-weight: 800;
+    line-height: 1.55;
+}
+
+.purity-detail-board h4 {
+    margin: 0 0 10px;
+    color: var(--purity-green-dark);
+    font-size: 1.08rem;
+    font-weight: 750;
+    line-height: 1.6;
+}
+
+.purity-detail-board p {
+    margin: 0 0 14px;
+    color: var(--purity-text);
+    font-size: 0.98rem;
+    line-height: 1.95;
+}
+
+.purity-detail-board p:last-child {
+    margin-bottom: 0;
+}
+
+/* ---------- Step Cards ---------- */
+
+.purity-steps {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 18px;
+}
 
 .step-card {
-  min-width: 0;
-  overflow: hidden;
-
-  display: flex;
-  flex-direction: column;
-
-  background: var(--board);
-
-  border: 1px solid var(--border);
-  border-radius: 15px;
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 100%;
+    padding: 20px;
+    border: 1px solid rgba(198, 160, 74, 0.35);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.78);
 }
 
-.step-card:hover {
-  border-color: var(--gold);
-  box-shadow: 0 7px 18px rgba(35, 67, 44, 0.08);
-  transform: translateY(-2px);
+.step-card h4 {
+    margin: 0 0 9px;
+    color: var(--purity-green);
+    font-size: 1.08rem;
+    font-weight: 800;
+    line-height: 1.6;
 }
 
-/* নতুন PNG স্কেচ ছবিগুলোর স্টাইল */
+.step-card p {
+    margin: 0;
+    color: var(--purity-muted);
+    font-size: 0.95rem;
+    line-height: 1.9;
+}
 
 .step-image {
-  width: 100%;
-  height: 155px;
-  padding: 10px;
-
-  object-fit: contain;
-  object-position: center;
-
-  background: var(--board-soft);
-  border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 190px;
+    margin: 0 0 15px;
+    padding: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(198, 160, 74, 0.25);
+    border-radius: 14px;
+    background: var(--purity-cream);
 }
 
-/* নিয়ত কার্ডে ছবি না থাকলেও একই রকম সুন্দর দেখাবে */
+.step-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
 
+/* For step cards without an illustration */
 .step-card:not(:has(.step-image)) {
-  justify-content: center;
-
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(201, 164, 59, 0.13),
-      transparent 65%
-    ),
-    var(--board-soft);
+    justify-content: center;
 }
 
-.step-copy {
-  min-width: 0;
+/* ---------- Lists and Notes ---------- */
 
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-
-  padding: 15px;
+.purity-list {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
-.step-copy h4 {
-  margin: 0;
-
-  color: var(--green);
-
-  font-size: 17px;
-  font-weight: 800;
-  line-height: 1.65;
+.purity-list li {
+    position: relative;
+    padding: 12px 16px 12px 42px;
+    border: 1px solid rgba(198, 160, 74, 0.25);
+    border-radius: 12px;
+    color: var(--purity-text);
+    background: rgba(255, 255, 255, 0.72);
+    line-height: 1.85;
 }
 
-.step-copy p {
-  margin: 0;
-
-  color: var(--text-soft);
-
-  font-size: 14px;
-  line-height: 1.9;
+.purity-list li::before {
+    position: absolute;
+    top: 17px;
+    left: 17px;
+    display: block;
+    width: 10px;
+    height: 10px;
+    border: 2px solid var(--purity-gold);
+    border-radius: 50%;
+    content: "";
+    background: var(--purity-green);
 }
 
-/* ---------- 14. CLEAN LISTS ---------- */
-
-.clean-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  margin: 0;
-  padding: 0;
-
-  list-style: none;
+.purity-note {
+    margin-top: 18px;
+    padding: 15px 18px;
+    border-left: 4px solid var(--purity-gold);
+    border-radius: 0 12px 12px 0;
+    color: var(--purity-green-dark);
+    background: var(--purity-green-light);
+    font-size: 0.95rem;
+    line-height: 1.9;
 }
 
-.clean-list li {
-  position: relative;
-
-  margin: 0;
-  padding-left: 29px;
-
-  color: var(--text-soft);
-
-  font-size: 15px;
-  line-height: 1.9;
+.purity-note p {
+    margin: 0;
+    color: inherit;
 }
 
-.clean-list li::before {
-  content: "✓";
-
-  position: absolute;
-  top: 3px;
-  left: 0;
-
-  width: 21px;
-  height: 21px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  color: var(--green-dark);
-  background: #f4e6b8;
-
-  border: 1px solid var(--gold-light);
-  border-radius: 50%;
-
-  font-size: 12px;
-  font-weight: 900;
-  line-height: 1;
+.purity-note strong {
+    color: var(--purity-green);
 }
 
-/* ---------- 15. DUA BOARD ---------- */
+/* ---------- Image Placeholders ---------- */
 
-.dua-panel {
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(201, 164, 59, 0.13),
-      transparent 55%
-    ),
-    var(--board-soft);
-
-  border-color: var(--gold-light);
+.purity-image-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 180px;
+    padding: 22px;
+    border: 2px dashed rgba(198, 160, 74, 0.7);
+    border-radius: 16px;
+    color: var(--purity-muted);
+    background: rgba(255, 250, 240, 0.7);
+    text-align: center;
 }
 
-.dua-panel .dua-arabic {
-  margin: 0;
-  padding: 20px 15px;
-
-  color: var(--green);
-
-  background: var(--board);
-
-  border: 1px solid var(--border);
-  border-radius: 13px;
-
-  font-family:
-    "Noto Naskh Arabic",
-    "Amiri",
-    serif;
-
-  font-size: clamp(22px, 4vw, 30px);
-  line-height: 2.1;
-
-  text-align: center;
-  overflow-wrap: normal;
+.purity-image-placeholder strong {
+    color: var(--purity-green);
+    font-size: 1rem;
 }
 
-.dua-panel strong {
-  color: var(--green);
+/* ---------- Links ---------- */
+
+.purity-link {
+    color: var(--purity-green);
+    font-weight: 700;
+    text-decoration-color: rgba(198, 160, 74, 0.8);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
 }
 
-/* ---------- 16. FOOTER ---------- */
+.purity-link:hover {
+    color: var(--purity-green-dark);
+    text-decoration-thickness: 2px;
+}
+
+/* ---------- Footer ---------- */
 
 .purity-footer {
-  position: relative;
-  overflow: hidden;
-
-  width: min(var(--page-width), calc(100% - 32px));
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 7px;
-
-  margin: 0 auto 25px;
-  padding: 27px 18px 43px;
-
-  color: #fff9e8;
-  background: #10472f;
-
-  border: 1px solid var(--gold);
-  border-radius: var(--radius);
-
-  box-shadow: var(--shadow);
-
-  text-align: center;
+    position: relative;
+    margin-top: 32px;
+    padding: 32px 18px 38px;
+    overflow: hidden;
+    border-top: 1px solid rgba(198, 160, 74, 0.3);
+    color: var(--purity-muted);
+    background: rgba(255, 250, 240, 0.9);
+    text-align: center;
 }
 
-/* সোনালি নকশা বোর্ডের একেবারে নিচে */
+.purity-footer::before {
+    display: none;
+    content: none;
+}
 
 .purity-footer::after {
-  content: "";
-
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-
-  height: 13px;
-
-  background:
-    repeating-linear-gradient(
-      135deg,
-      transparent 0,
-      transparent 7px,
-      var(--gold) 7px,
-      var(--gold) 9px,
-      transparent 9px,
-      transparent 15px
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 5px;
+    content: "";
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--purity-gold) 20%,
+        var(--purity-gold-light) 50%,
+        var(--purity-gold) 80%,
+        transparent 100%
     );
-
-  border-top: 1px solid var(--gold);
-}
-
-.footer-decoration {
-  margin-bottom: 3px;
-
-  color: var(--gold);
-
-  font-size: 15px;
-  letter-spacing: 2px;
-  line-height: 1.5;
-}
-
-.purity-footer h2 {
-  margin: 0;
-
-  color: var(--gold);
-
-  font-size: clamp(22px, 4vw, 29px);
-  font-weight: 850;
 }
 
 .purity-footer p {
-  max-width: 700px;
-  margin: 0;
-
-  color: #fff9e8;
-
-  font-size: 14px;
-  line-height: 1.9;
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.8;
 }
 
-/* ---------- 17. DARK MODE DETAILS ---------- */
+.purity-footer p + p {
+    margin-top: 6px;
+}
+
+/* ---------- Utility Classes ---------- */
+
+.purity-text-center {
+    text-align: center;
+}
+
+.purity-mt-0 {
+    margin-top: 0 !important;
+}
+
+.purity-mb-0 {
+    margin-bottom: 0 !important;
+}
+
+.purity-hidden {
+    display: none !important;
+}
+
+/* ---------- Dark Theme ---------- */
+
+html.dark,
+body.dark,
+body.dark-theme,
+body[data-theme="dark"],
+html[data-theme="dark"] {
+    --purity-green: #a5d1b3;
+    --purity-green-dark: #d1e8d5;
+    --purity-green-light: #233d30;
+    --purity-cream: #15231c;
+    --purity-paper: #1d3025;
+    --purity-text: #e8eee8;
+    --purity-muted: #bdcabe;
+    --purity-border: rgba(198, 160, 74, 0.38);
+    --purity-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+html.dark body,
+body.dark,
+body.dark-theme,
+body[data-theme="dark"],
+html[data-theme="dark"] {
+    color: var(--purity-text);
+    background-color: var(--purity-cream);
+    background-image: url("../assets/bg_pattern.png");
+}
 
 html.dark .purity-hero,
-html.dark-mode .purity-hero,
-html[data-theme="dark"] .purity-hero,
 body.dark .purity-hero,
-body.dark-mode .purity-hero,
-body[data-theme="dark"] .purity-hero {
-  background-color: #233126;
-  background-image:
-    linear-gradient(
-      rgba(24, 37, 27, 0.83),
-      rgba(24, 37, 27, 0.83)
-    ),
-    url("../assets/prayer-learning-bg.png");
-}
-
-html.dark .hero-intro,
-html.dark-mode .hero-intro,
-html[data-theme="dark"] .hero-intro,
-body.dark .hero-intro,
-body.dark-mode .hero-intro,
-body[data-theme="dark"] .hero-intro {
-  color: #e4eadf;
+body.dark-theme .purity-hero,
+body[data-theme="dark"] .purity-hero,
+html[data-theme="dark"] .purity-hero {
+    background-image:
+        linear-gradient(
+            180deg,
+            rgba(21, 35, 28, 0.84),
+            rgba(21, 35, 28, 0.93)
+        ),
+        url("../assets/prayer-learning-bg.png");
 }
 
 html.dark .purity-hero h1,
-html.dark-mode .purity-hero h1,
-html[data-theme="dark"] .purity-hero h1,
 body.dark .purity-hero h1,
-body.dark-mode .purity-hero h1,
-body[data-theme="dark"] .purity-hero h1 {
-  color: var(--gold);
-  text-shadow: none;
+body.dark-theme .purity-hero h1,
+body[data-theme="dark"] .purity-hero h1,
+html[data-theme="dark"] .purity-hero h1 {
+    color: #e1f0e3;
 }
 
-html.dark .step-card:hover,
-html.dark-mode .step-card:hover,
-html[data-theme="dark"] .step-card:hover,
-body.dark .step-card:hover,
-body.dark-mode .step-card:hover,
-body[data-theme="dark"] .step-card:hover {
-  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.18);
+html.dark .purity-hero-description,
+body.dark .purity-hero-description,
+body.dark-theme .purity-hero-description,
+body[data-theme="dark"] .purity-hero-description,
+html[data-theme="dark"] .purity-hero-description {
+    color: #d0ded2;
 }
 
-/* ---------- 18. TABLET ---------- */
+html.dark .purity-lesson-card,
+html.dark .purity-detail-board,
+html.dark .step-card,
+html.dark .purity-footer,
+body.dark .purity-lesson-card,
+body.dark .purity-detail-board,
+body.dark .step-card,
+body.dark .purity-footer,
+body.dark-theme .purity-lesson-card,
+body.dark-theme .purity-detail-board,
+body.dark-theme .step-card,
+body.dark-theme .purity-footer,
+body[data-theme="dark"] .purity-lesson-card,
+body[data-theme="dark"] .purity-detail-board,
+body[data-theme="dark"] .step-card,
+body[data-theme="dark"] .purity-footer,
+html[data-theme="dark"] .purity-lesson-card,
+html[data-theme="dark"] .purity-detail-board,
+html[data-theme="dark"] .step-card,
+html[data-theme="dark"] .purity-footer {
+    background-color: rgba(29, 48, 37, 0.97);
+}
+
+html.dark .lesson-card-title,
+html.dark .purity-section-heading h2,
+html.dark .purity-detail-board h3,
+html.dark .purity-detail-board h4,
+html.dark .step-card h4,
+html.dark .purity-note,
+html.dark .purity-note strong,
+body.dark .lesson-card-title,
+body.dark .purity-section-heading h2,
+body.dark .purity-detail-board h3,
+body.dark .purity-detail-board h4,
+body.dark .step-card h4,
+body.dark .purity-note,
+body.dark .purity-note strong,
+body.dark-theme .lesson-card-title,
+body.dark-theme .purity-section-heading h2,
+body.dark-theme .purity-detail-board h3,
+body.dark-theme .purity-detail-board h4,
+body.dark-theme .step-card h4,
+body.dark-theme .purity-note,
+body.dark-theme .purity-note strong,
+body[data-theme="dark"] .lesson-card-title,
+body[data-theme="dark"] .purity-section-heading h2,
+body[data-theme="dark"] .purity-detail-board h3,
+body[data-theme="dark"] .purity-detail-board h4,
+body[data-theme="dark"] .step-card h4,
+body[data-theme="dark"] .purity-note,
+body[data-theme="dark"] .purity-note strong,
+html[data-theme="dark"] .lesson-card-title,
+html[data-theme="dark"] .purity-section-heading h2,
+html[data-theme="dark"] .purity-detail-board h3,
+html[data-theme="dark"] .purity-detail-board h4,
+html[data-theme="dark"] .step-card h4,
+html[data-theme="dark"] .purity-note,
+html[data-theme="dark"] .purity-note strong {
+    color: var(--purity-green-dark);
+}
+
+html.dark .purity-list li,
+html.dark .lesson-image-wrap,
+html.dark .step-image,
+html.dark .purity-image-placeholder,
+body.dark .purity-list li,
+body.dark .lesson-image-wrap,
+body.dark .step-image,
+body.dark .purity-image-placeholder,
+body.dark-theme .purity-list li,
+body.dark-theme .lesson-image-wrap,
+body.dark-theme .step-image,
+body.dark-theme .purity-image-placeholder,
+body[data-theme="dark"] .purity-list li,
+body[data-theme="dark"] .lesson-image-wrap,
+body[data-theme="dark"] .step-image,
+body[data-theme="dark"] .purity-image-placeholder,
+html[data-theme="dark"] .purity-list li,
+html[data-theme="dark"] .lesson-image-wrap,
+html[data-theme="dark"] .step-image,
+html[data-theme="dark"] .purity-image-placeholder {
+    background-color: rgba(21, 35, 28, 0.8);
+}
+
+html.dark .purity-note,
+body.dark .purity-note,
+body.dark-theme .purity-note,
+body[data-theme="dark"] .purity-note,
+html[data-theme="dark"] .purity-note {
+    background: #233d30;
+}
+
+html.dark .purity-button,
+body.dark .purity-button,
+body.dark-theme .purity-button,
+body[data-theme="dark"] .purity-button,
+html[data-theme="dark"] .purity-button {
+    color: #14251b;
+    background: #a5d1b3;
+    border-color: #a5d1b3;
+}
+
+html.dark .purity-button-secondary,
+body.dark .purity-button-secondary,
+body.dark-theme .purity-button-secondary,
+body[data-theme="dark"] .purity-button-secondary,
+html[data-theme="dark"] .purity-button-secondary {
+    color: #d1e8d5;
+    background: #1d3025;
+    border-color: rgba(198, 160, 74, 0.5);
+}
+
+/* ---------- Responsive Layout ---------- */
+
+@media (min-width: 1100px) {
+    .purity-lessons {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .purity-steps {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
 
 @media (max-width: 760px) {
-  .purity-page {
-    width: calc(100% - 24px);
-    margin-top: 20px;
-    margin-bottom: 30px;
-    gap: 19px;
-  }
+    body {
+        background-attachment: scroll;
+    }
 
-  .lesson {
-    gap: 17px;
-  }
+    .purity-container {
+        width: min(100% - 28px, 620px);
+    }
 
-  .lesson-art {
-    height: 250px;
-  }
+    .purity-hero {
+        min-height: 270px;
+        padding: 44px 18px 40px;
+        background-position: center;
+    }
 
-  .step-image {
-    height: 140px;
-  }
+    .purity-content {
+        padding: 28px 0 38px;
+    }
 
-  .purity-footer {
-    width: calc(100% - 24px);
-  }
+    .purity-lessons,
+    .purity-steps {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .purity-lesson-card {
+        padding: 21px;
+    }
+
+    .lesson-image-wrap {
+        height: 210px;
+    }
+
+    .step-image {
+        height: 205px;
+    }
+
+    .purity-detail-board {
+        padding: 22px 18px;
+    }
+
+    .purity-section {
+        margin-bottom: 27px;
+    }
+
+    .purity-section-heading {
+        margin-bottom: 18px;
+    }
+
+    .purity-footer {
+        margin-top: 26px;
+        padding: 26px 16px 34px;
+    }
 }
 
-/* ---------- 19. MOBILE ---------- */
+@media (max-width: 420px) {
+    .purity-container {
+        width: calc(100% - 22px);
+    }
 
-@media (max-width: 520px) {
-  body {
-    font-size: 15px;
+    .purity-hero {
+        min-height: 245px;
+        padding: 36px 14px 34px;
+    }
 
-    background-size: auto, 450px auto;
-  }
+    .purity-hero h1 {
+        font-size: 1.85rem;
+    }
 
-  .purity-page {
-    width: calc(100% - 20px);
-    margin-top: 13px;
-    margin-bottom: 23px;
-    gap: 15px;
-  }
+    .purity-hero-description {
+        font-size: 0.92rem;
+    }
 
-  .purity-hero {
-    padding: 25px 16px;
-    border-top-width: 3px;
-    border-radius: 18px;
-  }
+    .purity-eyebrow {
+        font-size: 0.8rem;
+    }
 
-  .hero-ornament {
-    font-size: 22px;
-  }
+    .purity-lesson-card {
+        padding: 17px;
+        border-radius: 18px;
+    }
 
-  .purity-hero h1 {
-    margin-bottom: 10px;
-    font-size: 31px;
-  }
+    .lesson-card-header {
+        gap: 11px;
+    }
 
-  .hero-intro {
-    font-size: 14px;
-    line-height: 1.9;
-  }
+    .lesson-number {
+        flex-basis: 40px;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
 
-  .lesson {
-    gap: 14px;
-    padding: 16px 12px;
-    border-radius: 18px;
-  }
+    .lesson-card-title {
+        font-size: 1.13rem;
+    }
 
-  .lesson-heading {
-    gap: 10px;
-    padding-bottom: 11px;
-  }
+    .lesson-image-wrap {
+        height: 185px;
+        padding: 10px;
+    }
 
-  .lesson-heading h2 {
-    font-size: 22px;
-  }
+    .step-card {
+        padding: 16px;
+    }
 
-  .lesson-number {
-    width: 37px;
-    height: 37px;
-    min-width: 37px;
-    font-size: 16px;
-  }
+    .step-image {
+        height: 180px;
+    }
 
-  .lesson-art {
-    height: 215px;
-    min-height: 180px;
-    padding: 8px;
-    border-radius: 14px;
-  }
+    .purity-button {
+        width: 100%;
+    }
 
-  .lesson-intro {
-    padding: 13px;
-    font-size: 14px;
-    line-height: 1.9;
-  }
+    .purity-list li {
+        padding: 11px 12px 11px 36px;
+    }
 
-  .lesson-subsection {
-    gap: 10px;
-    padding: 13px 11px;
-    border-radius: 14px;
-  }
-
-  .lesson-subsection h3 {
-    font-size: 18px;
-  }
-
-  .lesson-subsection h3::before {
-    height: 21px;
-  }
-
-  .lesson-subsection p,
-  .clean-list li {
-    font-size: 14px;
-    line-height: 1.9;
-  }
-
-  .step-grid,
-  .step-grid-compact {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 11px;
-  }
-
-  .step-card {
-    display: grid;
-    grid-template-columns: 112px minmax(0, 1fr);
-    align-items: stretch;
-  }
-
-  .step-image {
-    width: 100%;
-    height: 100%;
-    min-height: 125px;
-
-    padding: 7px;
-
-    border-right: 1px solid var(--border);
-    border-bottom: 0;
-  }
-
-  .step-card:not(:has(.step-image)) {
-    min-height: 100px;
-  }
-
-  .step-copy {
-    justify-content: center;
-    gap: 5px;
-    padding: 11px 9px;
-  }
-
-  .step-copy h4 {
-    font-size: 15px;
-    line-height: 1.6;
-  }
-
-  .step-copy p {
-    font-size: 13px;
-    line-height: 1.8;
-  }
-
-  .clean-list {
-    gap: 8px;
-  }
-
-  .clean-list li {
-    padding-left: 26px;
-  }
-
-  .clean-list li::before {
-    width: 19px;
-    height: 19px;
-    font-size: 11px;
-  }
-
-  .dua-panel .dua-arabic {
-    padding: 14px 9px;
-    font-size: 22px;
-    line-height: 2;
-  }
-
-  .purity-footer {
-    width: calc(100% - 20px);
-    margin-bottom: 13px;
-    padding: 22px 12px 36px;
-    border-radius: 18px;
-  }
-
-  .footer-decoration {
-    font-size: 12px;
-    letter-spacing: 1px;
-  }
-
-  .purity-footer h2 {
-    font-size: 23px;
-  }
-
-  .purity-footer p {
-    font-size: 13px;
-  }
+    .purity-list li::before {
+        left: 13px;
+    }
 }
 
-/* ---------- 20. VERY SMALL SCREEN ---------- */
-
-@media (max-width: 360px) {
-  .lesson {
-    padding: 13px 9px;
-  }
-
-  .lesson-heading h2 {
-    font-size: 20px;
-  }
-
-  .step-card {
-    grid-template-columns: 94px minmax(0, 1fr);
-  }
-
-  .step-copy {
-    padding: 9px 7px;
-  }
-
-  .step-copy h4 {
-    font-size: 14px;
-  }
-
-  .step-copy p {
-    font-size: 12px;
-  }
-}
-
-/* ---------- 21. REDUCED MOTION ---------- */
+/* ---------- Reduced Motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* ---------- 22. PRINT ---------- */
-
-@media print {
-  body {
-    background: #fff;
-    color: #222;
-  }
-
-  .purity-page {
-    width: 100%;
-    margin: 0;
-    gap: 12px;
-  }
-
-  .lesson,
-  .lesson-subsection,
-  .step-card {
-    box-shadow: none;
-    break-inside: avoid;
-  }
-
-  .purity-footer {
-    break-inside: avoid;
-    print-color-adjust: exact;
-    -webkit-print-color-adjust: exact;
-  }
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
 }
