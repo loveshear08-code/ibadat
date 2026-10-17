@@ -1,583 +1,412 @@
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0B3D26">
-  <meta name="description" content="ওযু, গোসল, তায়াম্মুম ও পরিচ্ছন্নতার সহজ নির্দেশিকা।">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0F5132">
+  <meta name="description" content="IBADAT — পবিত্রতা, ওযু, গোসল, তায়াম্মুম ও পরিচ্ছন্নতার সম্পূর্ণ শিক্ষামূলক নির্দেশিকা।">
 
   <title>পবিত্রতা | IBADAT</title>
 
+  <!-- Existing project paths -->
   <link rel="stylesheet" href="../css/namaz-purity.css">
+  <script src="../js/namaz-purity.js" defer></script>
 </head>
 
 <body>
-<main class="purity-page">
+  <main class="purity-page" id="purityPage">
 
-  <!-- শুরুর বোর্ড: মসজিদের ছবি ব্যাকগ্রাউন্ডে থাকবে -->
-  <header class="hero" id="top">
-    <p class="hero-eyebrow" id="eyebrow">IBADAT • নামাজ শিক্ষা</p>
+    <!-- HERO: mosque background comes from CSS -->
+    <header class="hero" id="top">
+      <div class="hero-content">
+        <p class="hero-eyebrow" id="eyebrow">IBADAT · নামাজ শিক্ষা</p>
+        <h1 id="pageTitle">পবিত্রতা</h1>
 
-    <h1 id="pageTitle">পবিত্রতা</h1>
-
-    <div class="hero-description" id="heroDescription">
-      <p>পবিত্রতা ইসলামে ইবাদতের জন্য প্রস্তুতির গুরুত্বপূর্ণ অংশ।</p>
-      <p>শরীর, পোশাক ও নামাজের স্থান পবিত্র রাখা জরুরি।</p>
-      <p>ওযু, গোসল ও তায়াম্মুমের মাধ্যমে পবিত্রতা অর্জনের নিয়ম শিখে নাও।</p>
-      <p>সঠিক নিয়ম মেনে চলো, পবিত্র জীবন গড়ে তোলো।</p>
-    </div>
-  </header>
-
-
-  <!-- ১. পবিত্রতার নিয়ম -->
-  <section class="panel lesson purity-basics" id="purityRules">
-
-    <div class="section-title">
-      <span class="section-number">১</span>
-
-      <div>
-        <p class="kicker">প্রথম পাঠ</p>
-        <h2 id="purityRulesTitle">পবিত্রতার নিয়ম</h2>
+        <div class="hero-description" id="heroDescription">
+          <p>পবিত্রতা ইসলামে ইবাদতের জন্য প্রস্তুতির গুরুত্বপূর্ণ অংশ।</p>
+          <p>শরীর, পোশাক ও নামাজের স্থান পবিত্র রাখা জরুরি।</p>
+          <p>ওযু, গোসল ও তায়াম্মুমের মাধ্যমে পবিত্রতা অর্জনের নিয়ম শিখে নাও।</p>
+          <p>সঠিক নিয়ম মেনে চলো, পবিত্র জীবন গড়ে তোলো।</p>
+        </div>
       </div>
-    </div>
+    </header>
 
-    <p id="purityRulesIntro">
-      নামাজের আগে প্রয়োজন অনুযায়ী ওযু বা গোসল করে পবিত্রতা অর্জন করতে হয়।
-      শরীর, পোশাক ও নামাজের স্থান নাপাকি থেকে পরিষ্কার রাখতে হবে।
-      পানি ব্যবহার করা সম্ভব না হলে এবং প্রযোজ্য শর্ত পূরণ হলে
-      তায়াম্মুমের বিধান প্রযোজ্য হতে পারে।
-    </p>
+    <div class="purity-content">
 
-  </section>
+      <!-- 1. INTRODUCTION TO PURIFICATION -->
+      <section class="panel lesson" id="purityRules">
+        <header class="section-title">
+          <span class="section-number">১</span>
+          <div>
+            <p class="kicker">প্রথম পাঠ</p>
+            <h2 id="purityRulesTitle">পবিত্রতার নিয়ম</h2>
+          </div>
+        </header>
 
-
-  <!-- ২. ওযু -->
-  <section class="panel lesson" id="wudu">
-
-    <div class="section-title">
-      <span class="section-number">২</span>
-
-      <div>
-        <p class="kicker" id="wuduKicker">দ্বিতীয় পাঠ</p>
-        <h2 id="wuduTitle">ওযু</h2>
-      </div>
-    </div>
-
-    <!-- ওযুর মূল ছবি -->
-    <figure class="main-illustration">
-      <img
-        src="../assets/wudu-main.png"
-        alt="ওযুর মূল চিত্র"
-        loading="lazy"
-      >
-    </figure>
-
-    <div class="section-copy">
-
-      <p class="lead" id="wuduIntro">
-        ওযু হলো নির্দিষ্ট অঙ্গ ধোয়া এবং মাথা ও কান মাসেহ করার মাধ্যমে
-        নামাজের জন্য প্রয়োজনীয় পবিত্রতা অর্জনের পদ্ধতি।
-        নামাজের আগে ওযু প্রয়োজন হলে তা সঠিকভাবে সম্পন্ন করো।
-      </p>
-
-      <h3 id="wuduNiyyahTitle">ওযুর নিয়ত</h3>
-
-      <p id="wuduNiyyah">
-        মনে মনে পবিত্রতা অর্জন করে আল্লাহর সন্তুষ্টির জন্য ওযু করার
-        ইচ্ছা করো। মুখে নির্দিষ্ট বাক্য বলা আবশ্যক—এমন মনে করার
-        প্রয়োজন নেই।
-      </p>
-
-    </div>
-
-
-    <!-- ওযুর ধাপগুলো -->
-    <div class="step-list" id="wuduStepList">
-
-      <article class="step-card">
-        <img
-          src="../assets/wudu-hands.png"
-          alt="দুই হাত ধোয়া"
-          loading="lazy"
-        >
-
-        <div class="step-copy">
-          <h3>১. দুই হাত ধোয়া</h3>
-          <p>
-            দুই হাত কবজি পর্যন্ত ভালোভাবে ধুয়ে নাও।
-            সাধারণভাবে তিনবার ধোয়া সুন্নত।
-            আঙুলের ফাঁকেও পানি পৌঁছাও।
+        <article class="content-board">
+          <p id="purityRulesIntro">
+            নামাজের আগে প্রয়োজন অনুযায়ী ওযু বা গোসল করে পবিত্রতা অর্জন
+            করতে হয়। শরীর, পোশাক ও নামাজের স্থান নাপাকি থেকে পরিষ্কার
+            রাখতে হবে। পানি ব্যবহার করা সম্ভব না হলে এবং তায়াম্মুমের
+            শর্ত পূরণ হলে তায়াম্মুমের বিধান প্রযোজ্য হতে পারে।
           </p>
-        </div>
-      </article>
+        </article>
 
+        <article class="content-board">
+          <h3>পবিত্রতার তিনটি গুরুত্বপূর্ণ দিক</h3>
+          <p>শরীর পরিষ্কার রাখা এবং প্রয়োজনীয় পবিত্রতা অর্জন করা।</p>
+        </article>
 
-      <article class="step-card">
-        <img
-          src="../assets/wudu-mouth.png"
-          alt="কুলি করা"
-          loading="lazy"
-        >
+        <article class="content-board">
+          <h3>পোশাক পবিত্র রাখা</h3>
+          <p>নামাজের পোশাকে নাপাকি থাকলে নামাজের আগে তা যথাযথভাবে পরিষ্কার করা।</p>
+        </article>
 
-        <div class="step-copy">
-          <h3>২. কুলি করা</h3>
-          <p>
-            পানি নিয়ে মুখে ঘুরিয়ে কুলি করো।
-            সাধারণভাবে তিনবার করা সুন্নত।
-            রোজা থাকলে পানি গলায় চলে যাওয়া থেকে সতর্ক থাকো।
+        <article class="content-board">
+          <h3>নামাজের স্থান পরিষ্কার রাখা</h3>
+          <p>যেখানে নামাজ আদায় করবে, সেই স্থান পবিত্র রাখা।</p>
+        </article>
+      </section>
+
+      <!-- 2. WUDU -->
+      <section class="panel lesson" id="wudu">
+        <header class="section-title">
+          <span class="section-number">২</span>
+          <div>
+            <p class="kicker" id="wuduKicker">দ্বিতীয় পাঠ</p>
+            <h2 id="wuduTitle">ওযু</h2>
+          </div>
+        </header>
+
+        <!-- Existing image filename from the original project -->
+        <figure class="main-illustration">
+          <img
+            src="../assets/purity-wudu.png"
+            alt="ওযুর চিত্র"
+            loading="lazy"
+            decoding="async">
+        </figure>
+
+        <article class="content-board">
+          <p class="lead" id="wuduIntro">
+            ওযু হলো নির্দিষ্ট অঙ্গ ধোয়া এবং মাথা ও কান মাসেহ করার
+            মাধ্যমে নামাজের জন্য প্রয়োজনীয় পবিত্রতা অর্জনের পদ্ধতি।
           </p>
-        </div>
-      </article>
+        </article>
 
-
-      <article class="step-card">
-        <img
-          src="../assets/wudu-nose.png"
-          alt="নাক পরিষ্কার করা"
-          loading="lazy"
-        >
-
-        <div class="step-copy">
-          <h3>৩. নাক পরিষ্কার করা</h3>
-          <p>
-            নাকে আলতোভাবে পানি নিয়ে পরিষ্কার করো এবং পানি বের করে দাও।
-            সাধারণভাবে তিনবার করা সুন্নত।
-            রোজা থাকলে অতিরিক্ত গভীরে পানি টেনে নিও না।
+        <article class="content-board">
+          <h3 id="wuduNiyyahTitle">ওযুর নিয়ত</h3>
+          <p id="wuduNiyyah">
+            মনে মনে আল্লাহর সন্তুষ্টির জন্য ওযু করার ইচ্ছা করো।
+            নিয়তের বিষয়ে নির্ভরযোগ্য নির্দেশনা অনুসরণ করো।
           </p>
+        </article>
+
+        <article class="content-board">
+          <h3>ওযুর ধাপ</h3>
+          <p>প্রতিটি ধাপ মনোযোগ দিয়ে সম্পন্ন করো এবং প্রয়োজনীয় অঙ্গে পানি পৌঁছাও।</p>
+        </article>
+
+        <div class="step-list" id="wuduStepList">
+          <article class="step-card">
+            <img src="../assets/wudu-hands.png" alt="দুই হাত ধোয়া" loading="lazy" decoding="async">
+            <div class="step-copy">
+              <h3>১. দুই হাত ধোয়া</h3>
+              <p>দুই হাত কবজি পর্যন্ত ভালোভাবে ধুয়ে নাও এবং আঙুলের ফাঁকে পানি পৌঁছাও।</p>
+            </div>
+          </article>
+
+          <article class="step-card">
+            <img src="../assets/wudu-mouth.png" alt="কুলি করা" loading="lazy" decoding="async">
+            <div class="step-copy">
+              <h3>২. কুলি করা</h3>
+              <p>পানি নিয়ে মুখে ঘুরিয়ে কুলি করো। রোজা থাকলে পানি গলায় চলে যাওয়া থেকে সতর্ক থাকো।</p>
+            </div>
+          </article>
+
+          <article class="step-card">
+            <img src="../assets/wudu-nose.png" alt="নাক পরিষ্কার করা" loading="lazy" decoding="async">
+            <div class="step-copy">
+              <h3>৩. নাক পরিষ্কার করা</h3>
+              <p>নাকে আলতোভাবে পানি নিয়ে পরিষ্কার করো এবং পানি বের করে দাও।</p>
+            </div>
+          </article>
+
+          <article class="step-card">
+            <img src="../assets/wudu-face.png" alt="মুখ ধোয়া" loading="lazy" decoding="async">
+            <div class="step-copy">
+              <h3>৪. মুখ ধোয়া</h3>
+              <p>কপালের চুলের গোড়া থেকে থুতনির নিচ পর্যন্ত এবং মুখের দুই পাশ ভালোভাবে ধুয়ে নাও।</p>
+            </div>
+          </article>
+
+          <article class="step-card">
+            <img src="../assets/wudu-arms.png" alt="কনুইসহ দুই হাত ধোয়া" loading="lazy" decoding="async">
+            <div class="step-copy">
+              <h3>৫. দুই হাত কনুইসহ ধোয়া</h3>
+              <p>প্রথমে ডান হাত, তারপর বাঁ হাত কনুইসহ ভালোভাবে ধুয়ে নাও।</p>
+            </div>
+          </article>
+
+          <article class="step-card">
+            <img src="../assets/wudu-head.png" alt="মাথা মাসেহ করা" loading="lazy" decoding="async">
+            <div class="step-copy">
+              <h3>৬. মাথা মাসেহ করা</h3>
+              <p>ভেজা হাত দিয়ে মাথা মাসেহ করো। মাসেহের নির্দিষ্ট পদ্ধতি নির্ভরযোগ্য নির্দেশনা থেকে শিখে নাও।</p>
+            </div>
+          </article>
+
+          <article class="step-card">
+            <img src="../assets/wudu-head.png" alt="কান মাসেহ করা" loading="lazy" decoding="async">
+            <div class="step-copy">
+              <h3>৭. কান মাসেহ করা</h3>
+              <p>ভেজা আঙুল দিয়ে কানের নির্ধারিত অংশ মাসেহ করো।</p>
+            </div>
+          </article>
+
+          <article class="step-card">
+            <img src="../assets/wudu-feet.png" alt="টাখনুসহ পা ধোয়া" loading="lazy" decoding="async">
+            <div class="step-copy">
+              <h3>৮. দুই পা ধোয়া</h3>
+              <p>প্রথমে ডান, তারপর বাঁ পা টাখনুসহ ধুয়ে নাও এবং আঙুলের ফাঁকে পানি পৌঁছাও।</p>
+            </div>
+          </article>
         </div>
-      </article>
 
-
-      <article class="step-card">
-        <img
-          src="../assets/wudu-face.png"
-          alt="মুখ ধোয়া"
-          loading="lazy"
-        >
-
-        <div class="step-copy">
-          <h3>৪. মুখ ধোয়া</h3>
+        <article class="content-board note">
+          <h3 id="wuduNoteTitle">ওযু সম্পর্কে মনে রাখবে</h3>
           <p>
-            কপালের চুলের গোড়া থেকে থুতনির নিচ পর্যন্ত এবং
-            এক কানের পাশ থেকে অন্য কানের পাশ পর্যন্ত পুরো মুখ ধোও।
-            সাধারণভাবে তিনবার ধোয়া সুন্নত।
+            এখানে সাধারণ শিক্ষামূলক পদ্ধতি দেওয়া হয়েছে। ফরজ ও সুন্নতের
+            বিস্তারিত বিধান সম্পর্কে নিশ্চিত হতে নির্ভরযোগ্য আলেমের
+            পরামর্শ নাও।
           </p>
-        </div>
-      </article>
+        </article>
 
+        <article class="content-board">
+          <h3 id="wuduBreakTitle">ওযু ভঙ্গের সাধারণ কারণ</h3>
+          <ul id="wuduBreaks" class="guidance-list">
+            <li>প্রস্রাব, পায়খানা বা বায়ু নির্গত হওয়া।</li>
+            <li>চেতনা হারানো বা এমন ঘুম, যাতে সচেতনতা থাকে না।</li>
+            <li>অন্যান্য পরিস্থিতির বিধান নিশ্চিত হয়ে জেনে নাও।</li>
+          </ul>
+        </article>
+      </section>
 
-      <article class="step-card">
-        <img
-          src="../assets/wudu-arms.png"
-          alt="কনুইসহ হাত ধোয়া"
-          loading="lazy"
-        >
+      <!-- 3. GHUSL: original project asset -->
+      <section class="panel lesson" id="ghusl">
+        <header class="section-title">
+          <span class="section-number">৩</span>
+          <div>
+            <p class="kicker" id="ghuslKicker">তৃতীয় পাঠ</p>
+            <h2 id="ghuslTitle">গোসল</h2>
+          </div>
+        </header>
 
-        <div class="step-copy">
-          <h3>৫. দুই হাত কনুইসহ ধোয়া</h3>
+        <figure class="main-illustration">
+          <img
+            src="../assets/purity-ghusl.png"
+            alt="গোসলের চিত্র"
+            loading="lazy"
+            decoding="async">
+        </figure>
+
+        <article class="content-board">
+          <p id="ghuslIntro">
+            গোসল হলো নির্দিষ্ট অবস্থায় বড় অপবিত্রতা থেকে পবিত্রতা
+            অর্জনের জন্য পুরো শরীরে পানি পৌঁছে দেওয়ার পদ্ধতি।
+          </p>
+        </article>
+
+        <article class="content-board">
+          <h3 id="ghuslStepsTitle">গোসলের সাধারণ পদ্ধতি</h3>
+          <ol id="ghuslSteps" class="guidance-list">
+            <li>মনে মনে পবিত্রতার নিয়ত করো।</li>
+            <li>শরীরে কোনো নাপাকি থাকলে আগে তা পরিষ্কার করো।</li>
+            <li>নির্দেশিত পদ্ধতিতে ওযু করো।</li>
+            <li>মাথা ও চুলের গোড়ায় পানি পৌঁছাও।</li>
+            <li>শরীরের সর্বত্র পানি পৌঁছাও; বগল, নাভি ও শরীরের ভাঁজে খেয়াল করো।</li>
+          </ol>
+        </article>
+
+        <article class="content-board">
+          <h3 id="ghuslWhenTitle">কখন গোসল ফরজ হয়?</h3>
+          <ul id="ghuslWhen" class="guidance-list">
+            <li>দাম্পত্য মিলনের পর, প্রযোজ্য বিধান অনুযায়ী।</li>
+            <li>বীর্য নির্গমনের নির্দিষ্ট পরিস্থিতিতে।</li>
+            <li>ঋতুস্রাব শেষ হলে।</li>
+            <li>প্রসব-পরবর্তী রক্তস্রাব শেষ হলে।</li>
+          </ul>
+        </article>
+
+        <article class="content-board note" id="ghuslNote">
+          <h3 id="ghuslNoteTitle">গোসল সম্পর্কে গুরুত্বপূর্ণ কথা</h3>
           <p>
-            প্রথমে ডান হাত, তারপর বাঁ হাত আঙুলের ডগা থেকে
-            কনুইসহ ভালোভাবে ধোও।
-            সাধারণভাবে তিনবার ধোয়া সুন্নত।
+            শরীরের কোনো অংশে পানি পৌঁছাতে বাধা থাকলে তা খেয়াল করো।
+            ব্যক্তিগত পরিস্থিতি সম্পর্কে নির্ভরযোগ্য নির্দেশনা নাও।
           </p>
-        </div>
-      </article>
+        </article>
+      </section>
 
+      <!-- 4. TAYAMMUM: original project asset -->
+      <section class="panel lesson" id="tayammum">
+        <header class="section-title">
+          <span class="section-number">৪</span>
+          <div>
+            <p class="kicker" id="tayammumKicker">চতুর্থ পাঠ</p>
+            <h2 id="tayammumTitle">তায়াম্মুম</h2>
+          </div>
+        </header>
 
-      <article class="step-card">
-        <img
-          src="../assets/wudu-head.png"
-          alt="মাথা মাসেহ করা"
-          loading="lazy"
-        >
+        <figure class="main-illustration">
+          <img
+            src="../assets/purity-tayammum.png"
+            alt="তায়াম্মুমের চিত্র"
+            loading="lazy"
+            decoding="async">
+        </figure>
 
-        <div class="step-copy">
-          <h3>৬. মাথা মাসেহ করা</h3>
+        <article class="content-board">
+          <p id="tayammumIntro">
+            পানি না পাওয়া গেলে বা পানি ব্যবহার করলে ক্ষতির বাস্তব
+            আশঙ্কা থাকলে নির্দিষ্ট শর্তে তায়াম্মুম করা যায়।
+          </p>
+        </article>
+
+        <article class="content-board">
+          <h3 id="tayammumWhenTitle">কখন তায়াম্মুম করা যায়?</h3>
+          <ul id="tayammumWhen" class="guidance-list">
+            <li>প্রয়োজনীয় পানি খুঁজেও না পাওয়া গেলে।</li>
+            <li>পানি ব্যবহার করলে ক্ষতির বাস্তব আশঙ্কা থাকলে।</li>
+            <li>প্রযোজ্য অন্যান্য শর্ত পূরণ হলে।</li>
+          </ul>
+        </article>
+
+        <article class="content-board">
+          <h3>তায়াম্মুমের সাধারণ ধাপ</h3>
+          <p>নিয়ত, উপযুক্ত উপাদান ও মাসেহের সঠিক নিয়ম নির্ভরযোগ্য নির্দেশনা থেকে শিখে নাও।</p>
+        </article>
+
+        <article class="content-board note" id="tayammumNote">
+          <h3 id="tayammumNoteTitle">মনে রাখবে</h3>
           <p>
-            ভেজা হাত দিয়ে মাথা মাসেহ করো।
-            মাসেহের নির্দিষ্ট সীমা সম্পর্কে নির্ভরযোগ্য নির্দেশনা অনুসরণ করো।
-            সাধারণভাবে মাথা একবার মাসেহ করা হয়।
+            তায়াম্মুম কেবল প্রযোজ্য শর্ত পূরণ হলে করা যায়।
+            পানি ব্যবহার সম্ভব হলে পরবর্তী পবিত্রতার জন্য প্রযোজ্য
+            নিয়ম অনুসরণ করো।
           </p>
-        </div>
-      </article>
+        </article>
+      </section>
 
+      <!-- 5. NAJASAH AND CLEANLINESS: original project asset -->
+      <section class="panel lesson" id="cleanliness">
+        <header class="section-title">
+          <span class="section-number">৫</span>
+          <div>
+            <p class="kicker" id="cleanKicker">পঞ্চম পাঠ</p>
+            <h2 id="cleanTitle">নাপাকি ও পবিত্রতা</h2>
+          </div>
+        </header>
 
-      <article class="step-card">
-        <img
-          src="../assets/wudu-head.png"
-          alt="কান মাসেহ করা"
-          loading="lazy"
-        >
+        <figure class="main-illustration">
+          <img
+            src="../assets/purity-najasah.png"
+            alt="নাপাকি ও পবিত্রতার চিত্র"
+            loading="lazy"
+            decoding="async">
+        </figure>
 
-        <div class="step-copy">
-          <h3>৭. কান মাসেহ করা</h3>
+        <article class="content-board">
+          <h3 id="cleanBodyTitle">শরীরের পরিচ্ছন্নতা</h3>
+          <ul id="cleanBody" class="guidance-list">
+            <li>শরীর পরিষ্কার রাখো এবং ব্যক্তিগত পরিচ্ছন্নতার যত্ন নাও।</li>
+            <li>টয়লেট ব্যবহারের পর যথাযথভাবে পরিষ্কার হও।</li>
+            <li>শরীরে নাপাকি লাগলে নামাজের আগে তা দূর করো।</li>
+          </ul>
+        </article>
+
+        <article class="content-board">
+          <h3 id="cleanClothesTitle">পোশাকের পরিচ্ছন্নতা</h3>
+          <ul id="cleanClothes" class="guidance-list">
+            <li>নামাজের পোশাকে নাপাকি লাগলে তা পরিষ্কার করো বা পোশাক বদলাও।</li>
+            <li>নাপাকি কোথায় লেগেছে জানা থাকলে সেই অংশ ভালোভাবে ধুয়ে নাও।</li>
+          </ul>
+        </article>
+
+        <article class="content-board">
+          <h3 id="cleanPlaceTitle">নামাজের স্থানের পরিচ্ছন্নতা</h3>
+          <ul id="cleanPlace" class="guidance-list">
+            <li>যেখানে নামাজ পড়বে, সেই স্থান পবিত্র রাখো।</li>
+            <li>নাপাকি পড়লে তা যথাযথভাবে দূর করো।</li>
+            <li>অকারণ সন্দেহের কারণে নিজেকে বারবার কষ্টে ফেলো না।</li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- 6. IMPORTANT SUMMARY: original project asset -->
+      <section class="panel lesson" id="importantGuidance">
+        <header class="section-title">
+          <span class="section-number">৬</span>
+          <div>
+            <p class="kicker">শেষ পাঠ</p>
+            <h2 id="guidanceTitle">মনে রাখার গুরুত্বপূর্ণ বিষয়</h2>
+          </div>
+        </header>
+
+        <figure class="main-illustration">
+          <img
+            src="../assets/purity-summary.png"
+            alt="পবিত্রতার গুরুত্বপূর্ণ বিষয়গুলোর চিত্র"
+            loading="lazy"
+            decoding="async">
+        </figure>
+
+        <article class="content-board">
+          <h3>ওযু ভেঙে গেলে</h3>
           <p>
-            ভেজা আঙুল দিয়ে কানের ভেতরের দৃশ্যমান অংশ ও বাইরের অংশ
-            মাসেহ করো। সাধারণভাবে একবার করা হয়।
+            নামাজের আগে ওযু ভেঙে গেছে নিশ্চিত হলে নতুন করে ওযু করো।
+            শুধু সন্দেহ হলে নির্ভরযোগ্য বিধান জেনে নাও।
           </p>
-        </div>
-      </article>
+        </article>
 
-
-      <article class="step-card">
-        <img
-          src="../assets/wudu-feet.png"
-          alt="টাখনুসহ পা ধোয়া"
-          loading="lazy"
-        >
-
-        <div class="step-copy">
-          <h3>৮. দুই পা ধোয়া</h3>
+        <article class="content-board">
+          <h3>শরীর বা পোশাকে নাপাকি লাগলে</h3>
           <p>
-            প্রথমে ডান, তারপর বাঁ পা টাখনুসহ ধুয়ে নাও।
-            সাধারণভাবে তিনবার ধোয়া সুন্নত।
-            পায়ের আঙুলের ফাঁকে পানি পৌঁছাতে খেয়াল করো।
+            নাপাকি নিশ্চিত হলে নামাজের আগে তা যথাযথভাবে পরিষ্কার করো।
           </p>
-        </div>
-      </article>
+        </article>
 
-    </div>
-
-
-    <aside class="note" id="wuduNote">
-      <h3 id="wuduNoteTitle">ওযু সম্পর্কে মনে রাখবে</h3>
-
-      <p>
-        ধোয়ার সংখ্যা, ফরজ ও সুন্নতের বিস্তারিত বিধানে কিছু ফিকহি
-        পার্থক্য রয়েছে। এখানে সাধারণ শিক্ষামূলক পদ্ধতি দেওয়া হয়েছে।
-        নিজের পরিস্থিতি সম্পর্কে নিশ্চিত হতে বিশ্বস্ত আলেমের পরামর্শ নাও।
-      </p>
-    </aside>
-
-
-    <div class="section-copy">
-
-      <h3 id="wuduBreakTitle">ওযু ভঙ্গের সাধারণ কারণ</h3>
-
-      <ul id="wuduBreaks">
-        <li>প্রস্রাব, পায়খানা বা বায়ু নির্গত হওয়া।</li>
-        <li>চেতনা হারানো বা এমন ঘুম, যাতে সচেতনতা থাকে না।</li>
-        <li>কিছু অতিরিক্ত বিষয়ে বিধান ভিন্ন হতে পারে; নিশ্চিত না হলে জেনে নাও।</li>
-      </ul>
-
-    </div>
-
-  </section>
-
-
-  <!-- ৩. গোসল -->
-  <section class="panel lesson" id="ghusl">
-
-    <div class="section-title">
-      <span class="section-number">৩</span>
-
-      <div>
-        <p class="kicker" id="ghuslKicker">তৃতীয় পাঠ</p>
-        <h2 id="ghuslTitle">গোসল</h2>
-      </div>
-    </div>
-
-    <!-- গোসলের মূল ছবি -->
-    <figure class="main-illustration">
-      <img
-        src="../assets/ghusl-main.png"
-        alt="গোসলের মূল চিত্র"
-        loading="lazy"
-      >
-    </figure>
-
-    <div class="section-copy">
-
-      <p class="lead" id="ghuslIntro">
-        গোসল হলো নির্দিষ্ট অবস্থায় বড় অপবিত্রতা থেকে পবিত্রতা অর্জনের
-        জন্য পুরো শরীরে পানি পৌঁছে দেওয়ার পদ্ধতি।
-        শরীরের কোনো অংশ যেন শুকনো না থাকে, সেদিকে খেয়াল রাখতে হয়।
-      </p>
-
-      <h3 id="ghuslStepsTitle">গোসলের সাধারণ পদ্ধতি</h3>
-
-      <ol id="ghuslSteps">
-        <li>মনে মনে পবিত্রতার নিয়ত করো।</li>
-        <li>শরীরে কোনো নাপাকি থাকলে আগে তা পরিষ্কার করো।</li>
-        <li>সুন্নাহসম্মত পদ্ধতিতে ওযু করো।</li>
-        <li>মাথায় পানি দাও এবং চুলের গোড়াসহ পানি পৌঁছাও।</li>
-        <li>
-          শরীরের ডান ও বাঁ দিকসহ সর্বত্র পানি পৌঁছে দাও।
-          বগল, নাভি, আঙুলের ফাঁক ও শরীরের ভাঁজে পানি পৌঁছেছে কি না খেয়াল করো।
-        </li>
-      </ol>
-
-      <h3 id="ghuslWhenTitle">কখন গোসল ফরজ হয়?</h3>
-
-      <ul id="ghuslWhen">
-        <li>দাম্পত্য মিলনের পর।</li>
-        <li>বীর্য নির্গমনের নির্দিষ্ট অবস্থায়।</li>
-        <li>ঋতুস্রাব শেষ হলে।</li>
-        <li>প্রসব-পরবর্তী রক্তস্রাব শেষ হলে।</li>
-      </ul>
-
-    </div>
-
-    <aside class="note" id="ghuslNote">
-      <h3 id="ghuslNoteTitle">গোসল সম্পর্কে গুরুত্বপূর্ণ কথা</h3>
-
-      <p>
-        গোসলের বিস্তারিত বিধান ও কিছু পরিস্থিতির ব্যাখ্যায় পার্থক্য
-        থাকতে পারে। ব্যক্তিগত কোনো প্রশ্ন থাকলে বিশ্বস্ত আলেমের পরামর্শ নাও।
-      </p>
-    </aside>
-
-  </section>
-
-
-  <!-- ৪. তায়াম্মুম -->
-  <section class="panel lesson" id="tayammum">
-
-    <div class="section-title">
-      <span class="section-number">৪</span>
-
-      <div>
-        <p class="kicker" id="tayammumKicker">চতুর্থ পাঠ</p>
-        <h2 id="tayammumTitle">তায়াম্মুম</h2>
-      </div>
-    </div>
-
-    <!-- তায়াম্মুমের মূল ছবি -->
-    <figure class="main-illustration">
-      <img
-        src="../assets/tayammum-main.png"
-        alt="তায়াম্মুমের মূল চিত্র"
-        loading="lazy"
-      >
-    </figure>
-
-    <div class="section-copy">
-
-      <p class="lead" id="tayammumIntro">
-        পানি না পাওয়া গেলে বা পানি ব্যবহার করলে অসুস্থতা বা ক্ষতির
-        বাস্তব আশঙ্কা থাকলে নির্দিষ্ট শর্তে তায়াম্মুম করা যায়।
-        এটি ওযু বা গোসলের বিকল্প হিসেবে কেবল অনুমোদিত পরিস্থিতিতেই প্রযোজ্য।
-      </p>
-
-      <h3 id="tayammumWhenTitle">কখন তায়াম্মুম করা যায়?</h3>
-
-      <ul id="tayammumWhen">
-        <li>প্রয়োজনীয় পানি খুঁজেও না পাওয়া গেলে।</li>
-        <li>পানি ব্যবহার করলে ক্ষতির বাস্তব আশঙ্কা থাকলে।</li>
-        <li>প্রযোজ্য অন্যান্য শর্ত পূরণ হলে।</li>
-      </ul>
-
-    </div>
-
-
-    <div class="step-list" id="tayammumStepList">
-
-      <article class="step-card">
-        <img
-          src="../assets/tayammum-step-1.png"
-          alt="তায়াম্মুমের প্রস্তুতি"
-          loading="lazy"
-        >
-
-        <div class="step-copy">
-          <h3>১. নিয়ত করো</h3>
+        <article class="content-board">
+          <h3>গোসল ফরজ হলে</h3>
           <p>
-            মনে মনে পবিত্রতা অর্জন করে ইবাদতের জন্য
-            তায়াম্মুম করার ইচ্ছা করো।
+            প্রযোজ্য অবস্থায় শুধু ওযু যথেষ্ট নয়। নামাজের আগে
+            নির্ধারিত নিয়মে গোসল করে পবিত্রতা অর্জন করো।
           </p>
-        </div>
-      </article>
+        </article>
 
-
-      <article class="step-card">
-        <img
-          src="../assets/tayammum-step-2.png"
-          alt="পবিত্র মাটিজাত উপাদান ব্যবহার"
-          loading="lazy"
-        >
-
-        <div class="step-copy">
-          <h3>২. পবিত্র মাটিজাত উপাদান ব্যবহার করো</h3>
+        <article class="content-board">
+          <h3>পানি ব্যবহার করা সম্ভব না হলে</h3>
           <p>
-            নির্দেশিত পদ্ধতিতে উপযুক্ত পবিত্র মাটিজাত উপাদানের ওপর
-            হাত রাখো বা স্পর্শ করো। উপকরণের শর্ত নির্ভরযোগ্য নির্দেশনা
-            থেকে শিখে নাও।
+            তায়াম্মুমের শর্ত পূরণ হয়েছে কি না নিশ্চিত হয়ে
+            নির্ভরযোগ্য নির্দেশনা অনুসরণ করো।
           </p>
-        </div>
-      </article>
+        </article>
 
-
-      <article class="step-card">
-        <img
-          src="../assets/tayammum-step-3.png"
-          alt="মুখ ও হাত মাসেহ করা"
-          loading="lazy"
-        >
-
-        <div class="step-copy">
-          <h3>৩. মুখ ও হাত মাসেহ করো</h3>
+        <article class="content-board">
+          <h3>কোনো বিধান নিশ্চিত না হলে</h3>
           <p>
-            তায়াম্মুমের নির্ধারিত নিয়ম অনুযায়ী মুখ ও হাত মাসেহ করো।
-            মাসেহের সীমা ও ক্রম সম্পর্কে নির্ভরযোগ্য আলেমের শেখানো
-            পদ্ধতি অনুসরণ করো।
+            অনুমান করে সিদ্ধান্ত না নিয়ে বিশ্বস্ত আলেমের কাছে
+            জেনে নাও। এই পেজটি প্রাথমিক শিক্ষার জন্য।
           </p>
-        </div>
-      </article>
+        </article>
+      </section>
 
     </div>
 
+    <!-- Footer: one green board, one line -->
+    <footer class="purity-footer">
+      <p id="footerText">পবিত্রতা রক্ষা করো, ইবাদতে প্রশান্তি খুঁজে নাও।</p>
+    </footer>
 
-    <aside class="note" id="tayammumNote">
-      <h3 id="tayammumNoteTitle">মনে রাখবে</h3>
-
-      <p>
-        তায়াম্মুমের শর্ত পূরণ না হলে এটি করা যায় না।
-        পানি ব্যবহার সম্ভব হয়ে গেলে পরবর্তী পবিত্রতার জন্য প্রযোজ্য
-        নিয়ম অনুসরণ করো। বিস্তারিত বিধান জেনে নাও।
-      </p>
-    </aside>
-
-  </section>
-
-
-  <!-- ৫. পরিচ্ছন্নতা -->
-  <section class="panel lesson" id="cleanliness">
-
-    <div class="section-title">
-      <span class="section-number">৫</span>
-
-      <div>
-        <p class="kicker" id="cleanKicker">পঞ্চম পাঠ</p>
-        <h2 id="cleanTitle">পরিচ্ছন্নতা</h2>
-      </div>
-    </div>
-
-    <!-- পরিচ্ছন্নতার মূল ছবি -->
-    <figure class="main-illustration">
-      <img
-        src="../assets/cleanliness-main.png"
-        alt="পরিচ্ছন্নতার মূল চিত্র"
-        loading="lazy"
-      >
-    </figure>
-
-    <div class="section-copy">
-
-      <p class="lead" id="cleanIntro">
-        পরিচ্ছন্নতা দৈনন্দিন জীবনের গুরুত্বপূর্ণ অভ্যাস।
-        নামাজের জন্য শরীর, পোশাক ও নামাজের স্থান পবিত্র রাখা জরুরি।
-        নাপাকি থাকলে তা উপযুক্তভাবে দূর করতে হবে।
-      </p>
-
-      <h3 id="cleanBodyTitle">শরীরের পরিচ্ছন্নতা</h3>
-
-      <ul id="cleanBody">
-        <li>শরীর পরিষ্কার রাখো এবং ব্যক্তিগত পরিচ্ছন্নতার যত্ন নাও।</li>
-        <li>টয়লেট ব্যবহারের পর যথাযথভাবে পরিষ্কার হও।</li>
-        <li>শরীরে নাপাকি লাগলে নামাজের আগে তা দূর করো।</li>
-      </ul>
-
-
-      <h3 id="cleanClothesTitle">পোশাকের পরিচ্ছন্নতা</h3>
-
-      <ul id="cleanClothes">
-        <li>নামাজের পোশাকে নাপাকি লাগলে তা পরিষ্কার করো বা পোশাক বদলাও।</li>
-        <li>নাপাকি কোথায় লেগেছে জানা থাকলে সেই অংশ ভালোভাবে ধুয়ে নাও।</li>
-      </ul>
-
-
-      <h3 id="cleanPlaceTitle">নামাজের স্থানের পরিচ্ছন্নতা</h3>
-
-      <ul id="cleanPlace">
-        <li>যেখানে নামাজ পড়বে, সেই স্থান পবিত্র রাখো।</li>
-        <li>নাপাকি পড়লে তা যথাযথভাবে দূর করো।</li>
-        <li>
-          শুধু অকারণ সন্দেহের কারণে নিজেকে বারবার কষ্টে ফেলো না;
-          নির্ভরযোগ্য বিধান শিখে নাও।
-        </li>
-      </ul>
-
-    </div>
-
-  </section>
-
-
-  <!-- ৬. জরুরি নির্দেশনা -->
-  <section class="panel lesson" id="importantGuidance">
-
-    <div class="section-title">
-      <span class="section-number">৬</span>
-
-      <div>
-        <p class="kicker">শেষ পাঠ</p>
-        <h2 id="guidanceTitle">জরুরি নির্দেশনা</h2>
-      </div>
-    </div>
-
-    <!-- জরুরি নির্দেশনার মূল ছবি -->
-    <figure class="main-illustration">
-      <img
-        src="../assets/important-guidance-main.png"
-        alt="জরুরি নির্দেশনার মূল চিত্র"
-        loading="lazy"
-      >
-    </figure>
-
-
-    <div class="guidance-list" id="guidanceList">
-
-      <article class="guidance-item">
-        <h3>ওযু ভেঙে গেলে</h3>
-        <p>
-          নামাজের আগে ওযু ভেঙে গেছে নিশ্চিত হলে নতুন করে ওযু করো।
-          শুধু সন্দেহ হলে বারবার ওযু করার আগে নির্ভরযোগ্য বিধান জেনে নাও।
-        </p>
-      </article>
-
-      <article class="guidance-item">
-        <h3>শরীর বা পোশাকে নাপাকি লাগলে</h3>
-        <p>
-          নাপাকি লাগার বিষয়টি নিশ্চিত হলে নামাজের আগে তা উপযুক্তভাবে
-          পরিষ্কার করো। কোথায় লেগেছে জানা থাকলে সেই অংশ পরিষ্কার করো।
-        </p>
-      </article>
-
-      <article class="guidance-item">
-        <h3>গোসল ফরজ হলে</h3>
-        <p>
-          যে অবস্থায় গোসল ফরজ হয়, সে অবস্থায় শুধু ওযু যথেষ্ট নয়।
-          নামাজের আগে প্রযোজ্য নিয়মে গোসল করে পবিত্রতা অর্জন করো।
-        </p>
-      </article>
-
-      <article class="guidance-item">
-        <h3>পানি না পেলে বা পানি ব্যবহার ক্ষতিকর হলে</h3>
-        <p>
-          প্রযোজ্য শর্ত পূরণ হলে তায়াম্মুম করা যায়।
-          এ ক্ষেত্রে নির্ভরযোগ্য নির্দেশনা অনুসরণ করো।
-        </p>
-      </article>
-
-      <article class="guidance-item">
-        <h3>কোনো বিধান নিশ্চিত না হলে</h3>
-        <p>
-          অনুমান করে সিদ্ধান্ত না নিয়ে বিশ্বস্ত আলেমের কাছে জেনে নাও।
-          এই পেজটি প্রাথমিক শিক্ষার জন্য, ব্যক্তিগত ফতোয়ার বিকল্প নয়।
-        </p>
-      </article>
-
-    </div>
-
-  </section>
-
-
-  <!-- শেষের সবুজ বোর্ড: শুধু এক লাইন গোল্ডেন লেখা -->
-  <footer class="purity-footer">
-    <p id="footerText">পবিত্রতা রক্ষা করো, ইবাদতে প্রশান্তি খুঁজে নাও।</p>
-  </footer>
-
-</main>
-
-<script src="../js/namaz-purity.js"></script>
+  </main>
 </body>
 </html>
