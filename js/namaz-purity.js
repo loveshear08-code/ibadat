@@ -1,570 +1,577 @@
-/* =====================================================
-   IBADAT — PURITY PAGE
-   Language: Bengali • English • Hindi
-   Theme: Light / Dark
-   Settings: appSettings
-===================================================== */
 
-"use strict";
+/* =========================================
+   IBADAT — NAMAZ PURITY PAGE
+   File: namaz-purity.js
+========================================= */
 
-/* ---------- 1. TRANSLATIONS ---------- */
+(() => {
+    "use strict";
 
-const translations = {
+    const SETTINGS_KEY = "appSettings";
 
-  /* =============== BENGALI =============== */
-  bn: {
-    skipLink: "মূল অংশে যাও",
+    const translations = {
+        bn: {
+            pageTitle: "পবিত্রতা ও পরিচ্ছন্নতা",
+            heroEyebrow: "ইবাদতের প্রস্তুতি",
+            heroTitle: "পবিত্রতা ও পরিচ্ছন্নতা",
+            heroDescription: "ইবাদতের আগে পবিত্রতা অর্জনের নিয়মগুলো সহজভাবে শিখে নাও।",
 
-    heroTitle: "পবিত্রতা",
-    heroIntro:
-      "পবিত্রতা ইসলামের গুরুত্বপূর্ণ শিক্ষা। নামাজসহ বিভিন্ন ইবাদতের জন্য শরীর, পোশাক ও নামাজের স্থান পবিত্র রাখা জরুরি। অজু, গোসল ও তায়াম্মুমের সঠিক নিয়ম শিখে পরিচ্ছন্নতার অভ্যাস গড়ে তোলো।",
+            lessonsTitle: "পবিত্রতা শেখার বিষয়সমূহ",
+            lessonsDescription: "প্রতিটি বিষয় ধাপে ধাপে শিখে সঠিকভাবে আমল করার চেষ্টা করো।",
 
-    navWudu: "অজু",
-    navGhusl: "গোসল",
-    navTayammum: "তায়াম্মুম",
-    navCleanliness: "পরিচ্ছন্নতা",
-    navRules: "মৌলিক নিয়ম",
+            wuduTitle: "ওযু",
+            wuduDescription: "নামাজের আগে ওযু করার সঠিক নিয়ম ও ধাপগুলো শিখে নাও।",
+            wuduButton: "ওযুর নিয়ম দেখো",
 
-    wuduTitle: "অজু",
-    wuduIntro:
-      "অজু হলো নির্দিষ্ট অঙ্গ ধোয়া ও মাসেহ করার মাধ্যমে পবিত্রতা অর্জনের পদ্ধতি। নামাজের জন্য অজুর নিয়ম জানা জরুরি।",
-    wuduBeforeTitle: "অজুর আগে যা জানা দরকার",
-    wuduBeforeText:
-      "অজুর জন্য পবিত্র পানি ব্যবহার করবে। পানি পৌঁছাতে বাধা দেয় এমন বস্তু থাকলে তা সরিয়ে নেবে।",
-    wuduStepsTitle: "অজুর ধাপগুলো",
+            ghuslTitle: "ফরজ গোসল",
+            ghuslDescription: "কখন গোসল ফরজ হয় এবং কীভাবে ফরজ গোসল করতে হয় তা জানো।",
+            ghuslButton: "গোসলের নিয়ম দেখো",
 
-    wuduStep1Title: "নিয়ত ও বিসমিল্লাহ",
-    wuduStep1Text:
-      "মনে মনে অজুর নিয়ত করবে এবং বিসমিল্লাহ বলে শুরু করবে।",
-    wuduStep2Title: "দুই হাত ধোয়া",
-    wuduStep2Text:
-      "দুই হাত কবজি পর্যন্ত ভালোভাবে ধুবে।",
-    wuduStep3Title: "কুলি করা",
-    wuduStep3Text:
-      "ডান হাতে পানি নিয়ে মুখের ভেতর কুলি করবে।",
-    wuduStep4Title: "নাকে পানি দেওয়া",
-    wuduStep4Text:
-      "নাকে পানি নিয়ে পরিষ্কার করবে; অতিরিক্ত কষ্ট করবে না।",
-    wuduStep5Title: "মুখ ধোয়া",
-    wuduStep5Text:
-      "কপালের চুলের গোড়া থেকে থুতনির নিচ পর্যন্ত এবং এক কান থেকে অন্য কান পর্যন্ত মুখ ধুবে।",
-    wuduStep6Title: "দুই হাত কনুইসহ ধোয়া",
-    wuduStep6Text:
-      "প্রথমে ডান, তারপর বাম হাত কনুইসহ ধুবে।",
-    wuduStep7Title: "মাথা ও কান মাসেহ",
-    wuduStep7Text:
-      "ভেজা হাত দিয়ে মাথা মাসেহ করবে এবং ভেজা আঙুল দিয়ে কান মুছবে।",
-    wuduStep8Title: "দুই পা ধোয়া",
-    wuduStep8Text:
-      "প্রথমে ডান, তারপর বাম পা টাখনুসহ ধুবে। আঙুলের ফাঁকেও পানি পৌঁছাবে।",
+            tayammumTitle: "তায়াম্মুম",
+            tayammumDescription: "পানি ব্যবহার করা সম্ভব না হলে তায়াম্মুমের নিয়ম শিখে নাও।",
+            tayammumButton: "তায়াম্মুমের নিয়ম দেখো",
 
-    wuduFardTitle: "অজুর ফরজ",
-    wuduFard1: "সম্পূর্ণ মুখ ধোয়া।",
-    wuduFard2: "দুই হাত কনুইসহ ধোয়া।",
-    wuduFard3: "মাথার মাসেহ করা।",
-    wuduFard4: "দুই পা টাখনুসহ ধোয়া।",
+            cleanlinessTitle: "পরিচ্ছন্নতা",
+            cleanlinessDescription: "শরীর, পোশাক ও নামাজের স্থানের পবিত্রতা সম্পর্কে জানো।",
+            cleanlinessButton: "পরিচ্ছন্নতার নিয়ম দেখো",
 
-    wuduDuaTitle: "অজুর পরের দোয়া",
-    pronunciationLabel: "উচ্চারণ:",
-    meaningLabel: "অর্থ:",
-    wuduDuaPronunciation:
-      "আশহাদু আল্লা ইলাহা ইল্লাল্লাহু ওয়াহদাহু লা শারীকা লাহু, ওয়া আশহাদু আন্না মুহাম্মাদান আবদুহু ওয়া রাসূলুহু।",
-    wuduDuaMeaning:
-      "আমি সাক্ষ্য দিচ্ছি যে আল্লাহ ছাড়া কোনো সত্য উপাস্য নেই। তিনি একক, তাঁর কোনো অংশীদার নেই। আমি আরও সাক্ষ্য দিচ্ছি যে মুহাম্মদ (সা.) তাঁর বান্দা ও রাসুল।",
+            rulesTitle: "পবিত্রতার গুরুত্বপূর্ণ নিয়ম",
+            rulesDescription: "পবিত্রতা অর্জনের সময় যে বিষয়গুলো মনে রাখা জরুরি।",
+            rulesButton: "গুরুত্বপূর্ণ নিয়ম দেখো",
 
-    wuduBreakTitle: "অজু ভঙ্গের সাধারণ কারণ",
-    wuduBreak1: "প্রস্রাব, পায়খানা বা বায়ু নির্গত হওয়া।",
-    wuduBreak2:
-      "শরীর থেকে রক্ত বা পুঁজ বের হয়ে গড়িয়ে পড়া (হানাফি মত অনুযায়ী)।",
-    wuduBreak3: "মুখভর্তি বমি হওয়া (হানাফি মত অনুযায়ী)।",
-    wuduBreak4: "গভীর ঘুম বা চেতনা হারানো।",
+            wuduSectionTitle: "ওযু করার পদ্ধতি",
+            wuduIntro: "ওযু করার সময় ধাপে ধাপে কাজগুলো মনোযোগ দিয়ে সম্পন্ন করো।",
+            wuduStep1Title: "হাত ধোয়া",
+            wuduStep1Text: "দুই হাত কবজি পর্যন্ত ভালোভাবে ধুয়ে নাও।",
+            wuduStep2Title: "কুলি করা",
+            wuduStep2Text: "মুখের ভেতর পানি নিয়ে ভালোভাবে কুলি করো।",
+            wuduStep3Title: "নাকে পানি দেওয়া",
+            wuduStep3Text: "নাকে পানি দিয়ে পরিষ্কার করো।",
+            wuduStep4Title: "মুখ ধোয়া",
+            wuduStep4Text: "কপালের চুলের গোড়া থেকে থুতনির নিচ পর্যন্ত এবং এক কান থেকে অন্য কান পর্যন্ত মুখ ধুয়ে নাও।",
+            wuduStep5Title: "দুই হাত ধোয়া",
+            wuduStep5Text: "প্রথমে ডান হাত, তারপর বাম হাত কনুইসহ ধুয়ে নাও।",
+            wuduStep6Title: "মাথা মাসেহ করা",
+            wuduStep6Text: "ভেজা হাত দিয়ে মাথা মাসেহ করো।",
+            wuduStep7Title: "দুই পা ধোয়া",
+            wuduStep7Text: "প্রথমে ডান পা, তারপর বাম পা টাখনুসহ ধুয়ে নাও।",
+            wuduNote: "ওযুর প্রতিটি অঙ্গ ভালোভাবে ভেজানো এবং পানি অপচয় না করা জরুরি।",
 
-    ghuslTitle: "গোসল",
-    ghuslIntro:
-      "বিশেষ কিছু অবস্থায় গোসলের মাধ্যমে পূর্ণ পবিত্রতা অর্জন করতে হয়। গোসলের সময় শরীরের প্রতিটি অংশে পানি পৌঁছানো জরুরি।",
-    ghuslFardTitle: "গোসলের ফরজ",
-    ghuslFard1: "ভালোভাবে কুলি করা।",
-    ghuslFard2: "নাকে পানি পৌঁছানো।",
-    ghuslFard3: "সমস্ত শরীরে পানি পৌঁছানো; কোনো অংশ শুকনো না রাখা।",
-    ghuslStepsTitle: "গোসলের সহজ ধাপ",
-    ghuslStep1Title: "নিয়ত করা",
-    ghuslStep1Text: "পবিত্রতা অর্জনের উদ্দেশ্যে মনে মনে নিয়ত করবে।",
-    ghuslStep2Title: "হাত ও নাপাকি ধোয়া",
-    ghuslStep2Text: "প্রথমে হাত ধুয়ে শরীরে নাপাকি থাকলে তা পরিষ্কার করবে।",
-    ghuslStep3Title: "মাথায় পানি দেওয়া",
-    ghuslStep3Text: "মাথা ও চুলের গোড়ায় পানি পৌঁছাবে।",
-    ghuslStep4Title: "সমস্ত শরীর ধোয়া",
-    ghuslStep4Text: "শরীরের ডান ও বাম দিকসহ সব অংশে পানি পৌঁছাবে।",
+            ghuslIntro: "যেসব অবস্থায় গোসল ফরজ হয় এবং ফরজ গোসলের পদ্ধতি নিচে দেওয়া হলো।",
+            ghuslWhenTitle: "কখন গোসল ফরজ হয়?",
+            ghuslWhen1: "স্বামী-স্ত্রীর সহবাস হলে, বীর্যপাত হোক বা না হোক।",
+            ghuslWhen2: "প্রযোজ্য অবস্থায় বীর্যপাত হলে।",
+            ghuslWhen3: "মাসিকের রক্তপাত বন্ধ হলে।",
+            ghuslWhen4: "সন্তান প্রসবের পর নিফাসের রক্তপাত বন্ধ হলে।",
+            ghuslWhenNote: "ব্যক্তিগত পরিস্থিতি অনুযায়ী কোনো বিধান বুঝতে অসুবিধা হলে নির্ভরযোগ্য আলেমের পরামর্শ নাও।",
 
-    tayammumTitle: "তায়াম্মুম",
-    tayammumIntro:
-      "পানি না পাওয়া গেলে বা পানি ব্যবহার করা ক্ষতিকর হলে শরিয়তের নিয়ম অনুযায়ী তায়াম্মুম করা যায়।",
-    tayammumStepsTitle: "তায়াম্মুমের ধাপ",
-    tayammumStep1Title: "নিয়ত ও হাত রাখা",
-    tayammumStep1Text:
-      "নিয়ত করে পবিত্র মাটিজাত বস্তুর ওপর দুই হাত রাখবে।",
-    tayammumStep2Title: "মুখ মাসেহ করা",
-    tayammumStep2Text: "দুই হাত দিয়ে সম্পূর্ণ মুখ মাসেহ করবে।",
-    tayammumStep3Title: "দুই হাত মাসেহ করা",
-    tayammumStep3Text:
-      "শরিয়তের নির্দেশিত নিয়মে দুই হাত মাসেহ করবে।",
+            ghuslFardTitle: "ফরজ গোসলের আবশ্যক কাজ",
+            ghuslFard1: "মুখের ভেতর ভালোভাবে পানি পৌঁছানো।",
+            ghuslFard2: "নাকের ভেতর পানি পৌঁছানো।",
+            ghuslFard3: "সমস্ত শরীরে পানি পৌঁছানো, যেন কোনো অংশ শুকনো না থাকে।",
+            ghuslFardNote: "এগুলো হানাফি মাজহাব অনুযায়ী ফরজ গোসলের ফরজ কাজ। অন্য মাজহাবে কিছু বিধানের পার্থক্য থাকতে পারে।",
 
-    cleanlinessTitle: "পরিচ্ছন্নতা",
-    cleanlinessIntro:
-      "ইবাদতের জন্য শরীর, পোশাক ও নামাজের স্থান নাপাকি থেকে পবিত্র রাখা জরুরি। পরিচ্ছন্নতা দৈনন্দিন জীবনেরও গুরুত্বপূর্ণ অংশ।",
-    cleanlinessBodyTitle: "শরীর ও পোশাক পরিষ্কার রাখা",
-    cleanlinessBodyText:
-      "শরীর বা পোশাকে নাপাকি লাগলে নামাজের আগে তা শরিয়তের নিয়ম অনুযায়ী পরিষ্কার করবে।",
-    cleanlinessPlaceTitle: "নামাজের স্থান পরিষ্কার রাখা",
-    cleanlinessPlaceText:
-      "যে স্থানে নামাজ পড়বে, সেখানে নাপাকি আছে কি না খেয়াল করবে এবং প্রয়োজন হলে পরিষ্কার করবে।",
-    cleanlinessHabitsTitle: "দৈনন্দিন পরিচ্ছন্নতার অভ্যাস",
-    cleanlinessHabit1: "টয়লেট ব্যবহারের পর ভালোভাবে পবিত্রতা অর্জন করবে।",
-    cleanlinessHabit2: "শরীর, হাত, নখ ও পোশাক পরিচ্ছন্ন রাখবে।",
-    cleanlinessHabit3: "পানি অপচয় করবে না এবং পরিচ্ছন্নতার জিনিস পরিষ্কার রাখবে।",
+            ghuslStepsTitle: "ফরজ গোসল করার পদ্ধতি",
+            ghuslStep1Title: "নিয়ত করা",
+            ghuslStep1Text: "পবিত্রতা অর্জনের উদ্দেশ্যে মনে মনে নিয়ত করো।",
+            ghuslStep2Title: "শরীরের নাপাকি পরিষ্কার করা",
+            ghuslStep2Text: "শরীরে কোনো নাপাকি থাকলে তা আগে ভালোভাবে ধুয়ে পরিষ্কার করো।",
+            ghuslStep3Title: "মুখ ও নাকে পানি দেওয়া",
+            ghuslStep3Text: "হানাফি মাজহাব অনুযায়ী মুখের ভেতর ও নাকের ভেতর পানি পৌঁছাও।",
+            ghuslStep4Title: "মাথা ও চুল ভেজানো",
+            ghuslStep4Text: "মাথায় পানি ঢেলে চুলের গোড়াসহ ভালোভাবে ভিজিয়ে নাও।",
+            ghuslStep5Title: "সমস্ত শরীর ধোয়া",
+            ghuslStep5Text: "শরীরের ডান ও বাম দিকসহ সব অংশে পানি পৌঁছাও।",
+            ghuslStep6Title: "কোনো অংশ শুকনো না রাখা",
+            ghuslStep6Text: "শরীরের ভাঁজ, নাভি, বগল ও অন্যান্য স্থানে পানি পৌঁছেছে কি না নিশ্চিত হও।",
 
-    rulesTitle: "মৌলিক নিয়ম",
-    rulesKnowTitle: "যা জানা দরকার",
-    rulesItem1: "পবিত্রতা অর্জনের জন্য উপযুক্ত পানি ব্যবহার করবে।",
-    rulesItem2: "শরীর, পোশাক ও নামাজের স্থান পবিত্র রাখবে।",
-    rulesItem3: "অজু, গোসল ও তায়াম্মুমের নিয়ম পরিস্থিতি অনুযায়ী শিখবে।",
-    rulesItem4: "পানি ব্যবহার সম্ভব না হলে বা ক্ষতিকর হলে তায়াম্মুমের বিধান জানবে।",
-    rulesDoubtTitle: "সন্দেহ হলে কী করবে?",
-    rulesDoubtText:
-      "কোনো বিষয় বুঝতে অসুবিধা হলে নির্ভরযোগ্য ইসলামি শিক্ষাসূত্র দেখবে এবং প্রয়োজনে বিশ্বস্ত আলেমের পরামর্শ নেবে।",
+            ghuslCareTitle: "গোসলের সময় খেয়াল রাখবে",
+            ghuslCare1: "শরীরে পানি পৌঁছাতে বাধা দেয় এমন কিছু থাকলে তা সরিয়ে ফেলো।",
+            ghuslCare2: "চুলের গোড়া ও শরীরের ভাঁজে পানি পৌঁছানো নিশ্চিত করো।",
+            ghuslCare3: "অপ্রয়োজনীয়ভাবে পানি অপচয় করো না।",
+            ghuslCare4: "গোসলের সময় শালীনতা ও ব্যক্তিগত গোপনীয়তা বজায় রাখো।",
 
-    footerTitle: "পবিত্রতা রক্ষা করো",
-    footerLine: "ইবাদতকে সুন্দর ও কবুল হওয়ার যোগ্য করো।"
-  },
+            tayammumSectionTitle: "তায়াম্মুম করার পদ্ধতি",
+            tayammumIntro: "পানি না পাওয়া গেলে বা শরিয়তসম্মত কারণে পানি ব্যবহার করা সম্ভব না হলে তায়াম্মুমের বিধান প্রযোজ্য হতে পারে।",
+            tayammumStep1Title: "নিয়ত করা",
+            tayammumStep1Text: "পবিত্রতা অর্জনের উদ্দেশ্যে মনে মনে নিয়ত করো।",
+            tayammumStep2Title: "পবিত্র মাটিতে হাত রাখা",
+            tayammumStep2Text: "তায়াম্মুমের উপযোগী পবিত্র মাটিতে দুই হাত স্পর্শ করো।",
+            tayammumStep3Title: "মুখ মাসেহ করা",
+            tayammumStep3Text: "নিয়ম অনুযায়ী দুই হাত দিয়ে পুরো মুখ মাসেহ করো।",
+            tayammumStep4Title: "দুই হাত মাসেহ করা",
+            tayammumStep4Text: "নির্ধারিত পদ্ধতিতে দুই হাত মাসেহ করো।",
+            tayammumNote: "তায়াম্মুমের বিস্তারিত বিধান মাজহাবভেদে ভিন্ন হতে পারে।",
 
-  /* =============== ENGLISH =============== */
-  en: {
-    skipLink: "Skip to main content",
+            cleanlinessSectionTitle: "পরিচ্ছন্নতা ও পবিত্রতা",
+            cleanlinessIntro: "ইবাদতের জন্য শরীর, পোশাক ও নামাজের স্থান পবিত্র রাখা জরুরি।",
+            cleanlinessItem1: "শরীরের নাপাকি পরিষ্কার করো।",
+            cleanlinessItem2: "নামাজের পোশাক পরিষ্কার ও পবিত্র রাখো।",
+            cleanlinessItem3: "নামাজের স্থান নাপাকি থেকে মুক্ত রাখো।",
+            cleanlinessItem4: "পবিত্রতা অর্জনের ক্ষেত্রে সন্দেহ হলে নির্ভরযোগ্য আলেমের পরামর্শ নাও।",
 
-    heroTitle: "Purification",
-    heroIntro:
-      "Purification is an important teaching in Islam. Keeping the body, clothing, and prayer area pure is essential for worship. Learn the proper rules of wudu, ghusl, and tayammum and build good habits of cleanliness.",
+            rulesSectionTitle: "পবিত্রতার গুরুত্বপূর্ণ নিয়ম",
+            rulesItem1: "পানি ব্যবহারের সময় অপচয় এড়িয়ে চলো।",
+            rulesItem2: "শরীরের কোনো অংশে পানি পৌঁছাতে বাধা আছে কি না খেয়াল করো।",
+            rulesItem3: "ধর্মীয় বিধান শেখার সময় নির্ভরযোগ্য সূত্র অনুসরণ করো।",
+            rulesItem4: "মাজহাবভেদে পার্থক্য থাকলে নিজের অনুসৃত মাজহাবের নির্ভরযোগ্য নির্দেশনা মেনে চলো।",
 
-    navWudu: "Wudu",
-    navGhusl: "Ghusl",
-    navTayammum: "Tayammum",
-    navCleanliness: "Cleanliness",
-    navRules: "Basic Rules",
+            footerTitle: "জ্ঞান অর্জন করো ও আমল করো",
+            footerText: "আল্লাহ আমাদের সঠিকভাবে পবিত্রতা অর্জন করার তাওফিক দিন।"
+        },
 
-    wuduTitle: "Wudu",
-    wuduIntro:
-      "Wudu is a method of purification involving washing specific parts of the body and wiping others. Learning its rules is essential for Salah.",
-    wuduBeforeTitle: "Before Wudu",
-    wuduBeforeText:
-      "Use pure water and remove anything that prevents water from reaching the required areas.",
-    wuduStepsTitle: "Steps of Wudu",
+        en: {
+            pageTitle: "Purity and Cleanliness",
+            heroEyebrow: "Preparing for Worship",
+            heroTitle: "Purity and Cleanliness",
+            heroDescription: "Learn the rules of purification before worship in a simple way.",
 
-    wuduStep1Title: "Intention and Bismillah",
-    wuduStep1Text: "Make the intention in your heart and begin with Bismillah.",
-    wuduStep2Title: "Wash Both Hands",
-    wuduStep2Text: "Wash both hands thoroughly up to the wrists.",
-    wuduStep3Title: "Rinse the Mouth",
-    wuduStep3Text: "Take water with the right hand and rinse your mouth.",
-    wuduStep4Title: "Rinse the Nose",
-    wuduStep4Text: "Draw water into the nose and clean it without causing discomfort.",
-    wuduStep5Title: "Wash the Face",
-    wuduStep5Text: "Wash from the hairline to the chin and from one ear to the other.",
-    wuduStep6Title: "Wash Both Arms",
-    wuduStep6Text: "Wash the right arm first, then the left, including the elbows.",
-    wuduStep7Title: "Wipe the Head and Ears",
-    wuduStep7Text: "Wipe the head with wet hands and wipe the ears with wet fingers.",
-    wuduStep8Title: "Wash Both Feet",
-    wuduStep8Text: "Wash both feet up to the ankles, ensuring water reaches between the toes.",
+            lessonsTitle: "Learn About Purification",
+            lessonsDescription: "Learn each topic step by step and try to practise it correctly.",
 
-    wuduFardTitle: "Obligatory Acts of Wudu",
-    wuduFard1: "Wash the entire face.",
-    wuduFard2: "Wash both arms, including the elbows.",
-    wuduFard3: "Wipe the head.",
-    wuduFard4: "Wash both feet, including the ankles.",
+            wuduTitle: "Wudu (Ablution)",
+            wuduDescription: "Learn the correct steps of performing wudu before prayer.",
+            wuduButton: "Learn Wudu",
 
-    wuduDuaTitle: "Dua After Wudu",
-    pronunciationLabel: "Pronunciation:",
-    meaningLabel: "Meaning:",
-    wuduDuaPronunciation:
-      "Ashhadu alla ilaha illallahu wahdahu la sharika lahu, wa ashhadu anna Muhammadan abduhu wa rasuluhu.",
-    wuduDuaMeaning:
-      "I bear witness that there is no true deity except Allah alone, without any partner. I also bear witness that Muhammad (peace be upon him) is His servant and Messenger.",
+            ghuslTitle: "Obligatory Ghusl",
+            ghuslDescription: "Learn when ghusl becomes obligatory and how to perform it.",
+            ghuslButton: "Learn Ghusl",
 
-    wuduBreakTitle: "Common Things That Invalidate Wudu",
-    wuduBreak1: "Passing urine, stool, or wind.",
-    wuduBreak2: "Flowing blood or pus, according to the Hanafi school.",
-    wuduBreak3: "Vomiting a mouthful, according to the Hanafi school.",
-    wuduBreak4: "Deep sleep or loss of consciousness.",
+            tayammumTitle: "Tayammum",
+            tayammumDescription: "Learn how to perform tayammum when water cannot be used.",
+            tayammumButton: "Learn Tayammum",
 
-    ghuslTitle: "Ghusl",
-    ghuslIntro:
-      "In certain circumstances, a full ritual bath is required. Water must reach every part of the body.",
-    ghuslFardTitle: "Obligatory Acts of Ghusl",
-    ghuslFard1: "Rinse the mouth thoroughly.",
-    ghuslFard2: "Ensure water reaches inside the nose.",
-    ghuslFard3: "Wash the entire body without leaving any part dry.",
-    ghuslStepsTitle: "Simple Steps of Ghusl",
-    ghuslStep1Title: "Make the Intention",
-    ghuslStep1Text: "Make the intention in your heart to attain purification.",
-    ghuslStep2Title: "Wash Hands and Remove Impurity",
-    ghuslStep2Text: "Wash your hands and clean any impurity from the body.",
-    ghuslStep3Title: "Wash the Head",
-    ghuslStep3Text: "Ensure water reaches the head and roots of the hair.",
-    ghuslStep4Title: "Wash the Entire Body",
-    ghuslStep4Text: "Ensure water reaches every part of the body.",
+            cleanlinessTitle: "Cleanliness",
+            cleanlinessDescription: "Learn about the purity of the body, clothing and prayer area.",
+            cleanlinessButton: "Learn Cleanliness",
 
-    tayammumTitle: "Tayammum",
-    tayammumIntro:
-      "When water is unavailable or harmful to use, tayammum may be performed according to Islamic rulings.",
-    tayammumStepsTitle: "Steps of Tayammum",
-    tayammumStep1Title: "Intention and Place the Hands",
-    tayammumStep1Text: "Make the intention and place both hands on a suitable clean earth-based surface.",
-    tayammumStep2Title: "Wipe the Face",
-    tayammumStep2Text: "Wipe the entire face with both hands.",
-    tayammumStep3Title: "Wipe Both Hands",
-    tayammumStep3Text: "Wipe both hands according to the prescribed method.",
+            rulesTitle: "Important Purification Rules",
+            rulesDescription: "Important points to remember when seeking purification.",
+            rulesButton: "View Important Rules",
 
-    cleanlinessTitle: "Cleanliness",
-    cleanlinessIntro:
-      "For worship, the body, clothing, and prayer area must be free from impurity. Cleanliness is also important in daily life.",
-    cleanlinessBodyTitle: "Keep the Body and Clothing Clean",
-    cleanlinessBodyText: "Clean impurity from the body or clothing according to Islamic rulings before praying.",
-    cleanlinessPlaceTitle: "Keep the Prayer Area Clean",
-    cleanlinessPlaceText: "Check the prayer area for impurity and clean it when necessary.",
-    cleanlinessHabitsTitle: "Daily Cleanliness Habits",
-    cleanlinessHabit1: "Clean yourself properly after using the toilet.",
-    cleanlinessHabit2: "Keep your body, hands, nails, and clothing clean.",
-    cleanlinessHabit3: "Avoid wasting water and keep cleaning items clean.",
+            wuduSectionTitle: "How to Perform Wudu",
+            wuduIntro: "Follow each step carefully while performing wudu.",
+            wuduStep1Title: "Wash the Hands",
+            wuduStep1Text: "Wash both hands thoroughly up to the wrists.",
+            wuduStep2Title: "Rinse the Mouth",
+            wuduStep2Text: "Take water into your mouth and rinse thoroughly.",
+            wuduStep3Title: "Clean the Nose",
+            wuduStep3Text: "Use water to clean the inside of the nose.",
+            wuduStep4Title: "Wash the Face",
+            wuduStep4Text: "Wash the face from the hairline to the chin and from ear to ear.",
+            wuduStep5Title: "Wash Both Arms",
+            wuduStep5Text: "Wash the right arm and then the left, including the elbows.",
+            wuduStep6Title: "Wipe the Head",
+            wuduStep6Text: "Wipe the head with wet hands.",
+            wuduStep7Title: "Wash Both Feet",
+            wuduStep7Text: "Wash the right foot and then the left, including the ankles.",
+            wuduNote: "Wash each required area properly and avoid wasting water.",
 
-    rulesTitle: "Basic Rules",
-    rulesKnowTitle: "What You Should Know",
-    rulesItem1: "Use suitable water for purification.",
-    rulesItem2: "Keep your body, clothing, and prayer area pure.",
-    rulesItem3: "Learn the rules of wudu, ghusl, and tayammum for different situations.",
-    rulesItem4: "Learn the rulings of tayammum when water is unavailable or harmful.",
-    rulesDoubtTitle: "What If You Are Unsure?",
-    rulesDoubtText: "Consult reliable Islamic learning resources or a trusted scholar when needed.",
+            ghuslIntro: "Learn when ghusl becomes obligatory and how to perform obligatory ghusl.",
+            ghuslWhenTitle: "When Is Ghusl Obligatory?",
+            ghuslWhen1: "After sexual intercourse between spouses, whether or not ejaculation occurs.",
+            ghuslWhen2: "When ejaculation occurs in circumstances that require ghusl.",
+            ghuslWhen3: "When menstrual bleeding ends.",
+            ghuslWhen4: "When postnatal bleeding ends.",
+            ghuslWhenNote: "For guidance about a specific personal situation, consult a reliable scholar.",
 
-    footerTitle: "Maintain Purity",
-    footerLine: "Make your worship beautiful and worthy of acceptance."
-  },
+            ghuslFardTitle: "Obligatory Acts of Ghusl",
+            ghuslFard1: "Rinse the inside of the mouth thoroughly.",
+            ghuslFard2: "Ensure water reaches the inside of the nose.",
+            ghuslFard3: "Wash the entire body so that no area remains dry.",
+            ghuslFardNote: "These are the obligatory acts according to the Hanafi school. Some details differ among schools of Islamic law.",
 
-  /* =============== HINDI =============== */
-  hi: {
-    skipLink: "मुख्य सामग्री पर जाएँ",
+            ghuslStepsTitle: "How to Perform Obligatory Ghusl",
+            ghuslStep1Title: "Make the Intention",
+            ghuslStep1Text: "Make the intention in your heart to attain purification.",
+            ghuslStep2Title: "Remove Impurity",
+            ghuslStep2Text: "If there is any impurity on the body, wash it away first.",
+            ghuslStep3Title: "Rinse the Mouth and Nose",
+            ghuslStep3Text: "According to the Hanafi school, ensure water reaches the inside of the mouth and nose.",
+            ghuslStep4Title: "Wet the Head and Hair",
+            ghuslStep4Text: "Pour water over the head and ensure the hair roots are wet.",
+            ghuslStep5Title: "Wash the Entire Body",
+            ghuslStep5Text: "Ensure water reaches all parts of the body, including both sides.",
+            ghuslStep6Title: "Check for Dry Areas",
+            ghuslStep6Text: "Make sure water reaches skin folds, the navel, armpits and other areas.",
 
-    heroTitle: "पवित्रता",
-    heroIntro:
-      "पवित्रता इस्लाम की एक महत्वपूर्ण शिक्षा है। नमाज़ के लिए शरीर, कपड़े और नमाज़ की जगह को पाक रखना ज़रूरी है। वुज़ू, ग़ुस्ल और तयम्मुम के सही नियम सीखें और सफ़ाई की अच्छी आदतें अपनाएँ।",
+            ghuslCareTitle: "Things to Remember During Ghusl",
+            ghuslCare1: "Remove anything that prevents water from reaching the body.",
+            ghuslCare2: "Ensure water reaches hair roots and body folds.",
+            ghuslCare3: "Avoid wasting water.",
+            ghuslCare4: "Maintain modesty and privacy while bathing.",
 
-    navWudu: "वुज़ू",
-    navGhusl: "ग़ुस्ल",
-    navTayammum: "तयम्मुम",
-    navCleanliness: "सफ़ाई",
-    navRules: "बुनियादी नियम",
+            tayammumSectionTitle: "How to Perform Tayammum",
+            tayammumIntro: "Tayammum may apply when water is unavailable or cannot be used for a valid religious reason.",
+            tayammumStep1Title: "Make the Intention",
+            tayammumStep1Text: "Make the intention in your heart to attain purification.",
+            tayammumStep2Title: "Touch Clean Earth",
+            tayammumStep2Text: "Place both hands on suitable clean earth or material for tayammum.",
+            tayammumStep3Title: "Wipe the Face",
+            tayammumStep3Text: "Wipe the entire face with both hands according to the prescribed method.",
+            tayammumStep4Title: "Wipe the Hands",
+            tayammumStep4Text: "Wipe both hands according to the prescribed method.",
+            tayammumNote: "Details of tayammum may differ among schools of Islamic law.",
 
-    wuduTitle: "वुज़ू",
-    wuduIntro: "वुज़ू में कुछ अंगों को धोया और कुछ का मसह किया जाता है। नमाज़ के लिए सही वुज़ू करना सीखना ज़रूरी है।",
-    wuduBeforeTitle: "वुज़ू से पहले",
-    wuduBeforeText: "पाक पानी इस्तेमाल करें और पानी को ज़रूरी अंगों तक पहुँचने से रोकने वाली चीज़ हटा दें।",
-    wuduStepsTitle: "वुज़ू के चरण",
+            cleanlinessSectionTitle: "Cleanliness and Purity",
+            cleanlinessIntro: "For worship, the body, clothing and prayer area should be clean and pure.",
+            cleanlinessItem1: "Remove impurity from the body.",
+            cleanlinessItem2: "Keep prayer clothing clean and pure.",
+            cleanlinessItem3: "Keep the prayer area free from impurity.",
+            cleanlinessItem4: "Consult a reliable scholar if you are unsure about a purification ruling.",
 
-    wuduStep1Title: "नीयत और बिस्मिल्लाह",
-    wuduStep1Text: "दिल में नीयत करें और बिस्मिल्लाह कहकर शुरू करें।",
-    wuduStep2Title: "दोनों हाथ धोना",
-    wuduStep2Text: "दोनों हाथ कलाई तक अच्छी तरह धोएँ।",
-    wuduStep3Title: "कुल्ली करना",
-    wuduStep3Text: "दाएँ हाथ से पानी लेकर कुल्ली करें।",
-    wuduStep4Title: "नाक में पानी डालना",
-    wuduStep4Text: "नाक में पानी डालकर साफ़ करें, लेकिन तकलीफ़ न पहुँचाएँ।",
-    wuduStep5Title: "चेहरा धोना",
-    wuduStep5Text: "बालों की शुरुआत से ठुड्डी तक और एक कान से दूसरे कान तक चेहरा धोएँ।",
-    wuduStep6Title: "दोनों बाँहें धोना",
-    wuduStep6Text: "पहले दाईं और फिर बाईं बाँह कोहनी सहित धोएँ।",
-    wuduStep7Title: "सिर और कानों का मसह",
-    wuduStep7Text: "गीले हाथों से सिर और गीली उँगलियों से कानों का मसह करें।",
-    wuduStep8Title: "दोनों पैर धोना",
-    wuduStep8Text: "दोनों पैर टखनों सहित धोएँ और उँगलियों के बीच पानी पहुँचाएँ।",
+            rulesSectionTitle: "Important Purification Rules",
+            rulesItem1: "Avoid wasting water.",
+            rulesItem2: "Check whether anything prevents water from reaching the required areas.",
+            rulesItem3: "Follow reliable sources when learning religious rulings.",
+            rulesItem4: "Where rulings differ, follow reliable guidance from the school of law you follow.",
 
-    wuduFardTitle: "वुज़ू के फ़र्ज़",
-    wuduFard1: "पूरा चेहरा धोना।",
-    wuduFard2: "दोनों बाँहें कोहनियों सहित धोना।",
-    wuduFard3: "सिर का मसह करना।",
-    wuduFard4: "दोनों पैर टखनों सहित धोना।",
+            footerTitle: "Gain Knowledge and Practise It",
+            footerText: "May Allah grant us the ability to purify ourselves correctly."
+        },
 
-    wuduDuaTitle: "वुज़ू के बाद की दुआ",
-    pronunciationLabel: "उच्चारण:",
-    meaningLabel: "अर्थ:",
-    wuduDuaPronunciation: "अश्हदु अल्ला इलाहा इल्लल्लाहु वह्दहू ला शरीका लहू, व अश्हदु अन्ना मुहम्मदन अब्दुहू व रसूलुहू।",
-    wuduDuaMeaning: "मैं गवाही देता हूँ कि अल्लाह के सिवा कोई सच्चा उपास्य नहीं। वह अकेला है, उसका कोई साझीदार नहीं। मुहम्मद (सल्लल्लाहु अलैहि वसल्लम) उसके बंदे और रसूल हैं।",
+        hi: {
+            pageTitle: "पवित्रता और स्वच्छता",
+            heroEyebrow: "इबादत की तैयारी",
+            heroTitle: "पवित्रता और स्वच्छता",
+            heroDescription: "इबादत से पहले पाकी हासिल करने के नियम आसानी से सीखें।",
 
-    wuduBreakTitle: "वुज़ू टूटने के सामान्य कारण",
-    wuduBreak1: "पेशाब, पाख़ाना या हवा निकलना।",
-    wuduBreak2: "खून या पीप का बहना (हनफ़ी मत के अनुसार)।",
-    wuduBreak3: "भर मुँह उल्टी होना (हनफ़ी मत के अनुसार)।",
-    wuduBreak4: "गहरी नींद या बेहोशी।",
+            lessonsTitle: "पवित्रता के बारे में सीखें",
+            lessonsDescription: "हर विषय को चरणबद्ध तरीके से सीखें और सही ढंग से अमल करने की कोशिश करें।",
 
-    ghuslTitle: "ग़ुस्ल",
-    ghuslIntro: "कुछ विशेष परिस्थितियों में पूरी पाकी के लिए ग़ुस्ल ज़रूरी होता है। शरीर के हर हिस्से तक पानी पहुँचना चाहिए।",
-    ghuslFardTitle: "ग़ुस्ल के फ़र्ज़",
-    ghuslFard1: "अच्छी तरह कुल्ली करना।",
-    ghuslFard2: "नाक के अंदर पानी पहुँचाना।",
-    ghuslFard3: "पूरे शरीर तक पानी पहुँचाना।",
-    ghuslStepsTitle: "ग़ुस्ल के आसान चरण",
-    ghuslStep1Title: "नीयत करना",
-    ghuslStep1Text: "पाकी हासिल करने की नीयत करें।",
-    ghuslStep2Title: "हाथ और नापाकी साफ़ करना",
-    ghuslStep2Text: "पहले हाथ धोएँ और शरीर पर लगी नापाकी साफ़ करें।",
-    ghuslStep3Title: "सिर पर पानी डालना",
-    ghuslStep3Text: "सिर और बालों की जड़ों तक पानी पहुँचाएँ।",
-    ghuslStep4Title: "पूरा शरीर धोना",
-    ghuslStep4Text: "शरीर के हर हिस्से तक पानी पहुँचाएँ।",
+            wuduTitle: "वुज़ू",
+            wuduDescription: "नमाज़ से पहले वुज़ू करने का सही तरीका सीखें।",
+            wuduButton: "वुज़ू का तरीका",
 
-    tayammumTitle: "तयम्मुम",
-    tayammumIntro: "पानी न मिलने या पानी इस्तेमाल करना नुकसानदेह होने पर इस्लामी नियमों के अनुसार तयम्मुम किया जा सकता है।",
-    tayammumStepsTitle: "तयम्मुम के चरण",
-    tayammumStep1Title: "नीयत और हाथ रखना",
-    tayammumStep1Text: "नीयत करके दोनों हाथ पाक मिट्टी या उपयुक्त सतह पर रखें।",
-    tayammumStep2Title: "चेहरे का मसह",
-    tayammumStep2Text: "दोनों हाथों से पूरे चेहरे का मसह करें।",
-    tayammumStep3Title: "दोनों हाथों का मसह",
-    tayammumStep3Text: "निर्धारित तरीके से दोनों हाथों का मसह करें।",
+            ghuslTitle: "फ़र्ज़ ग़ुस्ल",
+            ghuslDescription: "जानें कि ग़ुस्ल कब फ़र्ज़ होता है और उसे कैसे किया जाता है।",
+            ghuslButton: "ग़ुस्ल का तरीका",
 
-    cleanlinessTitle: "सफ़ाई",
-    cleanlinessIntro: "इबादत के लिए शरीर, कपड़े और नमाज़ की जगह को नापाकी से पाक रखना ज़रूरी है।",
-    cleanlinessBodyTitle: "शरीर और कपड़ों की सफ़ाई",
-    cleanlinessBodyText: "नमाज़ से पहले शरीर या कपड़ों पर लगी नापाकी को इस्लामी नियमों के अनुसार साफ़ करें।",
-    cleanlinessPlaceTitle: "नमाज़ की जगह साफ़ रखना",
-    cleanlinessPlaceText: "नमाज़ की जगह पर नापाकी हो तो उसे साफ़ करें।",
-    cleanlinessHabitsTitle: "रोज़मर्रा की सफ़ाई",
-    cleanlinessHabit1: "शौचालय के बाद अच्छी तरह पाकी हासिल करें।",
-    cleanlinessHabit2: "शरीर, हाथ, नाखून और कपड़े साफ़ रखें।",
-    cleanlinessHabit3: "पानी बर्बाद न करें और सफ़ाई का सामान साफ़ रखें।",
+            tayammumTitle: "तयम्मुम",
+            tayammumDescription: "पानी इस्तेमाल करना संभव न हो तो तयम्मुम का तरीका सीखें।",
+            tayammumButton: "तयम्मुम का तरीका",
 
-    rulesTitle: "बुनियादी नियम",
-    rulesKnowTitle: "क्या जानना ज़रूरी है",
-    rulesItem1: "पाकी के लिए उपयुक्त पानी इस्तेमाल करें।",
-    rulesItem2: "शरीर, कपड़े और नमाज़ की जगह पाक रखें।",
-    rulesItem3: "वुज़ू, ग़ुस्ल और तयम्मुम के नियम सीखें।",
-    rulesItem4: "पानी न मिलने या नुकसानदेह होने पर तयम्मुम के नियम जानें।",
-    rulesDoubtTitle: "संदेह होने पर क्या करें?",
-    rulesDoubtText: "विश्वसनीय इस्लामी स्रोत देखें और ज़रूरत पड़ने पर किसी भरोसेमंद आलिम से सलाह लें।",
+            cleanlinessTitle: "स्वच्छता",
+            cleanlinessDescription: "शरीर, कपड़ों और नमाज़ की जगह की पाकी के बारे में जानें।",
+            cleanlinessButton: "स्वच्छता के नियम",
 
-    footerTitle: "पवित्रता बनाए रखें",
-    footerLine: "इबादत को सुंदर और क़बूल होने योग्य बनाएँ।"
-  }
-};
+            rulesTitle: "पवित्रता के ज़रूरी नियम",
+            rulesDescription: "पाकी हासिल करते समय इन ज़रूरी बातों का ध्यान रखें।",
+            rulesButton: "ज़रूरी नियम देखें",
 
+            wuduSectionTitle: "वुज़ू करने का तरीका",
+            wuduIntro: "वुज़ू करते समय हर चरण को ध्यानपूर्वक पूरा करें।",
+            wuduStep1Title: "हाथ धोना",
+            wuduStep1Text: "दोनों हाथों को कलाई तक अच्छी तरह धोएँ।",
+            wuduStep2Title: "कुल्ली करना",
+            wuduStep2Text: "मुँह में पानी लेकर अच्छी तरह कुल्ली करें।",
+            wuduStep3Title: "नाक साफ़ करना",
+            wuduStep3Text: "पानी से नाक के अंदरूनी हिस्से को साफ़ करें।",
+            wuduStep4Title: "चेहरा धोना",
+            wuduStep4Text: "बालों की शुरुआत से ठोड़ी तक और एक कान से दूसरे कान तक चेहरा धोएँ।",
+            wuduStep5Title: "दोनों बाज़ू धोना",
+            wuduStep5Text: "पहले दायाँ और फिर बायाँ बाज़ू कोहनियों समेत धोएँ।",
+            wuduStep6Title: "सिर का मसह",
+            wuduStep6Text: "गीले हाथों से सिर का मसह करें।",
+            wuduStep7Title: "दोनों पैर धोना",
+            wuduStep7Text: "पहले दायाँ और फिर बायाँ पैर टखनों समेत धोएँ।",
+            wuduNote: "हर ज़रूरी अंग को अच्छी तरह धोएँ और पानी बर्बाद न करें।",
 
-/* ---------- 2. SUPPORTED LANGUAGE ---------- */
+            ghuslIntro: "जानें कि ग़ुस्ल कब फ़र्ज़ होता है और फ़र्ज़ ग़ुस्ल कैसे किया जाता है।",
+            ghuslWhenTitle: "ग़ुस्ल कब फ़र्ज़ होता है?",
+            ghuslWhen1: "पति-पत्नी के बीच संभोग होने पर, चाहे स्खलन हो या न हो।",
+            ghuslWhen2: "ऐसी परिस्थिति में वीर्यपात होने पर जिसमें ग़ुस्ल ज़रूरी हो।",
+            ghuslWhen3: "मासिक धर्म का रक्तस्राव समाप्त होने पर।",
+            ghuslWhen4: "प्रसव के बाद होने वाला रक्तस्राव समाप्त होने पर।",
+            ghuslWhenNote: "किसी विशेष परिस्थिति के बारे में मार्गदर्शन के लिए विश्वसनीय आलिम से सलाह लें।",
 
-function getSupportedLanguage(language) {
-  const value = String(language || "")
-    .trim()
-    .toLowerCase();
+            ghuslFardTitle: "फ़र्ज़ ग़ुस्ल के अनिवार्य काम",
+            ghuslFard1: "मुँह के अंदर अच्छी तरह पानी पहुँचाना।",
+            ghuslFard2: "नाक के अंदर पानी पहुँचाना।",
+            ghuslFard3: "पूरे शरीर को धोना ताकि कोई हिस्सा सूखा न रहे।",
+            ghuslFardNote: "ये हनफ़ी मज़हब के अनुसार फ़र्ज़ ग़ुस्ल के अनिवार्य काम हैं। अन्य मज़हबों में कुछ विवरण अलग हो सकते हैं।",
 
-  if (
-    value === "bn" ||
-    value.startsWith("bn-") ||
-    value === "bengali" ||
-    value === "bangla"
-  ) {
-    return "bn";
-  }
+            ghuslStepsTitle: "फ़र्ज़ ग़ुस्ल करने का तरीका",
+            ghuslStep1Title: "नीयत करना",
+            ghuslStep1Text: "पाकी हासिल करने की नीयत दिल में करें।",
+            ghuslStep2Title: "नापाकी साफ़ करना",
+            ghuslStep2Text: "शरीर पर कोई नापाकी हो तो पहले उसे अच्छी तरह धो लें।",
+            ghuslStep3Title: "मुँह और नाक में पानी",
+            ghuslStep3Text: "हनफ़ी मज़हब के अनुसार मुँह और नाक के अंदर पानी पहुँचाएँ।",
+            ghuslStep4Title: "सिर और बाल भिगोना",
+            ghuslStep4Text: "सिर पर पानी डालें और बालों की जड़ों तक पानी पहुँचाएँ।",
+            ghuslStep5Title: "पूरा शरीर धोना",
+            ghuslStep5Text: "शरीर के दाएँ और बाएँ हिस्से समेत हर जगह पानी पहुँचाएँ।",
+            ghuslStep6Title: "कोई हिस्सा सूखा न रहे",
+            ghuslStep6Text: "शरीर की सिलवटों, नाभि, बगलों और अन्य जगहों तक पानी पहुँचने की जाँच करें।",
 
-  if (
-    value === "en" ||
-    value.startsWith("en-") ||
-    value === "english"
-  ) {
-    return "en";
-  }
+            ghuslCareTitle: "ग़ुस्ल के दौरान ध्यान रखने वाली बातें",
+            ghuslCare1: "पानी पहुँचने में रुकावट पैदा करने वाली चीज़ हटा दें।",
+            ghuslCare2: "बालों की जड़ों और शरीर की सिलवटों तक पानी पहुँचाएँ।",
+            ghuslCare3: "पानी बर्बाद न करें।",
+            ghuslCare4: "ग़ुस्ल करते समय शालीनता और निजता बनाए रखें।",
 
-  if (
-    value === "hi" ||
-    value.startsWith("hi-") ||
-    value === "hindi"
-  ) {
-    return "hi";
-  }
+            tayammumSectionTitle: "तयम्मुम करने का तरीका",
+            tayammumIntro: "पानी उपलब्ध न हो या किसी मान्य धार्मिक कारण से इस्तेमाल न किया जा सके तो तयम्मुम लागू हो सकता है।",
+            tayammumStep1Title: "नीयत करना",
+            tayammumStep1Text: "पाकी हासिल करने की नीयत दिल में करें।",
+            tayammumStep2Title: "पाक मिट्टी पर हाथ रखना",
+            tayammumStep2Text: "तयम्मुम के लिए उपयुक्त पाक मिट्टी या सामग्री पर दोनों हाथ रखें।",
+            tayammumStep3Title: "चेहरे का मसह",
+            tayammumStep3Text: "निर्धारित तरीके से दोनों हाथों से पूरे चेहरे का मसह करें।",
+            tayammumStep4Title: "हाथों का मसह",
+            tayammumStep4Text: "निर्धारित तरीके से दोनों हाथों का मसह करें।",
+            tayammumNote: "तयम्मुम के कुछ विवरण अलग-अलग मज़हबों में भिन्न हो सकते हैं।",
 
-  return "bn";
-}
+            cleanlinessSectionTitle: "स्वच्छता और पवित्रता",
+            cleanlinessIntro: "इबादत के लिए शरीर, कपड़े और नमाज़ की जगह पाक होनी चाहिए।",
+            cleanlinessItem1: "शरीर की नापाकी साफ़ करें।",
+            cleanlinessItem2: "नमाज़ के कपड़े साफ़ और पाक रखें।",
+            cleanlinessItem3: "नमाज़ की जगह को नापाकी से मुक्त रखें।",
+            cleanlinessItem4: "पवित्रता के किसी नियम में संदेह हो तो विश्वसनीय आलिम से सलाह लें।",
 
+            rulesSectionTitle: "पवित्रता के ज़रूरी नियम",
+            rulesItem1: "पानी बर्बाद करने से बचें।",
+            rulesItem2: "देखें कि पानी पहुँचने में कोई रुकावट तो नहीं है।",
+            rulesItem3: "धार्मिक नियम सीखते समय विश्वसनीय स्रोतों का पालन करें।",
+            rulesItem4: "जहाँ मज़हबों के बीच अंतर हो, अपने अनुसरण वाले मज़हब की विश्वसनीय हिदायत मानें।",
 
-/* ---------- 3. READ APP SETTINGS ---------- */
+            footerTitle: "ज्ञान हासिल करें और अमल करें",
+            footerText: "अल्लाह हमें सही तरीके से पाकी हासिल करने की तौफ़ीक़ दे।"
+        }
+    };
 
-function readAppSettings() {
-  try {
-    const raw = localStorage.getItem("appSettings");
+    const languageAliases = {
+        bn: "bn",
+        bengali: "bn",
+        bangla: "bn",
+        বাংলা: "bn",
 
-    if (!raw) return {};
+        en: "en",
+        english: "en",
+        ইংরেজি: "en",
 
-    const settings = JSON.parse(raw);
+        hi: "hi",
+        hindi: "hi",
+        हिन्दी: "hi",
+        हिंदी: "hi"
+    };
 
-    if (!settings || typeof settings !== "object") {
-      return {};
+    function readSettings() {
+        try {
+            const raw = localStorage.getItem(SETTINGS_KEY);
+            return raw ? JSON.parse(raw) : {};
+        } catch (error) {
+            console.warn("IBADAT: Could not read app settings.", error);
+            return {};
+        }
     }
 
-    return settings;
-  } catch (error) {
-    console.warn("IBADAT: appSettings পড়া যায়নি।", error);
-    return {};
-  }
-}
+    function getLanguage() {
+        const settings = readSettings();
 
+        const storedLanguage =
+            settings.lang ??
+            settings.language ??
+            settings.locale ??
+            document.documentElement.lang ??
+            "bn";
 
-function getLanguageFromSettings(settings) {
-  return getSupportedLanguage(
-    settings.lang ??
-    settings.language ??
-    settings.locale ??
-    "bn"
-  );
-}
+        const normalized = String(storedLanguage).trim().toLowerCase();
 
-
-/* ---------- 4. APPLY LANGUAGE ---------- */
-
-function applyLanguage(language) {
-  const lang = getSupportedLanguage(language);
-  const dictionary = translations[lang];
-
-  document.documentElement.lang = lang;
-  document.documentElement.dataset.lang = lang;
-
-  document.querySelectorAll("[data-i18n]").forEach((element) => {
-    const key = element.getAttribute("data-i18n");
-
-    if (
-      key &&
-      Object.prototype.hasOwnProperty.call(dictionary, key)
-    ) {
-      element.textContent = dictionary[key];
+        return languageAliases[normalized] || "bn";
     }
-  });
 
-  /*
-    প্রতিটি অংশের নম্বর ভাষা অনুযায়ী বদলাবে।
-    HTML-এ lesson-number-এর মধ্যে ১, ২, ৩... থাকলেও
-    JS সঠিকভাবে স্থানীয় অঙ্ক বসাবে।
-  */
-  const numberSystems = {
-    bn: ["১", "২", "৩", "৪", "৫"],
-    en: ["1", "2", "3", "4", "5"],
-    hi: ["१", "२", "३", "४", "५"]
-  };
+    function getDigitMap(language) {
+        if (language === "bn") {
+            return ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+        }
 
-  document.querySelectorAll(".lesson-number").forEach((badge, index) => {
-    if (index < 5) {
-      badge.textContent = numberSystems[lang][index];
+        if (language === "hi") {
+            return ["०", "१", "२", "३", "४", "५", "६", "७", "८", "९"];
+        }
+
+        return ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
     }
-  });
 
-  return lang;
-}
+    function localizeDigits(value, language) {
+        const digits = getDigitMap(language);
 
+        return String(value).replace(/\d/g, (digit) => digits[Number(digit)]);
+    }
 
-/* ---------- 5. APPLY LIGHT / DARK THEME ---------- */
+    function applyTranslations(language) {
+        const dictionary = translations[language] || translations.bn;
 
-function isDarkTheme(settings) {
-  if (typeof settings.dark === "boolean") {
-    return settings.dark;
-  }
+        document.querySelectorAll("[data-i18n]").forEach((element) => {
+            const key = element.getAttribute("data-i18n");
 
-  if (typeof settings.isDark === "boolean") {
-    return settings.isDark;
-  }
+            if (Object.prototype.hasOwnProperty.call(dictionary, key)) {
+                element.textContent = dictionary[key];
+            }
+        });
 
-  if (typeof settings.darkMode === "boolean") {
-    return settings.darkMode;
-  }
+        document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+            const key = element.getAttribute("data-i18n-placeholder");
 
-  if (typeof settings.theme === "string") {
-    return settings.theme.toLowerCase() === "dark";
-  }
+            if (Object.prototype.hasOwnProperty.call(dictionary, key)) {
+                element.setAttribute("placeholder", dictionary[key]);
+            }
+        });
 
-  return false;
-}
+        document.querySelectorAll("[data-i18n-title]").forEach((element) => {
+            const key = element.getAttribute("data-i18n-title");
 
+            if (Object.prototype.hasOwnProperty.call(dictionary, key)) {
+                element.setAttribute("title", dictionary[key]);
+            }
+        });
 
-function applyTheme(settings = {}) {
-  const dark = isDarkTheme(settings);
-  const root = document.documentElement;
-  const body = document.body;
+        document.documentElement.lang =
+            language === "bn" ? "bn" :
+            language === "hi" ? "hi" : "en";
 
-  root.classList.toggle("dark", dark);
-  root.classList.toggle("dark-mode", dark);
+        if (dictionary.pageTitle) {
+            document.title = dictionary.pageTitle;
+        }
 
-  body.classList.toggle("dark", dark);
-  body.classList.toggle("dark-mode", dark);
+        return dictionary;
+    }
 
-  root.dataset.theme = dark ? "dark" : "light";
-  body.dataset.theme = dark ? "dark" : "light";
+    function applyLessonNumbers(language) {
+        const numberElements = document.querySelectorAll(".lesson-number");
 
-  const themeColor = document.querySelector(
-    'meta[name="theme-color"]'
-  );
+        numberElements.forEach((element, index) => {
+            element.textContent = localizeDigits(index + 1, language);
+        });
+    }
 
-  if (themeColor) {
-    themeColor.setAttribute(
-      "content",
-      dark ? "#172019" : "#17583e"
-    );
-  }
+    function applyTheme() {
+        const settings = readSettings();
 
-  return dark;
-}
+        const themeValue = String(settings.theme ?? "").toLowerCase();
 
+        const isDark =
+            settings.dark === true ||
+            settings.isDark === true ||
+            settings.darkMode === true ||
+            themeValue === "dark";
 
-/* ---------- 6. INITIALIZE ---------- */
+        document.documentElement.classList.toggle("dark", isDark);
+        document.body.classList.toggle("dark", isDark);
+        document.body.classList.toggle("dark-theme", isDark);
+        document.documentElement.setAttribute(
+            "data-theme",
+            isDark ? "dark" : "light"
+        );
+    }
 
-function initializePurityPage() {
-  const settings = readAppSettings();
+    function applySettings() {
+        const language = getLanguage();
 
-  applyLanguage(getLanguageFromSettings(settings));
-  applyTheme(settings);
-}
+        applyTranslations(language);
+        applyLessonNumbers(language);
+        applyTheme();
+    }
 
+    function setupSectionLinks() {
+        document.querySelectorAll("[data-scroll-target]").forEach((button) => {
+            if (button.dataset.purityScrollReady === "true") {
+                return;
+            }
 
-/* ---------- 7. SETTINGS UPDATE SUPPORT ---------- */
+            button.dataset.purityScrollReady = "true";
 
-/*
-  একই সাইটের অন্য পেজ appSettings পরিবর্তন করলে
-  এই পেজেও ভাষা ও থিম আপডেট হবে।
-*/
+            button.addEventListener("click", () => {
+                const targetSelector = button.getAttribute("data-scroll-target");
 
-window.addEventListener("storage", (event) => {
-  if (event.key !== "appSettings") return;
+                if (!targetSelector) {
+                    return;
+                }
 
-  initializePurityPage();
-});
+                const target = document.querySelector(targetSelector);
 
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: window.matchMedia(
+                            "(prefers-reduced-motion: reduce)"
+                        ).matches ? "auto" : "smooth",
+                        block: "start"
+                    });
+                }
+            });
+        });
+    }
 
-window.addEventListener("ibadat:settings-changed", () => {
-  initializePurityPage();
-});
+    function setupAnchorScrolling() {
+        document.querySelectorAll('a[href^="#"]').forEach((link) => {
+            if (link.dataset.purityAnchorReady === "true") {
+                return;
+            }
 
+            link.dataset.purityAnchorReady = "true";
 
-/* ---------- 8. EXPOSE FUNCTIONS ---------- */
+            link.addEventListener("click", (event) => {
+                const href = link.getAttribute("href");
 
-window.IBADATPurity = {
-  translations,
-  applyLanguage,
-  applyTheme,
-  readAppSettings,
-  initialize: initializePurityPage
-};
+                if (!href || href === "#") {
+                    return;
+                }
 
+                let target;
 
-/* ---------- 9. RUN ---------- */
+                try {
+                    target = document.querySelector(href);
+                } catch (error) {
+                    return;
+                }
 
-if (document.readyState === "loading") {
-  document.addEventListener(
-    "DOMContentLoaded",
-    initializePurityPage,
-    { once: true }
-  );
-} else {
-  initializePurityPage();
-}
+                if (!target) {
+                    return;
+                }
+
+                event.preventDefault();
+
+                target.scrollIntoView({
+                    behavior: window.matchMedia(
+                        "(prefers-reduced-motion: reduce)"
+                    ).matches ? "auto" : "smooth",
+                    block: "start"
+                });
+
+                if (history.replaceState) {
+                    history.replaceState(null, "", href);
+                }
+            });
+        });
+    }
+
+    function initialize() {
+        applySettings();
+        setupSectionLinks();
+        setupAnchorScrolling();
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initialize, {
+            once: true
+        });
+    } else {
+        initialize();
+    }
+
+    window.addEventListener("storage", (event) => {
+        if (!event.key || event.key === SETTINGS_KEY) {
+            applySettings();
+        }
+    });
+
+    window.addEventListener("ibadat:settings-changed", applySettings);
+
+    window.IBADATPurity = {
+        applySettings,
+        applyTranslations,
+        applyTheme,
+        translations
+    };
+})();
