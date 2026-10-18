@@ -527,6 +527,20 @@ stepLabel: "चरण",
     const t = translations[lang];
     document.documentElement.lang = lang;
 
+     setText("pageTitle", t.pageTitle);
+
+document.querySelectorAll(
+  "#cleanliness .section-number, " +
+  "#wudu .section-number, " +
+  "#ghusl .section-number, " +
+  "#tayammum .section-number, " +
+  "#purityRules .section-number"
+).forEach((el, index) => {
+  el.textContent = t.lessonNumber[index];
+});
+
+setText("guidanceKicker", t.guidanceKicker);
+
     /*
       Hero board-এর চারটি লাইন ইচ্ছাকৃতভাবে পরিবর্তন করা হচ্ছে না।
       ফলে তোমার নির্ধারিত মূল লেখাগুলো অপরিবর্তিত থাকবে।
