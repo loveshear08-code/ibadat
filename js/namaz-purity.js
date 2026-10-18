@@ -144,7 +144,7 @@ stepLabel: "ধাপ",
       tayammumNoteTitle: "মনে রাখবে",
       tayammumNote: "তায়াম্মুম কেবল প্রযোজ্য শর্ত পূরণ হলে করা যায়। উপকরণ ও মাসেহের পদ্ধতি নির্ভরযোগ্য ইসলামি নির্দেশনা থেকে শিখে নাও।",
 
-       guidancekicker:"পঞ্চম পাঠ",
+       guidanceKicker:"পঞ্চম পাঠ",
       guidanceTitle: "গুরুত্বপূর্ণ সতর্কতা",
       guidance: [
         [
@@ -267,7 +267,7 @@ stepLabel: "Step",
       tayammumNoteTitle: "Remember",
       tayammumNote: "Tayammum is permitted only when its conditions are met. Learn the materials and method from reliable Islamic guidance.",
        
-       guidancekicker:"LESSON FIVE",
+       guidanceKicker:"LESSON FIVE",
       guidanceTitle: "Important Precautions",
       guidance: [
         ["If Wudu Is Invalidated", "If you are certain your wudu has been invalidated, perform it again before prayer. If unsure, seek reliable guidance."],
@@ -375,7 +375,7 @@ stepLabel: "चरण",
       tayammumNoteTitle: "याद रखें",
       tayammumNote: "तयम्मुम तभी किया जा सकता है जब उसकी शर्तें पूरी हों। सामग्री और विधि विश्वसनीय इस्लामी मार्गदर्शन से सीखें।",
 
-       guidancekicker:"पाँचवाँ पाठ",
+       guidanceKicker:"पाँचवाँ पाठ",
       guidanceTitle: "महत्वपूर्ण सावधानियाँ",
       guidance: [
         ["वुज़ू टूट जाए तो", "यदि वुज़ू टूटना निश्चित है, तो नमाज़ से पहले दोबारा वुज़ू करें। संदेह हो तो विश्वसनीय मार्गदर्शन लें।"],
@@ -549,11 +549,6 @@ stepLabel: "चरण",
     setText("wuduStepsTitle", t.wuduStepsTitle);
      setText("wuduStepsIntro", t.wuduStepsIntro);
     updateWudu(t);
-
-    const wuduIntro = document.querySelector(
-      "#wudu .steps-intro, #wudu [data-wudu-steps-intro]"
-    );
-    if (wuduIntro) wuduIntro.textContent = t.wuduStepsIntro;
 
     setText("wuduNoteTitle", t.wuduNoteTitle);
 
