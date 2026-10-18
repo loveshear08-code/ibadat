@@ -1089,11 +1089,11 @@ body.dark-mode .page-footer {
   }
 
   .page-footer {
-    min-height: 68px;
-    padding: 15px 12px;
-    border-radius: 18px 18px 0 0;
-    font-size: 0.94rem;
-  }
+  min-height: 80px;
+  padding: 17px 14px;
+  border-radius: 22px;
+  font-size: clamp(1rem, 3.8vw, 1.2rem);
+}
 }
 
 /* ---------- Extra-small phones ---------- */
