@@ -677,20 +677,20 @@ tbody tr.jumuah-row {
 
   width: 100%;
   min-width: 0;
-  min-height: 76px;
+  min-height: 86px;
 
   margin: 0;
-  padding: 18px 20px;
+  padding: 20px 18px;
 
-  border: 0;
-  border-radius: 20px 20px 0 0;
+  border: 1px solid rgba(190, 169, 93, 0.75);
+  border-radius: 26px;
 
-  color: #fff9df;
-  background: var(--green);
+  color: #fffbea;
+  background: #105536;
+  box-shadow: var(--shadow);
 
   text-align: center;
-
-  font-size: 1rem;
+  font-size: clamp(1rem, 3.8vw, 1.2rem);
   font-weight: 800;
   line-height: 1.8;
 
