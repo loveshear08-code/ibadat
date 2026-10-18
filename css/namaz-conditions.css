@@ -1,6 +1,6 @@
 /* ==========================================
-   IBADAT — NAMAZ CONDITIONS PAGE
-   Purity Page Matching Design
+   IBADAT — NAMAZ CONDITIONS
+   Equal boards + floral background spacing
    ========================================== */
 
 :root {
@@ -11,7 +11,9 @@
   --text: #244333;
   --board: rgba(255, 255, 250, 0.96);
   --border: #d9dfcf;
-  --shadow: 0 4px 14px rgba(38, 67, 45, 0.09);
+  --shadow: 0 4px 14px rgba(38, 67, 45, 0.08);
+  --page-width: 900px;
+  --board-gap: 24px;
 }
 
 * {
@@ -28,8 +30,12 @@ body {
   font-family: "Noto Sans Bengali", "Hind Siliguri", sans-serif;
   line-height: 1.8;
   background:
-    linear-gradient(rgba(255, 253, 243, 0.55), rgba(255, 253, 243, 0.55)),
-    url("../assets/bg_pattern.png") center top / cover fixed;
+    linear-gradient(
+      rgba(255, 253, 243, 0.48),
+      rgba(255, 253, 243, 0.48)
+    ),
+    url("../assets/bg_pattern.png") center top / 100% auto repeat-y;
+  background-attachment: fixed;
 }
 
 img {
@@ -38,20 +44,20 @@ img {
 }
 
 .conditions-page {
-  width: min(100% - 32px, 900px);
+  width: min(calc(100% - 32px), var(--page-width));
   margin: 0 auto;
-  padding: 14px 0 24px;
+  padding: 16px 0 24px;
 }
 
-/* Hero board — হালকা overlay */
+/* প্রথম বোর্ড */
 .hero {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  margin: 0 0 20px;
-  padding: 34px 24px;
+  margin: 0 0 var(--board-gap);
+  padding: 30px 24px;
   text-align: center;
-  border: 1px solid rgba(190, 169, 93, 0.55);
+  border: 1px solid rgba(190, 169, 93, 0.4);
   border-radius: 30px;
   background:
     linear-gradient(
@@ -62,16 +68,13 @@ img {
   box-shadow: var(--shadow);
 }
 
+/* উপরের গোল্ডেন ডিজাইন বাদ */
 .hero .ornament {
-  display: block;
-  margin-bottom: 8px;
-  color: var(--gold);
-  font-size: 2rem;
-  line-height: 1.2;
+  display: none;
 }
 
 .hero h1 {
-  margin: 0 0 10px;
+  margin: 0 0 12px;
   color: #a58a28;
   font-size: clamp(2rem, 6vw, 3rem);
   font-weight: 800;
@@ -80,31 +83,32 @@ img {
 
 .hero p {
   max-width: 760px;
-  margin: 8px auto 0;
+  margin: 10px auto 0;
   color: #254633;
   font-size: clamp(1rem, 3.7vw, 1.3rem);
   font-weight: 700;
   line-height: 1.8;
 }
 
-/* Lesson boards */
+/* সব বোর্ডের বাইরের কাঠামো */
 .panel,
 .lesson {
-  margin: 0 0 20px;
+  width: 100%;
+  margin: 0 0 var(--board-gap);
   padding: 24px 22px;
   overflow: hidden;
   border: 1px solid var(--border);
-  border-radius: 26px;
+  border-radius: 28px;
   background: var(--board);
   box-shadow: var(--shadow);
 }
 
-/* Section heading */
+/* বোর্ডের শিরোনাম */
 .section-title {
   display: flex;
   align-items: center;
   gap: 15px;
-  margin-bottom: 18px;
+  margin: 0 0 18px;
 }
 
 .section-number {
@@ -139,7 +143,7 @@ img {
   line-height: 1.5;
 }
 
-/* Illustration boards */
+/* ছবির বোর্ড */
 .art {
   margin: 18px 0;
   padding: 12px;
@@ -153,6 +157,7 @@ img {
 .art img {
   width: 100%;
   max-height: 390px;
+  margin: 0 auto;
   object-fit: contain;
   border-radius: 14px;
 }
@@ -161,7 +166,7 @@ img {
   width: 100%;
 }
 
-/* Text and lists */
+/* লেখা */
 .lesson p {
   margin: 12px 0;
 }
@@ -195,12 +200,12 @@ img {
   color: var(--gold);
 }
 
-/* Notes */
+/* মনে রাখবে / গুরুত্বপূর্ণ বোর্ড */
 .note {
   margin-top: 20px;
-  padding: 16px 18px;
-  border-left: 5px solid var(--gold);
-  border-radius: 14px;
+  padding: 18px 20px;
+  border-left: 6px solid var(--gold);
+  border-radius: 18px;
   background: var(--green-soft);
 }
 
@@ -216,16 +221,16 @@ img {
   margin: 0;
 }
 
-/* Footer — Purity page-এর মতো solid green board */
+/* শেষের সবুজ বোর্ড */
 .purity-footer {
   display: flex;
   min-height: 86px;
   align-items: center;
   justify-content: center;
-  margin: 24px 0 0;
+  margin: 0;
   padding: 20px 18px;
   border: 1px solid rgba(190, 169, 93, 0.75);
-  border-radius: 24px;
+  border-radius: 26px;
   background: #105536;
   box-shadow: var(--shadow);
   text-align: center;
@@ -239,7 +244,7 @@ img {
   line-height: 1.8;
 }
 
-/* Dark mode */
+/* ডার্ক থিম */
 body.dark-mode {
   --text: #e5eee5;
   --board: rgba(22, 44, 34, 0.96);
@@ -247,8 +252,12 @@ body.dark-mode {
   --green-soft: #203e2e;
 
   background:
-    linear-gradient(rgba(8, 24, 17, 0.78), rgba(8, 24, 17, 0.78)),
-    url("../assets/bg_pattern.png") center top / cover fixed;
+    linear-gradient(
+      rgba(8, 24, 17, 0.76),
+      rgba(8, 24, 17, 0.76)
+    ),
+    url("../assets/bg_pattern.png") center top / 100% auto repeat-y;
+  background-attachment: fixed;
 }
 
 body.dark-mode .hero {
@@ -300,15 +309,19 @@ body.dark-mode .purity-footer p {
   color: #fffbea;
 }
 
-/* Responsive */
+/* মোবাইল */
 @media (max-width: 600px) {
+  :root {
+    --board-gap: 18px;
+  }
+
   .conditions-page {
     width: calc(100% - 24px);
     padding-top: 12px;
   }
 
   .hero {
-    padding: 26px 16px;
+    padding: 24px 16px;
     border-radius: 25px;
   }
 
@@ -341,9 +354,13 @@ body.dark-mode .purity-footer p {
     max-height: 320px;
   }
 
+  .note {
+    padding: 15px;
+  }
+
   .purity-footer {
-    min-height: 86px;
-    padding: 18px 14px;
+    min-height: 80px;
+    padding: 17px 14px;
     border-radius: 22px;
   }
 }
