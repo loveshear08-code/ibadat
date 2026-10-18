@@ -423,6 +423,8 @@ textarea {
 #ghuslSteps {
   list-style: none;
   counter-reset: ghusl-counter;
+   padding-left: 0;
+  padding-inline-start: 0;
 }
 
 #ghuslSteps li {
@@ -433,10 +435,15 @@ textarea {
 #ghuslSteps li::before {
   content: attr(data-display-number) ".";
   position: absolute;
-  right: 100%;
-  margin-right: 5px;
+  left: 0;
+  top: 0;
+  margin: 0;
   color: var(--primary);
   font-weight: 700;
+}
+
+#ghuslSteps li {
+  padding-left: 28px;
 }
 
 .content-board li ul,
