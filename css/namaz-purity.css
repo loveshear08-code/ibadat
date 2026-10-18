@@ -203,7 +203,7 @@ textarea {
 .purity-content {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
 
   width: 100%;
   min-width: 0;
@@ -332,11 +332,9 @@ textarea {
 
 .content-board {
   display: block;
-
   width: 100%;
   min-width: 0;
-
-  margin: 0 0 var(--card-gap);
+  margin: 0 0 8px;
   padding: var(--card-padding);
 
   border: 1px solid var(--border);
@@ -345,8 +343,6 @@ textarea {
   background: rgba(255, 253, 247, 0.97);
   box-shadow: var(--shadow);
 }
-
-/* The final board in a group should not add extra bottom space. */
 
 .content-board:last-child {
   margin-bottom: 0;
@@ -387,55 +383,47 @@ textarea {
   color: var(--gold-dark);
 }
 
-/* ---------- Lists inside content boards ---------- */
-
-/*
-  Use a consistent LTR list indent.
-  The marker remains inside the board's usable space.
-*/
+/* ---------- Consistent list alignment ---------- */
 
 .content-board ul,
-.content-board ol {
+.content-board ol,
+.guidance-list {
   width: 100%;
   max-width: 100%;
-
   margin: 8px 0 0;
-  padding-left: 26px;
-  padding-right: 0;
-
+  padding: 0;
+  padding-inline-start: 24px;
+  padding-inline-end: 0;
   list-style-position: outside;
 }
 
-.content-board li {
+.content-board li,
+.guidance-list li {
   max-width: 100%;
-
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   padding: 0;
-
   color: var(--text);
-
   font-size: 0.96rem;
   line-height: 1.8;
-
   overflow-wrap: anywhere;
 }
 
-.content-board li:last-child {
+.content-board li:last-child,
+.guidance-list li:last-child {
   margin-bottom: 0;
 }
 
-.content-board li::marker {
+.content-board li::marker,
+.guidance-list li::marker {
   color: var(--primary);
   font-weight: 700;
 }
-
-/* Nested lists */
 
 .content-board li ul,
 .content-board li ol {
   margin-top: 6px;
   margin-bottom: 4px;
-  padding-left: 22px;
+  padding-inline-start: 20px;
 }
 
 /* ---------- Wudu step list ---------- */
@@ -812,7 +800,7 @@ body.dark-mode .purity-footer {
   }
 
   .purity-content {
-    gap: 22px;
+    gap: 16px;
   }
 
   .section-title {
@@ -878,7 +866,7 @@ body.dark-mode .purity-footer {
   }
 
   .purity-content {
-    gap: 17px;
+    gap: 12px;
   }
 
   .section-title {
