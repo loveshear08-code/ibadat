@@ -1,64 +1,156 @@
 /* ==========================================
    IBADAT — WAQT O RAKAT
-   Matching Purity & Namaz Conditions Pages
+   Complete refreshed stylesheet
+   Matched with Purity & Namaz Conditions
    ========================================== */
 
 :root {
   --green: #14583e;
   --green-dark: #103f2e;
   --green-soft: #e2f0dc;
-  --gold: #b59a42;
-  --text: #263d30;
-  --muted: #5b6c60;
-  --board: rgba(255, 255, 250, 0.94);
-  --border: #d5d9c9;
-  --shadow: 0 5px 16px rgba(26, 57, 39, 0.09);
+  --gold: #c9ad3e;
+  --gold-dark: #a98520;
+  --text: #244333;
+  --muted: #617362;
+  --board: rgba(255, 255, 250, 0.96);
+  --border: #d9dfcf;
+  --shadow: 0 4px 14px rgba(38, 67, 45, 0.09);
+
+  --page-width: 900px;
+  --page-gutter: 16px;
+  --board-padding: 24px;
+  --board-radius: 26px;
+  --section-gap: 20px;
 }
 
-* {
+/* ---------- Global reset ---------- */
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
+  width: 100%;
+  min-height: 100%;
   scroll-behavior: smooth;
+  scroll-padding-top: 16px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
+  width: 100%;
+  min-width: 0;
+  min-height: 100vh;
   margin: 0;
+  overflow-x: hidden;
+
   color: var(--text);
-  font-family: "Noto Sans Bengali", "Hind Siliguri", sans-serif;
-  background:
+
+  font-family:
+    "Noto Sans Bengali",
+    "Hind Siliguri",
+    "Nirmala UI",
+    "Noto Sans Devanagari",
+    Arial,
+    sans-serif;
+
+  font-size: 16px;
+  line-height: 1.8;
+
+  background-color: #fbf8ef;
+  background-image:
     linear-gradient(
-      rgba(255, 253, 243, 0.24),
-      rgba(255, 253, 243, 0.24)
+      rgba(251, 248, 239, 0.86),
+      rgba(251, 248, 239, 0.86)
     ),
-    url("../assets/bg_pattern.png") center top / 100% auto repeat-y;
+    url("../assets/bg_pattern.png");
+
+  background-repeat: repeat, repeat;
+  background-position: center top, center top;
+  background-size: auto, 300px auto;
+  background-attachment: scroll, fixed;
 }
 
-.page-container {
-  width: min(1100px, calc(100% - 36px));
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+li,
+th,
+td {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+p {
+  margin-top: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+/* ---------- Main page ---------- */
+
+.waqt-page {
+  width: min(calc(100% - 32px), var(--page-width));
+  min-width: 0;
   margin: 0 auto;
-  padding-top: 20px;
+  padding: 14px 0 0;
 }
 
-/* Hero */
+/* ---------- Hero board ---------- */
+
 .hero-board {
   position: relative;
-  overflow: hidden;
-  min-height: 220px;
+  isolation: isolate;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 34px 24px;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 250px;
+
+  margin: 0 0 var(--section-gap);
+  padding: 36px 28px;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(201, 173, 62, 0.72);
+  border-radius: 30px;
+
   text-align: center;
-  border: none;
-  border-radius: 18px;
-  background:
+
+  background-color: #f4edda;
+  background-image:
     linear-gradient(
-      rgba(255, 253, 239, 0.35),
-      rgba(247, 250, 232, 0.42)
+      rgba(255, 251, 239, 0.76),
+      rgba(255, 251, 239, 0.82)
     ),
-    url("../assets/prayer-learning-bg.png") center / cover no-repeat;
+    url("../assets/prayer-learning-bg.png");
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
   box-shadow: var(--shadow);
 }
 
@@ -69,376 +161,708 @@ body {
 .hero-content {
   position: relative;
   z-index: 1;
+
   width: 100%;
+  max-width: 760px;
+  min-width: 0;
+
+  margin: 0 auto;
 }
 
 .hero-content h1 {
-  margin: 0 0 12px;
-  color: #a58a28;
-  font-size: clamp(2rem, 5vw, 3.2rem);
-  font-weight: 800;
+  margin: 0 0 14px;
+
+  color: var(--gold-dark);
+
+  font-size: clamp(2rem, 5.5vw, 3rem);
+  font-weight: 900;
   line-height: 1.4;
 }
 
 .hero-content p {
   max-width: 760px;
   margin: 0 auto;
+
   color: #354b3a;
-  font-size: 1.05rem;
-  line-height: 1.85;
+
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.9;
 }
 
-/* Separate prayer boards */
+/* ---------- Five daily prayer boards ---------- */
+
 .prayer-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 18px;
-  margin-top: 20px;
+  gap: var(--section-gap);
+
+  width: 100%;
+  min-width: 0;
+
+  margin-top: 0;
 }
 
 .prayer-card {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
+  gap: 18px;
+
+  width: 100%;
   min-width: 0;
-  margin: 0;
-  padding: 22px;
-  background: var(--board);
+
+  margin: 0 0 var(--section-gap);
+  padding: var(--board-padding) 22px;
+
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: var(--board-radius);
+
+  background: var(--board);
   box-shadow: var(--shadow);
+
+  scroll-margin-top: 16px;
 }
 
 .prayer-number {
-  flex: 0 0 48px;
-  width: 48px;
-  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  flex: 0 0 58px;
+  width: 58px;
+  height: 58px;
+
+  border: 2px solid var(--gold);
   border-radius: 50%;
-  color: #fff;
+
+  color: #fffdf4;
   background: var(--green);
-  font-size: 1.3rem;
-  font-weight: 800;
+
+  font-size: 1.25rem;
+  font-weight: 900;
+  line-height: 1;
+
+  text-align: center;
 }
 
 .prayer-content {
-  flex: 1;
+  flex: 1 1 0;
   min-width: 0;
 }
 
 .prayer-content h2 {
-  margin: 0 0 10px;
+  margin: 0 0 12px;
+
   color: var(--green);
-  font-size: 1.35rem;
+
+  font-size: 1.45rem;
+  font-weight: 900;
   line-height: 1.5;
 }
 
 .prayer-content p {
-  margin: 0 0 14px;
+  margin: 0 0 16px;
+
   color: var(--muted);
-  font-size: 1rem;
-  line-height: 1.85;
+
+  font-size: 1.06rem;
+  font-weight: 500;
+  line-height: 1.9;
 }
+
+.prayer-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- Time and information panel ---------- */
 
 .time-note {
   display: block;
+
   width: 100%;
-  margin-top: 14px;
-  padding: 15px 17px;
-  border-radius: 13px;
+  min-width: 0;
+
+  margin-top: 18px;
+  padding: 16px 18px;
+
+  border: 1px solid rgba(217, 223, 207, 0.65);
+  border-radius: 18px;
+
   color: var(--muted);
   background: var(--green-soft);
-  font-size: 0.97rem;
-  line-height: 1.85;
+
+  font-size: 1rem;
+  line-height: 1.9;
+
+  box-shadow: none;
+}
+
+.time-note > span[aria-hidden="true"] {
+  display: block;
+
+  margin: 0 0 8px;
+
+  color: var(--green);
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.time-note p {
+  margin: 0;
+
+  color: var(--muted);
+
+  font-size: 1.02rem;
+  font-weight: 500;
+  line-height: 1.9;
 }
 
 .time-note strong {
-  color: var(--green);
+  color: var(--green-dark);
+  font-weight: 900;
 }
 
-/* Separate Jumuah board */
+/* ---------- Jumu'ah board ---------- */
+
 .special-prayer {
-  margin-top: 20px;
-  padding: 22px;
-  background: var(--board);
+  position: relative;
+
+  margin: 0 0 var(--section-gap);
+  padding: var(--board-padding) 22px;
+
   border: 1px solid var(--border);
-  border-left: 5px solid var(--gold);
-  border-radius: 18px;
+  border-left: 6px solid var(--gold);
+  border-radius: var(--board-radius);
+
+  background: var(--board);
   box-shadow: var(--shadow);
 }
 
-.special-prayer h2 {
-  margin: 0 0 10px;
+.special-prayer .prayer-number {
+  flex-shrink: 0;
+}
+
+.special-prayer h2,
+.special-prayer .prayer-content h2 {
+  margin: 0 0 12px;
+
   color: var(--green);
-  font-size: 1.35rem;
+
+  font-size: 1.45rem;
+  font-weight: 900;
   line-height: 1.5;
 }
 
 .special-prayer p {
-  margin: 0 0 12px;
+  margin: 0 0 14px;
+
   color: var(--muted);
-  line-height: 1.85;
+
+  font-size: 1.06rem;
+  font-weight: 500;
+  line-height: 1.9;
 }
 
-/* Separate summary board */
+.special-prayer p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- Rakat summary board ---------- */
+
 .summary-board {
-  margin-top: 20px;
-  padding: 24px 20px;
-  background: var(--board);
+  width: 100%;
+  min-width: 0;
+
+  margin: 0 0 var(--section-gap);
+  padding: 28px 22px;
+
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: var(--board-radius);
+
+  background: var(--board);
   box-shadow: var(--shadow);
 }
 
 .summary-heading {
-  margin-bottom: 20px;
+  width: 100%;
+  margin: 0 0 24px;
+
   text-align: center;
 }
 
 .summary-heading h2 {
-  margin: 0 0 10px;
+  margin: 0 0 12px;
+
   color: var(--green);
+
   font-size: clamp(1.45rem, 4vw, 2rem);
+  font-weight: 900;
   line-height: 1.55;
 }
 
 .summary-heading p {
   margin: 0;
+
   color: var(--muted);
-  font-size: 0.98rem;
-  line-height: 1.85;
+
+  font-size: 1.04rem;
+  font-weight: 500;
+  line-height: 1.9;
 }
 
 .summary-symbol {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  margin-bottom: 10px;
+
+  width: 58px;
+  height: 58px;
+
+  margin: 0 0 14px;
+
+  border-radius: 50%;
+
   color: var(--green);
   background: var(--green-soft);
-  border-radius: 50%;
-  font-size: 1.3rem;
+
+  font-size: 1.5rem;
 }
 
-/* Table stays inside the summary board */
+/* ---------- Rakat table ---------- */
+
 .table-wrap {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
   overflow-x: auto;
+
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.72);
+
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
 }
 
 table {
   width: 100%;
   min-width: 650px;
-  border-collapse: collapse;
-  background: rgba(255, 255, 255, 0.7);
+
+  border-collapse: separate;
+  border-spacing: 0;
+
+  color: var(--text);
+  background: transparent;
+
+  font-size: 1rem;
+  line-height: 1.8;
 }
 
 thead {
-  color: #fff;
+  color: #fffdf4;
   background: var(--green);
+}
+
+thead th {
+  color: #fffdf4;
+  background: var(--green);
+
+  font-weight: 900;
 }
 
 th,
 td {
-  padding: 13px 11px;
+  padding: 15px 12px;
+
+  border: 0;
   border-bottom: 1px solid var(--border);
+
   text-align: center;
   vertical-align: middle;
-  font-size: 0.95rem;
-  line-height: 1.7;
+
+  font-size: 1rem;
+  line-height: 1.8;
 }
 
 th {
-  font-weight: 700;
+  font-weight: 800;
 }
 
 td:first-child,
 th:first-child {
   text-align: left;
-  font-weight: 700;
+  font-weight: 800;
 }
 
-tbody tr:last-child td {
-  border-bottom: none;
+tbody th {
+  color: var(--text);
+}
+
+tbody tr {
+  background: rgba(255, 255, 255, 0.55);
 }
 
 tbody tr:nth-child(even) {
   background: rgba(226, 240, 220, 0.38);
 }
 
-.table-footnote {
-  margin: 14px 0 0;
-  color: var(--muted);
-  font-size: 0.92rem;
-  line-height: 1.85;
+tbody tr:last-child th,
+tbody tr:last-child td {
+  border-bottom: 0;
 }
 
-/* Nafl section inside summary board */
+tbody tr.jumuah-row {
+  background: rgba(226, 240, 220, 0.55);
+}
+
+.table-footnote {
+  margin: 16px 0 0;
+
+  color: var(--muted);
+
+  font-size: 0.98rem;
+  font-weight: 500;
+  line-height: 1.9;
+}
+
+/* ---------- Nafl prayer information ---------- */
+
 .nafl-list {
-  margin-top: 24px;
-  padding-top: 20px;
+  margin-top: 26px;
+  padding-top: 22px;
+
   border-top: 1px solid var(--border);
 }
 
 .nafl-list h3 {
-  margin: 0 0 14px;
+  margin: 0 0 16px;
+
   color: var(--green);
-  font-size: 1.3rem;
+
+  font-size: 1.35rem;
+  font-weight: 900;
   line-height: 1.6;
 }
 
+.nafl-list ul {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  padding-inline-start: 28px;
+
+  list-style-position: outside;
+}
+
+.nafl-list li {
+  margin: 0 0 10px;
+  padding: 0 0 0 2px;
+
+  color: var(--text);
+
+  font-size: 1.04rem;
+  font-weight: 500;
+  line-height: 1.85;
+
+  overflow-wrap: anywhere;
+}
+
+.nafl-list li:last-child {
+  margin-bottom: 0;
+}
+
+.nafl-list li::marker {
+  color: var(--green);
+  font-weight: 900;
+}
+
+.nafl-list li strong {
+  color: var(--green-dark);
+  font-weight: 900;
+}
+
+/* Keep support for optional .nafl-item elements */
+
 .nafl-item {
-  margin: 0 0 12px;
-  padding: 14px 16px;
-  background: rgba(226, 240, 220, 0.42);
-  border: 1px solid rgba(213, 217, 201, 0.75);
-  border-radius: 13px;
+  margin: 0 0 16px;
+  padding: 0 0 16px;
+
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+
+  background: transparent;
+  box-shadow: none;
 }
 
 .nafl-item:last-child {
   margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
 }
 
 .nafl-item h4 {
-  margin: 0 0 5px;
+  margin: 0 0 6px;
+
   color: var(--green);
-  font-size: 1rem;
-  line-height: 1.65;
+
+  font-size: 1.12rem;
+  font-weight: 900;
+  line-height: 1.6;
 }
 
 .nafl-item p {
   margin: 0;
+
   color: var(--muted);
-  font-size: 0.96rem;
+
+  font-size: 1.02rem;
+  font-weight: 500;
   line-height: 1.85;
 }
 
-/* Important note: its own board */
+/* ---------- Important caution ---------- */
+
 .important-note {
-  margin-top: 20px;
-  padding: 20px;
-  background: rgba(255, 250, 230, 0.96);
+  margin-top: 24px;
+  padding: 16px 18px;
+
   border: 1px solid #e2d6a9;
-  border-radius: 16px;
-  box-shadow: var(--shadow);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 14px 14px 0;
+
+  background: rgba(248, 243, 227, 0.82);
+  box-shadow: none;
+}
+
+.important-note > strong {
+  display: block;
+
+  margin: 0 0 8px;
+
+  color: var(--green-dark);
+
+  font-size: 1.12rem;
+  font-weight: 900;
+  line-height: 1.6;
 }
 
 .important-note h3 {
   margin: 0 0 8px;
-  color: #80651b;
-  font-size: 1.1rem;
+
+  color: var(--green-dark);
+
+  font-size: 1.12rem;
+  font-weight: 900;
   line-height: 1.6;
 }
 
 .important-note p {
   margin: 0;
+
   color: #5c512f;
+
+  font-size: 1.02rem;
+  font-weight: 500;
   line-height: 1.9;
 }
 
-/* Green footer */
+/* ---------- Footer ---------- */
+
 .page-footer {
-  min-height: 72px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
-  padding: 18px 16px;
-  color: #fff;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 76px;
+
+  margin: 0;
+  padding: 18px 20px;
+
+  border: 0;
+  border-radius: 20px 20px 0 0;
+
+  color: #fff9df;
   background: var(--green);
+
   text-align: center;
-  font-size: 0.96rem;
+
+  font-size: 1rem;
+  font-weight: 800;
   line-height: 1.8;
-  border-radius: 16px 16px 0 0;
+
+  overflow-wrap: anywhere;
 }
 
 .page-footer p {
   margin: 0;
+  color: inherit;
 }
 
-/* Dark theme */
+/* ---------- Dark theme ---------- */
+
 body.dark-mode {
-  --text: #e6eee7;
+  --text: #e4eee5;
   --muted: #c0cec3;
-  --board: rgba(25, 43, 33, 0.94);
-  --border: #405747;
+  --board: rgba(27, 43, 34, 0.97);
+  --border: #3c5745;
   --green-soft: #294c38;
-  background:
+  --shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+
+  color: var(--text);
+  background-color: #101a15;
+
+  background-image:
     linear-gradient(
-      rgba(13, 28, 20, 0.62),
-      rgba(13, 28, 20, 0.62)
+      rgba(16, 26, 21, 0.87),
+      rgba(16, 26, 21, 0.87)
     ),
-    url("../assets/bg_pattern.png") center top / 100% auto repeat-y;
+    url("../assets/bg_pattern.png");
+
+  background-repeat: repeat, repeat;
+  background-position: center top, center top;
+  background-size: auto, 300px auto;
+  background-attachment: scroll, fixed;
 }
 
 body.dark-mode .hero-board {
-  background:
+  background-color: #1b2b21;
+
+  background-image:
     linear-gradient(
-      rgba(15, 45, 31, 0.48),
-      rgba(15, 45, 31, 0.58)
+      rgba(27, 43, 34, 0.78),
+      rgba(27, 43, 34, 0.86)
     ),
-    url("../assets/prayer-learning-bg.png") center / cover no-repeat;
+    url("../assets/prayer-learning-bg.png");
+
+  border-color: rgba(201, 173, 62, 0.5);
 }
 
 body.dark-mode .hero-content h1 {
-  color: #e3c96d;
+  color: #e7d58a;
 }
 
 body.dark-mode .hero-content p {
-  color: #edf4e8;
+  color: #e4eee5;
+}
+
+body.dark-mode .prayer-card,
+body.dark-mode .special-prayer,
+body.dark-mode .summary-board {
+  color: var(--text);
+  background: var(--board);
+  border-color: var(--border);
+}
+
+body.dark-mode .special-prayer {
+  border-left-color: var(--gold);
+}
+
+body.dark-mode .prayer-number {
+  color: #fffdf4;
+  background: #20563c;
+  border-color: var(--gold);
 }
 
 body.dark-mode .prayer-content h2,
 body.dark-mode .special-prayer h2,
+body.dark-mode .special-prayer .prayer-content h2,
 body.dark-mode .summary-heading h2,
 body.dark-mode .nafl-list h3,
 body.dark-mode .nafl-item h4 {
-  color: #b8d9b9;
+  color: #c6e6c2;
 }
 
-body.dark-mode .prayer-number {
-  background: #286648;
+body.dark-mode .prayer-content p,
+body.dark-mode .special-prayer p,
+body.dark-mode .summary-heading p,
+body.dark-mode .table-footnote,
+body.dark-mode .nafl-item p {
+  color: var(--muted);
 }
 
 body.dark-mode .time-note {
-  color: #e1f0e3;
+  color: var(--text);
   background: #294c38;
+  border-color: var(--border);
+}
+
+body.dark-mode .time-note p {
+  color: var(--text);
 }
 
 body.dark-mode .time-note strong {
-  color: #c6e2bf;
+  color: #c6e6c2;
+}
+
+body.dark-mode .summary-symbol {
+  color: #c6e6c2;
+  background: #294c38;
+}
+
+body.dark-mode .table-wrap {
+  background: rgba(19, 36, 26, 0.95);
+  border-color: var(--border);
 }
 
 body.dark-mode table {
+  color: var(--text);
   background: rgba(19, 36, 26, 0.95);
 }
 
-body.dark-mode thead {
+body.dark-mode thead,
+body.dark-mode thead th {
+  color: #fffdf4;
   background: #20563c;
 }
 
-body.dark-mode tbody tr:nth-child(even) {
-  background: rgba(53, 88, 62, 0.45);
+body.dark-mode th,
+body.dark-mode td {
+  border-bottom-color: var(--border);
+}
+
+body.dark-mode tbody th {
+  color: var(--text);
+}
+
+body.dark-mode tbody tr {
+  background: rgba(25, 43, 33, 0.94);
+}
+
+body.dark-mode tbody tr:nth-child(even),
+body.dark-mode tbody tr.jumuah-row {
+  background: rgba(53, 88, 62, 0.42);
+}
+
+body.dark-mode .nafl-list {
+  border-top-color: var(--border);
+}
+
+body.dark-mode .nafl-list li {
+  color: var(--text);
+}
+
+body.dark-mode .nafl-list li strong {
+  color: #c6e6c2;
 }
 
 body.dark-mode .nafl-item {
-  background: rgba(53, 88, 62, 0.35);
+  border-bottom-color: var(--border);
+  background: transparent;
 }
 
 body.dark-mode .important-note {
-  background: rgba(91, 75, 31, 0.35);
+  background: rgba(58, 52, 29, 0.35);
   border-color: #76652f;
+  border-left-color: var(--gold);
 }
 
+body.dark-mode .important-note > strong,
 body.dark-mode .important-note h3 {
-  color: #e5d28a;
+  color: #e7d58a;
 }
 
 body.dark-mode .important-note p {
@@ -450,88 +874,302 @@ body.dark-mode .page-footer {
   background: #103f2e;
 }
 
-/* Mobile */
-@media (max-width: 720px) {
-  .page-container {
+/* ---------- Tablet ---------- */
+
+@media (min-width: 600px) {
+  .waqt-page {
+    width: min(calc(100% - 40px), var(--page-width));
+    padding-top: 20px;
+  }
+
+  .hero-board {
+    min-height: 260px;
+    padding: 38px 30px;
+  }
+
+  .prayer-card,
+  .special-prayer {
+    padding: 28px 26px;
+  }
+
+  .prayer-number {
+    flex-basis: 62px;
+    width: 62px;
+    height: 62px;
+  }
+
+  .prayer-content h2,
+  .special-prayer h2,
+  .special-prayer .prayer-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .summary-board {
+    padding: 30px 26px;
+  }
+
+  th,
+  td {
+    padding: 16px 13px;
+  }
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 599px) {
+  .waqt-page {
     width: calc(100% - 24px);
     padding-top: 12px;
   }
 
   .hero-board {
-    min-height: 180px;
+    min-height: 200px;
+
+    margin-bottom: 16px;
     padding: 26px 16px;
-    border-radius: 15px;
+
+    border-radius: 24px;
   }
 
   .hero-content h1 {
-    font-size: 2rem;
+    margin-bottom: 10px;
+    font-size: clamp(1.8rem, 8vw, 2.3rem);
   }
 
   .hero-content p {
-    font-size: 0.95rem;
+    font-size: 0.98rem;
+    line-height: 1.85;
   }
 
   .prayer-grid {
     gap: 16px;
-    margin-top: 16px;
   }
 
   .prayer-card {
-    gap: 13px;
-    padding: 18px 15px;
-    border-radius: 16px;
+    gap: 12px;
+
+    margin-bottom: 16px;
+    padding: 20px 16px;
+
+    border-radius: 23px;
   }
 
   .prayer-number {
-    flex-basis: 42px;
-    width: 42px;
-    height: 42px;
-    font-size: 1.15rem;
+    flex-basis: 46px;
+    width: 46px;
+    height: 46px;
+
+    font-size: 1.08rem;
   }
 
   .prayer-content h2 {
-    font-size: 1.2rem;
+    margin-bottom: 10px;
+    font-size: 1.25rem;
   }
 
   .prayer-content p {
-    font-size: 0.96rem;
+    margin-bottom: 14px;
+    font-size: 0.98rem;
+    line-height: 1.85;
   }
 
   .time-note {
+    margin-top: 15px;
     padding: 13px 14px;
-    font-size: 0.94rem;
+    border-radius: 15px;
   }
 
-  .special-prayer,
+  .time-note p {
+    font-size: 0.96rem;
+    line-height: 1.85;
+  }
+
+  .special-prayer {
+    margin-bottom: 16px;
+    padding: 20px 16px;
+    border-radius: 23px;
+    border-left-width: 5px;
+  }
+
+  .special-prayer h2,
+  .special-prayer .prayer-content h2 {
+    font-size: 1.25rem;
+  }
+
+  .special-prayer p {
+    font-size: 0.98rem;
+    line-height: 1.85;
+  }
+
   .summary-board {
-    margin-top: 16px;
-    padding: 19px 15px;
-    border-radius: 16px;
+    margin-bottom: 16px;
+    padding: 22px 16px;
+    border-radius: 23px;
   }
 
-  .nafl-item {
-    padding: 12px 13px;
+  .summary-heading {
+    margin-bottom: 20px;
   }
 
-  .important-note {
-    margin-top: 16px;
-    padding: 17px;
+  .summary-heading h2 {
+    font-size: 1.45rem;
+  }
+
+  .summary-heading p {
+    font-size: 0.98rem;
+    line-height: 1.85;
+  }
+
+  .summary-symbol {
+    width: 48px;
+    height: 48px;
+    font-size: 1.25rem;
+  }
+
+  .table-wrap {
+    border-radius: 15px;
+  }
+
+  table {
+    min-width: 650px;
   }
 
   th,
   td {
-    padding: 11px 9px;
-    font-size: 0.88rem;
+    padding: 13px 10px;
+    font-size: 0.94rem;
+    line-height: 1.75;
+  }
+
+  .table-footnote {
+    font-size: 0.94rem;
+    line-height: 1.85;
+  }
+
+  .nafl-list {
+    margin-top: 22px;
+    padding-top: 18px;
+  }
+
+  .nafl-list h3 {
+    font-size: 1.2rem;
+  }
+
+  .nafl-list ul {
+    padding-inline-start: 24px;
+  }
+
+  .nafl-list li {
+    margin-bottom: 9px;
+    font-size: 0.97rem;
+    line-height: 1.8;
+  }
+
+  .nafl-item h4 {
+    font-size: 1.04rem;
+  }
+
+  .nafl-item p {
+    font-size: 0.96rem;
+  }
+
+  .important-note {
+    margin-top: 20px;
+    padding: 13px 14px;
+  }
+
+  .important-note > strong,
+  .important-note h3 {
+    font-size: 1.05rem;
+  }
+
+  .important-note p {
+    font-size: 0.96rem;
+    line-height: 1.85;
   }
 
   .page-footer {
-    min-height: 66px;
-    margin-top: 16px;
+    min-height: 68px;
     padding: 15px 12px;
-    border-radius: 14px 14px 0 0;
-    font-size: 0.9rem;
+    border-radius: 18px 18px 0 0;
+    font-size: 0.94rem;
   }
 }
+
+/* ---------- Extra-small phones ---------- */
+
+@media (max-width: 360px) {
+  .waqt-page {
+    width: calc(100% - 20px);
+  }
+
+  .hero-board {
+    padding: 22px 12px;
+    border-radius: 20px;
+  }
+
+  .hero-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-content p {
+    font-size: 0.93rem;
+  }
+
+  .prayer-card {
+    gap: 10px;
+    padding: 17px 12px;
+    border-radius: 20px;
+  }
+
+  .prayer-number {
+    flex-basis: 40px;
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .prayer-content h2 {
+    font-size: 1.14rem;
+  }
+
+  .prayer-content p,
+  .special-prayer p {
+    font-size: 0.94rem;
+  }
+
+  .time-note {
+    padding: 11px 12px;
+  }
+
+  .time-note p {
+    font-size: 0.92rem;
+  }
+
+  .special-prayer {
+    padding: 17px 12px;
+    border-radius: 20px;
+  }
+
+  .summary-board {
+    padding: 18px 12px;
+    border-radius: 20px;
+  }
+
+  .summary-heading h2 {
+    font-size: 1.3rem;
+  }
+
+  .nafl-list li {
+    font-size: 0.92rem;
+  }
+
+  .important-note {
+    padding: 11px 12px;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
   html {
