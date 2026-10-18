@@ -1093,6 +1093,7 @@ body.dark-mode .page-footer {
   padding: 17px 14px;
   border-radius: 22px;
   font-size: clamp(1rem, 3.8vw, 1.2rem);
+   margin-bottom: 12px;  
 }
 }
 
