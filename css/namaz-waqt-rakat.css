@@ -10,9 +10,9 @@
   --gold: #b59a42;
   --text: #263d30;
   --muted: #5b6c60;
-  --board: rgba(255, 255, 250, 0.95);
-  --border: #dedfce;
-  --shadow: 0 8px 24px rgba(26, 57, 39, 0.12);
+  --board: rgba(255, 255, 250, 0.94);
+  --border: #d5d9c9;
+  --shadow: 0 5px 16px rgba(26, 57, 39, 0.09);
 }
 
 * {
@@ -29,19 +29,19 @@ body {
   font-family: "Noto Sans Bengali", "Hind Siliguri", sans-serif;
   background:
     linear-gradient(
-      rgba(255, 253, 243, 0.55),
-      rgba(255, 253, 243, 0.55)
+      rgba(255, 253, 243, 0.24),
+      rgba(255, 253, 243, 0.24)
     ),
-    url("../assets/bg_pattern.png") center top / cover fixed;
+    url("../assets/bg_pattern.png") center top / 100% auto repeat-y;
 }
 
 .page-container {
-  width: min(1100px, calc(100% - 32px));
+  width: min(1100px, calc(100% - 36px));
   margin: 0 auto;
-  padding: 24px 0 0;
+  padding-top: 20px;
 }
 
-/* Hero board */
+/* Hero */
 .hero-board {
   position: relative;
   overflow: hidden;
@@ -49,14 +49,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 36px 24px;
+  padding: 34px 24px;
   text-align: center;
   border: none;
-  border-radius: 22px;
+  border-radius: 18px;
   background:
     linear-gradient(
-      rgba(255, 253, 239, 0.48),
-      rgba(247, 250, 232, 0.57)
+      rgba(255, 253, 239, 0.35),
+      rgba(247, 250, 232, 0.42)
     ),
     url("../assets/prayer-learning-bg.png") center / cover no-repeat;
   box-shadow: var(--shadow);
@@ -77,7 +77,7 @@ body {
   color: #a58a28;
   font-size: clamp(2rem, 5vw, 3.2rem);
   font-weight: 800;
-  line-height: 1.35;
+  line-height: 1.4;
 }
 
 .hero-content p {
@@ -85,15 +85,15 @@ body {
   margin: 0 auto;
   color: #354b3a;
   font-size: 1.05rem;
-  line-height: 1.9;
+  line-height: 1.85;
 }
 
-/* Prayer cards */
+/* Separate prayer boards */
 .prayer-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 18px;
-  margin-top: 24px;
+  margin-top: 20px;
 }
 
 .prayer-card {
@@ -101,6 +101,7 @@ body {
   align-items: flex-start;
   gap: 16px;
   min-width: 0;
+  margin: 0;
   padding: 22px;
   background: var(--board);
   border: 1px solid var(--border);
@@ -118,7 +119,7 @@ body {
   border-radius: 50%;
   color: #fff;
   background: var(--green);
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   font-weight: 800;
 }
 
@@ -128,40 +129,39 @@ body {
 }
 
 .prayer-content h2 {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   color: var(--green);
   font-size: 1.35rem;
   line-height: 1.5;
 }
 
 .prayer-content p {
-  margin: 0 0 12px;
+  margin: 0 0 14px;
   color: var(--muted);
-  font-size: 0.98rem;
+  font-size: 1rem;
   line-height: 1.85;
 }
 
 .time-note {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  border-radius: 10px;
-  color: var(--green-dark);
+  display: block;
+  width: 100%;
+  margin-top: 14px;
+  padding: 15px 17px;
+  border-radius: 13px;
+  color: var(--muted);
   background: var(--green-soft);
-  font-size: 0.94rem;
-  line-height: 1.7;
+  font-size: 0.97rem;
+  line-height: 1.85;
 }
 
 .time-note strong {
   color: var(--green);
 }
 
-/* Jumuah information */
+/* Separate Jumuah board */
 .special-prayer {
-  margin-top: 22px;
-  padding: 24px;
+  margin-top: 20px;
+  padding: 22px;
   background: var(--board);
   border: 1px solid var(--border);
   border-left: 5px solid var(--gold);
@@ -172,27 +172,23 @@ body {
 .special-prayer h2 {
   margin: 0 0 10px;
   color: var(--green);
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   line-height: 1.5;
 }
 
 .special-prayer p {
   margin: 0 0 12px;
   color: var(--muted);
-  line-height: 1.9;
+  line-height: 1.85;
 }
 
-.special-prayer .time-note {
-  margin-top: 2px;
-}
-
-/* Rakat summary */
+/* Separate summary board */
 .summary-board {
-  margin-top: 24px;
-  padding: 26px;
+  margin-top: 20px;
+  padding: 24px 20px;
   background: var(--board);
   border: 1px solid var(--border);
-  border-radius: 20px;
+  border-radius: 18px;
   box-shadow: var(--shadow);
 }
 
@@ -202,32 +198,33 @@ body {
 }
 
 .summary-heading h2 {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   color: var(--green);
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  line-height: 1.5;
+  font-size: clamp(1.45rem, 4vw, 2rem);
+  line-height: 1.55;
 }
 
 .summary-heading p {
   margin: 0;
   color: var(--muted);
   font-size: 0.98rem;
-  line-height: 1.8;
+  line-height: 1.85;
 }
 
 .summary-symbol {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  margin-bottom: 8px;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 10px;
   color: var(--green);
   background: var(--green-soft);
   border-radius: 50%;
   font-size: 1.3rem;
 }
 
+/* Table stays inside the summary board */
 .table-wrap {
   width: 100%;
   overflow-x: auto;
@@ -240,7 +237,7 @@ table {
   width: 100%;
   min-width: 650px;
   border-collapse: collapse;
-  background: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.7);
 }
 
 thead {
@@ -250,7 +247,7 @@ thead {
 
 th,
 td {
-  padding: 13px 12px;
+  padding: 13px 11px;
   border-bottom: 1px solid var(--border);
   text-align: center;
   vertical-align: middle;
@@ -260,7 +257,6 @@ td {
 
 th {
   font-weight: 700;
-  white-space: normal;
 }
 
 td:first-child,
@@ -277,21 +273,17 @@ tbody tr:nth-child(even) {
   background: rgba(226, 240, 220, 0.38);
 }
 
-tbody tr:hover {
-  background: rgba(226, 240, 220, 0.7);
-}
-
 .table-footnote {
-  margin: 12px 0 0;
+  margin: 14px 0 0;
   color: var(--muted);
-  font-size: 0.9rem;
-  line-height: 1.8;
+  font-size: 0.92rem;
+  line-height: 1.85;
 }
 
-/* Nafl information inside the same summary board */
+/* Nafl section inside summary board */
 .nafl-list {
   margin-top: 24px;
-  padding-top: 22px;
+  padding-top: 20px;
   border-top: 1px solid var(--border);
 }
 
@@ -304,9 +296,10 @@ tbody tr:hover {
 
 .nafl-item {
   margin: 0 0 12px;
-  padding: 13px 15px;
+  padding: 14px 16px;
   background: rgba(226, 240, 220, 0.42);
-  border-radius: 12px;
+  border: 1px solid rgba(213, 217, 201, 0.75);
+  border-radius: 13px;
 }
 
 .nafl-item:last-child {
@@ -317,27 +310,28 @@ tbody tr:hover {
   margin: 0 0 5px;
   color: var(--green);
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .nafl-item p {
   margin: 0;
   color: var(--muted);
-  font-size: 0.95rem;
+  font-size: 0.96rem;
   line-height: 1.85;
 }
 
-/* Important note */
+/* Important note: its own board */
 .important-note {
   margin-top: 20px;
-  padding: 18px 20px;
-  background: rgba(255, 249, 225, 0.92);
-  border: 1px solid #e5d6a0;
-  border-radius: 14px;
+  padding: 20px;
+  background: rgba(255, 250, 230, 0.96);
+  border: 1px solid #e2d6a9;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
 }
 
 .important-note h3 {
-  margin: 0 0 7px;
+  margin: 0 0 8px;
   color: #80651b;
   font-size: 1.1rem;
   line-height: 1.6;
@@ -349,20 +343,20 @@ tbody tr:hover {
   line-height: 1.9;
 }
 
-/* Short green footer */
+/* Green footer */
 .page-footer {
-  margin-top: 28px;
-  min-height: 76px;
+  min-height: 72px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 18px 20px;
+  margin-top: 20px;
+  padding: 18px 16px;
   color: #fff;
   background: var(--green);
   text-align: center;
-  font-size: 0.98rem;
+  font-size: 0.96rem;
   line-height: 1.8;
-  border-radius: 18px 18px 0 0;
+  border-radius: 16px 16px 0 0;
 }
 
 .page-footer p {
@@ -373,22 +367,22 @@ tbody tr:hover {
 body.dark-mode {
   --text: #e6eee7;
   --muted: #c0cec3;
-  --board: rgba(25, 43, 33, 0.96);
+  --board: rgba(25, 43, 33, 0.94);
   --border: #405747;
   --green-soft: #294c38;
   background:
     linear-gradient(
-      rgba(13, 28, 20, 0.82),
-      rgba(13, 28, 20, 0.82)
+      rgba(13, 28, 20, 0.62),
+      rgba(13, 28, 20, 0.62)
     ),
-    url("../assets/bg_pattern.png") center top / cover fixed;
+    url("../assets/bg_pattern.png") center top / 100% auto repeat-y;
 }
 
 body.dark-mode .hero-board {
   background:
     linear-gradient(
-      rgba(15, 45, 31, 0.58),
-      rgba(15, 45, 31, 0.68)
+      rgba(15, 45, 31, 0.48),
+      rgba(15, 45, 31, 0.58)
     ),
     url("../assets/prayer-learning-bg.png") center / cover no-repeat;
 }
@@ -410,7 +404,6 @@ body.dark-mode .nafl-item h4 {
 }
 
 body.dark-mode .prayer-number {
-  color: #fff;
   background: #286648;
 }
 
@@ -431,8 +424,7 @@ body.dark-mode thead {
   background: #20563c;
 }
 
-body.dark-mode tbody tr:nth-child(even),
-body.dark-mode tbody tr:hover {
+body.dark-mode tbody tr:nth-child(even) {
   background: rgba(53, 88, 62, 0.45);
 }
 
@@ -441,7 +433,7 @@ body.dark-mode .nafl-item {
 }
 
 body.dark-mode .important-note {
-  background: rgba(91, 75, 31, 0.28);
+  background: rgba(91, 75, 31, 0.35);
   border-color: #76652f;
 }
 
@@ -458,7 +450,7 @@ body.dark-mode .page-footer {
   background: #103f2e;
 }
 
-/* Responsive layout */
+/* Mobile */
 @media (max-width: 720px) {
   .page-container {
     width: calc(100% - 24px);
@@ -467,8 +459,8 @@ body.dark-mode .page-footer {
 
   .hero-board {
     min-height: 180px;
-    padding: 28px 16px;
-    border-radius: 16px;
+    padding: 26px 16px;
+    border-radius: 15px;
   }
 
   .hero-content h1 {
@@ -480,15 +472,14 @@ body.dark-mode .page-footer {
   }
 
   .prayer-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 16px;
     margin-top: 16px;
   }
 
   .prayer-card {
-    padding: 18px 16px;
     gap: 13px;
-    border-radius: 15px;
+    padding: 18px 15px;
+    border-radius: 16px;
   }
 
   .prayer-number {
@@ -502,11 +493,29 @@ body.dark-mode .page-footer {
     font-size: 1.2rem;
   }
 
+  .prayer-content p {
+    font-size: 0.96rem;
+  }
+
+  .time-note {
+    padding: 13px 14px;
+    font-size: 0.94rem;
+  }
+
   .special-prayer,
   .summary-board {
     margin-top: 16px;
     padding: 19px 15px;
     border-radius: 16px;
+  }
+
+  .nafl-item {
+    padding: 12px 13px;
+  }
+
+  .important-note {
+    margin-top: 16px;
+    padding: 17px;
   }
 
   th,
@@ -516,9 +525,9 @@ body.dark-mode .page-footer {
   }
 
   .page-footer {
-    min-height: 68px;
-    margin-top: 20px;
-    padding: 16px 12px;
+    min-height: 66px;
+    margin-top: 16px;
+    padding: 15px 12px;
     border-radius: 14px 14px 0 0;
     font-size: 0.9rem;
   }
