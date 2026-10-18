@@ -5,156 +5,243 @@
    Light / Dark Theme
    ========================================== */
 
-(() => {
+(function () {
   "use strict";
 
   const translations = {
     bn: {
       pageTitle: "ওয়াক্ত ও রাকাত",
-      intro: "পাঁচ ওয়াক্ত নামাজের ওয়াক্ত ও রাকাত জানা গুরুত্বপূর্ণ। সঠিক সময়ে নামাজ আদায়ের জন্য নিজের এলাকার নির্ভরযোগ্য সময়সূচি অনুসরণ করো।",
-      ribbon: "সঠিক সময়ে নামাজ, জীবনের শান্তি ও বরকতের পথ",
+      intro: "পাঁচ ওয়াক্ত নামাজের সময়, রাকাত এবং সংশ্লিষ্ট গুরুত্বপূর্ণ তথ্য জেনে নাও।",
 
-      fajrTitle: "ফজর নামাজ",
-      fajrText: "সুবহে সাদিক থেকে সূর্যোদয়ের আগে পর্যন্ত ফজরের ওয়াক্ত। ফজরের ফরজ দুই রাকাত; এর আগে দুই রাকাত সুন্নতে মুয়াক্কাদা পড়া হয়।",
-      fajrTime: "সুবহে সাদিক থেকে সূর্যোদয়ের আগে পর্যন্ত",
+      fajrTitle: "ফজর",
+      fajrText: "ভোরে সুবহে সাদিক থেকে সূর্য ওঠার আগ পর্যন্ত ফজরের নামাজের সময়।",
+      timeLabel: "সময়",
+      fajrTime: "সুবহে সাদিক থেকে সূর্যোদয়ের আগ পর্যন্ত",
 
-      zuhrTitle: "যোহর নামাজ",
-      zuhrText: "সূর্য পশ্চিম দিকে ঢলে পড়লে যোহরের ওয়াক্ত শুরু হয়। যোহরের ফরজ চার রাকাত। জুমার শর্ত পূরণ হলে জুমার নামাজে ফরজ দুই রাকাত আদায় করা হয়; জুমা যোহরের বিকল্প।",
-      zuhrTime: "সূর্য ঢলে পড়ার পর থেকে আসরের ওয়াক্ত শুরু হওয়ার আগে পর্যন্ত",
+      zuhrTitle: "যোহর",
+      zuhrText: "সূর্য পশ্চিম দিকে ঢলে যাওয়ার পর যোহরের নামাজের সময় শুরু হয়।",
+      zuhrTime: "যোহরের ওয়াক্ত শুরু থেকে আসরের ওয়াক্ত শুরু হওয়ার আগ পর্যন্ত",
 
-      asrTitle: "আসর নামাজ",
-      asrText: "যোহরের ওয়াক্ত শেষ হওয়ার পর আসরের ওয়াক্ত শুরু হয়। আসরের ফরজ চার রাকাত।",
-      asrTime: "আসরের ওয়াক্ত শুরু থেকে সূর্যাস্তের আগে পর্যন্ত",
+      asrTitle: "আসর",
+      asrText: "বিকেলে আসরের নামাজ আদায় করা হয়।",
+      asrTime: "আসরের ওয়াক্ত শুরু থেকে সূর্যাস্তের আগ পর্যন্ত",
 
-      maghribTitle: "মাগরিব নামাজ",
-      maghribText: "সূর্যাস্তের পর মাগরিবের ওয়াক্ত শুরু হয়। মাগরিবের ফরজ তিন রাকাত। অযথা দেরি না করে নামাজ আদায় করো।",
-      maghribTime: "সূর্যাস্তের পর থেকে সন্ধ্যার গোধূলি মিলিয়ে যাওয়ার আগে পর্যন্ত",
+      maghribTitle: "মাগরিব",
+      maghribText: "সূর্য অস্ত যাওয়ার পর মাগরিবের নামাজের সময় শুরু হয়।",
+      maghribTime: "সূর্যাস্তের পর থেকে পশ্চিম আকাশের লাল আভা মিলিয়ে যাওয়ার আগ পর্যন্ত",
 
-      ishaTitle: "এশা নামাজ",
-      ishaText: "সন্ধ্যার গোধূলি মিলিয়ে যাওয়ার পর এশার ওয়াক্ত শুরু হয়। এশার ফরজ চার রাকাত; হানাফি মতে বিতর তিন রাকাত।",
-      ishaTime: "সন্ধ্যার গোধূলি মিলিয়ে যাওয়ার পর থেকে ফজরের আগে পর্যন্ত",
+      ishaTitle: "ইশা",
+      ishaText: "সন্ধ্যার আভা মিলিয়ে যাওয়ার পর ইশার নামাজের সময় শুরু হয়।",
+      ishaTime: "ইশার ওয়াক্ত শুরু থেকে সুবহে সাদিকের আগ পর্যন্ত",
 
-      timeLabel: "ওয়াক্ত:",
-      summaryTitle: "রাকাতের সংক্ষিপ্ত বিবরণ",
-      summaryIntro: "পাঁচ ওয়াক্ত নামাজের সুন্নত, ফরজ ও বিতরের প্রচলিত হানাফি বিন্যাস।",
+      jumuahTitle: "জুমার নামাজ",
+      jumuahText: "শুক্রবার যোহরের পরিবর্তে শর্ত পূরণ হলে জামাতে জুমার নামাজ আদায় করা হয়।",
+      jumuahLabel: "জুমার ফরজ",
+      jumuahNote: "জুমার নামাজের জন্য খুতবা ও জামাতসহ নির্ধারিত শর্ত পূরণ করতে হয়।",
+
+      summaryTitle: "নামাজের রাকাতের সংক্ষিপ্ত তালিকা",
+      summaryIntro: "প্রচলিত হানাফি আমল অনুযায়ী সাধারণ রাকাতের একটি সংক্ষিপ্ত তালিকা।",
       thPrayer: "নামাজ",
       thBefore: "আগের সুন্নত",
       thFard: "ফরজ",
       thAfter: "পরের সুন্নত",
       thWitr: "বিতর",
-      tableNote: "* আসর ও এশার আগে চার রাকাত সুন্নত গায়রে মুয়াক্কাদা। এটি প্রচলিত হানাফি বিন্যাস; অন্যান্য মাজহাবে কিছু পার্থক্য থাকতে পারে।",
-      importantTitle: "মনে রাখবে",
-      importantText: "নামাজের ওয়াক্ত স্থান ও তারিখ অনুযায়ী বদলে যায়। জুমার নামাজ নির্দিষ্ট শর্তে যোহরের পরিবর্তে আদায় করা হয়। নিজের এলাকার নির্ভরযোগ্য সময়সূচি ও ধর্মীয় নির্দেশনা অনুসরণ করো।",
-      footerText: "পবিত্রতা রক্ষা করো, ইবাদতে প্রশান্তি খুঁজে নাও।",
+      thNafl: "নফল",
 
-      jumuaTitle: "জুমার নামাজ",
-      jumuaText: "শুক্রবার যোহরের ওয়াক্তে জামাতের সঙ্গে জুমার নামাজ আদায় করা হয়। প্রচলিত হানাফি বিধান অনুযায়ী খুতবার পর দুই রাকাত ফরজ পড়া হয়। জুমার শর্ত পূরণ না হলে যোহরের নামাজ আদায় করতে হয়।",
-      jumuaTime: "শুক্রবার যোহরের ওয়াক্তে; স্থানীয় মসজিদের সময়সূচি অনুসরণ করো",
-      naflTitle: "নফল নামাজ",
-      naflText: "নফল নামাজ ঐচ্ছিক ইবাদত। নির্দিষ্ট নফল নামাজের নিয়ম ও সময় আলাদা হতে পারে। নিজের শেখা নির্ভরযোগ্য নির্দেশনা অনুযায়ী আদায় করো।",
-      naflTime: "নফল নামাজের ধরন অনুযায়ী সময় ভিন্ন হয়; নিষিদ্ধ সময়গুলো খেয়াল রাখো",
-      jumuaNav: "জুমার নামাজ",
-      naflNav: "নফল নামাজ"
+      fajr: "ফজর",
+      zuhr: "যোহর",
+      asr: "আসর",
+      maghrib: "মাগরিব",
+      isha: "ইশা",
+
+      fajrNafl: "—",
+      zuhrNafl: "—",
+      fourOptional: "৪*",
+      asrNafl: "—",
+      maghribNafl: "—",
+      ishaNafl: "—",
+      jumuahShort: "জুমা",
+      jumuahBefore: "৪ সুন্নত",
+      jumuahAfter: "সুন্নত",
+      jumuahNafl: "—",
+      tableNote: "* কিছু সুন্নত ও নফল রাকাতের সংখ্যা ও আদায়ের ধরন বিষয়ে আলেমদের মধ্যে মতভেদ রয়েছে।",
+
+      naflTitle: "নফল নামাজ সম্পর্কে",
+      tahajjudName: "তাহাজ্জুদ",
+      tahajjudText: "রাতের শেষ ভাগে আদায় করা উত্তম; ইশার পর থেকে ফজরের আগে পর্যন্ত আদায় করা যায়।",
+      ishraqName: "ইশরাক",
+      ishraqText: "সূর্য ওঠার পর নিষিদ্ধ সময় শেষ হলে আদায় করা হয়।",
+      duhaName: "দুহা বা চাশত",
+      duhaText: "সকালে সূর্য বেশ ওপরে ওঠার পর থেকে যোহরের আগ পর্যন্ত আদায় করা হয়।",
+      awwabinName: "আওয়াবিন",
+      awwabinText: "মাগরিবের পর নফল নামাজ হিসেবে প্রচলিত; রাকাতসংখ্যা নিয়ে মতভেদ আছে।",
+      tahiyyatName: "তাহিয়্যাতুল মসজিদ",
+      tahiyyatText: "মসজিদে প্রবেশের পর বসার আগে আদায় করা নফল নামাজ, যদি নিষিদ্ধ সময় না হয়।",
+
+      importantTitle: "গুরুত্বপূর্ণ সতর্কতা",
+      importantText: "নামাজের সঠিক সময় স্থান ও ঋতুভেদে পরিবর্তিত হয়। নিজের এলাকার নির্ভরযোগ্য নামাজের সময়সূচি অনুসরণ করো। সূর্যোদয়, ঠিক মধ্যাহ্ন ও সূর্যাস্তের সময় নফল নামাজ আদায় থেকে বিরত থাকো। রাকাতসংখ্যা ও কিছু সুন্নত আমলে মাজহাবভেদে পার্থক্য থাকতে পারে।",
+
+      footerText: "পবিত্রতা রক্ষা করো, ইবাদতে প্রশান্তি খুঁজে নাও।"
     },
 
     en: {
       pageTitle: "Prayer Times & Rakats",
-      intro: "Learn the times and rakats of the five daily prayers. Follow a reliable local timetable to pray at the correct time.",
-      ribbon: "Pray on time — a path to peace and blessing",
+      intro: "Learn about the five daily prayers, their times, rakats, and important related guidance.",
 
-      fajrTitle: "Fajr Prayer",
-      fajrText: "Fajr begins at true dawn and ends before sunrise. Its obligatory prayer is two rakats, preceded by two emphasized Sunnah rakats.",
+      fajrTitle: "Fajr",
+      fajrText: "Fajr begins at true dawn and ends before sunrise.",
+      timeLabel: "Time",
       fajrTime: "From true dawn until before sunrise",
 
-      zuhrTitle: "Zuhr Prayer",
-      zuhrText: "Zuhr begins after the sun passes its zenith. Its obligatory prayer is four rakats. When the conditions for Jumu'ah are met, two obligatory rakats of Friday prayer replace Zuhr.",
-      zuhrTime: "After solar noon until Asr begins",
+      zuhrTitle: "Zuhr",
+      zuhrText: "Zuhr begins after the sun passes its highest point.",
+      zuhrTime: "From the start of Zuhr until the start of Asr",
 
-      asrTitle: "Asr Prayer",
-      asrText: "Asr begins when the Zuhr period ends. Its obligatory prayer is four rakats.",
-      asrTime: "From the beginning of Asr until before sunset",
+      asrTitle: "Asr",
+      asrText: "Asr is the afternoon prayer.",
+      asrTime: "From the start of Asr until before sunset",
 
-      maghribTitle: "Maghrib Prayer",
-      maghribText: "Maghrib begins at sunset. Its obligatory prayer is three rakats. Pray without unnecessary delay.",
-      maghribTime: "From sunset until evening twilight disappears",
+      maghribTitle: "Maghrib",
+      maghribText: "Maghrib begins immediately after sunset.",
+      maghribTime: "From sunset until the evening twilight fades",
 
-      ishaTitle: "Isha Prayer",
-      ishaText: "Isha begins after evening twilight disappears. Its obligatory prayer is four rakats; Witr is three rakats in the Hanafi school.",
-      ishaTime: "After evening twilight disappears until before Fajr",
+      ishaTitle: "Isha",
+      ishaText: "Isha begins after the evening twilight has disappeared.",
+      ishaTime: "From the start of Isha until true dawn",
 
-      timeLabel: "Time:",
-      summaryTitle: "Rakat Summary",
-      summaryIntro: "A commonly taught Hanafi arrangement of Sunnah, obligatory and Witr rakats.",
+      jumuahTitle: "Jumu'ah Prayer",
+      jumuahText: "On Friday, Jumu'ah is performed in congregation instead of Zuhr when its conditions are fulfilled.",
+      jumuahLabel: "Jumu'ah Fard",
+      jumuahNote: "Jumu'ah requires its prescribed conditions, including the khutbah and congregation.",
+
+      summaryTitle: "Prayer Rakat Summary",
+      summaryIntro: "A brief overview of commonly practised rakats according to the Hanafi tradition.",
       thPrayer: "Prayer",
       thBefore: "Before Sunnah",
       thFard: "Fard",
       thAfter: "After Sunnah",
       thWitr: "Witr",
-      tableNote: "* Four rakats before Asr and Isha are non-emphasized Sunnah in the common Hanafi arrangement. Other schools may differ.",
-      importantTitle: "Remember",
-      importantText: "Prayer times vary by location and date. Friday prayer replaces Zuhr only when its conditions are met. Follow a reliable local timetable and trusted religious guidance.",
-      footerText: "পবিত্রতা রক্ষা করো, ইবাদতে প্রশান্তি খুঁজে নাও।",
+      thNafl: "Nafl",
 
-      jumuaTitle: "Jumu'ah (Friday Prayer)",
-      jumuaText: "Jumu'ah is performed in congregation on Friday during Zuhr time. In the common Hanafi practice, two obligatory rakats are performed after the sermon. If the conditions for Jumu'ah are not met, Zuhr is performed instead.",
-      jumuaTime: "During Zuhr time on Friday; follow your local mosque's schedule",
-      naflTitle: "Nafl Prayers",
-      naflText: "Nafl prayers are voluntary acts of worship. Their methods and times vary by type. Follow reliable religious guidance when performing them.",
-      naflTime: "The time depends on the type of Nafl prayer; observe prohibited prayer times",
-      jumuaNav: "Friday Prayer",
-      naflNav: "Nafl Prayers"
+      fajr: "Fajr",
+      zuhr: "Zuhr",
+      asr: "Asr",
+      maghrib: "Maghrib",
+      isha: "Isha",
+
+      fajrNafl: "—",
+      zuhrNafl: "—",
+      fourOptional: "4*",
+      asrNafl: "—",
+      maghribNafl: "—",
+      ishaNafl: "—",
+      jumuahShort: "Jumu'ah",
+      jumuahBefore: "4 Sunnah",
+      jumuahAfter: "Sunnah",
+      jumuahNafl: "—",
+      tableNote: "* Scholars differ regarding the number and practice of some Sunnah and Nafl rakats.",
+
+      naflTitle: "About Nafl Prayers",
+      tahajjudName: "Tahajjud",
+      tahajjudText: "Best performed in the last part of the night; it may be prayed after Isha and before Fajr.",
+      ishraqName: "Ishraq",
+      ishraqText: "Prayed after sunrise once the prohibited time has passed.",
+      duhaName: "Duha (Chasht)",
+      duhaText: "Prayed in the morning after the sun has risen higher and before Zuhr.",
+      awwabinName: "Awwabin",
+      awwabinText: "Commonly practised as a voluntary prayer after Maghrib; the number of rakats varies by scholarly view.",
+      tahiyyatName: "Tahiyyat al-Masjid",
+      tahiyyatText: "A voluntary prayer offered upon entering a mosque before sitting, provided it is not a prohibited time.",
+
+      importantTitle: "Important Note",
+      importantText: "Prayer times vary by location and season. Follow a reliable timetable for your area. Avoid voluntary prayers at sunrise, solar noon, and sunset. Rakat counts and some Sunnah practices may differ between schools of Islamic law.",
+
+      footerText: "Maintain purity and find peace through worship."
     },
 
     hi: {
-      pageTitle: "नमाज़ के वक़्त और रकअत",
-      intro: "पाँचों वक़्त की नमाज़ के समय और रकअत जानें। सही समय पर नमाज़ पढ़ने के लिए अपने क्षेत्र की विश्वसनीय समय-सारणी देखें।",
-      ribbon: "समय पर नमाज़ — सुकून और बरकत का रास्ता",
+      pageTitle: "नमाज़ के समय और रकअत",
+      intro: "पाँचों वक़्त की नमाज़, उनके समय, रकअत और ज़रूरी जानकारी जानें।",
 
-      fajrTitle: "फ़ज्र की नमाज़",
-      fajrText: "सच्ची सुबह से सूर्योदय से पहले तक फ़ज्र का वक़्त है। फ़र्ज़ दो रकअत हैं और उनसे पहले दो सुन्नते मुअक्कदा रकअत पढ़ी जाती हैं।",
+      fajrTitle: "फ़ज्र",
+      fajrText: "फ़ज्र का समय सच्ची सुबह से शुरू होकर सूर्योदय से पहले तक रहता है।",
+      timeLabel: "समय",
       fajrTime: "सच्ची सुबह से सूर्योदय से पहले तक",
 
-      zuhrTitle: "ज़ुहर की नमाज़",
-      zuhrText: "सूरज ढलने के बाद ज़ुहर का वक़्त शुरू होता है। फ़र्ज़ चार रकअत हैं। जुमे की शर्तें पूरी होने पर ज़ुहर के बदले जुमे की दो फ़र्ज़ रकअत अदा की जाती हैं।",
-      zuhrTime: "सूरज ढलने के बाद से अस्र शुरू होने तक",
+      zuhrTitle: "ज़ुहर",
+      zuhrText: "सूरज ढलने के बाद ज़ुहर का समय शुरू होता है।",
+      zuhrTime: "ज़ुहर का समय शुरू होने से अस्र का समय शुरू होने से पहले तक",
 
-      asrTitle: "अस्र की नमाज़",
-      asrText: "ज़ुहर का वक़्त समाप्त होने के बाद अस्र शुरू होता है। फ़र्ज़ चार रकअत हैं।",
-      asrTime: "अस्र के वक़्त से सूर्यास्त से पहले तक",
+      asrTitle: "अस्र",
+      asrText: "अस्र की नमाज़ दोपहर के बाद अदा की जाती है।",
+      asrTime: "अस्र का समय शुरू होने से सूर्यास्त से पहले तक",
 
-      maghribTitle: "मग़रिब की नमाज़",
-      maghribText: "सूर्यास्त के बाद मग़रिब का वक़्त शुरू होता है। फ़र्ज़ तीन रकअत हैं। बिना अनावश्यक देरी के नमाज़ पढ़ें।",
-      maghribTime: "सूर्यास्त से शाम की लाली समाप्त होने तक",
+      maghribTitle: "मग़रिब",
+      maghribText: "सूर्यास्त के बाद मग़रिब का समय शुरू होता है।",
+      maghribTime: "सूर्यास्त के बाद से शाम की लालिमा समाप्त होने तक",
 
-      ishaTitle: "इशा की नमाज़",
-      ishaText: "शाम की लाली समाप्त होने के बाद इशा शुरू होता है। फ़र्ज़ चार रकअत हैं; हनफ़ी मत में वितर तीन रकअत हैं।",
-      ishaTime: "शाम की लाली समाप्त होने से फ़ज्र से पहले तक",
+      ishaTitle: "इशा",
+      ishaText: "शाम की लालिमा समाप्त होने के बाद इशा का समय शुरू होता है।",
+      ishaTime: "इशा का समय शुरू होने से सच्ची सुबह से पहले तक",
 
-      timeLabel: "वक़्त:",
-      summaryTitle: "रकअत का संक्षिप्त विवरण",
-      summaryIntro: "सुन्नत, फ़र्ज़ और वितर रकअतों की प्रचलित हनफ़ी व्यवस्था।",
+      jumuahTitle: "जुमे की नमाज़",
+      jumuahText: "शुक्रवार को निर्धारित शर्तें पूरी होने पर ज़ुहर की जगह जमाअत के साथ जुमे की नमाज़ अदा की जाती है।",
+      jumuahLabel: "जुमे के फ़र्ज़",
+      jumuahNote: "जुमे की नमाज़ के लिए ख़ुत्बा और जमाअत सहित निर्धारित शर्तें पूरी होना ज़रूरी है।",
+
+      summaryTitle: "नमाज़ की रकअतों की सूची",
+      summaryIntro: "हनफ़ी परंपरा में प्रचलित रकअतों का संक्षिप्त विवरण।",
       thPrayer: "नमाज़",
       thBefore: "पहले की सुन्नत",
       thFard: "फ़र्ज़",
       thAfter: "बाद की सुन्नत",
-      thWitr: "वितर",
-      tableNote: "* अस्र और इशा से पहले चार रकअत ग़ैर-मुअक्कदा सुन्नत हैं। अन्य फ़िक़्ही मतों में कुछ अंतर हो सकता है।",
-      importantTitle: "ध्यान रखें",
-      importantText: "नमाज़ के वक़्त स्थान और तारीख़ के अनुसार बदलते हैं। जुमे की नमाज़ शर्तें पूरी होने पर ही ज़ुहर की जगह अदा की जाती है। विश्वसनीय स्थानीय समय-सारणी और धार्मिक मार्गदर्शन अपनाएँ।",
-      footerText: "पवित्रता बनाए रखें, इबादत में सुकून पाएँ।",
+      thWitr: "वित्र",
+      thNafl: "नफ़्ल",
 
-      jumuaTitle: "जुमे की नमाज़",
-      jumuaText: "शुक्रवार को ज़ुहर के वक़्त जमात के साथ जुमे की नमाज़ अदा की जाती है। प्रचलित हनफ़ी अमल में ख़ुत्बे के बाद दो फ़र्ज़ रकअत पढ़ी जाती हैं। जुमे की शर्तें पूरी न हों तो ज़ुहर की नमाज़ अदा की जाती है।",
-      jumuaTime: "शुक्रवार को ज़ुहर के वक़्त; स्थानीय मस्जिद की समय-सारणी देखें",
-      naflTitle: "नफ़्ल नमाज़",
-      naflText: "नफ़्ल नमाज़ स्वैच्छिक इबादत है। अलग-अलग नफ़्ल नमाज़ के तरीके और समय अलग हो सकते हैं। विश्वसनीय धार्मिक मार्गदर्शन का पालन करें।",
-      naflTime: "समय नफ़्ल नमाज़ के प्रकार पर निर्भर करता है; निषिद्ध समय का ध्यान रखें",
-      jumuaNav: "जुमे की नमाज़",
-      naflNav: "नफ़्ल नमाज़"
+      fajr: "फ़ज्र",
+      zuhr: "ज़ुहर",
+      asr: "अस्र",
+      maghrib: "मग़रिब",
+      isha: "इशा",
+
+      fajrNafl: "—",
+      zuhrNafl: "—",
+      fourOptional: "४*",
+      asrNafl: "—",
+      maghribNafl: "—",
+      ishaNafl: "—",
+      jumuahShort: "जुमा",
+      jumuahBefore: "४ सुन्नत",
+      jumuahAfter: "सुन्नत",
+      jumuahNafl: "—",
+      tableNote: "* कुछ सुन्नत और नफ़्ल रकअतों की संख्या और तरीके के बारे में विद्वानों में मतभेद हैं।",
+
+      naflTitle: "नफ़्ल नमाज़ के बारे में",
+      tahajjudName: "तहज्जुद",
+      tahajjudText: "रात के आख़िरी हिस्से में पढ़ना बेहतर है; इसे इशा के बाद और फ़ज्र से पहले पढ़ सकते हैं।",
+      ishraqName: "इशराक़",
+      ishraqText: "सूर्योदय के बाद निषिद्ध समय समाप्त होने पर पढ़ी जाती है।",
+      duhaName: "दुहा (चाश्त)",
+      duhaText: "सुबह सूरज ऊँचा उठने के बाद और ज़ुहर से पहले पढ़ी जाती है।",
+      awwabinName: "अव्वाबीन",
+      awwabinText: "मग़रिब के बाद नफ़्ल नमाज़ के रूप में प्रचलित है; रकअतों की संख्या पर मतभेद है।",
+      tahiyyatName: "तहिय्यतुल मस्जिद",
+      tahiyyatText: "मस्जिद में प्रवेश करने के बाद बैठने से पहले पढ़ी जाने वाली नफ़्ल नमाज़, बशर्ते वह निषिद्ध समय न हो।",
+
+      importantTitle: "ज़रूरी सावधानी",
+      importantText: "नमाज़ के समय स्थान और मौसम के अनुसार बदलते हैं। अपने क्षेत्र की विश्वसनीय समय-सारणी का पालन करें। सूर्योदय, ठीक दोपहर और सूर्यास्त के समय नफ़्ल नमाज़ न पढ़ें। रकअतों की संख्या और कुछ सुन्नत अमलों में फ़िक़्ही मतभेद हो सकते हैं।",
+
+      footerText: "पवित्रता बनाए रखें और इबादत में सुकून पाएँ।"
     }
   };
 
-  function readSettings() {
+  const digitMaps = {
+    bn: "০১২৩৪৫৬৭৮৯",
+    en: "0123456789",
+    hi: "०१२३४५६७८९"
+  };
+
+  function getSettings() {
     try {
       return JSON.parse(localStorage.getItem("appSettings") || "{}");
     } catch (error) {
@@ -162,64 +249,72 @@
     }
   }
 
-  function applyLanguage(language) {
+  function getLanguage() {
+    const settings = getSettings();
+    const storedLanguage = settings.lang || settings.language || "bn";
+    return translations[storedLanguage] ? storedLanguage : "bn";
+  }
+
+  function localizeDigits(value, language) {
+    const digits = digitMaps[language] || digitMaps.bn;
+
+    return String(value).replace(/[0-9]/g, function (digit) {
+      return digits[Number(digit)];
+    });
+  }
+
+  function applyTranslations(language) {
     const dictionary = translations[language] || translations.bn;
 
     document.documentElement.lang = language;
 
-    document.querySelectorAll("[data-i18n]").forEach((element) => {
-      const key = element.dataset.i18n;
+    document.querySelectorAll("[data-i18n]").forEach(function (element) {
+      const key = element.getAttribute("data-i18n");
 
       if (Object.prototype.hasOwnProperty.call(dictionary, key)) {
         element.textContent = dictionary[key];
       }
     });
 
-    document.title = `${dictionary.pageTitle} | IBADAT`;
+    document.querySelectorAll(".prayer-number[data-number]").forEach(function (element) {
+      element.textContent = localizeDigits(element.getAttribute("data-number"), language);
+    });
+
+    document.querySelectorAll("[data-digit]").forEach(function (element) {
+      const value = element.getAttribute("data-digit");
+      element.textContent = localizeDigits(value, language);
+    });
   }
 
-  function applyTheme(settings) {
-    const theme = String(
-      settings.theme || (settings.dark ? "dark" : "light")
-    ).toLowerCase();
+  function applyTheme() {
+    const settings = getSettings();
+    const theme = settings.theme || (settings.dark ? "dark" : "light");
 
-    const isDark =
-      settings.dark === true ||
-      settings.dark === "true" ||
-      theme === "dark";
-
-    document.body.classList.toggle("dark-mode", isDark);
-
-    const themeColor = document.querySelector('meta[name="theme-color"]');
-
-    if (themeColor) {
-      themeColor.setAttribute(
-        "content",
-        isDark ? "#102820" : "#f5f0df"
-      );
-    }
+    document.body.classList.toggle(
+      "dark-mode",
+      theme === "dark" || theme === true
+    );
   }
 
-  function refreshPage() {
-    const settings = readSettings();
-    const savedLanguage = String(settings.lang || "bn").toLowerCase();
-    const language = translations[savedLanguage] ? savedLanguage : "bn";
-
-    applyLanguage(language);
-    applyTheme(settings);
+  function init() {
+    applyTranslations(getLanguage());
+    applyTheme();
   }
+
+  window.refreshWaqtRakatPage = init;
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", refreshPage);
+    document.addEventListener("DOMContentLoaded", init);
   } else {
-    refreshPage();
+    init();
   }
 
-  window.addEventListener("storage", (event) => {
+  window.addEventListener("storage", function (event) {
     if (event.key === "appSettings") {
-      refreshPage();
+      init();
     }
   });
 
-  window.refreshWaqtRakatPage = refreshPage;
+  window.addEventListener("languageChanged", init);
+  window.addEventListener("themeChanged", init);
 })();
