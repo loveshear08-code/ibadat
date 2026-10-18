@@ -11,6 +11,12 @@
   const translations = {
     bn: {
       pageTitle: "পবিত্রতা",
+       heroLines: [
+  "পবিত্রতা হলো শরীর, পোশাক ও মনের পরিচ্ছন্নতা।",
+  "এটি ইবাদতের প্রস্তুতি ও জীবনের সৌন্দর্য।",
+  "পবিত্রতা আমাদের শেখায় পরিচ্ছন্নতা ও সচেতনতা।",
+  "এর মাধ্যমেই ইবাদতে আসে প্রশান্তি ও পরিপূর্ণতা।"
+],
 lessonNumber: ["১", "২", "৩", "৪", "৫"],
 stepLabel: "ধাপ",
        
@@ -175,6 +181,12 @@ stepLabel: "ধাপ",
 
     en: {
       pageTitle: "Purification",
+       heroLines: [
+  "Purity means cleanliness of the body, clothing, and mind.",
+  "It is preparation for worship and a beauty of life.",
+  "Purity teaches us cleanliness and awareness.",
+  "Through it, worship brings peace and completeness."
+],
 lessonNumber: ["1", "2", "3", "4", "5"],
 stepLabel: "Step",
        
@@ -283,6 +295,12 @@ stepLabel: "Step",
 
     hi: {
       pageTitle: "पवित्रता",
+       heroLines: [
+  "पवित्रता शरीर, कपड़ों और मन की स्वच्छता है।",
+  "यह इबादत की तैयारी और जीवन की सुंदरता है।",
+  "पवित्रता हमें स्वच्छता और जागरूकता सिखाती है।",
+  "इसके माध्यम से इबादत में शांति और पूर्णता आती है।"
+],
 lessonNumber: ["१", "२", "३", "४", "५"],
 stepLabel: "चरण",
        
@@ -316,14 +334,14 @@ stepLabel: "चरण",
       countLabel: "कितनी बार:",
 
       wuduSteps: [
-        ["दोनों हाथ धोएँ", "दोनों हाथ कलाइयों तक धोएँ और उँगलियों के बीच पानी पहुँचाएँ।", "3 बार"],
-        ["कुल्ली करें", "पानी को मुँह में घुमाकर कुल्ली करें। रोज़ा हो तो पानी निगलने से सावधान रहें।", "3 बार"],
-        ["नाक साफ करें", "नाक में हल्के से पानी लेकर साफ करें और पानी बाहर निकालें।", "3 बार"],
-        ["चेहरा धोएँ", "बालों की जड़ से ठोड़ी के नीचे तक और चेहरे के दोनों ओर धोएँ।", "3 बार"],
-        ["दोनों बाज़ू धोएँ", "पहले दायाँ, फिर बायाँ बाज़ू कोहनी सहित धोएँ।", "हर बाज़ू 3 बार"],
-        ["सिर का मसह करें", "गीले हाथों से सिर का मसह करें। सही विधि विश्वसनीय मार्गदर्शन से सीखें।", "1 बार"],
-        ["कानों का मसह करें", "गीली उँगलियों से कानों के निर्धारित हिस्सों का मसह करें।", "1 बार"],
-        ["दोनों पैर धोएँ", "दोनों पैर टखनों सहित धोएँ और उँगलियों के बीच पानी पहुँचाएँ।", "हर पैर 3 बार"]
+        ["दोनों हाथ धोएँ", "दोनों हाथ कलाइयों तक धोएँ और उँगलियों के बीच पानी पहुँचाएँ।", "३ बार"],
+        ["कुल्ली करें", "पानी को मुँह में घुमाकर कुल्ली करें। रोज़ा हो तो पानी निगलने से सावधान रहें।", "३ बार"],
+        ["नाक साफ करें", "नाक में हल्के से पानी लेकर साफ करें और पानी बाहर निकालें।", "३ बार"],
+        ["चेहरा धोएँ", "बालों की जड़ से ठोड़ी के नीचे तक और चेहरे के दोनों ओर धोएँ।", "३ बार"],
+        ["दोनों बाज़ू धोएँ", "पहले दायाँ, फिर बायाँ बाज़ू कोहनी सहित धोएँ।", "हर बाज़ू", "३ बार"],
+        ["सिर का मसह करें", "गीले हाथों से सिर का मसह करें। सही विधि विश्वसनीय मार्गदर्शन से सीखें।", "१ बार"],
+        ["कानों का मसह करें", "गीली उँगलियों से कानों के निर्धारित हिस्सों का मसह करें।", "१ बार"],
+        ["दोनों पैर धोएँ", "दोनों पैर टखनों सहित धोएँ और उँगलियों के बीच पानी पहुँचाएँ।", "हर पैर ३ बार"]
       ],
 
       wuduNoteTitle: "वुज़ू के बारे में याद रखें",
@@ -405,18 +423,32 @@ stepLabel: "चरण",
     }
   }
 
-  function setList(id, items) {
-    const el = document.getElementById(id);
-    if (!el || !Array.isArray(items)) return;
+function setList(id, items) {
+  const el = document.getElementById(id);
+  if (!el || !Array.isArray(items)) return;
 
-    el.replaceChildren();
+  el.replaceChildren();
 
-    items.forEach(value => {
-      const li = document.createElement("li");
-      li.textContent = value;
-      el.appendChild(li);
-    });
-  }
+  const lang = document.documentElement.lang || "bn";
+  const numbers = {
+    bn: ["১", "২", "৩", "৪", "৫"],
+    en: ["1", "2", "3", "4", "5"],
+    hi: ["१", "२", "३", "४", "५"]
+  };
+
+  items.forEach((value, index) => {
+    const li = document.createElement("li");
+
+    if (id === "ghuslSteps" || id === "ghuslStepList") {
+      li.value = index + 1;
+      li.dataset.displayNumber =
+        numbers[lang]?.[index] || String(index + 1);
+    }
+
+    li.textContent = value;
+    el.appendChild(li);
+  });
+}
 
   function setSectionHeader(id, kicker, title) {
     const section = document.getElementById(id);
@@ -528,6 +560,9 @@ stepLabel: "चरण",
     document.documentElement.lang = lang;
 
      setText("pageTitle", t.pageTitle);
+     t.heroLines.forEach((line, index) => {
+  setText("heroLine" + (index + 1), line);
+});
 
 document.querySelectorAll(
   "#cleanliness .section-number, " +
