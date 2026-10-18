@@ -772,28 +772,27 @@ textarea {
 /* ---------- Footer ---------- */
 
 .purity-footer {
+  display: flex;
   width: 100%;
-  min-width: 0;
+  min-height: 86px;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 20px 18px;
 
-  margin: var(--card-gap) 0 0;
-  padding: 16px 20px;
+  border: 1px solid rgba(190, 169, 93, 0.75);
+  border-radius: 26px;
 
-  border: 1px solid rgba(201, 173, 62, 0.6);
-  border-radius: 20px;
-
-  background: var(--primary);
+  background: #105536;
   box-shadow: var(--shadow);
-
   text-align: center;
   overflow-wrap: anywhere;
 }
 
 .purity-footer p {
   margin: 0;
-
-  color: #fff9df;
-
-  font-size: 0.98rem;
+  color: #fffbea;
+  font-size: clamp(1rem, 3.8vw, 1.2rem);
   font-weight: 800;
   line-height: 1.8;
 }
