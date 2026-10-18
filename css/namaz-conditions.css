@@ -1,16 +1,15 @@
 /* ==========================================
    IBADAT — NAMAZ CONDITIONS PAGE
-   Matching Purity Page Design
+   Purity Page Matching Design
    ========================================== */
 
 :root {
   --green: #14583e;
   --green-dark: #103f2e;
-  --green-soft: #e8f3e5;
-  --gold: #b59a42;
+  --green-soft: #f8f3e3;
+  --gold: #c9ad3e;
   --text: #244333;
-  --muted: #53695b;
-  --board: rgba(255, 255, 250, 0.94);
+  --board: rgba(255, 255, 250, 0.96);
   --border: #d9dfcf;
   --shadow: 0 4px 14px rgba(38, 67, 45, 0.09);
 }
@@ -38,29 +37,37 @@ img {
   max-width: 100%;
 }
 
-main {
+.conditions-page {
   width: min(100% - 32px, 900px);
   margin: 0 auto;
   padding: 14px 0 24px;
 }
 
-/* Hero board: purity page-এর মতো হালকা overlay */
+/* Hero board — হালকা overlay */
 .hero {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  margin-bottom: 20px;
+  margin: 0 0 20px;
   padding: 34px 24px;
   text-align: center;
   border: 1px solid rgba(190, 169, 93, 0.55);
   border-radius: 30px;
   background:
     linear-gradient(
-      rgba(255, 253, 239, 0.48),
-      rgba(247, 250, 232, 0.55)
+      rgba(255, 253, 239, 0.80),
+      rgba(247, 250, 232, 0.78)
     ),
     url("../assets/prayer-learning-bg.png") center / cover no-repeat;
   box-shadow: var(--shadow);
+}
+
+.hero .ornament {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--gold);
+  font-size: 2rem;
+  line-height: 1.2;
 }
 
 .hero h1 {
@@ -72,18 +79,19 @@ main {
 }
 
 .hero p {
-  margin: 8px auto 0;
   max-width: 760px;
+  margin: 8px auto 0;
   color: #254633;
   font-size: clamp(1rem, 3.7vw, 1.3rem);
   font-weight: 700;
   line-height: 1.8;
 }
 
-/* প্রতিটি পাঠের আলাদা বোর্ড */
-.panel {
+/* Lesson boards */
+.panel,
+.lesson {
   margin: 0 0 20px;
-  padding: 22px;
+  padding: 24px 22px;
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 26px;
@@ -91,16 +99,8 @@ main {
   box-shadow: var(--shadow);
 }
 
-.lesson {
-  margin: 0 0 20px;
-  padding: 24px 22px;
-  border: 1px solid var(--border);
-  border-radius: 26px;
-  background: var(--board);
-  box-shadow: var(--shadow);
-}
-
-.section-heading {
+/* Section heading */
+.section-title {
   display: flex;
   align-items: center;
   gap: 15px;
@@ -122,14 +122,16 @@ main {
   font-weight: 800;
 }
 
-.section-kicker {
+.kicker {
+  display: block;
   margin: 0;
   color: var(--gold);
   font-size: 1rem;
   font-weight: 800;
+  line-height: 1.5;
 }
 
-.section-title {
+.section-title h2 {
   margin: 0;
   color: var(--green-dark);
   font-size: clamp(1.35rem, 4.5vw, 1.8rem);
@@ -137,23 +139,14 @@ main {
   line-height: 1.5;
 }
 
-.lesson p {
-  margin: 12px 0;
-}
-
-.lesson-lead {
-  color: var(--text);
-  font-size: 1.08rem;
-  font-weight: 700;
-}
-
+/* Illustration boards */
 .art {
   margin: 18px 0;
   padding: 12px;
   overflow: hidden;
   border: 1px solid #e2d9b8;
   border-radius: 22px;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.76);
   text-align: center;
 }
 
@@ -162,6 +155,21 @@ main {
   max-height: 390px;
   object-fit: contain;
   border-radius: 14px;
+}
+
+.art.wide img {
+  width: 100%;
+}
+
+/* Text and lists */
+.lesson p {
+  margin: 12px 0;
+}
+
+.lesson .lead {
+  color: var(--text);
+  font-size: 1.08rem;
+  font-weight: 700;
 }
 
 .lesson h3 {
@@ -187,42 +195,45 @@ main {
   color: var(--gold);
 }
 
+/* Notes */
 .note {
   margin-top: 20px;
   padding: 16px 18px;
-  border-left: 5px solid var(--green);
-  border-radius: 12px;
+  border-left: 5px solid var(--gold);
+  border-radius: 14px;
   background: var(--green-soft);
 }
 
-.note h3 {
-  margin: 0 0 5px;
+.note strong {
+  display: block;
+  margin-bottom: 5px;
   color: var(--green);
+  font-size: 1.12rem;
+  font-weight: 800;
 }
 
 .note p {
   margin: 0;
 }
 
-/* Footer: purity page-এর মতো শান্ত, হালকা ডিজাইন */
+/* Footer — Purity page-এর মতো solid green board */
 .purity-footer {
+  display: flex;
+  min-height: 86px;
+  align-items: center;
+  justify-content: center;
   margin: 24px 0 0;
-  padding: 22px 18px;
-  border: 1px solid rgba(190, 169, 93, 0.55);
+  padding: 20px 18px;
+  border: 1px solid rgba(190, 169, 93, 0.75);
   border-radius: 24px;
-  background:
-    linear-gradient(
-      rgba(255, 253, 242, 0.82),
-      rgba(246, 249, 232, 0.86)
-    ),
-    url("../assets/bg_pattern.png") center / cover no-repeat;
+  background: #105536;
   box-shadow: var(--shadow);
   text-align: center;
 }
 
 .purity-footer p {
   margin: 0;
-  color: var(--green-dark);
+  color: #fffbea;
   font-size: clamp(1rem, 3.8vw, 1.2rem);
   font-weight: 800;
   line-height: 1.8;
@@ -231,10 +242,10 @@ main {
 /* Dark mode */
 body.dark-mode {
   --text: #e5eee5;
-  --muted: #c2d1c5;
   --board: rgba(22, 44, 34, 0.96);
   --border: #385746;
   --green-soft: #203e2e;
+
   background:
     linear-gradient(rgba(8, 24, 17, 0.78), rgba(8, 24, 17, 0.78)),
     url("../assets/bg_pattern.png") center top / cover fixed;
@@ -243,23 +254,26 @@ body.dark-mode {
 body.dark-mode .hero {
   background:
     linear-gradient(
-      rgba(15, 45, 31, 0.38),
-      rgba(15, 45, 31, 0.44)
+      rgba(255, 253, 239, 0.80),
+      rgba(247, 250, 232, 0.78)
     ),
     url("../assets/prayer-learning-bg.png") center / cover no-repeat;
 }
 
 body.dark-mode .hero h1 {
-  color: #f0d875;
+  color: #a58a28;
 }
 
-body.dark-mode .hero p,
-body.dark-mode .section-title,
+body.dark-mode .hero p {
+  color: #254633;
+}
+
+body.dark-mode .section-title h2,
 body.dark-mode .lesson h3 {
   color: #e3eee2;
 }
 
-body.dark-mode .section-kicker {
+body.dark-mode .kicker {
   color: #e0c767;
 }
 
@@ -269,31 +283,26 @@ body.dark-mode .art {
 }
 
 body.dark-mode .note {
-  border-left-color: #8cbd91;
+  border-left-color: #c9ad3e;
   background: #203e2e;
 }
 
-body.dark-mode .note h3 {
+body.dark-mode .note strong {
   color: #d5e8d2;
 }
 
 body.dark-mode .purity-footer {
-  border-color: #526a4c;
-  background:
-    linear-gradient(
-      rgba(19, 47, 33, 0.84),
-      rgba(19, 47, 33, 0.88)
-    ),
-    url("../assets/bg_pattern.png") center / cover no-repeat;
+  border-color: rgba(190, 169, 93, 0.75);
+  background: #105536;
 }
 
 body.dark-mode .purity-footer p {
-  color: #e3eee2;
+  color: #fffbea;
 }
 
-/* Responsive layout */
+/* Responsive */
 @media (max-width: 600px) {
-  main {
+  .conditions-page {
     width: calc(100% - 24px);
     padding-top: 12px;
   }
@@ -313,7 +322,7 @@ body.dark-mode .purity-footer p {
     border-radius: 23px;
   }
 
-  .section-heading {
+  .section-title {
     gap: 12px;
   }
 
@@ -333,6 +342,7 @@ body.dark-mode .purity-footer p {
   }
 
   .purity-footer {
+    min-height: 86px;
     padding: 18px 14px;
     border-radius: 22px;
   }
