@@ -1,28 +1,29 @@
+
 /* =========================================
    IBADAT — PURITY PAGE
    File: css/namaz-purity.css
-   Complete refreshed stylesheet
+   Complete stylesheet
    ========================================= */
 
 :root {
-  --primary: #0f5132;
-  --primary-dark: #0b3d26;
+  --primary: #14583e;
+  --primary-dark: #103f2e;
   --page-bg: #fbf8ef;
-  --card-bg: #fffdf7;
-  --text: #24452e;
+  --card-bg: rgba(255, 255, 250, 0.96);
+  --text: #244333;
   --muted: #617362;
-  --gold: #d4af37;
+  --gold: #c9ad3e;
   --gold-dark: #a98520;
-  --border: rgba(15, 81, 50, 0.20);
-  --shadow: 0 3px 12px rgba(15, 81, 50, 0.08);
+  --border: #d9dfcf;
+  --shadow: 0 4px 14px rgba(38, 67, 45, 0.09);
 
-  --radius-card: 18px;
-  --radius-small: 14px;
-  --page-width: 760px;
+  --radius-card: 26px;
+  --radius-small: 16px;
+  --page-width: 900px;
 
-  --page-gutter: 12px;
-  --card-padding: 16px;
-  --card-gap: 12px;
+  --page-gutter: 16px;
+  --card-padding: 24px;
+  --card-gap: 20px;
 }
 
 /* ---------- Global reset ---------- */
@@ -31,6 +32,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
@@ -50,20 +52,23 @@ body {
   overflow-x: hidden;
 
   color: var(--text);
+
   font-family:
     "Noto Sans Bengali",
     "Hind Siliguri",
     "Nirmala UI",
+    "Noto Sans Devanagari",
+    Arial,
     sans-serif;
 
   font-size: 16px;
-  line-height: 1.75;
+  line-height: 1.8;
 
   background-color: var(--page-bg);
   background-image:
     linear-gradient(
-      rgba(255, 251, 242, 0.70),
-      rgba(255, 251, 242, 0.70)
+      rgba(251, 248, 239, 0.86),
+      rgba(251, 248, 239, 0.86)
     ),
     url("../assets/bg_pattern.png");
 
@@ -113,7 +118,7 @@ textarea {
   max-width: var(--page-width);
   min-width: 0;
   margin: 0 auto;
-  padding: 14px var(--page-gutter) 20px;
+  padding: 14px var(--page-gutter) 26px;
 }
 
 /* ---------- Hero section ---------- */
@@ -128,23 +133,23 @@ textarea {
 
   width: 100%;
   min-width: 0;
-  min-height: 220px;
+  min-height: 250px;
 
-  margin: 0 0 20px;
-  padding: 26px 18px;
+  margin: 0 0 var(--card-gap);
+  padding: 34px 24px;
 
   overflow: hidden;
 
-  border: 1px solid rgba(169, 133, 32, 0.42);
-  border-radius: 22px;
+  border: 1px solid rgba(201, 173, 62, 0.75);
+  border-radius: 30px;
 
   text-align: center;
 
   background-color: #f4edda;
   background-image:
     linear-gradient(
-      rgba(255, 251, 239, 0.70),
-      rgba(255, 251, 239, 0.78)
+      rgba(255, 251, 239, 0.76),
+      rgba(255, 251, 239, 0.82)
     ),
     url("../assets/prayer-learning-bg.png");
 
@@ -160,19 +165,19 @@ textarea {
   z-index: 1;
 
   width: 100%;
-  max-width: 590px;
+  max-width: 720px;
   min-width: 0;
 
   margin: 0 auto;
 }
 
 .hero h1 {
-  margin: 0 0 12px;
+  margin: 0 0 14px;
 
   color: var(--gold-dark);
 
-  font-size: clamp(2rem, 7vw, 2.8rem);
-  font-weight: 800;
+  font-size: clamp(2rem, 6vw, 2.8rem);
+  font-weight: 900;
   line-height: 1.35;
 
   overflow-wrap: anywhere;
@@ -180,14 +185,14 @@ textarea {
 
 .hero-description {
   width: 100%;
-  max-width: 530px;
+  max-width: 650px;
   margin: 0 auto;
 
   color: #294c35;
 
-  font-size: 0.98rem;
-  font-weight: 600;
-  line-height: 1.85;
+  font-size: 1.04rem;
+  font-weight: 700;
+  line-height: 1.9;
 }
 
 .hero-description p {
@@ -203,15 +208,15 @@ textarea {
 .purity-content {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: var(--card-gap);
 
   width: 100%;
   min-width: 0;
 }
 
 /*
-  Section wrappers remain transparent.
-  Individual content boards provide the card design.
+  Every lesson is one complete main board.
+  The heading, illustration, text and lists remain inside it.
 */
 
 .panel.lesson {
@@ -219,6 +224,30 @@ textarea {
   min-width: 0;
 
   margin: 0;
+  padding: var(--card-padding) 22px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
+
+  scroll-margin-top: 16px;
+}
+
+/* ---------- Lesson heading ---------- */
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  width: 100%;
+  min-width: 0;
+
+  margin: 0 0 18px;
   padding: 0;
 
   border: 0;
@@ -228,43 +257,23 @@ textarea {
   box-shadow: none;
 }
 
-/* ---------- Lesson heading boards ---------- */
-
-.section-title {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  width: 100%;
-  min-width: 0;
-
-  margin: 0 0 12px;
-  padding: 13px 14px;
-
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--primary);
-  border-radius: 16px;
-
-  background: rgba(255, 253, 247, 0.97);
-  box-shadow: var(--shadow);
-}
-
 .section-number {
   display: flex;
   align-items: center;
   justify-content: center;
 
-  flex: 0 0 40px;
-  width: 40px;
-  height: 40px;
+  flex: 0 0 58px;
+  width: 58px;
+  height: 58px;
 
+  border: 2px solid var(--gold);
   border-radius: 50%;
 
   color: #fffdf4;
   background: var(--primary);
 
-  font-size: 1rem;
-  font-weight: 800;
+  font-size: 1.2rem;
+  font-weight: 900;
   line-height: 1;
 
   text-align: center;
@@ -276,11 +285,11 @@ textarea {
 }
 
 .kicker {
-  margin: 0 0 2px;
+  margin: 0 0 3px;
 
   color: var(--gold-dark);
 
-  font-size: 0.78rem;
+  font-size: 0.9rem;
   font-weight: 800;
   line-height: 1.5;
 }
@@ -290,58 +299,68 @@ textarea {
 
   color: var(--primary-dark);
 
-  font-size: clamp(1.15rem, 4.5vw, 1.45rem);
-  font-weight: 800;
-  line-height: 1.45;
+  font-size: clamp(1.35rem, 3.5vw, 1.7rem);
+  font-weight: 900;
+  line-height: 1.5;
 }
 
-/* ---------- Main illustration boards ---------- */
+/* ---------- Main illustration inside lesson board ---------- */
 
 .main-illustration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   width: 100%;
   max-width: 100%;
   min-width: 0;
 
-  margin: 0 auto 12px;
-  padding: 8px;
+  margin: 16px auto 22px;
+  padding: 0;
 
   overflow: hidden;
 
-  border: 1px solid var(--border);
-  border-radius: var(--radius-card);
+  border: 0;
+  border-radius: 0;
 
-  background: rgba(255, 253, 247, 0.97);
-  box-shadow: var(--shadow);
+  background: transparent;
+  box-shadow: none;
 }
 
 .main-illustration img {
   display: block;
 
   width: 100%;
-  max-width: 430px;
-  max-height: 270px;
+  max-width: 500px;
+  max-height: 360px;
   height: auto;
 
   margin: 0 auto;
 
   object-fit: contain;
   object-position: center;
+
+  border-radius: var(--radius-small);
 }
 
-/* ---------- Standard content boards ---------- */
+/* ---------- Content inside each main board ---------- */
+
+/* Text passages are not separate cards */
 
 .content-board {
   display: block;
+
   width: 100%;
   min-width: 0;
-  margin: 0 0 8px;
-  padding: var(--card-padding);
 
-  border: 1px solid var(--border);
-  border-radius: var(--radius-card);
+  margin: 0 0 18px;
+  padding: 0;
 
-  background: rgba(255, 253, 247, 0.97);
-  box-shadow: var(--shadow);
+  border: 0;
+  border-radius: 0;
+
+  background: transparent;
+  box-shadow: none;
 }
 
 .content-board:last-child {
@@ -349,13 +368,17 @@ textarea {
 }
 
 .content-board h3 {
-  margin: 0 0 8px;
+  margin: 20px 0 10px;
 
   color: var(--primary);
 
-  font-size: 1.02rem;
-  font-weight: 800;
-  line-height: 1.55;
+  font-size: 1.22rem;
+  font-weight: 900;
+  line-height: 1.6;
+}
+
+.content-board:first-of-type h3 {
+  margin-top: 0;
 }
 
 .content-board p {
@@ -363,48 +386,84 @@ textarea {
 
   color: var(--text);
 
-  font-size: 0.96rem;
+  font-size: 1.04rem;
   font-weight: 500;
   line-height: 1.85;
 }
 
 .content-board p + p {
-  margin-top: 9px;
+  margin-top: 10px;
 }
 
-/* Highlighted information boards */
+.content-board strong,
+.panel.lesson strong {
+  color: var(--primary-dark);
+  font-weight: 900;
+}
 
-.content-board.note {
+/* ---------- Important notes ---------- */
+
+.content-board.note,
+.note {
+  margin: 18px 0;
+  padding: 12px 16px;
+
+  border: 0;
   border-left: 4px solid var(--gold);
-  background: rgba(246, 241, 218, 0.97);
+  border-radius: 0 10px 10px 0;
+
+  background: rgba(248, 243, 227, 0.82);
+  box-shadow: none;
 }
 
-.content-board.note h3 {
+.content-board.note h3,
+.note h3 {
+  margin: 0 0 6px;
   color: var(--gold-dark);
+}
+
+.content-board.note p,
+.note p {
+  margin: 5px 0;
+
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.8;
 }
 
 /* ---------- Consistent list alignment ---------- */
 
 .content-board ul,
 .content-board ol,
-.guidance-list {
+.guidance-list,
+.panel.lesson > ul,
+.panel.lesson > ol {
   width: 100%;
   max-width: 100%;
-  margin: 8px 0 0;
+
+  margin: 12px 0 18px;
   padding: 0;
-  padding-inline-start: 24px;
+  padding-inline-start: 28px;
   padding-inline-end: 0;
+
   list-style-position: outside;
 }
 
 .content-board li,
-.guidance-list li {
+.guidance-list li,
+.panel.lesson > ul > li,
+.panel.lesson > ol > li {
   max-width: 100%;
-  margin: 0 0 8px;
-  padding: 0;
+
+  margin: 9px 0;
+  padding: 0 0 0 3px;
+
   color: var(--text);
-  font-size: 0.96rem;
-  line-height: 1.8;
+
+  font-size: 1.02rem;
+  font-weight: 500;
+  line-height: 1.85;
+
   overflow-wrap: anywhere;
 }
 
@@ -414,43 +473,48 @@ textarea {
 }
 
 .content-board li::marker,
-.guidance-list li::marker {
+.guidance-list li::marker,
+.panel.lesson li::marker {
   color: var(--primary);
-  font-weight: 700;
-}
-
-/* গোসলের তালিকার নম্বর ভাষা অনুযায়ী দেখাবে */
-#ghuslSteps {
-  list-style: none;
-  counter-reset: ghusl-counter;
-   padding-left: 0;
-  padding-inline-start: 0;
-}
-
-#ghuslSteps li {
-  counter-increment: ghusl-counter;
-  position: relative;
-}
-
-#ghuslSteps li::before {
-  content: attr(data-display-number) ".";
-  position: absolute;
-  left: 0;
-  top: 0;
-  margin: 0;
-  color: var(--primary);
-  font-weight: 700;
-}
-
-#ghuslSteps li {
-  padding-left: 28px;
+  font-weight: 800;
 }
 
 .content-board li ul,
 .content-board li ol {
-  margin-top: 6px;
-  margin-bottom: 4px;
-  padding-inline-start: 20px;
+  margin-top: 7px;
+  margin-bottom: 5px;
+  padding-inline-start: 22px;
+}
+
+/* Ghusl list: retain language-specific numbers from JavaScript */
+
+#ghuslSteps {
+  list-style: none;
+  counter-reset: ghusl-counter;
+
+  padding-left: 0;
+  padding-inline-start: 0;
+}
+
+#ghuslSteps li {
+  position: relative;
+  counter-increment: ghusl-counter;
+
+  padding-left: 32px;
+  padding-inline-start: 32px;
+}
+
+#ghuslSteps li::before {
+  content: attr(data-display-number) ".";
+
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  margin: 0;
+
+  color: var(--primary);
+  font-weight: 900;
 }
 
 /* ---------- Wudu step list ---------- */
@@ -458,12 +522,12 @@ textarea {
 .step-list {
   display: flex;
   flex-direction: column;
-  gap: 11px;
+  gap: 0;
 
   width: 100%;
   min-width: 0;
 
-  margin: 0 0 12px;
+  margin: 12px 0 18px;
   padding: 0;
 
   list-style: none;
@@ -471,29 +535,39 @@ textarea {
 
 .step-card {
   display: flex;
-  align-items: center;
-  gap: 13px;
+  align-items: flex-start;
+  gap: 16px;
 
   width: 100%;
   min-width: 0;
 
   margin: 0;
-  padding: 12px;
+  padding: 16px 0;
 
-  border: 1px solid var(--border);
-  border-radius: var(--radius-card);
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
 
-  background: rgba(255, 253, 247, 0.97);
-  box-shadow: var(--shadow);
+  background: transparent;
+  box-shadow: none;
+}
+
+.step-card:first-child {
+  padding-top: 4px;
+}
+
+.step-card:last-child {
+  padding-bottom: 4px;
+  border-bottom: 0;
 }
 
 .step-image {
   display: block;
 
-  flex: 0 0 104px;
-  width: 104px;
-  height: 104px;
-  max-width: 40%;
+  flex: 0 0 112px;
+  width: 112px;
+  height: 112px;
+  max-width: 35%;
 
   margin: 0;
 
@@ -502,10 +576,10 @@ textarea {
 
   padding: 5px;
 
-  border: 1px solid rgba(15, 81, 50, 0.13);
-  border-radius: 13px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
 
-  background: #f5f5e9;
+  background: rgba(248, 243, 227, 0.65);
 }
 
 .step-copy {
@@ -514,13 +588,13 @@ textarea {
 }
 
 .step-copy h3 {
-  margin: 0 0 5px;
+  margin: 0 0 6px;
 
   color: var(--primary);
 
-  font-size: 1rem;
-  font-weight: 800;
-  line-height: 1.5;
+  font-size: 1.12rem;
+  font-weight: 900;
+  line-height: 1.6;
 }
 
 .step-copy p {
@@ -528,7 +602,7 @@ textarea {
 
   color: var(--text);
 
-  font-size: 0.93rem;
+  font-size: 1rem;
   font-weight: 500;
   line-height: 1.8;
 }
@@ -554,15 +628,15 @@ textarea {
   color: var(--primary-dark);
   background: #eaf4e8;
 
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: 0.88rem;
+  font-weight: 800;
   line-height: 1.65;
 
   overflow-wrap: anywhere;
 }
 
 .step-count strong {
-  font-weight: 800;
+  font-weight: 900;
 }
 
 /* ---------- Tayammum illustrated steps ---------- */
@@ -570,12 +644,12 @@ textarea {
 .tayammum-step-list {
   display: flex;
   flex-direction: column;
-  gap: 11px;
+  gap: 0;
 
   width: 100%;
   min-width: 0;
 
-  margin: 0 0 12px;
+  margin: 12px 0 18px;
   padding: 0;
 
   list-style: none;
@@ -583,29 +657,39 @@ textarea {
 
 .tayammum-step-card {
   display: flex;
-  align-items: center;
-  gap: 13px;
+  align-items: flex-start;
+  gap: 16px;
 
   width: 100%;
   min-width: 0;
 
   margin: 0;
-  padding: 12px;
+  padding: 16px 0;
 
-  border: 1px solid var(--border);
-  border-radius: var(--radius-card);
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
 
-  background: rgba(255, 253, 247, 0.97);
-  box-shadow: var(--shadow);
+  background: transparent;
+  box-shadow: none;
+}
+
+.tayammum-step-card:first-child {
+  padding-top: 4px;
+}
+
+.tayammum-step-card:last-child {
+  padding-bottom: 4px;
+  border-bottom: 0;
 }
 
 .tayammum-step-image {
   display: block;
 
-  flex: 0 0 104px;
-  width: 104px;
-  height: 104px;
-  max-width: 40%;
+  flex: 0 0 112px;
+  width: 112px;
+  height: 112px;
+  max-width: 35%;
 
   margin: 0;
 
@@ -614,10 +698,10 @@ textarea {
 
   padding: 5px;
 
-  border: 1px solid rgba(15, 81, 50, 0.13);
-  border-radius: 13px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
 
-  background: #f5f5e9;
+  background: rgba(248, 243, 227, 0.65);
 }
 
 .tayammum-step-copy {
@@ -626,13 +710,13 @@ textarea {
 }
 
 .tayammum-step-copy h3 {
-  margin: 0 0 5px;
+  margin: 0 0 6px;
 
   color: var(--primary);
 
-  font-size: 1rem;
-  font-weight: 800;
-  line-height: 1.5;
+  font-size: 1.12rem;
+  font-weight: 900;
+  line-height: 1.6;
 }
 
 .tayammum-step-copy p {
@@ -640,8 +724,13 @@ textarea {
 
   color: var(--text);
 
-  font-size: 0.93rem;
+  font-size: 1rem;
+  font-weight: 500;
   line-height: 1.8;
+}
+
+.tayammum-step-copy p + p {
+  margin-top: 6px;
 }
 
 /* ---------- Guidance lists ---------- */
@@ -651,12 +740,14 @@ textarea {
   max-width: 100%;
 
   margin: 0;
-  padding-left: 26px;
-  padding-right: 0;
+  padding: 0;
+  padding-inline-start: 28px;
+  padding-inline-end: 0;
 
   color: var(--text);
 
-  font-size: 0.95rem;
+  font-size: 1.02rem;
+  font-weight: 500;
   line-height: 1.85;
 
   list-style-position: outside;
@@ -675,7 +766,7 @@ textarea {
 
 .guidance-list li::marker {
   color: var(--primary);
-  font-weight: 800;
+  font-weight: 900;
 }
 
 /* ---------- Footer ---------- */
@@ -684,11 +775,11 @@ textarea {
   width: 100%;
   min-width: 0;
 
-  margin: 20px 0 0;
-  padding: 15px 12px;
+  margin: var(--card-gap) 0 0;
+  padding: 16px 20px;
 
-  border: 1px solid rgba(212, 175, 55, 0.5);
-  border-radius: 16px;
+  border: 1px solid rgba(201, 173, 62, 0.6);
+  border-radius: 20px;
 
   background: var(--primary);
   box-shadow: var(--shadow);
@@ -702,28 +793,28 @@ textarea {
 
   color: #fff9df;
 
-  font-size: 0.96rem;
+  font-size: 0.98rem;
   font-weight: 800;
-  line-height: 1.75;
+  line-height: 1.8;
 }
 
 /* ---------- Dark mode ---------- */
 
 body.dark-mode {
-  --page-bg: #101c15;
-  --card-bg: #1b2a20;
-  --text: #e3ecdf;
-  --muted: #b6c6b5;
-  --border: rgba(180, 211, 181, 0.2);
-  --shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+  --page-bg: #101a15;
+  --card-bg: rgba(27, 43, 34, 0.97);
+  --text: #e4eee5;
+  --muted: #b6c8b8;
+  --border: #3c5745;
+  --shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
 
   color: var(--text);
   background-color: var(--page-bg);
 
   background-image:
     linear-gradient(
-      rgba(13, 25, 17, 0.76),
-      rgba(13, 25, 17, 0.76)
+      rgba(16, 26, 21, 0.87),
+      rgba(16, 26, 21, 0.87)
     ),
     url("../assets/bg_pattern.png");
 
@@ -734,33 +825,34 @@ body.dark-mode {
 }
 
 body.dark-mode .hero {
-  background-color: #25392b;
+  background-color: #1b2b21;
 
   background-image:
     linear-gradient(
-      rgba(16, 34, 22, 0.70),
-      rgba(16, 34, 22, 0.78)
+      rgba(27, 43, 34, 0.88),
+      rgba(27, 43, 34, 0.92)
     ),
     url("../assets/prayer-learning-bg.png");
 
-  border-color: rgba(212, 175, 55, 0.38);
+  border-color: rgba(201, 173, 62, 0.5);
 }
 
 body.dark-mode .hero h1 {
-  color: #efd47a;
+  color: #e7d58a;
 }
 
 body.dark-mode .hero-description {
-  color: #edf3e7;
+  color: #e4eee5;
 }
 
-body.dark-mode .section-title,
-body.dark-mode .content-board,
-body.dark-mode .step-card,
-body.dark-mode .tayammum-step-card,
-body.dark-mode .main-illustration {
-  background: rgba(27, 42, 32, 0.97);
+body.dark-mode .panel.lesson {
+  background: var(--card-bg);
   border-color: var(--border);
+}
+
+body.dark-mode .section-title {
+  background: transparent;
+  border-color: transparent;
 }
 
 body.dark-mode .section-title h2,
@@ -771,35 +863,60 @@ body.dark-mode .tayammum-step-copy h3 {
 }
 
 body.dark-mode .kicker {
-  color: #efd47a;
+  color: #e7d58a;
 }
 
 body.dark-mode .content-board p,
 body.dark-mode .content-board li,
+body.dark-mode .panel.lesson > p,
+body.dark-mode .panel.lesson > ul > li,
+body.dark-mode .panel.lesson > ol > li,
 body.dark-mode .step-copy p,
 body.dark-mode .tayammum-step-copy p,
 body.dark-mode .guidance-list {
   color: var(--text);
 }
 
+body.dark-mode .content-board strong,
+body.dark-mode .panel.lesson strong {
+  color: #f0df9c;
+}
+
 body.dark-mode .content-board li::marker,
-body.dark-mode .guidance-list li::marker {
+body.dark-mode .guidance-list li::marker,
+body.dark-mode .panel.lesson li::marker {
   color: #c6e6c2;
 }
 
-body.dark-mode .content-board.note {
-  background: rgba(58, 52, 29, 0.97);
+body.dark-mode .content-board.note,
+body.dark-mode .note {
+  background: rgba(58, 52, 29, 0.35);
   border-left-color: var(--gold);
 }
 
-body.dark-mode .content-board.note h3 {
-  color: #efd47a;
+body.dark-mode .content-board.note h3,
+body.dark-mode .note h3 {
+  color: #e7d58a;
+}
+
+body.dark-mode .content-board.note p,
+body.dark-mode .note p {
+  color: var(--text);
+}
+
+body.dark-mode .main-illustration {
+  background: transparent;
 }
 
 body.dark-mode .step-image,
 body.dark-mode .tayammum-step-image {
-  background: #25352a;
+  background: rgba(255, 255, 255, 0.04);
   border-color: var(--border);
+}
+
+body.dark-mode .step-card,
+body.dark-mode .tayammum-step-card {
+  border-bottom-color: var(--border);
 }
 
 body.dark-mode .step-copy .step-count {
@@ -809,253 +926,253 @@ body.dark-mode .step-copy .step-count {
 }
 
 body.dark-mode .purity-footer {
-  background: #17452d;
-  border-color: rgba(212, 175, 55, 0.4);
+  background: #103f2e;
+  border-color: rgba(201, 173, 62, 0.5);
 }
 
 /* ---------- Tablet and larger screens ---------- */
 
 @media (min-width: 600px) {
   .purity-page {
-    padding: 20px 16px 26px;
+    width: min(calc(100% - 40px), var(--page-width));
+    padding: 20px 0 28px;
   }
 
   .hero {
-    min-height: 250px;
-    padding: 32px 28px;
+    min-height: 260px;
+    padding: 38px 30px;
     margin-bottom: 22px;
   }
 
   .purity-content {
-    gap: 16px;
+    gap: 20px;
+  }
+
+  .panel.lesson {
+    padding: 28px 26px;
   }
 
   .section-title {
-    padding: 15px 18px;
-    margin-bottom: 13px;
+    margin-bottom: 20px;
   }
 
   .content-board {
-    padding: 18px 20px;
-  }
-
-  .content-board h3 {
-    margin-bottom: 9px;
+    margin-bottom: 20px;
   }
 
   .step-card,
   .tayammum-step-card {
-    gap: 16px;
-    padding: 14px;
+    gap: 18px;
+    padding: 18px 0;
   }
 
   .step-image,
   .tayammum-step-image {
-    flex-basis: 118px;
-    width: 118px;
-    height: 118px;
+    flex-basis: 124px;
+    width: 124px;
+    height: 124px;
   }
 
   .main-illustration img {
-    max-height: 280px;
+    max-height: 390px;
   }
 }
 
 /* ---------- Small phones ---------- */
 
-@media (max-width: 420px) {
-  :root {
-    --card-gap: 10px;
-    --card-padding: 13px;
-  }
-
+@media (max-width: 599px) {
   .purity-page {
-    padding: 10px 10px 16px;
+    width: calc(100% - 24px);
+    padding: 12px 0 20px;
   }
 
   .hero {
-    min-height: 190px;
+    min-height: 200px;
 
-    margin-bottom: 17px;
-    padding: 22px 12px;
+    margin-bottom: 16px;
+    padding: 25px 16px;
 
-    border-radius: 17px;
+    border-radius: 24px;
   }
 
   .hero h1 {
     margin-bottom: 10px;
-    font-size: clamp(1.9rem, 8vw, 2.4rem);
+    font-size: clamp(1.8rem, 8vw, 2.3rem);
   }
 
   .hero-description {
-    font-size: 0.9rem;
+    font-size: 0.98rem;
     line-height: 1.8;
   }
 
   .purity-content {
-    gap: 12px;
+    gap: 16px;
+  }
+
+  .panel.lesson {
+    padding: 20px 16px;
+    border-radius: 23px;
   }
 
   .section-title {
-    gap: 10px;
-    padding: 11px 12px;
-    margin-bottom: 10px;
-
-    border-radius: 14px;
+    gap: 12px;
+    margin-bottom: 16px;
   }
 
   .section-number {
-    flex-basis: 36px;
-    width: 36px;
-    height: 36px;
-    font-size: 0.9rem;
+    flex-basis: 48px;
+    width: 48px;
+    height: 48px;
+    font-size: 1.08rem;
   }
 
   .kicker {
-    font-size: 0.75rem;
+    font-size: 0.82rem;
   }
 
   .section-title h2 {
-    font-size: 1.16rem;
-    line-height: 1.45;
-  }
-
-  .content-board {
-    padding: 13px;
-    border-radius: 16px;
-  }
-
-  .content-board h3 {
-    font-size: 0.98rem;
+    font-size: 1.28rem;
     line-height: 1.5;
   }
 
-  .content-board p,
+  .main-illustration {
+    margin: 14px auto 18px;
+  }
+
+  .main-illustration img {
+    max-height: 280px;
+  }
+
+  .content-board {
+    margin-bottom: 16px;
+  }
+
+  .content-board h3 {
+    font-size: 1.12rem;
+  }
+
+  .content-board p {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
   .content-board li,
-  .guidance-list {
-    font-size: 0.91rem;
+  .guidance-list,
+  .panel.lesson > ul > li,
+  .panel.lesson > ol > li {
+    font-size: 0.98rem;
     line-height: 1.8;
   }
 
   .content-board ul,
   .content-board ol,
-  .guidance-list {
-    padding-left: 23px;
-  }
-
-  .content-board li {
-    margin-bottom: 8px;
-  }
-
-  .main-illustration {
-    margin-bottom: 10px;
-    padding: 7px;
-    border-radius: 16px;
-  }
-
-  .main-illustration img {
-    max-height: 225px;
+  .guidance-list,
+  .panel.lesson > ul,
+  .panel.lesson > ol {
+    padding-inline-start: 24px;
   }
 
   .step-card,
   .tayammum-step-card {
-    align-items: flex-start;
-    gap: 10px;
-    padding: 9px;
-    border-radius: 15px;
+    gap: 12px;
+    padding: 14px 0;
   }
 
   .step-image,
   .tayammum-step-image {
-    flex: 0 0 82px;
-    width: 82px;
-    height: 82px;
-    max-width: 38%;
-    padding: 3px;
+    flex-basis: 88px;
+    width: 88px;
+    height: 88px;
+    max-width: 36%;
   }
 
   .step-copy h3,
   .tayammum-step-copy h3 {
-    margin-bottom: 4px;
-    font-size: 0.91rem;
-    line-height: 1.5;
+    font-size: 1.02rem;
   }
 
   .step-copy p,
   .tayammum-step-copy p {
-    font-size: 0.85rem;
-    line-height: 1.75;
+    font-size: 0.96rem;
   }
 
   .step-copy .step-count {
-    margin-top: 7px;
     padding: 3px 8px;
-    font-size: 0.79rem;
-    line-height: 1.6;
-    border-radius: 12px;
+    font-size: 0.82rem;
   }
 
   .purity-footer {
     margin-top: 16px;
-    padding: 12px 10px;
-    border-radius: 14px;
-  }
-
-  .purity-footer p {
-    font-size: 0.88rem;
-    line-height: 1.7;
+    padding: 14px 16px;
+    border-radius: 18px;
   }
 }
 
 /* ---------- Extra-small phones ---------- */
 
-@media (max-width: 340px) {
+@media (max-width: 360px) {
   .purity-page {
-    padding-right: 8px;
-    padding-left: 8px;
+    width: calc(100% - 20px);
   }
 
   .hero {
-    padding-right: 10px;
-    padding-left: 10px;
+    padding: 22px 12px;
+  }
+
+  .panel.lesson {
+    padding: 17px 12px;
+    border-radius: 20px;
   }
 
   .section-title {
-    gap: 8px;
-    padding: 10px;
+    align-items: flex-start;
+    gap: 10px;
   }
 
   .section-number {
-    flex-basis: 32px;
-    width: 32px;
-    height: 32px;
+    flex-basis: 42px;
+    width: 42px;
+    height: 42px;
+    font-size: 1rem;
   }
 
   .section-title h2 {
-    font-size: 1.05rem;
+    font-size: 1.16rem;
   }
 
-  .content-board {
-    padding: 11px;
+  .content-board h3 {
+    font-size: 1.04rem;
+  }
+
+  .content-board p,
+  .content-board li,
+  .guidance-list {
+    font-size: 0.94rem;
   }
 
   .content-board ul,
   .content-board ol,
-  .guidance-list {
-    padding-left: 21px;
+  .guidance-list,
+  .panel.lesson > ul,
+  .panel.lesson > ol {
+    padding-inline-start: 22px;
   }
 
   .step-card,
   .tayammum-step-card {
-    gap: 8px;
-    padding: 8px;
+    gap: 10px;
   }
 
   .step-image,
   .tayammum-step-image {
-    flex-basis: 70px;
-    width: 70px;
-    height: 70px;
+    flex-basis: 72px;
+    width: 72px;
+    height: 72px;
+  }
+
+  .content-board.note,
+  .note {
+    padding: 10px 12px;
   }
 }
 
