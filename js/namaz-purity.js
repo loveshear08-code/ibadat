@@ -11,7 +11,9 @@
   const translations = {
     bn: {
       pageTitle: "পবিত্রতা",
-
+lessonNumber: ["১", "২", "৩", "৪", "৫"],
+stepLabel: "ধাপ",
+       
       cleanKicker: "প্রথম পাঠ",
       cleanTitle: "পবিত্রতা ও পরিচ্ছন্নতা",
       cleanBodyTitle: "শরীরের পরিচ্ছন্নতা",
@@ -142,6 +144,7 @@
       tayammumNoteTitle: "মনে রাখবে",
       tayammumNote: "তায়াম্মুম কেবল প্রযোজ্য শর্ত পূরণ হলে করা যায়। উপকরণ ও মাসেহের পদ্ধতি নির্ভরযোগ্য ইসলামি নির্দেশনা থেকে শিখে নাও।",
 
+       guidancekicker:"পঞ্চম পাঠ",
       guidanceTitle: "গুরুত্বপূর্ণ সতর্কতা",
       guidance: [
         [
@@ -172,7 +175,9 @@
 
     en: {
       pageTitle: "Purification",
-
+lessonNumber: ["1", "2", "3", "4", "5"],
+stepLabel: "Step",
+       
       cleanKicker: "LESSON ONE",
       cleanTitle: "Purity and Cleanliness",
       cleanBodyTitle: "Personal Cleanliness",
@@ -261,7 +266,8 @@
       ],
       tayammumNoteTitle: "Remember",
       tayammumNote: "Tayammum is permitted only when its conditions are met. Learn the materials and method from reliable Islamic guidance.",
-
+       
+       guidancekicker:"LESSON FIVE",
       guidanceTitle: "Important Precautions",
       guidance: [
         ["If Wudu Is Invalidated", "If you are certain your wudu has been invalidated, perform it again before prayer. If unsure, seek reliable guidance."],
@@ -277,7 +283,9 @@
 
     hi: {
       pageTitle: "पवित्रता",
-
+lessonNumber: ["१", "२", "३", "४", "५"],
+stepLabel: "चरण",
+       
       cleanKicker: "पहला पाठ",
       cleanTitle: "पवित्रता और स्वच्छता",
       cleanBodyTitle: "शरीर की स्वच्छता",
@@ -367,6 +375,7 @@
       tayammumNoteTitle: "याद रखें",
       tayammumNote: "तयम्मुम तभी किया जा सकता है जब उसकी शर्तें पूरी हों। सामग्री और विधि विश्वसनीय इस्लामी मार्गदर्शन से सीखें।",
 
+       guidancekicker:"पाँचवाँ पाठ",
       guidanceTitle: "महत्वपूर्ण सावधानियाँ",
       guidance: [
         ["वुज़ू टूट जाए तो", "यदि वुज़ू टूटना निश्चित है, तो नमाज़ से पहले दोबारा वुज़ू करें। संदेह हो तो विश्वसनीय मार्गदर्शन लें।"],
