@@ -547,6 +547,7 @@ stepLabel: "चरण",
     setText("wuduNiyyahTitle", t.wuduNiyyahTitle);
     setText("wuduNiyyah", t.wuduNiyyah);
     setText("wuduStepsTitle", t.wuduStepsTitle);
+     setText("wuduStepsIntro", t.wuduStepsIntro);
     updateWudu(t);
 
     const wuduIntro = document.querySelector(
@@ -584,7 +585,8 @@ stepLabel: "चरण",
     setText("tayammumTitle", t.tayammumTitle);
     setText("tayammumIntro", t.tayammumIntro);
     setText("tayammumStepsTitle", t.tayammumStepsTitle);
-    updateTayammum(t);
+    setText("tayammumStepsIntro", t.tayammumStepsIntro);
+     updateTayammum(t);
     setText("tayammumWhenTitle", t.tayammumWhenTitle);
     setList("tayammumWhen", t.tayammumWhen);
     setText("tayammumNoteTitle", t.tayammumNoteTitle);
