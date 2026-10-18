@@ -419,6 +419,26 @@ textarea {
   font-weight: 700;
 }
 
+/* গোসলের তালিকার নম্বর ভাষা অনুযায়ী দেখাবে */
+#ghuslSteps {
+  list-style: none;
+  counter-reset: ghusl-counter;
+}
+
+#ghuslSteps li {
+  counter-increment: ghusl-counter;
+  position: relative;
+}
+
+#ghuslSteps li::before {
+  content: attr(data-display-number) ".";
+  position: absolute;
+  right: 100%;
+  margin-right: 5px;
+  color: var(--primary);
+  font-weight: 700;
+}
+
 .content-board li ul,
 .content-board li ol {
   margin-top: 6px;
