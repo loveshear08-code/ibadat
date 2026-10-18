@@ -12,44 +12,26 @@
 <body>
 <main class="waqt-page">
 
-  <!-- প্রথম বোর্ড -->
+  <!-- মসজিদের ব্যাকগ্রাউন্ডসহ প্রধান বোর্ড -->
   <header class="hero-board">
     <div class="hero-content">
-      <span class="hero-kicker" data-i18n="eyebrow">নামাজ শিক্ষা</span>
       <h1 data-i18n="pageTitle">ওয়াক্ত ও রাকাত</h1>
       <p data-i18n="intro">
         পাঁচ ওয়াক্ত নামাজের সময় ও রাকাত সম্পর্কে সহজভাবে জেনে নাও।
         সঠিক সময়ের জন্য নিজের এলাকার নির্ভরযোগ্য সময়সূচি অনুসরণ করো।
       </p>
-      <div class="hero-ribbon" data-i18n="ribbon">
-        সঠিক সময়ে নামাজ, জীবনের শান্তি ও বরকতের পথ
-      </div>
     </div>
   </header>
 
-  <!-- বিষয়সূচি -->
-  <nav class="topic-board" aria-label="নামাজের বিষয়সূচি">
-    <h2 data-i18n="learnTitle">এই পেজে যা শিখবে</h2>
-    <div class="topic-list">
-      <a href="#fajr"><span data-number="1">১</span><span data-i18n="fajr">ফজর</span></a>
-      <a href="#zuhr"><span data-number="2">২</span><span data-i18n="zuhr">যোহর</span></a>
-      <a href="#asr"><span data-number="3">৩</span><span data-i18n="asr">আসর</span></a>
-      <a href="#maghrib"><span data-number="4">৪</span><span data-i18n="maghrib">মাগরিব</span></a>
-      <a href="#isha"><span data-number="5">৫</span><span data-i18n="isha">এশা</span></a>
-      <a href="#jumuah"><span data-i18n="jumuah">জুমার নামাজ</span></a>
-      <a href="#nafl"><span data-i18n="nafl">নফল নামাজ</span></a>
-      <a href="#rakat-summary" class="summary-link" data-i18n="summaryNav">রাকাতের সারসংক্ষেপ</a>
-    </div>
-  </nav>
+  <!-- পাঁচ ওয়াক্ত নামাজ -->
 
-  <!-- ফজর -->
   <section class="prayer-card" id="fajr">
     <div class="prayer-number" data-number="1">১</div>
     <div class="prayer-content">
       <h2 data-i18n="fajrTitle">ফজর নামাজ</h2>
       <p data-i18n="fajrText">
         সুবহে সাদিক থেকে সূর্যোদয়ের আগে পর্যন্ত ফজরের ওয়াক্ত।
-        ফজরের ফরজ দুই রাকাত; এর আগে দুই রাকাত সুন্নতে মুয়াক্কাদা।
+        ফরজ দুই রাকাত; এর আগে দুই রাকাত সুন্নতে মুয়াক্কাদা।
       </p>
       <div class="time-note">
         <span aria-hidden="true">◷</span>
@@ -60,15 +42,14 @@
     </div>
   </section>
 
-  <!-- যোহর -->
   <section class="prayer-card" id="zuhr">
     <div class="prayer-number" data-number="2">২</div>
     <div class="prayer-content">
       <h2 data-i18n="zuhrTitle">যোহর নামাজ</h2>
       <p data-i18n="zuhrText">
-        সূর্য ঢলে পড়ার পর যোহরের ওয়াক্ত শুরু হয়।
-        যোহরের ফরজ চার রাকাত। জুমার শর্ত পূরণ করে জুমার নামাজ আদায় করলে
-        তা যোহরের পরিবর্তে আদায় হয়।
+        সূর্য পশ্চিম দিকে ঢলে পড়লে যোহরের ওয়াক্ত শুরু হয়।
+        যোহরের ফরজ চার রাকাত। জুমার শর্ত পূরণ হলে জুমার দুই রাকাত ফরজ
+        যোহরের পরিবর্তে আদায় করা হয়।
       </p>
       <div class="time-note">
         <span aria-hidden="true">◷</span>
@@ -79,14 +60,13 @@
     </div>
   </section>
 
-  <!-- আসর -->
   <section class="prayer-card" id="asr">
     <div class="prayer-number" data-number="3">৩</div>
     <div class="prayer-content">
       <h2 data-i18n="asrTitle">আসর নামাজ</h2>
       <p data-i18n="asrText">
         আসরের নির্ধারিত সময় শুরু হলে নামাজ আদায় করবে।
-        আসরের ফরজ চার রাকাত। এর আগে চার রাকাত সুন্নতে গায়রে মুয়াক্কাদা পড়া হয়।
+        আসরের ফরজ চার রাকাত।
       </p>
       <div class="time-note">
         <span aria-hidden="true">◷</span>
@@ -97,14 +77,13 @@
     </div>
   </section>
 
-  <!-- মাগরিব -->
   <section class="prayer-card" id="maghrib">
     <div class="prayer-number" data-number="4">৪</div>
     <div class="prayer-content">
       <h2 data-i18n="maghribTitle">মাগরিব নামাজ</h2>
       <p data-i18n="maghribText">
         সূর্যাস্তের পর মাগরিবের ওয়াক্ত শুরু হয়।
-        ফরজ তিন রাকাত। ফরজের পর দুই রাকাত সুন্নতে মুয়াক্কাদা পড়া হয়।
+        ফরজ তিন রাকাত; ফরজের পরে দুই রাকাত সুন্নতে মুয়াক্কাদা।
       </p>
       <div class="time-note">
         <span aria-hidden="true">◷</span>
@@ -115,14 +94,13 @@
     </div>
   </section>
 
-  <!-- এশা -->
   <section class="prayer-card" id="isha">
     <div class="prayer-number" data-number="5">৫</div>
     <div class="prayer-content">
       <h2 data-i18n="ishaTitle">এশা নামাজ</h2>
       <p data-i18n="ishaText">
         সন্ধ্যার গোধূলি মিলিয়ে যাওয়ার পর এশার ওয়াক্ত শুরু হয়।
-        ফরজ চার রাকাত। হানাফি মতে বিতর তিন রাকাত ওয়াজিব।
+        ফরজ চার রাকাত; হানাফি মতে বিতর তিন রাকাত ওয়াজিব।
       </p>
       <div class="time-note">
         <span aria-hidden="true">◷</span>
@@ -139,44 +117,16 @@
     <div class="prayer-content">
       <h2 data-i18n="jumuahTitle">জুমার নামাজ</h2>
       <p data-i18n="jumuahText">
-        শুক্রবার যোহরের সময়ে নির্ধারিত শর্ত পূরণ করে জামাতে জুমার নামাজ আদায় করা হয়।
-        হানাফি মতে জুমার ফরজ দুই রাকাত। এটি যোহরের চার রাকাত ফরজের পরিবর্তে আদায় হয়।
+        শুক্রবার যোহরের ওয়াক্তে নির্ধারিত শর্ত পূরণ করে জামাতে জুমার নামাজ আদায় করা হয়।
+        প্রচলিত হানাফি বিধান অনুযায়ী খুতবার পর দুই রাকাত ফরজ পড়া হয়।
+        জুমার শর্ত পূরণ না হলে যোহরের নামাজ আদায় করতে হয়।
       </p>
       <div class="time-note">
         <span aria-hidden="true">◷</span>
         <p><strong data-i18n="jumuahLabel">মনে রাখবে:</strong>
           <span data-i18n="jumuahNote">
-            জুমার নামাজের আগে ও পরে সুন্নত পড়ার প্রচলিত বিধান রয়েছে।
+            জুমার আগে ও পরে সুন্নত নামাজের প্রচলিত বিধান রয়েছে।
             বিস্তারিত পদ্ধতি নির্ভরযোগ্য আলেমের কাছ থেকে শিখে নাও।
-          </span>
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- নফল নামাজ -->
-  <section class="prayer-card special-prayer" id="nafl">
-    <div class="prayer-number" aria-hidden="true">✦</div>
-    <div class="prayer-content">
-      <h2 data-i18n="naflTitle">নফল নামাজ</h2>
-      <p data-i18n="naflText">
-        ফরজ ও নির্ধারিত সুন্নতের বাইরে অতিরিক্ত সওয়াবের উদ্দেশ্যে নফল নামাজ পড়া হয়।
-        সামর্থ্য ও শরিয়তের নির্দেশনা অনুযায়ী নফল ইবাদত করা যায়।
-      </p>
-      <h3 data-i18n="naflExamplesTitle">কিছু পরিচিত নফল নামাজ</h3>
-      <ul id="nafl-examples">
-        <li data-i18n="naflTahajjud">তাহাজ্জুদ</li>
-        <li data-i18n="naflIshraq">ইশরাক</li>
-        <li data-i18n="naflDuha">দুহা বা চাশত</li>
-        <li data-i18n="naflTawbah">তওবার নামাজ</li>
-        <li data-i18n="naflHajat">হাজতের নামাজ</li>
-      </ul>
-      <div class="time-note">
-        <span aria-hidden="true">✦</span>
-        <p><strong data-i18n="naflCautionTitle">সতর্কতা:</strong>
-          <span data-i18n="naflCaution">
-            নফল নামাজের সময় ও পদ্ধতি সম্পর্কে নির্ভরযোগ্য নির্দেশনা অনুসরণ করবে।
-            নিষিদ্ধ সময়ে নামাজ পড়া থেকে বিরত থাকবে।
           </span>
         </p>
       </div>
@@ -190,7 +140,7 @@
       <div>
         <h2 data-i18n="summaryTitle">রাকাতের সংক্ষিপ্ত বিবরণ</h2>
         <p data-i18n="summaryIntro">
-          প্রচলিত হানাফি বিন্যাসে পাঁচ ওয়াক্তের সুন্নত, ফরজ ও বিতরের বিবরণ।
+          প্রচলিত হানাফি বিন্যাসে সুন্নত, ফরজ, বিতর ও নফল নামাজের বিবরণ।
         </p>
       </div>
     </div>
@@ -204,32 +154,57 @@
             <th scope="col" data-i18n="thFard">ফরজ</th>
             <th scope="col" data-i18n="thAfter">পরের সুন্নত</th>
             <th scope="col" data-i18n="thWitr">বিতর</th>
+            <th scope="col" data-i18n="thNafl">নফল</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <th scope="row" data-i18n="fajr">ফজর</th>
-            <td>২</td><td>২</td><td>—</td><td>—</td>
+            <td data-digit="2">২</td>
+            <td data-digit="2">২</td>
+            <td>—</td>
+            <td>—</td>
+            <td data-i18n="fajrNafl">প্রযোজ্য নয়</td>
           </tr>
           <tr>
             <th scope="row" data-i18n="zuhr">যোহর</th>
-            <td>৪</td><td>৪</td><td>২</td><td>—</td>
+            <td data-digit="4">৪</td>
+            <td data-digit="4">৪</td>
+            <td data-digit="2">২</td>
+            <td>—</td>
+            <td data-i18n="zuhrNafl">অতিরিক্ত নফল পড়া যায়</td>
           </tr>
           <tr>
             <th scope="row" data-i18n="asr">আসর</th>
-            <td>৪*</td><td>৪</td><td>—</td><td>—</td>
+            <td data-i18n="fourOptional">৪*</td>
+            <td data-digit="4">৪</td>
+            <td>—</td>
+            <td>—</td>
+            <td data-i18n="asrNafl">অতিরিক্ত নফল পড়া যায়</td>
           </tr>
           <tr>
             <th scope="row" data-i18n="maghrib">মাগরিব</th>
-            <td>—</td><td>৩</td><td>২</td><td>—</td>
+            <td>—</td>
+            <td data-digit="3">৩</td>
+            <td data-digit="2">২</td>
+            <td>—</td>
+            <td data-i18n="maghribNafl">অতিরিক্ত নফল পড়া যায়</td>
           </tr>
           <tr>
             <th scope="row" data-i18n="isha">এশা</th>
-            <td>৪*</td><td>৪</td><td>২</td><td>৩</td>
+            <td data-i18n="fourOptional">৪*</td>
+            <td data-digit="4">৪</td>
+            <td data-digit="2">২</td>
+            <td data-digit="3">৩</td>
+            <td data-i18n="ishaNafl">অতিরিক্ত নফল পড়া যায়</td>
           </tr>
           <tr class="jumuah-row">
-            <th scope="row" data-i18n="jumuahShort">জুমা**</th>
-            <td>৪</td><td>২</td><td>৪*</td><td>—</td>
+            <th scope="row" data-i18n="jumuahShort">জুমা</th>
+            <td data-i18n="jumuahBefore">৪ সুন্নত</td>
+            <td data-digit="2">২</td>
+            <td data-i18n="jumuahAfter">সুন্নত</td>
+            <td>—</td>
+            <td data-i18n="jumuahNafl">অতিরিক্ত নফল পড়া যায়</td>
           </tr>
         </tbody>
       </table>
@@ -237,19 +212,32 @@
 
     <p class="table-footnote" data-i18n="tableNote">
       * আসর ও এশার আগে চার রাকাত সুন্নতে গায়রে মুয়াক্কাদা।
-      জুমার পরের সুন্নতের বিস্তারিত বিন্যাসে প্রচলিত আমলভেদে পার্থক্য থাকতে পারে।
+      নফল রাকাতের নির্দিষ্ট সংখ্যা নেই; নামাজের ধরন ও বিধান অনুযায়ী তা ভিন্ন হয়।
+      এখানে প্রচলিত হানাফি বিন্যাস দেখানো হয়েছে।
     </p>
+
+    <!-- নফল নামাজের তালিকা -->
+    <div class="nafl-list">
+      <h3 data-i18n="naflTitle">পরিচিত নফল নামাজ</h3>
+      <ul>
+        <li><strong data-i18n="tahajjudName">তাহাজ্জুদ:</strong> <span data-i18n="tahajjudText">রাতের শেষভাগে পড়া হয়; সাধারণভাবে দুই রাকাত করে পড়া যায়।</span></li>
+        <li><strong data-i18n="ishraqName">ইশরাক:</strong> <span data-i18n="ishraqText">সূর্য ওঠার পর নিষিদ্ধ সময় শেষ হলে পড়া হয়।</span></li>
+        <li><strong data-i18n="duhaName">দুহা বা চাশত:</strong> <span data-i18n="duhaText">সকালে সূর্য বেশ ওপরে ওঠার পর থেকে যোহরের আগে পর্যন্ত পড়া হয়।</span></li>
+        <li><strong data-i18n="awwabinName">আওয়াবিন:</strong> <span data-i18n="awwabinText">মাগরিবের পর নফল নামাজের প্রচলিত নাম; রাকাতের বিবরণে মতভেদ থাকতে পারে।</span></li>
+        <li><strong data-i18n="tahiyyatName">তাহিয়্যাতুল মসজিদ:</strong> <span data-i18n="tahiyyatText">মসজিদে প্রবেশের পর বসার আগে পড়া হয়, যদি প্রযোজ্য শর্ত থাকে।</span></li>
+      </ul>
+    </div>
 
     <aside class="important-note">
       <strong data-i18n="importantTitle">মনে রাখবে</strong>
       <p data-i18n="importantText">
-        জুমার শর্ত পূরণ করে জুমা আদায় হলে তা যোহরের ফরজের পরিবর্তে হয়।
-        নামাজের সময় স্থান ও তারিখ অনুযায়ী বদলে যায়; স্থানীয় নির্ভরযোগ্য সময়সূচি অনুসরণ করবে।
+        নফল নামাজের সময় ও পদ্ধতিতে পার্থক্য থাকতে পারে।
+        নিষিদ্ধ সময়ে নামাজ পড়বে না এবং বিস্তারিত বিধান নির্ভরযোগ্য আলেমের কাছ থেকে শিখবে।
       </p>
     </aside>
   </section>
 
-  <!-- সবুজ ফুটার -->
+  <!-- পবিত্রতা পেজের মতো সংক্ষিপ্ত সবুজ ফুটার -->
   <footer class="page-footer">
     <p data-i18n="footerText">পবিত্রতা রক্ষা করো, ইবাদতে প্রশান্তি খুঁজে নাও।</p>
   </footer>
