@@ -187,30 +187,33 @@ textarea {
   line-height: 1.9;
 }
 
-/* ---------- Main topic boards ---------- */
+/* ---------- Main topic sections ----------
+   The page background remains visible between
+   separate content boards.
+   ---------------------------------------- */
 
 .topic-board {
   width: 100%;
   min-width: 0;
 
   margin: 0 0 var(--section-gap);
-  padding: var(--board-padding) 22px;
+  padding: 0;
 
-  border: 1px solid var(--border);
-  border-radius: var(--board-radius);
+  border: 0;
+  border-radius: 0;
 
-  background: var(--board);
-  box-shadow: var(--shadow);
+  background: transparent;
+  box-shadow: none;
 
   scroll-margin-top: 16px;
 }
 
-/* ---------- Topic heading ---------- */
+/* ---------- Topic heading and image board ---------- */
 
 .topic-heading {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 12px;
 
   width: 100%;
@@ -218,7 +221,7 @@ textarea {
 
   margin: 0 0 22px;
 
-  text-align: center;
+  text-align: left;
 }
 
 .topic-heading h2 {
@@ -251,8 +254,6 @@ textarea {
   line-height: 1;
 }
 
-/* ---------- Topic illustration ---------- */
-
 .topic-image {
   display: flex;
   align-items: center;
@@ -261,7 +262,7 @@ textarea {
   width: 100%;
   min-width: 0;
 
-  margin: 0 auto 24px;
+  margin: 0 auto;
   padding: 0;
 }
 
@@ -282,7 +283,7 @@ textarea {
   box-shadow: 0 4px 12px rgba(38, 67, 45, 0.09);
 }
 
-/* ---------- Inner information boards ---------- */
+/* ---------- Separate content boards ---------- */
 
 .info-board {
   width: 100%;
@@ -291,18 +292,16 @@ textarea {
   margin: 0 0 18px;
   padding: 20px 20px;
 
-  border: 1px solid rgba(217, 223, 207, 0.85);
+  border: 1px solid var(--border);
   border-radius: 18px;
 
   color: var(--muted);
-  background: rgba(226, 240, 220, 0.38);
+  background: var(--board);
+
+  box-shadow: var(--shadow);
 
   font-size: 1rem;
   line-height: 1.9;
-}
-
-.info-board:last-of-type {
-  margin-bottom: 18px;
 }
 
 .info-board h3 {
@@ -384,7 +383,7 @@ textarea {
   font-weight: 900;
 }
 
-/* ---------- Important caution board ---------- */
+/* ---------- Caution board ---------- */
 
 .important-note {
   position: relative;
@@ -402,7 +401,7 @@ textarea {
   color: var(--muted);
   background: rgba(244, 237, 218, 0.6);
 
-  box-shadow: none;
+  box-shadow: var(--shadow);
 }
 
 .important-note > strong,
@@ -510,7 +509,7 @@ body.dark-mode .hero-content p {
   color: #e4eee5;
 }
 
-body.dark-mode .topic-board {
+body.dark-mode .info-board {
   color: var(--text);
   background: var(--board);
   border-color: var(--border);
@@ -531,12 +530,6 @@ body.dark-mode .topic-number {
 body.dark-mode .topic-image img {
   background: #24392b;
   border-color: rgba(201, 173, 62, 0.55);
-}
-
-body.dark-mode .info-board {
-  color: var(--text);
-  background: rgba(41, 76, 56, 0.45);
-  border-color: var(--border);
 }
 
 body.dark-mode .info-board p {
@@ -588,10 +581,6 @@ body.dark-mode .page-footer {
   .hero-board {
     min-height: 260px;
     padding: 38px 30px;
-  }
-
-  .topic-board {
-    padding: 28px 26px;
   }
 
   .topic-heading {
@@ -646,8 +635,6 @@ body.dark-mode .page-footer {
 
   .topic-board {
     margin-bottom: 16px;
-    padding: 20px 16px;
-    border-radius: 23px;
   }
 
   .topic-heading {
@@ -750,11 +737,6 @@ body.dark-mode .page-footer {
 
   .hero-content p {
     font-size: 0.93rem;
-  }
-
-  .topic-board {
-    padding: 17px 12px;
-    border-radius: 20px;
   }
 
   .topic-heading {
