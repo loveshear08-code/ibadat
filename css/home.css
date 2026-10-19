@@ -183,7 +183,7 @@ body{
 
     padding:0;
 
-   background-image:url("../assets/bismillah.png");
+   background-image:url("../assets/home-bg1.jpg");
 
     background-position:center;
 
@@ -239,7 +239,7 @@ body{
 
     padding:0;
    
-   background-image:url("../assets/status.png");
+   background-image:url("../assets/home-bg2.jpg");
    
    background-position:left center;
 
@@ -355,7 +355,7 @@ body{
 
    overflow:hidden;
 
-   background-image:url("../assets/prayer-w.png");
+   background-image:url("../assets/home-bg3.jpg");
 
     background-position:center;
 
