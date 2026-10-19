@@ -159,7 +159,7 @@
     },
     {
       id: "special-prayers",
-      icon: "complete-namaz.png",
+      icon: "complete-nmamaz.png",
       title: {
         bn: "বিশেষ নামাজ",
         en: "Special Prayers",
