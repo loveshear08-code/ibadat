@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
-  // 1. Check the main heading, three topic boards and footer.
+  // 1. Check required page sections.
   const requiredElements = [
     ".hero-board",
     "#farz",
@@ -28,17 +28,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // 2. Check that each topic board has an image.
-  page.querySelectorAll(".topic-board").forEach(function (board) {
-    const image = board.querySelector(".topic-image img");
-
-    if (!image) {
-      console.warn("A topic board is missing its image:", board.id);
-      return;
-    }
-
+  // 2. Check topic images without changing their paths or appearance.
+  page.querySelectorAll(".topic-image img").forEach(function (image) {
     image.addEventListener("error", function () {
-      console.warn("Image could not be loaded:", image.src);
+      console.warn("Image could not be loaded:", image.getAttribute("src"));
       image.classList.add("image-load-error");
     });
 
@@ -47,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // 3. Smooth scrolling for links that point to sections on this page.
+  // 3. Smooth scrolling for links to sections on this page.
   page.querySelectorAll('a[href^="#"]').forEach(function (link) {
     link.addEventListener("click", function (event) {
       const targetId = link.getAttribute("href").slice(1);
