@@ -1,6 +1,6 @@
 /* =========================================
    IBADAT — NAMAZ LEARNING PAGE
-   18 Topics | Bengali / English / Hindi
+   14 Topics | Bengali / English / Hindi
    Light & Dark Theme
    ========================================= */
 
@@ -20,13 +20,11 @@
 
   --page-padding-x: 10px;
   --page-padding-y: 8px;
-  --grid-gap: 7px;
+  --grid-gap: 8px;
   --card-radius: 16px;
 }
 
-/* =========================================
-   RESET
-   ========================================= */
+/* RESET */
 
 * {
   box-sizing: border-box;
@@ -72,10 +70,7 @@ body {
   overscroll-behavior: none;
 }
 
-/* =========================================
-   MAIN PAGE
-   Shorter intro, more room for 18 cards
-   ========================================= */
+/* MAIN PAGE */
 
 .namaz-page {
   width: 100%;
@@ -89,7 +84,7 @@ body {
     minmax(0, 0.62fr)
     minmax(0, 2.38fr);
 
-  gap: 7px;
+  gap: 8px;
 
   padding:
     max(var(--page-padding-y), env(safe-area-inset-top))
@@ -99,9 +94,7 @@ body {
   overflow: hidden;
 }
 
-/* =========================================
-   INTRODUCTION BOARD
-   ========================================= */
+/* INTRODUCTION BOARD */
 
 .intro-board {
   position: relative;
@@ -152,8 +145,6 @@ body {
   gap: 3px;
 }
 
-/* Intro heading */
-
 .intro-content h1 {
   color: var(--heading-gold);
 
@@ -167,8 +158,6 @@ body {
   margin-bottom: 1px;
   flex: 0 0 auto;
 }
-
-/* Intro paragraph */
 
 .intro-content > p {
   color: #1E4620;
@@ -190,10 +179,8 @@ body {
   text-wrap: pretty;
 }
 
-/* =========================================
-   LEARNING GRID
-   Two columns × nine rows = 18 cards
-   ========================================= */
+/* LEARNING GRID
+   2 columns × 7 rows = 14 cards */
 
 .learning-grid {
   width: 100%;
@@ -205,16 +192,14 @@ body {
   display: grid;
 
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(9, minmax(0, 1fr));
+  grid-template-rows: repeat(7, minmax(0, 1fr));
 
   gap: var(--grid-gap);
 
   overflow: hidden;
 }
 
-/* =========================================
-   TOPIC CARDS
-   ========================================= */
+/* TOPIC CARDS */
 
 .learning-card {
   position: relative;
@@ -232,7 +217,7 @@ body {
   justify-content: flex-start;
 
   gap: 7px;
-  padding: 4px 7px;
+  padding: 5px 7px;
 
   background: var(--card-bg);
 
@@ -259,7 +244,7 @@ body {
     box-shadow 0.18s ease;
 }
 
-/* Topic icon */
+/* TOPIC ICON */
 
 .topic-icon {
   display: block;
@@ -278,7 +263,7 @@ body {
   background: transparent;
 }
 
-/* Topic label */
+/* TOPIC LABEL */
 
 .learning-card span {
   flex: 1;
@@ -296,7 +281,7 @@ body {
   word-break: normal;
 }
 
-/* Interaction */
+/* INTERACTION */
 
 .learning-card:active {
   background: var(--card-bg-hover);
@@ -319,9 +304,7 @@ body {
   }
 }
 
-/* =========================================
-   COMPACT PHONES
-   ========================================= */
+/* COMPACT PHONES */
 
 @media (max-width: 380px) {
   :root {
@@ -373,9 +356,7 @@ body {
   }
 }
 
-/* =========================================
-   SHORT SCREENS
-   ========================================= */
+/* SHORT SCREENS */
 
 @media (max-height: 740px) {
   .namaz-page {
@@ -417,9 +398,7 @@ body {
   }
 }
 
-/* =========================================
-   DARK THEME
-   ========================================= */
+/* DARK THEME */
 
 body.dark-mode {
   --page-bg: #121A15;
@@ -465,9 +444,7 @@ body.dark-mode .learning-card span {
   color: var(--text);
 }
 
-/* =========================================
-   ACCESSIBILITY
-   ========================================= */
+/* ACCESSIBILITY */
 
 @media (prefers-reduced-motion: reduce) {
   .learning-card {
