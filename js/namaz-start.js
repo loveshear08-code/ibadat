@@ -1,389 +1,290 @@
-/* ==========================================
-   IBADAT — NAMAZ START
-   Bengali | English | Hindi
-   Saved Language | Dark Mode
-   ========================================== */
-
-"use strict";
+/* =========================================
+   IBADAT — NAMAZ START PAGE
+   Bengali / English / Hindi
+   Language settings + Dark mode
+========================================= */
 
 (() => {
-  const SETTINGS_KEY = "appSettings";
-  const ASSET_BASE = "../assets/";
+  "use strict";
 
-  const page = document.querySelector(".namaz-start-page");
+  const STORAGE_KEY = "appSettings";
 
-  if (!page) {
-    console.warn("IBADAT: Namaz Start page not found.");
-    return;
-  }
+  /* =======================================
+     TRANSLATIONS
+  ======================================= */
 
-  /* ---------- LANGUAGE SETTINGS ---------- */
+  const translations = {
+    bn: {
+      pageTitle: "নামাজ শুরু করার প্রস্তুতি",
+      pageIntro: "নামাজের আগে প্রস্তুতি থেকে তাকবিরে তাহরিমা পর্যন্ত ধাপে ধাপে শিখে নাও।",
 
-  function getSettings() {
+      introTitle: "নামাজ শুরু করার আগে",
+      introText: "নামাজ আদায়ের আগে পবিত্রতা, সতর ঢাকা, কিবলামুখী হওয়া এবং নামাজের জন্য প্রস্তুত হওয়া জরুরি। এরপর অন্তরে নামাজের নিয়ত করে তাকবিরে তাহরিমার মাধ্যমে নামাজ শুরু করতে হয়।",
+
+      preparationSubtitle: "প্রথম ধাপ",
+      preparationTitle: "নামাজের প্রস্তুতি",
+      preparationIntroTitle: "নামাজের আগে যা নিশ্চিত করবে",
+      preparationIntroText: "নামাজ শুরু করার আগে নিচের বিষয়গুলো খেয়াল করো।",
+      preparationChecklistTitle: "প্রস্তুতির তালিকা",
+      preparationPoint1: "শরীর, পোশাক ও নামাজের স্থান পবিত্র রাখা।",
+      preparationPoint2: "ওযু থাকা এবং প্রয়োজন হলে গোসল করা।",
+      preparationPoint3: "নামাজের সময় হয়েছে কি না নিশ্চিত হওয়া।",
+      preparationPoint4: "সতর ঢেকে কিবলামুখী হয়ে দাঁড়ানো।",
+
+      niyyahSubtitle: "দ্বিতীয় ধাপ",
+      niyyahTitle: "নামাজের নিয়ত",
+      niyyahIntroTitle: "নিয়ত কী?",
+      niyyahIntroText: "নিয়ত হলো অন্তরে কোনো ইবাদত করার সংকল্প করা। কোন নামাজ আদায় করবে, তা অন্তরে স্থির করাই মূল বিষয়।",
+      niyyahMeaningTitle: "নিয়ত সম্পর্কে মনে রাখবে",
+      niyyahMeaningText: "নিয়ত মুখে উচ্চারণ করা আবশ্যক নয়; অন্তরের সংকল্পই নিয়তের মূল বিষয়।",
+      niyyahImportantTitle: "গুরুত্বপূর্ণ সতর্কতা",
+      niyyahImportantText: "নিয়ত নিয়ে অযথা সন্দেহ বা বারবার একই সংকল্প পুনরাবৃত্তি করে নিজেকে কষ্ট দেবে না।",
+
+      takbirSubtitle: "তৃতীয় ধাপ",
+      takbirTitle: "তাকবিরে তাহরিমা",
+      takbirIntroTitle: "তাকবিরে তাহরিমা কী?",
+      takbirIntroText: "নামাজ শুরু করার সময় আল্লাহু আকবার বলে নামাজে প্রবেশ করাকে তাকবিরে তাহরিমা বলা হয়।",
+      takbirHowTitle: "কীভাবে তাকবির বলবে",
+      takbirHowText: "নামাজ শুরু করার সময় “আল্লাহু আকবার” বলবে। হাত তোলার পদ্ধতি ও অবস্থান সম্পর্কে নিজের অনুসৃত নির্ভরযোগ্য শিক্ষার নির্দেশনা মেনে চলবে।",
+      takbirPronunciationTitle: "উচ্চারণ",
+      takbirPronunciationText: "আল্লাহু আকবার",
+      takbirMeaningTitle: "অর্থ",
+      takbirMeaningText: "আল্লাহ সর্বশ্রেষ্ঠ।",
+
+      sanaTitle: "ছানা পড়া",
+      sanaText: "তাকবিরে তাহরিমার পর ছানা পড়া হয়। ছানার প্রচলিত দোয়া নিচে দেওয়া হলো।",
+
+      sanaArabic: "سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ وَلَا إِلَهَ غَيْرُكَ",
+      sanaPronunciationTitle: "বাংলা উচ্চারণ",
+      sanaPronunciationText: "সুবহানাকাল্লাহুম্মা ওয়া বিহামদিকা, ওয়া তাবারাকাসমুকা, ওয়া তা'আলা জাদ্দুকা, ওয়া লা ইলাহা গাইরুক।",
+      sanaMeaningTitle: "অর্থ",
+      sanaMeaningText: "হে আল্লাহ! তুমি পবিত্র, তোমারই প্রশংসা। তোমার নাম বরকতময়, তোমার মর্যাদা অতি উচ্চ এবং তুমি ছাড়া কোনো উপাস্য নেই।",
+
+      nextStepsTitle: "এরপর কী করবে?",
+      nextStep1: "ছানা পড়ার পর নিজের নামাজের ধরন ও অনুসৃত পদ্ধতি অনুযায়ী পরবর্তী কিরাআত শুরু করবে।",
+      nextStep2: "নামাজের প্রতিটি অংশ ধীরস্থিরভাবে এবং মনোযোগ দিয়ে আদায় করবে।",
+      nextStep3: "নামাজের ফরজ, ওয়াজিব ও সুন্নত সম্পর্কে নির্ভরযোগ্য শিক্ষা গ্রহণ করবে।",
+      nextStep4: "কোনো বিষয়ে সন্দেহ হলে যোগ্য আলেমের কাছে জেনে নেবে।",
+
+      cautionTitle: "গুরুত্বপূর্ণ সতর্কতা",
+      cautionText: "নামাজের কিছু নিয়ম মাজহাব ও অনুসৃত ফিকহি পদ্ধতি অনুযায়ী ভিন্ন হতে পারে। তাই নিজের অনুসৃত নির্ভরযোগ্য পদ্ধতি অনুযায়ী শিখবে।",
+
+      footer: "পবিত্রতা রক্ষা করো, ইবাদতে প্রশান্তি খুঁজে নাও।",
+      footerText: "পবিত্রতা রক্ষা করো, ইবাদতে প্রশান্তি খুঁজে নাও।"
+    },
+
+    en: {
+      pageTitle: "Preparing to Begin Salah",
+      pageIntro: "Learn step by step, from preparation before prayer to the opening takbir.",
+
+      introTitle: "Before Starting Salah",
+      introText: "Before praying, ensure cleanliness, cover the required parts of the body, face the Qiblah, and prepare for prayer. Then make the intention in your heart and begin with the opening takbir.",
+
+      preparationSubtitle: "Step One",
+      preparationTitle: "Preparation for Salah",
+      preparationIntroTitle: "What to Check Before Salah",
+      preparationIntroText: "Keep the following points in mind before beginning your prayer.",
+      preparationChecklistTitle: "Preparation Checklist",
+      preparationPoint1: "Ensure that your body, clothes, and prayer place are clean.",
+      preparationPoint2: "Have wudu, and perform ghusl when required.",
+      preparationPoint3: "Make sure the prayer time has begun.",
+      preparationPoint4: "Cover the required parts of the body and face the Qiblah.",
+
+      niyyahSubtitle: "Step Two",
+      niyyahTitle: "Intention for Salah",
+      niyyahIntroTitle: "What Is Niyyah?",
+      niyyahIntroText: "Niyyah means forming the intention in your heart to perform an act of worship. The essential point is to establish in your heart which prayer you intend to perform.",
+      niyyahMeaningTitle: "Remember About Niyyah",
+      niyyahMeaningText: "Uttering the intention aloud is not obligatory; the intention in the heart is the essential part.",
+      niyyahImportantTitle: "Important Caution",
+      niyyahImportantText: "Do not distress yourself with unnecessary doubts or repeatedly renewing the same intention.",
+
+      takbirSubtitle: "Step Three",
+      takbirTitle: "Takbirat al-Ihram",
+      takbirIntroTitle: "What Is Takbirat al-Ihram?",
+      takbirIntroText: "Entering salah by saying “Allahu Akbar” at its beginning is called Takbirat al-Ihram.",
+      takbirHowTitle: "How to Say the Takbir",
+      takbirHowText: "At the beginning of salah, say “Allahu Akbar.” Follow the reliable guidance of the school or method you practise regarding raising and positioning the hands.",
+      takbirPronunciationTitle: "Pronunciation",
+      takbirPronunciationText: "Allahu Akbar",
+      takbirMeaningTitle: "Meaning",
+      takbirMeaningText: "Allah is the Greatest.",
+
+      sanaTitle: "Reciting the Sana",
+      sanaText: "Sana is recited after the opening takbir. A commonly taught supplication is given below.",
+
+      sanaArabic: "سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ وَلَا إِلَهَ غَيْرُكَ",
+      sanaPronunciationTitle: "Pronunciation",
+      sanaPronunciationText: "Subhanaka Allahumma wa bihamdika, wa tabarakasmuka, wa ta'ala jadduka, wa la ilaha ghayruk.",
+      sanaMeaningTitle: "Meaning",
+      sanaMeaningText: "Glory and praise belong to You, O Allah. Blessed is Your name, exalted is Your majesty, and there is no deity besides You.",
+
+      nextStepsTitle: "What Comes Next?",
+      nextStep1: "After the Sana, begin the next recitation according to your prayer and the method you follow.",
+      nextStep2: "Perform each part of the prayer calmly and attentively.",
+      nextStep3: "Learn the obligatory, necessary, and Sunnah acts of prayer from reliable sources.",
+      nextStep4: "If you are unsure about something, ask a qualified scholar.",
+
+      cautionTitle: "Important Caution",
+      cautionText: "Some details of salah may differ according to the school of jurisprudence and the method followed. Learn according to reliable guidance from your own tradition.",
+
+      footer: "Maintain purity and find peace in worship.",
+      footerText: "Maintain purity and find peace in worship."
+    },
+
+    hi: {
+      pageTitle: "नमाज़ शुरू करने की तैयारी",
+      pageIntro: "नमाज़ से पहले की तैयारी से लेकर तकबीरे तहरीमा तक, चरण-दर-चरण सीखें।",
+
+      introTitle: "नमाज़ शुरू करने से पहले",
+      introText: "नमाज़ पढ़ने से पहले पाकीज़गी, शरीर के आवश्यक अंगों को ढकना, क़िबला की ओर रुख करना और नमाज़ के लिए तैयार होना ज़रूरी है। फिर दिल में नियत करके तकबीरे तहरीमा से नमाज़ शुरू करें।",
+
+      preparationSubtitle: "पहला चरण",
+      preparationTitle: "नमाज़ की तैयारी",
+      preparationIntroTitle: "नमाज़ से पहले क्या जाँचें",
+      preparationIntroText: "नमाज़ शुरू करने से पहले इन बातों का ध्यान रखें।",
+      preparationChecklistTitle: "तैयारी की सूची",
+      preparationPoint1: "शरीर, कपड़े और नमाज़ की जगह पाक रखें।",
+      preparationPoint2: "वुज़ू की हालत में हों और ज़रूरत होने पर ग़ुस्ल करें।",
+      preparationPoint3: "सुनिश्चित करें कि नमाज़ का समय शुरू हो गया है।",
+      preparationPoint4: "शरीर के आवश्यक अंगों को ढककर क़िबला की ओर खड़े हों।",
+
+      niyyahSubtitle: "दूसरा चरण",
+      niyyahTitle: "नमाज़ की नियत",
+      niyyahIntroTitle: "नियत क्या है?",
+      niyyahIntroText: "नियत का अर्थ दिल में इबादत करने का इरादा करना है। आप कौन-सी नमाज़ पढ़ रहे हैं, इसे दिल में तय करना मूल बात है।",
+      niyyahMeaningTitle: "नियत के बारे में याद रखें",
+      niyyahMeaningText: "नियत को ज़ुबान से कहना अनिवार्य नहीं है; दिल का इरादा ही नियत का मूल है।",
+      niyyahImportantTitle: "महत्वपूर्ण सावधानी",
+      niyyahImportantText: "बेवजह शक करके या बार-बार वही नियत दोहराकर खुद को परेशान न करें।",
+
+      takbirSubtitle: "तीसरा चरण",
+      takbirTitle: "तकबीरे तहरीमा",
+      takbirIntroTitle: "तकबीरे तहरीमा क्या है?",
+      takbirIntroText: "नमाज़ शुरू करते समय “अल्लाहु अकबर” कहकर नमाज़ में प्रवेश करना तकबीरे तहरीमा कहलाता है।",
+      takbirHowTitle: "तकबीर कैसे कहें",
+      takbirHowText: "नमाज़ शुरू करते समय “अल्लाहु अकबर” कहें। हाथ उठाने और रखने के तरीके के लिए अपने मान्य फ़िक़्ही तरीके की विश्वसनीय शिक्षा का पालन करें।",
+      takbirPronunciationTitle: "उच्चारण",
+      takbirPronunciationText: "अल्लाहु अकबर",
+      takbirMeaningTitle: "अर्थ",
+      takbirMeaningText: "अल्लाह सबसे महान है।",
+
+      sanaTitle: "सना पढ़ना",
+      sanaText: "तकबीरे तहरीमा के बाद सना पढ़ी जाती है। नीचे एक प्रचलित दुआ दी गई है।",
+
+      sanaArabic: "سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ وَلَا إِلَهَ غَيْرُكَ",
+      sanaPronunciationTitle: "उच्चारण",
+      sanaPronunciationText: "सुब्हानकल्लाहुम्मा व बिहम्दिका, व तबारकस्मुका, व तआला जद्दुका, व ला इलाहा ग़ैरुक।",
+      sanaMeaningTitle: "अर्थ",
+      sanaMeaningText: "ऐ अल्लाह! तू पाक है और सारी प्रशंसा तेरे लिए है। तेरा नाम बरकत वाला है, तेरी शान बुलंद है और तेरे सिवा कोई उपास्य नहीं।",
+
+      nextStepsTitle: "इसके बाद क्या करें?",
+      nextStep1: "सना के बाद अपनी नमाज़ और अपनाए गए तरीके के अनुसार अगली क़िराअत शुरू करें।",
+      nextStep2: "नमाज़ के हर भाग को शांति और ध्यान के साथ अदा करें।",
+      nextStep3: "विश्वसनीय स्रोतों से नमाज़ के फ़र्ज़, वाजिब और सुन्नत कार्य सीखें।",
+      nextStep4: "किसी बात में संदेह हो तो योग्य आलिम से पूछें।",
+
+      cautionTitle: "महत्वपूर्ण सावधानी",
+      cautionText: "नमाज़ के कुछ नियम फ़िक़्ही मज़हब और अपनाए गए तरीके के अनुसार अलग हो सकते हैं। अपने तरीके की विश्वसनीय शिक्षा के अनुसार सीखें।",
+
+      footer: "पाकीज़गी बनाए रखें और इबादत में सुकून पाएँ।",
+      footerText: "पाकीज़गी बनाए रखें और इबादत में सुकून पाएँ।"
+    }
+  };
+
+  /* =======================================
+     SETTINGS
+  ======================================= */
+
+  function readSettings() {
     try {
-      return JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{}");
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved ? JSON.parse(saved) : {};
     } catch (error) {
-      console.warn("IBADAT: Could not read settings.", error);
       return {};
     }
   }
 
   function getLanguage() {
+    const settings = readSettings();
     const params = new URLSearchParams(window.location.search);
-    const requestedLanguage = params.get("lang");
-    const savedLanguage = getSettings().lang;
+    const urlLanguage = params.get("lang");
 
-    const language = requestedLanguage || savedLanguage || "bn";
+    const language = (
+      urlLanguage ||
+      settings.lang ||
+      settings.language ||
+      "bn"
+    ).toLowerCase();
 
-    return ["bn", "en", "hi"].includes(language)
-      ? language
-      : "bn";
+    return translations[language] ? language : "bn";
   }
-
-  let currentLanguage = getLanguage();
-
-  /* ---------- PAGE CONTENT ---------- */
-
-  const content = {
-    bn: {
-      pageTitle: "নামাজ শুরু | IBADAT",
-      description:
-        "নিয়ত, তাকবিরে তাহরিমা এবং নামাজ শুরু করার নিয়ম ধাপে ধাপে শিখুন।",
-
-      heroTitle: "নামাজ শুরু",
-      heroText:
-        "নিয়ত থেকে তাকবিরে তাহরিমা পর্যন্ত নামাজ শুরু করার প্রাথমিক নিয়মগুলো শিখুন।",
-
-      preparation: {
-        subtitle: "প্রথম পাঠ",
-        title: "নামাজের প্রস্তুতি",
-        intro:
-          "নামাজ শুরু করার আগে ওয়াক্ত, পবিত্রতা, পোশাক ও নামাজের স্থান সম্পর্কে নিশ্চিত হও।",
-        heading: "নামাজের আগে যা যাচাই করবে",
-        points: [
-          "নামাজের নির্ধারিত ওয়াক্ত হয়েছে কি না নিশ্চিত হও।",
-          "প্রয়োজন অনুযায়ী অজু, গোসল বা তায়াম্মুমের মাধ্যমে পবিত্রতা অর্জন করো।",
-          "শরীর, পোশাক ও নামাজের স্থান পবিত্র রাখো এবং সতর ঢেকে নাও।",
-          "কিবলামুখী হয়ে মনোযোগসহ নামাজের জন্য প্রস্তুত হও।"
-        ]
-      },
-
-      intention: {
-        subtitle: "দ্বিতীয় পাঠ",
-        title: "নিয়ত",
-        intro:
-          "নিয়ত হলো কোন নামাজ আদায় করবে, তা অন্তরে স্থির করা।",
-        heading: "নিয়ত করার নিয়ম",
-        points: [
-          "কোন নামাজ আদায় করবে, তা মনে নির্দিষ্ট করো।",
-          "নিয়তের জন্য নির্দিষ্ট আরবি বাক্য মুখে বলা আবশ্যক নয়।",
-          "ইমামের পেছনে নামাজ পড়লে জামাতে শরিক হওয়ার বিষয়টিও মনে রাখো।"
-        ]
-      },
-
-      takbir: {
-        subtitle: "তৃতীয় পাঠ",
-        title: "তাকবিরে তাহরিমা",
-        intro:
-          "‘আল্লাহু আকবার’ বলে নামাজ শুরু করাকে তাকবিরে তাহরিমা বলা হয়।",
-        heading: "তাকবিরে তাহরিমার নিয়ম",
-        points: [
-          "সক্ষম হলে সোজা হয়ে দাঁড়িয়ে কিবলামুখী হও।",
-          "নামাজ শুরু করার সময় ‘আল্লাহু আকবার’ বলো।",
-          "তাকবিরের মাধ্যমে নামাজে প্রবেশ করার পর নামাজের নির্ধারিত নিয়ম মেনে চলো।"
-        ],
-        arabic: "اللّٰهُ أَكْبَرُ",
-        pronunciation: "আল্লাহু আকবার",
-        meaning: "অর্থ: আল্লাহ সর্বশ্রেষ্ঠ।"
-      },
-
-      nextHeading: "এরপর কী করবে?",
-      nextText:
-        "তাকবিরে তাহরিমার পর নামাজের নিয়ম অনুযায়ী সানা পড়বে। এরপর কিরাতসহ পরবর্তী কাজগুলো ধারাবাহিকভাবে আদায় করবে।",
-
-      cautionHeading: "মনে রাখবে",
-      cautionText:
-        "এগুলো নামাজ শেখার প্রাথমিক নির্দেশনা। বিস্তারিত বিধানে মাজহাব ও পরিস্থিতি অনুযায়ী পার্থক্য থাকতে পারে। সঠিক পদ্ধতি নির্ভরযোগ্য আলেম বা শিক্ষকের কাছ থেকে শিখে নাও।",
-
-      footer: "পবিত্রতা রক্ষা করো, ইবাদতে প্রশান্তি খুঁজে নাও।"
-    },
-
-    en: {
-      pageTitle: "Starting Salah | IBADAT",
-      description:
-        "Learn the intention, opening takbir and the basic steps for beginning Salah.",
-
-      heroTitle: "Starting Salah",
-      heroText:
-        "Learn the essential steps for beginning Salah, from intention to the opening takbir.",
-
-      preparation: {
-        subtitle: "Lesson One",
-        title: "Preparation for Salah",
-        intro:
-          "Before starting Salah, check the prayer time, purification, clothing and prayer area.",
-        heading: "Before you begin",
-        points: [
-          "Make sure the prescribed prayer time has begun.",
-          "Purify yourself through wudu, ghusl or tayammum when required.",
-          "Ensure your body, clothing and prayer area are clean, and cover the required parts of the body.",
-          "Face the Qiblah and prepare to pray attentively."
-        ]
-      },
-
-      intention: {
-        subtitle: "Lesson Two",
-        title: "Intention (Niyyah)",
-        intro:
-          "Niyyah means having the intention in your heart to perform a particular prayer.",
-        heading: "Making the intention",
-        points: [
-          "Know in your heart which prayer you are about to perform.",
-          "Saying a specific Arabic formula aloud is not required for the intention itself.",
-          "If praying behind an imam, keep your participation in the congregation in mind."
-        ]
-      },
-
-      takbir: {
-        subtitle: "Lesson Three",
-        title: "Opening Takbir",
-        intro:
-          "The opening declaration ‘Allahu Akbar’ marks the beginning of Salah.",
-        heading: "How to begin",
-        points: [
-          "Stand upright facing the Qiblah if you are able to stand.",
-          "Begin the prayer by saying ‘Allahu Akbar’.",
-          "After entering Salah with the opening takbir, follow the prescribed rules of prayer."
-        ],
-        arabic: "اللّٰهُ أَكْبَرُ",
-        pronunciation: "Allahu Akbar",
-        meaning: "Meaning: Allah is the Greatest."
-      },
-
-      nextHeading: "What comes next?",
-      nextText:
-        "After the opening takbir, recite the opening supplication (Sana) according to the method you follow, then continue with the prescribed recitation and actions of Salah.",
-
-      cautionHeading: "Remember",
-      cautionText:
-        "These are introductory learning guidelines. Some details may vary by school of thought and circumstance. Learn the correct method from a trusted scholar or teacher.",
-
-      footer: "Preserve purity and find peace in worship."
-    },
-
-    hi: {
-      pageTitle: "नमाज़ की शुरुआत | IBADAT",
-      description:
-        "नमाज़ की नियत, तकबीर-ए-तहरीमा और शुरुआत के बुनियादी तरीक़े सीखें।",
-
-      heroTitle: "नमाज़ की शुरुआत",
-      heroText:
-        "नियत से लेकर तकबीर-ए-तहरीमा तक नमाज़ शुरू करने के बुनियादी तरीक़े सीखें।",
-
-      preparation: {
-        subtitle: "पहला पाठ",
-        title: "नमाज़ की तैयारी",
-        intro:
-          "नमाज़ शुरू करने से पहले वक़्त, पाक-सफ़ाई, कपड़ों और नमाज़ की जगह की जाँच करें।",
-        heading: "शुरू करने से पहले",
-        points: [
-          "सुनिश्चित करें कि नमाज़ का निर्धारित वक़्त शुरू हो गया है।",
-          "ज़रूरत के अनुसार वुज़ू, ग़ुस्ल या तयम्मुम से पाकी हासिल करें।",
-          "शरीर, कपड़े और नमाज़ की जगह को पाक रखें तथा ज़रूरी अंग ढकें।",
-          "क़िबले की ओर मुँह करके ध्यान के साथ नमाज़ के लिए तैयार हों।"
-        ]
-      },
-
-      intention: {
-        subtitle: "दूसरा पाठ",
-        title: "नियत",
-        intro:
-          "नियत का अर्थ है दिल में यह तय करना कि कौन-सी नमाज़ अदा करनी है।",
-        heading: "नियत करने का तरीक़ा",
-        points: [
-          "दिल में तय करें कि कौन-सी नमाज़ अदा करनी है।",
-          "नियत के लिए किसी ख़ास अरबी वाक्य को ज़ोर से कहना ज़रूरी नहीं है।",
-          "इमाम के पीछे नमाज़ पढ़ते समय जमाअत में शामिल होने का इरादा भी रखें।"
-        ]
-      },
-
-      takbir: {
-        subtitle: "तीसरा पाठ",
-        title: "तकबीर-ए-तहरीमा",
-        intro:
-          "‘अल्लाहु अकबर’ कहकर नमाज़ शुरू करने को तकबीर-ए-तहरीमा कहते हैं।",
-        heading: "तकबीर-ए-तहरीमा का तरीक़ा",
-        points: [
-          "यदि खड़े हो सकते हैं, तो सीधे खड़े होकर क़िबले की ओर मुँह करें।",
-          "‘अल्लाहु अकबर’ कहकर नमाज़ शुरू करें।",
-          "तकबीर के बाद नमाज़ के निर्धारित नियमों का पालन करें।"
-        ],
-        arabic: "اللّٰهُ أَكْبَرُ",
-        pronunciation: "अल्लाहु अकबर",
-        meaning: "अर्थ: अल्लाह सबसे महान है।"
-      },
-
-      nextHeading: "इसके बाद क्या करें?",
-      nextText:
-        "तकबीर-ए-तहरीमा के बाद अपने तरीक़े के अनुसार सना पढ़ें। फिर क़िराअत और नमाज़ के अगले काम क्रम से अदा करें।",
-
-      cautionHeading: "याद रखें",
-      cautionText:
-        "ये नमाज़ सीखने के शुरुआती निर्देश हैं। फ़िक़्ही विवरण मज़हब और परिस्थिति के अनुसार अलग हो सकते हैं। सही तरीक़ा किसी भरोसेमंद आलिम या शिक्षक से सीखें।",
-
-      footer: "पाकी बनाए रखें, इबादत में सुकून पाएँ।"
-    }
-  };
-
-  /* ---------- TEXT HELPERS ---------- */
-
-  function getText() {
-    return content[currentLanguage] || content.bn;
-  }
-
-  function setText(selector, value) {
-    const element = page.querySelector(selector);
-
-    if (element && typeof value === "string") {
-      element.textContent = value;
-    }
-  }
-
-  function setList(selector, items) {
-    const list = page.querySelector(selector);
-
-    if (!list || !Array.isArray(items)) {
-      return;
-    }
-
-    const fragment = document.createDocumentFragment();
-
-    items.forEach((item) => {
-      const li = document.createElement("li");
-      li.textContent = item;
-      fragment.appendChild(li);
-    });
-
-    list.replaceChildren(fragment);
-  }
-
-  /* ---------- BUILD PAGE TEXT ---------- */
-
-  function buildPage() {
-    const text = getText();
-
-    document.documentElement.lang = currentLanguage;
-    document.title = text.pageTitle;
-
-    const description = document.querySelector(
-      'meta[name="description"]'
-    );
-
-    if (description) {
-      description.setAttribute("content", text.description);
-    }
-
-    setText(".hero-content h1", text.heroTitle);
-    setText(".hero-content p", text.heroText);
-
-    setText("#preparation-subtitle", text.preparation.subtitle);
-    setText("#preparation-title", text.preparation.title);
-    setText("#preparation-intro", text.preparation.intro);
-    setText("#preparation-heading", text.preparation.heading);
-    setList("#preparation-list", text.preparation.points);
-
-    setText("#intention-subtitle", text.intention.subtitle);
-    setText("#intention-title", text.intention.title);
-    setText("#intention-intro", text.intention.intro);
-    setText("#intention-heading", text.intention.heading);
-    setList("#intention-list", text.intention.points);
-
-    setText("#takbir-subtitle", text.takbir.subtitle);
-    setText("#takbir-title", text.takbir.title);
-    setText("#takbir-intro", text.takbir.intro);
-    setText("#takbir-heading", text.takbir.heading);
-    setList("#takbir-list", text.takbir.points);
-
-    setText("#takbir-arabic", text.takbir.arabic);
-    setText("#takbir-pronunciation", text.takbir.pronunciation);
-    setText("#takbir-meaning", text.takbir.meaning);
-
-    setText("#next-heading", text.nextHeading);
-    setText("#next-text", text.nextText);
-
-    setText("#caution-heading", text.cautionHeading);
-    setText("#caution-text", text.cautionText);
-
-    setText(".page-footer p", text.footer);
-
-    page.querySelectorAll("[data-language-label]").forEach((element) => {
-      const key = element.dataset.languageLabel;
-
-      if (text[key]) {
-        element.textContent = text[key];
-      }
-    });
-  }
-
-  /* ---------- DARK MODE ---------- */
 
   function applyTheme() {
-    const settings = getSettings();
+    const settings = readSettings();
+    const darkMode = Boolean(settings.dark);
 
-    document.body.classList.toggle(
-      "dark-mode",
-      Boolean(settings.dark)
-    );
+    document.body.classList.toggle("dark-mode", darkMode);
+    document.documentElement.classList.toggle("dark-mode", darkMode);
   }
 
-  /* ---------- IMAGE CHECK ---------- */
+  /* =======================================
+     APPLY TRANSLATIONS
+  ======================================= */
 
-  function checkImages() {
-    page.querySelectorAll(".topic-image img").forEach((image) => {
-      image.addEventListener("error", () => {
-        image.classList.add("image-load-error");
-        console.warn("IBADAT: Image could not be loaded:", image.src);
-      });
+  function applyTranslations(language) {
+    const content = translations[language] || translations.bn;
 
-      image.addEventListener("load", () => {
-        image.classList.remove("image-load-error");
-      });
+    document.documentElement.lang = language;
 
-      if (image.complete && image.naturalWidth === 0) {
-        image.classList.add("image-load-error");
+    document.querySelectorAll("[data-i18n]").forEach((element) => {
+      const key = element.dataset.i18n;
+
+      if (Object.prototype.hasOwnProperty.call(content, key)) {
+        element.textContent = content[key];
       }
     });
+
+    document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+      const key = element.dataset.i18nPlaceholder;
+
+      if (Object.prototype.hasOwnProperty.call(content, key)) {
+        element.setAttribute("placeholder", content[key]);
+      }
+    });
+
+    document.querySelectorAll("[data-i18n-title]").forEach((element) => {
+      const key = element.dataset.i18nTitle;
+
+      if (Object.prototype.hasOwnProperty.call(content, key)) {
+        element.setAttribute("title", content[key]);
+      }
+    });
+
+    document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
+      const key = element.dataset.i18nAriaLabel;
+
+      if (Object.prototype.hasOwnProperty.call(content, key)) {
+        element.setAttribute("aria-label", content[key]);
+      }
+    });
+
+    document.title = content.pageTitle || "IBADAT";
   }
 
-  /* ---------- LANGUAGE REFRESH ---------- */
+  /* =======================================
+     INITIALIZE PAGE
+  ======================================= */
 
-  function refreshNamazStartPage() {
-    currentLanguage = getLanguage();
+  function initializePage() {
     applyTheme();
-    buildPage();
-  }
-
-  window.refreshNamazStartPage = refreshNamazStartPage;
-
-  window.addEventListener("storage", (event) => {
-    if (event.key === SETTINGS_KEY) {
-      refreshNamazStartPage();
-    }
-  });
-
-  /* ---------- INITIALIZE ---------- */
-
-  function initialize() {
-    applyTheme();
-    buildPage();
-    checkImages();
+    applyTranslations(getLanguage());
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initialize, {
-      once: true
-    });
+    document.addEventListener("DOMContentLoaded", initializePage);
   } else {
-    initialize();
+    initializePage();
   }
+
 })();
