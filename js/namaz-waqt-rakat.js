@@ -39,8 +39,7 @@
       jumuahLabel: "জুমার ফরজ",
       jumuahNote: "জুমার নামাজের জন্য খুতবা ও জামাতসহ নির্ধারিত শর্ত পূরণ করতে হয়।",
 
-      summaryTitle: "নামাজের রাকাতের সংক্ষিপ্ত তালিকা",
-      summaryIntro: "প্রচলিত হানাফি আমল অনুযায়ী সাধারণ রাকাতের একটি সংক্ষিপ্ত তালিকা।",
+      summaryTitle: "নামাজের রাকাত পরিচিতি",
       thPrayer: "নামাজ",
       thBefore: "আগের সুন্নত",
       thFard: "ফরজ",
@@ -114,8 +113,7 @@
       jumuahLabel: "Jumu'ah Fard",
       jumuahNote: "Jumu'ah requires its prescribed conditions, including the khutbah and congregation.",
 
-      summaryTitle: "Prayer Rakat Summary",
-      summaryIntro: "A brief overview of commonly practised rakats according to the Hanafi tradition.",
+      summaryTitle: "Prayer Rakat Guide",
       thPrayer: "Prayer",
       thBefore: "Before Sunnah",
       thFard: "Fard",
@@ -189,8 +187,7 @@
       jumuahLabel: "जुमे के फ़र्ज़",
       jumuahNote: "जुमे की नमाज़ के लिए ख़ुत्बा और जमाअत सहित निर्धारित शर्तें पूरी होना ज़रूरी है।",
 
-      summaryTitle: "नमाज़ की रकअतों की सूची",
-      summaryIntro: "हनफ़ी परंपरा में प्रचलित रकअतों का संक्षिप्त विवरण।",
+     summaryTitle: "नमाज़ की रकअत परिचय", 
       thPrayer: "नमाज़",
       thBefore: "पहले की सुन्नत",
       thFard: "फ़र्ज़",
