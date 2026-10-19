@@ -40,7 +40,7 @@
     "purity": "namaz-purity.html",
     "conditions": "namaz-conditions.html",
     "times-rakats": "namaz-waqt-rakat.html",
-    "fard-wajib-sunnah": "namaz-rulings.html",
+    "fard-wajib-sunnah": "farz-wajib-sunnat.html",
     "start": "namaz-start.html",
     "qirat": "namaz-qirat.html",
     "ruku": "namaz-ruku.html",
