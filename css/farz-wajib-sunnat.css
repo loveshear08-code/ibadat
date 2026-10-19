@@ -187,10 +187,7 @@ textarea {
   line-height: 1.9;
 }
 
-/* ---------- Main topic sections ----------
-   The page background remains visible between
-   separate content boards.
-   ---------------------------------------- */
+/* ---------- Main topic sections ---------- */
 
 .topic-board {
   width: 100%;
@@ -208,7 +205,27 @@ textarea {
   scroll-margin-top: 16px;
 }
 
-/* ---------- Topic heading and image board ---------- */
+/* ---------- Combined heading, image and definition boards ---------- */
+
+.farz-content-board,
+.wajib-content-board,
+.sunnat-content-board {
+  width: 100%;
+  min-width: 0;
+
+  margin: 0 0 var(--section-gap);
+  padding: var(--board-padding);
+
+  border: 1px solid var(--border);
+  border-radius: var(--board-radius);
+
+  color: var(--text);
+  background: var(--board);
+
+  box-shadow: var(--shadow);
+}
+
+/* ---------- Topic heading ---------- */
 
 .topic-heading {
   display: flex;
@@ -254,6 +271,8 @@ textarea {
   line-height: 1;
 }
 
+/* ---------- Images inside the combined board ---------- */
+
 .topic-image {
   display: flex;
   align-items: center;
@@ -262,8 +281,12 @@ textarea {
   width: 100%;
   min-width: 0;
 
-  margin: 0 auto;
+  margin: 0 auto 24px;
   padding: 0;
+
+  background: transparent;
+  border: 0;
+  border-radius: 0;
 }
 
 .topic-image img {
@@ -276,14 +299,37 @@ textarea {
 
   margin: 0 auto;
 
-  border: 2px solid rgba(201, 173, 62, 0.68);
-  border-radius: 50%;
+  border: 0;
+  border-radius: 0;
 
-  background: #f4edda;
-  box-shadow: 0 4px 12px rgba(38, 67, 45, 0.09);
+  background: transparent;
+  box-shadow: none;
 }
 
-/* ---------- Separate content boards ---------- */
+/* ---------- Definition heading inside combined board ---------- */
+
+.farz-content-board > .info-board,
+.wajib-content-board > .info-board,
+.sunnat-content-board > .info-board {
+  width: 100%;
+  min-width: 0;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  border-radius: 0;
+
+  color: var(--muted);
+  background: transparent;
+
+  box-shadow: none;
+
+  font-size: 1rem;
+  line-height: 1.9;
+}
+
+/* ---------- Separate information boards ---------- */
 
 .info-board {
   width: 100%;
@@ -509,10 +555,26 @@ body.dark-mode .hero-content p {
   color: #e4eee5;
 }
 
+body.dark-mode .farz-content-board,
+body.dark-mode .wajib-content-board,
+body.dark-mode .sunnat-content-board {
+  color: var(--text);
+  background: var(--board);
+  border-color: var(--border);
+}
+
 body.dark-mode .info-board {
   color: var(--text);
   background: var(--board);
   border-color: var(--border);
+}
+
+body.dark-mode .farz-content-board > .info-board,
+body.dark-mode .wajib-content-board > .info-board,
+body.dark-mode .sunnat-content-board > .info-board {
+  color: var(--muted);
+  background: transparent;
+  border-color: transparent;
 }
 
 body.dark-mode .topic-heading h2,
@@ -528,8 +590,7 @@ body.dark-mode .topic-number {
 }
 
 body.dark-mode .topic-image img {
-  background: #24392b;
-  border-color: rgba(201, 173, 62, 0.55);
+  background: transparent;
 }
 
 body.dark-mode .info-board p {
@@ -583,6 +644,12 @@ body.dark-mode .page-footer {
     padding: 38px 30px;
   }
 
+  .farz-content-board,
+  .wajib-content-board,
+  .sunnat-content-board {
+    padding: 28px 26px;
+  }
+
   .topic-heading {
     margin-bottom: 24px;
   }
@@ -599,6 +666,12 @@ body.dark-mode .page-footer {
 
   .info-board {
     padding: 22px 22px;
+  }
+
+  .farz-content-board > .info-board,
+  .wajib-content-board > .info-board,
+  .sunnat-content-board > .info-board {
+    padding: 0;
   }
 
   .important-note {
@@ -637,6 +710,14 @@ body.dark-mode .page-footer {
     margin-bottom: 16px;
   }
 
+  .farz-content-board,
+  .wajib-content-board,
+  .sunnat-content-board {
+    margin-bottom: 16px;
+    padding: 20px 16px;
+    border-radius: 23px;
+  }
+
   .topic-heading {
     gap: 10px;
     margin-bottom: 18px;
@@ -666,6 +747,16 @@ body.dark-mode .page-footer {
     padding: 16px 14px;
     border-radius: 15px;
     font-size: 0.97rem;
+  }
+
+  .farz-content-board > .info-board,
+  .wajib-content-board > .info-board,
+  .sunnat-content-board > .info-board {
+    margin-bottom: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
   }
 
   .info-board h3 {
@@ -739,6 +830,13 @@ body.dark-mode .page-footer {
     font-size: 0.93rem;
   }
 
+  .farz-content-board,
+  .wajib-content-board,
+  .sunnat-content-board {
+    padding: 17px 12px;
+    border-radius: 20px;
+  }
+
   .topic-heading {
     gap: 8px;
   }
@@ -761,6 +859,12 @@ body.dark-mode .page-footer {
   .info-board {
     padding: 14px 11px;
     border-radius: 13px;
+  }
+
+  .farz-content-board > .info-board,
+  .wajib-content-board > .info-board,
+  .sunnat-content-board > .info-board {
+    padding: 0;
   }
 
   .info-board h3 {
