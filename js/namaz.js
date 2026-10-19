@@ -60,7 +60,7 @@
     },
     {
       id: "arabic-learning",
-      icon: "qaida-arabic-reading.png",
+      icon: "arabic-learning.png",
       title: {
         bn: "আরবি শিক্ষা",
         en: "Arabic Learning",
@@ -87,7 +87,7 @@
     },
     {
       id: "times-rakats",
-      icon: "prayer-times-rakats.png",
+      icon: "waqt-rakat.png",
       title: {
         bn: "ওয়াক্ত ও রাকাত",
         en: "Prayer Times & Rakats",
