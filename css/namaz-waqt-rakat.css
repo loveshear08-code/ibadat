@@ -530,13 +530,20 @@ tbody tr.jumuah-row {
 /* ---------- Nafl prayer information ---------- */
 
 .nafl-list {
-  margin-top: 26px;
-  padding-top: 22px;
+  width: 100%;
+  min-width: 0;
 
-  border-top: 1px solid var(--border);
+  margin: 0 0 var(--section-gap);
+  padding: 28px 22px;
+
+  border: 1px solid var(--border);
+  border-radius: var(--board-radius);
+
+  background: var(--board);
+  box-shadow: var(--shadow);
 }
 
-.nafl-list h3 {
+.nafl-list h2 {
   margin: 0 0 16px;
 
   color: var(--green);
@@ -625,15 +632,17 @@ tbody tr.jumuah-row {
 /* ---------- Important caution ---------- */
 
 .important-note {
-  margin-top: 24px;
-  padding: 16px 18px;
+  width: 100%;
+  min-width: 0;
 
-  border: 1px solid #e2d6a9;
-  border-left: 4px solid var(--gold);
-  border-radius: 0 14px 14px 0;
+  margin: 0 0 var(--section-gap);
+  padding: 28px 22px;
 
-  background: rgba(248, 243, 227, 0.82);
-  box-shadow: none;
+  border: 1px solid var(--border);
+  border-radius: var(--board-radius);
+
+  background: var(--board);
+  box-shadow: var(--shadow);
 }
 
 .important-note > strong {
@@ -661,7 +670,7 @@ tbody tr.jumuah-row {
 .important-note p {
   margin: 0;
 
-  color: #5c512f;
+  color: var(--muted);
 
   font-size: 1.02rem;
   font-weight: 500;
@@ -751,7 +760,9 @@ body.dark-mode .hero-content p {
 
 body.dark-mode .prayer-card,
 body.dark-mode .special-prayer,
-body.dark-mode .summary-board {
+body.dark-mode .summary-board,
+body.dark-mode .nafl-list,
+body.dark-mode .important-note {
   color: var(--text);
   background: var(--board);
   border-color: var(--border);
@@ -771,7 +782,7 @@ body.dark-mode .prayer-content h2,
 body.dark-mode .special-prayer h2,
 body.dark-mode .special-prayer .prayer-content h2,
 body.dark-mode .summary-heading h2,
-body.dark-mode .nafl-list h3,
+body.dark-mode .nafl-list h2,
 body.dark-mode .nafl-item h4 {
   color: #c6e6c2;
 }
@@ -837,10 +848,6 @@ body.dark-mode tbody tr.jumuah-row {
   background: rgba(53, 88, 62, 0.42);
 }
 
-body.dark-mode .nafl-list {
-  border-top-color: var(--border);
-}
-
 body.dark-mode .nafl-list li {
   color: var(--text);
 }
@@ -854,19 +861,13 @@ body.dark-mode .nafl-item {
   background: transparent;
 }
 
-body.dark-mode .important-note {
-  background: rgba(58, 52, 29, 0.35);
-  border-color: #76652f;
-  border-left-color: var(--gold);
-}
-
 body.dark-mode .important-note > strong,
 body.dark-mode .important-note h3 {
-  color: #e7d58a;
+  color: #c6e6c2;
 }
 
 body.dark-mode .important-note p {
-  color: #e4ddc1;
+  color: var(--muted);
 }
 
 body.dark-mode .page-footer {
@@ -905,6 +906,11 @@ body.dark-mode .page-footer {
   }
 
   .summary-board {
+    padding: 30px 26px;
+  }
+
+  .nafl-list,
+  .important-note {
     padding: 30px 26px;
   }
 
@@ -1046,12 +1052,14 @@ body.dark-mode .page-footer {
     line-height: 1.85;
   }
 
-  .nafl-list {
-    margin-top: 22px;
-    padding-top: 18px;
+  .nafl-list,
+  .important-note {
+    margin-bottom: 16px;
+    padding: 22px 16px;
+    border-radius: 23px;
   }
 
-  .nafl-list h3 {
+  .nafl-list h2 {
     font-size: 1.2rem;
   }
 
@@ -1073,11 +1081,6 @@ body.dark-mode .page-footer {
     font-size: 0.96rem;
   }
 
-  .important-note {
-    margin-top: 20px;
-    padding: 13px 14px;
-  }
-
   .important-note > strong,
   .important-note h3 {
     font-size: 1.05rem;
@@ -1089,12 +1092,12 @@ body.dark-mode .page-footer {
   }
 
   .page-footer {
-  min-height: 80px;
-  padding: 17px 14px;
-  border-radius: 22px;
-  font-size: clamp(1rem, 3.8vw, 1.2rem);
-   margin-bottom: 12px;  
-}
+    min-height: 80px;
+    padding: 17px 14px;
+    border-radius: 22px;
+    font-size: clamp(1rem, 3.8vw, 1.2rem);
+    margin-bottom: 12px;
+  }
 }
 
 /* ---------- Extra-small phones ---------- */
@@ -1152,7 +1155,9 @@ body.dark-mode .page-footer {
     border-radius: 20px;
   }
 
-  .summary-board {
+  .summary-board,
+  .nafl-list,
+  .important-note {
     padding: 18px 12px;
     border-radius: 20px;
   }
@@ -1166,7 +1171,7 @@ body.dark-mode .page-footer {
   }
 
   .important-note {
-    padding: 11px 12px;
+    padding: 18px 12px;
   }
 }
 
