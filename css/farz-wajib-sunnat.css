@@ -1,0 +1,812 @@
+/* ==========================================
+   IBADAT — FARZ, WAJIB O SUNNAT
+   Matched with Waqt o Rakat design
+   ========================================== */
+
+:root {
+  --green: #14583e;
+  --green-dark: #103f2e;
+  --green-soft: #e2f0dc;
+  --gold: #c9ad3e;
+  --gold-dark: #a98520;
+  --text: #244333;
+  --muted: #617362;
+  --board: rgba(255, 255, 250, 0.96);
+  --border: #d9dfcf;
+  --shadow: 0 4px 14px rgba(38, 67, 45, 0.09);
+
+  --page-width: 900px;
+  --page-gutter: 16px;
+  --board-padding: 24px;
+  --board-radius: 26px;
+  --section-gap: 20px;
+}
+
+/* ---------- Global reset ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  width: 100%;
+  min-height: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 16px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  width: 100%;
+  min-width: 0;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+
+  color: var(--text);
+
+  font-family:
+    "Noto Sans Bengali",
+    "Hind Siliguri",
+    "Nirmala UI",
+    "Noto Sans Devanagari",
+    Arial,
+    sans-serif;
+
+  font-size: 16px;
+  line-height: 1.8;
+
+  background-color: #fbf8ef;
+  background-image:
+    linear-gradient(
+      rgba(251, 248, 239, 0.86),
+      rgba(251, 248, 239, 0.86)
+    ),
+    url("../assets/bg_pattern.png");
+
+  background-repeat: repeat, repeat;
+  background-position: center top, center top;
+  background-size: auto, 300px auto;
+  background-attachment: scroll, fixed;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+li {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+p {
+  margin-top: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+/* ---------- Main page ---------- */
+
+.farz-wajib-sunnat-page {
+  width: min(calc(100% - 32px), var(--page-width));
+  min-width: 0;
+  margin: 0 auto;
+  padding: 14px 0 0;
+}
+
+/* ---------- Hero board ---------- */
+
+.hero-board {
+  position: relative;
+  isolation: isolate;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 250px;
+
+  margin: 0 0 var(--section-gap);
+  padding: 36px 28px;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(201, 173, 62, 0.72);
+  border-radius: 30px;
+
+  text-align: center;
+
+  background-color: #f4edda;
+  background-image:
+    linear-gradient(
+      rgba(255, 251, 239, 0.76),
+      rgba(255, 251, 239, 0.82)
+    ),
+    url("../assets/prayer-learning-bg.png");
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  box-shadow: var(--shadow);
+}
+
+.hero-board::before {
+  content: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: 760px;
+  min-width: 0;
+
+  margin: 0 auto;
+}
+
+.hero-content h1 {
+  margin: 0 0 14px;
+
+  color: var(--gold-dark);
+
+  font-size: clamp(2rem, 5.5vw, 3rem);
+  font-weight: 900;
+  line-height: 1.4;
+}
+
+.hero-content p {
+  max-width: 760px;
+  margin: 0 auto;
+
+  color: #354b3a;
+
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.9;
+}
+
+/* ---------- Main topic boards ---------- */
+
+.topic-board {
+  width: 100%;
+  min-width: 0;
+
+  margin: 0 0 var(--section-gap);
+  padding: var(--board-padding) 22px;
+
+  border: 1px solid var(--border);
+  border-radius: var(--board-radius);
+
+  background: var(--board);
+  box-shadow: var(--shadow);
+
+  scroll-margin-top: 16px;
+}
+
+/* ---------- Topic heading ---------- */
+
+.topic-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  width: 100%;
+  min-width: 0;
+
+  margin: 0 0 22px;
+
+  text-align: center;
+}
+
+.topic-heading h2 {
+  margin: 0;
+
+  color: var(--green);
+
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 900;
+  line-height: 1.5;
+}
+
+.topic-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
+
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+
+  color: #fffdf4;
+  background: var(--green);
+
+  font-size: 1.1rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+/* ---------- Topic illustration ---------- */
+
+.topic-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-width: 0;
+
+  margin: 0 auto 24px;
+  padding: 0;
+}
+
+.topic-image img {
+  display: block;
+
+  width: min(100%, 340px);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+
+  margin: 0 auto;
+
+  border: 2px solid rgba(201, 173, 62, 0.68);
+  border-radius: 50%;
+
+  background: #f4edda;
+  box-shadow: 0 4px 12px rgba(38, 67, 45, 0.09);
+}
+
+/* ---------- Inner information boards ---------- */
+
+.info-board {
+  width: 100%;
+  min-width: 0;
+
+  margin: 0 0 18px;
+  padding: 20px 20px;
+
+  border: 1px solid rgba(217, 223, 207, 0.85);
+  border-radius: 18px;
+
+  color: var(--muted);
+  background: rgba(226, 240, 220, 0.38);
+
+  font-size: 1rem;
+  line-height: 1.9;
+}
+
+.info-board:last-of-type {
+  margin-bottom: 18px;
+}
+
+.info-board h3 {
+  margin: 0 0 10px;
+
+  color: var(--green);
+
+  font-size: 1.2rem;
+  font-weight: 900;
+  line-height: 1.6;
+}
+
+.info-board h4 {
+  margin: 18px 0 10px;
+
+  color: var(--green-dark);
+
+  font-size: 1.08rem;
+  font-weight: 900;
+  line-height: 1.65;
+}
+
+.info-board p {
+  margin: 0 0 14px;
+
+  color: var(--muted);
+
+  font-size: 1.02rem;
+  font-weight: 500;
+  line-height: 1.9;
+}
+
+.info-board p:last-child {
+  margin-bottom: 0;
+}
+
+.info-board strong {
+  color: var(--green-dark);
+  font-weight: 900;
+}
+
+/* ---------- Information lists ---------- */
+
+.detail-list {
+  width: 100%;
+  min-width: 0;
+
+  margin: 0;
+  padding: 0;
+  padding-inline-start: 28px;
+
+  list-style-position: outside;
+}
+
+.detail-list li {
+  margin: 0 0 10px;
+  padding: 0 0 0 3px;
+
+  color: var(--text);
+
+  font-size: 1.02rem;
+  font-weight: 500;
+  line-height: 1.9;
+
+  overflow-wrap: anywhere;
+}
+
+.detail-list li:last-child {
+  margin-bottom: 0;
+}
+
+.detail-list li::marker {
+  color: var(--green);
+  font-weight: 900;
+}
+
+.detail-list li strong {
+  color: var(--green-dark);
+  font-weight: 900;
+}
+
+/* ---------- Important caution board ---------- */
+
+.important-note {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+
+  margin: 0;
+  padding: 22px 20px;
+
+  border: 1px solid var(--border);
+  border-left: 6px solid var(--gold);
+  border-radius: 18px;
+
+  color: var(--muted);
+  background: rgba(244, 237, 218, 0.6);
+
+  box-shadow: none;
+}
+
+.important-note > strong,
+.important-note h3 {
+  display: block;
+
+  margin: 0 0 8px;
+
+  color: var(--green-dark);
+
+  font-size: 1.12rem;
+  font-weight: 900;
+  line-height: 1.6;
+}
+
+.important-note p {
+  margin: 0;
+
+  color: var(--muted);
+
+  font-size: 1.02rem;
+  font-weight: 500;
+  line-height: 1.9;
+}
+
+/* ---------- Footer ---------- */
+
+.page-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 86px;
+
+  margin: 0 0 12px;
+  padding: 20px 18px;
+
+  border: 1px solid rgba(190, 169, 93, 0.75);
+  border-radius: 26px;
+
+  color: #fffbea;
+  background: #105536;
+  box-shadow: var(--shadow);
+
+  text-align: center;
+
+  font-size: clamp(1rem, 3.8vw, 1.2rem);
+  font-weight: 800;
+  line-height: 1.8;
+
+  overflow-wrap: anywhere;
+}
+
+.page-footer p {
+  margin: 0;
+  color: inherit;
+}
+
+/* ---------- Dark theme ---------- */
+
+body.dark-mode {
+  --text: #e4eee5;
+  --muted: #c0cec3;
+  --board: rgba(27, 43, 34, 0.97);
+  --border: #3c5745;
+  --green-soft: #294c38;
+  --shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+
+  color: var(--text);
+  background-color: #101a15;
+
+  background-image:
+    linear-gradient(
+      rgba(16, 26, 21, 0.87),
+      rgba(16, 26, 21, 0.87)
+    ),
+    url("../assets/bg_pattern.png");
+
+  background-repeat: repeat, repeat;
+  background-position: center top, center top;
+  background-size: auto, 300px auto;
+  background-attachment: scroll, fixed;
+}
+
+body.dark-mode .hero-board {
+  background-color: #1b2b21;
+
+  background-image:
+    linear-gradient(
+      rgba(27, 43, 34, 0.78),
+      rgba(27, 43, 34, 0.86)
+    ),
+    url("../assets/prayer-learning-bg.png");
+
+  border-color: rgba(201, 173, 62, 0.5);
+}
+
+body.dark-mode .hero-content h1 {
+  color: #e7d58a;
+}
+
+body.dark-mode .hero-content p {
+  color: #e4eee5;
+}
+
+body.dark-mode .topic-board {
+  color: var(--text);
+  background: var(--board);
+  border-color: var(--border);
+}
+
+body.dark-mode .topic-heading h2,
+body.dark-mode .info-board h3,
+body.dark-mode .info-board h4 {
+  color: #c6e6c2;
+}
+
+body.dark-mode .topic-number {
+  color: #fffdf4;
+  background: #20563c;
+  border-color: var(--gold);
+}
+
+body.dark-mode .topic-image img {
+  background: #24392b;
+  border-color: rgba(201, 173, 62, 0.55);
+}
+
+body.dark-mode .info-board {
+  color: var(--text);
+  background: rgba(41, 76, 56, 0.45);
+  border-color: var(--border);
+}
+
+body.dark-mode .info-board p {
+  color: var(--muted);
+}
+
+body.dark-mode .info-board strong,
+body.dark-mode .detail-list li strong {
+  color: #c6e6c2;
+}
+
+body.dark-mode .detail-list li {
+  color: var(--text);
+}
+
+body.dark-mode .detail-list li::marker {
+  color: #c6e6c2;
+}
+
+body.dark-mode .important-note {
+  color: var(--text);
+  background: rgba(53, 70, 49, 0.45);
+  border-color: var(--border);
+  border-left-color: var(--gold);
+}
+
+body.dark-mode .important-note > strong,
+body.dark-mode .important-note h3 {
+  color: #c6e6c2;
+}
+
+body.dark-mode .important-note p {
+  color: var(--muted);
+}
+
+body.dark-mode .page-footer {
+  color: #f4fff5;
+  background: #103f2e;
+}
+
+/* ---------- Tablet ---------- */
+
+@media (min-width: 600px) {
+  .farz-wajib-sunnat-page {
+    width: min(calc(100% - 40px), var(--page-width));
+    padding-top: 20px;
+  }
+
+  .hero-board {
+    min-height: 260px;
+    padding: 38px 30px;
+  }
+
+  .topic-board {
+    padding: 28px 26px;
+  }
+
+  .topic-heading {
+    margin-bottom: 24px;
+  }
+
+  .topic-number {
+    flex-basis: 52px;
+    width: 52px;
+    height: 52px;
+  }
+
+  .topic-image img {
+    width: min(100%, 360px);
+  }
+
+  .info-board {
+    padding: 22px 22px;
+  }
+
+  .important-note {
+    padding: 24px 22px;
+  }
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 599px) {
+  .farz-wajib-sunnat-page {
+    width: calc(100% - 24px);
+    padding-top: 12px;
+  }
+
+  .hero-board {
+    min-height: 200px;
+
+    margin-bottom: 16px;
+    padding: 26px 16px;
+
+    border-radius: 24px;
+  }
+
+  .hero-content h1 {
+    margin-bottom: 10px;
+    font-size: clamp(1.8rem, 8vw, 2.3rem);
+  }
+
+  .hero-content p {
+    font-size: 0.98rem;
+    line-height: 1.85;
+  }
+
+  .topic-board {
+    margin-bottom: 16px;
+    padding: 20px 16px;
+    border-radius: 23px;
+  }
+
+  .topic-heading {
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .topic-heading h2 {
+    font-size: 1.35rem;
+  }
+
+  .topic-number {
+    flex-basis: 42px;
+    width: 42px;
+    height: 42px;
+    font-size: 1rem;
+  }
+
+  .topic-image {
+    margin-bottom: 20px;
+  }
+
+  .topic-image img {
+    width: min(100%, 290px);
+  }
+
+  .info-board {
+    margin-bottom: 15px;
+    padding: 16px 14px;
+    border-radius: 15px;
+    font-size: 0.97rem;
+  }
+
+  .info-board h3 {
+    margin-bottom: 8px;
+    font-size: 1.12rem;
+  }
+
+  .info-board h4 {
+    margin-top: 15px;
+    font-size: 1.02rem;
+  }
+
+  .info-board p {
+    margin-bottom: 12px;
+    font-size: 0.96rem;
+    line-height: 1.85;
+  }
+
+  .detail-list {
+    padding-inline-start: 24px;
+  }
+
+  .detail-list li {
+    margin-bottom: 9px;
+    font-size: 0.96rem;
+    line-height: 1.85;
+  }
+
+  .important-note {
+    padding: 17px 14px;
+    border-radius: 15px;
+    border-left-width: 5px;
+  }
+
+  .important-note > strong,
+  .important-note h3 {
+    font-size: 1.05rem;
+  }
+
+  .important-note p {
+    font-size: 0.96rem;
+    line-height: 1.85;
+  }
+
+  .page-footer {
+    min-height: 80px;
+    padding: 17px 14px;
+    border-radius: 22px;
+    font-size: clamp(1rem, 3.8vw, 1.2rem);
+    margin-bottom: 12px;
+  }
+}
+
+/* ---------- Extra-small phones ---------- */
+
+@media (max-width: 360px) {
+  .farz-wajib-sunnat-page {
+    width: calc(100% - 20px);
+  }
+
+  .hero-board {
+    padding: 22px 12px;
+    border-radius: 20px;
+  }
+
+  .hero-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-content p {
+    font-size: 0.93rem;
+  }
+
+  .topic-board {
+    padding: 17px 12px;
+    border-radius: 20px;
+  }
+
+  .topic-heading {
+    gap: 8px;
+  }
+
+  .topic-heading h2 {
+    font-size: 1.2rem;
+  }
+
+  .topic-number {
+    flex-basis: 38px;
+    width: 38px;
+    height: 38px;
+    font-size: 0.95rem;
+  }
+
+  .topic-image img {
+    width: min(100%, 250px);
+  }
+
+  .info-board {
+    padding: 14px 11px;
+    border-radius: 13px;
+  }
+
+  .info-board h3 {
+    font-size: 1.05rem;
+  }
+
+  .info-board p,
+  .detail-list li {
+    font-size: 0.92rem;
+  }
+
+  .detail-list {
+    padding-inline-start: 22px;
+  }
+
+  .important-note {
+    padding: 15px 11px;
+  }
+
+  .important-note p {
+    font-size: 0.92rem;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
