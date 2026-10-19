@@ -150,7 +150,7 @@
     },
     {
       id: "jamaat-jumuah",
-      icon: "jamaat-special-namaz.png",
+      icon: "jamaat-jumuah.png",
       title: {
         bn: "জামাত ও জুমা",
         en: "Jamaat & Jumu'ah",
