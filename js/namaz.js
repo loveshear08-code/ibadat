@@ -123,7 +123,7 @@
     },
     {
       id: "ruku-sujood",
-      icon: "ruku.png",
+      icon: "ruku-sujood.png",
       title: {
         bn: "রুকু ও সিজদা",
         en: "Ruku & Sujood",
@@ -132,7 +132,7 @@
     },
     {
       id: "sitting-salam",
-      icon: "tashahhud.png",
+      icon: "sitting-salam.png",
       title: {
         bn: "বৈঠক ও সালাম",
         en: "Sitting & Salam",
@@ -159,7 +159,7 @@
     },
     {
       id: "special-prayers",
-      icon: "complete-nmamaz.png",
+      icon: "special-prayers.png",
       title: {
         bn: "বিশেষ নামাজ",
         en: "Special Prayers",
