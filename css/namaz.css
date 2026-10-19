@@ -61,7 +61,7 @@ body {
       rgba(255, 251, 244, 0.82),
       rgba(255, 251, 244, 0.82)
     ),
-    url("../assets/bg_pattern.png");
+    url("../assets/main-bg.jpg");
 
   background-position: center;
   background-repeat: no-repeat;
@@ -148,7 +148,7 @@ body {
 .intro-content h1 {
   color: var(--heading-gold);
 
-  font-size: clamp(23px, 5.6vw, 29px);
+  font-size: clamp(30px, 7vw, 38px);
   font-weight: 900;
   line-height: 1.15;
 
@@ -162,9 +162,9 @@ body {
 .intro-content > p {
   color: #1E4620;
 
-  font-size: clamp(14px, 3.7vw, 17px);
+  font-size: clamp(17px, 4.4vw, 21px);
   font-weight: 750;
-  line-height: 1.32;
+  line-height: 1.4;
 
   text-align: center;
 
@@ -227,7 +227,7 @@ body {
   color: var(--text);
 
   font-family: inherit;
-  font-size: clamp(11px, 2.9vw, 15px);
+  font-size: clamp(14px, 3.8vw, 19px);
   font-weight: 800;
   line-height: 1.22;
 
@@ -249,8 +249,8 @@ body {
 .topic-icon {
   display: block;
 
-  width: clamp(32px, 8.5vw, 44px);
-  height: clamp(32px, 8.5vw, 44px);
+  width: clamp(40px, 10vw, 52px);
+  height: clamp(40px, 10vw, 52px);
 
   flex: 0 0 auto;
 
@@ -414,7 +414,7 @@ body.dark-mode {
       rgba(12, 24, 18, 0.86),
       rgba(12, 24, 18, 0.86)
     ),
-    url("../assets/hero-bg.jpg");
+    url("../assets/main-bg.jpg");
 
   color: var(--text);
 }
@@ -428,7 +428,7 @@ body.dark-mode .intro-board {
       rgba(13, 28, 19, 0.78),
       rgba(13, 28, 19, 0.78)
     ),
-    url("../assets/prayer-learning-bg.png");
+    url("../assets/hero-bg.jpg");
 }
 
 body.dark-mode .intro-content h1 {
