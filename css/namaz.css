@@ -118,7 +118,7 @@ body {
       rgba(255, 252, 242, 0.79),
       rgba(255, 252, 242, 0.79)
     ),
-    url("../assets/prayer-hero-bg.jpg");
+    url("../assets/hero-bg.jpg");
 
   background-size: cover;
   background-position: center;
@@ -414,7 +414,7 @@ body.dark-mode {
       rgba(12, 24, 18, 0.86),
       rgba(12, 24, 18, 0.86)
     ),
-    url("../assets/bg_pattern.png");
+    url("../assets/hero-bg.jpg");
 
   color: var(--text);
 }
