@@ -1,12 +1,13 @@
 /* =========================================
    IBADAT — NAMAZ START PAGE
-   Matching Farz-Wajib-Sunnat page design
+   Consistent Islamic UI
+   Responsive + Dark Mode
 ========================================= */
 
 :root {
   --page-bg: #f5f0e5;
-  --board-bg: rgba(255, 253, 247, 0.96);
-  --board-border: rgba(191, 157, 87, 0.25);
+  --board-bg: rgba(255, 253, 247, 0.97);
+  --board-border: rgba(191, 157, 87, 0.28);
 
   --text-main: #26372d;
   --text-secondary: #657064;
@@ -18,8 +19,7 @@
   --gold: #c39a4a;
   --gold-soft: #f8f0dc;
 
-  --shadow:
-    0 8px 24px rgba(57, 48, 29, 0.08);
+  --shadow: 0 6px 20px rgba(57, 48, 29, 0.07);
 
   --radius-large: 26px;
   --radius-medium: 20px;
@@ -29,11 +29,16 @@
 }
 
 /* =========================================
-   GLOBAL PAGE
+   GLOBAL
 ========================================= */
+
+* {
+  box-sizing: border-box;
+}
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -42,6 +47,7 @@ body {
 
   color: var(--text-main);
   background-color: var(--page-bg);
+
   background-image:
     linear-gradient(
       rgba(248, 245, 236, 0.82),
@@ -63,10 +69,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-* {
-  box-sizing: border-box;
-}
-
 img {
   display: block;
   max-width: 100%;
@@ -80,13 +82,17 @@ select {
 }
 
 .namaz-start-page {
-  width: min(
-    calc(100% - 32px),
-    var(--page-width)
-  );
-
+  width: min(calc(100% - 32px), var(--page-width));
   margin: 0 auto;
   padding: 24px 0 36px;
+}
+
+.namaz-start-page h1,
+.namaz-start-page h2,
+.namaz-start-page h3,
+.namaz-start-page p,
+.namaz-start-page figure {
+  overflow-wrap: anywhere;
 }
 
 /* =========================================
@@ -98,23 +104,28 @@ select {
   overflow: hidden;
 
   margin-bottom: 26px;
-  padding: 34px 28px;
+  padding: 32px 26px;
 
   text-align: center;
-
   color: #fffdf5;
-  background:
+
+  /* Keep the mosque/pattern background visible */
+  background-color: var(--green-dark);
+  background-image:
     linear-gradient(
-      135deg,
-      #245b43 0%,
-      #194633 100%
-    );
+      rgba(25, 70, 51, 0.16),
+      rgba(25, 70, 51, 0.16)
+    ),
+    url("../assets/bg_pattern.png");
+
+  background-size: cover, 280px 280px;
+  background-position: center;
+  background-repeat: no-repeat, repeat;
 
   border: 1px solid rgba(205, 174, 105, 0.55);
   border-radius: var(--radius-large);
 
-  box-shadow:
-    0 12px 30px rgba(31, 68, 48, 0.17);
+  box-shadow: var(--shadow);
 }
 
 .hero-board::before,
@@ -126,7 +137,7 @@ select {
   width: 150px;
   height: 150px;
 
-  border: 1px solid rgba(225, 196, 127, 0.2);
+  border: 1px solid rgba(225, 196, 127, 0.25);
   border-radius: 50%;
 }
 
@@ -150,16 +161,16 @@ select {
 
   color: #fff8df;
 
-  font-size: clamp(1.65rem, 4vw, 2.25rem);
+  font-size: clamp(1.65rem, 4vw, 2.2rem);
   font-weight: 800;
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 .hero-content p {
   max-width: 680px;
   margin: 0 auto;
 
-  color: rgba(255, 253, 245, 0.9);
+  color: rgba(255, 253, 245, 0.93);
 
   font-size: 1rem;
   line-height: 1.9;
@@ -192,13 +203,11 @@ select {
 
 .introduction-board p {
   margin: 0;
-  color: var(--text-secondary);
+  color: var(--text-main);
 }
 
 /* =========================================
    TOPIC SECTIONS
-   Keep the page background visible between
-   separate topic boards.
 ========================================= */
 
 .topic-board {
@@ -211,11 +220,7 @@ select {
   box-shadow: none;
 }
 
-/* =========================================
-   COMBINED TOPIC BOARDS
-   Heading + number + image + first content
-   stay together inside one board.
-========================================= */
+/* Main boards containing heading, image and intro */
 
 .preparation-content-board,
 .niyyah-content-board,
@@ -231,7 +236,7 @@ select {
 }
 
 /* =========================================
-   TOPIC HEADING
+   TOPIC HEADINGS
 ========================================= */
 
 .topic-heading {
@@ -262,8 +267,7 @@ select {
   font-weight: 800;
   line-height: 1;
 
-  box-shadow:
-    0 4px 10px rgba(36, 91, 67, 0.15);
+  box-shadow: 0 4px 10px rgba(36, 91, 67, 0.15);
 }
 
 .heading-text {
@@ -293,8 +297,7 @@ select {
 }
 
 /* =========================================
-   TOPIC IMAGES
-   No extra circle, frame or image card.
+   IMAGES
 ========================================= */
 
 .topic-image {
@@ -313,9 +316,9 @@ select {
 }
 
 .topic-image img {
-  width: auto;
-  max-width: min(100%, 340px);
-  max-height: 300px;
+  width: 100%;
+  max-width: 340px;
+  height: 300px;
 
   margin: 0 auto;
 
@@ -347,6 +350,7 @@ select {
   margin-bottom: 0;
 }
 
+.info-board h2,
 .info-board h3 {
   margin: 0 0 10px;
 
@@ -366,11 +370,7 @@ select {
   margin-bottom: 0;
 }
 
-/*
-  The first information board inside each
-  combined board is part of that same board.
-  Remove its inner card/background.
-*/
+/* First content belongs visually to its parent board */
 
 .preparation-content-board > .info-board,
 .niyyah-content-board > .info-board,
@@ -388,30 +388,29 @@ select {
    LISTS
 ========================================= */
 
-.info-board ul,
-.info-board ol {
+.detail-list {
   margin: 8px 0 0;
   padding-inline-start: 26px;
 }
 
-.info-board li {
+.detail-list li {
   margin: 0 0 8px;
   padding-inline-start: 3px;
 
   color: var(--text-main);
 }
 
-.info-board li:last-child {
+.detail-list li:last-child {
   margin-bottom: 0;
 }
 
-.info-board li::marker {
+.detail-list li::marker {
   color: var(--gold);
   font-weight: 800;
 }
 
 /* =========================================
-   ARABIC TEXT BOARD
+   ARABIC BOARD
 ========================================= */
 
 .arabic-board {
@@ -425,7 +424,6 @@ select {
   border-radius: var(--radius-small);
 }
 
-.arabic-board p,
 .arabic-board .arabic-text {
   margin: 0;
 
@@ -438,12 +436,21 @@ select {
 
   font-size: clamp(1.5rem, 4vw, 2rem);
   line-height: 2;
-  direction: rtl;
   text-align: center;
+  direction: rtl;
+}
+
+.arabic-board .transliteration,
+.arabic-board .meaning {
+  margin: 8px 0 0;
+
+  color: var(--green-dark);
+  font-size: 1.05rem;
+  line-height: 1.8;
 }
 
 /* =========================================
-   IMPORTANT NOTE / CAUTION
+   IMPORTANT NOTE
 ========================================= */
 
 .important-note {
@@ -466,6 +473,7 @@ select {
 
   font-size: 1.15rem;
   font-weight: 800;
+  line-height: 1.65;
 }
 
 .important-note p {
@@ -474,16 +482,29 @@ select {
 }
 
 /* =========================================
-   FOOTER
+   FOOTER BOARD
 ========================================= */
 
 .page-footer {
-  margin-top: 30px;
-  padding: 18px 14px;
+  margin-top: 28px;
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+}
+
+.page-footer .footer-board {
+  margin: 0;
+  padding: 18px 22px;
 
   text-align: center;
 
-  border-top: 1px solid var(--board-border);
+  background: var(--board-bg);
+  border: 1px solid var(--board-border);
+  border-top: 3px solid var(--green);
+
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow);
 }
 
 .page-footer p {
@@ -498,7 +519,6 @@ select {
 
 /* =========================================
    DARK MODE
-   Works with body.dark-mode from existing JS.
 ========================================= */
 
 body.dark-mode {
@@ -516,8 +536,7 @@ body.dark-mode {
   --gold: #d8b56c;
   --gold-soft: #302b20;
 
-  --shadow:
-    0 8px 24px rgba(0, 0, 0, 0.2);
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 
   background-color: var(--page-bg);
 
@@ -530,17 +549,15 @@ body.dark-mode {
 }
 
 body.dark-mode .hero-board {
-  background:
+  background-color: #172d22;
+  background-image:
     linear-gradient(
-      135deg,
-      #203e2e 0%,
-      #172d22 100%
-    );
+      rgba(23, 45, 34, 0.25),
+      rgba(23, 45, 34, 0.25)
+    ),
+    url("../assets/bg_pattern.png");
 
   border-color: rgba(216, 181, 108, 0.35);
-
-  box-shadow:
-    0 12px 30px rgba(0, 0, 0, 0.22);
 }
 
 body.dark-mode .hero-content h1 {
@@ -566,8 +583,9 @@ body.dark-mode .arabic-board {
   border-color: rgba(216, 181, 108, 0.35);
 }
 
-body.dark-mode .arabic-board p,
-body.dark-mode .arabic-board .arabic-text {
+body.dark-mode .arabic-board .arabic-text,
+body.dark-mode .arabic-board .transliteration,
+body.dark-mode .arabic-board .meaning {
   color: #e5f0e4;
 }
 
@@ -586,8 +604,8 @@ body.dark-mode .important-note p {
   color: var(--text-main);
 }
 
-body.dark-mode .page-footer {
-  border-top-color: var(--board-border);
+body.dark-mode .page-footer .footer-board {
+  border-top-color: var(--green);
 }
 
 /* =========================================
@@ -628,8 +646,8 @@ body.dark-mode .page-footer {
   }
 
   .topic-image img {
-    max-width: min(100%, 310px);
-    max-height: 270px;
+    max-width: 310px;
+    height: 270px;
   }
 }
 
@@ -691,7 +709,6 @@ body.dark-mode .page-footer {
     flex-basis: 37px;
     width: 37px;
     height: 37px;
-
     font-size: 0.95rem;
   }
 
@@ -709,8 +726,8 @@ body.dark-mode .page-footer {
   }
 
   .topic-image img {
-    max-width: min(100%, 260px);
-    max-height: 235px;
+    max-width: 260px;
+    height: 235px;
   }
 
   .info-board {
@@ -719,6 +736,7 @@ body.dark-mode .page-footer {
     border-radius: 17px;
   }
 
+  .info-board h2,
   .info-board h3 {
     font-size: 1.03rem;
   }
@@ -731,8 +749,7 @@ body.dark-mode .page-footer {
     line-height: 1.85;
   }
 
-  .info-board ul,
-  .info-board ol {
+  .detail-list {
     padding-inline-start: 22px;
   }
 
@@ -741,9 +758,13 @@ body.dark-mode .page-footer {
     padding: 16px 12px;
   }
 
-  .arabic-board p,
   .arabic-board .arabic-text {
     font-size: 1.55rem;
+  }
+
+  .arabic-board .transliteration,
+  .arabic-board .meaning {
+    font-size: 0.95rem;
   }
 
   .important-note {
@@ -759,7 +780,11 @@ body.dark-mode .page-footer {
 
   .page-footer {
     margin-top: 24px;
-    padding: 16px 10px;
+  }
+
+  .page-footer .footer-board {
+    padding: 16px 14px;
+    border-radius: 17px;
   }
 
   .page-footer p {
@@ -807,12 +832,16 @@ body.dark-mode .page-footer {
 
   .topic-image img {
     max-width: 100%;
-    max-height: 210px;
+    height: 210px;
+  }
+
+  .arabic-board .arabic-text {
+    font-size: 1.35rem;
   }
 }
 
 /* =========================================
-   ACCESSIBILITY / MOTION
+   ACCESSIBILITY
 ========================================= */
 
 @media (prefers-reduced-motion: reduce) {
