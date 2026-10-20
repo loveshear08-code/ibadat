@@ -1,7 +1,7 @@
 /* =========================================
    IBADAT — NAMAZ CONDITIONS PAGE
-   Complete responsive stylesheet
-   Existing HTML, content, images and JS preserved
+   Responsive | Bangla | English | Hindi
+   Light Mode + Dark Mode
    ========================================= */
 
 :root {
@@ -77,7 +77,7 @@ select {
 }
 
 /* =========================================
-   MAIN PAGE WRAPPER
+   MAIN PAGE
    ========================================= */
 
 .conditions-page {
@@ -112,7 +112,6 @@ select {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-
     box-shadow: var(--shadow);
 }
 
@@ -160,7 +159,6 @@ select {
 .panel {
     margin-bottom: 20px;
     padding: 24px 22px;
-
     background: rgba(255, 255, 250, 0.96);
     border: 1px solid var(--border);
     border-radius: var(--radius-card);
@@ -173,7 +171,7 @@ select {
 }
 
 /* =========================================
-   CONTENTS / QUICK NAVIGATION
+   CONTENTS NAVIGATION
    ========================================= */
 
 .contents h2 {
@@ -194,7 +192,6 @@ select {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
     min-height: 40px;
     padding: 8px 13px;
 
@@ -284,7 +281,7 @@ select {
 
 /* =========================================
    ILLUSTRATIONS
-   Keeps all original image files and locations
+   Original image paths remain unchanged
    ========================================= */
 
 .art {
@@ -292,11 +289,9 @@ select {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-
     margin-left: auto;
     margin-right: auto;
     padding: 0;
-
     background: transparent;
     border: 0;
     border-radius: 0;
@@ -316,17 +311,15 @@ select {
     max-height: 360px;
     height: auto;
     margin: 0 auto;
-
     object-fit: contain;
     object-position: center;
-
     background: transparent;
     border: 0;
     border-radius: 14px;
 }
 
 /* =========================================
-   PARAGRAPHS AND SUBHEADINGS
+   TEXT AND SUBHEADINGS
    ========================================= */
 
 .lead {
@@ -380,7 +373,6 @@ select {
 .note {
     margin: 14px 0 7px;
     padding: 14px 15px;
-
     background: #F8F3E3;
     border-left: 4px solid var(--gold);
     border-radius: 12px;
@@ -403,8 +395,8 @@ select {
 }
 
 /* =========================================
-   FOOTER
-   Existing footer text and HTML are unchanged
+   FOOTER — LIGHT MODE
+   Deep green board
    ========================================= */
 
 .conditions-footer {
@@ -421,8 +413,8 @@ select {
 
     color: #FFFFFF;
     background: #105536;
-    border: 1px solid var(--gold);
-    border-top: 3px solid var(--gold);
+    border: 1px solid #D4AF37;
+    border-top: 3px solid #D4AF37;
     border-radius: 26px;
 
     text-align: center;
@@ -438,7 +430,6 @@ select {
 
     width: 100%;
     color: #FFFFFF;
-
     font-family:
         "Noto Sans Bengali",
         "Noto Sans Devanagari",
@@ -486,7 +477,6 @@ body.dark-mode {
 
     color: var(--text);
     background-color: #121A15;
-
     background-image:
         linear-gradient(
             rgba(12, 24, 18, 0.86),
@@ -556,18 +546,29 @@ body.dark-mode .art img {
     border-color: transparent;
 }
 
-body.dark-mode .conditions-footer {
-    color: #FFFFFF;
-    background: #105536;
-    border-color: var(--gold);
+/* =========================================
+   FOOTER — DARK MODE
+   Light board, matching the Purity page
+   ========================================= */
+
+body.dark-mode .conditions-page .conditions-footer {
+    background: #FFFFFF;
+    color: #1E4620;
+    border: 1px solid #D4AF37;
+    border-top: 3px solid #D4AF37;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
 }
 
-body.dark-mode .conditions-footer-message {
-    color: #FFFFFF;
+body.dark-mode .conditions-page .conditions-footer-message {
+    color: #1E4620;
 }
 
-body.dark-mode .conditions-footer-brand {
-    color: #E6C75A;
+body.dark-mode .conditions-page .conditions-footer .footer-star {
+    color: #B08D23;
+}
+
+body.dark-mode .conditions-page .conditions-footer-brand {
+    color: #105536;
 }
 
 /* =========================================
