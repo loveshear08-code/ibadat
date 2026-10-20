@@ -1,4 +1,3 @@
-
 /* =========================================
    IBADAT — PURITY PAGE
    File: css/namaz-purity.css
@@ -800,22 +799,22 @@ textarea {
 /* ---------- Dark mode ---------- */
 
 body.dark-mode {
-  --page-bg: #101a15;
-  --card-bg: rgba(27, 43, 34, 0.97);
-  --text: #e4eee5;
-  --muted: #b6c8b8;
-  --border: #3c5745;
-  --shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  --page-bg: #121A15;
+  --card-bg: rgba(38, 59, 41, 0.97);
+  --text: #E7F0E4;
+  --muted: #B6C8B8;
+  --border: rgba(190, 228, 183, 0.22);
+  --shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
 
   color: var(--text);
   background-color: var(--page-bg);
 
   background-image:
     linear-gradient(
-      rgba(16, 26, 21, 0.87),
-      rgba(16, 26, 21, 0.87)
+      rgba(12, 24, 18, 0.86),
+      rgba(12, 24, 18, 0.86)
     ),
-    url("../assets/bg_pattern.png");
+    url("../assets/main-bg.jpg");
 
   background-repeat: repeat, repeat;
   background-position: center top, center top;
@@ -824,24 +823,23 @@ body.dark-mode {
 }
 
 body.dark-mode .hero {
-  background-color: #1b2b21;
-
+  background-color: #263B29;
   background-image:
     linear-gradient(
-      rgba(27, 43, 34, 0.88),
-      rgba(27, 43, 34, 0.92)
+      rgba(38, 59, 41, 0.82),
+      rgba(38, 59, 41, 0.86)
     ),
     url("../assets/prayer-learning-bg.png");
 
-  border-color: rgba(201, 173, 62, 0.5);
+  border-color: rgba(212, 175, 55, 0.62);
 }
 
 body.dark-mode .hero h1 {
-  color: #e7d58a;
+  color: #E7D18A;
 }
 
 body.dark-mode .hero-description {
-  color: #e4eee5;
+  color: #E7F0E4;
 }
 
 body.dark-mode .panel.lesson {
@@ -858,11 +856,11 @@ body.dark-mode .section-title h2,
 body.dark-mode .content-board h3,
 body.dark-mode .step-copy h3,
 body.dark-mode .tayammum-step-copy h3 {
-  color: #c6e6c2;
+  color: #C6E6C2;
 }
 
 body.dark-mode .kicker {
-  color: #e7d58a;
+  color: #E7D18A;
 }
 
 body.dark-mode .content-board p,
@@ -878,24 +876,24 @@ body.dark-mode .guidance-list {
 
 body.dark-mode .content-board strong,
 body.dark-mode .panel.lesson strong {
-  color: #f0df9c;
+  color: #F0DF9C;
 }
 
 body.dark-mode .content-board li::marker,
 body.dark-mode .guidance-list li::marker,
 body.dark-mode .panel.lesson li::marker {
-  color: #c6e6c2;
+  color: #C6E6C2;
 }
 
 body.dark-mode .content-board.note,
 body.dark-mode .note {
   background: rgba(58, 52, 29, 0.35);
-  border-left-color: var(--gold);
+  border-left-color: #D4AF37;
 }
 
 body.dark-mode .content-board.note h3,
 body.dark-mode .note h3 {
-  color: #e7d58a;
+  color: #E7D58A;
 }
 
 body.dark-mode .content-board.note p,
@@ -919,14 +917,14 @@ body.dark-mode .tayammum-step-card {
 }
 
 body.dark-mode .step-copy .step-count {
-  color: #e4f1df;
+  color: #E4F1DF;
   background: #294632;
   border-color: rgba(180, 211, 181, 0.25);
 }
 
 body.dark-mode .purity-footer {
-  background: #103f2e;
-  border-color: rgba(201, 173, 62, 0.5);
+  background: #263B29;
+  border-color: rgba(212, 175, 55, 0.62);
 }
 
 /* ---------- Tablet and larger screens ---------- */
