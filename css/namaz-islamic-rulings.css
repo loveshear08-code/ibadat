@@ -21,7 +21,7 @@
 
   --page-padding-x: 10px;
   --page-padding-y: 8px;
-  --grid-gap: 8px;
+  --grid-gap: 5px;
   --card-radius: 16px;
 }
 
@@ -97,15 +97,17 @@ body {
   overflow: hidden;
 }
 
-/* INTRODUCTION BOARD */
+/* INTRODUCTION BOARD
+   Keep the top board fixed in size */
 
 .intro-board {
   position: relative;
   isolation: isolate;
 
   width: 100%;
-  min-height: 0;
+  height: 22%;
   flex: 0 0 22%;
+  min-height: 0;
 
   display: flex;
   align-items: center;
@@ -175,7 +177,8 @@ body {
   overflow-wrap: break-word;
 }
 
-/* TOPIC GRID */
+/* TOPIC GRID
+   All 10 cards share the remaining space equally */
 
 .learning-grid {
   width: 100%;
@@ -184,6 +187,7 @@ body {
   min-width: 0;
 
   display: grid;
+
   grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-template-rows: repeat(5, minmax(0, 1fr));
 
@@ -205,11 +209,12 @@ body {
 
   display: flex;
   flex-direction: row;
+
   align-items: center;
   justify-content: flex-start;
 
   gap: 9px;
-  padding: 10px 9px;
+  padding: 6px 9px;
 
   background: var(--card-bg);
 
@@ -225,6 +230,7 @@ body {
 
   text-align: center;
   cursor: pointer;
+
   overflow: hidden;
 
   box-shadow: 0 2px 4px rgba(15, 81, 50, 0.09);
@@ -250,6 +256,7 @@ body {
 
   border: 0;
   border-radius: 50%;
+
   background: transparent;
 }
 
@@ -266,6 +273,7 @@ body {
   line-height: 1.3;
 
   text-align: center;
+
   overflow-wrap: anywhere;
   word-break: normal;
 }
@@ -289,18 +297,20 @@ body {
   }
 }
 
-/* FOOTER */
+/* FOOTER
+   Keep footer height unchanged */
 
 .bidhan-footer {
   width: 100%;
-  min-height: 0;
-  flex: 0 0 auto;
+  height: 62px;
+  min-height: 62px;
+  flex: 0 0 62px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  padding: 7px 12px;
+  padding: 10px 12px;
 
   color: #FFFFFF;
   background: #0F5132;
@@ -323,7 +333,7 @@ body {
   :root {
     --page-padding-x: 7px;
     --page-padding-y: 6px;
-    --grid-gap: 5px;
+    --grid-gap: 4px;
     --card-radius: 12px;
   }
 
@@ -353,10 +363,11 @@ body {
 
   .learning-card {
     gap: 5px;
-    padding: 5px;
+    padding: 4px;
 
     font-size: clamp(10px, 2.9vw, 13px);
     line-height: 1.2;
+
     border-radius: 11px;
   }
 
@@ -366,7 +377,11 @@ body {
   }
 
   .bidhan-footer {
-    padding: 6px 8px;
+    height: 62px;
+    min-height: 62px;
+    flex-basis: 62px;
+
+    padding: 7px 8px;
     border-radius: 14px;
   }
 
@@ -387,7 +402,7 @@ body {
   }
 
   .intro-board {
-    flex-basis: 21%;
+    flex-basis: 22%;
   }
 
   .intro-content {
@@ -417,6 +432,10 @@ body {
   }
 
   .bidhan-footer {
+    height: 62px;
+    min-height: 62px;
+    flex-basis: 62px;
+
     padding-top: 6px;
     padding-bottom: 6px;
   }
