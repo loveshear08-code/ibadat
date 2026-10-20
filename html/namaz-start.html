@@ -2,10 +2,9 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#14583e">
-  <meta name="description" content="নামাজের প্রস্তুতি, নিয়ত, তাকবিরে তাহরিমা ও সানা শেখার সহজ নির্দেশিকা।">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0F5132">
+  <meta name="description" content="নামাজ শুরু করার নিয়ত, তাকবির, হাত বাঁধা, কিয়াম ও সানা শেখার সহজ নির্দেশিকা।">
   <title>নামাজ শুরু | IBADAT</title>
 
   <link rel="stylesheet" href="../css/namaz-start.css">
@@ -15,351 +14,263 @@
 <body>
   <main class="namaz-start-page">
 
-    <!-- MAIN HEADING -->
+    <!-- HERO BOARD: HEADING + INTRODUCTION -->
     <header class="hero-board">
       <div class="hero-content">
+        <span class="hero-ornament" aria-hidden="true">✦</span>
         <h1 data-i18n="pageTitle">নামাজ শুরু</h1>
-        <p data-i18n="pageIntro">
-          নামাজের প্রস্তুতি থেকে তাকবিরে তাহরিমা ও সানা পর্যন্ত
-          ধাপে ধাপে শিখে নাও।
+        <p class="hero-intro" data-i18n="pageIntro">
+          আল্লাহর সন্তুষ্টির উদ্দেশ্যে মনোযোগ ও আন্তরিকতার সঙ্গে নামাজ শুরু করার সহজ নির্দেশিকা।
+        </p>
+        <p class="hero-subtitle" data-i18n="pageSubtitle">
+          নিয়ত থেকে সানা পর্যন্ত ধাপগুলো শিখে নাও।
         </p>
       </div>
     </header>
 
-    <!-- INTRODUCTION -->
-    <section class="info-board introduction-board">
-      <h2 data-i18n="introTitle">নামাজ শুরু করার আগে</h2>
-      <p data-i18n="introText">
-        নামাজের আগে পবিত্রতা, সতর ঢাকা, কিবলামুখী হওয়া এবং
-        নামাজের জন্য প্রস্তুত হওয়া জরুরি। এরপর অন্তরে নিয়ত
-        করে তাকবিরে তাহরিমার মাধ্যমে নামাজ শুরু করো।
-      </p>
-    </section>
-
-    <!-- STEP 1: PREPARATION -->
-    <section class="topic-board" id="preparation">
-
-      <div class="preparation-content-board">
-
-        <div class="topic-heading">
-          <span class="topic-number">১</span>
-
-          <div class="heading-text">
-            <span class="topic-subtitle"
-                  data-i18n="preparationSubtitle">
-              প্রথম ধাপ
-            </span>
-
-            <h2 data-i18n="preparationTitle">
-              নামাজের প্রস্তুতি
-            </h2>
-          </div>
+    <!-- STEP 1: NIYYAH -->
+    <section class="lesson-board" id="niyyah" aria-labelledby="niyyah-title">
+      <div class="topic-heading">
+        <span class="topic-number" aria-hidden="true" data-step="1">১</span>
+        <div class="heading-text">
+          <span class="topic-subtitle" data-i18n="niyyahSubtitle">প্রথম ধাপ</span>
+          <h2 id="niyyah-title" data-i18n="niyyahTitle">নিয়ত</h2>
         </div>
-
-        <figure class="topic-image">
-          <img
-            src="../assets/Young%20Boy%20Preparing%20a%20Prayer%20Rug%20in%20Mosque.png"
-            alt="নামাজের প্রস্তুতি নিচ্ছে এমন এক মুসলিম বালক"
-            data-i18n-alt="preparationImageAlt"
-            width="600"
-            height="600"
-            loading="lazy"
-          >
-        </figure>
-
-        <div class="info-board">
-          <h3 data-i18n="preparationIntroTitle">
-            নামাজের আগে যা নিশ্চিত করবে
-          </h3>
-
-          <p data-i18n="preparationIntroText">
-            নামাজ শুরু করার আগে প্রয়োজনীয় বিষয়গুলো নিশ্চিত করো।
-          </p>
-        </div>
-
       </div>
 
-      <div class="info-board">
-        <h3 data-i18n="preparationChecklistTitle">
-          প্রস্তুতির তালিকা
-        </h3>
+      <figure class="topic-image">
+        <img
+          src="../assets/images/niyyah.png"
+          alt="নামাজের নিয়ত মনে স্থির করছে এমন এক মুসলিম বালক"
+          data-i18n-alt="niyyahImageAlt"
+          width="1536"
+          height="1024"
+          loading="lazy"
+        >
+      </figure>
 
+      <div class="content-block">
+        <h3 data-i18n="niyyahWhatTitle">নিয়ত কী?</h3>
+        <p data-i18n="niyyahWhatText">
+          নিয়ত হলো অন্তরে কোনো ইবাদত আদায় করার সংকল্প। নামাজের ক্ষেত্রে কোন নামাজ আদায় করবে, তা মনে স্থির করাই মূল বিষয়।
+        </p>
+
+        <h3 data-i18n="niyyahHowTitle">কীভাবে নিয়ত করবে?</h3>
         <ul class="detail-list">
-          <li data-i18n="preparationPoint1">
-            শরীর, পোশাক ও নামাজের স্থান পবিত্র রাখো।
-          </li>
-
-          <li data-i18n="preparationPoint2">
-            অজু করো এবং প্রয়োজন হলে গোসল করো।
-          </li>
-
-          <li data-i18n="preparationPoint3">
-            নামাজের ওয়াক্ত হয়েছে কি না নিশ্চিত করো।
-          </li>
-
-          <li data-i18n="preparationPoint4">
-            সতর ঢেকে কিবলামুখী হয়ে দাঁড়াও।
-          </li>
+          <li data-i18n="niyyahPoint1">কোন নামাজ আদায় করবে, তা মনে নির্ধারণ করো।</li>
+          <li data-i18n="niyyahPoint2">আল্লাহর সন্তুষ্টির উদ্দেশ্যে নামাজ আদায়ের সংকল্প করো।</li>
+          <li data-i18n="niyyahPoint3">মনোযোগ ধরে রাখো এবং অপ্রয়োজনীয় দুশ্চিন্তা এড়িয়ে চলো।</li>
         </ul>
       </div>
 
-    </section>
-
-    <!-- STEP 2: NIYYAH -->
-    <section class="topic-board" id="niyyah">
-
-      <div class="niyyah-content-board">
-
-        <div class="topic-heading">
-          <span class="topic-number">২</span>
-
-          <div class="heading-text">
-            <span class="topic-subtitle"
-                  data-i18n="niyyahSubtitle">
-              দ্বিতীয় ধাপ
-            </span>
-
-            <h2 data-i18n="niyyahTitle">
-              নামাজের নিয়ত
-            </h2>
-          </div>
-        </div>
-
-        <figure class="topic-image">
-          <img
-            src="../assets/Peaceful%20Intention%20in%20the%20Mosque.png"
-            alt="নামাজের নিয়ত মনে স্থির করছে এমন এক মুসলিম বালক"
-            data-i18n-alt="niyyahImageAlt"
-            width="600"
-            height="600"
-            loading="lazy"
-          >
-        </figure>
-
-        <div class="info-board">
-          <h3 data-i18n="niyyahIntroTitle">
-            নিয়ত কী?
-          </h3>
-
-          <p data-i18n="niyyahIntroText">
-            নিয়ত হলো অন্তরে ইবাদত করার সংকল্প করা।
-            কোন নামাজ আদায় করবে, তা মনে স্থির রাখো।
-          </p>
-        </div>
-
-      </div>
-
-      <div class="info-board">
-        <h3 data-i18n="niyyahMeaningTitle">
-          নিয়ত সম্পর্কে মনে রাখবে
-        </h3>
-
-        <p data-i18n="niyyahMeaningText">
-          নিয়তের মূল স্থান অন্তর। নির্দিষ্ট আরবি বাক্য মুখে
-          বলা নিয়তের অপরিহার্য শর্ত নয়।
+      <aside class="note-board">
+        <h3 data-i18n="niyyahNoteTitle">মনে রাখবে</h3>
+        <p data-i18n="niyyahNoteText">
+          নিয়ত মূলত অন্তরের বিষয়। নির্দিষ্ট বাক্য বারবার বলার কারণে অযথা দুশ্চিন্তায় পড়বে না।
         </p>
-      </div>
-
-      <div class="info-board">
-        <h3 data-i18n="niyyahImportantTitle">
-          গুরুত্বপূর্ণ সতর্কতা
-        </h3>
-
-        <p data-i18n="niyyahImportantText">
-          অযথা সন্দেহ করে একই নিয়ত বারবার পুনরাবৃত্তি করে
-          নিজেকে কষ্ট দেবে না।
-        </p>
-      </div>
-
+      </aside>
     </section>
 
-    <!-- STEP 3: TAKBIR-E-TAHRIMA -->
-    <section class="topic-board" id="takbir">
-
-      <div class="takbir-content-board">
-
-        <div class="topic-heading">
-          <span class="topic-number">৩</span>
-
-          <div class="heading-text">
-            <span class="topic-subtitle"
-                  data-i18n="takbirSubtitle">
-              তৃতীয় ধাপ
-            </span>
-
-            <h2 data-i18n="takbirTitle">
-              তাকবিরে তাহরিমা
-            </h2>
-          </div>
-        </div>
-
-        <figure class="topic-image">
-          <img
-            src="../assets/takbir.png"
-            alt="নামাজ শুরু করার সময় দুই হাত তুলছে এমন এক মুসলিম বালক"
-            data-i18n-alt="takbirImageAlt"
-            width="600"
-            height="600"
-            loading="lazy"
-          >
-        </figure>
-
-        <div class="info-board">
-          <h3 data-i18n="takbirIntroTitle">
-            তাকবিরে তাহরিমা কী?
-          </h3>
-
-          <p data-i18n="takbirIntroText">
-            নামাজ শুরু করার সময় আল্লাহু আকবার বলে
-            নামাজে প্রবেশ করাকে তাকবিরে তাহরিমা বলে।
-          </p>
-
-          <h3 data-i18n="takbirHowTitle">
-            কীভাবে তাকবির বলবে?
-          </h3>
-
-          <p data-i18n="takbirHowText">
-            নামাজ শুরু করার সময় বলো:
-          </p>
-
-          <div class="arabic-board" lang="ar" dir="rtl">
-            <p class="arabic-text">اللّٰهُ أَكْبَرُ</p>
-
-            <p class="transliteration"
-               dir="ltr"
-               data-i18n="takbirPronunciationText">
-              আল্লাহু আকবার
-            </p>
-
-            <p class="meaning"
-               dir="ltr"
-               data-i18n="takbirMeaningText">
-              অর্থ: আল্লাহ সর্বশ্রেষ্ঠ।
-            </p>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- STEP 4: SANA -->
-    <section class="topic-board text-only-board" id="sana">
-
+    <!-- STEP 2: TAKBIR-E-TAHRIMAH -->
+    <section class="lesson-board" id="takbir" aria-labelledby="takbir-title">
       <div class="topic-heading">
-        <span class="topic-number">৪</span>
-
+        <span class="topic-number" aria-hidden="true" data-step="2">২</span>
         <div class="heading-text">
-          <span class="topic-subtitle"
-                data-i18n="sanaSubtitle">
-            চতুর্থ ধাপ
-          </span>
-
-          <h2 data-i18n="sanaTitle">
-            সানা পড়া
-          </h2>
+          <span class="topic-subtitle" data-i18n="takbirSubtitle">দ্বিতীয় ধাপ</span>
+          <h2 id="takbir-title" data-i18n="takbirTitle">তাকবিরাতুল ইহরাম</h2>
         </div>
       </div>
 
-      <div class="info-board">
+      <figure class="topic-image">
+        <img
+          src="../assets/images/takbir-tahrimah.png"
+          alt="নামাজ শুরু করার সময় দুই হাত তুলছে এমন এক মুসলিম বালক"
+          data-i18n-alt="takbirImageAlt"
+          width="1536"
+          height="1024"
+          loading="lazy"
+        >
+      </figure>
 
-        <p data-i18n="sanaText">
-          তাকবিরে তাহরিমার পর সানা পড়া হয়।
-          সানার প্রচলিত দোয়াটি শিখে নাও।
+      <div class="content-block">
+        <h3 data-i18n="takbirWhatTitle">তাকবিরাতুল ইহরাম কী?</h3>
+        <p data-i18n="takbirWhatText">
+          নামাজের শুরুতে “আল্লাহু আকবার” বলে নামাজে প্রবেশ করাকে তাকবিরাতুল ইহরাম বলা হয়।
         </p>
 
-        <div class="arabic-board" lang="ar" dir="rtl">
-          <p class="arabic-text" data-i18n="sanaArabic">
-            سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ
-            وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ
-            وَلَا إِلَهَ غَيْرُكَ
+        <h3 data-i18n="takbirHowTitle">কীভাবে বলবে?</h3>
+        <p data-i18n="takbirHowText">
+          স্থিরভাবে দাঁড়িয়ে নামাজের শুরুতে বলো:
+        </p>
+
+        <div class="arabic-board">
+          <p class="arabic-text" lang="ar" dir="rtl">اللَّهُ أَكْبَرُ</p>
+          <p class="transliteration" data-i18n="takbirPronunciation">
+            উচ্চারণ: আল্লাহু আকবার
+          </p>
+          <p class="meaning" data-i18n="takbirMeaning">
+            অর্থ: আল্লাহ সর্বশ্রেষ্ঠ।
           </p>
         </div>
 
-        <h3 data-i18n="sanaPronunciationTitle">
-          বাংলা উচ্চারণ
-        </h3>
+        <h3 data-i18n="takbirReminderTitle">যা খেয়াল রাখবে</h3>
+        <p data-i18n="takbirReminderText">
+          শব্দগুলো স্পষ্টভাবে উচ্চারণ করো এবং নামাজে প্রবেশ করার পর মনোযোগ বজায় রাখো।
+        </p>
+      </div>
+    </section>
 
-        <p data-i18n="sanaPronunciationText">
-          সুবহানাকাল্লাহুম্মা ওয়া বিহামদিকা,
-          ওয়া তাবারাকাসমুকা, ওয়া তা'আলা জাদ্দুকা,
-          ওয়া লা ইলাহা গাইরুক।
+    <!-- STEP 3: FOLDED HANDS -->
+    <section class="lesson-board" id="folded-hands" aria-labelledby="folded-hands-title">
+      <div class="topic-heading">
+        <span class="topic-number" aria-hidden="true" data-step="3">৩</span>
+        <div class="heading-text">
+          <span class="topic-subtitle" data-i18n="handsSubtitle">তৃতীয় ধাপ</span>
+          <h2 id="folded-hands-title" data-i18n="handsTitle">হাত বাঁধা</h2>
+        </div>
+      </div>
+
+      <figure class="topic-image">
+        <img
+          src="../assets/images/folded-hands.png"
+          alt="নামাজে দাঁড়িয়ে হাত বাঁধা অবস্থায় এক মুসলিম বালক"
+          data-i18n-alt="handsImageAlt"
+          width="1536"
+          height="1024"
+          loading="lazy"
+        >
+      </figure>
+
+      <div class="content-block">
+        <h3 data-i18n="handsWhatTitle">হাত বাঁধার সময়</h3>
+        <p data-i18n="handsWhatText">
+          তাকবিরের পর দাঁড়িয়ে নামাজের প্রচলিত পদ্ধতি অনুযায়ী হাত বাঁধো। এরপর পরবর্তী পাঠের জন্য মনোযোগী হও।
         </p>
 
-        <h3 data-i18n="sanaMeaningTitle">
-          অর্থ
-        </h3>
+        <h3 data-i18n="handsReminderTitle">যা মনে রাখবে</h3>
+        <ul class="detail-list">
+          <li data-i18n="handsPoint1">শরীর স্বাভাবিক ও স্থির রাখো।</li>
+          <li data-i18n="handsPoint2">হাত রাখার পদ্ধতিতে প্রচলিত ভিন্নতা থাকতে পারে।</li>
+          <li data-i18n="handsPoint3">ভিন্ন পদ্ধতি দেখলে কাউকে অসম্মান বা দোষারোপ করবে না।</li>
+        </ul>
+      </div>
 
+      <aside class="note-board">
+        <h3 data-i18n="handsNoteTitle">মনে রাখবে</h3>
+        <p data-i18n="handsNoteText">
+          নামাজের আদব বজায় রাখো এবং নির্ভরযোগ্য শিক্ষার মাধ্যমে নিজের পদ্ধতি শিখে নাও।
+        </p>
+      </aside>
+    </section>
+
+    <!-- STEP 4: QIYAM -->
+    <section class="lesson-board" id="qiyam" aria-labelledby="qiyam-title">
+      <div class="topic-heading">
+        <span class="topic-number" aria-hidden="true" data-step="4">৪</span>
+        <div class="heading-text">
+          <span class="topic-subtitle" data-i18n="qiyamSubtitle">চতুর্থ ধাপ</span>
+          <h2 id="qiyam-title" data-i18n="qiyamTitle">কিয়াম</h2>
+        </div>
+      </div>
+
+      <figure class="topic-image">
+        <img
+          src="../assets/images/qiyam.png"
+          alt="নামাজে সোজা হয়ে দাঁড়ানোর শিক্ষামূলক চিত্র"
+          data-i18n-alt="qiyamImageAlt"
+          width="1536"
+          height="1024"
+          loading="lazy"
+        >
+      </figure>
+
+      <div class="content-block">
+        <h3 data-i18n="qiyamWhatTitle">কিয়াম কী?</h3>
+        <p data-i18n="qiyamWhatText">
+          কিয়াম অর্থ নামাজে দাঁড়ানো। এ অবস্থায় কুরআন তিলাওয়াত করা হয়। দাঁড়ানোর সময় স্থিরতা ও মনোযোগ বজায় রাখার চেষ্টা করো।
+        </p>
+
+        <h3 data-i18n="qiyamHowTitle">মনোযোগ ধরে রাখার উপায়</h3>
+        <ul class="detail-list">
+          <li data-i18n="qiyamPoint1">স্বাভাবিকভাবে সোজা হয়ে দাঁড়াও।</li>
+          <li data-i18n="qiyamPoint2">দৃষ্টি সাধারণত সিজদার স্থানের দিকে রাখো।</li>
+          <li data-i18n="qiyamPoint3">অপ্রয়োজনীয় নড়াচড়া ও চারদিকে তাকানো এড়িয়ে চলো।</li>
+          <li data-i18n="qiyamPoint4">যা পড়ছ, তার অর্থ বোঝার চেষ্টা করো।</li>
+        </ul>
+      </div>
+
+      <aside class="note-board">
+        <h3 data-i18n="qiyamNoteTitle">বিশেষ অবস্থায়</h3>
+        <p data-i18n="qiyamNoteText">
+          অসুস্থতা বা শারীরিক অক্ষমতা থাকলে সামর্থ্য অনুযায়ী নামাজ আদায়ের বিধান সম্পর্কে নির্ভরযোগ্য নির্দেশনা নাও।
+        </p>
+      </aside>
+    </section>
+
+    <!-- STEP 5: SANA -->
+    <section class="lesson-board" id="sana" aria-labelledby="sana-title">
+      <div class="topic-heading">
+        <span class="topic-number" aria-hidden="true" data-step="5">৫</span>
+        <div class="heading-text">
+          <span class="topic-subtitle" data-i18n="sanaSubtitle">পঞ্চম ধাপ</span>
+          <h2 id="sana-title" data-i18n="sanaTitle">সানা</h2>
+        </div>
+      </div>
+
+      <figure class="topic-image">
+        <img
+          src="../assets/images/sana.png"
+          alt="মসজিদে কুরআন পাঠের শিক্ষামূলক চিত্র"
+          data-i18n-alt="sanaImageAlt"
+          width="1536"
+          height="1024"
+          loading="lazy"
+        >
+      </figure>
+
+      <div class="content-block">
+        <p data-i18n="sanaIntroText">
+          নামাজের শুরুতে প্রচলিত একটি সানার দোয়া নিচে দেওয়া হলো। আরবি পাঠ, উচ্চারণ ও অর্থ একসঙ্গে শিখে নাও।
+        </p>
+
+        <div class="arabic-board sana-arabic-board">
+          <p class="arabic-text" lang="ar" dir="rtl">
+            سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ، وَتَعَالَىٰ جَدُّكَ، وَلَا إِلَٰهَ غَيْرُكَ
+          </p>
+        </div>
+
+        <h3 data-i18n="sanaPronunciationTitle">বাংলা উচ্চারণ</h3>
+        <p class="pronunciation-text" data-i18n="sanaPronunciationText">
+          সুবহানাকাল্লাহুম্মা ওয়া বিহামদিকা, ওয়া তাবারাকাসমুকা, ওয়া তা'আলা জাদ্দুকা, ওয়া লা ইলাহা গাইরুক।
+        </p>
+
+        <h3 data-i18n="sanaMeaningTitle">অর্থ</h3>
         <p data-i18n="sanaMeaningText">
-          হে আল্লাহ! আপনি পবিত্র, আপনারই প্রশংসা।
-          আপনার নাম বরকতময়, আপনার মর্যাদা অতি উচ্চ
-          এবং আপনি ছাড়া কোনো সত্য উপাস্য নেই।
+          হে আল্লাহ! আপনি পবিত্র, আপনারই প্রশংসা। আপনার নাম বরকতময়, আপনার মহিমা সমুচ্চ এবং আপনি ছাড়া কোনো সত্য উপাস্য নেই।
         </p>
-
       </div>
 
+      <aside class="note-board">
+        <h3 data-i18n="sanaNoteTitle">শুদ্ধভাবে শেখার জন্য</h3>
+        <p data-i18n="sanaNoteText">
+          আরবি শব্দগুলো ধীরে ও যথাসম্ভব শুদ্ধভাবে পড়ো। উচ্চারণ শেখার সময় নির্ভরযোগ্য পাঠ বা শিক্ষকের সহায়তা নাও।
+        </p>
+      </aside>
     </section>
 
-    <!-- STEP 5: NEXT ACTIONS -->
-    <section class="topic-board text-only-board" id="next-steps">
-
-      <div class="topic-heading">
-        <span class="topic-number">৫</span>
-
-        <div class="heading-text">
-          <span class="topic-subtitle"
-                data-i18n="nextStepsSubtitle">
-            পঞ্চম ধাপ
-          </span>
-
-          <h2 data-i18n="nextStepsTitle">
-            সানার পরের ধাপ
-          </h2>
-        </div>
-      </div>
-
-      <div class="info-board">
-        <ol class="detail-list">
-          <li data-i18n="nextStep1">
-            বিসমিল্লাহ বলো।
-          </li>
-
-          <li data-i18n="nextStep2">
-            সূরা ফাতিহা পড়ো।
-          </li>
-
-          <li data-i18n="nextStep3">
-            সূরা ফাতিহার পর নির্ধারিত কিরাত পড়ো।
-          </li>
-
-          <li data-i18n="nextStep4">
-            এরপর রুকু, সিজদা ও পরবর্তী ধাপগুলো সম্পন্ন করো।
-          </li>
-        </ol>
-      </div>
-
-    </section>
-
-    <!-- IMPORTANT CAUTION -->
+    <!-- IMPORTANT NOTE -->
     <aside class="important-note">
-      <h2 data-i18n="cautionTitle">
-        গুরুত্বপূর্ণ সতর্কতা
-      </h2>
-
+      <h2 data-i18n="cautionTitle">গুরুত্বপূর্ণ সতর্কতা</h2>
       <p data-i18n="cautionText">
-        নামাজের নিয়ম নির্ভরযোগ্য ইসলামী শিক্ষা থেকে শিখবে।
-        কোনো বিষয়ে সংশয় থাকলে যোগ্য আলেমের পরামর্শ নাও।
+        এই পেজটি নামাজের শুরুর ধাপগুলো শেখার প্রাথমিক সহায়িকা। বিস্তারিত বিধান নির্ভরযোগ্য ইসলামি শিক্ষাসূত্র থেকে যাচাই করে শিখবে।
       </p>
     </aside>
 
-    <!-- FOOTER BOARD -->
+    <!-- CLICKABLE FOOTER: TEXT ONLY -->
     <footer class="page-footer">
-      <div class="info-board footer-board">
-        <p data-i18n="footerText">
-          পবিত্রতা রক্ষা করো, ইবাদতে প্রশান্তি খুঁজে নাও।
-        </p>
-      </div>
+      <a class="qirat-footer-link" href="qirat.html" data-i18n-aria-label="qiratLinkLabel">
+        <span data-i18n="qiratLinkText">কিরাত শিখুন</span>
+      </a>
     </footer>
 
   </main>
