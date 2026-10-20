@@ -1,42 +1,45 @@
-/* =========================================
+/* =========================================================
    IBADAT — NAMAZ START PAGE
-   Consistent Islamic UI
-   Responsive + Dark Mode
-========================================= */
+   File: namaz-start.css
+   ========================================================= */
 
 :root {
-  --page-bg: #f5f0e5;
-  --board-bg: rgba(255, 253, 247, 0.97);
-  --board-border: rgba(191, 157, 87, 0.28);
+  --primary-green: #0F5132;
+  --deep-green: #093B25;
+  --gold: #D4AF37;
+  --heading-gold: #B08D23;
 
-  --text-main: #26372d;
-  --text-secondary: #657064;
+  --page-text: #26352C;
+  --muted-text: #59665D;
 
-  --green: #245b43;
-  --green-dark: #194633;
-  --green-soft: #e8f0e8;
+  --page-board: rgba(255, 255, 250, 0.96);
+  --board-border: rgba(15, 81, 50, 0.28);
+  --soft-board: #F8F6EE;
+  --arabic-board: #F5F1DF;
 
-  --gold: #c39a4a;
-  --gold-soft: #f8f0dc;
+  --board-radius: 24px;
+  --small-radius: 15px;
 
-  --shadow: 0 6px 20px rgba(57, 48, 29, 0.07);
+  --board-shadow:
+    0 5px 18px rgba(0, 0, 0, 0.10);
 
-  --radius-large: 26px;
-  --radius-medium: 20px;
-  --radius-small: 14px;
+  --content-width: 900px;
 
-  --page-width: 900px;
+  --body-size: 16px;
+  --body-line-height: 1.8;
+  --heading-size: 21px;
 }
 
-/* =========================================
-   GLOBAL
-========================================= */
+/* =========================
+   RESET AND BASE
+   ========================= */
 
 * {
   box-sizing: border-box;
 }
 
 html {
+  min-height: 100%;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
@@ -44,34 +47,36 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-
-  color: var(--text-main);
-  background-color: var(--page-bg);
-
-  background-image:
-    linear-gradient(
-      rgba(248, 245, 236, 0.82),
-      rgba(248, 245, 236, 0.82)
-    ),
-    url("../assets/bg_pattern.png");
-
-  background-repeat: repeat;
-  background-size: auto, 280px 280px;
-  background-attachment: fixed;
-
+  color: var(--page-text);
   font-family:
     "Noto Sans Bengali",
-    "Hind Siliguri",
-    "Noto Sans",
+    "Nirmala UI",
+    "Noto Sans Devanagari",
+    Arial,
     sans-serif;
+  font-size: var(--body-size);
+  line-height: var(--body-line-height);
 
-  line-height: 1.8;
-  -webkit-font-smoothing: antialiased;
+  background:
+    linear-gradient(
+      rgba(248, 246, 238, 0.72),
+      rgba(248, 246, 238, 0.82)
+    ),
+    url("../assets/main-bg.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 img {
   display: block;
   max-width: 100%;
+}
+
+a {
+  color: inherit;
 }
 
 button,
@@ -81,224 +86,208 @@ select {
   font: inherit;
 }
 
-.namaz-start-page {
-  width: min(calc(100% - 32px), var(--page-width));
-  margin: 0 auto;
-  padding: 24px 0 36px;
+/* =========================
+   MAIN PAGE WRAPPER
+   ========================= */
+
+.page-container,
+main {
+  width: min(
+    calc(100% - 32px),
+    var(--content-width)
+  );
+  margin-inline: auto;
+  padding-block: 20px 28px;
 }
 
-.namaz-start-page h1,
-.namaz-start-page h2,
-.namaz-start-page h3,
-.namaz-start-page p,
-.namaz-start-page figure {
-  overflow-wrap: anywhere;
+.page-container > *,
+main > * {
+  margin-bottom: 20px;
 }
 
-/* =========================================
+.page-container > *:last-child,
+main > *:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================
    HERO BOARD
-========================================= */
+   ========================= */
 
 .hero-board {
   position: relative;
+  isolation: isolate;
   overflow: hidden;
 
-  margin-bottom: 26px;
-  padding: 32px 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 190px;
+  padding: 30px 24px;
 
   text-align: center;
-  color: #fffdf5;
+  color: #fff;
 
-  /* Keep the mosque/pattern background visible */
-  background-color: var(--green-dark);
-  background-image:
+  background:
     linear-gradient(
-      rgba(25, 70, 51, 0.16),
-      rgba(25, 70, 51, 0.16)
+      135deg,
+      rgba(9, 59, 37, 0.92),
+      rgba(15, 81, 50, 0.88)
     ),
-    url("../assets/bg_pattern.png");
+    url("../assets/hero-bg.jpg");
 
-  background-size: cover, 280px 280px;
+  background-size: cover;
   background-position: center;
-  background-repeat: no-repeat, repeat;
 
-  border: 1px solid rgba(205, 174, 105, 0.55);
-  border-radius: var(--radius-large);
-
-  box-shadow: var(--shadow);
+  border: 2px solid var(--gold);
+  border-radius: 30px;
+  box-shadow: var(--board-shadow);
 }
 
 .hero-board::before,
 .hero-board::after {
-  position: absolute;
   content: "";
-  pointer-events: none;
-
-  width: 150px;
-  height: 150px;
-
-  border: 1px solid rgba(225, 196, 127, 0.25);
+  position: absolute;
+  z-index: -1;
+  width: 100px;
+  height: 100px;
+  border: 1px solid rgba(212, 175, 55, 0.48);
   border-radius: 50%;
+  pointer-events: none;
 }
 
 .hero-board::before {
-  top: -86px;
-  left: -48px;
+  top: -48px;
+  left: -35px;
 }
 
 .hero-board::after {
-  right: -48px;
-  bottom: -94px;
+  right: -35px;
+  bottom: -48px;
 }
 
 .hero-content {
-  position: relative;
-  z-index: 1;
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
 }
 
-.hero-content h1 {
-  margin: 0 0 10px;
+.hero-ornament {
+  width: 70px;
+  height: 3px;
+  margin: 0 auto 13px;
+  background: var(--gold);
+  border-radius: 10px;
+}
 
-  color: #fff8df;
-
-  font-size: clamp(1.65rem, 4vw, 2.2rem);
+.hero-board h1 {
+  margin: 0 0 12px;
+  color: #F4D778;
+  font-size: clamp(25px, 4vw, 34px);
   font-weight: 800;
-  line-height: 1.5;
+  line-height: 1.45;
 }
 
-.hero-content p {
+.hero-intro,
+.hero-subtitle {
   max-width: 680px;
   margin: 0 auto;
-
-  color: rgba(255, 253, 245, 0.93);
-
-  font-size: 1rem;
-  line-height: 1.9;
+  color: #fff;
+  font-size: var(--body-size);
+  line-height: 1.8;
 }
 
-/* =========================================
-   INTRODUCTION BOARD
-========================================= */
+.hero-subtitle {
+  margin-top: 5px;
+  color: #F4E8BC;
+}
 
-.introduction-board {
-  margin-bottom: 26px;
+/* =========================
+   LESSON BOARDS
+   All five lesson boards
+   share the same base style.
+   ========================= */
+
+.lesson-board,
+.note-board,
+.important-note {
+  width: 100%;
+  min-width: 0;
   padding: 24px;
 
-  background: var(--board-bg);
+  background: var(--page-board);
   border: 1px solid var(--board-border);
-  border-radius: var(--radius-large);
-
-  box-shadow: var(--shadow);
+  border-radius: var(--board-radius);
+  box-shadow: var(--board-shadow);
 }
 
-.introduction-board h2 {
-  margin: 0 0 10px;
-
-  color: var(--green);
-
-  font-size: 1.35rem;
-  font-weight: 800;
-  line-height: 1.6;
+.lesson-board {
+  position: relative;
+  overflow: hidden;
 }
 
-.introduction-board p {
-  margin: 0;
-  color: var(--text-main);
+.lesson-board::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--primary-green),
+    var(--gold),
+    var(--primary-green)
+  );
 }
 
-/* =========================================
-   TOPIC SECTIONS
-========================================= */
-
-.topic-board {
-  margin: 0 0 28px;
-  padding: 0;
-
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-}
-
-/* Main boards containing heading, image and intro */
-
-.preparation-content-board,
-.niyyah-content-board,
-.takbir-content-board {
-  margin: 0 0 18px;
-  padding: 24px;
-
-  background: var(--board-bg);
-  border: 1px solid var(--board-border);
-  border-radius: var(--radius-large);
-
-  box-shadow: var(--shadow);
-}
-
-/* =========================================
-   TOPIC HEADINGS
-========================================= */
+/* =========================
+   SECTION HEADING
+   ========================= */
 
 .topic-heading {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-
   margin: 0 0 18px;
+  text-align: center;
 }
 
 .topic-number {
-  display: flex;
-  flex: 0 0 44px;
-
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 8px;
 
-  color: #fffdf5;
-  background: var(--green);
-
-  border: 2px solid rgba(195, 154, 74, 0.8);
+  color: #fff;
+  background: var(--primary-green);
+  border: 2px solid var(--gold);
   border-radius: 50%;
 
-  font-size: 1.05rem;
+  font-size: 15px;
   font-weight: 800;
   line-height: 1;
-
-  box-shadow: 0 4px 10px rgba(36, 91, 67, 0.15);
-}
-
-.heading-text {
-  flex: 1;
-  min-width: 0;
-}
-
-.topic-subtitle {
-  display: block;
-  margin: 0 0 3px;
-
-  color: var(--gold);
-
-  font-size: 0.88rem;
-  font-weight: 700;
-  line-height: 1.6;
 }
 
 .topic-heading h2 {
   margin: 0;
-
-  color: var(--green);
-
-  font-size: clamp(1.25rem, 3vw, 1.65rem);
+  color: var(--primary-green);
+  font-size: var(--heading-size);
   font-weight: 800;
   line-height: 1.55;
 }
 
-/* =========================================
-   IMAGES
-========================================= */
+.topic-subtitle {
+  margin: 5px 0 0;
+  color: var(--muted-text);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* =========================
+   IMAGE AREA
+   ========================= */
 
 .topic-image {
   display: flex;
@@ -306,546 +295,553 @@ select {
   justify-content: center;
 
   width: 100%;
-  margin: 0 auto 20px;
-  padding: 0;
+  max-width: 430px;
+  min-height: 180px;
 
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
+  margin: 0 auto 20px;
+  padding: 12px;
+
+  background: var(--soft-board);
+  border: 1px solid rgba(212, 175, 55, 0.65);
+  border-radius: 18px;
 }
 
 .topic-image img {
   width: 100%;
-  max-width: 340px;
-  height: 300px;
-
-  margin: 0 auto;
-
+  max-width: 390px;
+  height: 230px;
   object-fit: contain;
   object-position: center;
-
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
+  border-radius: 10px;
 }
 
-/* =========================================
-   INFORMATION BOARDS
-========================================= */
+/* =========================
+   CONTENT AND TEXT
+   ========================= */
 
-.info-board {
-  margin: 0 0 18px;
-  padding: 22px 24px;
-
-  background: var(--board-bg);
-  border: 1px solid var(--board-border);
-  border-radius: var(--radius-medium);
-
-  box-shadow: var(--shadow);
+.content-block {
+  margin-top: 18px;
 }
 
-.info-board:last-child {
-  margin-bottom: 0;
-}
-
-.info-board h2,
-.info-board h3 {
-  margin: 0 0 10px;
-
-  color: var(--green);
-
-  font-size: 1.15rem;
+.content-block h3,
+.note-board h3,
+.important-note h3 {
+  margin: 0 0 8px;
+  color: var(--primary-green);
+  font-size: 17px;
   font-weight: 800;
-  line-height: 1.65;
+  line-height: 1.6;
 }
 
-.info-board p {
-  margin: 0 0 12px;
-  color: var(--text-main);
+.content-block p,
+.note-board p,
+.important-note p {
+  margin: 0 0 10px;
+  color: var(--page-text);
+  font-size: var(--body-size);
+  line-height: var(--body-line-height);
 }
 
-.info-board p:last-child {
+.content-block p:last-child,
+.note-board p:last-child,
+.important-note p:last-child {
   margin-bottom: 0;
 }
-
-/* First content belongs visually to its parent board */
-
-.preparation-content-board > .info-board,
-.niyyah-content-board > .info-board,
-.takbir-content-board > .info-board {
-  margin: 0;
-  padding: 0;
-
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-}
-
-/* =========================================
-   LISTS
-========================================= */
 
 .detail-list {
   margin: 8px 0 0;
-  padding-inline-start: 26px;
+  padding-left: 24px;
 }
 
 .detail-list li {
   margin: 0 0 8px;
-  padding-inline-start: 3px;
-
-  color: var(--text-main);
+  padding-left: 3px;
+  color: var(--page-text);
+  font-size: var(--body-size);
+  line-height: var(--body-line-height);
 }
 
 .detail-list li:last-child {
   margin-bottom: 0;
 }
 
-.detail-list li::marker {
-  color: var(--gold);
-  font-weight: 800;
+/* Bengali and Hindi list marker spacing */
+html[lang="bn"] .detail-list,
+html[lang="hi"] .detail-list {
+  padding-left: 26px;
 }
 
-/* =========================================
-   ARABIC BOARD
-========================================= */
+/* =========================
+   ARABIC TEXT BOARD
+   ========================= */
 
 .arabic-board {
-  margin: 18px 0;
+  margin: 16px 0;
   padding: 20px 16px;
 
   text-align: center;
-
-  background: var(--green-soft);
-  border: 1px solid rgba(195, 154, 74, 0.45);
-  border-radius: var(--radius-small);
+  background: var(--arabic-board);
+  border: 1px solid rgba(212, 175, 55, 0.75);
+  border-radius: 17px;
 }
 
+.arabic-board p,
 .arabic-board .arabic-text {
   margin: 0;
-
-  color: var(--green-dark);
+  color: #183E2B;
 
   font-family:
     "Noto Naskh Arabic",
     "Amiri",
+    "Traditional Arabic",
     serif;
 
-  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-size: clamp(24px, 4.5vw, 31px);
   line-height: 2;
-  text-align: center;
   direction: rtl;
+  text-align: center;
 }
 
-.arabic-board .transliteration,
-.arabic-board .meaning {
-  margin: 8px 0 0;
-
-  color: var(--green-dark);
-  font-size: 1.05rem;
-  line-height: 1.8;
+.arabic-board .arabic-translation {
+  margin-top: 12px;
+  font-family: inherit;
+  font-size: var(--body-size);
+  line-height: var(--body-line-height);
+  direction: ltr;
+  color: var(--page-text);
 }
 
-/* =========================================
+/* Pronunciation and meaning text */
+.pronunciation,
+.meaning-text {
+  margin-top: 10px;
+  font-size: var(--body-size);
+  line-height: var(--body-line-height);
+}
+
+.pronunciation strong,
+.meaning-text strong {
+  color: var(--primary-green);
+}
+
+/* =========================
+   SMALL REMINDER BOARDS
+   ========================= */
+
+.note-board {
+  margin-top: 18px;
+  padding: 18px 20px;
+
+  background: var(--soft-board);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+.note-board h3 {
+  margin-bottom: 6px;
+}
+
+.note-board p {
+  font-size: 15px;
+}
+
+/* =========================
    IMPORTANT NOTE
-========================================= */
+   ========================= */
 
 .important-note {
-  margin: 24px 0;
-  padding: 20px 22px;
-
-  background: var(--gold-soft);
-  border: 1px solid rgba(195, 154, 74, 0.4);
+  padding: 22px 24px;
+  background: rgba(255, 250, 231, 0.97);
+  border: 1px solid rgba(212, 175, 55, 0.6);
   border-left: 5px solid var(--gold);
-  border-radius: var(--radius-medium);
-
-  box-shadow: var(--shadow);
+  border-radius: 16px;
 }
 
-.important-note h2,
 .important-note h3 {
-  margin: 0 0 8px;
-
-  color: var(--green-dark);
-
-  font-size: 1.15rem;
-  font-weight: 800;
-  line-height: 1.65;
+  margin-bottom: 8px;
+  color: #795D10;
 }
 
-.important-note p {
-  margin: 0;
-  color: var(--text-main);
-}
-
-/* =========================================
+/* =========================
    FOOTER BOARD
-========================================= */
+   Only the Qirat link text
+   appears inside this board.
+   ========================= */
 
 .page-footer {
-  margin-top: 28px;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  margin-top: 24px;
   padding: 0;
 
-  border: 0;
-  background: transparent;
+  background: var(--deep-green);
+  border: 1px solid var(--gold);
+  border-radius: 22px;
+  box-shadow: var(--board-shadow);
 }
 
-.page-footer .footer-board {
-  margin: 0;
-  padding: 18px 22px;
+.page-footer::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--deep-green),
+    var(--gold),
+    var(--deep-green)
+  );
+}
 
+.qirat-footer-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 72px;
+  padding: 18px 20px;
+
+  color: #F4D778;
   text-align: center;
+  text-decoration: none;
 
-  background: var(--board-bg);
-  border: 1px solid var(--board-border);
-  border-top: 3px solid var(--green);
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.6;
 
-  border-radius: var(--radius-medium);
-  box-shadow: var(--shadow);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
-.page-footer p {
-  margin: 0;
-
-  color: var(--text-secondary);
-
-  font-size: 0.95rem;
-  font-weight: 600;
-  line-height: 1.8;
+.qirat-footer-link:hover {
+  color: #fff;
+  background: rgba(212, 175, 55, 0.12);
 }
 
-/* =========================================
+.qirat-footer-link:focus-visible {
+  outline: 3px solid #F4D778;
+  outline-offset: -6px;
+  border-radius: 18px;
+}
+
+/* =========================
    DARK MODE
-========================================= */
+   Compatible with body.dark-mode
+   ========================= */
 
 body.dark-mode {
-  --page-bg: #141d18;
-  --board-bg: rgba(31, 42, 35, 0.97);
-  --board-border: rgba(193, 161, 94, 0.24);
+  --page-text: #E7EDE8;
+  --muted-text: #C1CCC4;
 
-  --text-main: #e8eee7;
-  --text-secondary: #bac6ba;
+  --page-board: rgba(24, 37, 30, 0.97);
+  --board-border: rgba(212, 175, 55, 0.38);
+  --soft-board: #24382B;
+  --arabic-board: #2C3B2E;
 
-  --green: #b4d5b9;
-  --green-dark: #d0e5d1;
-  --green-soft: #263d30;
-
-  --gold: #d8b56c;
-  --gold-soft: #302b20;
-
-  --shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-
-  background-color: var(--page-bg);
-
-  background-image:
+  background:
     linear-gradient(
-      rgba(16, 25, 19, 0.88),
-      rgba(16, 25, 19, 0.88)
+      rgba(7, 20, 12, 0.78),
+      rgba(7, 20, 12, 0.86)
     ),
-    url("../assets/bg_pattern.png");
+    url("../assets/main-bg.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 body.dark-mode .hero-board {
-  background-color: #172d22;
-  background-image:
+  background:
     linear-gradient(
-      rgba(23, 45, 34, 0.25),
-      rgba(23, 45, 34, 0.25)
+      135deg,
+      rgba(5, 28, 17, 0.96),
+      rgba(9, 59, 37, 0.94)
     ),
-    url("../assets/bg_pattern.png");
+    url("../assets/hero-bg.jpg");
 
-  border-color: rgba(216, 181, 108, 0.35);
+  background-size: cover;
+  background-position: center;
 }
 
-body.dark-mode .hero-content h1 {
-  color: #f0e4bd;
+body.dark-mode .lesson-board,
+body.dark-mode .note-board {
+  background-color: var(--page-board);
 }
 
-body.dark-mode .hero-content p {
-  color: #d5e0d5;
-}
-
-body.dark-mode .topic-number {
-  color: #17271c;
-  background: #b4d5b9;
-  border-color: var(--gold);
+body.dark-mode .topic-heading h2,
+body.dark-mode .content-block h3,
+body.dark-mode .note-board h3 {
+  color: #E8CA67;
 }
 
 body.dark-mode .topic-subtitle {
-  color: var(--gold);
+  color: #C4D0C7;
+}
+
+body.dark-mode .topic-image {
+  background: #1E3025;
+  border-color: rgba(212, 175, 55, 0.55);
 }
 
 body.dark-mode .arabic-board {
-  background: #263d30;
-  border-color: rgba(216, 181, 108, 0.35);
+  background: var(--arabic-board);
+  border-color: rgba(212, 175, 55, 0.6);
 }
 
-body.dark-mode .arabic-board .arabic-text,
-body.dark-mode .arabic-board .transliteration,
-body.dark-mode .arabic-board .meaning {
-  color: #e5f0e4;
+body.dark-mode .arabic-board p,
+body.dark-mode .arabic-board .arabic-text {
+  color: #FFF4D1;
 }
 
 body.dark-mode .important-note {
-  background: #302b20;
-  border-color: rgba(216, 181, 108, 0.3);
+  background: #302E20;
+  border-color: rgba(212, 175, 55, 0.55);
   border-left-color: var(--gold);
 }
 
-body.dark-mode .important-note h2,
 body.dark-mode .important-note h3 {
-  color: #e6ce98;
+  color: #F4D778;
 }
 
-body.dark-mode .important-note p {
-  color: var(--text-main);
+body.dark-mode .page-footer {
+  background: #061F14;
 }
 
-body.dark-mode .page-footer .footer-board {
-  border-top-color: var(--green);
-}
-
-/* =========================================
+/* =========================
    TABLET
-========================================= */
+   ========================= */
 
 @media (max-width: 768px) {
-  .namaz-start-page {
-    width: min(calc(100% - 26px), var(--page-width));
-    padding-top: 18px;
-    padding-bottom: 28px;
+  :root {
+    --body-size: 15.5px;
+    --heading-size: 20px;
+    --board-radius: 21px;
   }
 
-  .hero-board {
-    margin-bottom: 22px;
-    padding: 28px 22px;
-    border-radius: 23px;
+  .page-container,
+  main {
+    width: min(calc(100% - 24px), var(--content-width));
+    padding-block: 14px 22px;
   }
 
-  .introduction-board {
-    margin-bottom: 22px;
-    padding: 22px;
-  }
-
-  .topic-board {
-    margin-bottom: 24px;
-  }
-
-  .preparation-content-board,
-  .niyyah-content-board,
-  .takbir-content-board {
-    padding: 22px;
-    border-radius: 23px;
-  }
-
-  .info-board {
-    padding: 20px 22px;
-  }
-
-  .topic-image img {
-    max-width: 310px;
-    height: 270px;
-  }
-}
-
-/* =========================================
-   MOBILE
-========================================= */
-
-@media (max-width: 480px) {
-  .namaz-start-page {
-    width: calc(100% - 20px);
-    padding-top: 12px;
-    padding-bottom: 22px;
-  }
-
-  .hero-board {
-    margin-bottom: 18px;
-    padding: 23px 16px;
-    border-radius: 20px;
-  }
-
-  .hero-content h1 {
-    font-size: 1.5rem;
-    line-height: 1.5;
-  }
-
-  .hero-content p {
-    font-size: 0.93rem;
-    line-height: 1.8;
-  }
-
-  .introduction-board {
-    margin-bottom: 20px;
-    padding: 18px;
-    border-radius: 20px;
-  }
-
-  .introduction-board h2 {
-    font-size: 1.15rem;
-  }
-
-  .topic-board {
-    margin-bottom: 22px;
-  }
-
-  .preparation-content-board,
-  .niyyah-content-board,
-  .takbir-content-board {
-    margin-bottom: 14px;
-    padding: 18px;
-    border-radius: 20px;
-  }
-
-  .topic-heading {
-    gap: 11px;
-    margin-bottom: 15px;
-  }
-
-  .topic-number {
-    flex-basis: 37px;
-    width: 37px;
-    height: 37px;
-    font-size: 0.95rem;
-  }
-
-  .topic-subtitle {
-    font-size: 0.8rem;
-  }
-
-  .topic-heading h2 {
-    font-size: 1.15rem;
-    line-height: 1.55;
-  }
-
-  .topic-image {
+  .page-container > *,
+  main > * {
     margin-bottom: 16px;
   }
 
-  .topic-image img {
-    max-width: 260px;
-    height: 235px;
+  .hero-board {
+    min-height: 175px;
+    padding: 25px 20px;
+    border-radius: 24px;
   }
 
-  .info-board {
-    margin-bottom: 14px;
-    padding: 17px 18px;
-    border-radius: 17px;
-  }
-
-  .info-board h2,
-  .info-board h3 {
-    font-size: 1.03rem;
-  }
-
-  .info-board p,
-  .info-board li,
-  .introduction-board p,
-  .important-note p {
-    font-size: 0.94rem;
-    line-height: 1.85;
-  }
-
-  .detail-list {
-    padding-inline-start: 22px;
-  }
-
-  .arabic-board {
-    margin: 15px 0;
-    padding: 16px 12px;
-  }
-
-  .arabic-board .arabic-text {
-    font-size: 1.55rem;
-  }
-
-  .arabic-board .transliteration,
-  .arabic-board .meaning {
-    font-size: 0.95rem;
-  }
-
+  .lesson-board,
+  .note-board,
   .important-note {
-    margin: 20px 0;
-    padding: 17px 18px;
-    border-radius: 17px;
+    padding: 21px;
   }
 
-  .important-note h2,
-  .important-note h3 {
-    font-size: 1.05rem;
+  .topic-image {
+    max-width: 400px;
   }
 
-  .page-footer {
-    margin-top: 24px;
-  }
-
-  .page-footer .footer-board {
-    padding: 16px 14px;
-    border-radius: 17px;
-  }
-
-  .page-footer p {
-    font-size: 0.88rem;
+  .topic-image img {
+    height: 215px;
   }
 }
 
-/* =========================================
-   EXTRA SMALL MOBILE
-========================================= */
+/* =========================
+   MOBILE
+   ========================= */
 
-@media (max-width: 360px) {
+@media (max-width: 480px) {
+  :root {
+    --body-size: 15px;
+    --heading-size: 19px;
+    --board-radius: 18px;
+  }
+
+  body {
+    background-attachment: scroll;
+  }
+
+  body.dark-mode {
+    background-attachment: scroll;
+  }
+
+  .page-container,
+  main {
+    width: calc(100% - 20px);
+    padding-block: 10px 18px;
+  }
+
+  .page-container > *,
+  main > * {
+    margin-bottom: 13px;
+  }
+
   .hero-board {
-    padding: 20px 13px;
+    min-height: 160px;
+    padding: 22px 16px;
+    border-radius: 21px;
   }
 
-  .hero-content h1 {
-    font-size: 1.35rem;
+  .hero-board h1 {
+    margin-bottom: 9px;
+    font-size: 25px;
   }
 
-  .preparation-content-board,
-  .niyyah-content-board,
-  .takbir-content-board {
-    padding: 15px;
+  .hero-intro,
+  .hero-subtitle {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .hero-ornament {
+    width: 54px;
+    margin-bottom: 10px;
+  }
+
+  .lesson-board,
+  .note-board,
+  .important-note {
+    padding: 18px 15px;
+    border-radius: 18px;
   }
 
   .topic-heading {
-    gap: 9px;
+    margin-bottom: 14px;
   }
 
   .topic-number {
-    flex-basis: 33px;
-    width: 33px;
-    height: 33px;
-    font-size: 0.88rem;
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
   }
 
   .topic-heading h2 {
-    font-size: 1.05rem;
+    font-size: var(--heading-size);
   }
 
-  .info-board {
-    padding: 15px;
+  .topic-subtitle {
+    font-size: 13px;
+  }
+
+  .topic-image {
+    min-height: 140px;
+    margin-bottom: 16px;
+    padding: 8px;
+    border-radius: 14px;
   }
 
   .topic-image img {
-    max-width: 100%;
-    height: 210px;
+    height: 190px;
   }
 
+  .content-block {
+    margin-top: 15px;
+  }
+
+  .content-block h3,
+  .note-board h3,
+  .important-note h3 {
+    font-size: 16px;
+  }
+
+  .detail-list {
+    padding-left: 21px;
+  }
+
+  .detail-list li {
+    padding-left: 2px;
+    margin-bottom: 7px;
+  }
+
+  .arabic-board {
+    margin: 13px 0;
+    padding: 16px 10px;
+    border-radius: 14px;
+  }
+
+  .arabic-board p,
   .arabic-board .arabic-text {
-    font-size: 1.35rem;
+    font-size: 25px;
+    line-height: 2;
+  }
+
+  .note-board {
+    padding: 15px;
+  }
+
+  .note-board p {
+    font-size: 14px;
+  }
+
+  .important-note {
+    padding: 18px 16px;
+  }
+
+  .page-footer {
+    margin-top: 17px;
+    border-radius: 18px;
+  }
+
+  .qirat-footer-link {
+    min-height: 64px;
+    padding: 16px;
+    font-size: 17px;
   }
 }
 
-/* =========================================
-   ACCESSIBILITY
-========================================= */
+/* =========================
+   SMALL MOBILE
+   ========================= */
+
+@media (max-width: 360px) {
+  .hero-board h1 {
+    font-size: 22px;
+  }
+
+  .hero-board {
+    padding-inline: 13px;
+  }
+
+  .lesson-board,
+  .note-board,
+  .important-note {
+    padding: 15px 12px;
+  }
+
+  .topic-image img {
+    height: 165px;
+  }
+
+  .arabic-board p,
+  .arabic-board .arabic-text {
+    font-size: 22px;
+  }
+}
+
+/* =========================
+   REDUCED MOTION
+   ========================= */
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
