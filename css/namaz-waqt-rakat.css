@@ -61,7 +61,18 @@ body {
   font-size: 16px;
   line-height: 1.8;
 
-  background-color: #f8f6ee;
+   position: relative;
+  isolation: isolate;
+  background: transparent;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
   background-image:
     linear-gradient(
       rgba(255, 251, 244, 0.82),
@@ -72,7 +83,6 @@ body {
   background-repeat: no-repeat, no-repeat;
   background-position: center top, center top;
   background-size: cover, cover;
-  background-attachment: fixed, fixed;
 }
 
 img,
@@ -710,8 +720,10 @@ body.dark-mode {
   --shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
 
   color: var(--text);
-  background-color: #101a15;
+   background: transparent;
+}
 
+body.dark-mode::before {
   background-image:
     linear-gradient(
       rgba(12, 24, 18, 0.86),
@@ -722,7 +734,6 @@ body.dark-mode {
   background-repeat: no-repeat, no-repeat;
   background-position: center top, center top;
   background-size: cover, cover;
-  background-attachment: fixed, fixed;
 }
 
 body.dark-mode .hero-board {
