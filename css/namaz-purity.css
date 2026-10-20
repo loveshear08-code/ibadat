@@ -69,7 +69,7 @@ body {
       rgba(251, 248, 239, 0.86),
       rgba(251, 248, 239, 0.86)
     ),
-    url("../assets/bg_pattern.png");
+    url("../assets/main-bg.jpg");
 
   background-repeat: repeat, repeat;
   background-position: center top, center top;
@@ -150,7 +150,7 @@ textarea {
       rgba(255, 251, 239, 0.76),
       rgba(255, 251, 239, 0.82)
     ),
-    url("../assets/prayer-learning-bg.png");
+    url("../assets/hero-bg.jpg");
 
   background-position: center;
   background-repeat: no-repeat;
@@ -829,7 +829,7 @@ body.dark-mode .hero {
       rgba(38, 59, 41, 0.82),
       rgba(38, 59, 41, 0.86)
     ),
-    url("../assets/prayer-learning-bg.png");
+    url("../assets/hero-bg.jpg");
 
   border-color: rgba(212, 175, 55, 0.62);
 }
