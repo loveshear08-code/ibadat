@@ -23,6 +23,8 @@
   --page-padding-y: 8px;
   --grid-gap: 5px;
   --card-radius: 16px;
+
+  --footer-height: 62px;
 }
 
 /* RESET */
@@ -39,7 +41,7 @@ html {
   height: 100%;
   min-height: 0;
   overflow: hidden;
-  scroll-behavior: smooth;
+  overscroll-behavior: none;
 }
 
 body {
@@ -78,7 +80,7 @@ body {
 
 .bidhan-page {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   height: 100dvh;
   min-height: 0;
   max-width: 900px;
@@ -98,14 +100,13 @@ body {
 }
 
 /* INTRODUCTION BOARD
-   Keep the top board fixed in size */
+   Keep the main board size stable */
 
 .intro-board {
   position: relative;
   isolation: isolate;
 
   width: 100%;
-  height: 22%;
   flex: 0 0 22%;
   min-height: 0;
 
@@ -178,7 +179,8 @@ body {
 }
 
 /* TOPIC GRID
-   All 10 cards share the remaining space equally */
+   2 columns × 5 rows
+   Cards equally share remaining space */
 
 .learning-grid {
   width: 100%;
@@ -213,8 +215,8 @@ body {
   align-items: center;
   justify-content: flex-start;
 
-  gap: 9px;
-  padding: 6px 9px;
+  gap: 7px;
+  padding: 5px 7px;
 
   background: var(--card-bg);
 
@@ -298,13 +300,13 @@ body {
 }
 
 /* FOOTER
-   Keep footer height unchanged */
+   Keep footer height and colors stable */
 
 .bidhan-footer {
   width: 100%;
-  height: 62px;
-  min-height: 62px;
-  flex: 0 0 62px;
+  height: var(--footer-height);
+  min-height: var(--footer-height);
+  flex: 0 0 var(--footer-height);
 
   display: flex;
   align-items: center;
@@ -362,7 +364,7 @@ body {
   }
 
   .learning-card {
-    gap: 5px;
+    gap: 4px;
     padding: 4px;
 
     font-size: clamp(10px, 2.9vw, 13px);
@@ -377,9 +379,9 @@ body {
   }
 
   .bidhan-footer {
-    height: 62px;
-    min-height: 62px;
-    flex-basis: 62px;
+    height: var(--footer-height);
+    min-height: var(--footer-height);
+    flex-basis: var(--footer-height);
 
     padding: 7px 8px;
     border-radius: 14px;
@@ -432,9 +434,9 @@ body {
   }
 
   .bidhan-footer {
-    height: 62px;
-    min-height: 62px;
-    flex-basis: 62px;
+    height: var(--footer-height);
+    min-height: var(--footer-height);
+    flex-basis: var(--footer-height);
 
     padding-top: 6px;
     padding-bottom: 6px;
