@@ -2,6 +2,7 @@
    IBADAT — ISLAMIC BIDHAN
    10 Topics | Bengali / English / Hindi
    Light & Dark Theme
+   Fixed Single-Screen Layout
    ========================================= */
 
 :root {
@@ -24,6 +25,8 @@
   --card-radius: 16px;
 }
 
+/* RESET */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -33,14 +36,16 @@
 
 html {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
+  overflow: hidden;
   scroll-behavior: smooth;
 }
 
 body {
   width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
 
   color: var(--text);
 
@@ -65,27 +70,30 @@ body {
   background-size: cover;
   background-attachment: fixed;
 
-  overscroll-behavior-y: contain;
+  overscroll-behavior: none;
 }
 
 /* MAIN PAGE */
 
 .bidhan-page {
   width: 100%;
+  height: 100%;
+  height: 100dvh;
+  min-height: 0;
   max-width: 900px;
-  min-height: 100vh;
-  min-height: 100dvh;
 
   margin: 0 auto;
 
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 7px;
 
   padding:
     max(var(--page-padding-y), env(safe-area-inset-top))
     var(--page-padding-x)
     max(var(--page-padding-y), env(safe-area-inset-bottom));
+
+  overflow: hidden;
 }
 
 /* INTRODUCTION BOARD */
@@ -95,7 +103,8 @@ body {
   isolation: isolate;
 
   width: 100%;
-  min-height: 200px;
+  min-height: 0;
+  flex: 0 0 25%;
 
   display: flex;
   align-items: center;
@@ -127,15 +136,17 @@ body {
   z-index: 1;
 
   width: 100%;
+  max-height: 100%;
   min-width: 0;
+  overflow: hidden;
 
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
 
-  padding: 22px 14px;
-  gap: 8px;
+  padding: 12px 14px;
+  gap: 6px;
 }
 
 .intro-content h1 {
@@ -157,7 +168,7 @@ body {
 
   font-size: clamp(15px, 4vw, 19px);
   font-weight: 750;
-  line-height: 1.55;
+  line-height: 1.45;
 
   text-align: center;
   overflow-wrap: break-word;
@@ -167,11 +178,17 @@ body {
 
 .learning-grid {
   width: 100%;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
 
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(5, minmax(0, 1fr));
 
   gap: var(--grid-gap);
+
+  overflow: hidden;
 }
 
 /* TOPIC CARDS */
@@ -180,8 +197,10 @@ body {
   position: relative;
 
   width: 100%;
+  height: 100%;
+
   min-width: 0;
-  min-height: 88px;
+  min-height: 0;
 
   display: flex;
   flex-direction: row;
@@ -273,13 +292,14 @@ body {
 
 .bidhan-footer {
   width: 100%;
-  min-height: 62px;
+  min-height: 0;
+  flex: 0 0 auto;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  padding: 15px 12px;
+  padding: 10px 12px;
 
   color: #FFFFFF;
   background: #0F5132;
@@ -293,7 +313,7 @@ body {
 .bidhan-footer p {
   font-size: clamp(13px, 3.5vw, 17px);
   font-weight: 800;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 /* COMPACT PHONES */
@@ -307,46 +327,97 @@ body {
   }
 
   .bidhan-page {
-    gap: 7px;
+    gap: 5px;
   }
 
   .intro-board {
-    min-height: 175px;
+    flex-basis: 24%;
     border-radius: 16px;
   }
 
   .intro-content {
-    padding: 16px 9px;
-    gap: 6px;
+    padding: 8px 9px;
+    gap: 4px;
   }
 
   .intro-content h1 {
-    font-size: clamp(23px, 6vw, 28px);
+    font-size: clamp(20px, 5.5vw, 26px);
+    line-height: 1.12;
   }
 
   .intro-content > p {
-    font-size: clamp(12px, 3.4vw, 15px);
-    line-height: 1.45;
+    font-size: clamp(11px, 3.2vw, 14px);
+    line-height: 1.3;
   }
 
   .learning-card {
-    min-height: 72px;
     gap: 5px;
-    padding: 7px 5px;
+    padding: 5px 5px;
 
     font-size: clamp(10px, 2.9vw, 13px);
+    line-height: 1.2;
     border-radius: 11px;
   }
 
   .topic-icon {
-    width: clamp(29px, 8vw, 36px);
-    height: clamp(29px, 8vw, 36px);
+    width: clamp(27px, 7.5vw, 36px);
+    height: clamp(27px, 7.5vw, 36px);
   }
 
   .bidhan-footer {
-    min-height: 54px;
-    padding: 12px 8px;
+    padding: 7px 8px;
     border-radius: 14px;
+  }
+
+  .bidhan-footer p {
+    font-size: clamp(11px, 3.2vw, 14px);
+    line-height: 1.3;
+  }
+}
+
+/* SHORT SCREENS */
+
+@media (max-height: 740px) {
+  .bidhan-page {
+    gap: 5px;
+
+    padding-top: max(5px, env(safe-area-inset-top));
+    padding-bottom: max(5px, env(safe-area-inset-bottom));
+  }
+
+  .intro-board {
+    flex-basis: 23%;
+  }
+
+  .intro-content {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    gap: 4px;
+  }
+
+  .intro-content h1 {
+    font-size: clamp(19px, 4.9vw, 25px);
+    line-height: 1.12;
+  }
+
+  .intro-content > p {
+    font-size: clamp(11px, 3.2vw, 15px);
+    line-height: 1.3;
+  }
+
+  .learning-card {
+    gap: 4px;
+    padding: 4px;
+  }
+
+  .topic-icon {
+    width: clamp(27px, 7.2vw, 39px);
+    height: clamp(27px, 7.2vw, 39px);
+  }
+
+  .bidhan-footer {
+    padding-top: 7px;
+    padding-bottom: 7px;
   }
 }
 
