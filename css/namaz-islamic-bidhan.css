@@ -1,0 +1,415 @@
+/* =========================================
+   IBADAT — ISLAMIC BIDHAN
+   10 Topics | Bengali / English / Hindi
+   Light & Dark Theme
+   ========================================= */
+
+:root {
+  --primary: #0F5132;
+  --primary-dark: #0B3D26;
+
+  --page-bg: #F8F6EE;
+  --card-bg: #BFE4B7;
+  --card-bg-hover: #AED9A5;
+
+  --text: #1E4620;
+  --gold: #D4AF37;
+  --heading-gold: #B08D23;
+
+  --border: rgba(15, 81, 50, 0.20);
+
+  --page-padding-x: 10px;
+  --page-padding-y: 8px;
+  --grid-gap: 8px;
+  --card-radius: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  width: 100%;
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  color: var(--text);
+
+  font-family:
+    "Noto Sans Bengali",
+    "Nirmala UI",
+    "Noto Sans Devanagari",
+    Arial,
+    sans-serif;
+
+  background-color: var(--page-bg);
+
+  background-image:
+    linear-gradient(
+      rgba(255, 251, 244, 0.82),
+      rgba(255, 251, 244, 0.82)
+    ),
+    url("../assets/main-bg.jpg");
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+
+  overscroll-behavior-y: contain;
+}
+
+/* MAIN PAGE */
+
+.bidhan-page {
+  width: 100%;
+  max-width: 900px;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  padding:
+    max(var(--page-padding-y), env(safe-area-inset-top))
+    var(--page-padding-x)
+    max(var(--page-padding-y), env(safe-area-inset-bottom));
+}
+
+/* INTRODUCTION BOARD */
+
+.intro-board {
+  position: relative;
+  isolation: isolate;
+
+  width: 100%;
+  min-height: 200px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(212, 175, 55, 0.78);
+  border-radius: 20px;
+
+  background-color: #F8F4E8;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 252, 242, 0.79),
+      rgba(255, 252, 242, 0.79)
+    ),
+    url("../assets/hero-bg.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  box-shadow: 0 3px 10px rgba(11, 61, 38, 0.12);
+}
+
+.intro-content {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+
+  padding: 22px 14px;
+  gap: 8px;
+}
+
+.intro-content h1 {
+  color: var(--heading-gold);
+
+  font-size: clamp(28px, 7vw, 38px);
+  font-weight: 900;
+  line-height: 1.2;
+
+  text-align: center;
+}
+
+.intro-content > p {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+
+  color: #1E4620;
+
+  font-size: clamp(15px, 4vw, 19px);
+  font-weight: 750;
+  line-height: 1.55;
+
+  text-align: center;
+  overflow-wrap: break-word;
+}
+
+/* TOPIC GRID */
+
+.learning-grid {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: var(--grid-gap);
+}
+
+/* TOPIC CARDS */
+
+.learning-card {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 88px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+
+  gap: 9px;
+  padding: 10px 9px;
+
+  background: var(--card-bg);
+
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+
+  color: var(--text);
+
+  font-family: inherit;
+  font-size: clamp(13px, 3.6vw, 18px);
+  font-weight: 800;
+  line-height: 1.3;
+
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+
+  box-shadow: 0 2px 4px rgba(15, 81, 50, 0.09);
+
+  transition:
+    background-color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+/* TOPIC ICON */
+
+.topic-icon {
+  display: block;
+
+  width: clamp(38px, 10vw, 52px);
+  height: clamp(38px, 10vw, 52px);
+
+  flex: 0 0 auto;
+
+  object-fit: contain;
+  object-position: center;
+
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+}
+
+/* TOPIC LABEL */
+
+.learning-card span {
+  flex: 1;
+  min-width: 0;
+
+  color: var(--text);
+
+  font-size: inherit;
+  font-weight: 800;
+  line-height: 1.3;
+
+  text-align: center;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* INTERACTION */
+
+.learning-card:active {
+  background: var(--card-bg-hover);
+  transform: scale(0.985);
+}
+
+.learning-card:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: -3px;
+}
+
+@media (hover: hover) {
+  .learning-card:hover {
+    background: var(--card-bg-hover);
+    box-shadow: 0 3px 7px rgba(15, 81, 50, 0.13);
+  }
+}
+
+/* FOOTER */
+
+.bidhan-footer {
+  width: 100%;
+  min-height: 62px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 15px 12px;
+
+  color: #FFFFFF;
+  background: #0F5132;
+
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  border-radius: 18px;
+
+  text-align: center;
+}
+
+.bidhan-footer p {
+  font-size: clamp(13px, 3.5vw, 17px);
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+/* COMPACT PHONES */
+
+@media (max-width: 380px) {
+  :root {
+    --page-padding-x: 7px;
+    --page-padding-y: 6px;
+    --grid-gap: 5px;
+    --card-radius: 12px;
+  }
+
+  .bidhan-page {
+    gap: 7px;
+  }
+
+  .intro-board {
+    min-height: 175px;
+    border-radius: 16px;
+  }
+
+  .intro-content {
+    padding: 16px 9px;
+    gap: 6px;
+  }
+
+  .intro-content h1 {
+    font-size: clamp(23px, 6vw, 28px);
+  }
+
+  .intro-content > p {
+    font-size: clamp(12px, 3.4vw, 15px);
+    line-height: 1.45;
+  }
+
+  .learning-card {
+    min-height: 72px;
+    gap: 5px;
+    padding: 7px 5px;
+
+    font-size: clamp(10px, 2.9vw, 13px);
+    border-radius: 11px;
+  }
+
+  .topic-icon {
+    width: clamp(29px, 8vw, 36px);
+    height: clamp(29px, 8vw, 36px);
+  }
+
+  .bidhan-footer {
+    min-height: 54px;
+    padding: 12px 8px;
+    border-radius: 14px;
+  }
+}
+
+/* DARK THEME */
+
+body.dark-mode {
+  --page-bg: #121A15;
+  --card-bg: #263B29;
+  --card-bg-hover: #304A34;
+  --text: #E7F0E4;
+  --border: rgba(190, 228, 183, 0.22);
+
+  background-color: var(--page-bg);
+
+  background-image:
+    linear-gradient(
+      rgba(12, 24, 18, 0.86),
+      rgba(12, 24, 18, 0.86)
+    ),
+    url("../assets/main-bg.jpg");
+
+  color: var(--text);
+}
+
+body.dark-mode .intro-board {
+  border-color: rgba(212, 175, 55, 0.62);
+  background-color: #1E2A22;
+
+  background-image:
+    linear-gradient(
+      rgba(13, 28, 19, 0.78),
+      rgba(13, 28, 19, 0.78)
+    ),
+    url("../assets/hero-bg.jpg");
+}
+
+body.dark-mode .intro-content h1 {
+  color: #E7D18A;
+}
+
+body.dark-mode .intro-content > p {
+  color: #F0F0E8;
+}
+
+body.dark-mode .learning-card,
+body.dark-mode .learning-card span {
+  color: var(--text);
+}
+
+body.dark-mode .bidhan-footer {
+  color: #1E4620;
+  background: #FFFFFF;
+  border-color: rgba(212, 175, 55, 0.62);
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .learning-card {
+    transition: none;
+  }
+}
