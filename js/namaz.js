@@ -2,7 +2,7 @@
 
 (() => {
   const SETTINGS_KEY = "appSettings";
-  const ASSET_BASE = "../assets/";
+  const ASSET_BASE = "../assets/icons/";
 
   function getAppSettings() {
     try {
@@ -141,7 +141,7 @@
     },
     {
       id: "complete",
-      icon: "complete-namaz.png",
+      icon: "complete-prayer.png",
       title: {
         bn: "সম্পূর্ণ নামাজ",
         en: "Complete Prayer",
