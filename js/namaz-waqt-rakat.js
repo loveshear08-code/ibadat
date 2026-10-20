@@ -34,12 +34,12 @@
       ishaText: "সন্ধ্যার আভা মিলিয়ে যাওয়ার পর ইশার নামাজের সময় শুরু হয়।",
       ishaTime: "ইশার ওয়াক্ত শুরু থেকে সুবহে সাদিকের আগ পর্যন্ত",
 
-      jumuahTitle: "জুমার নামাজ",
+      jumuahTitle: "জুম্মা",
       jumuahText: "শুক্রবার যোহরের পরিবর্তে শর্ত পূরণ হলে জামাতে জুমার নামাজ আদায় করা হয়।",
       jumuahLabel: "জুমার ফরজ",
       jumuahNote: "জুমার নামাজের জন্য খুতবা ও জামাতসহ নির্ধারিত শর্ত পূরণ করতে হয়।",
 
-      summaryTitle: "নামাজের রাকাত পরিচিতি",
+      summaryTitle: "রাকাত পরিচিতি",
       thPrayer: "নামাজ",
       thBefore: "আগের সুন্নত",
       thFard: "ফরজ",
@@ -65,7 +65,7 @@
       jumuahNafl: "—",
       tableNote: "* কিছু সুন্নত ও নফল রাকাতের সংখ্যা ও আদায়ের ধরন বিষয়ে আলেমদের মধ্যে মতভেদ রয়েছে।",
 
-      naflTitle: "নফল নামাজ সম্পর্কে",
+      naflTitle: "নফল নামাজ",
       tahajjudName: "তাহাজ্জুদ",
       tahajjudText: "রাতের শেষ ভাগে আদায় করা উত্তম; ইশার পর থেকে ফজরের আগে পর্যন্ত আদায় করা যায়।",
       ishraqName: "ইশরাক",
@@ -77,7 +77,7 @@
       tahiyyatName: "তাহিয়্যাতুল মসজিদ",
       tahiyyatText: "মসজিদে প্রবেশের পর বসার আগে আদায় করা নফল নামাজ, যদি নিষিদ্ধ সময় না হয়।",
 
-      importantTitle: "গুরুত্বপূর্ণ সতর্কতা",
+      importantTitle: "সতর্কতা",
       importantText: "নামাজের সঠিক সময় স্থান ও ঋতুভেদে পরিবর্তিত হয়। নিজের এলাকার নির্ভরযোগ্য নামাজের সময়সূচি অনুসরণ করো। সূর্যোদয়, ঠিক মধ্যাহ্ন ও সূর্যাস্তের সময় নফল নামাজ আদায় থেকে বিরত থাকো। রাকাতসংখ্যা ও কিছু সুন্নত আমলে মাজহাবভেদে পার্থক্য থাকতে পারে।",
 
       footerText: "পবিত্রতা রক্ষা করো, ইবাদতে প্রশান্তি খুঁজে নাও।"
@@ -108,12 +108,12 @@
       ishaText: "Isha begins after the evening twilight has disappeared.",
       ishaTime: "From the start of Isha until true dawn",
 
-      jumuahTitle: "Jumu'ah Prayer",
+      jumuahTitle: "Jumu'ah",
       jumuahText: "On Friday, Jumu'ah is performed in congregation instead of Zuhr when its conditions are fulfilled.",
       jumuahLabel: "Jumu'ah Fard",
       jumuahNote: "Jumu'ah requires its prescribed conditions, including the khutbah and congregation.",
 
-      summaryTitle: "Prayer Rakat Guide",
+      summaryTitle: "Rakat Guide",
       thPrayer: "Prayer",
       thBefore: "Before Sunnah",
       thFard: "Fard",
@@ -139,7 +139,7 @@
       jumuahNafl: "—",
       tableNote: "* Scholars differ regarding the number and practice of some Sunnah and Nafl rakats.",
 
-      naflTitle: "About Nafl Prayers",
+      naflTitle: "Nafl Prayers",
       tahajjudName: "Tahajjud",
       tahajjudText: "Best performed in the last part of the night; it may be prayed after Isha and before Fajr.",
       ishraqName: "Ishraq",
@@ -151,7 +151,7 @@
       tahiyyatName: "Tahiyyat al-Masjid",
       tahiyyatText: "A voluntary prayer offered upon entering a mosque before sitting, provided it is not a prohibited time.",
 
-      importantTitle: "Important Note",
+      importantTitle: "Caution",
       importantText: "Prayer times vary by location and season. Follow a reliable timetable for your area. Avoid voluntary prayers at sunrise, solar noon, and sunset. Rakat counts and some Sunnah practices may differ between schools of Islamic law.",
 
       footerText: "Maintain purity and find peace through worship."
@@ -182,12 +182,12 @@
       ishaText: "शाम की लालिमा समाप्त होने के बाद इशा का समय शुरू होता है।",
       ishaTime: "इशा का समय शुरू होने से सच्ची सुबह से पहले तक",
 
-      jumuahTitle: "जुमे की नमाज़",
+      jumuahTitle: "जुम्म",
       jumuahText: "शुक्रवार को निर्धारित शर्तें पूरी होने पर ज़ुहर की जगह जमाअत के साथ जुमे की नमाज़ अदा की जाती है।",
       jumuahLabel: "जुमे के फ़र्ज़",
       jumuahNote: "जुमे की नमाज़ के लिए ख़ुत्बा और जमाअत सहित निर्धारित शर्तें पूरी होना ज़रूरी है।",
 
-     summaryTitle: "नमाज़ की रकअत परिचय", 
+     summaryTitle: "रकअत परिचय", 
       thPrayer: "नमाज़",
       thBefore: "पहले की सुन्नत",
       thFard: "फ़र्ज़",
@@ -213,7 +213,7 @@
       jumuahNafl: "—",
       tableNote: "* कुछ सुन्नत और नफ़्ल रकअतों की संख्या और तरीके के बारे में विद्वानों में मतभेद हैं।",
 
-      naflTitle: "नफ़्ल नमाज़ के बारे में",
+      naflTitle: "नफ़्ल नमाज़",
       tahajjudName: "तहज्जुद",
       tahajjudText: "रात के आख़िरी हिस्से में पढ़ना बेहतर है; इसे इशा के बाद और फ़ज्र से पहले पढ़ सकते हैं।",
       ishraqName: "इशराक़",
@@ -225,7 +225,7 @@
       tahiyyatName: "तहिय्यतुल मस्जिद",
       tahiyyatText: "मस्जिद में प्रवेश करने के बाद बैठने से पहले पढ़ी जाने वाली नफ़्ल नमाज़, बशर्ते वह निषिद्ध समय न हो।",
 
-      importantTitle: "ज़रूरी सावधानी",
+      importantTitle: "सावधानी।",
       importantText: "नमाज़ के समय स्थान और मौसम के अनुसार बदलते हैं। अपने क्षेत्र की विश्वसनीय समय-सारणी का पालन करें। सूर्योदय, ठीक दोपहर और सूर्यास्त के समय नफ़्ल नमाज़ न पढ़ें। रकअतों की संख्या और कुछ सुन्नत अमलों में फ़िक़्ही मतभेद हो सकते हैं।",
 
       footerText: "पवित्रता बनाए रखें और इबादत में सुकून पाएँ।"
