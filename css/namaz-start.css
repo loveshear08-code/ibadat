@@ -1,19 +1,20 @@
+
 /* ========================================
    IBADAT — Namaz Start Page
    File: css/namaz-start.css
 ======================================== */
 
 :root {
-  --green-deep: #123f30;
-  --green-main: #1d5942;
+  --green-deep: #124b36;
+  --green-main: #176044;
+  --green-soft: #edf2e6;
   --gold: #c9a451;
-  --gold-light: #ead49a;
+  --gold-light: #f0dda2;
   --cream: #fffaf0;
-  --text-dark: #26352c;
-  --text-muted: #5e685f;
-  --board-bg: rgba(255, 252, 244, 0.96);
-  --board-border: rgba(190, 151, 69, 0.8);
-  --board-shadow: 0 7px 22px rgba(48, 39, 20, 0.13);
+  --text-dark: #243a30;
+  --board-bg: rgba(255, 253, 247, 0.96);
+  --board-border: rgba(201, 164, 81, 0.88);
+  --board-shadow: 0 5px 18px rgba(48, 39, 20, 0.12);
 }
 
 /* ---------- Base ---------- */
@@ -35,136 +36,153 @@ body {
     "Noto Sans Bengali",
     "Nirmala UI",
     "Vrinda",
-    Arial,
     sans-serif;
 
   background-color: #f5edda;
   background-image: url("../assets/main-bg.jpg");
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: center top;
   background-size: cover;
   background-attachment: fixed;
 }
 
-/* ---------- Page Layout ---------- */
+/* ---------- Page ---------- */
 
 .namaz-page {
-  width: min(100% - 28px, 900px);
-  margin: 0 auto;
-  padding: 22px 0 30px;
+  width: min(100% - 28px, 960px);
+  margin-inline: auto;
+  padding: 18px 0 28px;
 }
 
 .hero-board,
 .lesson-board,
 .qirat-footer {
   width: 100%;
-  overflow: hidden;
   border: 1.5px solid var(--board-border);
-  border-radius: 20px;
+  border-radius: 22px;
   box-shadow: var(--board-shadow);
 }
 
 /* ---------- Hero Board ---------- */
+/* Full-board mosque image + one translucent cream overlay.
+   There is deliberately NO inner card or inner border. */
 
 .hero-board {
   position: relative;
+  isolation: isolate;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 230px;
+  min-height: 245px;
   margin-bottom: 22px;
-  padding: 28px 22px;
-
+  padding: 34px 28px;
+  overflow: hidden;
+  background-color: #f8f0dc;
   background-image: url("../assets/hero-bg.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
 }
 
+.hero-board::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(255, 250, 239, 0.68);
+  pointer-events: none;
+}
+
 .hero-content {
   width: 100%;
-  max-width: 690px;
-  padding: 22px 24px;
+  max-width: 820px;
+  padding: 0;
+  margin: 0 auto;
   text-align: center;
-  background: rgba(255, 250, 239, 0.91);
-  border: 1px solid rgba(201, 164, 81, 0.85);
-  border-radius: 16px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
 }
 
 .hero-content h1 {
-  margin: 0 0 12px;
-  color: var(--green-deep);
-  font-size: clamp(25px, 4vw, 36px);
-  font-weight: 800;
-  line-height: 1.5;
+  margin: 0 0 10px;
+  color: #a98118;
+  font-size: clamp(32px, 5vw, 44px);
+  font-weight: 900;
+  line-height: 1.35;
+  text-wrap: balance;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
 }
 
-.hero-content p {
+.hero-description {
+  max-width: 790px;
+  margin-inline: auto;
+}
+
+.hero-description p {
   margin: 0;
-  color: #384b3e;
-  font-size: clamp(15px, 2.2vw, 18px);
-  line-height: 1.9;
+  color: var(--green-deep);
+  font-size: clamp(17px, 2.2vw, 21px);
+  font-weight: 600;
+  line-height: 1.85;
+  text-wrap: pretty;
+}
+
+.hero-description p + p {
+  margin-top: 2px;
 }
 
 /* ---------- Lesson Boards ---------- */
 
 .lesson-board {
-  margin-bottom: 22px;
-  padding: 24px;
+  margin-bottom: 20px;
+  padding: 25px;
   background: var(--board-bg);
+  overflow: hidden;
 }
-
-/* Heading and number stay at the top-left.
-   No decorative symbol above the heading. */
 
 .topic-heading {
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 10px;
-  width: 100%;
-  margin: 0 0 22px;
-  text-align: left;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 20px;
 }
 
 .topic-number {
-  flex: 0 0 auto;
+  flex: 0 0 54px;
+  width: 54px;
+  height: 54px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 36px;
-  min-height: 36px;
-  padding: 4px 9px;
-  color: #fffaf0;
-  background: var(--green-main);
-  border: 1px solid var(--gold);
-  border-radius: 10px;
-  font-size: 18px;
+  color: #fffdf4;
+  background: var(--green-deep);
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  font-size: 27px;
   font-weight: 800;
-  line-height: 1.4;
+  line-height: 1;
 }
 
 .topic-heading h2 {
   margin: 0;
-  padding: 1px 0 0;
   color: var(--green-deep);
-  font-size: clamp(21px, 3vw, 28px);
-  font-weight: 800;
-  line-height: 1.6;
-  text-align: left;
+  font-size: clamp(27px, 3.5vw, 34px);
+  font-weight: 900;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
-/* ---------- Lesson Content ---------- */
+/* ---------- Image + Text ---------- */
 
 .lesson-content {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
   align-items: center;
-  gap: 24px;
-  width: 100%;
+  gap: 28px;
 }
 
 .lesson-image {
-  flex: 0 1 38%;
   min-width: 0;
   display: flex;
   align-items: center;
@@ -174,70 +192,111 @@ body {
 .lesson-image img {
   display: block;
   width: 100%;
-  max-width: 260px;
+  max-width: 350px;
   height: auto;
-  max-height: 300px;
+  max-height: 370px;
   object-fit: contain;
-  border-radius: 12px;
 }
 
 .lesson-text {
-  flex: 1 1 62%;
   min-width: 0;
 }
 
 .lesson-text p {
-  margin: 0 0 14px;
+  margin: 0 0 16px;
   color: var(--text-dark);
-  font-size: 16px;
-  line-height: 2;
+  font-size: clamp(17px, 2vw, 20px);
+  line-height: 1.95;
   overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .lesson-text p:last-child {
   margin-bottom: 0;
 }
 
-/* Arabic text */
+/* ---------- Niyyah Example ---------- */
+
+.info-panel {
+  margin-top: 18px;
+  padding: 18px 20px;
+  background: var(--green-soft);
+  border-radius: 15px;
+}
+
+.info-panel h3 {
+  margin: 0 0 8px;
+  color: var(--green-deep);
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+.info-panel p {
+  margin: 0;
+  font-size: clamp(16px, 1.9vw, 19px);
+  line-height: 1.9;
+}
+
+/* ---------- Arabic Recitation ---------- */
+
+.recitation-panel {
+  margin-top: 16px;
+  padding: 20px;
+  background: var(--green-soft);
+  border-radius: 15px;
+}
+
+.recitation-panel p {
+  margin-bottom: 13px;
+}
+
+.recitation-panel p:last-child {
+  margin-bottom: 0;
+}
 
 .arabic-text {
   color: var(--green-deep) !important;
-  font-family: "Noto Naskh Arabic", "Traditional Arabic", serif;
-  font-size: clamp(24px, 4vw, 31px) !important;
-  font-weight: 600;
-  line-height: 2.1 !important;
-  text-align: right;
-  direction: rtl;
-}
-
-/* ---------- Sana Board ---------- */
-
-#sana .lesson-content {
-  display: block;
-}
-
-#sana .lesson-text {
-  width: 100%;
-}
-
-#sana .arabic-text {
-  margin-bottom: 18px;
+  font-family:
+    "Noto Naskh Arabic",
+    "Amiri",
+    "Traditional Arabic",
+    serif;
+  font-size: clamp(32px, 4.2vw, 40px) !important;
+  font-weight: 700;
+  line-height: 2 !important;
   text-align: center;
+  direction: rtl;
+  unicode-bidi: isolate;
+  overflow-wrap: normal;
 }
 
-#sana .lesson-text p:not(.arabic-text) {
-  margin-bottom: 14px;
+.sana-arabic {
+  font-size: clamp(28px, 3.6vw, 36px) !important;
+  line-height: 2.1 !important;
 }
 
-/* ---------- Qirat Footer ---------- */
+.pronunciation,
+.meaning {
+  font-size: clamp(16px, 1.9vw, 19px);
+  line-height: 1.95;
+}
+
+.pronunciation strong,
+.meaning strong {
+  color: var(--green-deep);
+  font-weight: 800;
+}
+
+/* ---------- Footer ---------- */
 
 .qirat-footer {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 125px;
-  margin-top: 0;
-  padding: 24px;
+  margin: 0;
+  padding: 22px 24px;
   background: var(--green-deep);
   border: 2px solid var(--gold);
   border-radius: 20px;
@@ -245,12 +304,14 @@ body {
 }
 
 .qirat-footer a {
-  display: inline-block;
+  display: block;
+  width: 100%;
   color: var(--gold-light);
-  font-size: clamp(23px, 4vw, 30px);
-  font-weight: 800;
-  line-height: 1.6;
+  font-size: clamp(23px, 3.5vw, 30px);
+  font-weight: 900;
+  line-height: 1.65;
   text-decoration: none;
+  overflow-wrap: anywhere;
   transition: color 0.2s ease;
 }
 
@@ -261,126 +322,127 @@ body {
   text-underline-offset: 5px;
 }
 
+.qirat-footer a:focus-visible {
+  outline: 3px solid var(--gold-light);
+  outline-offset: 5px;
+  border-radius: 4px;
+}
+
 /* ---------- Dark Theme ---------- */
 
 body.dark-theme,
 body.dark-mode {
-  --board-bg: rgba(29, 37, 31, 0.96);
-  --text-dark: #f1eee4;
-  --text-muted: #d0d1c7;
-  --board-border: rgba(201, 164, 81, 0.8);
-  --board-shadow: 0 7px 22px rgba(0, 0, 0, 0.28);
+  --green-deep: #d5e8d9;
+  --green-main: #285b45;
+  --green-soft: #283a30;
+  --cream: #1d2821;
+  --text-dark: #f0f1e8;
+  --board-bg: rgba(29, 39, 32, 0.97);
+  --board-border: rgba(201, 164, 81, 0.88);
+  --board-shadow: 0 7px 22px rgba(0, 0, 0, 0.3);
 
   color: var(--text-dark);
-  background-color: #202820;
+  background-color: #17231c;
   background-image:
-    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    linear-gradient(
+      rgba(9, 18, 13, 0.66),
+      rgba(9, 18, 13, 0.66)
+    ),
     url("../assets/main-bg.jpg");
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: center top;
   background-size: cover;
   background-attachment: fixed;
 }
 
-.dark-theme .hero-content,
-.dark-mode .hero-content {
-  background: rgba(31, 39, 32, 0.91);
-  border-color: var(--gold);
+.dark-theme .hero-board::before,
+.dark-mode .hero-board::before {
+  background: rgba(22, 35, 27, 0.76);
 }
 
 .dark-theme .hero-content h1,
-.dark-mode .hero-content h1,
-.dark-theme .hero-content p,
-.dark-mode .hero-content p,
-.dark-theme .topic-heading h2,
-.dark-mode .topic-heading h2,
-.dark-theme .lesson-text p,
-.dark-mode .lesson-text p,
-.dark-theme .arabic-text,
-.dark-mode .arabic-text {
-  color: var(--text-dark) !important;
+.dark-mode .hero-content h1 {
+  color: #f0d27b;
+  text-shadow: none;
+}
+
+.dark-theme .hero-description p,
+.dark-mode .hero-description p {
+  color: #f1f0e7;
 }
 
 .dark-theme .topic-number,
 .dark-mode .topic-number {
   color: #fffaf0;
-  background: #244d3b;
+  background: #24543d;
 }
 
-/* ---------- Responsive: Tablets ---------- */
+.dark-theme .qirat-footer,
+.dark-mode .qirat-footer {
+  background: #102e23;
+}
+
+.dark-theme .qirat-footer a,
+.dark-mode .qirat-footer a {
+  color: #f0d995;
+}
+
+/* ---------- Tablet ---------- */
 
 @media (max-width: 700px) {
   .namaz-page {
     width: calc(100% - 22px);
-    padding-top: 14px;
+    padding-top: 13px;
     padding-bottom: 22px;
   }
 
   .hero-board {
-    min-height: 205px;
-    margin-bottom: 16px;
-    padding: 18px;
-    border-radius: 16px;
-  }
-
-  .hero-content {
-    padding: 18px;
-    border-radius: 13px;
+    min-height: 225px;
+    margin-bottom: 17px;
+    padding: 26px 20px;
+    border-radius: 18px;
   }
 
   .lesson-board {
-    margin-bottom: 16px;
-    padding: 20px;
-    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 17px;
+    border-radius: 18px;
   }
 
   .topic-heading {
-    gap: 9px;
+    gap: 12px;
     margin-bottom: 18px;
   }
 
   .topic-number {
-    min-width: 33px;
-    min-height: 33px;
-    font-size: 16px;
+    flex-basis: 48px;
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
   }
 
   .lesson-content {
-    gap: 18px;
-  }
-
-  .lesson-image {
-    flex-basis: 36%;
+    gap: 20px;
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
   }
 
   .lesson-image img {
-    max-height: 240px;
+    max-height: 300px;
   }
 
-  .lesson-text {
-    flex-basis: 64%;
-  }
-
-  .lesson-text p {
-    font-size: 15px;
-    line-height: 1.9;
+  .recitation-panel,
+  .info-panel {
+    padding: 17px;
   }
 
   .qirat-footer {
-    min-height: 110px;
-    border-radius: 16px;
+    min-height: 115px;
   }
 }
 
-/* ---------- Responsive: Mobile ---------- */
+/* ---------- Mobile ---------- */
 
 @media (max-width: 480px) {
-  body {
-    background-attachment: fixed;
-    background-position: center center;
-    background-size: cover;
-  }
-
   .namaz-page {
     width: calc(100% - 18px);
     padding-top: 10px;
@@ -388,100 +450,161 @@ body.dark-mode {
   }
 
   .hero-board {
-    min-height: 185px;
-    padding: 13px;
-    margin-bottom: 13px;
+    min-height: 220px;
+    padding: 25px 15px;
+    margin-bottom: 15px;
+    border-radius: 16px;
+    background-position: center;
   }
 
-  .hero-content {
-    padding: 15px 12px;
+  .hero-board::before {
+    background: rgba(255, 250, 239, 0.74);
   }
 
   .hero-content h1 {
-    margin-bottom: 8px;
-    font-size: 25px;
+    margin-bottom: 10px;
+    font-size: 32px;
+    line-height: 1.45;
   }
 
-  .hero-content p {
-    font-size: 14px;
-    line-height: 1.8;
+  .hero-description p {
+    font-size: 17px;
+    line-height: 1.85;
   }
 
   .lesson-board {
-    padding: 16px;
-    margin-bottom: 13px;
-    border-radius: 14px;
+    padding: 19px 16px 22px;
+    margin-bottom: 15px;
+    border-radius: 16px;
   }
 
   .topic-heading {
-    align-items: flex-start;
-    gap: 8px;
-    margin-bottom: 15px;
+    gap: 11px;
+    margin-bottom: 16px;
   }
 
   .topic-number {
-    min-width: 30px;
-    min-height: 30px;
-    padding: 3px 7px;
-    border-radius: 8px;
-    font-size: 15px;
+    flex-basis: 44px;
+    width: 44px;
+    height: 44px;
+    font-size: 23px;
   }
 
   .topic-heading h2 {
-    padding-top: 0;
-    font-size: 20px;
+    font-size: 25px;
     line-height: 1.55;
   }
 
   .lesson-content {
+    display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 16px;
+    gap: 17px;
   }
 
   .lesson-image {
-    flex: none;
     width: 100%;
   }
 
   .lesson-image img {
     width: 100%;
-    max-width: 235px;
-    max-height: 230px;
-    margin: 0 auto;
+    max-width: 310px;
+    max-height: 310px;
+    margin-inline: auto;
   }
 
   .lesson-text {
-    flex: none;
     width: 100%;
   }
 
   .lesson-text p {
-    font-size: 15px;
+    font-size: 18px;
     line-height: 1.95;
   }
 
+  .info-panel {
+    margin-top: 15px;
+    padding: 16px;
+    border-radius: 13px;
+  }
+
+  .info-panel h3 {
+    font-size: 20px;
+  }
+
+  .info-panel p {
+    font-size: 17px;
+    line-height: 1.9;
+  }
+
+  .recitation-panel {
+    margin-top: 15px;
+    padding: 17px 15px;
+    border-radius: 13px;
+  }
+
   .arabic-text {
-    font-size: 25px !important;
-    line-height: 2 !important;
+    font-size: 34px !important;
+    line-height: 2.05 !important;
   }
 
-  #sana .lesson-content {
-    display: block;
+  .sana-arabic {
+    font-size: 29px !important;
+    line-height: 2.15 !important;
   }
 
-  #sana .lesson-text {
-    width: 100%;
+  .pronunciation,
+  .meaning {
+    font-size: 17px !important;
+    line-height: 1.95 !important;
   }
 
   .qirat-footer {
-    min-height: 100px;
-    padding: 18px;
-    border-radius: 15px;
+    min-height: 108px;
+    padding: 20px 16px;
+    border-radius: 16px;
   }
 
   .qirat-footer a {
     font-size: 24px;
+    line-height: 1.65;
+  }
+
+  body.dark-theme .hero-board::before,
+  body.dark-mode .hero-board::before {
+    background: rgba(22, 35, 27, 0.8);
+  }
+}
+
+/* ---------- Extra-small phones ---------- */
+
+@media (max-width: 360px) {
+  .hero-content h1 {
+    font-size: 29px;
+  }
+
+  .hero-description p {
+    font-size: 16px;
+  }
+
+  .topic-heading h2 {
+    font-size: 22px;
+  }
+
+  .lesson-board {
+    padding-inline: 13px;
+  }
+
+  .arabic-text {
+    font-size: 30px !important;
+  }
+
+  .sana-arabic {
+    font-size: 26px !important;
+  }
+
+  .qirat-footer a {
+    font-size: 21px;
   }
 }
 
