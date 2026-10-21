@@ -3,139 +3,76 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0F5132">
-
-  <meta
-    name="description"
-    content="IBADAT — পাক-পবিত্রতা, ওযু, গোসল, তায়াম্মুম ও পরিচ্ছন্নতার শিক্ষামূলক নির্দেশিকা।"
-  >
-
+  <meta name="description" content="IBADAT — পাক-পবিত্রতা, ওযু, গোসল, তায়াম্মুম ও পরিচ্ছন্নতার শিক্ষামূলক নির্দেশনা">
   <title>পাক-পবিত্রতা | IBADAT</title>
 
-  <!-- পেজের CSS -->
+  <!-- পাক-পবিত্রতা পেজের CSS -->
   <link rel="stylesheet" href="../css/namaz-purity.css">
 
-  <!-- পেজের JavaScript -->
+  <!-- পাক-পবিত্রতা পেজের JavaScript -->
   <script src="../js/namaz-purity.js" defer></script>
 </head>
 
 <body>
+  <main id="purityPage" class="purity-page">
 
-  <!-- =====================================
-       মূল পেজ
-  ====================================== -->
-  <main class="purity-page" id="purityPage">
+    <!-- মূল পেজ: হিরো বোর্ড, আটটি অপশন ও ফুটার -->
+    <section id="purityHome" class="purity-home">
 
-    <!-- উপরের হিরো বোর্ড -->
-    <header class="intro-board">
+      <header id="purityHero" class="purity-hero">
+        <div class="purity-hero-overlay">
+          <h1 id="pageTitle">পাক-পবিত্রতা</h1>
+          <p id="pageIntro">
+            শুদ্ধতা, পরিচ্ছন্নতা ও ইবাদতের প্রস্তুতি
+          </p>
+        </div>
+      </header>
 
-      <div class="intro-content">
+      <!-- আটটি অপশন JavaScript দিয়ে এখানে তৈরি হবে -->
+      <section
+        id="learningGrid"
+        class="learning-grid"
+        aria-label="পাক-পবিত্রতার আটটি বিষয়"
+      ></section>
 
-        <h1 id="pageTitle">
-          পাক-পবিত্রতা
-        </h1>
-
-        <p id="pageIntro">
-          শুদ্ধতার পথে শেখা ও অনুশীলন
+      <footer id="homeFooter" class="purity-footer">
+        <p id="footerText">
+          পবিত্রতা রক্ষা করো, ইবাদতে প্রশান্তি খুঁজে নাও।
         </p>
+      </footer>
 
-      </div>
-
-    </header>
-
-
-    <!-- =====================================
-         আটটি বিষয়ের অপশন
-         ২ কলাম × ৪ সারি
-    ====================================== -->
-    <section
-      class="learning-grid"
-      id="learningGrid"
-      aria-label="পাক-পবিত্রতার বিষয়সমূহ"
-    >
-      <!--
-        আটটি অপশন JavaScript থেকে তৈরি হবে।
-        ওযু, গোসল, তায়াম্মুম ও অন্যান্য বিষয়
-        namaz-purity.js ফাইল থেকে আসবে।
-      -->
     </section>
 
 
-    <!-- মূল পেজের ফুটার বোর্ড -->
-    <footer class="purity-footer">
+    <!-- বিস্তারিত শিক্ষা: ওযু, গোসল, তায়াম্মুম ও বাকি বিষয় -->
+    <section id="detailView" class="purity-detail" hidden>
 
-      <p id="footerText">
-        পবিত্রতা রক্ষা করো, ইবাদতে প্রশান্তি খুঁজে নাও।
-      </p>
+      <!-- প্রতিটি বিষয়ের উপরের বার -->
+      <header id="detailHeader" class="detail-header">
+        <h1 id="detailTitle">ওযু</h1>
+        <p id="detailSubtitle"></p>
+      </header>
 
-    </footer>
+      <!-- কেবল এই অংশটি স্ক্রল করবে -->
+      <div id="detailScroll" class="detail-scroll">
+        <div
+          id="detailContent"
+          class="detail-content"
+          aria-live="polite"
+        ></div>
+      </div>
+
+      <!-- প্রতিটি বিস্তারিত পেজের নিচের বার -->
+      <footer id="detailFooter" class="purity-footer detail-footer">
+        <p id="detailFooterText">
+          পবিত্রতা রক্ষা করো, ইবাদতে প্রশান্তি খুঁজে নাও।
+        </p>
+      </footer>
+
+    </section>
 
   </main>
-
-
-
-  <!-- =====================================
-       বিস্তারিত বিষয়ের পেজ
-  ====================================== -->
-  <section
-    class="detail-view"
-    id="detailView"
-    hidden
-    aria-labelledby="detailTitle"
-  >
-
-    <!--
-      সব ডিটেইল পেজের একই টপ বার।
-
-      প্রথম লাইন:
-      ক্লিক করা অপশনের নাম, সোনালি রঙে।
-
-      দ্বিতীয় লাইন:
-      স্থায়ী লেখা, সাদা রঙে।
-
-      দুটি লাইনই মাঝখানে থাকবে।
-      এখানে কোনো Back Button নেই।
-    -->
-    <header class="detail-header">
-
-      <h1 id="detailTitle">
-        ওযু
-      </h1>
-
-      <p id="detailSubtitle">
-        শুদ্ধতার পথে শেখা ও অনুশীলন
-      </p>
-
-    </header>
-
-
-    <!--
-      প্রতিটি বিষয়ের আলাদা কনটেন্ট বোর্ড
-      JavaScript থেকে তৈরি হবে।
-    -->
-    <main
-      class="detail-content"
-      id="detailContent"
-    >
-      <!-- বিস্তারিত বিষয়বস্তু এখানে আসবে -->
-    </main>
-
-
-    <!-- ডিটেইল পেজের ফুটার বোর্ড -->
-    <footer class="detail-footer">
-
-      <p id="detailFooterText">
-        পবিত্রতা রক্ষা করো, ইবাদতে প্রশান্তি খুঁজে নাও।
-      </p>
-
-    </footer>
-
-  </section>
-
 </body>
 </html>
