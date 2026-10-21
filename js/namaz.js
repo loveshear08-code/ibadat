@@ -31,42 +31,40 @@
 
   let currentLanguage = getCurrentLanguage();
 
+  /*
+   * NAMAZ ROUTES
+   * প্রতিটি মূল অপশন তার নির্ধারিত পেজে যাবে।
+   */
+
   const NAMAZ_ROUTES = {
-    "kalima-aqeedah": "namaz-kalima-aqeedah.html",
-    "arabic-learning": "namaz-qaida-arabic.html",
     "purity": "namaz-purity.html",
+    "iman-aqidah": "namaz-kalima-aqeedah.html",
     "conditions": "namaz-conditions.html",
     "times-rakats": "namaz-waqt-rakat.html",
-    "islamic-rulings": "namaz-islamic-rulings.html",
-    "start": "namaz-start.html",
-    "qirat": "namaz-qirat.html",
-    "ruku-sujood": "namaz-ruku-sujood.html",
-    "sitting-salam": "namaz-baithak-salam.html",
     "complete": "namaz-complete.html",
-    "jamaat-jumuah": "namaz-jamaat-jumuah.html",
     "special-prayers": "namaz-special-prayers.html",
+    "jamaat": "namaz-jamaat-jumuah.html",
+    "arabic-learning": "namaz-qaida-arabic.html",
+    "islamic-rulings": "namaz-islamic-rulings.html",
     "daily-amal": "namaz-daily-amal.html"
   };
 
+  /*
+   * FINAL 10 TOPICS
+   * নির্ধারিত ক্রম:
+   * 1. পাক-পবিত্রতা
+   * 2. ঈমান ও আকিদা
+   * 3. নামাজের শর্ত
+   * 4. ওয়াক্ত ও রাকাত
+   * 5. সম্পূর্ণ নামাজ
+   * 6. বিশেষ নামাজ
+   * 7. মসজিদ ও জামাত
+   * 8. আরবি শিক্ষা
+   * 9. ইসলামিক বিধান
+   * 10. দৈনিক আমল
+   */
+
   const topics = [
-    {
-      id: "kalima-aqeedah",
-      icon: "kalima-aqeedah.png",
-      title: {
-        bn: "কালিমা ও আকিদা",
-        en: "Kalima & Aqeedah",
-        hi: "कलिमा और अकीदा"
-      }
-    },
-    {
-      id: "arabic-learning",
-      icon: "arabic-learning.png",
-      title: {
-        bn: "আরবি শিক্ষা",
-        en: "Arabic Learning",
-        hi: "अरबी शिक्षा"
-      }
-    },
     {
       id: "purity",
       icon: "purity.png",
@@ -74,6 +72,15 @@
         bn: "পাক-পবিত্রতা",
         en: "Purification",
         hi: "पाक-सफ़ाई"
+      }
+    },
+    {
+      id: "iman-aqidah",
+      icon: "iman-akidah.png",
+      title: {
+        bn: "ঈমান ও আকিদা",
+        en: "Iman & Aqidah",
+        hi: "ईमान और अकीदा"
       }
     },
     {
@@ -95,66 +102,12 @@
       }
     },
     {
-      id: "islamic-rulings",
-      icon: "islamic-rulings.png",
-      title: {
-        bn: "ইসলামিক বিধান",
-        en: "Islamic Rulings",
-        hi: "इस्लामी नियम"
-      }
-    },
-    {
-      id: "start",
-      icon: "prayer-start.png",
-      title: {
-        bn: "নামাজ শুরু",
-        en: "Starting Prayer",
-        hi: "नमाज़ की शुरुआत"
-      }
-    },
-    {
-      id: "qirat",
-      icon: "qirat.png",
-      title: {
-        bn: "কিরাত",
-        en: "Qira'at",
-        hi: "क़िराअत"
-      }
-    },
-    {
-      id: "ruku-sujood",
-      icon: "ruku-sujood.png",
-      title: {
-        bn: "রুকু ও সিজদা",
-        en: "Ruku & Sujood",
-        hi: "रुकू और सज्दा"
-      }
-    },
-    {
-      id: "sitting-salam",
-      icon: "sitting-salam.png",
-      title: {
-        bn: "বৈঠক ও সালাম",
-        en: "Sitting & Salam",
-        hi: "बैठक और सलाम"
-      }
-    },
-    {
       id: "complete",
       icon: "complete-prayer.png",
       title: {
         bn: "সম্পূর্ণ নামাজ",
         en: "Complete Prayer",
         hi: "पूरी नमाज़"
-      }
-    },
-    {
-      id: "jamaat-jumuah",
-      icon: "jamaat-jumuah.png",
-      title: {
-        bn: "জামাত ও জুমা",
-        en: "Jamaat & Jumu'ah",
-        hi: "जमाअत और जुमा"
       }
     },
     {
@@ -167,19 +120,51 @@
       }
     },
     {
+      id: "jamaat",
+      icon: "mosjid-jamat.png",
+      title: {
+        bn: "মসজিদ ও জামাত",
+        en: "Mosque & Jamaat",
+        hi: "मस्जिद और जमात"
+      }
+    },
+    {
+      id: "arabic-learning",
+      icon: "arabic-learning.png",
+      title: {
+        bn: "আরবি শিক্ষা",
+        en: "Arabic Learning",
+        hi: "अरबी शिक्षा"
+      }
+    },
+    {
+      id: "islamic-rulings",
+      icon: "islamic-rulings.png",
+      title: {
+        bn: "ইসলামিক বিধান",
+        en: "Islamic Rulings",
+        hi: "इस्लामी नियम"
+      }
+    },
+    {
       id: "daily-amal",
       icon: "daily-amal.png",
       title: {
-        bn: "দৈনন্দিন আমল",
+        bn: "দৈনিক আমল",
         en: "Daily Practices",
         hi: "दैनिक अमल"
       }
     }
   ];
 
+  /*
+   * INTRODUCTION
+   * মূল পরিচিতি এবং তিনটি ভাষা অপরিবর্তিত।
+   */
+
   const introduction = {
     bn: {
-      heading: "কী ও কেন ?",
+      heading: "কী ও কেন?",
       paragraph:
         "নামাজ ইসলামের অন্যতম প্রধান ইবাদত, যা আল্লাহর স্মরণে হৃদয়কে প্রশান্ত করে। এটি মুমিনের জীবনে শৃঙ্খলা আনে এবং সৃষ্টিকর্তার নৈকট্য লাভের পথ সুগম করে।",
       ariaLabel: "নামাজ সম্পর্কে পরিচিতি"
@@ -202,10 +187,21 @@
     return textObject[currentLanguage] || textObject.bn || "";
   }
 
+  /*
+   * SAVED THEME
+   */
+
   function applySavedTheme() {
     const settings = getAppSettings();
-    document.body.classList.toggle("dark-mode", Boolean(settings.dark));
+    document.body.classList.toggle(
+      "dark-mode",
+      Boolean(settings.dark)
+    );
   }
+
+  /*
+   * BUILD INTRODUCTION
+   */
 
   function buildIntroduction() {
     const intro = introduction[currentLanguage] || introduction.bn;
@@ -237,11 +233,18 @@
     document.title = pageTitles[currentLanguage];
   }
 
+  /*
+   * OPEN TOPIC
+   */
+
   function openTopic(topic) {
     const page = NAMAZ_ROUTES[topic.id];
 
     if (!page) {
-      console.error("IBADAT: No route configured for", topic.id);
+      console.error(
+        "IBADAT: No route configured for",
+        topic.id
+      );
       return;
     }
 
@@ -250,6 +253,10 @@
 
     window.location.href = destination.href;
   }
+
+  /*
+   * BUILD 10-CARD GRID
+   */
 
   function buildLearningGrid() {
     const grid = document.getElementById("learning-grid");
@@ -278,10 +285,18 @@
       icon.decoding = "async";
       icon.draggable = false;
 
-      icon.addEventListener("error", () => {
-        button.classList.add("icon-missing");
-        console.warn("IBADAT: Icon not found:", icon.src);
-      }, { once: true });
+      icon.addEventListener(
+        "error",
+        () => {
+          button.classList.add("icon-missing");
+
+          console.warn(
+            "IBADAT: Icon not found:",
+            icon.getAttribute("src")
+          );
+        },
+        { once: true }
+      );
 
       const label = document.createElement("span");
       label.textContent = getText(topic.title);
@@ -298,8 +313,13 @@
     grid.replaceChildren(fragment);
   }
 
+  /*
+   * REFRESH PAGE
+   */
+
   function refreshNamazPage() {
     currentLanguage = getCurrentLanguage();
+
     applySavedTheme();
     buildIntroduction();
     buildLearningGrid();
@@ -312,6 +332,10 @@
       refreshNamazPage();
     }
   });
+
+  /*
+   * INITIALIZE
+   */
 
   function initializeNamazPage() {
     applySavedTheme();
