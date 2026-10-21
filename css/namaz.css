@@ -2,7 +2,7 @@
    IBADAT — NAMAZ LEARNING PAGE
    10 Topics | Bengali / English / Hindi
    Light & Dark Theme | Responsive
-   Footer with Golden Bottom Border
+   Balanced Boards | Curved Golden Footer
    ========================================= */
 
 :root {
@@ -21,11 +21,10 @@
 
   --page-padding-x: 10px;
   --page-padding-y: 8px;
-  --grid-gap: 8px;
-  --card-radius: 16px;
+  --grid-gap: 7px;
+  --card-radius: 15px;
 
-  /* Footer dimensions */
-  --footer-height: 58px;
+  --footer-height: 68px;
   --footer-radius: 20px;
 }
 
@@ -38,18 +37,15 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-html {
+html,
+body {
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
 body {
-  width: 100%;
-  height: 100%;
   min-height: 0;
-  overflow: hidden;
-
   color: var(--text);
 
   font-family:
@@ -60,7 +56,6 @@ body {
     sans-serif;
 
   background-color: var(--page-bg);
-
   background-image:
     linear-gradient(
       rgba(255, 251, 244, 0.82),
@@ -86,16 +81,16 @@ body {
   display: grid;
 
   /*
-    Introduction + 10 cards + footer.
-    Footer height remains controlled.
+    More space for the introduction and footer.
+    The 10 topic cards share the remaining space.
   */
 
   grid-template-rows:
-    minmax(0, 0.62fr)
-    minmax(0, 2.38fr)
+    minmax(0, 0.78fr)
+    minmax(0, 2.22fr)
     var(--footer-height);
 
-  gap: 8px;
+  gap: 7px;
 
   padding:
     max(var(--page-padding-y), env(safe-area-inset-top))
@@ -112,6 +107,7 @@ body {
   isolation: isolate;
 
   width: 100%;
+  height: 100%;
   min-height: 0;
   overflow: hidden;
 
@@ -119,11 +115,10 @@ body {
   align-items: center;
   justify-content: center;
 
-  border: 1px solid rgba(212, 175, 55, 0.78);
+  border: 1px solid rgba(212, 175, 55, 0.82);
   border-radius: 20px;
 
   background-color: #F8F4E8;
-
   background-image:
     linear-gradient(
       rgba(255, 252, 242, 0.79),
@@ -135,7 +130,7 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 
-  box-shadow: 0 3px 10px rgba(11, 61, 38, 0.12);
+  box-shadow: 0 4px 12px rgba(11, 61, 38, 0.13);
 }
 
 .intro-content {
@@ -152,51 +147,47 @@ body {
   align-items: stretch;
   justify-content: center;
 
-  padding: 4px 10px;
-  gap: 3px;
+  padding: 6px 12px;
+  gap: 5px;
 }
 
 .intro-content h1 {
   color: var(--heading-gold);
 
-  font-size: clamp(30px, 7vw, 38px);
+  font-size: clamp(23px, 6.2vw, 34px);
   font-weight: 900;
   line-height: 1.15;
 
   text-align: center;
   letter-spacing: 0;
 
-  margin-bottom: 1px;
   flex: 0 0 auto;
 }
 
 .intro-content > p {
-  color: #1E4620;
-
-  font-size: clamp(17px, 4.4vw, 21px);
-  font-weight: 750;
-  line-height: 1.4;
-
-  text-align: center;
-
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
 
-  flex: 0 0 auto;
+  color: #1E4620;
 
-  overflow-wrap: normal;
+  font-size: clamp(13px, 3.7vw, 18px);
+  font-weight: 750;
+  line-height: 1.36;
+
+  text-align: center;
+  overflow-wrap: break-word;
   word-break: normal;
   text-wrap: pretty;
+
+  flex: 0 0 auto;
 }
 
-/* LEARNING GRID
-   2 columns × 5 rows = 10 cards */
+/* LEARNING GRID — 2 COLUMNS × 5 ROWS */
 
 .learning-grid {
   width: 100%;
   height: 100%;
-
   min-height: 0;
   min-width: 0;
 
@@ -217,30 +208,27 @@ body {
 
   width: 100%;
   height: 100%;
-
   min-height: 0;
   min-width: 0;
 
   display: flex;
   flex-direction: row;
-
   align-items: center;
   justify-content: flex-start;
 
-  gap: 7px;
-  padding: 5px 7px;
+  gap: 6px;
+  padding: 4px 6px;
 
   background: var(--card-bg);
-
   border: 1px solid var(--border);
   border-radius: var(--card-radius);
 
   color: var(--text);
 
   font-family: inherit;
-  font-size: clamp(14px, 3.8vw, 19px);
+  font-size: clamp(12px, 3.4vw, 17px);
   font-weight: 800;
-  line-height: 1.22;
+  line-height: 1.2;
 
   text-align: center;
   cursor: pointer;
@@ -260,8 +248,8 @@ body {
 .topic-icon {
   display: block;
 
-  width: clamp(40px, 10vw, 52px);
-  height: clamp(40px, 10vw, 52px);
+  width: clamp(32px, 8.5vw, 45px);
+  height: clamp(32px, 8.5vw, 45px);
 
   flex: 0 0 auto;
 
@@ -270,7 +258,6 @@ body {
 
   border: 0;
   border-radius: 50%;
-
   background: transparent;
 }
 
@@ -284,7 +271,7 @@ body {
 
   font-size: inherit;
   font-weight: 800;
-  line-height: 1.22;
+  line-height: 1.2;
 
   text-align: center;
 
@@ -315,10 +302,7 @@ body {
   }
 }
 
-/* =========================================
-   FOOTER BOARD
-   Inspired by the Purity page footer
-   ========================================= */
+/* FOOTER BOARD */
 
 .namaz-footer {
   position: relative;
@@ -333,39 +317,49 @@ body {
   align-items: center;
   justify-content: center;
 
-  padding: 5px 12px;
+  padding: 7px 12px;
   overflow: hidden;
 
   background: var(--primary);
   color: #FFFFFF;
 
-  border: 1.5px solid rgba(212, 175, 55, 0.75);
+  border: 1.5px solid rgba(212, 175, 55, 0.78);
   border-radius: var(--footer-radius);
 
-  box-shadow: 0 3px 9px rgba(11, 61, 38, 0.18);
+  box-shadow: 0 4px 10px rgba(11, 61, 38, 0.19);
 }
 
 /*
-  Golden lower accent:
-  follows the curved bottom corners.
+  Curved golden accent:
+  thicker through the middle and tapered
+  toward both rounded ends.
 */
 
 .namaz-footer::after {
   content: "";
   position: absolute;
 
-  left: 0;
-  right: 0;
+  left: 10px;
+  right: 10px;
   bottom: 0;
 
-  height: 3px;
+  height: 4px;
 
   background: var(--gold);
 
-  border-radius:
-    0 0
-    calc(var(--footer-radius) - 2px)
-    calc(var(--footer-radius) - 2px);
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+
+  clip-path: polygon(
+    0 100%,
+    3% 60%,
+    10% 30%,
+    25% 8%,
+    50% 0,
+    75% 8%,
+    90% 30%,
+    97% 60%,
+    100% 100%
+  );
 
   pointer-events: none;
 }
@@ -381,9 +375,9 @@ body {
   color: #FFFFFF;
 
   font-family: inherit;
-  font-size: clamp(12px, 3.5vw, 17px);
+  font-size: clamp(13px, 3.5vw, 17px);
   font-weight: 800;
-  line-height: 1.3;
+  line-height: 1.35;
 
   text-align: center;
 
@@ -399,58 +393,64 @@ body {
     --page-padding-y: 6px;
     --grid-gap: 5px;
     --card-radius: 12px;
-    --footer-height: 52px;
-    --footer-radius: 15px;
+    --footer-height: 62px;
+    --footer-radius: 16px;
   }
 
   .namaz-page {
-    gap: 5px;
-
     grid-template-rows:
-      minmax(0, 0.62fr)
-      minmax(0, 2.38fr)
+      minmax(0, 0.78fr)
+      minmax(0, 2.22fr)
       var(--footer-height);
+
+    gap: 5px;
   }
 
   .intro-board {
-    border-radius: 16px;
+    border-radius: 17px;
   }
 
   .intro-content {
-    padding: 4px 8px;
-    gap: 3px;
+    padding: 5px 8px;
+    gap: 4px;
   }
 
   .intro-content h1 {
-    font-size: clamp(20px, 5.2vw, 24px);
+    font-size: clamp(21px, 5.8vw, 27px);
     line-height: 1.12;
   }
 
   .intro-content > p {
-    font-size: clamp(12px, 3.3vw, 15px);
-    font-weight: 750;
-    line-height: 1.30;
+    font-size: clamp(12px, 3.4vw, 15px);
+    line-height: 1.28;
   }
 
   .learning-card {
     gap: 4px;
     padding: 3px 4px;
 
-    font-size: clamp(10px, 2.8vw, 12px);
+    font-size: clamp(10px, 2.9vw, 12px);
     border-radius: 11px;
   }
 
   .topic-icon {
-    width: clamp(29px, 7.8vw, 36px);
-    height: clamp(29px, 7.8vw, 36px);
+    width: clamp(27px, 7.4vw, 34px);
+    height: clamp(27px, 7.4vw, 34px);
   }
 
   .namaz-footer {
-    padding: 4px 7px;
+    padding: 5px 8px;
   }
 
   .namaz-footer p {
-    font-size: clamp(10px, 3vw, 13px);
+    font-size: clamp(11px, 3.1vw, 14px);
+    line-height: 1.3;
+  }
+
+  .namaz-footer::after {
+    left: 8px;
+    right: 8px;
+    height: 4px;
   }
 }
 
@@ -458,13 +458,13 @@ body {
 
 @media (max-height: 740px) {
   :root {
-    --footer-height: 52px;
+    --footer-height: 60px;
   }
 
   .namaz-page {
     grid-template-rows:
-      minmax(0, 0.62fr)
-      minmax(0, 2.38fr)
+      minmax(0, 0.76fr)
+      minmax(0, 2.24fr)
       var(--footer-height);
 
     gap: 5px;
@@ -474,20 +474,19 @@ body {
   }
 
   .intro-content {
-    padding-top: 3px;
-    padding-bottom: 3px;
+    padding-top: 4px;
+    padding-bottom: 4px;
     gap: 3px;
   }
 
   .intro-content h1 {
-    font-size: clamp(19px, 4.9vw, 24px);
+    font-size: clamp(19px, 5vw, 25px);
     line-height: 1.12;
   }
 
   .intro-content > p {
     font-size: clamp(12px, 3.2vw, 15px);
-    font-weight: 750;
-    line-height: 1.28;
+    line-height: 1.27;
   }
 
   .learning-card {
@@ -496,8 +495,12 @@ body {
   }
 
   .topic-icon {
-    width: clamp(28px, 7.6vw, 39px);
-    height: clamp(28px, 7.6vw, 39px);
+    width: clamp(27px, 7.2vw, 37px);
+    height: clamp(27px, 7.2vw, 37px);
+  }
+
+  .namaz-footer p {
+    font-size: clamp(11px, 3.2vw, 15px);
   }
 }
 
