@@ -1,776 +1,658 @@
-/* =========================================
-   IBADAT — NAMAZ CONDITIONS PAGE
-   Responsive | Bangla | English | Hindi
-   Light Mode + Dark Mode
-   ========================================= */
+
+/* ==================================================
+   IBADAT — NAMAZ CONDITIONS
+   Shared design | Responsive | Light / Dark
+   ================================================== */
 
 :root {
-    --primary: #0F5132;
-    --primary-dark: #0B3D26;
-    --page-bg: #F8F6EE;
-    --card-bg: #FFFFFF;
-    --feature: #BFE4B7;
-    --text: #1E4620;
-    --muted: #526B53;
-    --gold: #D4AF37;
-    --heading-gold: #B08D23;
-    --border: rgba(15, 81, 50, 0.20);
-    --shadow: 0 3px 12px rgba(15, 81, 50, 0.08);
-
-    --page-width: 760px;
-    --radius-page: 30px;
-    --radius-card: 26px;
-    --radius-image: 16px;
+  color-scheme: light;
+  --primary: #0f5132;
+  --primary-dark: #0b3d26;
+  --page-bg: #f8f6ee;
+  --card-bg: rgba(255, 255, 255, 0.94);
+  --feature: #dcebd4;
+  --text: #1e4620;
+  --muted: #526b53;
+  --gold: #d4af37;
+  --heading-gold: #9b791c;
+  --border: rgba(15, 81, 50, 0.2);
+  --shadow: 0 4px 16px rgba(15, 81, 50, 0.09);
+  --section-gap: 16px;
 }
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
-    min-height: 100%;
-    scroll-behavior: smooth;
-    scroll-padding-top: 12px;
+  min-height: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 16px;
 }
 
 body {
-    min-height: 100vh;
-    color: var(--text);
-    font-family:
-        "Noto Sans Bengali",
-        "Nirmala UI",
-        "Noto Sans Devanagari",
-        Arial,
-        sans-serif;
-    font-size: 16px;
-    line-height: 1.7;
-    background-color: var(--page-bg);
-    background-image:
-        linear-gradient(
-            rgba(255, 251, 244, 0.82),
-            rgba(255, 251, 244, 0.82)
-        ),
-        url("../assets/main-bg.jpg");
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
+  min-height: 100vh;
+  color: var(--text);
+  font-family:
+    "Noto Sans Bengali",
+    "Noto Sans Devanagari",
+    "Nirmala UI",
+    Arial,
+    sans-serif;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+  background:
+    linear-gradient(
+      rgba(255, 251, 244, 0.83),
+      rgba(255, 251, 244, 0.83)
+    ),
+    url("../assets/main-bg.jpg") center / cover fixed;
 }
 
 img {
-    display: block;
-    max-width: 100%;
+  display: block;
+  max-width: 100%;
 }
 
 a {
-    color: inherit;
+  color: inherit;
 }
-
-button,
-input,
-textarea,
-select {
-    font: inherit;
-}
-
-/* =========================================
-   MAIN PAGE
-   ========================================= */
 
 .conditions-page {
-    width: 100%;
-    max-width: var(--page-width);
-    margin: 0 auto;
-    padding: 14px 12px 28px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px 16px 30px;
 }
 
-/* =========================================
-   HERO BOARD
-   ========================================= */
+/* ---------- Hero ---------- */
 
 .hero {
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 20px;
-    padding: 34px 24px;
-    text-align: center;
-
-    border: 1px solid rgba(212, 175, 55, 0.75);
-    border-radius: var(--radius-page);
-
-    background-color: #F8F6EE;
-    background-image:
-        linear-gradient(
-            rgba(255, 252, 242, 0.79),
-            rgba(255, 252, 242, 0.79)
-        ),
-        url("../assets/hero-bg.jpg");
-
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    box-shadow: var(--shadow);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-bottom: var(--section-gap);
+  padding: 30px 26px;
+  text-align: center;
+  border: 1px solid rgba(212, 175, 55, 0.72);
+  border-radius: 30px;
+  background:
+    linear-gradient(
+      rgba(255, 252, 242, 0.78),
+      rgba(255, 252, 242, 0.84)
+    ),
+    url("../assets/hero-bg.jpg") center / cover no-repeat;
+  box-shadow: var(--shadow);
 }
 
 .ornament {
-    display: block;
-    margin-bottom: 5px;
-    color: var(--gold);
-    font-size: 25px;
-    line-height: 1.4;
+  display: block;
+  margin-bottom: 4px;
+  color: var(--gold);
+  font-size: 24px;
+  line-height: 1.4;
 }
 
 .hero h1 {
-    margin: 0 0 10px;
-    color: var(--heading-gold);
-    font-size: clamp(30px, 6vw, 40px);
-    font-weight: 900;
-    line-height: 1.3;
-    overflow-wrap: anywhere;
+  margin: 4px 0 12px;
+  color: var(--heading-gold);
+  font-size: clamp(29px, 5vw, 42px);
+  font-weight: 900;
+  line-height: 1.3;
+}
+
+.hero-intro,
+.hero-subtitle {
+  max-width: 740px;
+  margin-right: auto;
+  margin-left: auto;
+  font-size: clamp(14px, 2vw, 17px);
+  line-height: 1.85;
 }
 
 .hero-intro {
-    max-width: 620px;
-    margin: 0 auto 12px;
-    color: var(--text);
-    font-size: clamp(15px, 3.8vw, 18px);
-    font-weight: 700;
-    line-height: 1.8;
-    overflow-wrap: anywhere;
+  margin-bottom: 9px;
+  font-weight: 650;
 }
 
 .hero-subtitle {
-    max-width: 560px;
-    margin: 0 auto;
-    color: var(--primary);
-    font-size: clamp(14px, 3.6vw, 17px);
-    font-weight: 750;
-    line-height: 1.75;
-    overflow-wrap: anywhere;
+  font-size: clamp(13px, 1.8vw, 15px);
+  font-weight: 600;
 }
 
-/* =========================================
-   COMMON BOARDS
-   ========================================= */
+/* ---------- Panels ---------- */
 
 .panel {
-    margin-bottom: 20px;
-    padding: 24px 22px;
-    background: rgba(255, 255, 250, 0.96);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow);
+  min-width: 0;
+  margin-bottom: var(--section-gap);
+  padding: 21px;
+  border: 1px solid var(--border);
+  border-radius: 26px;
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
 }
 
-.panel h2,
-.panel h3 {
-    overflow-wrap: anywhere;
-}
-
-/* =========================================
-   CONTENTS NAVIGATION
-   ========================================= */
-
-.contents h2 {
-    margin-bottom: 12px;
-    color: var(--text);
-    font-size: clamp(19px, 4.5vw, 23px);
-    font-weight: 900;
-    line-height: 1.45;
-}
-
-.contents-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 9px;
-}
-
-.contents-links a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 40px;
-    padding: 8px 13px;
-
-    color: var(--text);
-    background: var(--feature);
-    border: 1px solid var(--border);
-    border-radius: 999px;
-
-    font-size: 13px;
-    font-weight: 800;
-    line-height: 1.55;
-    text-align: center;
-    text-decoration: none;
-
-    transition:
-        background-color 0.2s ease,
-        border-color 0.2s ease;
-}
-
-.contents-links a:focus-visible {
-    outline: 3px solid var(--gold);
-    outline-offset: 3px;
-}
-
-@media (hover: hover) {
-    .contents-links a:hover {
-        background: #D3EBCB;
-        border-color: rgba(15, 81, 50, 0.38);
-    }
-}
-
-/* =========================================
-   LESSON HEADINGS
-   ========================================= */
-
-.lesson {
-    scroll-margin-top: 12px;
-}
-
-.section-title {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-}
-
-.section-title > b {
-    display: inline-flex;
-    flex: 0 0 46px;
-    width: 46px;
-    height: 46px;
-    align-items: center;
-    justify-content: center;
-
-    color: #FFF9E9;
-    background: var(--primary);
-    border: 2px solid var(--gold);
-    border-radius: 50%;
-
-    font-size: 18px;
-    font-weight: 900;
-    line-height: 1;
-}
-
-.section-title > div {
-    flex: 1;
-    min-width: 0;
-}
-
-.kicker {
-    display: block;
-    margin-bottom: 3px;
-    color: var(--primary);
-    font-size: 13px;
-    font-weight: 850;
-    line-height: 1.55;
-}
-
-.section-title h2 {
-    margin: 0;
-    color: var(--text);
-    font-size: clamp(21px, 4.8vw, 27px);
-    font-weight: 900;
-    line-height: 1.45;
-    overflow-wrap: anywhere;
-}
-
-/* =========================================
-   ILLUSTRATIONS
-   Original image paths remain unchanged
-   ========================================= */
-
-.art {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0;
-    background: transparent;
-    border: 0;
-    border-radius: 0;
-}
-
-.art.wide {
-    width: 100%;
-    max-width: 500px;
-    margin-top: 8px;
-    margin-bottom: 20px;
-}
-
-.art img {
-    display: block;
-    width: 100%;
-    max-width: 500px;
-    max-height: 360px;
-    height: auto;
-    margin: 0 auto;
-    object-fit: contain;
-    object-position: center;
-    background: transparent;
-    border: 0;
-    border-radius: 14px;
-}
-
-/* =========================================
-   TEXT AND SUBHEADINGS
-   ========================================= */
-
-.lead {
-    margin: 8px 0 15px;
-    color: var(--text);
-    font-size: 15px;
-    font-weight: 650;
-    line-height: 1.85;
-    overflow-wrap: anywhere;
+.panel h2 {
+  color: var(--text);
+  font-size: clamp(20px, 3vw, 25px);
+  font-weight: 900;
+  line-height: 1.45;
 }
 
 .panel h3 {
-    margin: 17px 0 8px;
-    color: var(--primary);
-    font-size: clamp(17px, 4.2vw, 20px);
-    font-weight: 900;
-    line-height: 1.55;
+  margin: 16px 0 8px;
+  color: var(--primary);
+  font-size: clamp(16px, 2.2vw, 19px);
+  font-weight: 850;
+  line-height: 1.55;
 }
 
-.panel h3:first-child {
-    margin-top: 0;
+.panel p {
+  line-height: 1.85;
 }
 
-/* =========================================
-   LISTS
-   ========================================= */
+.panel p + p {
+  margin-top: 8px;
+}
 
 .panel ol,
 .panel ul {
-    margin: 7px 0 14px;
-    padding-left: 25px;
+  margin: 8px 0 14px;
+  padding-left: 25px;
 }
 
 .panel li {
-    padding: 4px 0 4px 2px;
-    color: var(--text);
-    font-size: 14px;
-    line-height: 1.85;
-    overflow-wrap: anywhere;
+  padding: 3px 0 3px 2px;
+  font-size: 15px;
+  line-height: 1.8;
 }
 
 .panel li::marker {
-    color: var(--heading-gold);
-    font-weight: 800;
+  color: var(--heading-gold);
+  font-weight: 800;
 }
 
-/* =========================================
-   NOTE BOARDS
-   ========================================= */
+.lesson {
+  scroll-margin-top: 16px;
+}
+
+/* ---------- Contents navigation ---------- */
+
+.contents {
+  padding: 19px 21px;
+}
+
+.contents h2 {
+  margin-bottom: 12px;
+}
+
+.contents-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.contents-links a {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--feature);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.contents-links a:hover {
+  border-color: var(--gold);
+  transform: translateY(-1px);
+}
+
+/* ---------- Section headings ---------- */
+
+.section-title {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 14px;
+}
+
+.section-title > b {
+  display: inline-flex;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff9e9;
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.section-title > div {
+  min-width: 0;
+}
+
+.section-title h2 {
+  margin: 0;
+}
+
+.kicker {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.025em;
+}
+
+/* ---------- Lesson illustrations ---------- */
+
+.art {
+  width: 100%;
+  max-width: 100%;
+  margin: 12px auto 16px;
+  overflow: hidden;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 20px;
+  background: #f7eed6;
+}
+
+.art.wide {
+  max-width: 460px;
+}
+
+.art img {
+  width: 100%;
+  height: auto;
+  max-height: 390px;
+  object-fit: contain;
+}
+
+.lead {
+  margin: 8px 0 14px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.85;
+}
+
+/* ---------- Notes and important reminders ---------- */
 
 .note {
-    margin: 14px 0 7px;
-    padding: 14px 15px;
-    background: #F8F3E3;
-    border-left: 4px solid var(--gold);
-    border-radius: 12px;
+  margin: 14px 0 8px;
+  padding: 15px 17px;
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--gold);
+  border-radius: 14px;
+  background: #f8f3e3;
 }
 
 .note strong {
-    display: block;
-    margin-bottom: 5px;
-    color: var(--primary);
-    font-size: 15px;
-    font-weight: 900;
-    line-height: 1.6;
+  display: block;
+  margin-bottom: 6px;
+  color: var(--primary);
+  font-size: 16px;
+  font-weight: 900;
 }
 
 .note p {
-    color: var(--text);
-    font-size: 13px;
-    line-height: 1.85;
-    overflow-wrap: anywhere;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.85;
 }
 
-/* =========================================
-   FOOTER — LIGHT MODE
-   Deep green board
-   ========================================= */
+/* ---------- Footer ---------- */
 
 .conditions-footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-
-    width: 100%;
-    min-height: 86px;
-    margin: 20px 0 0;
-    padding: 16px 12px;
-
-    color: #FFFFFF;
-    background: #105536;
-    border: 1px solid #D4AF37;
-    border-top: 3px solid #D4AF37;
-    border-radius: 26px;
-
-    text-align: center;
-    box-shadow: 0 3px 12px rgba(11, 61, 38, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+  min-height: 78px;
+  margin: 18px 0 0;
+  padding: 17px 14px;
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  border-radius: 22px;
+  background: var(--primary-dark);
+  color: #fff9e9;
+  text-align: center;
+  box-shadow: var(--shadow);
 }
 
 .conditions-footer-message {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-
-    width: 100%;
-    color: #FFFFFF;
-    font-family:
-        "Noto Sans Bengali",
-        "Noto Sans Devanagari",
-        "Nirmala UI",
-        Arial,
-        sans-serif;
-
-    font-size: clamp(12px, 3.3vw, 15px);
-    font-weight: 800;
-    line-height: 1.7;
-    text-align: center;
-    white-space: normal;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  color: #fff9e9;
+  font-size: clamp(12px, 2vw, 15px);
+  font-weight: 800;
+  line-height: 1.7;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .conditions-footer .footer-star {
-    flex: 0 0 auto;
-    color: #D4AF37;
-    font-size: 15px;
-    line-height: 1;
+  flex: 0 0 auto;
+  color: var(--gold);
+  font-size: 15px;
+  line-height: 1;
 }
 
 .conditions-footer-brand {
-    color: #E6C75A;
-    font-family: Arial, sans-serif;
-    font-size: 12px;
-    font-weight: 900;
-    letter-spacing: 2px;
-    line-height: 1.5;
+  color: #e6c75a;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  line-height: 1.5;
 }
 
-/* =========================================
-   GENTLE DARK MODE
-   ========================================= */
+/* ---------- Keyboard accessibility ---------- */
+
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* ---------- Dark theme ---------- */
 
 body.dark-mode {
-    --page-bg: #121A15;
-    --card-bg: #263B29;
-    --feature: #263B29;
-    --text: #E7F0E4;
-    --muted: #C1D0BE;
-    --gold: #D4AF37;
-    --heading-gold: #E7D18A;
-    --border: rgba(190, 228, 183, 0.22);
-    --shadow: 0 3px 14px rgba(0, 0, 0, 0.16);
+  color-scheme: dark;
+  --page-bg: #121a15;
+  --card-bg: rgba(30, 42, 34, 0.96);
+  --feature: #263b29;
+  --text: #e7f0e4;
+  --muted: #c1d0be;
+  --heading-gold: #e7d18a;
+  --border: rgba(190, 228, 183, 0.22);
+  --shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
 
-    color: var(--text);
-    background-color: #121A15;
-    background-image:
-        linear-gradient(
-            rgba(12, 24, 18, 0.86),
-            rgba(12, 24, 18, 0.86)
-        ),
-        url("../assets/main-bg.jpg");
+  color: var(--text);
+  background:
+    linear-gradient(
+      rgba(12, 24, 18, 0.87),
+      rgba(12, 24, 18, 0.87)
+    ),
+    url("../assets/main-bg.jpg") center / cover fixed;
 }
 
 body.dark-mode .hero {
-    background-color: #1B2B22;
-    background-image:
-        linear-gradient(
-            rgba(13, 28, 19, 0.78),
-            rgba(13, 28, 19, 0.78)
-        ),
-        url("../assets/hero-bg.jpg");
+  background:
+    linear-gradient(
+      rgba(13, 28, 19, 0.79),
+      rgba(13, 28, 19, 0.86)
+    ),
+    url("../assets/hero-bg.jpg") center / cover no-repeat;
 }
 
 body.dark-mode .panel {
-    background: rgba(27, 43, 34, 0.97);
-    border-color: var(--border);
+  background-color: var(--card-bg);
 }
 
 body.dark-mode .hero h1 {
-    color: var(--heading-gold);
+  color: var(--heading-gold);
 }
 
 body.dark-mode .hero-intro,
-body.dark-mode .hero-subtitle {
-    color: #E4EEE5;
-}
-
+body.dark-mode .hero-subtitle,
 body.dark-mode .hero .ornament {
-    color: var(--gold);
+  color: #d7e9d2;
 }
 
 body.dark-mode .kicker,
 body.dark-mode .panel h3,
 body.dark-mode .note strong {
-    color: #CDE5C7;
+  color: #cde5c7;
 }
 
 body.dark-mode .contents-links a {
-    color: var(--text);
-    background: #263B29;
-    border-color: var(--border);
+  color: var(--text);
+  background: #263b29;
+  border-color: var(--border);
+}
+
+body.dark-mode .art {
+  background: #26352a;
+  border-color: rgba(212, 175, 55, 0.35);
+}
+
+body.dark-mode .art img {
+  background: #f7eed6;
 }
 
 body.dark-mode .note {
-    background: rgba(58, 52, 29, 0.35);
-    border-left-color: var(--gold);
+  background: #26352a;
+  border-left-color: var(--gold);
 }
 
 body.dark-mode .note p {
-    color: var(--text);
+  color: var(--text);
 }
 
 body.dark-mode .section-title > b {
-    color: #FFF9E9;
-    background: #0F5132;
-    border-color: var(--gold);
+  color: #fff9e9;
+  background: #0f5132;
+  border-color: var(--gold);
 }
 
-body.dark-mode .art,
-body.dark-mode .art img {
-    background: transparent;
-    border-color: transparent;
+body.dark-mode .conditions-footer {
+  background: #082f1e;
+  color: #fff;
 }
 
-/* =========================================
-   FOOTER — DARK MODE
-   Light board, matching the Purity page
-   ========================================= */
-
-body.dark-mode .conditions-page .conditions-footer {
-    background: #FFFFFF;
-    color: #1E4620;
-    border: 1px solid #D4AF37;
-    border-top: 3px solid #D4AF37;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+body.dark-mode .conditions-footer-message {
+  color: #fff;
 }
 
-body.dark-mode .conditions-page .conditions-footer-message {
-    color: #1E4620;
+body.dark-mode .conditions-footer-brand {
+  color: #e6c75a;
 }
 
-body.dark-mode .conditions-page .conditions-footer .footer-star {
-    color: #B08D23;
+/* ---------- Tablet ---------- */
+
+@media (max-width: 700px) {
+  .conditions-page {
+    padding: 12px 12px 26px;
+  }
+
+  .hero {
+    padding: 25px 20px;
+    border-radius: 26px;
+  }
+
+  .panel {
+    padding: 18px;
+    border-radius: 23px;
+  }
+
+  .art.wide {
+    max-width: 430px;
+  }
+
+  .lead {
+    font-size: 15px;
+  }
 }
 
-body.dark-mode .conditions-page .conditions-footer-brand {
-    color: #105536;
+/* ---------- Mobile ---------- */
+
+@media (max-width: 480px) {
+  .conditions-page {
+    padding: 9px 9px 22px;
+  }
+
+  .hero {
+    padding: 21px 14px;
+    border-radius: 21px;
+  }
+
+  .hero h1 {
+    margin-bottom: 9px;
+    font-size: clamp(27px, 8vw, 35px);
+  }
+
+  .hero-intro {
+    margin-bottom: 8px;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .hero-subtitle {
+    font-size: 13.5px;
+    line-height: 1.8;
+  }
+
+  .panel {
+    margin-bottom: 12px;
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .contents-links {
+    gap: 8px;
+  }
+
+  .contents-links a {
+    flex: 1 1 auto;
+    min-height: 38px;
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .section-title {
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 11px;
+  }
+
+  .section-title > b {
+    flex-basis: 36px;
+    width: 36px;
+    height: 36px;
+    font-size: 15px;
+  }
+
+  .section-title h2 {
+    font-size: clamp(19px, 5.4vw, 23px);
+  }
+
+  .kicker {
+    font-size: 12px;
+  }
+
+  .art {
+    margin-bottom: 12px;
+    border-radius: 16px;
+  }
+
+  .lead {
+    margin: 7px 0 11px;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .panel h3 {
+    margin-top: 13px;
+    font-size: 16px;
+  }
+
+  .panel ol,
+  .panel ul {
+    padding-left: 22px;
+  }
+
+  .panel li {
+    font-size: 13.5px;
+    line-height: 1.8;
+  }
+
+  .note {
+    padding: 12px;
+  }
+
+  .note strong {
+    font-size: 14px;
+  }
+
+  .note p {
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .conditions-footer {
+    min-height: 68px;
+    padding: 14px 10px;
+    border-radius: 18px;
+  }
+
+  .conditions-footer-message {
+    gap: 5px;
+    font-size: 12px;
+  }
+
+  .conditions-footer .footer-star {
+    font-size: 12px;
+  }
 }
 
-/* =========================================
-   MOBILE RESPONSIVE DESIGN
-   ========================================= */
+/* ---------- Very small screens ---------- */
 
-@media (max-width: 600px) {
-    .conditions-page {
-        width: calc(100% - 24px);
-        padding: 12px 0 22px;
-    }
+@media (max-width: 350px) {
+  .hero {
+    padding: 18px 12px;
+  }
 
-    .hero {
-        min-height: 200px;
-        margin-bottom: 16px;
-        padding: 25px 16px;
-        border-radius: 24px;
-    }
+  .panel {
+    padding: 12px;
+  }
 
-    .ornament {
-        font-size: 22px;
-    }
+  .section-title {
+    gap: 8px;
+  }
 
-    .hero h1 {
-        margin-bottom: 8px;
-        font-size: clamp(28px, 7.5vw, 36px);
-    }
+  .section-title h2 {
+    font-size: 18px;
+  }
 
-    .hero-intro {
-        margin-bottom: 9px;
-        font-size: 14px;
-        line-height: 1.8;
-    }
-
-    .hero-subtitle {
-        font-size: 14px;
-        line-height: 1.75;
-    }
-
-    .panel {
-        margin-bottom: 16px;
-        padding: 20px 16px;
-        border-radius: 23px;
-    }
-
-    .contents h2 {
-        margin-bottom: 10px;
-        font-size: 19px;
-    }
-
-    .contents-links {
-        gap: 7px;
-    }
-
-    .contents-links a {
-        min-height: 38px;
-        padding: 7px 11px;
-        font-size: 12px;
-    }
-
-    .section-title {
-        gap: 10px;
-        margin-bottom: 13px;
-    }
-
-    .section-title > b {
-        flex-basis: 40px;
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
-    }
-
-    .section-title h2 {
-        font-size: clamp(20px, 5.2vw, 24px);
-    }
-
-    .kicker {
-        font-size: 12px;
-    }
-
-    .art.wide {
-        max-width: 100%;
-        margin-top: 6px;
-        margin-bottom: 16px;
-    }
-
-    .art img {
-        max-width: 100%;
-        max-height: 300px;
-        border-radius: 12px;
-    }
-
-    .lead {
-        margin: 7px 0 12px;
-        font-size: 14px;
-        line-height: 1.85;
-    }
-
-    .panel h3 {
-        margin-top: 14px;
-        font-size: 17px;
-    }
-
-    .panel ol,
-    .panel ul {
-        padding-left: 22px;
-    }
-
-    .panel li {
-        font-size: 13.5px;
-        line-height: 1.85;
-    }
-
-    .note {
-        padding: 12px;
-    }
-
-    .note strong {
-        font-size: 14px;
-    }
-
-    .note p {
-        font-size: 12.5px;
-        line-height: 1.85;
-    }
-
-    .conditions-footer {
-        min-height: 82px;
-        margin-top: 16px;
-        padding: 13px 10px;
-        border-radius: 23px;
-    }
-
-    .conditions-footer-message {
-        gap: 5px;
-        font-size: 12px;
-    }
-
-    .conditions-footer .footer-star {
-        font-size: 13px;
-    }
+  .contents-links a {
+    font-size: 12px;
+  }
 }
 
-/* Small phones */
-
-@media (max-width: 360px) {
-    .conditions-page {
-        width: calc(100% - 20px);
-    }
-
-    .hero {
-        padding: 22px 12px;
-    }
-
-    .panel {
-        padding: 17px 13px;
-    }
-
-    .section-title {
-        gap: 8px;
-    }
-
-    .section-title > b {
-        flex-basis: 36px;
-        width: 36px;
-        height: 36px;
-        font-size: 15px;
-    }
-
-    .section-title h2 {
-        font-size: 19px;
-    }
-
-    .contents-links a {
-        padding: 7px 9px;
-        font-size: 11.5px;
-    }
-
-    .conditions-footer-message {
-        font-size: 11px;
-    }
-}
-
-/* =========================================
-   ACCESSIBILITY
-   ========================================= */
-
-:focus-visible {
-    outline: 3px solid var(--gold);
-    outline-offset: 3px;
-}
+/* ---------- Reduced motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
-    html {
-        scroll-behavior: auto;
-    }
+  html {
+    scroll-behavior: auto;
+  }
 
-    *,
-    *::before,
-    *::after {
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-    }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
