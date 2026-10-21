@@ -1,3 +1,4 @@
+
 /* ==========================================
    IBADAT — Namaz Start Page
    File: JS/namaz-start.js
@@ -10,96 +11,146 @@
 const translations = {
   bn: {
     pageTitle: "নামাজ শুরু",
-    pageIntro: "নিয়ত থেকে নামাজের প্রথম ধাপগুলো সহজভাবে শিখে নাও।",
+
+    pageIntro1:
+      "Namaz হল আল্লাহর সাথে সরাসরি সংযোগের একটি অনন্য ইবাদত।",
+
+    pageIntro2:
+      "এই অংশে নামাজ শুরুর ধাপগুলো ধারাবাহিকভাবে উপস্থাপনা করা হয়েছে।",
 
     niyyahTitle: "নিয়ত",
+    niyyahAlt: "নিয়ত করার প্রস্তুতি",
+
     niyyahText:
-      "নিয়ত হলো অন্তরে কোন নামাজ আদায় করবে তা স্থির করা। নিয়ত মূলত অন্তরের সংকল্প; মুখে নির্দিষ্ট বাক্য বলা আবশ্যক নয়।",
+      "নামাজ শুরু করার আগে মনে মনে স্থির করবে, তুমি কোন নামাজ আদায় করতে যাচ্ছ। নিয়ত হলো অন্তরের সংকল্প; মুখে নির্দিষ্ট বাক্য বলা আবশ্যক নয়।",
+
+    niyyahExampleTitle: "সহজ উদাহরণ",
+
+    niyyahExample:
+      "আল্লাহর সন্তুষ্টির জন্য যে নামাজ আদায় করতে যাচ্ছ, সেই উদ্দেশ্যটি মনে স্থির করো।",
 
     takbirTitle: "তাকবিরে তাহরিমা",
-    takbirPronunciation: "উচ্চারণ: আল্লাহু আকবার",
-    takbirMeaning: "অর্থ: আল্লাহ সর্বশ্রেষ্ঠ।",
-    takbirText: "তাকবিরে তাহরিমা বলে নামাজ শুরু করা হয়।",
+    takbirAlt: "তাকবিরে তাহরিমা বলার ভঙ্গি",
 
-    handsTitle: "হাত বাঁধা",
-    handsText:
-      "তাকবির বলার পর নামাজে হাত বাঁধবে। হাত বাঁধার পদ্ধতিতে প্রচলিত ফিকহি মতভেদ রয়েছে; তাই শেখার সময় নিজের অনুসৃত নির্ভরযোগ্য শিক্ষকের নির্দেশনা অনুসরণ করবে।",
+    takbirText:
+      "নামাজ শুরু করার সময় নির্ধারিত পদ্ধতিতে তাকবির বলবে। হাত তোলার ভঙ্গি শেখার সময় নির্ভরযোগ্য শিক্ষকের নির্দেশনা অনুসরণ করো।",
 
-    qiyamTitle: "কিয়াম",
-    qiyamText:
-      "কিয়াম হলো নামাজে দাঁড়িয়ে থাকা। সক্ষম ব্যক্তি ফরজ নামাজে দাঁড়িয়ে নামাজ আদায় করবে এবং মনোযোগ ও বিনয়ের সঙ্গে থাকবে।",
+    pronunciationLabel: "উচ্চারণ:",
+    meaningLabel: "অর্থ:",
+
+    takbirPronunciation: "আল্লাহু আকবার।",
+    takbirMeaning: "আল্লাহ সর্বশ্রেষ্ঠ।",
 
     sanaTitle: "সানা",
-    sanaPronunciation:
-      "উচ্চারণ: সুবহানাকাল্লাহুম্মা ওয়া বিহামদিকা, ওয়া তাবারাকাসমুকা, ওয়া তা‘আলা জাদ্দুকা, ওয়া লা ইলাহা গাইরুক।",
-    sanaMeaning:
-      "অর্থ: হে আল্লাহ! আপনি পবিত্র, আপনারই প্রশংসা। আপনার নাম বরকতময়, আপনার মর্যাদা মহান, আর আপনি ছাড়া কোনো উপাস্য নেই।",
+    sanaAlt: "সানা পাঠের প্রস্তুতি",
 
-    qiratLinkText: "কিরাত শিখো"
+    sanaText:
+      "তাকবিরে তাহরিমার পর সানা পাঠ করা হয়।",
+
+    sanaPronunciation:
+      "সুবহানাকাল্লাহুম্মা ওয়া বিহামদিকা, ওয়া তাবারাকাসমুকা, ওয়া তা'আলা জাদ্দুকা, ওয়া লা ইলাহা গাইরুক।",
+
+    sanaMeaning:
+      "হে আল্লাহ! আপনি পবিত্র, আপনারই প্রশংসা। আপনার নাম বরকতময়, আপনার মর্যাদা মহান, আর আপনি ছাড়া কোনো উপাস্য নেই।",
+
+    qiratLinkText:
+      "কিরাত শেখার জন্য এখানে ট্যাপ করুন"
   },
 
   en: {
     pageTitle: "Starting Salah",
-    pageIntro:
-      "Learn the first steps of Salah, beginning with intention.",
+
+    pageIntro1:
+      "Namaz is a unique act of worship that connects us directly with Allah.",
+
+    pageIntro2:
+      "This section presents the opening steps of Salah in a clear, step-by-step order.",
 
     niyyahTitle: "Intention (Niyyah)",
+    niyyahAlt: "Preparing to make the intention for Salah",
+
     niyyahText:
-      "Niyyah means intending in your heart which prayer you are going to perform. It is primarily an intention of the heart; saying a specific phrase aloud is not required.",
+      "Before beginning Salah, make a clear intention in your heart about which prayer you are going to perform. Niyyah is an intention of the heart; saying a specific phrase aloud is not required.",
 
-    takbirTitle: "Takbir al-Tahrimah",
-    takbirPronunciation: "Pronunciation: Allahu Akbar",
-    takbirMeaning: "Meaning: Allah is the Greatest.",
+    niyyahExampleTitle: "A Simple Example",
+
+    niyyahExample:
+      "Keep in mind which prayer you intend to perform for the sake of Allah.",
+
+    takbirTitle: "Opening Takbir",
+    takbirAlt: "Posture for the opening Takbir",
+
     takbirText:
-      "Salah begins by saying Takbir al-Tahrimah.",
+      "Begin Salah by saying the opening Takbir in the prescribed manner. Follow a reliable teacher's guidance when learning the hand-raising posture.",
 
-    handsTitle: "Folding the Hands",
-    handsText:
-      "After saying the opening takbir, fold your hands for Salah. Practices differ on how the hands are positioned, so follow the guidance of a reliable teacher you trust.",
+    pronunciationLabel: "Pronunciation:",
+    meaningLabel: "Meaning:",
 
-    qiyamTitle: "Qiyam (Standing)",
-    qiyamText:
-      "Qiyam means standing during Salah. A person who is able should stand for obligatory prayers and remain attentive and humble.",
+    takbirPronunciation: "Allahu Akbar.",
+    takbirMeaning: "Allah is the Greatest.",
 
     sanaTitle: "Sana",
-    sanaPronunciation:
-      "Pronunciation: Subhanakallahumma wa bihamdika, wa tabarakasmuka, wa ta'ala jadduka, wa la ilaha ghayruk.",
-    sanaMeaning:
-      "Meaning: O Allah, You are glorified and all praise belongs to You. Blessed is Your name, exalted is Your majesty, and there is no deity besides You.",
+    sanaAlt: "Preparing to recite Sana",
 
-    qiratLinkText: "Learn Qirat"
+    sanaText:
+      "Sana is recited after the opening Takbir.",
+
+    sanaPronunciation:
+      "Subhanakallahumma wa bihamdika, wa tabarakasmuka, wa ta'ala jadduka, wa la ilaha ghayruk.",
+
+    sanaMeaning:
+      "Glory be to You, O Allah, and praise belongs to You. Blessed is Your name, exalted is Your majesty, and there is no deity besides You.",
+
+    qiratLinkText:
+      "Tap here to learn Qirat"
   },
 
   hi: {
     pageTitle: "नमाज़ की शुरुआत",
-    pageIntro:
-      "नीयत से नमाज़ के शुरुआती चरणों को आसानी से सीखें।",
+
+    pageIntro1:
+      "नमाज़ अल्लाह से सीधे जुड़ने का एक अनूठा इबादत का माध्यम है।",
+
+    pageIntro2:
+      "इस भाग में नमाज़ शुरू करने के शुरुआती चरणों को क्रमबद्ध रूप से प्रस्तुत किया गया है।",
 
     niyyahTitle: "नीयत",
+    niyyahAlt: "नमाज़ की नीयत करने की तैयारी",
+
     niyyahText:
-      "नीयत का अर्थ है दिल में यह इरादा करना कि कौन-सी नमाज़ पढ़नी है। नीयत मूल रूप से दिल का इरादा है; किसी विशेष वाक्य को ज़ोर से कहना आवश्यक नहीं है।",
+      "नमाज़ शुरू करने से पहले दिल में यह इरादा करें कि कौन-सी नमाज़ अदा करनी है। नीयत दिल का इरादा है; किसी विशेष वाक्य को ज़ोर से कहना आवश्यक नहीं है।",
+
+    niyyahExampleTitle: "आसान उदाहरण",
+
+    niyyahExample:
+      "अल्लाह की प्रसन्नता के लिए आप जो नमाज़ अदा करने वाले हैं, उसका इरादा दिल में रखें।",
 
     takbirTitle: "तकबीर-ए-तहरीमा",
-    takbirPronunciation: "उच्चारण: अल्लाहु अकबर",
-    takbirMeaning: "अर्थ: अल्लाह सबसे महान है।",
+    takbirAlt: "तकबीर-ए-तहरीमा कहने की मुद्रा",
+
     takbirText:
-      "तकबीर-ए-तहरीमा कहकर नमाज़ शुरू की जाती है।",
+      "नमाज़ की शुरुआत निर्धारित तरीके से तकबीर कहकर करें। हाथ उठाने की मुद्रा सीखते समय किसी विश्वसनीय शिक्षक के मार्गदर्शन का पालन करें।",
 
-    handsTitle: "हाथ बाँधना",
-    handsText:
-      "शुरुआती तकबीर के बाद नमाज़ में हाथ बाँधें। हाथ बाँधने के तरीके में अलग-अलग प्रचलित मत हैं, इसलिए अपने विश्वसनीय शिक्षक के मार्गदर्शन का पालन करें।",
+    pronunciationLabel: "उच्चारण:",
+    meaningLabel: "अर्थ:",
 
-    qiyamTitle: "क़ियाम",
-    qiyamText:
-      "क़ियाम का अर्थ नमाज़ में खड़े रहना है। जो व्यक्ति खड़े होने में सक्षम हो, वह फ़र्ज़ नमाज़ खड़े होकर अदा करे और ध्यान व विनम्रता बनाए रखे।",
+    takbirPronunciation: "अल्लाहु अकबर।",
+    takbirMeaning: "अल्लाह सबसे महान है।",
 
     sanaTitle: "सना",
-    sanaPronunciation:
-      "उच्चारण: सुब्हानकल्लाहुम्मा व बिहम्दिका, व तबारकस्मुका, व तआला जद्दुका, व ला इलाहा ग़ैरुक।",
-    sanaMeaning:
-      "अर्थ: ऐ अल्लाह! आप पाक हैं और सारी प्रशंसा आपके लिए है। आपका नाम बरकत वाला है, आपकी महानता बुलंद है और आपके सिवा कोई पूज्य नहीं।",
+    sanaAlt: "सना पढ़ने की तैयारी",
 
-    qiratLinkText: "क़िरात सीखें"
+    sanaText:
+      "शुरुआती तकबीर के बाद सना पढ़ी जाती है।",
+
+    sanaPronunciation:
+      "सुब्हानकल्लाहुम्मा व बिहम्दिका, व तबारकस्मुका, व तआला जद्दुका, व ला इलाहा ग़ैरुक।",
+
+    sanaMeaning:
+      "ऐ अल्लाह! आप पाक हैं और सारी प्रशंसा आपके लिए है। आपका नाम बरकत वाला है, आपकी महानता बुलंद है और आपके सिवा कोई पूज्य नहीं।",
+
+    qiratLinkText:
+      "क़िरात सीखने के लिए यहाँ टैप करें"
   }
 };
 
@@ -118,19 +169,22 @@ function readAppSettings() {
       }
     }
   } catch (error) {
-    console.warn("IBADAT: Settings could not be read.", error);
+    console.warn(
+      "IBADAT: Could not read app settings.",
+      error
+    );
   }
 
   return {};
 }
 
 
-/* ---------- Language Detection ---------- */
+/* ---------- Language ---------- */
 
 function getCurrentLanguage() {
   const settings = readAppSettings();
 
-  const possibleLanguage =
+  const savedLanguage =
     settings.language ||
     settings.lang ||
     localStorage.getItem("language") ||
@@ -138,7 +192,7 @@ function getCurrentLanguage() {
     document.documentElement.lang ||
     "bn";
 
-  const language = String(possibleLanguage).toLowerCase();
+  const language = String(savedLanguage).toLowerCase();
 
   if (language.startsWith("en")) return "en";
   if (language.startsWith("hi")) return "hi";
@@ -147,7 +201,7 @@ function getCurrentLanguage() {
 }
 
 
-/* ---------- Translation ---------- */
+/* ---------- Apply Translations ---------- */
 
 function applyTranslations() {
   const language = getCurrentLanguage();
@@ -155,33 +209,38 @@ function applyTranslations() {
 
   document.documentElement.lang = language;
 
-  // Translate text content.
   document.querySelectorAll("[data-i18n]").forEach((element) => {
     const key = element.getAttribute("data-i18n");
 
-    if (
-      Object.prototype.hasOwnProperty.call(dictionary, key)
-    ) {
+    if (Object.prototype.hasOwnProperty.call(dictionary, key)) {
       element.textContent = dictionary[key];
     }
   });
 
-  // Translate image alt text.
   document.querySelectorAll("[data-i18n-alt]").forEach((element) => {
     const key = element.getAttribute("data-i18n-alt");
 
-    if (
-      Object.prototype.hasOwnProperty.call(dictionary, key)
-    ) {
+    if (Object.prototype.hasOwnProperty.call(dictionary, key)) {
       element.setAttribute("alt", dictionary[key]);
     }
   });
 
-  // Update the page title.
-  document.title =
-    dictionary.pageTitle + " | IBADAT";
+  // Use the appropriate numeral style for each language.
+  const numerals = {
+    bn: ["১", "২", "৩"],
+    en: ["1", "2", "3"],
+    hi: ["१", "२", "३"]
+  };
 
-  // Update text direction for Arabic content.
+  document.querySelectorAll(".topic-number").forEach((element, index) => {
+    if (numerals[language]?.[index]) {
+      element.textContent = numerals[language][index];
+    }
+  });
+
+  document.title = `${dictionary.pageTitle} | IBADAT`;
+
+  // Keep Arabic text in its correct direction in every language.
   document.querySelectorAll(".arabic-text").forEach((element) => {
     element.setAttribute("dir", "rtl");
     element.setAttribute("lang", "ar");
@@ -189,9 +248,9 @@ function applyTranslations() {
 }
 
 
-/* ---------- Theme Handling ---------- */
+/* ---------- Theme ---------- */
 
-function applyTheme() {
+function getCurrentTheme() {
   const settings = readAppSettings();
 
   const savedTheme =
@@ -203,10 +262,17 @@ function applyTheme() {
 
   const theme = String(savedTheme).toLowerCase();
 
-  const isDark =
-    theme === "dark" ||
-    theme === "dark-mode" ||
-    theme === "dark_theme";
+  return [
+    "dark",
+    "dark-mode",
+    "dark_mode",
+    "dark-theme",
+    "dark_theme"
+  ].includes(theme);
+}
+
+function applyTheme() {
+  const isDark = getCurrentTheme();
 
   document.body.classList.toggle("dark-theme", isDark);
   document.body.classList.toggle("dark-mode", isDark);
@@ -221,7 +287,7 @@ function applyTheme() {
 }
 
 
-/* ---------- Sync with App Settings ---------- */
+/* ---------- Refresh ---------- */
 
 function refreshPageSettings() {
   applyTranslations();
@@ -234,35 +300,31 @@ function refreshPageSettings() {
 function initializeNamazStartPage() {
   refreshPageSettings();
 
-  // React when settings are changed in another tab.
+  // Respond to settings changes saved in another tab.
   window.addEventListener("storage", (event) => {
-    if (
-      event.key === "appSettings" ||
-      event.key === "language" ||
-      event.key === "appLanguage" ||
-      event.key === "theme" ||
-      event.key === "appTheme"
-    ) {
+    const watchedKeys = [
+      "appSettings",
+      "language",
+      "appLanguage",
+      "theme",
+      "appTheme"
+    ];
+
+    if (watchedKeys.includes(event.key)) {
       refreshPageSettings();
     }
   });
 
-  // Allow the app to request a refresh after changing settings.
-  window.addEventListener("appSettingsChanged", () => {
-    refreshPageSettings();
-  });
+  // Respond to events dispatched by the existing app settings page.
+  window.addEventListener("appSettingsChanged", refreshPageSettings);
 
-  window.addEventListener("languageChanged", () => {
-    applyTranslations();
-  });
+  window.addEventListener("languageChanged", applyTranslations);
 
-  window.addEventListener("themeChanged", () => {
-    applyTheme();
-  });
+  window.addEventListener("themeChanged", applyTheme);
 }
 
 
-/* ---------- Run Safely ---------- */
+/* ---------- Run ---------- */
 
 if (document.readyState === "loading") {
   document.addEventListener(
