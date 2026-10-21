@@ -1,36 +1,59 @@
 
-/* ========================================
-   IBADAT — Namaz Qirat Page
+/* =====================================================
+   IBADAT — NAMAZ QIRAT PAGE
    File: css/namaz-qirat.css
-======================================== */
+   Complete responsive stylesheet
+   ===================================================== */
+
+/* ---------- Theme Variables ---------- */
 
 :root {
+  color-scheme: light;
+
   --green-deep: #124b36;
   --green-main: #176044;
-  --green-soft: #edf2e6;
+  --green-light: #e9f0e5;
+
   --gold: #c9a451;
   --gold-light: #f0dda2;
-  --text-dark: #243a30;
+
+  --text-dark: #263b30;
+  --text-muted: #526358;
+
+  --page-fallback: #f5edda;
   --board-bg: rgba(255, 253, 247, 0.96);
-  --board-border: rgba(201, 164, 81, 0.88);
-  --board-shadow: 0 5px 18px rgba(48, 39, 20, 0.12);
+  --panel-bg: #edf2e6;
+  --verse-bg: rgba(255, 255, 255, 0.76);
+
+  --border-color: rgba(201, 164, 81, 0.82);
+  --shadow:
+    0 5px 18px rgba(48, 39, 20, 0.13);
+
+  --radius-large: 21px;
+  --radius-medium: 15px;
+  --radius-small: 11px;
 }
 
-/* ---------- Base ---------- */
+/* ---------- Reset ---------- */
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 html {
   min-height: 100%;
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
+
   color: var(--text-dark);
+
   font-family:
     "Noto Sans Bengali",
     "Nirmala UI",
@@ -38,7 +61,7 @@ body {
     Arial,
     sans-serif;
 
-  background-color: #f5edda;
+  background-color: var(--page-fallback);
   background-image: url("../assets/main-bg.jpg");
   background-repeat: no-repeat;
   background-position: center top;
@@ -46,34 +69,40 @@ body {
   background-attachment: fixed;
 }
 
-/* ---------- Page Layout ---------- */
+/* ---------- Main Page ---------- */
 
 .qirat-page {
-  width: min(100% - 28px, 960px);
+  width: min(100% - 28px, 920px);
   margin-inline: auto;
-  padding: 18px 0 28px;
+  padding: 18px 0 24px;
 }
 
 .hero-board,
 .lesson-board,
 .qirat-footer {
   width: 100%;
-  border: 1.5px solid var(--board-border);
-  border-radius: 22px;
-  box-shadow: var(--board-shadow);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow);
 }
 
-/* ---------- Hero Board ---------- */
+/* =====================================================
+   HERO BOARD
+   Mosque background + cream overlay
+   ===================================================== */
 
 .hero-board {
   position: relative;
   isolation: isolate;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 245px;
-  margin-bottom: 22px;
-  padding: 34px 28px;
+
+  min-height: 220px;
+  margin: 0 0 19px;
+  padding: 30px 25px;
+
   overflow: hidden;
 
   background-color: #f8f0dc;
@@ -83,199 +112,151 @@ body {
   background-size: cover;
 }
 
+/* Overlay stays above the background image */
 .hero-board::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: -1;
-  background: rgba(255, 250, 239, 0.68);
+  z-index: 0;
+
+  background: rgba(255, 250, 239, 0.76);
   pointer-events: none;
 }
 
+/* Hero text stays above the overlay */
 .hero-content {
+  position: relative;
+  z-index: 1;
+
   width: 100%;
-  max-width: 820px;
-  margin: 0 auto;
+  max-width: 800px;
+  margin-inline: auto;
+
   text-align: center;
 }
 
 .hero-content h1 {
-  margin: 0 0 10px;
-  color: #a98118;
-  font-size: clamp(32px, 5vw, 44px);
+  margin: 0 0 9px;
+
+  color: #987313;
+
+  font-size: clamp(31px, 5vw, 43px);
   font-weight: 900;
   line-height: 1.35;
+
   text-wrap: balance;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+  overflow-wrap: anywhere;
+
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 .hero-description {
-  max-width: 790px;
+  width: 100%;
+  max-width: 750px;
   margin-inline: auto;
 }
 
 .hero-description p {
   margin: 0;
+
   color: var(--green-deep);
-  font-size: clamp(17px, 2.2vw, 21px);
+
+  font-size: clamp(16px, 2.2vw, 20px);
   font-weight: 600;
-  line-height: 1.85;
+  line-height: 1.8;
+
   text-wrap: pretty;
+  overflow-wrap: anywhere;
 }
 
 .hero-description p + p {
   margin-top: 2px;
 }
 
-/* ---------- Lesson Boards ---------- */
+/* =====================================================
+   LESSON BOARDS
+   ===================================================== */
 
 .lesson-board {
-  margin-bottom: 20px;
-  padding: 25px;
+  margin: 0 0 17px;
+  padding: 24px;
+
   background: var(--board-bg);
+
   overflow: hidden;
+  overflow-wrap: anywhere;
 }
 
 .topic-heading {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin: 0 0 20px;
+  gap: 13px;
+
+  margin: 0 0 19px;
 }
 
 .topic-number {
-  flex: 0 0 54px;
-  width: 54px;
-  height: 54px;
+  flex: 0 0 47px;
+
+  width: 47px;
+  height: 47px;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
   color: #fffdf4;
   background: var(--green-deep);
+
   border: 2px solid var(--gold);
   border-radius: 50%;
-  font-size: 27px;
+
+  font-size: 23px;
   font-weight: 800;
   line-height: 1;
+
+  font-variant-numeric: tabular-nums;
 }
 
 .topic-heading h2 {
+  min-width: 0;
   margin: 0;
+
   color: var(--green-deep);
-  font-size: clamp(25px, 3.5vw, 33px);
+
+  font-size: clamp(23px, 3.4vw, 31px);
   font-weight: 900;
   line-height: 1.5;
+
   overflow-wrap: anywhere;
 }
 
 .section-intro {
-  margin: 0 0 20px;
-  font-size: clamp(17px, 2vw, 20px);
-  line-height: 1.95;
-}
+  margin: 0 0 17px;
 
-/* ---------- Image Placeholders ---------- */
+  color: var(--text-dark);
 
-.image-placeholder {
-  min-width: 0;
-  width: 100%;
-  min-height: 220px;
-  padding: 24px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-
-  color: var(--green-deep);
-  background:
-    linear-gradient(
-      135deg,
-      rgba(237, 242, 230, 0.95),
-      rgba(255, 250, 239, 0.98)
-    );
-  border: 1.5px dashed var(--board-border);
-  border-radius: 17px;
-  text-align: center;
-}
-
-.image-placeholder-icon {
-  color: var(--gold);
-  font-family: serif;
-  font-size: 54px;
-  line-height: 1;
-}
-
-.image-placeholder p {
-  margin: 0;
-  font-size: 16px;
-  line-height: 1.8;
-}
-
-.wide-image {
-  min-height: 150px;
-  margin: 0 0 20px;
-}
-
-/* ---------- Lesson Content ---------- */
-
-.lesson-content {
-  display: grid;
-  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
-  align-items: center;
-  gap: 28px;
-}
-
-.lesson-text {
-  min-width: 0;
-}
-
-.lesson-text > p {
-  margin: 0 0 16px;
-  font-size: clamp(17px, 2vw, 20px);
-  line-height: 1.95;
-  overflow-wrap: anywhere;
-}
-
-.lesson-text > p:last-child {
-  margin-bottom: 0;
-}
-
-/* ---------- Information Panel ---------- */
-
-.info-panel {
-  margin-top: 18px;
-  padding: 18px 20px;
-  background: var(--green-soft);
-  border-radius: 15px;
-}
-
-.info-panel h3 {
-  margin: 0 0 8px;
-  color: var(--green-deep);
-  font-size: 21px;
-  font-weight: 800;
-  line-height: 1.55;
-}
-
-.info-panel p {
-  margin: 0;
-  font-size: clamp(16px, 1.9vw, 19px);
+  font-size: clamp(16px, 2vw, 19px);
   line-height: 1.9;
 }
 
-/* ---------- Recitation Panels ---------- */
+/* =====================================================
+   RECITATION PANEL
+   ===================================================== */
 
 .recitation-panel {
-  margin-top: 16px;
-  padding: 20px;
-  background: var(--green-soft);
-  border-radius: 15px;
+  min-width: 0;
+
+  margin: 0;
+  padding: 19px 20px;
+
+  background: var(--panel-bg);
+  border: 1px solid rgba(201, 164, 81, 0.35);
+  border-radius: var(--radius-medium);
 }
 
 .recitation-panel p {
-  margin: 0 0 14px;
+  margin: 0 0 13px;
   overflow-wrap: anywhere;
 }
 
@@ -283,26 +264,40 @@ body {
   margin-bottom: 0;
 }
 
+/* ---------- Arabic Text ---------- */
+
 .arabic-text {
   color: var(--green-deep);
+
   font-family:
     "Noto Naskh Arabic",
     "Amiri",
     "Traditional Arabic",
+    "Times New Roman",
     serif;
-  font-size: clamp(30px, 4vw, 40px);
+
+  font-size: clamp(29px, 4vw, 39px);
   font-weight: 700;
   line-height: 2.05;
+
   text-align: center;
   direction: rtl;
   unicode-bidi: isolate;
+
   overflow-wrap: normal;
+  word-break: normal;
 }
+
+/* ---------- Pronunciation and Meaning ---------- */
 
 .pronunciation,
 .meaning {
-  font-size: clamp(16px, 1.9vw, 19px);
-  line-height: 1.95;
+  color: var(--text-dark);
+
+  font-size: clamp(16px, 1.9vw, 18px);
+  line-height: 1.9;
+
+  overflow-wrap: anywhere;
 }
 
 .pronunciation strong,
@@ -311,38 +306,52 @@ body {
   font-weight: 800;
 }
 
-/* ---------- Verse Cards ---------- */
+/* =====================================================
+   VERSE LIST AND VERSE CARDS
+   ===================================================== */
 
 .verse-list {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 13px;
+
+  min-width: 0;
 }
 
 .verse-card {
   display: grid;
-  grid-template-columns: 42px minmax(0, 1fr);
+  grid-template-columns: 37px minmax(0, 1fr);
   align-items: start;
-  gap: 15px;
-  padding: 19px;
+  gap: 13px;
 
-  background: rgba(255, 255, 255, 0.62);
+  min-width: 0;
+  padding: 17px;
+
+  background: var(--verse-bg);
+
   border: 1px solid rgba(201, 164, 81, 0.48);
-  border-radius: 15px;
+  border-radius: var(--radius-medium);
 }
 
 .verse-number {
-  width: 38px;
-  height: 38px;
+  width: 35px;
+  height: 35px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   color: #fffdf4;
   background: var(--green-main);
+
   border: 1px solid var(--gold);
   border-radius: 50%;
-  font-size: 18px;
+
+  font-size: 17px;
   font-weight: 800;
+  line-height: 1;
+
+  font-variant-numeric: tabular-nums;
 }
 
 .verse-content {
@@ -350,7 +359,7 @@ body {
 }
 
 .verse-content p {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   overflow-wrap: anywhere;
 }
 
@@ -359,209 +368,208 @@ body {
 }
 
 .verse-content .arabic-text {
-  margin-bottom: 14px;
-  font-size: clamp(28px, 3.6vw, 36px);
+  margin-bottom: 12px;
+
+  font-size: clamp(27px, 3.5vw, 35px);
+  line-height: 2.1;
 }
 
 .verse-content .pronunciation,
 .verse-content .meaning {
-  font-size: clamp(16px, 1.8vw, 18px);
-  line-height: 1.95;
-}
-
-/* ---------- Learning Note ---------- */
-
-.note-text {
-  margin: 20px 0 0;
-  padding: 16px 18px;
-  color: var(--text-dark);
-  background: var(--green-soft);
-  border-left: 4px solid var(--gold);
-  border-radius: 10px;
-  font-size: 16px;
+  font-size: clamp(15px, 1.8vw, 18px);
   line-height: 1.9;
 }
 
-/* ---------- Footer ---------- */
+/* =====================================================
+   NOTE TEXT
+   ===================================================== */
+
+.note-text {
+  margin: 17px 0 0;
+  padding: 13px 16px;
+
+  color: var(--text-dark);
+  background: var(--panel-bg);
+
+  border-left: 4px solid var(--gold);
+  border-radius: var(--radius-small);
+
+  font-size: 15px;
+  line-height: 1.85;
+
+  overflow-wrap: anywhere;
+}
+
+/* =====================================================
+   FOOTER BOARD
+   One line only: "পরবর্তী ধাপ শিখুন"
+   ===================================================== */
 
 .qirat-footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 125px;
-  padding: 22px 24px;
+
+  min-height: 0;
+  margin: 0;
+  padding: 17px 15px;
+
   background: var(--green-deep);
   border: 2px solid var(--gold);
-  border-radius: 20px;
+
+  border-radius: var(--radius-large);
+
   text-align: center;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .qirat-footer a {
   display: block;
   width: 100%;
+
   color: var(--gold-light);
-  font-size: clamp(23px, 3.5vw, 30px);
-  font-weight: 900;
-  line-height: 1.65;
+
+  font-size: clamp(17px, 2.5vw, 21px);
+  font-weight: 800;
+  line-height: 1.4;
+
   text-decoration: none;
+  text-align: center;
   overflow-wrap: anywhere;
 }
 
-.qirat-footer a:hover,
-.qirat-footer a:focus-visible {
-  color: #fff;
-  text-decoration: underline;
-  text-underline-offset: 5px;
+.qirat-footer a:hover {
+  color: #ffffff;
 }
 
 .qirat-footer a:focus-visible {
-  outline: 3px solid var(--gold-light);
+  outline: 2px solid var(--gold-light);
   outline-offset: 5px;
+  border-radius: 4px;
 }
 
-/* ---------- Dark Theme ---------- */
+/* Make the footer feel like one clickable board */
+.qirat-footer:has(a:hover) {
+  border-color: var(--gold-light);
+}
+
+/* =====================================================
+   DARK THEME
+   Supports body.dark-theme, body.dark-mode and data-theme
+   ===================================================== */
 
 body.dark-theme,
-body.dark-mode {
-  --green-deep: #d5e8d9;
-  --green-main: #285b45;
-  --green-soft: #283a30;
-  --text-dark: #f0f1e8;
-  --board-bg: rgba(29, 39, 32, 0.97);
-  --board-border: rgba(201, 164, 81, 0.88);
-  --board-shadow: 0 7px 22px rgba(0, 0, 0, 0.3);
+body.dark-mode,
+html[data-theme="dark"] body,
+body[data-theme="dark"] {
+  color-scheme: dark;
 
-  color: var(--text-dark);
+  --green-deep: #d8eadb;
+  --green-main: #285b45;
+  --green-light: #283a30;
+
+  --text-dark: #edf1e9;
+  --text-muted: #c3d0c5;
+
+  --board-bg: rgba(29, 39, 32, 0.97);
+  --panel-bg: rgba(39, 57, 46, 0.97);
+  --verse-bg: rgba(39, 51, 42, 0.94);
+
+  --border-color: rgba(201, 164, 81, 0.78);
+  --shadow: 0 6px 22px rgba(0, 0, 0, 0.32);
+
   background-color: #17231c;
+
   background-image:
     linear-gradient(
       rgba(9, 18, 13, 0.66),
       rgba(9, 18, 13, 0.66)
     ),
     url("../assets/main-bg.jpg");
+
   background-repeat: no-repeat;
   background-position: center top;
   background-size: cover;
   background-attachment: fixed;
 }
 
-.dark-theme .hero-board::before,
-.dark-mode .hero-board::before {
-  background: rgba(22, 35, 27, 0.76);
+/* Dark hero overlay */
+body.dark-theme .hero-board::before,
+body.dark-mode .hero-board::before,
+html[data-theme="dark"] body .hero-board::before,
+body[data-theme="dark"] .hero-board::before {
+  background: rgba(20, 33, 25, 0.80);
 }
 
-.dark-theme .hero-content h1,
-.dark-mode .hero-content h1 {
+body.dark-theme .hero-content h1,
+body.dark-mode .hero-content h1,
+html[data-theme="dark"] body .hero-content h1,
+body[data-theme="dark"] .hero-content h1 {
   color: #f0d27b;
   text-shadow: none;
 }
 
-.dark-theme .hero-description p,
-.dark-mode .hero-description p {
-  color: #f1f0e7;
+body.dark-theme .hero-description p,
+body.dark-mode .hero-description p,
+html[data-theme="dark"] body .hero-description p,
+body[data-theme="dark"] .hero-description p {
+  color: #f0f1e8;
 }
 
-.dark-theme .image-placeholder,
-.dark-mode .image-placeholder {
-  background: rgba(40, 58, 48, 0.94);
-  border-color: rgba(201, 164, 81, 0.75);
+body.dark-theme .arabic-text,
+body.dark-mode .arabic-text,
+html[data-theme="dark"] body .arabic-text,
+body[data-theme="dark"] .arabic-text {
+  color: #e4eddc;
 }
 
-.dark-theme .verse-card,
-.dark-mode .verse-card {
-  background: rgba(40, 52, 43, 0.92);
+body.dark-theme .pronunciation strong,
+body.dark-theme .meaning strong,
+body.dark-mode .pronunciation strong,
+body.dark-mode .meaning strong,
+html[data-theme="dark"] body .pronunciation strong,
+html[data-theme="dark"] body .meaning strong {
+  color: #f0d27b;
 }
 
-.dark-theme .qirat-footer,
-.dark-mode .qirat-footer {
+body.dark-theme .qirat-footer,
+body.dark-mode .qirat-footer,
+html[data-theme="dark"] body .qirat-footer,
+body[data-theme="dark"] .qirat-footer {
   background: #102e23;
 }
 
-.dark-theme .qirat-footer a,
-.dark-mode .qirat-footer a {
+body.dark-theme .qirat-footer a,
+body.dark-mode .qirat-footer a,
+html[data-theme="dark"] body .qirat-footer a,
+body[data-theme="dark"] .qirat-footer a {
   color: #f0d995;
 }
 
-/* ---------- Tablet ---------- */
+/* =====================================================
+   TABLET
+   ===================================================== */
 
 @media (max-width: 700px) {
   .qirat-page {
     width: calc(100% - 22px);
     padding-top: 13px;
-    padding-bottom: 22px;
+    padding-bottom: 20px;
   }
 
   .hero-board {
-    min-height: 225px;
-    margin-bottom: 17px;
-    padding: 26px 20px;
+    min-height: 205px;
+    margin-bottom: 16px;
+    padding: 25px 19px;
     border-radius: 18px;
   }
 
   .lesson-board {
-    padding: 22px;
-    margin-bottom: 17px;
+    padding: 21px;
+    margin-bottom: 15px;
     border-radius: 18px;
-  }
-
-  .topic-number {
-    flex-basis: 48px;
-    width: 48px;
-    height: 48px;
-    font-size: 24px;
-  }
-
-  .lesson-content {
-    gap: 20px;
-    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
-  }
-
-  .image-placeholder {
-    min-height: 190px;
-    padding: 18px;
-  }
-
-  .verse-card {
-    gap: 12px;
-    padding: 16px;
-  }
-}
-
-/* ---------- Mobile ---------- */
-
-@media (max-width: 480px) {
-  .qirat-page {
-    width: calc(100% - 18px);
-    padding-top: 10px;
-    padding-bottom: 18px;
-  }
-
-  .hero-board {
-    min-height: 220px;
-    padding: 25px 15px;
-    margin-bottom: 15px;
-    border-radius: 16px;
-  }
-
-  .hero-board::before {
-    background: rgba(255, 250, 239, 0.74);
-  }
-
-  .hero-content h1 {
-    margin-bottom: 10px;
-    font-size: 32px;
-    line-height: 1.45;
-  }
-
-  .hero-description p {
-    font-size: 17px;
-    line-height: 1.85;
-  }
-
-  .lesson-board {
-    padding: 19px 16px 22px;
-    margin-bottom: 15px;
-    border-radius: 16px;
   }
 
   .topic-heading {
@@ -570,148 +578,239 @@ body.dark-mode {
   }
 
   .topic-number {
-    flex-basis: 44px;
-    width: 44px;
-    height: 44px;
-    font-size: 23px;
+    flex-basis: 43px;
+    width: 43px;
+    height: 43px;
+    font-size: 21px;
+  }
+
+  .verse-card {
+    gap: 11px;
+    padding: 15px;
+  }
+
+  .recitation-panel {
+    padding: 17px;
+  }
+
+  .qirat-footer {
+    padding: 16px 14px;
+  }
+}
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 480px) {
+  .qirat-page {
+    width: calc(100% - 18px);
+    padding-top: 10px;
+    padding-bottom: 17px;
+  }
+
+  .hero-board {
+    min-height: 195px;
+    margin-bottom: 13px;
+    padding: 23px 14px;
+
+    border-radius: 16px;
+  }
+
+  .hero-board::before {
+    background: rgba(255, 250, 239, 0.79);
+  }
+
+  .hero-content h1 {
+    margin-bottom: 8px;
+    font-size: 31px;
+    line-height: 1.4;
+  }
+
+  .hero-description p {
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  .lesson-board {
+    padding: 17px 14px 19px;
+    margin-bottom: 13px;
+
+    border-radius: 15px;
+  }
+
+  .topic-heading {
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .topic-number {
+    flex-basis: 39px;
+    width: 39px;
+    height: 39px;
+
+    font-size: 20px;
   }
 
   .topic-heading h2 {
-    font-size: 24px;
-    line-height: 1.55;
+    font-size: 22px;
+    line-height: 1.5;
   }
 
-  .lesson-content {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 17px;
-  }
-
-  .image-placeholder {
-    min-height: 200px;
-    padding: 20px;
-    border-radius: 14px;
-  }
-
-  .image-placeholder-icon {
-    font-size: 48px;
-  }
-
-  .wide-image {
-    min-height: 135px;
-    margin-bottom: 16px;
-  }
-
-  .lesson-text > p,
   .section-intro {
-    font-size: 18px;
-    line-height: 1.95;
+    margin-bottom: 14px;
+    font-size: 16px;
+    line-height: 1.85;
   }
 
-  .info-panel,
   .recitation-panel {
-    padding: 17px 15px;
-    border-radius: 13px;
+    padding: 15px 12px;
+    border-radius: 12px;
+  }
+
+  .recitation-panel p {
+    margin-bottom: 11px;
   }
 
   .arabic-text {
-    font-size: 33px;
+    font-size: 30px;
     line-height: 2.05;
   }
 
   .pronunciation,
   .meaning {
-    font-size: 17px;
-    line-height: 1.95;
+    font-size: 16px;
+    line-height: 1.85;
   }
 
   .verse-list {
-    gap: 13px;
+    gap: 11px;
   }
 
   .verse-card {
-    grid-template-columns: 34px minmax(0, 1fr);
-    gap: 11px;
-    padding: 14px 12px;
-    border-radius: 13px;
+    grid-template-columns: 31px minmax(0, 1fr);
+    gap: 10px;
+
+    padding: 13px 10px;
+    border-radius: 12px;
   }
 
   .verse-number {
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+  }
+
+  .verse-content p {
+    margin-bottom: 9px;
   }
 
   .verse-content .arabic-text {
-    font-size: 29px;
+    font-size: 27px;
     line-height: 2.1;
+    margin-bottom: 10px;
   }
 
   .verse-content .pronunciation,
   .verse-content .meaning {
-    font-size: 16px;
-    line-height: 1.95;
+    font-size: 15px;
+    line-height: 1.85;
   }
 
   .note-text {
-    font-size: 16px;
-    padding: 14px;
+    margin-top: 14px;
+    padding: 12px;
+
+    font-size: 14px;
+    line-height: 1.8;
   }
 
   .qirat-footer {
-    min-height: 108px;
-    padding: 20px 16px;
-    border-radius: 16px;
+    padding: 14px 10px;
+    border-radius: 15px;
   }
 
   .qirat-footer a {
-    font-size: 24px;
-    line-height: 1.65;
+    font-size: 18px;
+    line-height: 1.4;
   }
 
   body.dark-theme .hero-board::before,
-  body.dark-mode .hero-board::before {
-    background: rgba(22, 35, 27, 0.8);
+  body.dark-mode .hero-board::before,
+  html[data-theme="dark"] body .hero-board::before,
+  body[data-theme="dark"] .hero-board::before {
+    background: rgba(20, 33, 25, 0.83);
   }
 }
 
-/* ---------- Extra-small Phones ---------- */
+/* =====================================================
+   EXTRA-SMALL PHONES
+   ===================================================== */
 
 @media (max-width: 360px) {
+  .qirat-page {
+    width: calc(100% - 14px);
+  }
+
+  .hero-board {
+    padding-inline: 11px;
+  }
+
   .hero-content h1 {
-    font-size: 29px;
+    font-size: 28px;
   }
 
   .hero-description p {
-    font-size: 16px;
-  }
-
-  .topic-heading h2 {
-    font-size: 21px;
+    font-size: 15px;
   }
 
   .lesson-board {
-    padding-inline: 13px;
+    padding-inline: 11px;
+  }
+
+  .topic-heading h2 {
+    font-size: 20px;
   }
 
   .arabic-text {
-    font-size: 29px;
+    font-size: 27px;
   }
 
   .verse-content .arabic-text {
-    font-size: 26px;
+    font-size: 24px;
+  }
+
+  .verse-card {
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 8px;
+    padding: 11px 8px;
+  }
+
+  .verse-number {
+    width: 27px;
+    height: 27px;
+    font-size: 14px;
   }
 
   .qirat-footer a {
-    font-size: 21px;
+    font-size: 17px;
   }
 }
 
-/* ---------- Accessibility ---------- */
+/* =====================================================
+   ACCESSIBILITY
+   ===================================================== */
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
