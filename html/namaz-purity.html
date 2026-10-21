@@ -1,77 +1,260 @@
 
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="bn" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
   <meta name="theme-color" content="#0F5132">
-  <meta name="description" content="IBADAT — পাক-পবিত্রতা, ওযু, গোসল, তায়াম্মুম ও পরিচ্ছন্নতার শিক্ষামূলক নির্দেশনা">
+  <meta
+    name="description"
+    content="IBADAT — ওযু, গোসল, তায়াম্মুম, শরীর ও পোশাকের পবিত্রতা এবং ইসলামে পরিচ্ছন্নতার সম্পূর্ণ শিক্ষামূলক নির্দেশনা"
+  >
+
   <title>পাক-পবিত্রতা | IBADAT</title>
 
-  <!-- পাক-পবিত্রতা পেজের CSS -->
+  <!-- Page stylesheet -->
   <link rel="stylesheet" href="../css/namaz-purity.css">
 
-  <!-- পাক-পবিত্রতা পেজের JavaScript -->
+  <!-- Optional Bengali and multilingual font support -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Page script -->
   <script src="../js/namaz-purity.js" defer></script>
 </head>
 
 <body>
   <main id="purityPage" class="purity-page">
 
-    <!-- মূল পেজ: হিরো বোর্ড, আটটি অপশন ও ফুটার -->
-    <section id="purityHome" class="purity-home">
+    <!-- ==================================================
+         MAIN BOARD
+         Only the heading and two-line introduction
+         ================================================== -->
 
-      <header id="purityHero" class="purity-hero">
-        <div class="purity-hero-overlay">
-          <h1 id="pageTitle">পাক-পবিত্রতা</h1>
-          <p id="pageIntro">
-            শুদ্ধতা, পরিচ্ছন্নতা ও ইবাদতের প্রস্তুতি
-          </p>
-        </div>
-      </header>
+    <header id="purityHero" class="purity-hero">
+      <div class="purity-hero-overlay">
+        <h1 id="pageTitle">পাক-পবিত্রতা</h1>
 
-      <!-- আটটি অপশন JavaScript দিয়ে এখানে তৈরি হবে -->
-      <section
-        id="learningGrid"
-        class="learning-grid"
-        aria-label="পাক-পবিত্রতার আটটি বিষয়"
-      ></section>
-
-      <footer id="homeFooter" class="purity-footer">
-        <p id="footerText">
-          পবিত্রতা রক্ষা করো, ইবাদতে প্রশান্তি খুঁজে নাও।
+        <p id="pageIntro">
+          পাক-পবিত্রতা মানুষের পরিচ্ছন্নতা ও ইবাদতের প্রস্তুতির গুরুত্বপূর্ণ অংশ।
+          সঠিক নিয়মে পবিত্রতা অর্জন করে আমরা নামাজসহ বিভিন্ন ইবাদতের জন্য প্রস্তুত হই।
         </p>
-      </footer>
-
-    </section>
-
-
-    <!-- বিস্তারিত শিক্ষা: ওযু, গোসল, তায়াম্মুম ও বাকি বিষয় -->
-    <section id="detailView" class="purity-detail" hidden>
-
-      <!-- প্রতিটি বিষয়ের উপরের বার -->
-      <header id="detailHeader" class="detail-header">
-        <h1 id="detailTitle">ওযু</h1>
-        <p id="detailSubtitle"></p>
-      </header>
-
-      <!-- কেবল এই অংশটি স্ক্রল করবে -->
-      <div id="detailScroll" class="detail-scroll">
-        <div
-          id="detailContent"
-          class="detail-content"
-          aria-live="polite"
-        ></div>
       </div>
+    </header>
 
-      <!-- প্রতিটি বিস্তারিত পেজের নিচের বার -->
-      <footer id="detailFooter" class="purity-footer detail-footer">
-        <p id="detailFooterText">
-          পবিত্রতা রক্ষা করো, ইবাদতে প্রশান্তি খুঁজে নাও।
-        </p>
-      </footer>
 
-    </section>
+    <!-- ==================================================
+         ALL EIGHT TOPICS
+         All lessons appear on this single page.
+         No separate topic pages or topic-card navigation.
+         ================================================== -->
+
+    <div id="purityLessons" class="purity-lessons">
+
+      <!-- ==================================================
+           1. WUDU
+           JavaScript will render each lesson board separately.
+           ================================================== -->
+
+      <section
+        id="lesson-wudu"
+        class="purity-topic"
+        data-topic="wudu"
+        aria-labelledby="heading-wudu"
+      >
+        <h2 id="heading-wudu" class="topic-heading">
+          ওযু
+        </h2>
+
+        <div
+          id="content-wudu"
+          class="topic-content"
+          aria-live="polite"
+        >
+          <!-- Wudu lesson boards are inserted here. -->
+        </div>
+      </section>
+
+
+      <!-- ==================================================
+           2. GHUSL
+           ================================================== -->
+
+      <section
+        id="lesson-ghusl"
+        class="purity-topic"
+        data-topic="ghusl"
+        aria-labelledby="heading-ghusl"
+      >
+        <h2 id="heading-ghusl" class="topic-heading">
+          গোসল
+        </h2>
+
+        <div
+          id="content-ghusl"
+          class="topic-content"
+        >
+          <!-- Ghusl lesson boards are inserted here. -->
+        </div>
+      </section>
+
+
+      <!-- ==================================================
+           3. TAYAMMUM
+           ================================================== -->
+
+      <section
+        id="lesson-tayammum"
+        class="purity-topic"
+        data-topic="tayammum"
+        aria-labelledby="heading-tayammum"
+      >
+        <h2 id="heading-tayammum" class="topic-heading">
+          তায়াম্মুম
+        </h2>
+
+        <div
+          id="content-tayammum"
+          class="topic-content"
+        >
+          <!-- Tayammum lesson boards are inserted here. -->
+        </div>
+      </section>
+
+
+      <!-- ==================================================
+           4. BODY PURITY
+           ================================================== -->
+
+      <section
+        id="lesson-body-purity"
+        class="purity-topic"
+        data-topic="body-purity"
+        aria-labelledby="heading-body-purity"
+      >
+        <h2 id="heading-body-purity" class="topic-heading">
+          শরীরের পবিত্রতা
+        </h2>
+
+        <div
+          id="content-body-purity"
+          class="topic-content"
+        >
+          <!-- Body purity lesson boards are inserted here. -->
+        </div>
+      </section>
+
+
+      <!-- ==================================================
+           5. CLOTHING PURITY
+           ================================================== -->
+
+      <section
+        id="lesson-clothing-purity"
+        class="purity-topic"
+        data-topic="clothing-purity"
+        aria-labelledby="heading-clothing-purity"
+      >
+        <h2 id="heading-clothing-purity" class="topic-heading">
+          পোশাকের পবিত্রতা
+        </h2>
+
+        <div
+          id="content-clothing-purity"
+          class="topic-content"
+        >
+          <!-- Clothing purity lesson boards are inserted here. -->
+        </div>
+      </section>
+
+
+      <!-- ==================================================
+           6. PRAYER PLACE PURITY
+           ================================================== -->
+
+      <section
+        id="lesson-place-purity"
+        class="purity-topic"
+        data-topic="place-purity"
+        aria-labelledby="heading-place-purity"
+      >
+        <h2 id="heading-place-purity" class="topic-heading">
+          নামাজের স্থানের পবিত্রতা
+        </h2>
+
+        <div
+          id="content-place-purity"
+          class="topic-content"
+        >
+          <!-- Prayer place purity lesson boards are inserted here. -->
+        </div>
+      </section>
+
+
+      <!-- ==================================================
+           7. REMOVING IMPURITY
+           ================================================== -->
+
+      <section
+        id="lesson-impurity-removal"
+        class="purity-topic"
+        data-topic="impurity-removal"
+        aria-labelledby="heading-impurity-removal"
+      >
+        <h2 id="heading-impurity-removal" class="topic-heading">
+          নাপাকি দূরীকরণ
+        </h2>
+
+        <div
+          id="content-impurity-removal"
+          class="topic-content"
+        >
+          <!-- Impurity removal lesson boards are inserted here. -->
+        </div>
+      </section>
+
+
+      <!-- ==================================================
+           8. HAYEZ AND NIFAS
+           ================================================== -->
+
+      <section
+        id="lesson-hayez-nifas"
+        class="purity-topic"
+        data-topic="hayez-nifas"
+        aria-labelledby="heading-hayez-nifas"
+      >
+        <h2 id="heading-hayez-nifas" class="topic-heading">
+          হায়েজ ও নিফাস
+        </h2>
+
+        <div
+          id="content-hayez-nifas"
+          class="topic-content"
+        >
+          <!-- Hayez and nifas lesson boards are inserted here. -->
+        </div>
+      </section>
+
+    </div>
+
+
+    <!-- ==================================================
+         FINAL FOOTER BOARD
+         Only one footer at the end of the whole page.
+         ================================================== -->
+
+    <footer id="homeFooter" class="purity-footer">
+      <p id="footerText">
+        পবিত্রতা রক্ষা করো, ইবাদতে প্রশান্তি খুঁজে নাও।
+      </p>
+    </footer>
 
   </main>
 </body>
