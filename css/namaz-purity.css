@@ -1,45 +1,86 @@
 
-/* =========================================================
-   IBADAT — NAMAZ PURITY PAGE
+/* ==========================================================
+   IBADAT — PAK-PABITRATA
    File: css/namaz-purity.css
-   Backgrounds:
-   ../assets/main-bg.jpg
-   ../assets/hero-bg.jpg
-   ========================================================= */
 
-/* ---------- 1. ROOT VARIABLES ---------- */
+   Main background : ../assets/main-bg.jpg
+   Hero background : ../assets/hero-bg.jpg
+   Lesson images   : ../assets/images/
+
+   One page:
+   1 Main board
+   8 Topics with separate lesson boards
+   1 Final footer board
+   ========================================================== */
+
+
+/* ==========================================================
+   1. DESIGN VARIABLES
+   ========================================================== */
 
 :root {
-  --purity-green: #0f5132;
-  --purity-green-dark: #073b25;
-  --purity-green-light: #24764d;
+  color-scheme: light;
 
-  --purity-gold: #d5b45b;
-  --purity-gold-light: #f0d98b;
+  --green: #0f5132;
+  --green-dark: #093b26;
+  --green-mid: #17613d;
+  --green-light: #26784d;
 
-  --purity-cream: #fffdf5;
-  --purity-cream-soft: #f8f2df;
+  --gold: #d5b45b;
+  --gold-light: #f0d98b;
+  --gold-border: #b9953e;
 
-  --purity-text: #203b2b;
-  --purity-muted: #526454;
+  --page-text: #24382b;
+  --muted-text: #586557;
 
-  --purity-border: rgba(183, 145, 54, 0.8);
-  --purity-shadow: 0 5px 18px rgba(22, 43, 29, 0.17);
+  --board-bg: rgba(255, 253, 246, 0.96);
+  --board-bg-soft: rgba(255, 251, 237, 0.95);
+  --board-border: rgba(176, 142, 56, 0.78);
 
-  --purity-radius: 16px;
-  --purity-small-radius: 11px;
+  --page-overlay: rgba(255, 252, 240, 0.77);
+  --hero-overlay: rgba(255, 252, 239, 0.80);
 
-  --purity-page-padding: clamp(8px, 2.2vw, 18px);
-  --purity-card-gap: clamp(8px, 2vw, 14px);
+  --shadow:
+    0 4px 14px rgba(25, 47, 31, 0.15);
 
-  --purity-header-height: 74px;
-  --purity-footer-height: 54px;
+  --shadow-light:
+    0 2px 7px rgba(25, 47, 31, 0.10);
 
-  --purity-main-bg: url("../assets/main-bg.jpg");
-  --purity-hero-bg: url("../assets/hero-bg.jpg");
+  --radius-large: 19px;
+  --radius-medium: 14px;
+  --radius-small: 11px;
+
+  --page-gap: 14px;
+  --page-padding: clamp(9px, 2.5vw, 18px);
+
+  --main-bg: url("../assets/main-bg.jpg");
+  --hero-bg: url("../assets/hero-bg.jpg");
+
+  --footer-text: #fff8e4;
+
+  --font-bengali:
+    "Noto Sans Bengali",
+    "Nirmala UI",
+    "Vrinda",
+    "Hind Siliguri",
+    sans-serif;
+
+  --font-english:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  --font-hindi:
+    "Noto Sans Devanagari",
+    "Nirmala UI",
+    Mangal,
+    sans-serif;
 }
 
-/* ---------- 2. GLOBAL RESET ---------- */
+
+/* ==========================================================
+   2. RESET
+   ========================================================== */
 
 * {
   box-sizing: border-box;
@@ -51,42 +92,43 @@ html {
   min-height: 100%;
   margin: 0;
   padding: 0;
+
   scroll-behavior: smooth;
+
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
 
 body {
+  position: relative;
+
   width: 100%;
   min-width: 280px;
   min-height: 100vh;
   min-height: 100dvh;
+
   margin: 0;
   padding: 0;
 
-  color: var(--purity-text);
-  background-color: #f3eedf;
+  color: var(--page-text);
+  background-color: #f5f0df;
+
   background-image:
     linear-gradient(
-      rgba(255, 253, 245, 0.76),
-      rgba(255, 253, 245, 0.76)
+      var(--page-overlay),
+      var(--page-overlay)
     ),
-    var(--purity-main-bg);
+    var(--main-bg);
 
+  background-position: center top;
   background-repeat: no-repeat;
-  background-position: center center;
   background-size: cover;
   background-attachment: fixed;
 
-  font-family:
-    "Noto Sans Bengali",
-    "Nirmala UI",
-    "Vrinda",
-    "Hind Siliguri",
-    system-ui,
-    sans-serif;
+  font-family: var(--font-bengali);
+  font-size: 16px;
+  line-height: 1.65;
 
-  line-height: 1.55;
   overflow-x: hidden;
 }
 
@@ -95,79 +137,67 @@ button,
 input,
 textarea,
 select {
-  font-family:
-    "Noto Sans Bengali",
-    "Nirmala UI",
-    "Vrinda",
-    "Hind Siliguri",
-    system-ui,
-    sans-serif;
+  font-family: inherit;
 }
 
-button,
-a,
 img {
-  -webkit-tap-highlight-color: transparent;
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin-top: 0;
 }
 
 button {
   font: inherit;
 }
 
-img {
-  display: block;
-  max-width: 100%;
-}
-
-h1,
-h2,
-h3,
-p {
-  margin-top: 0;
-}
-
 [hidden] {
   display: none !important;
 }
 
-/* ---------- 3. MAIN PAGE CONTAINER ---------- */
-
-#purityPage,
-.purity-page {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
-  margin: 0 auto;
+::selection {
+  color: #fff;
+  background: var(--green);
 }
 
-.purity-home,
-.purity-detail {
+
+/* ==========================================================
+   3. MAIN PAGE
+   ========================================================== */
+
+.purity-page,
+#purityPage {
   width: 100%;
   max-width: 900px;
-  margin: 0 auto;
-  padding: var(--purity-page-padding);
-}
 
-/* ---------- 4. HOME PAGE LAYOUT ---------- */
-
-.purity-home {
   min-height: 100vh;
   min-height: 100dvh;
 
-  display: grid;
-  grid-template-rows:
-    minmax(105px, 0.9fr)
-    minmax(0, 4fr)
-    auto;
+  margin-inline: auto;
+  padding: var(--page-padding);
 
-  gap: var(--purity-card-gap);
-  align-content: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  gap: var(--page-gap);
 }
 
-/* ---------- 5. HERO BOARD ---------- */
 
-.purity-hero {
+/* ==========================================================
+   4. MAIN HERO BOARD
+   Heading + exactly two-line-style introduction
+   ========================================================== */
+
+.purity-hero,
+#purityHero {
   position: relative;
   isolation: isolate;
 
@@ -176,386 +206,246 @@ p {
   justify-content: center;
 
   width: 100%;
-  min-height: 105px;
+  min-height: 190px;
+
+  padding: clamp(18px, 5vw, 38px);
+
   overflow: hidden;
 
-  border: 1.5px solid var(--purity-border);
-  border-radius: var(--purity-radius);
+  border: 2px solid var(--gold);
+  border-radius: var(--radius-large);
 
-  background-color: #f7f0d9;
+  color: #fff;
+
+  background-color: var(--green);
+
   background-image:
     linear-gradient(
-      rgba(255, 252, 237, 0.80),
-      rgba(255, 252, 237, 0.80)
+      rgba(12, 76, 46, 0.86),
+      rgba(12, 76, 46, 0.86)
     ),
-    var(--purity-hero-bg);
+    var(--hero-bg);
 
-  background-repeat: no-repeat;
   background-position: center;
+  background-repeat: no-repeat;
   background-size: cover;
 
-  box-shadow: var(--purity-shadow);
+  box-shadow: var(--shadow);
+
   text-align: center;
 }
 
 .purity-hero::before {
   content: "";
+
   position: absolute;
   z-index: -1;
-  inset: 6px;
+  inset: 7px;
 
-  border: 1px solid rgba(181, 142, 48, 0.42);
-  border-radius: calc(var(--purity-radius) - 5px);
+  border: 1px solid rgba(213, 180, 91, 0.64);
+  border-radius: calc(var(--radius-large) - 6px);
 
   pointer-events: none;
 }
 
 .purity-hero-overlay {
-  width: 100%;
-  padding: clamp(10px, 2.5vw, 22px);
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+
+  width: 100%;
+  max-width: 760px;
+
+  gap: 12px;
 }
 
 #pageTitle {
   margin: 0;
-  color: var(--purity-green-dark);
 
-  font-size: clamp(22px, 5.5vw, 34px);
+  color: var(--gold-light);
+
+  font-size: clamp(28px, 6.5vw, 43px);
   font-weight: 800;
-  line-height: 1.35;
+  line-height: 1.4;
 
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
+  text-align: center;
+
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.30);
 }
 
 #pageIntro {
-  max-width: 620px;
-  margin: 0;
-
-  color: #485440;
-  font-size: clamp(12px, 2.9vw, 16px);
-  font-weight: 500;
-  line-height: 1.55;
-}
-
-/* ---------- 6. LEARNING CARDS GRID ---------- */
-
-.learning-grid {
-  display: grid;
-
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(4, minmax(0, 1fr));
-
-  gap: var(--purity-card-gap);
-
-  width: 100%;
-  min-height: 0;
-  align-content: stretch;
-}
-
-/* The JavaScript should create each card using this class. */
-
-.purity-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-
-  min-width: 0;
-  min-height: 0;
-  padding: 0;
-
-  overflow: hidden;
-
-  border: 1.5px solid var(--purity-border);
-  border-radius: var(--purity-small-radius);
-
-  background: rgba(255, 253, 245, 0.94);
-  box-shadow: 0 3px 10px rgba(31, 51, 32, 0.13);
-
-  color: var(--purity-text);
-  text-align: center;
-
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-
-  transition:
-    transform 160ms ease,
-    box-shadow 160ms ease,
-    border-color 160ms ease,
-    background-color 160ms ease;
-}
-
-.purity-card:focus-visible {
-  outline: 3px solid var(--purity-green-light);
-  outline-offset: 3px;
-}
-
-.purity-card:active {
-  transform: scale(0.975);
-  background-color: #f5edcf;
-}
-
-.purity-card:hover {
-  border-color: #ad852e;
-  box-shadow: 0 5px 14px rgba(31, 51, 32, 0.2);
-}
-
-/* Main card image */
-
-.purity-card img,
-.purity-card-image {
-  display: block;
-
-  width: 100%;
-  height: 0;
-  min-height: 0;
-  flex: 1 1 auto;
-
-  object-fit: cover;
-  object-position: center;
-
-  background: #eee7d4;
-}
-
-/* Card title */
-
-.purity-card-title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  min-height: 34px;
-  flex: 0 0 auto;
+  max-width: 680px;
 
   margin: 0;
-  padding: 5px 4px;
 
-  color: var(--purity-green-dark);
-  background: rgba(255, 253, 245, 0.98);
+  color: #fff9e9;
 
-  border-top: 1px solid rgba(183, 145, 54, 0.42);
+  font-size: clamp(14px, 3.5vw, 17px);
+  font-weight: 400;
+  line-height: 1.9;
 
-  font-size: clamp(12px, 3vw, 16px);
-  font-weight: 750;
-  line-height: 1.4;
   text-align: center;
 
   overflow-wrap: anywhere;
 }
 
-/* Support for button-based cards */
 
-button.purity-card {
-  appearance: none;
-  -webkit-appearance: none;
-}
+/* ==========================================================
+   5. ALL EIGHT TOPICS CONTAINER
+   ========================================================== */
 
-.purity-card:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-}
-
-/* ---------- 7. SHARED FOOTER ---------- */
-
-.purity-footer {
+.purity-lessons,
+#purityLessons {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  align-items: stretch;
 
   width: 100%;
-  min-height: var(--purity-footer-height);
+  min-width: 0;
 
-  padding: 9px 12px;
+  gap: clamp(22px, 4vw, 34px);
+}
 
-  border: 1.5px solid var(--purity-gold);
-  border-radius: 13px;
 
-  color: #fff8df;
+/* ==========================================================
+   6. TOPIC SECTION
+   No cards grid; each topic flows down the same page.
+   ========================================================== */
+
+.purity-topic {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  width: 100%;
+  min-width: 0;
+
+  gap: 12px;
+
+  scroll-margin-top: 12px;
+}
+
+.topic-heading {
+  width: 100%;
+
+  margin: 0;
+  padding: 13px 14px;
+
+  color: var(--gold-light);
   background:
     linear-gradient(
       135deg,
-      #0c472d,
-      #145b39 55%,
-      #0b432a
+      var(--green-dark),
+      var(--green),
+      var(--green-mid)
     );
 
-  box-shadow: 0 4px 12px rgba(18, 49, 29, 0.2);
+  border: 1.5px solid var(--gold);
+  border-radius: var(--radius-medium);
+
+  box-shadow: var(--shadow-light);
+
+  font-size: clamp(21px, 5vw, 29px);
+  font-weight: 800;
+  line-height: 1.5;
 
   text-align: center;
-}
-
-.purity-footer p {
-  margin: 0;
-
-  font-size: clamp(11px, 2.8vw, 15px);
-  font-weight: 600;
-  line-height: 1.5;
 
   overflow-wrap: anywhere;
 }
 
-#footerText,
-#detailFooterText {
-  color: #fff8df;
-}
 
-/* ---------- 8. DETAIL PAGE LAYOUT ---------- */
+/* ==========================================================
+   7. TOPIC CONTENT
+   JavaScript inserts separate boards into this container.
+   ========================================================== */
 
-.purity-detail {
-  height: 100vh;
-  height: 100dvh;
-  min-height: 0;
-
-  display: flex;
-  flex-direction: column;
-  gap: var(--purity-card-gap);
-
-  overflow: hidden;
-}
-
-/* ---------- 9. DETAIL HEADER ---------- */
-
-.detail-header {
-  position: relative;
-  z-index: 2;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  flex: 0 0 auto;
-  min-height: 64px;
-
-  padding: 10px 12px;
-
-  border: 1.5px solid var(--purity-border);
-  border-radius: var(--purity-radius);
-
-  color: var(--purity-green-dark);
-
-  background:
-    linear-gradient(
-      rgba(255, 252, 237, 0.94),
-      rgba(255, 252, 237, 0.94)
-    );
-
-  box-shadow: 0 3px 10px rgba(31, 51, 32, 0.12);
-  text-align: center;
-}
-
-#detailTitle {
-  margin: 0;
-
-  color: var(--purity-green-dark);
-  font-size: clamp(20px, 5vw, 28px);
-  font-weight: 800;
-  line-height: 1.4;
-}
-
-#detailSubtitle {
-  margin: 3px 0 0;
-
-  color: var(--purity-muted);
-  font-size: clamp(11px, 2.8vw, 14px);
-  line-height: 1.5;
-}
-
-/* ---------- 10. DETAIL SCROLL AREA ---------- */
-
-.detail-scroll {
-  flex: 1 1 auto;
-
-  width: 100%;
-  min-height: 0;
-
-  overflow-x: hidden;
-  overflow-y: auto;
-
-  overscroll-behavior-y: contain;
-  -webkit-overflow-scrolling: touch;
-
-  scrollbar-width: thin;
-  scrollbar-color: rgba(15, 81, 50, 0.55) rgba(255, 253, 245, 0.35);
-
-  padding: 0 1px 8px;
-}
-
-.detail-scroll::-webkit-scrollbar {
-  width: 5px;
-}
-
-.detail-scroll::-webkit-scrollbar-track {
-  background: rgba(255, 253, 245, 0.35);
-  border-radius: 8px;
-}
-
-.detail-scroll::-webkit-scrollbar-thumb {
-  background: rgba(15, 81, 50, 0.55);
-  border-radius: 8px;
-}
-
-.detail-scroll::-webkit-scrollbar-thumb:hover {
-  background: var(--purity-green);
-}
-
-/* ---------- 11. DETAIL CONTENT ---------- */
-
-.detail-content {
+.topic-content {
   display: flex;
   flex-direction: column;
   align-items: stretch;
 
-  gap: var(--purity-card-gap);
-
   width: 100%;
   min-width: 0;
-  padding-bottom: 5px;
+
+  gap: var(--page-gap);
 }
 
-/* Every lesson board */
+
+/* ==========================================================
+   8. INDIVIDUAL LESSON BOARDS
+   Every lesson is one separate board.
+   Never nest a board inside another board.
+   ========================================================== */
 
 .lesson-board {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
   width: 100%;
   min-width: 0;
-  padding: clamp(12px, 3.3vw, 20px);
 
-  border: 1.5px solid var(--purity-border);
-  border-radius: var(--purity-radius);
+  padding: clamp(14px, 3.5vw, 23px);
 
-  color: var(--purity-text);
-  background: rgba(255, 253, 245, 0.95);
+  border: 1.5px solid var(--board-border);
+  border-radius: var(--radius-large);
 
-  box-shadow: var(--purity-shadow);
+  color: var(--page-text);
+  background: var(--board-bg);
+
+  box-shadow: var(--shadow);
 
   overflow-wrap: anywhere;
 }
 
-.lesson-board h2,
-.lesson-board h3 {
-  margin: 0 0 10px;
-
-  color: var(--purity-green-dark);
-
-  font-size: clamp(17px, 4.2vw, 23px);
-  font-weight: 800;
-  line-height: 1.5;
+.lesson-board > :last-child {
+  margin-bottom: 0;
 }
 
-.lesson-board p {
-  margin: 0 0 10px;
 
-  color: var(--purity-text);
+/* Lesson board headings */
+
+.lesson-board h2,
+.lesson-board h3,
+.lesson-board h4 {
+  margin: 0 0 11px;
+
+  color: var(--green-dark);
+
+  font-weight: 800;
+  line-height: 1.55;
+
+  overflow-wrap: anywhere;
+}
+
+.lesson-board h2 {
+  font-size: clamp(20px, 4.8vw, 27px);
+}
+
+.lesson-board h3 {
+  font-size: clamp(17px, 4vw, 22px);
+}
+
+.lesson-board h4 {
+  font-size: clamp(15px, 3.7vw, 19px);
+}
+
+
+/* Lesson paragraphs */
+
+.lesson-board p {
+  margin: 0 0 12px;
+
+  color: var(--page-text);
 
   font-size: clamp(14px, 3.5vw, 17px);
-  line-height: 1.85;
+  font-weight: 400;
+  line-height: 1.95;
 
   overflow-wrap: anywhere;
 }
@@ -564,72 +454,101 @@ button.purity-card {
   margin-bottom: 0;
 }
 
+
+/* Lesson lists */
+
 .lesson-board ul,
 .lesson-board ol {
-  margin: 8px 0 0;
-  padding-inline-start: 24px;
+  margin: 7px 0 12px;
+
+  padding-inline-start: 25px;
 }
 
 .lesson-board li {
-  margin-bottom: 8px;
-  padding-inline-start: 2px;
+  margin: 0 0 9px;
+
+  padding-inline-start: 3px;
+
+  color: var(--page-text);
 
   font-size: clamp(14px, 3.5vw, 17px);
-  line-height: 1.8;
+  line-height: 1.85;
+
+  overflow-wrap: anywhere;
 }
 
 .lesson-board li:last-child {
   margin-bottom: 0;
 }
 
-/* Lesson introduction board */
+
+/* ==========================================================
+   9. INTRODUCTION BOARDS
+   Topic image + introduction + importance.
+   ========================================================== */
 
 .lesson-intro {
-  border-top: 3px solid var(--purity-green);
+  border-top: 3px solid var(--green);
+  background: var(--board-bg);
 }
 
+.lesson-intro h3,
 .lesson-intro h2 {
-  color: var(--purity-green-dark);
+  color: var(--green-dark);
 }
 
-/* Lesson step board */
+.lesson-intro .lesson-image {
+  margin-bottom: 15px;
+}
+
+
+/* ==========================================================
+   10. LESSON STEP BOARDS
+   ========================================================== */
 
 .lesson-step {
-  position: relative;
-  border-inline-start: 3px solid rgba(15, 81, 50, 0.65);
+  border-inline-start: 4px solid var(--green);
 }
 
-.lesson-step h3 {
+.lesson-step > h3:first-child {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
+
+  gap: 9px;
+
+  margin-bottom: 12px;
 }
 
-/* Optional step number */
+
+/* Optional number badge */
 
 .lesson-step-number {
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  flex: 0 0 29px;
-  width: 29px;
-  height: 29px;
+  flex: 0 0 32px;
+
+  width: 32px;
+  height: 32px;
 
   margin-top: 1px;
 
+  border: 1px solid var(--gold);
   border-radius: 50%;
-  border: 1px solid var(--purity-gold);
 
-  color: #fff8df;
-  background: var(--purity-green);
+  color: #fff8e4;
+  background: var(--green);
 
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
   line-height: 1;
 }
 
-/* Detail lesson images */
+
+/* ==========================================================
+   11. LESSON IMAGES
+   ========================================================== */
 
 .lesson-image {
   display: block;
@@ -638,79 +557,112 @@ button.purity-card {
   max-width: 560px;
   height: auto;
 
-  margin: 12px auto 15px;
+  margin: 12px auto 16px;
 
   object-fit: contain;
   object-position: center;
 
-  border: 1px solid rgba(183, 145, 54, 0.55);
-  border-radius: 12px;
+  border: 1px solid rgba(183, 145, 54, 0.60);
+  border-radius: var(--radius-medium);
 
-  background: #f4edda;
+  background: #f3ecda;
 }
-
-/* Intro image */
 
 .lesson-intro .lesson-image {
-  max-height: 320px;
+  max-height: 360px;
 }
-
-/* Smaller step images */
 
 .lesson-step .lesson-image {
-  max-height: 290px;
+  max-height: 330px;
 }
 
-/* Final reminder board */
+
+/* Keep images responsive */
+
+.lesson-image[src=""],
+.lesson-image:not([src]) {
+  display: none;
+}
+
+
+/* ==========================================================
+   12. REMEMBER BOARDS
+   ========================================================== */
 
 .lesson-reminder {
-  border: 2px solid var(--purity-gold);
-  border-top: 4px solid var(--purity-green);
+  border: 2px solid var(--gold);
+  border-top: 4px solid var(--green);
 
   background:
     linear-gradient(
       145deg,
-      rgba(255, 253, 244, 0.98),
-      rgba(248, 242, 220, 0.97)
+      rgba(255, 253, 245, 0.98),
+      rgba(248, 242, 224, 0.98)
     );
 }
 
 .lesson-reminder h2,
 .lesson-reminder h3 {
-  color: var(--purity-green-dark);
+  color: var(--green-dark);
 }
 
 .lesson-reminder strong {
-  color: var(--purity-green-dark);
+  color: var(--green-dark);
 }
 
-/* Qur'an / quotation section */
+
+/* ==========================================================
+   13. QUOTATIONS AND REFERENCES
+   ========================================================== */
 
 .lesson-quote {
-  margin-top: 12px;
-  padding: 12px;
+  display: flex;
+  flex-direction: column;
 
-  border-inline-start: 3px solid var(--purity-gold);
+  gap: 8px;
 
+  margin-top: 14px;
+  padding: 13px;
+
+  border-inline-start: 3px solid var(--gold);
   border-radius: 8px;
 
-  color: var(--purity-green-dark);
-  background: rgba(213, 180, 91, 0.12);
+  color: var(--page-text);
+  background: rgba(213, 180, 91, 0.13);
+}
+
+.lesson-quote h3,
+.lesson-quote h4 {
+  margin: 0;
+
+  color: var(--green-dark);
 }
 
 .lesson-quote p {
-  margin: 0 0 8px;
+  margin: 0;
 }
 
-.lesson-quote p:last-child {
-  margin-bottom: 0;
+.lesson-translation {
+  color: var(--muted-text) !important;
+  font-size: 0.94em !important;
 }
 
-/* Arabic text support */
+.lesson-source {
+  margin-top: 10px !important;
+
+  color: var(--muted-text) !important;
+
+  font-size: 12px !important;
+  line-height: 1.7 !important;
+}
+
+
+/* Arabic content */
 
 .arabic-text {
   direction: rtl;
-  text-align: right;
+
+  margin-block: 10px;
 
   font-family:
     "Noto Naskh Arabic",
@@ -718,86 +670,158 @@ button.purity-card {
     "Traditional Arabic",
     serif;
 
-  font-size: clamp(20px, 5vw, 27px);
-  line-height: 2;
+  font-size: clamp(21px, 5vw, 29px);
+  line-height: 2.1;
+
+  text-align: right;
 }
 
-/* Translation / source notes */
 
-.lesson-translation {
-  color: var(--purity-muted) !important;
-  font-size: 0.94em !important;
+/* ==========================================================
+   14. IMPORTANT NOTES / HIGHLIGHTS
+   These are text treatments, not nested boards.
+   ========================================================== */
+
+.lesson-note {
+  margin: 10px 0;
+
+  padding: 0 12px;
+
+  border-inline-start: 3px solid var(--green);
+
+  color: var(--muted-text);
+
+  font-size: 14px;
+  line-height: 1.8;
 }
 
-.lesson-source {
-  margin-top: 8px !important;
-
-  color: var(--purity-muted) !important;
-  font-size: 12px !important;
+.lesson-board strong {
+  font-weight: 750;
 }
 
-/* ---------- 12. DETAIL FOOTER ---------- */
-
-.detail-footer {
-  position: relative;
-  z-index: 2;
-
-  flex: 0 0 auto;
-  min-height: 48px;
-
-  margin-top: 0;
+.lesson-board a {
+  color: var(--green);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
 
-/* ---------- 13. LANGUAGE SUPPORT ---------- */
-
-[lang="bn"] {
-  font-family:
-    "Noto Sans Bengali",
-    "Nirmala UI",
-    "Vrinda",
-    "Hind Siliguri",
-    system-ui,
-    sans-serif;
+.lesson-board a:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
 }
 
-[lang="en"] {
-  font-family:
-    Inter,
-    Arial,
-    Helvetica,
-    sans-serif;
+
+/* ==========================================================
+   15. FINAL FOOTER BOARD
+   ========================================================== */
+
+.purity-footer,
+#homeFooter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 58px;
+
+  margin-top: 2px;
+  padding: 12px 15px;
+
+  border: 1.5px solid var(--gold);
+  border-radius: var(--radius-medium);
+
+  color: var(--footer-text);
+
+  background:
+    linear-gradient(
+      135deg,
+      #0b452b,
+      #145b39 52%,
+      #0b432a
+    );
+
+  box-shadow: var(--shadow);
+
+  text-align: center;
 }
 
-[lang="hi"] {
-  font-family:
-    "Noto Sans Devanagari",
-    "Nirmala UI",
-    Mangal,
-    system-ui,
-    sans-serif;
+.purity-footer p {
+  margin: 0;
+
+  color: var(--footer-text);
+
+  font-size: clamp(12px, 3vw, 16px);
+  font-weight: 600;
+  line-height: 1.7;
+
+  overflow-wrap: anywhere;
 }
 
-/* Keep content readable when language changes */
 
-.lesson-board[lang="en"] p,
-.lesson-board[lang="hi"] p,
-.lesson-board[lang="en"] li,
-.lesson-board[lang="hi"] li {
-  line-height: 1.75;
+/* ==========================================================
+   16. LANGUAGE SUPPORT
+   ========================================================== */
+
+html[lang="bn"] body,
+html[lang="bn"] button,
+html[lang="bn"] input,
+html[lang="bn"] textarea,
+html[lang="bn"] select {
+  font-family: var(--font-bengali);
 }
 
-/* ---------- 14. DARK MODE ---------- */
+html[lang="en"] body,
+html[lang="en"] button,
+html[lang="en"] input,
+html[lang="en"] textarea,
+html[lang="en"] select {
+  font-family: var(--font-english);
+}
+
+html[lang="hi"] body,
+html[lang="hi"] button,
+html[lang="hi"] input,
+html[lang="hi"] textarea,
+html[lang="hi"] select {
+  font-family: var(--font-hindi);
+}
+
+html[lang="en"] .lesson-board p,
+html[lang="en"] .lesson-board li,
+html[lang="hi"] .lesson-board p,
+html[lang="hi"] .lesson-board li {
+  line-height: 1.8;
+}
+
+
+/* ==========================================================
+   17. DARK MODE
+   Supports the site's data-theme and common dark classes.
+   ========================================================== */
 
 html[data-theme="dark"],
 body[data-theme="dark"],
 html.dark,
 body.dark,
 body.dark-mode {
-  --purity-text: #f1f2e9;
-  --purity-muted: #c4cebf;
+  color-scheme: dark;
 
-  --purity-border: rgba(213, 180, 91, 0.8);
-  --purity-shadow: 0 5px 18px rgba(0, 0, 0, 0.3);
+  --page-text: #edf1e8;
+  --muted-text: #c2cdbf;
+
+  --board-bg: rgba(26, 43, 31, 0.97);
+  --board-bg-soft: rgba(29, 47, 33, 0.97);
+
+  --board-border: rgba(213, 180, 91, 0.72);
+
+  --page-overlay: rgba(8, 23, 14, 0.78);
+  --hero-overlay: rgba(8, 46, 28, 0.84);
+
+  --shadow:
+    0 5px 16px rgba(0, 0, 0, 0.28);
+
+  --shadow-light:
+    0 3px 9px rgba(0, 0, 0, 0.23);
 }
 
 html[data-theme="dark"] body,
@@ -805,15 +829,16 @@ body[data-theme="dark"],
 html.dark body,
 body.dark,
 body.dark-mode {
-  color: var(--purity-text);
+  color: var(--page-text);
 
-  background-color: #17251c;
+  background-color: #132319;
+
   background-image:
     linear-gradient(
-      rgba(12, 25, 17, 0.76),
-      rgba(12, 25, 17, 0.76)
+      var(--page-overlay),
+      var(--page-overlay)
     ),
-    var(--purity-main-bg);
+    var(--main-bg);
 }
 
 html[data-theme="dark"] .purity-hero,
@@ -823,68 +848,26 @@ body.dark .purity-hero,
 body.dark-mode .purity-hero {
   background-image:
     linear-gradient(
-      rgba(18, 34, 23, 0.83),
-      rgba(18, 34, 23, 0.83)
+      rgba(7, 46, 27, 0.88),
+      rgba(7, 46, 27, 0.88)
     ),
-    var(--purity-hero-bg);
+    var(--hero-bg);
 }
 
-html[data-theme="dark"] #pageTitle,
-html[data-theme="dark"] #detailTitle,
-body[data-theme="dark"] #pageTitle,
-body[data-theme="dark"] #detailTitle,
-html.dark #pageTitle,
-html.dark #detailTitle,
-body.dark #pageTitle,
-body.dark #detailTitle,
-body.dark-mode #pageTitle,
-body.dark-mode #detailTitle {
-  color: #f4e4aa;
-  text-shadow: none;
-}
+html[data-theme="dark"] .topic-heading,
+body[data-theme="dark"] .topic-heading,
+html.dark .topic-heading,
+body.dark .topic-heading,
+body.dark-mode .topic-heading {
+  color: var(--gold-light);
 
-html[data-theme="dark"] #pageIntro,
-body[data-theme="dark"] #pageIntro,
-html.dark #pageIntro,
-body.dark #pageIntro,
-body.dark-mode #pageIntro {
-  color: #e0e5d8;
-}
-
-html[data-theme="dark"] .purity-card,
-body[data-theme="dark"] .purity-card,
-html.dark .purity-card,
-body.dark .purity-card,
-body.dark-mode .purity-card {
-  color: #f1f2e9;
-  background: rgba(28, 45, 32, 0.97);
-}
-
-html[data-theme="dark"] .purity-card-title,
-body[data-theme="dark"] .purity-card-title,
-html.dark .purity-card-title,
-body.dark .purity-card-title,
-body.dark-mode .purity-card-title {
-  color: #f2e5b9;
-  background: rgba(25, 42, 29, 0.98);
-  border-top-color: rgba(213, 180, 91, 0.4);
-}
-
-html[data-theme="dark"] .detail-header,
-body[data-theme="dark"] .detail-header,
-html.dark .detail-header,
-body.dark .detail-header,
-body.dark-mode .detail-header {
-  color: #f1f2e9;
-  background: rgba(25, 42, 29, 0.97);
-}
-
-html[data-theme="dark"] #detailSubtitle,
-body[data-theme="dark"] #detailSubtitle,
-html.dark #detailSubtitle,
-body.dark #detailSubtitle,
-body.dark-mode #detailSubtitle {
-  color: #c4cebf;
+  background:
+    linear-gradient(
+      135deg,
+      #082f1e,
+      #10482d,
+      #155638
+    );
 }
 
 html[data-theme="dark"] .lesson-board,
@@ -892,26 +875,32 @@ body[data-theme="dark"] .lesson-board,
 html.dark .lesson-board,
 body.dark .lesson-board,
 body.dark-mode .lesson-board {
-  color: #f1f2e9;
-  background: rgba(25, 42, 29, 0.96);
+  color: var(--page-text);
+  background: var(--board-bg);
+  border-color: var(--board-border);
 }
 
 html[data-theme="dark"] .lesson-board h2,
 html[data-theme="dark"] .lesson-board h3,
+html[data-theme="dark"] .lesson-board h4,
 html[data-theme="dark"] .lesson-board strong,
 body[data-theme="dark"] .lesson-board h2,
 body[data-theme="dark"] .lesson-board h3,
+body[data-theme="dark"] .lesson-board h4,
 body[data-theme="dark"] .lesson-board strong,
 html.dark .lesson-board h2,
 html.dark .lesson-board h3,
+html.dark .lesson-board h4,
 html.dark .lesson-board strong,
 body.dark .lesson-board h2,
 body.dark .lesson-board h3,
+body.dark .lesson-board h4,
 body.dark .lesson-board strong,
 body.dark-mode .lesson-board h2,
 body.dark-mode .lesson-board h3,
+body.dark-mode .lesson-board h4,
 body.dark-mode .lesson-board strong {
-  color: #f0d98b;
+  color: var(--gold-light);
 }
 
 html[data-theme="dark"] .lesson-board p,
@@ -924,7 +913,7 @@ body.dark .lesson-board p,
 body.dark .lesson-board li,
 body.dark-mode .lesson-board p,
 body.dark-mode .lesson-board li {
-  color: #e7ebdf;
+  color: var(--page-text);
 }
 
 html[data-theme="dark"] .lesson-reminder,
@@ -932,7 +921,7 @@ body[data-theme="dark"] .lesson-reminder,
 html.dark .lesson-reminder,
 body.dark .lesson-reminder,
 body.dark-mode .lesson-reminder {
-  background: rgba(34, 47, 32, 0.98);
+  background: var(--board-bg-soft);
 }
 
 html[data-theme="dark"] .lesson-quote,
@@ -940,7 +929,21 @@ body[data-theme="dark"] .lesson-quote,
 html.dark .lesson-quote,
 body.dark .lesson-quote,
 body.dark-mode .lesson-quote {
-  background: rgba(213, 180, 91, 0.1);
+  color: var(--page-text);
+  background: rgba(213, 180, 91, 0.09);
+}
+
+html[data-theme="dark"] .lesson-quote h3,
+html[data-theme="dark"] .lesson-quote h4,
+body[data-theme="dark"] .lesson-quote h3,
+body[data-theme="dark"] .lesson-quote h4,
+html.dark .lesson-quote h3,
+html.dark .lesson-quote h4,
+body.dark .lesson-quote h3,
+body.dark .lesson-quote h4,
+body.dark-mode .lesson-quote h3,
+body.dark-mode .lesson-quote h4 {
+  color: var(--gold-light);
 }
 
 html[data-theme="dark"] .lesson-image,
@@ -948,205 +951,222 @@ body[data-theme="dark"] .lesson-image,
 html.dark .lesson-image,
 body.dark .lesson-image,
 body.dark-mode .lesson-image {
-  background: #26372a;
+  background: #26382a;
   border-color: rgba(213, 180, 91, 0.55);
 }
 
-/* ---------- 15. RESPONSIVE: SMALL PHONES ---------- */
+html[data-theme="dark"] .lesson-board a,
+body[data-theme="dark"] .lesson-board a,
+html.dark .lesson-board a,
+body.dark .lesson-board a,
+body.dark-mode .lesson-board a {
+  color: var(--gold-light);
+}
+
+
+/* ==========================================================
+   18. RESPONSIVE: SMALL MOBILE
+   ========================================================== */
 
 @media (max-width: 360px) {
   :root {
-    --purity-page-padding: 7px;
-    --purity-card-gap: 7px;
-    --purity-radius: 13px;
-    --purity-small-radius: 9px;
-    --purity-footer-height: 44px;
+    --page-padding: 7px;
+    --page-gap: 10px;
+
+    --radius-large: 14px;
+    --radius-medium: 11px;
+    --radius-small: 9px;
   }
 
-  .purity-home {
-    grid-template-rows:
-      minmax(92px, 0.85fr)
-      minmax(0, 4fr)
-      auto;
-  }
-
-  .purity-hero {
-    min-height: 92px;
-  }
-
-  .purity-hero-overlay {
-    padding: 8px;
+  .purity-hero,
+  #purityHero {
+    min-height: 155px;
+    padding: 17px 12px;
   }
 
   #pageTitle {
+    font-size: 25px;
+  }
+
+  #pageIntro {
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .purity-lessons {
+    gap: 22px;
+  }
+
+  .purity-topic {
+    gap: 9px;
+  }
+
+  .topic-heading {
+    padding: 10px;
     font-size: 21px;
   }
 
-  #pageIntro {
-    font-size: 11px;
-  }
-
-  .purity-card-title {
-    min-height: 29px;
-    padding: 4px 3px;
-    font-size: 11px;
-  }
-
-  .purity-footer {
-    padding: 7px 8px;
-  }
-
-  .purity-footer p {
-    font-size: 10px;
+  .topic-content {
+    gap: 10px;
   }
 
   .lesson-board {
-    padding: 11px;
-  }
-}
-
-/* ---------- 16. RESPONSIVE: SHORT SCREENS ---------- */
-
-@media (max-height: 700px) {
-  .purity-home {
-    grid-template-rows:
-      minmax(82px, 0.8fr)
-      minmax(0, 4fr)
-      auto;
+    padding: 12px;
   }
 
-  .purity-hero {
-    min-height: 82px;
+  .lesson-board h2 {
+    font-size: 20px;
   }
 
-  .purity-hero-overlay {
-    padding: 7px 10px;
+  .lesson-board h3 {
+    font-size: 17px;
   }
 
-  #pageTitle {
-    font-size: clamp(19px, 4.8vw, 27px);
+  .lesson-board p,
+  .lesson-board li {
+    font-size: 14px;
+    line-height: 1.85;
   }
 
-  #pageIntro {
-    font-size: clamp(10px, 2.5vw, 13px);
+  .lesson-image {
+    margin-block: 9px 12px;
   }
 
-  .purity-card-title {
-    min-height: 27px;
-    padding-block: 3px;
-  }
-
-  .purity-footer {
-    min-height: 38px;
-    padding-block: 5px;
+  .purity-footer,
+  #homeFooter {
+    min-height: 49px;
+    padding: 9px;
   }
 
   .purity-footer p {
     font-size: 11px;
   }
-
-  .detail-header {
-    min-height: 54px;
-    padding-block: 7px;
-  }
-
-  .detail-footer {
-    min-height: 40px;
-  }
 }
 
-/* ---------- 17. RESPONSIVE: TALL PHONES ---------- */
 
-@media (min-height: 800px) and (max-width: 600px) {
-  .purity-home {
-    grid-template-rows:
-      minmax(120px, 0.9fr)
-      minmax(0, 4fr)
-      auto;
-  }
-
-  .purity-hero {
-    min-height: 120px;
-  }
-
-  .purity-card-title {
-    min-height: 36px;
-    font-size: clamp(13px, 3.3vw, 16px);
-  }
-}
-
-/* ---------- 18. TABLETS AND DESKTOP ---------- */
+/* ==========================================================
+   19. RESPONSIVE: TABLETS
+   ========================================================== */
 
 @media (min-width: 600px) {
-  .purity-home,
-  .purity-detail {
+  .purity-page,
+  #purityPage {
     padding: 16px;
+    gap: 17px;
   }
 
-  .purity-home {
+  .purity-hero,
+  #purityHero {
+    min-height: 220px;
+  }
+
+  .purity-lessons {
+    gap: 32px;
+  }
+
+  .purity-topic {
     gap: 14px;
   }
 
-  .learning-grid {
-    gap: 14px;
-  }
-
-  .purity-card {
-    border-radius: 15px;
-  }
-
-  .purity-card-title {
-    min-height: 42px;
-    padding: 8px;
-  }
-
-  .purity-detail {
-    gap: 14px;
-  }
-
-  .detail-content {
-    gap: 14px;
-  }
-}
-
-@media (min-width: 900px) {
-  .purity-home,
-  .purity-detail {
-    padding: 18px;
-  }
-
-  .purity-card-title {
-    font-size: 16px;
+  .topic-content {
+    gap: 16px;
   }
 
   .lesson-board {
     padding: 22px;
   }
+
+  .lesson-image {
+    max-width: 600px;
+  }
 }
 
-/* ---------- 19. REDUCED MOTION ---------- */
+
+/* ==========================================================
+   20. RESPONSIVE: DESKTOP
+   ========================================================== */
+
+@media (min-width: 900px) {
+  .purity-page,
+  #purityPage {
+    padding: 18px;
+  }
+
+  .purity-hero,
+  #purityHero {
+    min-height: 250px;
+  }
+
+  #pageTitle {
+    font-size: 43px;
+  }
+
+  #pageIntro {
+    font-size: 17px;
+  }
+
+  .lesson-board {
+    padding: 24px;
+  }
+}
+
+
+/* ==========================================================
+   21. SHORT SCREEN AND LANDSCAPE PHONE
+   This page is intentionally scrollable.
+   ========================================================== */
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .purity-hero,
+  #purityHero {
+    min-height: 130px;
+    padding-block: 14px;
+  }
+
+  #pageTitle {
+    font-size: 26px;
+  }
+
+  #pageIntro {
+    font-size: 13px;
+  }
+}
+
+
+/* ==========================================================
+   22. ACCESSIBILITY
+   ========================================================== */
+
+:focus-visible {
+  outline: 3px solid var(--green-light);
+  outline-offset: 3px;
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
-/* ---------- 20. SAFE AREA SUPPORT ---------- */
+
+/* ==========================================================
+   23. MOBILE SAFE AREA
+   ========================================================== */
 
 @supports (padding: env(safe-area-inset-bottom)) {
-  .purity-home {
+  .purity-page,
+  #purityPage {
     padding-bottom:
-      max(var(--purity-page-padding), env(safe-area-inset-bottom));
-  }
-
-  .purity-detail {
-    padding-bottom:
-      max(var(--purity-page-padding), env(safe-area-inset-bottom));
+      max(var(--page-padding), env(safe-area-inset-bottom));
   }
 }
+
+
+/* ==========================================================
+   END OF FILE
+   ========================================================== */
