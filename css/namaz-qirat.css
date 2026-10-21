@@ -1,0 +1,717 @@
+
+/* ========================================
+   IBADAT — Namaz Qirat Page
+   File: css/namaz-qirat.css
+======================================== */
+
+:root {
+  --green-deep: #124b36;
+  --green-main: #176044;
+  --green-soft: #edf2e6;
+  --gold: #c9a451;
+  --gold-light: #f0dda2;
+  --text-dark: #243a30;
+  --board-bg: rgba(255, 253, 247, 0.96);
+  --board-border: rgba(201, 164, 81, 0.88);
+  --board-shadow: 0 5px 18px rgba(48, 39, 20, 0.12);
+}
+
+/* ---------- Base ---------- */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text-dark);
+  font-family:
+    "Noto Sans Bengali",
+    "Nirmala UI",
+    "Vrinda",
+    Arial,
+    sans-serif;
+
+  background-color: #f5edda;
+  background-image: url("../assets/main-bg.jpg");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+/* ---------- Page Layout ---------- */
+
+.qirat-page {
+  width: min(100% - 28px, 960px);
+  margin-inline: auto;
+  padding: 18px 0 28px;
+}
+
+.hero-board,
+.lesson-board,
+.qirat-footer {
+  width: 100%;
+  border: 1.5px solid var(--board-border);
+  border-radius: 22px;
+  box-shadow: var(--board-shadow);
+}
+
+/* ---------- Hero Board ---------- */
+
+.hero-board {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 245px;
+  margin-bottom: 22px;
+  padding: 34px 28px;
+  overflow: hidden;
+
+  background-color: #f8f0dc;
+  background-image: url("../assets/hero-bg.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.hero-board::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(255, 250, 239, 0.68);
+  pointer-events: none;
+}
+
+.hero-content {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero-content h1 {
+  margin: 0 0 10px;
+  color: #a98118;
+  font-size: clamp(32px, 5vw, 44px);
+  font-weight: 900;
+  line-height: 1.35;
+  text-wrap: balance;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.hero-description {
+  max-width: 790px;
+  margin-inline: auto;
+}
+
+.hero-description p {
+  margin: 0;
+  color: var(--green-deep);
+  font-size: clamp(17px, 2.2vw, 21px);
+  font-weight: 600;
+  line-height: 1.85;
+  text-wrap: pretty;
+}
+
+.hero-description p + p {
+  margin-top: 2px;
+}
+
+/* ---------- Lesson Boards ---------- */
+
+.lesson-board {
+  margin-bottom: 20px;
+  padding: 25px;
+  background: var(--board-bg);
+  overflow: hidden;
+}
+
+.topic-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 20px;
+}
+
+.topic-number {
+  flex: 0 0 54px;
+  width: 54px;
+  height: 54px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fffdf4;
+  background: var(--green-deep);
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  font-size: 27px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.topic-heading h2 {
+  margin: 0;
+  color: var(--green-deep);
+  font-size: clamp(25px, 3.5vw, 33px);
+  font-weight: 900;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.section-intro {
+  margin: 0 0 20px;
+  font-size: clamp(17px, 2vw, 20px);
+  line-height: 1.95;
+}
+
+/* ---------- Image Placeholders ---------- */
+
+.image-placeholder {
+  min-width: 0;
+  width: 100%;
+  min-height: 220px;
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  color: var(--green-deep);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(237, 242, 230, 0.95),
+      rgba(255, 250, 239, 0.98)
+    );
+  border: 1.5px dashed var(--board-border);
+  border-radius: 17px;
+  text-align: center;
+}
+
+.image-placeholder-icon {
+  color: var(--gold);
+  font-family: serif;
+  font-size: 54px;
+  line-height: 1;
+}
+
+.image-placeholder p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.wide-image {
+  min-height: 150px;
+  margin: 0 0 20px;
+}
+
+/* ---------- Lesson Content ---------- */
+
+.lesson-content {
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+  align-items: center;
+  gap: 28px;
+}
+
+.lesson-text {
+  min-width: 0;
+}
+
+.lesson-text > p {
+  margin: 0 0 16px;
+  font-size: clamp(17px, 2vw, 20px);
+  line-height: 1.95;
+  overflow-wrap: anywhere;
+}
+
+.lesson-text > p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- Information Panel ---------- */
+
+.info-panel {
+  margin-top: 18px;
+  padding: 18px 20px;
+  background: var(--green-soft);
+  border-radius: 15px;
+}
+
+.info-panel h3 {
+  margin: 0 0 8px;
+  color: var(--green-deep);
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+.info-panel p {
+  margin: 0;
+  font-size: clamp(16px, 1.9vw, 19px);
+  line-height: 1.9;
+}
+
+/* ---------- Recitation Panels ---------- */
+
+.recitation-panel {
+  margin-top: 16px;
+  padding: 20px;
+  background: var(--green-soft);
+  border-radius: 15px;
+}
+
+.recitation-panel p {
+  margin: 0 0 14px;
+  overflow-wrap: anywhere;
+}
+
+.recitation-panel p:last-child {
+  margin-bottom: 0;
+}
+
+.arabic-text {
+  color: var(--green-deep);
+  font-family:
+    "Noto Naskh Arabic",
+    "Amiri",
+    "Traditional Arabic",
+    serif;
+  font-size: clamp(30px, 4vw, 40px);
+  font-weight: 700;
+  line-height: 2.05;
+  text-align: center;
+  direction: rtl;
+  unicode-bidi: isolate;
+  overflow-wrap: normal;
+}
+
+.pronunciation,
+.meaning {
+  font-size: clamp(16px, 1.9vw, 19px);
+  line-height: 1.95;
+}
+
+.pronunciation strong,
+.meaning strong {
+  color: var(--green-deep);
+  font-weight: 800;
+}
+
+/* ---------- Verse Cards ---------- */
+
+.verse-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.verse-card {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: start;
+  gap: 15px;
+  padding: 19px;
+
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(201, 164, 81, 0.48);
+  border-radius: 15px;
+}
+
+.verse-number {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fffdf4;
+  background: var(--green-main);
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.verse-content {
+  min-width: 0;
+}
+
+.verse-content p {
+  margin: 0 0 12px;
+  overflow-wrap: anywhere;
+}
+
+.verse-content p:last-child {
+  margin-bottom: 0;
+}
+
+.verse-content .arabic-text {
+  margin-bottom: 14px;
+  font-size: clamp(28px, 3.6vw, 36px);
+}
+
+.verse-content .pronunciation,
+.verse-content .meaning {
+  font-size: clamp(16px, 1.8vw, 18px);
+  line-height: 1.95;
+}
+
+/* ---------- Learning Note ---------- */
+
+.note-text {
+  margin: 20px 0 0;
+  padding: 16px 18px;
+  color: var(--text-dark);
+  background: var(--green-soft);
+  border-left: 4px solid var(--gold);
+  border-radius: 10px;
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+/* ---------- Footer ---------- */
+
+.qirat-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 125px;
+  padding: 22px 24px;
+  background: var(--green-deep);
+  border: 2px solid var(--gold);
+  border-radius: 20px;
+  text-align: center;
+}
+
+.qirat-footer a {
+  display: block;
+  width: 100%;
+  color: var(--gold-light);
+  font-size: clamp(23px, 3.5vw, 30px);
+  font-weight: 900;
+  line-height: 1.65;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.qirat-footer a:hover,
+.qirat-footer a:focus-visible {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+.qirat-footer a:focus-visible {
+  outline: 3px solid var(--gold-light);
+  outline-offset: 5px;
+}
+
+/* ---------- Dark Theme ---------- */
+
+body.dark-theme,
+body.dark-mode {
+  --green-deep: #d5e8d9;
+  --green-main: #285b45;
+  --green-soft: #283a30;
+  --text-dark: #f0f1e8;
+  --board-bg: rgba(29, 39, 32, 0.97);
+  --board-border: rgba(201, 164, 81, 0.88);
+  --board-shadow: 0 7px 22px rgba(0, 0, 0, 0.3);
+
+  color: var(--text-dark);
+  background-color: #17231c;
+  background-image:
+    linear-gradient(
+      rgba(9, 18, 13, 0.66),
+      rgba(9, 18, 13, 0.66)
+    ),
+    url("../assets/main-bg.jpg");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.dark-theme .hero-board::before,
+.dark-mode .hero-board::before {
+  background: rgba(22, 35, 27, 0.76);
+}
+
+.dark-theme .hero-content h1,
+.dark-mode .hero-content h1 {
+  color: #f0d27b;
+  text-shadow: none;
+}
+
+.dark-theme .hero-description p,
+.dark-mode .hero-description p {
+  color: #f1f0e7;
+}
+
+.dark-theme .image-placeholder,
+.dark-mode .image-placeholder {
+  background: rgba(40, 58, 48, 0.94);
+  border-color: rgba(201, 164, 81, 0.75);
+}
+
+.dark-theme .verse-card,
+.dark-mode .verse-card {
+  background: rgba(40, 52, 43, 0.92);
+}
+
+.dark-theme .qirat-footer,
+.dark-mode .qirat-footer {
+  background: #102e23;
+}
+
+.dark-theme .qirat-footer a,
+.dark-mode .qirat-footer a {
+  color: #f0d995;
+}
+
+/* ---------- Tablet ---------- */
+
+@media (max-width: 700px) {
+  .qirat-page {
+    width: calc(100% - 22px);
+    padding-top: 13px;
+    padding-bottom: 22px;
+  }
+
+  .hero-board {
+    min-height: 225px;
+    margin-bottom: 17px;
+    padding: 26px 20px;
+    border-radius: 18px;
+  }
+
+  .lesson-board {
+    padding: 22px;
+    margin-bottom: 17px;
+    border-radius: 18px;
+  }
+
+  .topic-number {
+    flex-basis: 48px;
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+  }
+
+  .lesson-content {
+    gap: 20px;
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  }
+
+  .image-placeholder {
+    min-height: 190px;
+    padding: 18px;
+  }
+
+  .verse-card {
+    gap: 12px;
+    padding: 16px;
+  }
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 480px) {
+  .qirat-page {
+    width: calc(100% - 18px);
+    padding-top: 10px;
+    padding-bottom: 18px;
+  }
+
+  .hero-board {
+    min-height: 220px;
+    padding: 25px 15px;
+    margin-bottom: 15px;
+    border-radius: 16px;
+  }
+
+  .hero-board::before {
+    background: rgba(255, 250, 239, 0.74);
+  }
+
+  .hero-content h1 {
+    margin-bottom: 10px;
+    font-size: 32px;
+    line-height: 1.45;
+  }
+
+  .hero-description p {
+    font-size: 17px;
+    line-height: 1.85;
+  }
+
+  .lesson-board {
+    padding: 19px 16px 22px;
+    margin-bottom: 15px;
+    border-radius: 16px;
+  }
+
+  .topic-heading {
+    gap: 11px;
+    margin-bottom: 16px;
+  }
+
+  .topic-number {
+    flex-basis: 44px;
+    width: 44px;
+    height: 44px;
+    font-size: 23px;
+  }
+
+  .topic-heading h2 {
+    font-size: 24px;
+    line-height: 1.55;
+  }
+
+  .lesson-content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 17px;
+  }
+
+  .image-placeholder {
+    min-height: 200px;
+    padding: 20px;
+    border-radius: 14px;
+  }
+
+  .image-placeholder-icon {
+    font-size: 48px;
+  }
+
+  .wide-image {
+    min-height: 135px;
+    margin-bottom: 16px;
+  }
+
+  .lesson-text > p,
+  .section-intro {
+    font-size: 18px;
+    line-height: 1.95;
+  }
+
+  .info-panel,
+  .recitation-panel {
+    padding: 17px 15px;
+    border-radius: 13px;
+  }
+
+  .arabic-text {
+    font-size: 33px;
+    line-height: 2.05;
+  }
+
+  .pronunciation,
+  .meaning {
+    font-size: 17px;
+    line-height: 1.95;
+  }
+
+  .verse-list {
+    gap: 13px;
+  }
+
+  .verse-card {
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 11px;
+    padding: 14px 12px;
+    border-radius: 13px;
+  }
+
+  .verse-number {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  .verse-content .arabic-text {
+    font-size: 29px;
+    line-height: 2.1;
+  }
+
+  .verse-content .pronunciation,
+  .verse-content .meaning {
+    font-size: 16px;
+    line-height: 1.95;
+  }
+
+  .note-text {
+    font-size: 16px;
+    padding: 14px;
+  }
+
+  .qirat-footer {
+    min-height: 108px;
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+
+  .qirat-footer a {
+    font-size: 24px;
+    line-height: 1.65;
+  }
+
+  body.dark-theme .hero-board::before,
+  body.dark-mode .hero-board::before {
+    background: rgba(22, 35, 27, 0.8);
+  }
+}
+
+/* ---------- Extra-small Phones ---------- */
+
+@media (max-width: 360px) {
+  .hero-content h1 {
+    font-size: 29px;
+  }
+
+  .hero-description p {
+    font-size: 16px;
+  }
+
+  .topic-heading h2 {
+    font-size: 21px;
+  }
+
+  .lesson-board {
+    padding-inline: 13px;
+  }
+
+  .arabic-text {
+    font-size: 29px;
+  }
+
+  .verse-content .arabic-text {
+    font-size: 26px;
+  }
+
+  .qirat-footer a {
+    font-size: 21px;
+  }
+}
+
+/* ---------- Accessibility ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
