@@ -2,7 +2,9 @@
 /* =========================================
    IBADAT — WAQT & RAKAT PAGE
    File: css/namaz-waqt-rakat.css
-   Shared visual system: Namaz Conditions
+   Shared design based on namaz-conditions.css
+   Bengali / English / Hindi
+   Light & Dark Mode
    ========================================= */
 
 :root {
@@ -23,7 +25,7 @@
     --page-width: 760px;
 }
 
-/* ---------- Reset ---------- */
+/* RESET */
 
 * {
     box-sizing: border-box;
@@ -50,19 +52,16 @@ body {
     font-size: 16px;
     line-height: 1.7;
     background-color: var(--page-bg);
-
-    /* Keep the shared page background from becoming oversized. */
     background-image:
         linear-gradient(
             rgba(255, 251, 244, 0.83),
             rgba(255, 251, 244, 0.83)
         ),
         url("../assets/bg_pattern.png");
-
-    background-position: center top, center top;
-    background-size: auto, 420px auto;
-    background-repeat: repeat, repeat;
-    background-attachment: scroll, scroll;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 img {
@@ -81,7 +80,7 @@ select {
     font: inherit;
 }
 
-/* ---------- Main page wrapper ---------- */
+/* PAGE WRAPPER */
 
 .waqt-rakat-page,
 .waqt-page,
@@ -92,38 +91,31 @@ select {
     padding: 12px 12px 28px;
 }
 
-/* ---------- Hero board ---------- */
+/* HERO BOARD — same as CONDITIONS page */
 
-.hero,
-.waqt-hero,
-.rakat-hero,
-.page-hero {
+.hero {
     position: relative;
     overflow: hidden;
     margin-bottom: 14px;
     padding: 22px 17px 24px;
     text-align: center;
-
     color: var(--text);
     border: 1px solid rgba(212, 175, 55, 0.75);
     border-radius: var(--radius-page);
-
-    background-color: rgba(255, 252, 242, 0.92);
+    background-color: #F8F4E8;
     background-image:
         linear-gradient(
             rgba(255, 252, 242, 0.77),
             rgba(255, 252, 242, 0.84)
         ),
         url("../assets/prayer-learning-bg.png");
-
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     box-shadow: var(--shadow);
 }
 
-.ornament,
-.hero-ornament {
+.ornament {
     display: block;
     margin-bottom: 3px;
     color: var(--gold);
@@ -131,10 +123,7 @@ select {
     line-height: 1.3;
 }
 
-.hero h1,
-.waqt-hero h1,
-.rakat-hero h1,
-.page-hero h1 {
+.hero h1 {
     margin: 0 0 7px;
     color: var(--heading-gold);
     font-size: clamp(31px, 7vw, 40px);
@@ -143,40 +132,28 @@ select {
     overflow-wrap: anywhere;
 }
 
-.hero-intro,
-.hero-description,
-.hero-subtitle,
-.page-description {
+.hero-intro {
     max-width: 620px;
     margin: 0 auto 9px;
     color: var(--text);
     font-size: clamp(15px, 4vw, 18px);
-    font-weight: 650;
+    font-weight: 750;
     line-height: 1.75;
     overflow-wrap: anywhere;
 }
 
 .hero-subtitle {
     max-width: 560px;
-    margin-bottom: 0;
+    margin: 0 auto;
     color: var(--primary);
     font-size: clamp(14px, 3.8vw, 17px);
     font-weight: 750;
     line-height: 1.65;
 }
 
-/* ---------- Shared content cards ---------- */
+/* MAIN CONTENT CARDS */
 
-.panel,
-.lesson,
-.prayer-card,
-.time-card,
-.rakat-card,
-.waqt-card,
-.info-card,
-.content-card,
-.summary-card {
-    min-width: 0;
+.panel {
     margin-bottom: 13px;
     padding: 15px;
     color: var(--text);
@@ -187,20 +164,19 @@ select {
 }
 
 .panel h2,
-.panel h3,
-.prayer-card h2,
-.prayer-card h3,
-.time-card h2,
-.time-card h3,
-.rakat-card h2,
-.rakat-card h3,
-.waqt-card h2,
-.waqt-card h3 {
+.panel h3 {
     overflow-wrap: anywhere;
 }
 
-.kicker,
-.eyebrow {
+.panel p {
+    margin: 6px 0 10px;
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.kicker {
     display: block;
     margin-bottom: 2px;
     color: var(--primary);
@@ -209,71 +185,68 @@ select {
     line-height: 1.5;
 }
 
-.panel h2,
-.section-heading,
-.section-title h2 {
+/* CONTENTS NAVIGATION */
+
+.contents {
+    margin-bottom: 13px;
+}
+
+.contents h2 {
+    margin-bottom: 10px;
     color: var(--text);
-    font-size: clamp(20px, 5vw, 26px);
+    font-size: clamp(18px, 4.8vw, 22px);
     font-weight: 900;
     line-height: 1.4;
 }
 
-.panel h3,
-.prayer-card h3,
-.time-card h3,
-.rakat-card h3,
-.waqt-card h3 {
-    margin: 12px 0 7px;
-    color: var(--primary);
-    font-size: clamp(18px, 4.5vw, 22px);
-    font-weight: 900;
-    line-height: 1.5;
+.contents-links,
+#contentsLinks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
-.panel h3:first-child,
-.prayer-card h3:first-child,
-.time-card h3:first-child,
-.rakat-card h3:first-child,
-.waqt-card h3:first-child {
-    margin-top: 0;
-}
-
-.panel p,
-.prayer-card p,
-.time-card p,
-.rakat-card p,
-.waqt-card p {
-    margin: 6px 0 10px;
+.contents-links a,
+#contentsLinks a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 7px 13px;
     color: var(--text);
-    font-size: 15px;
-    line-height: 1.8;
-    overflow-wrap: anywhere;
-}
-
-.panel ul,
-.panel ol,
-.prayer-card ul,
-.prayer-card ol {
-    margin: 6px 0 12px;
-    padding-left: 24px;
-}
-
-.panel li,
-.prayer-card li {
-    padding: 3px 0 4px 2px;
-    color: var(--text);
-    font-size: 14px;
-    line-height: 1.8;
-    overflow-wrap: anywhere;
-}
-
-.panel li::marker,
-.prayer-card li::marker {
-    color: var(--heading-gold);
+    background: var(--feature);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 13px;
     font-weight: 800;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
 }
 
-/* ---------- Prayer number badge ---------- */
+.contents-links a:focus-visible,
+#contentsLinks a:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
+}
+
+@media (hover: hover) {
+    .contents-links a:hover,
+    #contentsLinks a:hover {
+        background: #D3EBCB;
+        border-color: rgba(15, 81, 50, 0.38);
+    }
+}
+
+/* SECTION HEADINGS AND NUMBER BADGES */
+
+.lesson,
+.prayer-section {
+    scroll-margin-top: 12px;
+}
 
 .section-title {
     display: flex;
@@ -282,22 +255,17 @@ select {
     margin-bottom: 12px;
 }
 
-.section-title > b,
-.prayer-number,
-.card-number,
-.number-badge {
+.section-title > b {
     display: inline-flex;
     flex: 0 0 40px;
     width: 40px;
     height: 40px;
     align-items: center;
     justify-content: center;
-
     color: #FFF9E9;
     background: var(--primary);
     border: 2px solid var(--gold);
     border-radius: 50%;
-
     font-size: 17px;
     font-weight: 900;
     line-height: 1;
@@ -310,17 +278,36 @@ select {
 
 .section-title h2 {
     margin: 0;
+    color: var(--text);
+    font-size: clamp(21px, 5vw, 27px);
+    font-weight: 900;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
 }
 
-/* ---------- Prayer time information ---------- */
+.section-title .kicker {
+    margin-bottom: 2px;
+}
+
+/* PRAYER TIME TEXT */
+
+.lead {
+    margin: 7px 0 12px;
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 650;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
 
 .time-label,
 .prayer-time-label {
     display: block;
-    margin-top: 12px;
+    margin: 12px 0 4px;
     color: var(--primary);
     font-size: 15px;
     font-weight: 900;
+    line-height: 1.6;
 }
 
 .time-description,
@@ -332,78 +319,84 @@ select {
     overflow-wrap: anywhere;
 }
 
-/* ---------- Contents navigation ---------- */
+/* SUBHEADINGS */
 
-.contents {
-    margin-bottom: 13px;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.94);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow);
-}
-
-.contents h2 {
-    margin-bottom: 10px;
-    color: var(--text);
-    font-size: clamp(18px, 4.8vw, 22px);
+.panel h3 {
+    margin: 15px 0 7px;
+    color: var(--primary);
+    font-size: clamp(17px, 4.3vw, 20px);
     font-weight: 900;
-    line-height: 1.4;
-}
-
-.contents-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.contents-links a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 40px;
-    padding: 7px 13px;
-
-    color: var(--text);
-    background: var(--feature);
-    border: 1px solid var(--border);
-    border-radius: 999px;
-
-    font-size: 13px;
-    font-weight: 800;
     line-height: 1.5;
-    text-align: center;
-    text-decoration: none;
-
-    transition:
-        background-color 0.2s ease,
-        border-color 0.2s ease;
 }
 
-.contents-links a:focus-visible {
-    outline: 3px solid var(--gold);
-    outline-offset: 3px;
+.panel h3:first-child {
+    margin-top: 0;
 }
 
-@media (hover: hover) {
-    .contents-links a:hover {
-        background: #D3EBCB;
-        border-color: rgba(15, 81, 50, 0.38);
-    }
+/* LISTS */
+
+.panel ol,
+.panel ul {
+    margin: 6px 0 12px;
+    padding-left: 24px;
 }
 
-/* ---------- Rakat table ---------- */
+.panel li {
+    padding: 3px 0 4px 2px;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.panel li::marker {
+    color: var(--heading-gold);
+    font-weight: 800;
+}
+
+/* ILLUSTRATIONS */
+
+.art {
+    overflow: hidden;
+    background: #F7EED6;
+    border: 1px solid rgba(212, 175, 55, 0.32);
+    border-radius: var(--radius-image);
+}
+
+.art img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+    object-position: center;
+    background: #FFF9E9;
+}
+
+.art.wide {
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto 13px;
+}
+
+.art.wide img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: contain;
+}
+
+/* RAKAT SUMMARY TABLE */
 
 .table-wrap,
-.rakat-table-wrap,
-.table-responsive {
+.table-responsive,
+.rakat-table-wrap {
     width: 100%;
     max-width: 100%;
     margin: 12px 0;
     overflow-x: auto;
     overscroll-behavior-x: contain;
     -webkit-overflow-scrolling: touch;
-
     border: 1px solid var(--border);
     border-radius: 14px;
     background: var(--card-bg);
@@ -449,11 +442,9 @@ tbody tr:last-child td {
     border-bottom: 0;
 }
 
-/* ---------- Notes and important information ---------- */
+/* IMPORTANT NOTES */
 
-.note,
-.info-note,
-.important-note {
+.note {
     margin: 12px 0 7px;
     padding: 12px 13px;
     background: #F8F3E3;
@@ -461,9 +452,7 @@ tbody tr:last-child td {
     border-radius: 11px;
 }
 
-.note strong,
-.info-note strong,
-.important-note strong {
+.note strong {
     display: block;
     margin-bottom: 4px;
     color: var(--primary);
@@ -471,9 +460,7 @@ tbody tr:last-child td {
     font-weight: 900;
 }
 
-.note p,
-.info-note p,
-.important-note p {
+.note p {
     margin: 0;
     color: var(--text);
     font-size: 13px;
@@ -481,62 +468,22 @@ tbody tr:last-child td {
     overflow-wrap: anywhere;
 }
 
-/* ---------- Images ---------- */
-
-.art,
-.illustration {
-    overflow: hidden;
-    background: #F7EED6;
-    border: 1px solid rgba(212, 175, 55, 0.32);
-    border-radius: var(--radius-image);
-}
-
-.art img,
-.illustration img {
-    display: block;
-    width: 100%;
-    height: auto;
-    margin: 0 auto;
-    object-fit: contain;
-    object-position: center;
-    background: #FFF9E9;
-}
-
-.art.wide,
-.illustration.wide {
-    width: 100%;
-    max-width: 430px;
-    margin: 0 auto 13px;
-}
-
-.art.wide img,
-.illustration.wide img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 3 / 2;
-    object-fit: contain;
-}
-
-/* ---------- Shared footer ---------- */
+/* FOOTER — same design as CONDITIONS page */
 
 .conditions-footer,
 .waqt-rakat-footer,
-.rakat-footer,
-.page-footer {
+.rakat-footer {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 3px;
-
     width: 100%;
     margin: 18px 0 0;
     padding: 14px 10px 12px;
-
-    color: #FFF;
     background: #0B3D26;
+    color: #FFF;
     text-align: center;
-
     border-top: 3px solid #D4AF37;
     border-radius: 12px 12px 0 0;
     box-shadow: 0 -3px 12px rgba(11, 61, 38, 0.12);
@@ -549,7 +496,6 @@ tbody tr:last-child td {
     align-items: center;
     justify-content: center;
     gap: 7px;
-
     width: 100%;
     color: #FFF;
     font-family:
@@ -581,7 +527,7 @@ tbody tr:last-child td {
     line-height: 1.5;
 }
 
-/* ---------- Small mobile screens ---------- */
+/* SMALL MOBILE */
 
 @media (max-width: 420px) {
     .waqt-rakat-page,
@@ -590,25 +536,17 @@ tbody tr:last-child td {
         padding: 8px 9px 22px;
     }
 
-    .hero,
-    .waqt-hero,
-    .rakat-hero,
-    .page-hero {
+    .hero {
         padding: 17px 12px 19px;
         border-radius: 18px;
     }
 
-    .hero h1,
-    .waqt-hero h1,
-    .rakat-hero h1,
-    .page-hero h1 {
+    .hero h1 {
         margin-bottom: 7px;
         font-size: clamp(30px, 8vw, 36px);
     }
 
-    .hero-intro,
-    .hero-description,
-    .page-description {
+    .hero-intro {
         margin-bottom: 8px;
         font-size: 14px;
         line-height: 1.8;
@@ -619,26 +557,19 @@ tbody tr:last-child td {
         line-height: 1.7;
     }
 
-    .panel,
-    .lesson,
-    .prayer-card,
-    .time-card,
-    .rakat-card,
-    .waqt-card,
-    .info-card,
-    .content-card,
-    .summary-card,
-    .contents {
+    .panel {
         margin-bottom: 10px;
         padding: 12px;
         border-radius: 16px;
     }
 
-    .contents-links {
+    .contents-links,
+    #contentsLinks {
         gap: 7px;
     }
 
-    .contents-links a {
+    .contents-links a,
+    #contentsLinks a {
         min-height: 38px;
         padding: 7px 10px;
         font-size: 12px;
@@ -649,10 +580,7 @@ tbody tr:last-child td {
         margin-bottom: 10px;
     }
 
-    .section-title > b,
-    .prayer-number,
-    .card-number,
-    .number-badge {
+    .section-title > b {
         flex-basis: 36px;
         width: 36px;
         height: 36px;
@@ -663,39 +591,46 @@ tbody tr:last-child td {
         font-size: clamp(20px, 5.4vw, 24px);
     }
 
-    .kicker,
-    .eyebrow {
+    .kicker {
         font-size: 12px;
     }
 
-    .panel p,
-    .prayer-card p,
-    .time-card p,
-    .rakat-card p,
-    .waqt-card p {
+    .art.wide {
+        margin-bottom: 11px;
+        border-radius: 14px;
+    }
+
+    .lead {
+        margin: 7px 0 11px;
         font-size: 14px;
         line-height: 1.8;
     }
 
-    .panel h3,
-    .prayer-card h3,
-    .time-card h3,
-    .rakat-card h3,
-    .waqt-card h3 {
+    .panel h3 {
         margin-top: 13px;
         font-size: 17px;
     }
 
-    .panel ul,
     .panel ol,
-    .prayer-card ul,
-    .prayer-card ol {
+    .panel ul {
         padding-left: 22px;
     }
 
-    .panel li,
-    .prayer-card li {
+    .panel li {
         font-size: 13.5px;
+        line-height: 1.8;
+    }
+
+    .note {
+        padding: 10px 11px;
+    }
+
+    .note strong {
+        font-size: 14px;
+    }
+
+    .note p {
+        font-size: 12.5px;
         line-height: 1.8;
     }
 
@@ -705,29 +640,9 @@ tbody tr:last-child td {
         font-size: 12px;
     }
 
-    .note,
-    .info-note,
-    .important-note {
-        padding: 10px 11px;
-    }
-
-    .note strong,
-    .info-note strong,
-    .important-note strong {
-        font-size: 14px;
-    }
-
-    .note p,
-    .info-note p,
-    .important-note p {
-        font-size: 12.5px;
-        line-height: 1.8;
-    }
-
     .conditions-footer,
     .waqt-rakat-footer,
-    .rakat-footer,
-    .page-footer {
+    .rakat-footer {
         padding: 12px 5px 10px;
     }
 
@@ -742,7 +657,7 @@ tbody tr:last-child td {
     }
 }
 
-/* ---------- Tablet and desktop ---------- */
+/* TABLET AND DESKTOP */
 
 @media (min-width: 600px) {
     .waqt-rakat-page,
@@ -752,52 +667,30 @@ tbody tr:last-child td {
         padding-bottom: 34px;
     }
 
-    .hero,
-    .waqt-hero,
-    .rakat-hero,
-    .page-hero {
+    .hero {
         padding: 26px 24px 28px;
     }
 
-    .panel,
-    .lesson,
-    .prayer-card,
-    .time-card,
-    .rakat-card,
-    .waqt-card,
-    .info-card,
-    .content-card,
-    .summary-card,
-    .contents {
+    .panel {
         padding: 20px;
     }
 
-    .art.wide,
-    .illustration.wide {
+    .art.wide {
         max-width: 430px;
     }
 
-    .panel li,
-    .prayer-card li {
+    .panel li {
         font-size: 15px;
     }
 
-    .panel p,
-    .prayer-card p,
-    .time-card p,
-    .rakat-card p,
-    .waqt-card p {
+    .lead {
         font-size: 16px;
     }
 }
 
-/* ---------- Dark mode: match the app setting ---------- */
+/* DARK MODE — app's body.dark-mode setting */
 
-body.dark-mode,
-body.dark-theme,
-body.theme-dark,
-html.dark-mode body,
-html[data-theme="dark"] body {
+body.dark-mode {
     --page-bg: #121A15;
     --card-bg: #1E2A22;
     --feature: #263B29;
@@ -816,22 +709,9 @@ html[data-theme="dark"] body {
             rgba(12, 24, 18, 0.87)
         ),
         url("../assets/bg_pattern.png");
-
-    background-position: center top, center top;
-    background-size: auto, 420px auto;
-    background-repeat: repeat, repeat;
-    background-attachment: scroll, scroll;
 }
 
-body.dark-mode .hero,
-body.dark-mode .waqt-hero,
-body.dark-mode .rakat-hero,
-body.dark-mode .page-hero,
-body.dark-theme .hero,
-body.theme-dark .hero,
-html[data-theme="dark"] .hero {
-    color: var(--text);
-    background-color: #1E2A22;
+body.dark-mode .hero {
     background-image:
         linear-gradient(
             rgba(13, 28, 19, 0.79),
@@ -840,91 +720,60 @@ html[data-theme="dark"] .hero {
         url("../assets/prayer-learning-bg.png");
 }
 
-body.dark-mode .panel,
-body.dark-mode .lesson,
-body.dark-mode .prayer-card,
-body.dark-mode .time-card,
-body.dark-mode .rakat-card,
-body.dark-mode .waqt-card,
-body.dark-mode .info-card,
-body.dark-mode .content-card,
-body.dark-mode .summary-card,
-body.dark-mode .contents,
-body.dark-theme .panel,
-body.theme-dark .panel,
-html[data-theme="dark"] .panel {
-    color: var(--text);
+body.dark-mode .panel {
     background: rgba(30, 42, 34, 0.96);
-    border-color: var(--border);
 }
 
-body.dark-mode .hero h1,
-body.dark-mode .waqt-hero h1,
-body.dark-mode .rakat-hero h1,
-body.dark-mode .page-hero h1,
-body.dark-mode .panel h2,
-body.dark-mode .panel h3,
-body.dark-mode .section-title h2 {
+body.dark-mode .hero h1 {
     color: var(--heading-gold);
 }
 
 body.dark-mode .hero-intro,
-body.dark-mode .hero-description,
 body.dark-mode .hero-subtitle,
-body.dark-mode .page-description,
-body.dark-mode .panel p,
-body.dark-mode .panel li,
-body.dark-mode .prayer-card p,
-body.dark-mode .time-card p,
-body.dark-mode .rakat-card p,
-body.dark-mode .waqt-card p,
-body.dark-mode .time-description,
-body.dark-mode .prayer-time,
-body.dark-mode .time-text {
-    color: var(--text);
+body.dark-mode .hero .ornament {
+    color: #D7E9D2;
 }
 
 body.dark-mode .kicker,
-body.dark-mode .eyebrow,
-body.dark-mode .time-label,
-body.dark-mode .prayer-time-label,
-body.dark-mode .note strong,
-body.dark-mode .info-note strong,
-body.dark-mode .important-note strong {
+body.dark-mode .panel h3,
+body.dark-mode .note strong {
     color: #CDE5C7;
 }
 
-body.dark-mode .section-title > b,
-body.dark-mode .prayer-number,
-body.dark-mode .card-number,
-body.dark-mode .number-badge {
-    color: #FFF9E9;
-    background: #0F5132;
-    border-color: var(--gold);
-}
-
-body.dark-mode .contents-links a {
+body.dark-mode .contents-links a,
+body.dark-mode #contentsLinks a {
     color: var(--text);
     background: #263B29;
     border-color: var(--border);
 }
 
-body.dark-mode .note,
-body.dark-mode .info-note,
-body.dark-mode .important-note {
+body.dark-mode .art {
+    background: #26352A;
+    border-color: rgba(212, 175, 55, 0.35);
+}
+
+body.dark-mode .art img {
+    background: #F7EED6;
+}
+
+body.dark-mode .note {
     background: #26352A;
     border-left-color: var(--gold);
 }
 
-body.dark-mode .note p,
-body.dark-mode .info-note p,
-body.dark-mode .important-note p {
+body.dark-mode .note p {
     color: var(--text);
 }
 
+body.dark-mode .section-title > b {
+    color: #FFF9E9;
+    background: #0F5132;
+    border-color: var(--gold);
+}
+
 body.dark-mode .table-wrap,
-body.dark-mode .rakat-table-wrap,
 body.dark-mode .table-responsive,
+body.dark-mode .rakat-table-wrap,
 body.dark-mode table {
     color: var(--text);
     background: var(--card-bg);
@@ -945,23 +794,11 @@ body.dark-mode tbody tr:nth-child(even) {
     background: rgba(191, 228, 183, 0.07);
 }
 
-body.dark-mode .art,
-body.dark-mode .illustration {
-    background: #26352A;
-    border-color: rgba(212, 175, 55, 0.35);
-}
-
-body.dark-mode .art img,
-body.dark-mode .illustration img {
-    background: #F7EED6;
-}
-
 body.dark-mode .conditions-footer,
 body.dark-mode .waqt-rakat-footer,
-body.dark-mode .rakat-footer,
-body.dark-mode .page-footer {
-    color: #FFF;
+body.dark-mode .rakat-footer {
     background: #082F1E;
+    color: #FFF;
     border-top-color: #D4AF37;
 }
 
@@ -975,7 +812,7 @@ body.dark-mode .footer-brand {
     color: #E6C75A;
 }
 
-/* ---------- Accessibility ---------- */
+/* ACCESSIBILITY */
 
 :focus-visible {
     outline: 3px solid var(--gold);
