@@ -4,6 +4,10 @@
   const SETTINGS_KEY = "appSettings";
   const ASSET_BASE = "../assets/icons/";
 
+  /* =========================================
+     SETTINGS
+     ========================================= */
+
   function getAppSettings() {
     try {
       return JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{}");
@@ -31,10 +35,9 @@
 
   let currentLanguage = getCurrentLanguage();
 
-  /*
-   * NAMAZ ROUTES
-   * প্রতিটি মূল অপশন তার নির্ধারিত পেজে যাবে।
-   */
+  /* =========================================
+     PAGE ROUTES
+     ========================================= */
 
   const NAMAZ_ROUTES = {
     "purity": "namaz-purity.html",
@@ -49,20 +52,9 @@
     "daily-amal": "namaz-daily-amal.html"
   };
 
-  /*
-   * FINAL 10 TOPICS
-   * নির্ধারিত ক্রম:
-   * 1. পাক-পবিত্রতা
-   * 2. ঈমান ও আকিদা
-   * 3. নামাজের শর্ত
-   * 4. ওয়াক্ত ও রাকাত
-   * 5. সম্পূর্ণ নামাজ
-   * 6. বিশেষ নামাজ
-   * 7. মসজিদ ও জামাত
-   * 8. আরবি শিক্ষা
-   * 9. ইসলামিক বিধান
-   * 10. দৈনিক আমল
-   */
+  /* =========================================
+     FINAL 10 TOPICS
+     ========================================= */
 
   const topics = [
     {
@@ -157,10 +149,9 @@
     }
   ];
 
-  /*
-   * INTRODUCTION
-   * মূল পরিচিতি এবং তিনটি ভাষা অপরিবর্তিত।
-   */
+  /* =========================================
+     INTRODUCTION TEXT
+     ========================================= */
 
   const introduction = {
     bn: {
@@ -169,12 +160,14 @@
         "নামাজ ইসলামের অন্যতম প্রধান ইবাদত, যা আল্লাহর স্মরণে হৃদয়কে প্রশান্ত করে। এটি মুমিনের জীবনে শৃঙ্খলা আনে এবং সৃষ্টিকর্তার নৈকট্য লাভের পথ সুগম করে।",
       ariaLabel: "নামাজ সম্পর্কে পরিচিতি"
     },
+
     en: {
       heading: "What & Why?",
       paragraph:
         "Salah is one of the most important acts of worship in Islam. It brings remembrance of Allah, peace to the heart, and discipline to daily life.",
       ariaLabel: "Introduction to Salah"
     },
+
     hi: {
       heading: "क्या और क्यों?",
       paragraph:
@@ -183,25 +176,36 @@
     }
   };
 
+  /* =========================================
+     FOOTER MESSAGE
+     ========================================= */
+
+  const footerMessages = {
+    bn: "নামাজ শিখি, শুদ্ধভাবে ইবাদত করি।",
+    en: "Learn Salah, worship with sincerity.",
+    hi: "नमाज़ सीखें, सच्चे मन से इबादत करें।"
+  };
+
   function getText(textObject) {
     return textObject[currentLanguage] || textObject.bn || "";
   }
 
-  /*
-   * SAVED THEME
-   */
+  /* =========================================
+     THEME
+     ========================================= */
 
   function applySavedTheme() {
     const settings = getAppSettings();
+
     document.body.classList.toggle(
       "dark-mode",
       Boolean(settings.dark)
     );
   }
 
-  /*
-   * BUILD INTRODUCTION
-   */
+  /* =========================================
+     BUILD INTRODUCTION AND FOOTER
+     ========================================= */
 
   function buildIntroduction() {
     const intro = introduction[currentLanguage] || introduction.bn;
@@ -209,6 +213,7 @@
     const heading = document.getElementById("intro-title");
     const paragraph = document.getElementById("intro-paragraph-1");
     const board = document.querySelector(".intro-board");
+    const footerMessage = document.getElementById("footer-message");
 
     if (heading) {
       heading.textContent = intro.heading;
@@ -222,6 +227,11 @@
       board.setAttribute("aria-label", intro.ariaLabel);
     }
 
+    if (footerMessage) {
+      footerMessage.textContent =
+        footerMessages[currentLanguage] || footerMessages.bn;
+    }
+
     document.documentElement.lang = currentLanguage;
 
     const pageTitles = {
@@ -233,9 +243,9 @@
     document.title = pageTitles[currentLanguage];
   }
 
-  /*
-   * OPEN TOPIC
-   */
+  /* =========================================
+     OPEN TOPIC
+     ========================================= */
 
   function openTopic(topic) {
     const page = NAMAZ_ROUTES[topic.id];
@@ -249,14 +259,15 @@
     }
 
     const destination = new URL(page, window.location.href);
+
     destination.searchParams.set("lang", currentLanguage);
 
     window.location.href = destination.href;
   }
 
-  /*
-   * BUILD 10-CARD GRID
-   */
+  /* =========================================
+     BUILD 10 TOPIC CARDS
+     ========================================= */
 
   function buildLearningGrid() {
     const grid = document.getElementById("learning-grid");
@@ -274,7 +285,10 @@
       button.type = "button";
       button.className = "learning-card";
       button.dataset.topic = topic.id;
-      button.setAttribute("aria-label", getText(topic.title));
+
+      const labelText = getText(topic.title);
+
+      button.setAttribute("aria-label", labelText);
 
       const icon = document.createElement("img");
 
@@ -299,7 +313,7 @@
       );
 
       const label = document.createElement("span");
-      label.textContent = getText(topic.title);
+      label.textContent = labelText;
 
       button.append(icon, label);
 
@@ -313,9 +327,9 @@
     grid.replaceChildren(fragment);
   }
 
-  /*
-   * REFRESH PAGE
-   */
+  /* =========================================
+     REFRESH PAGE
+     ========================================= */
 
   function refreshNamazPage() {
     currentLanguage = getCurrentLanguage();
@@ -325,7 +339,17 @@
     buildLearningGrid();
   }
 
+  /*
+   * Allows the existing app language switcher
+   * to refresh this page when invoked.
+   */
+
   window.refreshNamazLanguage = refreshNamazPage;
+
+  /*
+   * Keep the page synchronized when appSettings
+   * changes in another browser tab.
+   */
 
   window.addEventListener("storage", (event) => {
     if (event.key === SETTINGS_KEY) {
@@ -333,9 +357,9 @@
     }
   });
 
-  /*
-   * INITIALIZE
-   */
+  /* =========================================
+     INITIALIZE
+     ========================================= */
 
   function initializeNamazPage() {
     applySavedTheme();
