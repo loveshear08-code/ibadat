@@ -1,59 +1,116 @@
 
-/* =========================================
-   IBADAT — PAK-PABITROTA
-   File: ../css/namaz-purity.css
-========================================= */
+/* =========================================================
+   IBADAT — NAMAZ PURITY PAGE
+   File: css/namaz-purity.css
+   Backgrounds:
+   ../assets/main-bg.jpg
+   ../assets/hero-bg.jpg
+   ========================================================= */
 
+/* ---------- 1. ROOT VARIABLES ---------- */
 
-/* ---------- 1. RESET & GLOBAL ---------- */
+:root {
+  --purity-green: #0f5132;
+  --purity-green-dark: #073b25;
+  --purity-green-light: #24764d;
+
+  --purity-gold: #d5b45b;
+  --purity-gold-light: #f0d98b;
+
+  --purity-cream: #fffdf5;
+  --purity-cream-soft: #f8f2df;
+
+  --purity-text: #203b2b;
+  --purity-muted: #526454;
+
+  --purity-border: rgba(183, 145, 54, 0.8);
+  --purity-shadow: 0 5px 18px rgba(22, 43, 29, 0.17);
+
+  --purity-radius: 16px;
+  --purity-small-radius: 11px;
+
+  --purity-page-padding: clamp(8px, 2.2vw, 18px);
+  --purity-card-gap: clamp(8px, 2vw, 14px);
+
+  --purity-header-height: 74px;
+  --purity-footer-height: 54px;
+
+  --purity-main-bg: url("../assets/main-bg.jpg");
+  --purity-hero-bg: url("../assets/hero-bg.jpg");
+}
+
+/* ---------- 2. GLOBAL RESET ---------- */
 
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-:root {
-  --green: #0F5132;
-  --deep-green: #093D26;
-  --gold: #D4AF37;
-  --cream: #FFF8E8;
-  --white: #FFFFFF;
-  --text: #26352D;
-  --border: rgba(212, 175, 55, 0.85);
-  --board-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
-  --board-radius: 15px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
+  width: 100%;
   min-height: 100%;
+  margin: 0;
+  padding: 0;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
+  width: 100%;
+  min-width: 280px;
   min-height: 100vh;
   min-height: 100dvh;
-  width: 100%;
-  color: var(--text);
-  font-family:
-    "Noto Sans Bengali",
-    "Hind Siliguri",
-    "Nirmala UI",
-    sans-serif;
-  background-color: #E9E3D5;
-  background-image: url("../assets/main-bg.jpg");
-  background-position: center;
+  margin: 0;
+  padding: 0;
+
+  color: var(--purity-text);
+  background-color: #f3eedf;
+  background-image:
+    linear-gradient(
+      rgba(255, 253, 245, 0.76),
+      rgba(255, 253, 245, 0.76)
+    ),
+    var(--purity-main-bg);
+
   background-repeat: no-repeat;
+  background-position: center center;
   background-size: cover;
   background-attachment: fixed;
+
+  font-family:
+    "Noto Sans Bengali",
+    "Nirmala UI",
+    "Vrinda",
+    "Hind Siliguri",
+    system-ui,
+    sans-serif;
+
+  line-height: 1.55;
   overflow-x: hidden;
 }
 
+body,
 button,
 input,
 textarea,
 select {
+  font-family:
+    "Noto Sans Bengali",
+    "Nirmala UI",
+    "Vrinda",
+    "Hind Siliguri",
+    system-ui,
+    sans-serif;
+}
+
+button,
+a,
+img {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
   font: inherit;
 }
 
@@ -62,742 +119,989 @@ img {
   max-width: 100%;
 }
 
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
 [hidden] {
   display: none !important;
 }
 
+/* ---------- 3. MAIN PAGE CONTAINER ---------- */
 
-/* ---------- 2. MAIN LANDING PAGE ---------- */
-
+#purityPage,
 .purity-page {
-  width: 100%;
-  height: 100vh;
-  height: 100dvh;
-  min-height: 0;
-  padding:
-    max(8px, env(safe-area-inset-top))
-    10px
-    max(8px, env(safe-area-inset-bottom));
-  display: grid;
-  grid-template-rows:
-    minmax(105px, 0.95fr)
-    minmax(0, 4fr)
-    minmax(38px, 0.4fr);
-  gap: 9px;
-  overflow: hidden;
-}
-
-
-/* ---------- 3. HERO BOARD ---------- */
-
-.intro-board {
   position: relative;
-  isolation: isolate;
-  min-height: 0;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border: 1.5px solid var(--gold);
-  border-radius: var(--board-radius);
-  box-shadow: var(--board-shadow);
-  background-image:
-    linear-gradient(
-      rgba(255, 248, 232, 0.76),
-      rgba(255, 248, 232, 0.76)
-    ),
-    url("../assets/hero-bg.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.intro-content {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  padding: 10px;
-  text-align: center;
-}
-
-.intro-content h1 {
-  color: var(--gold);
-  font-size: clamp(23px, 5.6vw, 35px);
-  font-weight: 800;
-  line-height: 1.35;
-  text-align: center;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.28);
-}
-
-.intro-content p {
-  margin-top: 4px;
-  color: #FFFFFF;
-  font-size: clamp(12px, 3.3vw, 16px);
-  font-weight: 600;
-  line-height: 1.5;
-  text-align: center;
-  text-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.8),
-    0 0 5px rgba(0, 0, 0, 0.45);
-}
-
-
-/* ---------- 4. EIGHT OPTION GRID ---------- */
-
-.learning-grid {
-  min-height: 0;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(4, minmax(0, 1fr));
-  gap: 8px;
-  overflow: hidden;
-}
-
-
-/* Supports common option-card class names */
-
-.learning-grid > *,
-.learning-card,
-.option-card,
-.category-card,
-.purity-option {
-  min-width: 0;
-  min-height: 0;
-}
-
-.learning-grid > *,
-.learning-card,
-.option-card,
-.category-card,
-.purity-option {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-start;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: rgba(255, 250, 239, 0.94);
-  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.12);
-  color: var(--green);
-  text-decoration: none;
-  text-align: center;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
-}
-
-.learning-grid > *:active,
-.learning-card:active,
-.option-card:active,
-.category-card:active,
-.purity-option:active {
-  transform: scale(0.985);
-}
-
-
-/* Make the image occupy most of the card */
-
-.learning-grid > * img,
-.learning-card img,
-.option-card img,
-.category-card img,
-.purity-option img,
-.learning-grid > * .option-image,
-.learning-card .option-image,
-.option-card .option-image,
-.category-card .option-image,
-.purity-option .option-image {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  flex: 1 1 auto;
-  object-fit: contain;
-  object-position: center;
-  padding: 3px;
-  margin: 0 auto;
-  border-radius: 8px 8px 0 0;
-}
-
-
-/* Alternative wrapper used around option images */
-
-.option-image-wrap,
-.category-image-wrap,
-.card-image-wrap {
-  width: 100%;
-  min-height: 0;
-  flex: 1 1 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.option-image-wrap img,
-.category-image-wrap img,
-.card-image-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-  padding: 3px;
-}
-
-
-/* Option names */
-
-.learning-grid > * h2,
-.learning-grid > * h3,
-.learning-card h2,
-.learning-card h3,
-.option-card h2,
-.option-card h3,
-.category-card h2,
-.category-card h3,
-.purity-option h2,
-.purity-option h3,
-.learning-grid > * .option-title,
-.learning-card .option-title,
-.option-card .option-title,
-.category-card .option-title,
-.purity-option .option-title {
-  flex: 0 0 auto;
-  width: 100%;
-  padding: 5px 3px 6px;
-  color: var(--green);
-  font-size: clamp(12px, 3.1vw, 16px);
-  font-weight: 800;
-  line-height: 1.35;
-  text-align: center;
-  overflow-wrap: anywhere;
-}
-
-
-/* ---------- 5. LANDING FOOTER ---------- */
-
-.purity-footer {
-  width: 100%;
-  min-height: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  padding: 5px 9px;
-  border: 1px solid var(--gold);
-  border-radius: 11px;
-  background: rgba(15, 81, 50, 0.94);
-  box-shadow: var(--board-shadow);
-}
-
-.purity-footer p {
-  color: var(--white);
-  font-size: clamp(10px, 2.8vw, 14px);
-  font-weight: 600;
-  line-height: 1.45;
-  text-align: center;
-  overflow-wrap: anywhere;
-}
-
-
-/* ---------- 6. DETAIL PAGE LAYOUT ---------- */
-
-.detail-view {
   width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding:
-    max(10px, env(safe-area-inset-top))
-    10px
-    max(10px, env(safe-area-inset-bottom));
-  overflow: visible;
+  margin: 0 auto;
 }
 
-
-/* ---------- 7. DETAIL TOP BAR ---------- */
-
-.detail-header {
-  position: relative;
+.purity-home,
+.purity-detail {
   width: 100%;
-  min-height: 88px;
-  flex: 0 0 auto;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--purity-page-padding);
+}
+
+/* ---------- 4. HOME PAGE LAYOUT ---------- */
+
+.purity-home {
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  display: grid;
+  grid-template-rows:
+    minmax(105px, 0.9fr)
+    minmax(0, 4fr)
+    auto;
+
+  gap: var(--purity-card-gap);
+  align-content: stretch;
+}
+
+/* ---------- 5. HERO BOARD ---------- */
+
+.purity-hero {
+  position: relative;
+  isolation: isolate;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 105px;
+  overflow: hidden;
+
+  border: 1.5px solid var(--purity-border);
+  border-radius: var(--purity-radius);
+
+  background-color: #f7f0d9;
+  background-image:
+    linear-gradient(
+      rgba(255, 252, 237, 0.80),
+      rgba(255, 252, 237, 0.80)
+    ),
+    var(--purity-hero-bg);
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  box-shadow: var(--purity-shadow);
+  text-align: center;
+}
+
+.purity-hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 6px;
+
+  border: 1px solid rgba(181, 142, 48, 0.42);
+  border-radius: calc(var(--purity-radius) - 5px);
+
+  pointer-events: none;
+}
+
+.purity-hero-overlay {
+  width: 100%;
+  padding: clamp(10px, 2.5vw, 22px);
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  padding: 13px 10px;
-  border: 1.5px solid var(--gold);
-  border-radius: 13px;
-  background: var(--green);
-  box-shadow: var(--board-shadow);
-  text-align: center;
+  gap: 4px;
 }
 
-
-/* Clicked option's title */
-
-.detail-header h1,
-#detailTitle {
-  display: block;
-  width: 100%;
+#pageTitle {
   margin: 0;
-  padding: 0;
-  color: var(--gold);
-  font-size: clamp(22px, 5.5vw, 30px);
+  color: var(--purity-green-dark);
+
+  font-size: clamp(22px, 5.5vw, 34px);
   font-weight: 800;
-  line-height: 1.4;
-  text-align: center;
-  overflow-wrap: anywhere;
+  line-height: 1.35;
+
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
 }
 
-
-/* Fixed white subtitle */
-
-.detail-header p,
-#detailSubtitle {
-  display: block;
-  width: 100%;
+#pageIntro {
+  max-width: 620px;
   margin: 0;
-  padding: 0;
-  color: #FFFFFF;
-  font-size: clamp(12px, 3.2vw, 16px);
-  font-weight: 600;
-  line-height: 1.5;
-  text-align: center;
-  overflow-wrap: anywhere;
+
+  color: #485440;
+  font-size: clamp(12px, 2.9vw, 16px);
+  font-weight: 500;
+  line-height: 1.55;
 }
 
+/* ---------- 6. LEARNING CARDS GRID ---------- */
 
-/* ---------- 8. DETAIL CONTENT ---------- */
+.learning-grid {
+  display: grid;
 
-.detail-content {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+
+  gap: var(--purity-card-gap);
+
   width: 100%;
+  min-height: 0;
+  align-content: stretch;
+}
+
+/* The JavaScript should create each card using this class. */
+
+.purity-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 12px;
-  flex: 0 0 auto;
+
+  min-width: 0;
   min-height: 0;
+  padding: 0;
+
+  overflow: hidden;
+
+  border: 1.5px solid var(--purity-border);
+  border-radius: var(--purity-small-radius);
+
+  background: rgba(255, 253, 245, 0.94);
+  box-shadow: 0 3px 10px rgba(31, 51, 32, 0.13);
+
+  color: var(--purity-text);
+  text-align: center;
+
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
 }
 
+.purity-card:focus-visible {
+  outline: 3px solid var(--purity-green-light);
+  outline-offset: 3px;
+}
 
-/* Each independent content board */
+.purity-card:active {
+  transform: scale(0.975);
+  background-color: #f5edcf;
+}
 
-.detail-panel,
-.lesson-card,
-.step-card,
-.content-board,
-.purity-content-board,
-.summary-card,
-.remember-card,
-.quran-card,
-.intro-detail-card {
+.purity-card:hover {
+  border-color: #ad852e;
+  box-shadow: 0 5px 14px rgba(31, 51, 32, 0.2);
+}
+
+/* Main card image */
+
+.purity-card img,
+.purity-card-image {
+  display: block;
+
+  width: 100%;
+  height: 0;
+  min-height: 0;
+  flex: 1 1 auto;
+
+  object-fit: cover;
+  object-position: center;
+
+  background: #eee7d4;
+}
+
+/* Card title */
+
+.purity-card-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 34px;
+  flex: 0 0 auto;
+
+  margin: 0;
+  padding: 5px 4px;
+
+  color: var(--purity-green-dark);
+  background: rgba(255, 253, 245, 0.98);
+
+  border-top: 1px solid rgba(183, 145, 54, 0.42);
+
+  font-size: clamp(12px, 3vw, 16px);
+  font-weight: 750;
+  line-height: 1.4;
+  text-align: center;
+
+  overflow-wrap: anywhere;
+}
+
+/* Support for button-based cards */
+
+button.purity-card {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.purity-card:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* ---------- 7. SHARED FOOTER ---------- */
+
+.purity-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: var(--purity-footer-height);
+
+  padding: 9px 12px;
+
+  border: 1.5px solid var(--purity-gold);
+  border-radius: 13px;
+
+  color: #fff8df;
+  background:
+    linear-gradient(
+      135deg,
+      #0c472d,
+      #145b39 55%,
+      #0b432a
+    );
+
+  box-shadow: 0 4px 12px rgba(18, 49, 29, 0.2);
+
+  text-align: center;
+}
+
+.purity-footer p {
+  margin: 0;
+
+  font-size: clamp(11px, 2.8vw, 15px);
+  font-weight: 600;
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+#footerText,
+#detailFooterText {
+  color: #fff8df;
+}
+
+/* ---------- 8. DETAIL PAGE LAYOUT ---------- */
+
+.purity-detail {
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--purity-card-gap);
+
+  overflow: hidden;
+}
+
+/* ---------- 9. DETAIL HEADER ---------- */
+
+.detail-header {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+  min-height: 64px;
+
+  padding: 10px 12px;
+
+  border: 1.5px solid var(--purity-border);
+  border-radius: var(--purity-radius);
+
+  color: var(--purity-green-dark);
+
+  background:
+    linear-gradient(
+      rgba(255, 252, 237, 0.94),
+      rgba(255, 252, 237, 0.94)
+    );
+
+  box-shadow: 0 3px 10px rgba(31, 51, 32, 0.12);
+  text-align: center;
+}
+
+#detailTitle {
+  margin: 0;
+
+  color: var(--purity-green-dark);
+  font-size: clamp(20px, 5vw, 28px);
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+#detailSubtitle {
+  margin: 3px 0 0;
+
+  color: var(--purity-muted);
+  font-size: clamp(11px, 2.8vw, 14px);
+  line-height: 1.5;
+}
+
+/* ---------- 10. DETAIL SCROLL AREA ---------- */
+
+.detail-scroll {
+  flex: 1 1 auto;
+
+  width: 100%;
+  min-height: 0;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+
+  scrollbar-width: thin;
+  scrollbar-color: rgba(15, 81, 50, 0.55) rgba(255, 253, 245, 0.35);
+
+  padding: 0 1px 8px;
+}
+
+.detail-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.detail-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 253, 245, 0.35);
+  border-radius: 8px;
+}
+
+.detail-scroll::-webkit-scrollbar-thumb {
+  background: rgba(15, 81, 50, 0.55);
+  border-radius: 8px;
+}
+
+.detail-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--purity-green);
+}
+
+/* ---------- 11. DETAIL CONTENT ---------- */
+
+.detail-content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  gap: var(--purity-card-gap);
+
   width: 100%;
   min-width: 0;
-  flex: 0 0 auto;
-  padding: 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--board-radius);
-  background: rgba(255, 250, 239, 0.96);
-  box-shadow: var(--board-shadow);
-  color: var(--text);
+  padding-bottom: 5px;
 }
 
+/* Every lesson board */
 
-/* Board headings */
+.lesson-board {
+  width: 100%;
+  min-width: 0;
+  padding: clamp(12px, 3.3vw, 20px);
 
-.detail-content h2,
-.detail-content h3,
-.detail-panel h2,
-.detail-panel h3,
-.lesson-card h2,
-.lesson-card h3,
-.step-card h2,
-.step-card h3,
-.content-board h2,
-.content-board h3,
-.summary-card h2,
-.remember-card h2 {
-  color: var(--green);
+  border: 1.5px solid var(--purity-border);
+  border-radius: var(--purity-radius);
+
+  color: var(--purity-text);
+  background: rgba(255, 253, 245, 0.95);
+
+  box-shadow: var(--purity-shadow);
+
+  overflow-wrap: anywhere;
+}
+
+.lesson-board h2,
+.lesson-board h3 {
+  margin: 0 0 10px;
+
+  color: var(--purity-green-dark);
+
+  font-size: clamp(17px, 4.2vw, 23px);
   font-weight: 800;
   line-height: 1.5;
+}
+
+.lesson-board p {
+  margin: 0 0 10px;
+
+  color: var(--purity-text);
+
+  font-size: clamp(14px, 3.5vw, 17px);
+  line-height: 1.85;
+
   overflow-wrap: anywhere;
 }
 
-.detail-content h2,
-.detail-panel h2,
-.lesson-card h2,
-.step-card h2,
-.content-board h2 {
-  margin-bottom: 8px;
-  font-size: clamp(18px, 4.5vw, 23px);
-  text-align: left;
-}
-
-.detail-content h3,
-.detail-panel h3,
-.lesson-card h3,
-.step-card h3,
-.content-board h3 {
-  margin-bottom: 6px;
-  font-size: clamp(16px, 4vw, 19px);
-  text-align: left;
-}
-
-
-/* Body copy */
-
-.detail-content p,
-.detail-panel p,
-.lesson-card p,
-.step-card p,
-.content-board p,
-.summary-card p,
-.remember-card p,
-.quran-card p,
-.intro-detail-card p {
-  margin-top: 6px;
-  margin-bottom: 8px;
-  color: var(--text);
-  font-size: 15px;
-  line-height: 1.9;
-  overflow-wrap: anywhere;
-}
-
-.detail-content p:last-child,
-.detail-panel p:last-child,
-.lesson-card p:last-child,
-.step-card p:last-child,
-.content-board p:last-child {
+.lesson-board p:last-child {
   margin-bottom: 0;
 }
 
-
-/* Lists */
-
-.detail-content ul,
-.detail-content ol,
-.detail-panel ul,
-.detail-panel ol,
-.lesson-card ul,
-.lesson-card ol,
-.step-card ul,
-.step-card ol {
-  padding-left: 24px;
-  margin: 7px 0 10px;
+.lesson-board ul,
+.lesson-board ol {
+  margin: 8px 0 0;
+  padding-inline-start: 24px;
 }
 
-.detail-content li,
-.detail-panel li,
-.lesson-card li,
-.step-card li {
-  padding-left: 2px;
-  margin-bottom: 6px;
-  font-size: 15px;
+.lesson-board li {
+  margin-bottom: 8px;
+  padding-inline-start: 2px;
+
+  font-size: clamp(14px, 3.5vw, 17px);
   line-height: 1.8;
 }
 
+.lesson-board li:last-child {
+  margin-bottom: 0;
+}
 
-/* ---------- 9. DETAIL IMAGES ---------- */
+/* Lesson introduction board */
 
-.detail-content img,
-.detail-panel img,
-.lesson-card img,
-.step-card img,
-.content-board img,
-.intro-detail-card img {
+.lesson-intro {
+  border-top: 3px solid var(--purity-green);
+}
+
+.lesson-intro h2 {
+  color: var(--purity-green-dark);
+}
+
+/* Lesson step board */
+
+.lesson-step {
+  position: relative;
+  border-inline-start: 3px solid rgba(15, 81, 50, 0.65);
+}
+
+.lesson-step h3 {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* Optional step number */
+
+.lesson-step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 29px;
+  width: 29px;
+  height: 29px;
+
+  margin-top: 1px;
+
+  border-radius: 50%;
+  border: 1px solid var(--purity-gold);
+
+  color: #fff8df;
+  background: var(--purity-green);
+
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* Detail lesson images */
+
+.lesson-image {
   display: block;
+
   width: 100%;
-  max-width: 100%;
+  max-width: 560px;
   height: auto;
-  max-height: 380px;
+
+  margin: 12px auto 15px;
+
   object-fit: contain;
   object-position: center;
-  margin: 8px auto 12px;
-  border-radius: 10px;
+
+  border: 1px solid rgba(183, 145, 54, 0.55);
+  border-radius: 12px;
+
+  background: #f4edda;
 }
 
+/* Intro image */
 
-/* Step image can be large while preserving aspect ratio */
-
-.step-card .step-image,
-.lesson-card .step-image,
-.detail-content .step-image {
-  width: 100%;
-  max-height: 340px;
-  object-fit: contain;
-  margin: 8px auto 12px;
+.lesson-intro .lesson-image {
+  max-height: 320px;
 }
 
+/* Smaller step images */
 
-/* ---------- 10. NO BOARD INSIDE ANOTHER BOARD ---------- */
-
-/*
-  If the JavaScript currently wraps lesson-card inside
-  detail-panel, neutralize the outer wrapper's board appearance.
-  For the intended layout, each step should ultimately be
-  rendered as a direct child of #detailContent.
-*/
-
-.detail-panel:has(.lesson-card),
-.detail-panel:has(.step-card),
-.detail-panel:has(.content-board) {
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  overflow: visible;
+.lesson-step .lesson-image {
+  max-height: 290px;
 }
 
-.detail-panel:has(.lesson-card) > .lesson-card,
-.detail-panel:has(.step-card) > .step-card,
-.detail-panel:has(.content-board) > .content-board {
-  margin-bottom: 12px;
+/* Final reminder board */
+
+.lesson-reminder {
+  border: 2px solid var(--purity-gold);
+  border-top: 4px solid var(--purity-green);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 253, 244, 0.98),
+      rgba(248, 242, 220, 0.97)
+    );
 }
 
-
-/* ---------- 11. FINAL REMEMBER BOARD ---------- */
-
-.summary-card,
-.remember-card,
-.final-summary,
-.final-summary-board {
-  width: 100%;
-  padding: 15px;
-  border: 1.5px solid var(--gold);
-  border-radius: var(--board-radius);
-  background: rgba(255, 248, 232, 0.97);
-  box-shadow: var(--board-shadow);
+.lesson-reminder h2,
+.lesson-reminder h3 {
+  color: var(--purity-green-dark);
 }
 
-.summary-card h2,
-.remember-card h2,
-.final-summary h2,
-.final-summary-board h2 {
-  margin: 0 0 9px;
-  color: var(--green);
-  font-size: clamp(19px, 4.8vw, 24px);
-  font-weight: 800;
-  line-height: 1.5;
-  text-align: left;
+.lesson-reminder strong {
+  color: var(--purity-green-dark);
 }
 
+/* Qur'an / quotation section */
+
+.lesson-quote {
+  margin-top: 12px;
+  padding: 12px;
+
+  border-inline-start: 3px solid var(--purity-gold);
+
+  border-radius: 8px;
+
+  color: var(--purity-green-dark);
+  background: rgba(213, 180, 91, 0.12);
+}
+
+.lesson-quote p {
+  margin: 0 0 8px;
+}
+
+.lesson-quote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Arabic text support */
+
+.arabic-text {
+  direction: rtl;
+  text-align: right;
+
+  font-family:
+    "Noto Naskh Arabic",
+    "Amiri",
+    "Traditional Arabic",
+    serif;
+
+  font-size: clamp(20px, 5vw, 27px);
+  line-height: 2;
+}
+
+/* Translation / source notes */
+
+.lesson-translation {
+  color: var(--purity-muted) !important;
+  font-size: 0.94em !important;
+}
+
+.lesson-source {
+  margin-top: 8px !important;
+
+  color: var(--purity-muted) !important;
+  font-size: 12px !important;
+}
 
 /* ---------- 12. DETAIL FOOTER ---------- */
 
 .detail-footer {
-  width: 100%;
-  min-height: 48px;
+  position: relative;
+  z-index: 2;
+
   flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  border: 1px solid var(--gold);
-  border-radius: 12px;
-  background: rgba(15, 81, 50, 0.96);
-  box-shadow: var(--board-shadow);
+  min-height: 48px;
+
+  margin-top: 0;
 }
 
-.detail-footer p {
-  margin: 0;
-  color: #FFFFFF;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.6;
-  text-align: center;
+/* ---------- 13. LANGUAGE SUPPORT ---------- */
+
+[lang="bn"] {
+  font-family:
+    "Noto Sans Bengali",
+    "Nirmala UI",
+    "Vrinda",
+    "Hind Siliguri",
+    system-ui,
+    sans-serif;
 }
 
-
-/* ---------- 13. LINKS & INTERACTIVE ELEMENTS ---------- */
-
-.detail-content a {
-  color: var(--green);
-  font-weight: 700;
-  text-underline-offset: 3px;
+[lang="en"] {
+  font-family:
+    Inter,
+    Arial,
+    Helvetica,
+    sans-serif;
 }
 
-.detail-content button {
-  max-width: 100%;
-  cursor: pointer;
+[lang="hi"] {
+  font-family:
+    "Noto Sans Devanagari",
+    "Nirmala UI",
+    Mangal,
+    system-ui,
+    sans-serif;
 }
 
-.detail-content strong,
-.detail-content b {
-  color: var(--green);
-  font-weight: 800;
+/* Keep content readable when language changes */
+
+.lesson-board[lang="en"] p,
+.lesson-board[lang="hi"] p,
+.lesson-board[lang="en"] li,
+.lesson-board[lang="hi"] li {
+  line-height: 1.75;
 }
 
+/* ---------- 14. DARK MODE ---------- */
 
-/* ---------- 14. SMALL MOBILE SCREENS ---------- */
+html[data-theme="dark"],
+body[data-theme="dark"],
+html.dark,
+body.dark,
+body.dark-mode {
+  --purity-text: #f1f2e9;
+  --purity-muted: #c4cebf;
+
+  --purity-border: rgba(213, 180, 91, 0.8);
+  --purity-shadow: 0 5px 18px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme="dark"] body,
+body[data-theme="dark"],
+html.dark body,
+body.dark,
+body.dark-mode {
+  color: var(--purity-text);
+
+  background-color: #17251c;
+  background-image:
+    linear-gradient(
+      rgba(12, 25, 17, 0.76),
+      rgba(12, 25, 17, 0.76)
+    ),
+    var(--purity-main-bg);
+}
+
+html[data-theme="dark"] .purity-hero,
+body[data-theme="dark"] .purity-hero,
+html.dark .purity-hero,
+body.dark .purity-hero,
+body.dark-mode .purity-hero {
+  background-image:
+    linear-gradient(
+      rgba(18, 34, 23, 0.83),
+      rgba(18, 34, 23, 0.83)
+    ),
+    var(--purity-hero-bg);
+}
+
+html[data-theme="dark"] #pageTitle,
+html[data-theme="dark"] #detailTitle,
+body[data-theme="dark"] #pageTitle,
+body[data-theme="dark"] #detailTitle,
+html.dark #pageTitle,
+html.dark #detailTitle,
+body.dark #pageTitle,
+body.dark #detailTitle,
+body.dark-mode #pageTitle,
+body.dark-mode #detailTitle {
+  color: #f4e4aa;
+  text-shadow: none;
+}
+
+html[data-theme="dark"] #pageIntro,
+body[data-theme="dark"] #pageIntro,
+html.dark #pageIntro,
+body.dark #pageIntro,
+body.dark-mode #pageIntro {
+  color: #e0e5d8;
+}
+
+html[data-theme="dark"] .purity-card,
+body[data-theme="dark"] .purity-card,
+html.dark .purity-card,
+body.dark .purity-card,
+body.dark-mode .purity-card {
+  color: #f1f2e9;
+  background: rgba(28, 45, 32, 0.97);
+}
+
+html[data-theme="dark"] .purity-card-title,
+body[data-theme="dark"] .purity-card-title,
+html.dark .purity-card-title,
+body.dark .purity-card-title,
+body.dark-mode .purity-card-title {
+  color: #f2e5b9;
+  background: rgba(25, 42, 29, 0.98);
+  border-top-color: rgba(213, 180, 91, 0.4);
+}
+
+html[data-theme="dark"] .detail-header,
+body[data-theme="dark"] .detail-header,
+html.dark .detail-header,
+body.dark .detail-header,
+body.dark-mode .detail-header {
+  color: #f1f2e9;
+  background: rgba(25, 42, 29, 0.97);
+}
+
+html[data-theme="dark"] #detailSubtitle,
+body[data-theme="dark"] #detailSubtitle,
+html.dark #detailSubtitle,
+body.dark #detailSubtitle,
+body.dark-mode #detailSubtitle {
+  color: #c4cebf;
+}
+
+html[data-theme="dark"] .lesson-board,
+body[data-theme="dark"] .lesson-board,
+html.dark .lesson-board,
+body.dark .lesson-board,
+body.dark-mode .lesson-board {
+  color: #f1f2e9;
+  background: rgba(25, 42, 29, 0.96);
+}
+
+html[data-theme="dark"] .lesson-board h2,
+html[data-theme="dark"] .lesson-board h3,
+html[data-theme="dark"] .lesson-board strong,
+body[data-theme="dark"] .lesson-board h2,
+body[data-theme="dark"] .lesson-board h3,
+body[data-theme="dark"] .lesson-board strong,
+html.dark .lesson-board h2,
+html.dark .lesson-board h3,
+html.dark .lesson-board strong,
+body.dark .lesson-board h2,
+body.dark .lesson-board h3,
+body.dark .lesson-board strong,
+body.dark-mode .lesson-board h2,
+body.dark-mode .lesson-board h3,
+body.dark-mode .lesson-board strong {
+  color: #f0d98b;
+}
+
+html[data-theme="dark"] .lesson-board p,
+html[data-theme="dark"] .lesson-board li,
+body[data-theme="dark"] .lesson-board p,
+body[data-theme="dark"] .lesson-board li,
+html.dark .lesson-board p,
+html.dark .lesson-board li,
+body.dark .lesson-board p,
+body.dark .lesson-board li,
+body.dark-mode .lesson-board p,
+body.dark-mode .lesson-board li {
+  color: #e7ebdf;
+}
+
+html[data-theme="dark"] .lesson-reminder,
+body[data-theme="dark"] .lesson-reminder,
+html.dark .lesson-reminder,
+body.dark .lesson-reminder,
+body.dark-mode .lesson-reminder {
+  background: rgba(34, 47, 32, 0.98);
+}
+
+html[data-theme="dark"] .lesson-quote,
+body[data-theme="dark"] .lesson-quote,
+html.dark .lesson-quote,
+body.dark .lesson-quote,
+body.dark-mode .lesson-quote {
+  background: rgba(213, 180, 91, 0.1);
+}
+
+html[data-theme="dark"] .lesson-image,
+body[data-theme="dark"] .lesson-image,
+html.dark .lesson-image,
+body.dark .lesson-image,
+body.dark-mode .lesson-image {
+  background: #26372a;
+  border-color: rgba(213, 180, 91, 0.55);
+}
+
+/* ---------- 15. RESPONSIVE: SMALL PHONES ---------- */
 
 @media (max-width: 360px) {
-  .purity-page {
-    padding-left: 7px;
-    padding-right: 7px;
-    gap: 6px;
+  :root {
+    --purity-page-padding: 7px;
+    --purity-card-gap: 7px;
+    --purity-radius: 13px;
+    --purity-small-radius: 9px;
+    --purity-footer-height: 44px;
+  }
+
+  .purity-home {
     grid-template-rows:
-      minmax(90px, 0.9fr)
+      minmax(92px, 0.85fr)
       minmax(0, 4fr)
-      minmax(34px, 0.38fr);
+      auto;
   }
 
-  .learning-grid {
-    gap: 6px;
+  .purity-hero {
+    min-height: 92px;
   }
 
-  .learning-grid > *,
-  .learning-card,
-  .option-card,
-  .category-card,
-  .purity-option {
-    border-radius: 9px;
+  .purity-hero-overlay {
+    padding: 8px;
   }
 
-  .learning-grid > * img,
-  .learning-card img,
-  .option-card img,
-  .category-card img,
-  .purity-option img {
-    padding: 2px;
+  #pageTitle {
+    font-size: 21px;
   }
 
-  .learning-grid > * h2,
-  .learning-grid > * h3,
-  .learning-card h2,
-  .learning-card h3,
-  .option-card h2,
-  .option-card h3,
-  .category-card h2,
-  .category-card h3,
-  .purity-option h2,
-  .purity-option h3 {
-    padding: 3px 2px 4px;
-    font-size: 12px;
+  #pageIntro {
+    font-size: 11px;
   }
 
-  .intro-content h1 {
-    font-size: 23px;
-  }
-
-  .intro-content p {
-    font-size: 12px;
-  }
-
-  .detail-view {
-    padding-left: 7px;
-    padding-right: 7px;
-  }
-
-  .detail-panel,
-  .lesson-card,
-  .step-card,
-  .content-board,
-  .summary-card,
-  .remember-card {
-    padding: 11px;
-  }
-}
-
-
-/* ---------- 15. SHORT MOBILE SCREENS ---------- */
-
-@media (max-height: 700px) {
-  .purity-page {
-    padding-top: 5px;
-    padding-bottom: 5px;
-    gap: 6px;
-    grid-template-rows:
-      minmax(78px, 0.85fr)
-      minmax(0, 4.2fr)
-      minmax(30px, 0.34fr);
-  }
-
-  .intro-content {
-    padding: 5px;
-  }
-
-  .intro-content h1 {
-    font-size: clamp(20px, 5vw, 29px);
-  }
-
-  .intro-content p {
-    margin-top: 2px;
-    font-size: clamp(11px, 3vw, 14px);
-  }
-
-  .learning-grid {
-    gap: 5px;
-  }
-
-  .learning-grid > * h2,
-  .learning-grid > * h3,
-  .learning-card h2,
-  .learning-card h3,
-  .option-card h2,
-  .option-card h3,
-  .category-card h2,
-  .category-card h3,
-  .purity-option h2,
-  .purity-option h3 {
-    padding-top: 2px;
-    padding-bottom: 3px;
-    font-size: 12px;
+  .purity-card-title {
+    min-height: 29px;
+    padding: 4px 3px;
+    font-size: 11px;
   }
 
   .purity-footer {
-    padding: 3px 6px;
+    padding: 7px 8px;
   }
 
   .purity-footer p {
     font-size: 10px;
   }
+
+  .lesson-board {
+    padding: 11px;
+  }
 }
 
+/* ---------- 16. RESPONSIVE: SHORT SCREENS ---------- */
 
-/* ---------- 16. TABLETS & LARGER SCREENS ---------- */
-
-@media (min-width: 600px) {
-  .purity-page {
-    max-width: 720px;
-    margin: 0 auto;
-    padding-left: 16px;
-    padding-right: 16px;
-    gap: 12px;
+@media (max-height: 700px) {
+  .purity-home {
+    grid-template-rows:
+      minmax(82px, 0.8fr)
+      minmax(0, 4fr)
+      auto;
   }
 
-  .learning-grid {
-    gap: 12px;
+  .purity-hero {
+    min-height: 82px;
   }
 
-  .learning-grid > *,
-  .learning-card,
-  .option-card,
-  .category-card,
-  .purity-option {
-    border-radius: 15px;
+  .purity-hero-overlay {
+    padding: 7px 10px;
   }
 
-  .detail-view {
-    max-width: 760px;
-    margin: 0 auto;
-    padding-left: 16px;
-    padding-right: 16px;
-    gap: 14px;
+  #pageTitle {
+    font-size: clamp(19px, 4.8vw, 27px);
+  }
+
+  #pageIntro {
+    font-size: clamp(10px, 2.5vw, 13px);
+  }
+
+  .purity-card-title {
+    min-height: 27px;
+    padding-block: 3px;
+  }
+
+  .purity-footer {
+    min-height: 38px;
+    padding-block: 5px;
+  }
+
+  .purity-footer p {
+    font-size: 11px;
   }
 
   .detail-header {
-    min-height: 100px;
+    min-height: 54px;
+    padding-block: 7px;
+  }
+
+  .detail-footer {
+    min-height: 40px;
+  }
+}
+
+/* ---------- 17. RESPONSIVE: TALL PHONES ---------- */
+
+@media (min-height: 800px) and (max-width: 600px) {
+  .purity-home {
+    grid-template-rows:
+      minmax(120px, 0.9fr)
+      minmax(0, 4fr)
+      auto;
+  }
+
+  .purity-hero {
+    min-height: 120px;
+  }
+
+  .purity-card-title {
+    min-height: 36px;
+    font-size: clamp(13px, 3.3vw, 16px);
+  }
+}
+
+/* ---------- 18. TABLETS AND DESKTOP ---------- */
+
+@media (min-width: 600px) {
+  .purity-home,
+  .purity-detail {
+    padding: 16px;
+  }
+
+  .purity-home {
+    gap: 14px;
+  }
+
+  .learning-grid {
+    gap: 14px;
+  }
+
+  .purity-card {
+    border-radius: 15px;
+  }
+
+  .purity-card-title {
+    min-height: 42px;
+    padding: 8px;
+  }
+
+  .purity-detail {
+    gap: 14px;
   }
 
   .detail-content {
@@ -805,18 +1109,44 @@ img {
   }
 }
 
-
-/* ---------- 17. ACCESSIBILITY ---------- */
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
+@media (min-width: 900px) {
+  .purity-home,
+  .purity-detail {
+    padding: 18px;
   }
 
+  .purity-card-title {
+    font-size: 16px;
+  }
+
+  .lesson-board {
+    padding: 22px;
+  }
+}
+
+/* ---------- 19. REDUCED MOTION ---------- */
+
+@media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
+    scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* ---------- 20. SAFE AREA SUPPORT ---------- */
+
+@supports (padding: env(safe-area-inset-bottom)) {
+  .purity-home {
+    padding-bottom:
+      max(var(--purity-page-padding), env(safe-area-inset-bottom));
+  }
+
+  .purity-detail {
+    padding-bottom:
+      max(var(--purity-page-padding), env(safe-area-inset-bottom));
   }
 }
