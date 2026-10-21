@@ -1,9 +1,13 @@
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#124b36">
+  <meta name="description" content="নামাজ শুরুর প্রাথমিক ধাপগুলো সহজভাবে শিখুন।">
   <title>নামাজ শুরু | IBADAT</title>
+
   <link rel="stylesheet" href="../css/namaz-start.css">
   <script src="../JS/namaz-start.js" defer></script>
 </head>
@@ -11,17 +15,23 @@
 <body>
   <main class="namaz-page">
 
-    <!-- Hero Board -->
+    <!-- Hero: no inner board -->
     <header class="hero-board">
       <div class="hero-content">
         <h1 data-i18n="pageTitle">নামাজ শুরু</h1>
-        <p data-i18n="pageIntro">
-          নিয়ত থেকে নামাজের প্রথম ধাপগুলো সহজভাবে শিখে নাও।
-        </p>
+
+        <div class="hero-description">
+          <p data-i18n="pageIntro1">
+            Namaz হল আল্লাহর সাথে সরাসরি সংযোগের একটি অনন্য ইবাদত।
+          </p>
+          <p data-i18n="pageIntro2">
+            এই অংশে নামাজ শুরুর ধাপগুলো ধারাবাহিকভাবে উপস্থাপনা করা হয়েছে।
+          </p>
+        </div>
       </div>
     </header>
 
-    <!-- ১. নিয়ত -->
+    <!-- 1. Niyyah -->
     <section class="lesson-board" id="niyyah">
       <div class="topic-heading">
         <span class="topic-number">১</span>
@@ -32,21 +42,29 @@
         <div class="lesson-image">
           <img
             src="../assets/images/niyyah.png"
-            alt="নিয়ত"
-            data-i18n-alt="niyyahTitle"
+            alt="নিয়ত করার প্রস্তুতি"
+            data-i18n-alt="niyyahAlt"
+            loading="lazy"
           >
         </div>
 
         <div class="lesson-text">
           <p data-i18n="niyyahText">
-            নিয়ত হলো অন্তরে কোন নামাজ আদায় করবে তা স্থির করা।
-            নিয়ত মূলত অন্তরের সংকল্প; মুখে নির্দিষ্ট বাক্য বলা আবশ্যক নয়।
+            নামাজ শুরু করার আগে মনে মনে স্থির করবে, তুমি কোন নামাজ আদায় করতে যাচ্ছ।
+            নিয়ত হলো অন্তরের সংকল্প; মুখে নির্দিষ্ট বাক্য বলা আবশ্যক নয়।
           </p>
+
+          <div class="info-panel">
+            <h3 data-i18n="niyyahExampleTitle">সহজ উদাহরণ</h3>
+            <p data-i18n="niyyahExample">
+              আল্লাহর সন্তুষ্টির জন্য যে নামাজ আদায় করতে যাচ্ছ, সেই উদ্দেশ্যটি মনে স্থির করো।
+            </p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ২. তাকবিরে তাহরিমা -->
+    <!-- 2. Takbir al-Tahrimah -->
     <section class="lesson-board" id="takbir-tahrimah">
       <div class="topic-heading">
         <span class="topic-number">২</span>
@@ -57,106 +75,93 @@
         <div class="lesson-image">
           <img
             src="../assets/images/takbir-tahrimah.png"
-            alt="তাকবিরে তাহরিমা"
-            data-i18n-alt="takbirTitle"
+            alt="তাকবিরে তাহরিমা বলার ভঙ্গি"
+            data-i18n-alt="takbirAlt"
+            loading="lazy"
           >
         </div>
 
         <div class="lesson-text">
-          <p class="arabic-text" lang="ar" dir="rtl">اللَّهُ أَكْبَرُ</p>
-          <p data-i18n="takbirPronunciation">উচ্চারণ: আল্লাহু আকবার</p>
-          <p data-i18n="takbirMeaning">অর্থ: আল্লাহ সর্বশ্রেষ্ঠ।</p>
           <p data-i18n="takbirText">
-            তাকবিরে তাহরিমা বলে নামাজ শুরু করা হয়।
+            নামাজ শুরু করার সময় নির্ধারিত পদ্ধতিতে তাকবির বলবে।
+            হাত তোলার ভঙ্গি শেখার সময় নির্ভরযোগ্য শিক্ষকের নির্দেশনা অনুসরণ করো।
           </p>
+
+          <div class="recitation-panel">
+            <p class="arabic-text" lang="ar" dir="rtl">
+              اللَّهُ أَكْبَرُ
+            </p>
+
+            <p class="pronunciation">
+              <strong data-i18n="pronunciationLabel">উচ্চারণ:</strong>
+              <span data-i18n="takbirPronunciation">আল্লাহু আকবার।</span>
+            </p>
+
+            <p class="meaning">
+              <strong data-i18n="meaningLabel">অর্থ:</strong>
+              <span data-i18n="takbirMeaning">আল্লাহ সর্বশ্রেষ্ঠ।</span>
+            </p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ৩. হাত বাঁধা -->
-    <section class="lesson-board" id="folded-hands">
-      <div class="topic-heading">
-        <span class="topic-number">৩</span>
-        <h2 data-i18n="handsTitle">হাত বাঁধা</h2>
-      </div>
-
-      <div class="lesson-content">
-        <div class="lesson-image">
-          <img
-            src="../assets/images/folded-hands.png"
-            alt="নামাজে হাত বাঁধা"
-            data-i18n-alt="handsTitle"
-          >
-        </div>
-
-        <div class="lesson-text">
-          <p data-i18n="handsText">
-            তাকবির বলার পর নামাজে হাত বাঁধবে। হাত বাঁধার পদ্ধতিতে
-            প্রচলিত ফিকহি মতভেদ রয়েছে; তাই শেখার সময় নিজের অনুসৃত
-            নির্ভরযোগ্য শিক্ষকের নির্দেশনা অনুসরণ করবে।
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ৪. কিয়াম -->
-    <section class="lesson-board" id="qiyam">
-      <div class="topic-heading">
-        <span class="topic-number">৪</span>
-        <h2 data-i18n="qiyamTitle">কিয়াম</h2>
-      </div>
-
-      <div class="lesson-content">
-        <div class="lesson-image">
-          <img
-            src="../assets/images/qiyam.png"
-            alt="কিয়াম"
-            data-i18n-alt="qiyamTitle"
-          >
-        </div>
-
-        <div class="lesson-text">
-          <p data-i18n="qiyamText">
-            কিয়াম হলো নামাজে দাঁড়িয়ে থাকা। সক্ষম ব্যক্তি ফরজ নামাজে
-            দাঁড়িয়ে নামাজ আদায় করবে এবং মনোযোগ ও বিনয়ের সঙ্গে থাকবে।
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ৫. সানা -->
+    <!-- 3. Sana -->
     <section class="lesson-board" id="sana">
       <div class="topic-heading">
-        <span class="topic-number">৫</span>
+        <span class="topic-number">৩</span>
         <h2 data-i18n="sanaTitle">সানা</h2>
       </div>
 
       <div class="lesson-content">
+        <div class="lesson-image">
+          <img
+            src="../assets/images/sana.png"
+            alt="সানা পাঠের প্রস্তুতি"
+            data-i18n-alt="sanaAlt"
+            loading="lazy"
+          >
+        </div>
+
         <div class="lesson-text">
-          <p class="arabic-text" lang="ar" dir="rtl">
-            سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ
-            وَتَبَارَكَ اسْمُكَ وَتَعَالَىٰ جَدُّكَ
-            وَلَا إِلَٰهَ غَيْرُكَ
+          <p data-i18n="sanaText">
+            তাকবিরে তাহরিমার পর সানা পাঠ করা হয়।
           </p>
 
-          <p data-i18n="sanaPronunciation">
-            উচ্চারণ: সুবহানাকাল্লাহুম্মা ওয়া বিহামদিকা,
-            ওয়া তাবারাকাসমুকা, ওয়া তা‘আলা জাদ্দুকা,
-            ওয়া লা ইলাহা গাইরুক।
-          </p>
+          <div class="recitation-panel">
+            <p class="arabic-text sana-arabic" lang="ar" dir="rtl">
+              سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ
+              وَتَبَارَكَ اسْمُكَ وَتَعَالَىٰ جَدُّكَ
+              وَلَا إِلَٰهَ غَيْرُكَ
+            </p>
 
-          <p data-i18n="sanaMeaning">
-            অর্থ: হে আল্লাহ! আপনি পবিত্র, আপনারই প্রশংসা।
-            আপনার নাম বরকতময়, আপনার মর্যাদা মহান,
-            আর আপনি ছাড়া কোনো উপাস্য নেই।
-          </p>
+            <p class="pronunciation">
+              <strong data-i18n="pronunciationLabel">উচ্চারণ:</strong>
+              <span data-i18n="sanaPronunciation">
+                সুবহানাকাল্লাহুম্মা ওয়া বিহামদিকা,
+                ওয়া তাবারাকাসমুকা, ওয়া তা‘আলা জাদ্দুকা,
+                ওয়া লা ইলাহা গাইরুক।
+              </span>
+            </p>
+
+            <p class="meaning">
+              <strong data-i18n="meaningLabel">অর্থ:</strong>
+              <span data-i18n="sanaMeaning">
+                হে আল্লাহ! আপনি পবিত্র, আপনারই প্রশংসা।
+                আপনার নাম বরকতময়, আপনার মর্যাদা মহান,
+                আর আপনি ছাড়া কোনো উপাস্য নেই।
+              </span>
+            </p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Footer: সানার পর সরাসরি -->
+    <!-- Footer: opens the existing Qirat page -->
     <footer class="qirat-footer">
-      <a href="qirat.html" data-i18n="qiratLinkText">কিরাত শিখো</a>
+      <a href="qirat.html" data-i18n="qiratLinkText">
+        কিরাত শেখার জন্য এখানে ট্যাপ করুন
+      </a>
     </footer>
 
   </main>
