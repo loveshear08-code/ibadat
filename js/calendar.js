@@ -1,8 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
+    "use strict";
 
     /* ==================================================
        IBADAT — ISLAMIC CALENDAR
        Languages: Bengali, English, Hindi
+       Compatible with the updated calendar.html / CSS
     ================================================== */
 
     const grid = document.getElementById("calendarGrid");
@@ -12,6 +14,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const dayNamesDiv = document.getElementById("dayNames");
     const eventsTitle = document.getElementById("eventsTitle");
     const eventsTimeline = document.getElementById("eventsTimeline");
+    const calendarHeading = document.getElementById("calendarHeading");
+    const calendarFooter = document.getElementById("calendarFooter");
 
     if (
         !grid || !title || !prev || !next ||
@@ -32,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function getLanguage() {
-        const selected = readSettings().lang || "bn";
+        const selected = String(readSettings().lang || "bn").toLowerCase();
         return ["bn", "en", "hi"].includes(selected) ? selected : "bn";
     }
 
@@ -70,7 +74,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const TEXT = {
         bn: {
-            eventsTitle: "এই মাসের ইসলামিক বিশেষ দিন",
+            heading: "ক্যালেন্ডার",
+            footer: "আল্লাহকে স্মরণ করুন",
+            eventsTitle: "ইসলামিক বিশেষ দিন",
             empty: "এই মাসের জন্য তালিকাভুক্ত কোনো বিশেষ দিন পাওয়া যায়নি।",
             loading: "ইসলামিক বিশেষ দিনের তথ্য লোড হচ্ছে…",
             error: "বিশেষ দিনের তথ্য লোড করা যায়নি। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।",
@@ -81,7 +87,9 @@ document.addEventListener("DOMContentLoaded", function () {
         },
 
         en: {
-            eventsTitle: "Islamic Special Days This Month",
+            heading: "Calendar",
+            footer: "Remember Allah",
+            eventsTitle: "Islamic Special Days",
             empty: "No listed special days were found for this month.",
             loading: "Loading Islamic observances…",
             error: "Could not load special-day information. Check your internet connection and try again.",
@@ -92,7 +100,9 @@ document.addEventListener("DOMContentLoaded", function () {
         },
 
         hi: {
-            eventsTitle: "इस महीने के इस्लामी विशेष दिन",
+            heading: "कैलेंडर",
+            footer: "अल्लाह को याद करें",
+            eventsTitle: "इस्लामी विशेष दिन",
             empty: "इस महीने के लिए सूचीबद्ध कोई विशेष दिन नहीं मिला।",
             loading: "इस्लामी विशेष दिनों की जानकारी लोड हो रही है…",
             error: "विशेष दिनों की जानकारी लोड नहीं हो सकी। इंटरनेट कनेक्शन जाँचकर फिर कोशिश करें।",
@@ -105,15 +115,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* ================= NUMBER FORMAT ================= */
 
+    const DIGITS = {
+        bn: "০১২৩৪৫৬৭৮৯",
+        en: "0123456789",
+        hi: "०१२३४५६७८९"
+    };
+
     function formatNum(value) {
-        const digits = {
-            bn: "০১২৩৪৫৬৭৮৯",
-            hi: "०१२३४५६७८९"
-        };
+        const digitSet = DIGITS[lang] || DIGITS.bn;
 
         return String(value).replace(/\d/g, function (digit) {
-            if (lang === "en") return digit;
-            return digits[lang][Number(digit)];
+            return digitSet[Number(digit)];
         });
     }
 
@@ -190,9 +202,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    /* ================= API NAME TRANSLATIONS =================
-       Normalized API names are matched against these aliases.
-    ========================================================== */
+    /* ================= API NAME TRANSLATIONS ================= */
 
     const API_NAMES = [
         {
@@ -311,6 +321,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     ];
 
+    /* ================= TRANSLATION HELPERS ================= */
+
     function normalizeName(value) {
         return String(value || "")
             .normalize("NFD")
@@ -330,43 +342,77 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         for (const entry of API_NAMES) {
-            const match = entry.keys.some(function (key) {
-                return normalized.includes(normalizeName(key));
+            const matched = entry.keys.some(function (key) {
+                const normalizedKey = normalizeName(key);
+
+                return normalized === normalizedKey ||
+                    normalized.includes(normalizedKey);
             });
 
-            if (match) {
-                return entry[lang];
+            if (matched) {
+                return entry[lang] || entry.en;
             }
         }
 
-        // Do not display an untranslated English API name in Bengali/Hindi.
-        // Unknown names receive a localized general label.
-        return TEXT[lang].unknown;
+        // Preserve original API name in English.
+        // For Bengali/Hindi, use the localized fallback instead of
+        // showing untranslated English text as if it were translated.
+        return lang === "en"
+            ? String(rawName).trim()
+            : TEXT[lang].unknown;
     }
 
-    /* ================= DAY LABELS ================= */
+    function getCuratedName(event) {
+        if (!event) return "";
+
+        if (typeof event === "string") {
+            return event;
+        }
+
+        return event[lang] || event.en || event.bn || event.hi || "";
+    }
+
+    /* ================= HEADINGS ================= */
+
+    function renderHeadings() {
+        if (calendarHeading) {
+            calendarHeading.textContent = TEXT[lang].heading;
+        }
+
+        if (calendarFooter) {
+            calendarFooter.textContent = TEXT[lang].footer;
+        }
+
+        eventsTitle.textContent = TEXT[lang].eventsTitle;
+    }
+
+    /* ================= WEEKDAY LABELS ================= */
 
     function renderDays() {
-        dayNamesDiv.innerHTML = "";
+        dayNamesDiv.replaceChildren();
 
         DAYS[lang].forEach(function (dayName) {
             const element = document.createElement("div");
+            element.className = "day-name";
             element.textContent = dayName;
             dayNamesDiv.appendChild(element);
         });
     }
 
-    /* ================= CURRENT MONTH ================= */
+    /* ================= MONTH STATE ================= */
 
-    let current = new Date();
-    current.setDate(1);
+    const initialDate = new Date();
+    let currentYear = initialDate.getFullYear();
+    let currentMonth = initialDate.getMonth();
 
     let requestId = 0;
+    let cachedEventMap = null;
+    let cachedMonthKey = "";
 
-    /* ================= EVENT HELPERS ================= */
+    /* ================= EVENT LIST HELPERS ================= */
 
     function showMessage(message, className) {
-        eventsTimeline.innerHTML = "";
+        eventsTimeline.replaceChildren();
 
         const element = document.createElement("div");
         element.className = className;
@@ -382,6 +428,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (
             !Number.isInteger(date) ||
             date < 1 ||
+            date > 31 ||
             !eventName
         ) {
             return;
@@ -394,46 +441,46 @@ document.addEventListener("DOMContentLoaded", function () {
         const list = map.get(date);
         const normalized = normalizeName(eventName);
 
-        const duplicate = list.some(function (item) {
-            return normalizeName(item) === normalized;
+        const isDuplicate = list.some(function (existingName) {
+            return normalizeName(existingName) === normalized;
         });
 
-        if (!duplicate) {
+        if (!isDuplicate) {
             list.push(eventName);
         }
     }
 
     function renderEventList(eventMap) {
-        eventsTimeline.innerHTML = "";
+        eventsTimeline.replaceChildren();
 
-        const dates = Array.from(eventMap.keys()).sort(function (a, b) {
+        const sortedDays = Array.from(eventMap.keys()).sort(function (a, b) {
             return a - b;
         });
 
-        if (dates.length === 0) {
-            showMessage(TEXT[lang].empty, "event-empty");
+        if (sortedDays.length === 0) {
+            const empty = document.createElement("div");
+            empty.className = "event-empty";
+            empty.textContent = TEXT[lang].empty;
+            eventsTimeline.appendChild(empty);
         } else {
-            dates.forEach(function (day) {
+            sortedDays.forEach(function (day) {
                 eventMap.get(day).forEach(function (eventName) {
                     const item = document.createElement("div");
                     item.className = "event-item";
 
-                    const dot = document.createElement("div");
+                    const dot = document.createElement("span");
                     dot.className = "event-dot";
                     dot.setAttribute("aria-hidden", "true");
 
-                    const date = document.createElement("div");
+                    const date = document.createElement("span");
                     date.className = "event-date";
                     date.textContent = formatNum(day);
 
-                    const name = document.createElement("div");
+                    const name = document.createElement("span");
                     name.className = "event-name";
                     name.textContent = eventName;
 
-                    item.appendChild(dot);
-                    item.appendChild(date);
-                    item.appendChild(name);
-
+                    item.append(dot, date, name);
                     eventsTimeline.appendChild(item);
                 });
             });
@@ -445,118 +492,221 @@ document.addEventListener("DOMContentLoaded", function () {
         eventsTimeline.appendChild(note);
     }
 
+    function showError(retryCallback) {
+        eventsTimeline.replaceChildren();
+
+        const error = document.createElement("div");
+        error.className = "event-error";
+        error.textContent = TEXT[lang].error;
+
+        const retryButton = document.createElement("button");
+        retryButton.type = "button";
+        retryButton.textContent = TEXT[lang].retry;
+        retryButton.addEventListener("click", retryCallback);
+
+        eventsTimeline.append(error, retryButton);
+    }
+
+    /* ================= API DATE HELPERS ================= */
+
+    function getGregorianDate(entry) {
+        const gregorian = entry && entry.gregorian;
+
+        if (!gregorian) {
+            return null;
+        }
+
+        const parts = String(gregorian.date || "").split("-");
+
+        if (parts.length === 3) {
+            const day = Number(parts[0]);
+            const month = Number(parts[1]);
+            const year = Number(parts[2]);
+
+            if (
+                Number.isInteger(day) &&
+                Number.isInteger(month) &&
+                Number.isInteger(year)
+            ) {
+                return { day, month, year };
+            }
+        }
+
+        const day = Number(gregorian.day);
+        const month = Number(gregorian.month && gregorian.month.number);
+        const year = Number(gregorian.year);
+
+        if (
+            Number.isInteger(day) &&
+            Number.isInteger(month) &&
+            Number.isInteger(year) &&
+            day > 0 && month > 0 && year > 0
+        ) {
+            return { day, month, year };
+        }
+
+        return null;
+    }
+
+    function getHijriDate(entry) {
+        const hijri = entry && entry.hijri;
+
+        if (!hijri || !hijri.day || !hijri.month) {
+            return null;
+        }
+
+        const day = Number(hijri.day);
+        const month = Number(hijri.month.number);
+
+        if (
+            !Number.isInteger(day) ||
+            !Number.isInteger(month) ||
+            day < 1 || month < 1 || month > 12
+        ) {
+            return null;
+        }
+
+        return { day, month };
+    }
+
+    function getApiHolidayNames(entry) {
+        const hijri = entry && entry.hijri;
+
+        if (!hijri) {
+            return [];
+        }
+
+        const names = [];
+        const possibleLists = [
+            hijri.holidays,
+            hijri.adjustedHolidays
+        ];
+
+        possibleLists.forEach(function (list) {
+            if (Array.isArray(list)) {
+                list.forEach(function (name) {
+                    if (typeof name === "string" && name.trim()) {
+                        names.push(name.trim());
+                    }
+                });
+            }
+        });
+
+        return names;
+    }
+
+    /* ================= BUILD EVENTS ================= */
+
+    function buildEventMap(apiDays, year, month) {
+        const eventMap = new Map();
+
+        apiDays.forEach(function (entry) {
+            const gregorian = getGregorianDate(entry);
+
+            if (
+                !gregorian ||
+                gregorian.year !== year ||
+                gregorian.month !== month
+            ) {
+                return;
+            }
+
+            const hijri = getHijriDate(entry);
+
+            if (hijri) {
+                const key = hijri.day + "-" + hijri.month;
+                const curated = EVENTS[key];
+
+                if (curated) {
+                    addEvent(
+                        eventMap,
+                        gregorian.day,
+                        getCuratedName(curated)
+                    );
+                }
+            }
+
+            getApiHolidayNames(entry).forEach(function (rawName) {
+                const translated = translateApiName(rawName);
+
+                if (translated) {
+                    addEvent(eventMap, gregorian.day, translated);
+                }
+            });
+        });
+
+        return eventMap;
+    }
+
     /* ================= LOAD ISLAMIC EVENTS ================= */
 
     async function renderEvents() {
         const thisRequest = ++requestId;
-        const year = current.getFullYear();
-        const month = current.getMonth() + 1;
+        const year = currentYear;
+        const month = currentMonth + 1;
+        const monthKey = year + "-" + month;
 
         eventsTitle.textContent = TEXT[lang].eventsTitle;
+
+        if (cachedMonthKey === monthKey && cachedEventMap) {
+            renderEventList(cachedEventMap);
+            return;
+        }
+
         showMessage(TEXT[lang].loading, "event-loading");
 
-        const eventMap = new Map();
+        const url =
+            "https://api.aladhan.com/v1/gToHCalendar/" +
+            month + "/" + year;
 
         try {
-            const url =
-                "https://api.aladhan.com/v1/gToHCalendar/" +
-                month + "/" + year;
-
-            const response = await fetch(url);
+            const response = await fetch(url, {
+                method: "GET",
+                headers: { Accept: "application/json" }
+            });
 
             if (!response.ok) {
-                throw new Error("API HTTP error: " + response.status);
+                throw new Error("Calendar API HTTP error: " + response.status);
             }
 
             const result = await response.json();
 
-            if (!result || !Array.isArray(result.data)) {
-                throw new Error("Invalid API response");
+            if (
+                !result ||
+                (result.code && result.code !== 200) ||
+                !Array.isArray(result.data)
+            ) {
+                throw new Error("Invalid calendar API response.");
             }
 
             if (thisRequest !== requestId) {
                 return;
             }
 
-            result.data.forEach(function (day) {
-                if (!day || !day.hijri || !day.gregorian) {
-                    return;
-                }
+            const eventMap = buildEventMap(result.data, year, month);
 
-                const gregorianDay = Number(day.gregorian.day);
-                const hijriDay = Number(day.hijri.day);
-                const hijriMonth = Number(
-                    day.hijri.month && day.hijri.month.number
-                );
-
-                // Our curated list of known Hijri observances.
-                const key = hijriDay + "-" + hijriMonth;
-                const curated = EVENTS[key];
-
-                if (curated) {
-                    addEvent(eventMap, gregorianDay, curated[lang]);
-                }
-
-                // Events supplied by the calendar API.
-                const holidayLists = [
-                    day.hijri.holidays,
-                    day.hijri.adjustedHolidays
-                ];
-
-                holidayLists.forEach(function (holidays) {
-                    if (!Array.isArray(holidays)) {
-                        return;
-                    }
-
-                    holidays.forEach(function (holiday) {
-                        const translated = translateApiName(holiday);
-
-                        if (translated) {
-                            addEvent(eventMap, gregorianDay, translated);
-                        }
-                    });
-                });
-            });
-
-            if (thisRequest !== requestId) {
-                return;
-            }
+            cachedMonthKey = monthKey;
+            cachedEventMap = eventMap;
 
             renderEventList(eventMap);
-
         } catch (error) {
-            console.error("Calendar events loading failed:", error);
+            console.error("IBADAT Calendar API error:", error);
 
             if (thisRequest !== requestId) {
                 return;
             }
 
-            showMessage(TEXT[lang].error, "event-error");
-
-            const retryButton = document.createElement("button");
-            retryButton.type = "button";
-            retryButton.textContent = TEXT[lang].retry;
-            retryButton.style.display = "block";
-            retryButton.style.margin = "8px auto 0";
-            retryButton.style.padding = "7px 12px";
-            retryButton.style.border = "0";
-            retryButton.style.borderRadius = "10px";
-            retryButton.style.background = "var(--primary)";
-            retryButton.style.color = "var(--cream)";
-            retryButton.style.cursor = "pointer";
-
-            retryButton.addEventListener("click", renderEvents);
-            eventsTimeline.appendChild(retryButton);
+            showError(renderEvents);
         }
     }
 
     /* ================= DRAW CALENDAR ================= */
 
-    function draw() {
-        grid.innerHTML = "";
+    function drawCalendar() {
+        grid.replaceChildren();
 
-        const year = current.getFullYear();
-        const month = current.getMonth();
+        const year = currentYear;
+        const month = currentMonth;
 
         title.textContent =
             MONTHS[lang][month] + " " + formatNum(year);
@@ -565,32 +715,33 @@ document.addEventListener("DOMContentLoaded", function () {
         const totalDays = new Date(year, month + 1, 0).getDate();
         const today = new Date();
 
-        // Blank cells before the first day.
         for (let i = 0; i < firstDay; i++) {
             const blank = document.createElement("div");
+            blank.className = "day-empty";
             blank.setAttribute("aria-hidden", "true");
             grid.appendChild(blank);
         }
 
-        // Calendar dates.
         for (let day = 1; day <= totalDays; day++) {
             const cell = document.createElement("div");
             cell.className = "day";
+            cell.textContent = formatNum(day);
 
-            const number = document.createElement("div");
-            number.className = "eng";
-            number.textContent = formatNum(day);
-
-            cell.appendChild(number);
-
-            if (
+            const isToday =
                 day === today.getDate() &&
                 month === today.getMonth() &&
-                year === today.getFullYear()
-            ) {
+                year === today.getFullYear();
+
+            if (isToday) {
                 cell.classList.add("today");
                 cell.setAttribute("aria-current", "date");
             }
+
+            cell.setAttribute(
+                "aria-label",
+                MONTHS[lang][month] + " " +
+                formatNum(day) + ", " + formatNum(year)
+            );
 
             grid.appendChild(cell);
         }
@@ -598,33 +749,67 @@ document.addEventListener("DOMContentLoaded", function () {
         renderEvents();
     }
 
+    /* ================= FULL RENDER ================= */
+
+    function draw() {
+        renderHeadings();
+        renderDays();
+        drawCalendar();
+    }
+
     /* ================= MONTH NAVIGATION ================= */
 
     prev.addEventListener("click", function () {
-        current.setMonth(current.getMonth() - 1);
+        currentMonth--;
+
+        if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+        }
+
         draw();
     });
 
     next.addEventListener("click", function () {
-        current.setMonth(current.getMonth() + 1);
+        currentMonth++;
+
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        }
+
         draw();
     });
 
-    /* ================= INITIALIZE ================= */
+    /* ================= LANGUAGE CHANGE ================= */
 
-    renderDays();
-    draw();
+    window.addEventListener("storage", function (event) {
+        if (event.key !== "appSettings") {
+            return;
+        }
 
-    /* ================= LANGUAGE UPDATE ================= */
-
-    setInterval(function () {
         const newLang = getLanguage();
 
         if (newLang !== lang) {
             lang = newLang;
-            renderDays();
+            draw();
+        }
+    });
+
+    /*
+     * The storage event does not fire in the same tab that changes
+     * localStorage. This check supports the existing app settings flow.
+     */
+    window.setInterval(function () {
+        const newLang = getLanguage();
+
+        if (newLang !== lang) {
+            lang = newLang;
             draw();
         }
     }, 1000);
 
+    /* ================= INITIALIZE ================= */
+
+    draw();
 });
