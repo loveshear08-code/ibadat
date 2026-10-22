@@ -1,31 +1,27 @@
-/* =========================================
-   IBADAT CALENDAR — COMPLETE CSS
-   Main background : main-bg.jpg
-   Calendar board  : hero-bg.jpg
-   Top / Bottom    : Deep green + gold border
-   ========================================= */
+/* =====================================================
+   IBADAT — FRESH ISLAMIC CALENDAR CSS
+   Compatible with existing calendar.html and calendar.js
+   ===================================================== */
 
 :root {
-    --deep-green: #124d32;
-    --deep-green-dark: #0c3b27;
-    --gold: #e6c66f;
-    --gold-light: #f6e4a6;
-    --red: #d93636;
+    --deep-green: #124c32;
+    --deep-green-dark: #0c3926;
+    --gold: #e8c766;
+    --gold-light: #f5e5a7;
 
-    --cream-white: rgba(255, 252, 239, 0.91);
-    --green-white-overlay: rgba(238, 248, 235, 0.84);
+    --cream: #fffdf5;
+    --cream-deep: #f8f3e3;
 
-    --text: #173c2b;
-    --muted: #5f7567;
-    --card: rgba(255, 255, 255, 0.72);
-    --line: rgba(24, 83, 53, 0.20);
+    --text: #17452f;
+    --muted: #68796b;
+    --border: rgba(184, 153, 72, 0.55);
 
-    --page-gap: 10px;
-    --board-radius: 17px;
-    --gold-border: 2px solid var(--gold);
+    --page-gap: 9px;
+    --bar-height: 64px;
+    --panel-radius: 20px;
 }
 
-/* ---------- Basic reset ---------- */
+/* ---------------- Reset ---------------- */
 
 * {
     box-sizing: border-box;
@@ -41,9 +37,11 @@ html {
 body {
     width: 100%;
     height: 100%;
+    height: 100dvh;
     min-height: 0;
+
     margin: 0;
-    padding: 10px;
+    padding: 9px 10px;
 
     display: flex;
     flex-direction: column;
@@ -52,64 +50,69 @@ body {
     overflow: hidden;
 
     color: var(--text);
+
     font-family:
         "Noto Sans Bengali",
         "Noto Sans Devanagari",
         "Nirmala UI",
-        "Arial",
+        Arial,
         sans-serif;
 
     background:
         linear-gradient(
             135deg,
-            rgba(238, 248, 235, 0.88),
-            rgba(255, 255, 250, 0.82),
-            rgba(224, 241, 224, 0.86)
+            rgba(235, 245, 226, 0.56),
+            rgba(255, 253, 245, 0.62),
+            rgba(232, 244, 222, 0.58)
         ),
-        url("../assets/main-bg.jpg") center / cover no-repeat fixed;
+        url("../assets/main-bg.jpg") center / cover no-repeat;
 
     -webkit-tap-highlight-color: transparent;
 }
 
-/* ---------- Shared top and bottom boards ---------- */
+/* ---------------- Top and bottom bars ---------------- */
 
 .top-board,
 .bottom-board {
     position: relative;
     z-index: 2;
 
-    flex: 0 0 auto;
+    flex: 0 0 var(--bar-height);
+
     width: 100%;
     min-width: 0;
+    height: var(--bar-height);
+    min-height: var(--bar-height);
+    max-height: var(--bar-height);
 
     display: flex;
     align-items: center;
     justify-content: center;
 
+    padding: 7px 12px;
+
     color: var(--gold-light);
+
     background: linear-gradient(
-        145deg,
+        140deg,
         var(--deep-green),
         var(--deep-green-dark)
     );
 
-    border: var(--gold-border);
-    border-radius: var(--board-radius);
+    border: 2px solid var(--gold);
+    border-radius: var(--panel-radius);
 
     box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.10);
+        0 3px 9px rgba(30, 49, 28, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-/* ---------- Top calendar bar ---------- */
+/* ---------------- Top bar layout ---------------- */
 
 .top-board {
-    min-height: 58px;
-    padding: 7px 12px;
-
     display: grid;
-    grid-template-columns: 48px minmax(0, 1fr) 48px;
-    gap: 10px;
+    grid-template-columns: 42px minmax(0, 1fr) 42px;
+    gap: 8px;
 }
 
 #calendarHeading {
@@ -118,47 +121,48 @@ body {
     padding: 0;
 
     color: var(--gold-light);
-    font-size: clamp(19px, 4.5vw, 25px);
-    font-weight: 800;
-    line-height: 1.25;
+
+    font-size: clamp(19px, 4.6vw, 25px);
+    font-weight: 700;
+    line-height: 1.3;
     text-align: center;
+
     overflow-wrap: anywhere;
 }
 
-/* ---------- Previous / next month buttons ---------- */
+/* ---------------- Gold-only navigation arrows ---------------- */
 
 .month-button {
-    width: 44px;
-    height: 40px;
-    min-width: 44px;
-    min-height: 40px;
-    padding: 0;
+    width: 40px;
+    height: 44px;
+    min-width: 40px;
+    min-height: 44px;
 
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    color: #ffffff;
-    background: linear-gradient(145deg, #ed4545, #bd2020);
+    margin: 0;
+    padding: 0;
 
-    border: 1px solid #ffaaaa;
-    border-radius: 10px;
+    color: var(--gold);
+    background: transparent;
 
-    box-shadow:
-        0 2px 5px rgba(0, 0, 0, 0.24),
-        inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
 
     font-family: inherit;
-    font-size: 17px;
+    font-size: 29px;
     font-weight: 800;
+    line-height: 1;
 
     cursor: pointer;
     touch-action: manipulation;
 
     transition:
-        transform 0.15s ease,
-        background-color 0.15s ease,
-        box-shadow 0.15s ease;
+        color 0.15s ease,
+        transform 0.15s ease;
 }
 
 .month-button span {
@@ -167,25 +171,25 @@ body {
 }
 
 .month-button:hover {
-    background: linear-gradient(145deg, #ff5555, #d02020);
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.28);
+    color: #fff0b0;
+    background: transparent;
+    box-shadow: none;
 }
 
 .month-button:active {
-    transform: scale(0.94);
+    transform: scale(0.91);
 }
 
 .month-button:focus-visible {
     outline: 2px solid var(--gold-light);
-    outline-offset: 3px;
+    outline-offset: 1px;
 }
 
-/* ---------- Main layout ---------- */
+/* ---------------- Main content layout ---------------- */
 
 .calendar {
-    position: relative;
-
     flex: 1 1 auto;
+
     width: 100%;
     min-width: 0;
     min-height: 0;
@@ -197,12 +201,13 @@ body {
     overflow: hidden;
 }
 
-/* ---------- Calendar board ---------- */
+/* ---------------- Calendar board ---------------- */
 
 .calendar-board {
     position: relative;
 
     flex: 0 0 auto;
+
     width: 100%;
     min-width: 0;
 
@@ -210,45 +215,54 @@ body {
     flex-direction: column;
 
     padding: 10px;
+
     overflow: hidden;
 
+    /*
+       Keep the mosque visible by using a lighter overlay.
+       The hero image remains beneath the cream-white layer.
+    */
     background:
         linear-gradient(
-            rgba(255, 253, 244, 0.91),
-            rgba(255, 252, 238, 0.88)
+            rgba(255, 253, 244, 0.48),
+            rgba(255, 252, 239, 0.52)
         ),
         url("../assets/hero-bg.jpg") center / cover no-repeat;
 
-    border: 1px solid rgba(170, 143, 73, 0.72);
-    border-radius: var(--board-radius);
+    border: 1px solid var(--border);
+    border-radius: var(--panel-radius);
 
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 3px 10px rgba(30, 49, 28, 0.10);
 }
 
-/* Month and year heading */
+/* ---------------- Month title ---------------- */
 
 #monthTitle {
     flex: 0 0 auto;
+
     width: 100%;
     min-width: 0;
 
-    margin: 0 0 9px;
-    padding: 2px 0 7px;
+    margin: 0 0 8px;
+    padding: 2px 0 8px;
 
     color: var(--deep-green);
-    font-size: clamp(17px, 4vw, 22px);
-    font-weight: 800;
+
+    font-size: clamp(18px, 4.2vw, 23px);
+    font-weight: 750;
     line-height: 1.35;
     text-align: center;
+
     overflow-wrap: anywhere;
 
-    border-bottom: 1px solid rgba(18, 77, 50, 0.20);
+    border-bottom: 1px solid rgba(18, 76, 50, 0.20);
 }
 
-/* ---------- Weekday names ---------- */
+/* ---------------- Weekday names ---------------- */
 
 .day-names {
     flex: 0 0 auto;
+
     width: 100%;
     min-width: 0;
 
@@ -264,15 +278,16 @@ body {
     padding: 5px 0;
 
     color: var(--deep-green);
-    font-size: clamp(10px, 2.6vw, 13px);
-    font-weight: 800;
-    line-height: 1.3;
+
+    font-size: clamp(11px, 2.8vw, 14px);
+    font-weight: 750;
+    line-height: 1.35;
     text-align: center;
 
     overflow-wrap: anywhere;
 }
 
-/* ---------- Calendar date grid ---------- */
+/* ---------------- Date grid ---------------- */
 
 .grid {
     width: 100%;
@@ -286,17 +301,13 @@ body {
     align-content: stretch;
 }
 
-/* Date cells and empty cells */
-
 .day,
-.grid > div {
+.day-empty {
     min-width: 0;
     min-height: 0;
 }
 
 .day {
-    position: relative;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -304,13 +315,13 @@ body {
     padding: 3px 1px;
 
     color: var(--text);
-    background: rgba(255, 255, 255, 0.64);
+    background: rgba(255, 254, 247, 0.88);
 
-    border: 1px solid rgba(30, 93, 58, 0.16);
-    border-radius: 8px;
+    border: 1px solid rgba(182, 155, 83, 0.30);
+    border-radius: 9px;
 
-    font-size: clamp(12px, 3.2vw, 16px);
-    font-weight: 650;
+    font-size: clamp(13px, 3.3vw, 17px);
+    font-weight: 750;
     line-height: 1.2;
     text-align: center;
 
@@ -320,42 +331,29 @@ body {
 }
 
 .day:active {
-    background: rgba(220, 239, 220, 0.95);
+    background: rgba(245, 235, 202, 0.96);
 }
 
-/* Current date */
+/* Today's date */
 
 .day.today {
     color: #ffffff;
     background: var(--deep-green);
 
     border: 2px solid var(--gold);
+
     box-shadow:
-        0 0 0 1px rgba(18, 77, 50, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.18);
+        0 0 0 1px rgba(18, 76, 50, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
 
-    font-weight: 900;
+    font-weight: 800;
 }
 
-/* Optional English date number if generated by the existing JS */
-
-.day .eng {
-    display: block;
-    margin-top: 2px;
-
-    color: var(--muted);
-    font-size: 0.72em;
-    font-weight: 500;
-}
-
-.day.today .eng {
-    color: #fff3c5;
-}
-
-/* ---------- Islamic special-days board ---------- */
+/* ---------------- Islamic special-days panel ---------------- */
 
 .events-section {
     flex: 1 1 0;
+
     width: 100%;
     min-width: 0;
     min-height: 0;
@@ -365,44 +363,48 @@ body {
 
     padding: 10px;
 
+    /*
+       Intentionally plain cream-white.
+       No background image or green fill for this panel.
+    */
     color: var(--text);
-    background: linear-gradient(
-        145deg,
-        rgba(222, 241, 204, 0.96),
-        rgba(205, 231, 181, 0.96)
-    );
+    background: var(--cream);
 
-    border: 1px solid rgba(105, 148, 79, 0.65);
-    border-radius: var(--board-radius);
+    border: 1px solid var(--border);
+    border-radius: var(--panel-radius);
 
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.10);
+    box-shadow: 0 3px 9px rgba(30, 49, 28, 0.07);
 
     overflow: hidden;
 }
 
-/* The existing JS controls this title's text */
+/* ---------------- Events heading ---------------- */
 
 .events-title {
     flex: 0 0 auto;
+
     min-width: 0;
 
     margin: 0 0 8px;
-    padding: 0 0 7px;
+    padding: 1px 0 8px;
 
     color: var(--deep-green);
-    font-size: clamp(14px, 3.6vw, 18px);
-    font-weight: 800;
+
+    font-size: clamp(15px, 3.8vw, 19px);
+    font-weight: 750;
     line-height: 1.4;
     text-align: center;
+
     overflow-wrap: anywhere;
 
-    border-bottom: 1px solid rgba(18, 77, 50, 0.20);
+    border-bottom: 1px solid rgba(18, 76, 50, 0.18);
 }
 
-/* Scroll is limited to the event list, not the whole page */
+/* ---------------- Events list ---------------- */
 
 .events-timeline {
     flex: 1 1 auto;
+
     min-width: 0;
     min-height: 0;
 
@@ -410,14 +412,16 @@ body {
     flex-direction: column;
     gap: 7px;
 
+    padding: 1px 3px 3px 1px;
+
     overflow-x: hidden;
     overflow-y: auto;
+
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
 
-    padding: 1px 3px 3px 1px;
     scrollbar-width: thin;
-    scrollbar-color: rgba(18, 77, 50, 0.45) transparent;
+    scrollbar-color: rgba(18, 76, 50, 0.35) transparent;
 }
 
 .events-timeline::-webkit-scrollbar {
@@ -429,14 +433,15 @@ body {
 }
 
 .events-timeline::-webkit-scrollbar-thumb {
-    background: rgba(18, 77, 50, 0.42);
+    background: rgba(18, 76, 50, 0.35);
     border-radius: 10px;
 }
 
-/* Event item styles */
+/* ---------------- Event item ---------------- */
 
 .event-item {
     flex: 0 0 auto;
+
     min-width: 0;
 
     display: flex;
@@ -446,10 +451,10 @@ body {
     padding: 8px 10px;
 
     color: var(--text);
-    background: rgba(255, 255, 255, 0.67);
+    background: #fffef8;
 
-    border: 1px solid rgba(45, 105, 53, 0.16);
-    border-radius: 10px;
+    border: 1px solid rgba(143, 163, 112, 0.35);
+    border-radius: 12px;
 
     overflow-wrap: anywhere;
 }
@@ -457,60 +462,74 @@ body {
 .event-dot {
     flex: 0 0 auto;
 
-    width: 9px;
-    height: 9px;
-    margin-top: 5px;
+    width: 10px;
+    height: 10px;
+
+    margin-top: 6px;
 
     background: var(--deep-green);
-    border: 1px solid rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(18, 76, 50, 0.18);
     border-radius: 50%;
 }
 
 .event-date {
     flex: 0 0 auto;
+
     min-width: 0;
 
     color: var(--deep-green);
+
     font-size: 13px;
     font-weight: 800;
-    line-height: 1.5;
+    line-height: 1.55;
 }
 
 .event-name {
     flex: 1 1 auto;
+
     min-width: 0;
 
     color: var(--text);
+
     font-size: 13px;
-    font-weight: 600;
-    line-height: 1.55;
+    font-weight: 700;
+    line-height: 1.6;
+
     overflow-wrap: anywhere;
-    word-break: normal;
 }
 
-/* Empty, loading and error states */
+/* ---------------- Empty / loading / error messages ---------------- */
 
 .event-empty,
 .event-loading,
 .event-error {
     flex: 0 0 auto;
+
     min-width: 0;
 
-    padding: 12px 8px;
+    padding: 10px 8px;
 
     color: var(--muted);
+
     font-size: 13px;
-    line-height: 1.6;
+    font-weight: 600;
+    line-height: 1.65;
     text-align: center;
+
     overflow-wrap: anywhere;
 }
 
 .event-error {
-    color: #a42b2b;
+    color: #a12e2e;
 }
 
+/* Retry button generated by the existing JS */
+
 .events-timeline button {
+    flex: 0 0 auto;
+
     max-width: 100%;
+
     margin: 6px auto;
     padding: 8px 14px;
 
@@ -520,62 +539,63 @@ body {
     border: 1px solid var(--gold);
     border-radius: 9px;
 
-    font: inherit;
+    font-family: inherit;
+    font-size: 13px;
     font-weight: 700;
 
     cursor: pointer;
 }
 
-/* ---------- Bottom footer board ---------- */
+/* ---------------- Bottom bar ---------------- */
 
 .bottom-board {
-    min-height: 48px;
-    padding: 8px 12px;
-
     text-align: center;
 }
 
 #calendarFooter {
     min-width: 0;
+
     margin: 0;
+    padding: 0;
 
     color: var(--gold-light);
-    font-size: clamp(12px, 3.2vw, 15px);
+
+    font-size: clamp(13px, 3.4vw, 16px);
     font-weight: 700;
     line-height: 1.4;
     text-align: center;
+
     overflow-wrap: anywhere;
 }
 
-/* ---------- Dark mode ---------- */
+/* =====================================================
+   DARK MODE
+   ===================================================== */
 
 body.dark-mode {
-    --text: #e8f0e8;
-    --muted: #c0cfc1;
-    --card: rgba(28, 44, 34, 0.82);
-    --line: rgba(206, 224, 203, 0.20);
+    --text: #e9efe6;
+    --muted: #c0cbbd;
+    --cream: #202d23;
+    --cream-deep: #26352a;
+    --border: rgba(218, 190, 105, 0.48);
 
-    --cream-white: rgba(24, 37, 29, 0.91);
-    --green-white-overlay: rgba(20, 37, 27, 0.86);
+    color: var(--text);
 
     background:
         linear-gradient(
             135deg,
-            rgba(13, 34, 23, 0.88),
-            rgba(19, 38, 27, 0.84),
-            rgba(11, 29, 20, 0.89)
+            rgba(13, 33, 22, 0.65),
+            rgba(19, 37, 26, 0.65)
         ),
-        url("../assets/main-bg.jpg") center / cover no-repeat fixed;
-
-    color: var(--text);
+        url("../assets/main-bg.jpg") center / cover no-repeat;
 }
 
 body.dark-mode .top-board,
 body.dark-mode .bottom-board {
     background: linear-gradient(
-        145deg,
-        #103d2a,
-        #092d1e
+        140deg,
+        #103e29,
+        #092e1e
     );
 
     border-color: var(--gold);
@@ -586,123 +606,126 @@ body.dark-mode #calendarFooter {
     color: var(--gold-light);
 }
 
+body.dark-mode .month-button {
+    color: var(--gold);
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+body.dark-mode .month-button:hover {
+    color: #fff0b0;
+    background: transparent;
+}
+
 body.dark-mode .calendar-board {
     background:
         linear-gradient(
-            rgba(20, 34, 25, 0.90),
-            rgba(22, 37, 27, 0.92)
+            rgba(24, 35, 26, 0.36),
+            rgba(24, 35, 26, 0.42)
         ),
         url("../assets/hero-bg.jpg") center / cover no-repeat;
 
-    border-color: rgba(230, 198, 111, 0.65);
+    border-color: var(--border);
 }
 
 body.dark-mode #monthTitle,
 body.dark-mode .day-name {
-    color: #e5f0df;
-    border-color: rgba(220, 237, 217, 0.20);
+    color: #e6efdf;
+}
+
+body.dark-mode #monthTitle {
+    border-bottom-color: rgba(226, 238, 219, 0.20);
 }
 
 body.dark-mode .day {
-    color: #e8f0e8;
-    background: rgba(37, 57, 42, 0.88);
-    border-color: rgba(216, 234, 212, 0.15);
+    color: #e9efe6;
+    background: rgba(30, 46, 33, 0.90);
+    border-color: rgba(225, 236, 217, 0.16);
 }
 
 body.dark-mode .day:active {
-    background: rgba(53, 82, 57, 0.96);
+    background: rgba(49, 71, 49, 0.96);
 }
 
 body.dark-mode .day.today {
     color: #ffffff;
-    background: #17633e;
+    background: #145c3a;
     border-color: var(--gold);
-}
-
-body.dark-mode .day .eng {
-    color: #c0d2c2;
-}
-
-body.dark-mode .day.today .eng {
-    color: #fff0b5;
 }
 
 body.dark-mode .events-section {
     color: var(--text);
-    background: linear-gradient(
-        145deg,
-        rgba(35, 57, 39, 0.97),
-        rgba(27, 47, 32, 0.97)
-    );
-
-    border-color: rgba(154, 190, 126, 0.58);
+    background: var(--cream);
+    border-color: var(--border);
 }
 
 body.dark-mode .events-title {
-    color: #d9efc9;
-    border-color: rgba(220, 237, 217, 0.20);
+    color: #e1efcf;
+    border-bottom-color: rgba(226, 238, 219, 0.18);
 }
 
 body.dark-mode .event-item {
     color: var(--text);
-    background: rgba(14, 31, 21, 0.70);
-    border-color: rgba(211, 233, 203, 0.14);
+    background: #29382c;
+    border-color: rgba(225, 236, 217, 0.14);
 }
 
 body.dark-mode .event-dot {
-    background: #a9d48b;
+    background: #b7d88c;
 }
 
 body.dark-mode .event-date {
-    color: #d4edb9;
+    color: #d6eab8;
 }
 
 body.dark-mode .event-name {
-    color: #e8f0e8;
+    color: #e9efe6;
 }
 
 body.dark-mode .event-empty,
 body.dark-mode .event-loading {
-    color: #c0cfc1;
+    color: #c0cbbd;
 }
 
 body.dark-mode .event-error {
-    color: #ffaaaa;
+    color: #ffb0a8;
 }
 
 body.dark-mode .events-timeline {
-    scrollbar-color: rgba(203, 224, 193, 0.40) transparent;
+    scrollbar-color: rgba(205, 222, 195, 0.35) transparent;
 }
 
 body.dark-mode .events-timeline::-webkit-scrollbar-thumb {
-    background: rgba(203, 224, 193, 0.40);
+    background: rgba(205, 222, 195, 0.35);
 }
 
-/* ---------- Short screens ---------- */
+/* =====================================================
+   SHORT MOBILE SCREENS
+   ===================================================== */
 
 @media (max-height: 760px) {
-    body {
-        padding: 7px;
-        gap: 7px;
+    :root {
+        --page-gap: 6px;
+        --bar-height: 52px;
     }
 
-    .calendar {
-        gap: 7px;
+    body {
+        padding: 6px 7px;
     }
 
     .top-board {
-        min-height: 49px;
-        padding: 5px 9px;
-        grid-template-columns: 42px minmax(0, 1fr) 42px;
-        gap: 7px;
+        grid-template-columns: 36px minmax(0, 1fr) 36px;
+        gap: 5px;
+        padding: 4px 8px;
     }
 
     .month-button {
-        width: 38px;
-        height: 34px;
-        min-width: 38px;
-        min-height: 34px;
-        font-size: 15px;
+        width: 35px;
+        height: 38px;
+        min-width: 35px;
+        min-height: 38px;
+        font-size: 26px;
     }
 
     .calendar-board {
@@ -710,7 +733,7 @@ body.dark-mode .events-timeline::-webkit-scrollbar-thumb {
     }
 
     #monthTitle {
-        margin-bottom: 6px;
+        margin-bottom: 5px;
         padding-bottom: 5px;
     }
 
@@ -742,36 +765,30 @@ body.dark-mode .events-timeline::-webkit-scrollbar-thumb {
 
     .event-item {
         padding: 6px 8px;
-        gap: 7px;
-    }
-
-    .bottom-board {
-        min-height: 39px;
-        padding: 5px 10px;
     }
 }
 
-/* ---------- Narrow phones ---------- */
+/* =====================================================
+   NARROW PHONES
+   ===================================================== */
 
 @media (max-width: 360px) {
     body {
-        padding: 6px;
-        gap: 6px;
+        padding: 5px;
     }
 
     .top-board {
-        grid-template-columns: 36px minmax(0, 1fr) 36px;
-        gap: 5px;
-        padding: 5px 7px;
+        grid-template-columns: 31px minmax(0, 1fr) 31px;
+        gap: 4px;
+        padding: 4px 6px;
     }
 
     .month-button {
-        width: 33px;
-        height: 33px;
-        min-width: 33px;
-        min-height: 33px;
-        font-size: 13px;
-        border-radius: 8px;
+        width: 30px;
+        height: 36px;
+        min-width: 30px;
+        min-height: 36px;
+        font-size: 23px;
     }
 
     .calendar-board {
@@ -803,7 +820,81 @@ body.dark-mode .events-timeline::-webkit-scrollbar-thumb {
     }
 }
 
-/* ---------- Reduced motion preference ---------- */
+/* =====================================================
+   VERY SHORT SCREENS
+   ===================================================== */
+
+@media (max-height: 600px) {
+    :root {
+        --bar-height: 44px;
+        --page-gap: 4px;
+    }
+
+    body {
+        padding: 4px 6px;
+    }
+
+    .top-board {
+        grid-template-columns: 30px minmax(0, 1fr) 30px;
+        gap: 3px;
+        padding: 3px 6px;
+    }
+
+    .month-button {
+        width: 29px;
+        height: 32px;
+        min-width: 29px;
+        min-height: 32px;
+        font-size: 21px;
+    }
+
+    .calendar-board {
+        padding: 5px;
+    }
+
+    #monthTitle {
+        margin-bottom: 3px;
+        padding: 0 0 3px;
+        font-size: 16px;
+    }
+
+    .day-names {
+        margin-bottom: 2px;
+    }
+
+    .day-name {
+        padding: 2px 0;
+        font-size: 10px;
+    }
+
+    .grid {
+        gap: 2px;
+    }
+
+    .day {
+        font-size: 11px;
+    }
+
+    .events-section {
+        padding: 5px;
+    }
+
+    .events-title {
+        margin-bottom: 3px;
+        padding-bottom: 3px;
+        font-size: 14px;
+    }
+
+    .bottom-board {
+        padding: 4px 8px;
+    }
+
+    #calendarFooter {
+        font-size: 12px;
+    }
+}
+
+/* ---------------- Reduced motion ---------------- */
 
 @media (prefers-reduced-motion: reduce) {
     *,
@@ -811,7 +902,5 @@ body.dark-mode .events-timeline::-webkit-scrollbar-thumb {
     *::after {
         scroll-behavior: auto !important;
         transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
     }
 }
