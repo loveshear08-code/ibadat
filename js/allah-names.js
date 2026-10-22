@@ -2,13 +2,27 @@
 
 let s = localStorage.getItem("appSettings");
 
-if(s){
-    s = JSON.parse(s);
-}else{
-    s = {lang:"bn"};
+if (s) {
+    try {
+        s = JSON.parse(s);
+    } catch (error) {
+        s = { lang: "bn" };
+    }
+} else {
+    s = { lang: "bn" };
 }
 
-const lang = s.lang || "bn";
+const getLanguage = () => {
+    const settings = JSON.parse(
+        localStorage.getItem("appSettings") || '{"lang":"bn"}'
+    );
+
+    return ["bn", "en", "hi"].includes(settings.lang)
+        ? settings.lang
+        : "bn";
+};
+
+let lang = getLanguage();
 
 // ================= TITLE =================
 
@@ -19,17 +33,20 @@ const TITLE = {
 };
 
 const pageTitle = document.getElementById("pageTitle");
-
-if (pageTitle) {
-    pageTitle.innerText = TITLE[lang] || TITLE.bn;
-}
-
-document.title = TITLE[lang] || TITLE.en;
-
 const introTitle = document.getElementById("introTitle");
 
-if (introTitle) {
-    introTitle.innerText = TITLE[lang] || TITLE.bn;
+function updatePageLanguage() {
+    lang = getLanguage();
+
+    if (pageTitle) {
+        pageTitle.innerText = TITLE[lang];
+    }
+
+    if (introTitle) {
+        introTitle.innerText = TITLE[lang];
+    }
+
+    document.title = TITLE[lang];
 }
 
 // ================= BISMILLAH =================
@@ -52,6 +69,14 @@ const BISMILLAH = {
         text: "बिस्मिल्लाहिर रहमानिर रहीम",
         meaning: "परम कृपाशील, अत्यंत दयालु अल्लाह के नाम से"
     }
+};
+
+// ================= FOOTER MESSAGE =================
+
+const FOOTER_MESSAGES = {
+    bn: "আল্লাহকে জানুন, স্মরণে রাখুন।",
+    en: "Know Allah, and keep Him in remembrance.",
+    hi: "अल्लाह को जानें और उनका स्मरण करते रहें।"
 };
 
 // ================= DATA =================
@@ -261,54 +286,94 @@ const names = [
 // ================= RENDER =================
 
 const container = document.getElementById("namesContainer");
+const footerText = document.getElementById("namesFooterText");
 
-let html = "";
+function renderNames() {
+    updatePageLanguage();
 
-// BISMILLAH CARD — NO NUMBER
+    if (!container) {
+        return;
+    }
 
-html += `
-<div class="bismillah-card">
+    let html = "";
 
-    <div class="arabic" lang="ar" dir="rtl">
-        ${BISMILLAH[lang].ar}
-    </div>
+    // BISMILLAH CARD — NO NUMBER
 
-    <div class="pron">
-        ${BISMILLAH[lang].text}
-    </div>
+    const bismillah = BISMILLAH[lang];
 
-    <div class="meaning">
-        ${BISMILLAH[lang].meaning}
-    </div>
+    html += `
+        <div class="bismillah-card">
 
-</div>
-`;
+            <div class="arabic" lang="ar" dir="rtl">
+                ${bismillah.ar}
+            </div>
 
-// 🔥 1–99 NAMES
+            <div class="pron">
+                ${bismillah.text}
+            </div>
 
-names.forEach((item,index)=>{
+            <div class="meaning">
+                ${bismillah.meaning}
+            </div>
 
-let name = item[lang];
-let meaning = item[lang+"_mean"];
+        </div>
+    `;
 
-const serial =
-    lang === "bn"
-        ? (index + 1).toLocaleString("bn-BD")
-        : lang === "hi"
-            ? (index + 1).toLocaleString("hi-IN-u-nu-deva")
-            : (index + 1).toLocaleString("en-US");
+    // ALL 99 NAMES — ORIGINAL ORDER PRESERVED
 
-html += `
-<div class="name-card">
-    <div class="arabic">
-        <span class="name-number">${serial}.</span>
-        <span class="arabic-name" lang="ar" dir="rtl">${item.ar}</span>
-    </div>
-    <div class="pron">${name}</div>
-    <div class="meaning">${meaning}</div>
-</div>
-`;
-    
+    names.forEach((item, index) => {
+        const name = item[lang];
+        const meaning = item[`${lang}_mean`];
+
+        const serial =
+            lang === "bn"
+                ? (index + 1).toLocaleString("bn-BD")
+                : lang === "hi"
+                    ? (index + 1).toLocaleString("hi-IN-u-nu-deva")
+                    : (index + 1).toLocaleString("en-US");
+
+        html += `
+            <div class="name-card">
+
+                <div class="arabic">
+                    <span class="name-number">${serial}.</span>
+                    <span class="arabic-name" lang="ar" dir="rtl">${item.ar}</span>
+                </div>
+
+                <div class="pron" lang="${lang}">
+                    ${name}
+                </div>
+
+                <div class="meaning" lang="${lang}">
+                    ${meaning}
+                </div>
+
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+
+    // FOOTER MESSAGE — LANGUAGE AWARE
+
+    if (footerText) {
+        footerText.textContent = FOOTER_MESSAGES[lang];
+    }
+}
+
+// ================= INITIAL RENDER =================
+
+renderNames();
+
+// ================= LANGUAGE CHANGE SUPPORT =================
+
+// Update the page when the saved language changes in another tab.
+window.addEventListener("storage", function (event) {
+    if (event.key === "appSettings") {
+        renderNames();
+    }
 });
 
-container.innerHTML = html;
+// Allow other scripts on this page to refresh the names after
+// changing appSettings in the same tab.
+window.addEventListener("languageChanged", renderNames);
