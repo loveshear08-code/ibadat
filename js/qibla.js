@@ -159,7 +159,7 @@
         transform: "translateX(-50%) rotate(0deg)",
         transformOrigin: "50% 100%",
         borderRadius: "5px",
-        background: "#0F5132",
+       background: "var(--compass-needle)", 
         pointerEvents: "none"
     });
 
@@ -174,7 +174,7 @@
         height: "0",
         borderLeft: "9px solid transparent",
         borderRight: "9px solid transparent",
-        borderBottom: "15px solid #C62828"
+        borderBottom: "15px solid var(--compass-tip)"
     });
 
     needle.appendChild(tip);
