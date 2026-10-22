@@ -1,42 +1,106 @@
 <!DOCTYPE html>
 <html lang="bn">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#1F6B3A">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1F6B3A">
 
-<title>Calendar</title>
+    <title>Calendar</title>
 
-<link rel="stylesheet" href="../css/calendar.css?v=final3">
+    <!-- Calendar CSS -->
+    <link rel="stylesheet" href="../css/calendar.css?v=final5">
 </head>
 
 <body>
 
-<div class="calendar">
+    <!-- FIXED TOP BOARD -->
+    <header class="top-board">
 
-    <!-- HEADER -->
-    <div class="header">
-        <button id="prevMonth" type="button" aria-label="Previous month">◀</button>
-        <h2 id="monthTitle"></h2>
-        <button id="nextMonth" type="button" aria-label="Next month">▶</button>
-    </div>
+        <!-- PREVIOUS MONTH -->
+        <button
+            id="prevMonth"
+            class="month-button"
+            type="button"
+            aria-label="Previous month"
+            title="Previous month">
+            <span aria-hidden="true">◀</span>
+        </button>
 
-    <!-- DAYS -->
-    <div class="day-names" id="dayNames"></div>
+        <!-- CENTER HEADING -->
+        <h1 id="calendarHeading">ক্যালেন্ডার</h1>
 
-    <!-- GRID -->
-    <div id="calendarGrid" class="grid"></div>
+        <!-- NEXT MONTH -->
+        <button
+            id="nextMonth"
+            class="month-button"
+            type="button"
+            aria-label="Next month"
+            title="Next month">
+            <span aria-hidden="true">▶</span>
+        </button>
 
-    <!-- ISLAMIC EVENTS -->
-    <section class="events-section">
-        <div class="events-title" id="eventsTitle"></div>
-        <div class="events-timeline" id="eventsTimeline" aria-live="polite"></div>
-    </section>
+    </header>
 
-</div>
+    <!-- MAIN CALENDAR CONTENT -->
+    <main class="calendar">
 
-<script src="../js/calendar.js?v=final3"></script>
-<script src="../js/theme.js"></script>
+        <!-- CALENDAR BOARD -->
+        <section
+            class="calendar-board"
+            aria-label="Calendar">
+
+            <!-- MONTH AND YEAR -->
+            <h2 id="monthTitle"></h2>
+
+            <!-- WEEKDAY NAMES -->
+            <div
+                class="day-names"
+                id="dayNames">
+            </div>
+
+            <!-- CALENDAR DATE GRID -->
+            <div
+                id="calendarGrid"
+                class="grid">
+            </div>
+
+        </section>
+
+        <!-- ISLAMIC SPECIAL DAYS BOARD -->
+        <section
+            class="events-section"
+            aria-label="Islamic special days">
+
+            <h2
+                class="events-title"
+                id="eventsTitle">
+            </h2>
+
+            <div
+                class="events-timeline"
+                id="eventsTimeline"
+                aria-live="polite">
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FIXED BOTTOM FOOTER BOARD -->
+    <footer class="bottom-board">
+
+        <p id="calendarFooter">
+            আল্লাহকে স্মরণ করুন
+        </p>
+
+    </footer>
+
+    <!-- Calendar JavaScript -->
+    <script src="../js/calendar.js?v=final5"></script>
+
+    <!-- Existing Theme JavaScript -->
+    <script src="../js/theme.js"></script>
 
 </body>
 </html>
