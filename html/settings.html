@@ -1,179 +1,102 @@
 <!DOCTYPE html>
 <html lang="bn">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#1F6B3A">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#124C32">
     <title>Settings</title>
-
-    <link rel="stylesheet" href="../css/settings.css">
+    <link rel="stylesheet" href="../css/settings.css?v=22">
 </head>
-
 <body>
 
-<div class="container">
+    <header class="top-board">
+        <h1 id="settingsTitle">সেটিংস</h1>
+    </header>
 
-    <!-- ================= TITLE ================= -->
+    <main class="container">
+        <div class="content">
 
-    <h2 id="settingsTitle">⚙️ সেটিংস</h2>
+            <!-- LANGUAGE -->
+            <section class="card language-card">
+                <h2 id="langTitle">ভাষা</h2>
+                <select id="langSelect" aria-label="Language">
+                    <option value="bn">বাংলা</option>
+                    <option value="en">English</option>
+                    <option value="hi">हिन्दी</option>
+                </select>
+            </section>
 
-    <div class="content">
+            <!-- THEME -->
+            <section class="card theme-card">
+                <h2 id="themeTitle">থিম</h2>
+                <label for="darkMode" class="theme-label">
+                    <input type="checkbox" id="darkMode">
+                    <span id="darkLabel">ডার্ক মোড</span>
+                </label>
+            </section>
 
-        <!-- ================= AZAN SETTINGS ================= -->
+            <!-- AZAN SETTINGS -->
+            <section class="card azan-card">
+                <h2 id="azanTitle">আজান সেটিং</h2>
+                <p id="azanDesc">কোন ওয়াক্তে কোন আজান বাজবে</p>
 
-        <div class="card">
+                <div class="azan-list">
 
-            <h3 id="azanTitle">আজান সেটিং</h3>
+                    <div class="azan-row">
+                        <span id="prayer_fajr">ফজর</span>
+                        <select id="azan_fajr" aria-label="Fajr Azan"></select>
+                        <button type="button" class="play-button"
+                            aria-label="Play Fajr Azan"
+                            onclick="playAzan(document.getElementById('azan_fajr').value)">▶</button>
+                    </div>
 
-            <p id="azanDesc">কোন ওয়াক্তে কোন আজান বাজবে</p>
+                    <div class="azan-row">
+                        <span id="prayer_dhuhr">জোহর</span>
+                        <select id="azan_dhuhr" aria-label="Dhuhr Azan"></select>
+                        <button type="button" class="play-button"
+                            aria-label="Play Dhuhr Azan"
+                            onclick="playAzan(document.getElementById('azan_dhuhr').value)">▶</button>
+                    </div>
 
-            <!-- FAJR -->
+                    <div class="azan-row">
+                        <span id="prayer_asr">আসর</span>
+                        <select id="azan_asr" aria-label="Asr Azan"></select>
+                        <button type="button" class="play-button"
+                            aria-label="Play Asr Azan"
+                            onclick="playAzan(document.getElementById('azan_asr').value)">▶</button>
+                    </div>
 
-            <div class="azan-row">
+                    <div class="azan-row">
+                        <span id="prayer_maghrib">মাগরিব</span>
+                        <select id="azan_maghrib" aria-label="Maghrib Azan"></select>
+                        <button type="button" class="play-button"
+                            aria-label="Play Maghrib Azan"
+                            onclick="playAzan(document.getElementById('azan_maghrib').value)">▶</button>
+                    </div>
 
-                <span id="prayer_fajr">ফজর</span>
+                    <div class="azan-row">
+                        <span id="prayer_isha">এশা</span>
+                        <select id="azan_isha" aria-label="Isha Azan"></select>
+                        <button type="button" class="play-button"
+                            aria-label="Play Isha Azan"
+                            onclick="playAzan(document.getElementById('azan_isha').value)">▶</button>
+                    </div>
 
-                <select id="azan_fajr" aria-label="Fajr Azan"></select>
-
-                <button
-                    type="button"
-                    aria-label="Play Fajr Azan"
-                    onclick="playAzan(document.getElementById('azan_fajr').value)">
-                    ▶️
-                </button>
-
-            </div>
-
-            <!-- DHUHR -->
-
-            <div class="azan-row">
-
-                <span id="prayer_dhuhr">জোহর</span>
-
-                <select id="azan_dhuhr" aria-label="Dhuhr Azan"></select>
-
-                <button
-                    type="button"
-                    aria-label="Play Dhuhr Azan"
-                    onclick="playAzan(document.getElementById('azan_dhuhr').value)">
-                    ▶️
-                </button>
-
-            </div>
-
-            <!-- ASR -->
-
-            <div class="azan-row">
-
-                <span id="prayer_asr">আসর</span>
-
-                <select id="azan_asr" aria-label="Asr Azan"></select>
-
-                <button
-                    type="button"
-                    aria-label="Play Asr Azan"
-                    onclick="playAzan(document.getElementById('azan_asr').value)">
-                    ▶️
-                </button>
-
-            </div>
-
-            <!-- MAGHRIB -->
-
-            <div class="azan-row">
-
-                <span id="prayer_maghrib">মাগরিব</span>
-
-                <select id="azan_maghrib" aria-label="Maghrib Azan"></select>
-
-                <button
-                    type="button"
-                    aria-label="Play Maghrib Azan"
-                    onclick="playAzan(document.getElementById('azan_maghrib').value)">
-                    ▶️
-                </button>
-
-            </div>
-
-            <!-- ISHA -->
-
-            <div class="azan-row">
-
-                <span id="prayer_isha">এশা</span>
-
-                <select id="azan_isha" aria-label="Isha Azan"></select>
-
-                <button
-                    type="button"
-                    aria-label="Play Isha Azan"
-                    onclick="playAzan(document.getElementById('azan_isha').value)">
-                    ▶️
-                </button>
-
-            </div>
+                </div>
+            </section>
 
         </div>
 
-        <!-- ================= LANGUAGE ================= -->
-
-        <div class="card">
-
-            <h3 id="langTitle">ভাষা</h3>
-
-            <select id="langSelect" aria-label="Language">
-
-                <option value="bn">বাংলা</option>
-
-                <option value="en">English</option>
-
-                <option value="hi">हिन्दी</option>
-
-            </select>
-
+        <div class="btn-box">
+            <button type="button" id="saveBtn" onclick="saveSettings()">সেভ</button>
         </div>
+    </main>
 
-        <!-- ================= THEME ================= -->
+    <footer class="bottom-board">
+        <p id="settingsFooter">আল্লাহকে স্মরণ করুন</p>
+    </footer>
 
-        <div class="card">
-
-            <h3 id="themeTitle">থিম</h3>
-
-            <label for="darkMode">
-
-                <input
-                    type="checkbox"
-                    id="darkMode">
-
-                <span id="darkLabel">ডার্ক মোড</span>
-
-            </label>
-
-        </div>
-
-    </div>
-
-    <!-- ================= SAVE ================= -->
-
-    <div class="btn-box">
-
-        <button
-            type="button"
-            id="saveBtn"
-            onclick="saveSettings()">
-
-            সেভ
-
-        </button>
-
-    </div>
-
-</div>
-
-<!-- ================= JAVASCRIPT ================= -->
-
-<script src="../js/settings.js?v=21"></script>
-
+    <script src="../js/settings.js?v=22"></script>
+    <script src="../js/theme.js"></script>
 </body>
 </html>
