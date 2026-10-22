@@ -186,7 +186,7 @@ body {
             var(--cream-overlay),
             var(--cream-overlay)
         ),
-        url("../assets/main-bg.jpg");
+        url("../assets/images/home-bg.png");
 
     background-position: center center;
     background-repeat: no-repeat;
@@ -240,7 +240,7 @@ body {
             var(--cream-overlay),
             var(--cream-overlay)
         ),
-        url("../assets/main-bg.jpg");
+        url("../assets/images/home-bg.png");
 
     background-position: center center;
     background-repeat: no-repeat;
@@ -341,7 +341,7 @@ body {
             var(--cream-overlay),
             var(--cream-overlay)
         ),
-        url("../assets/main-bg.jpg");
+        url("../assets/images/home-bg.png");
 
     background-position: center center;
     background-repeat: no-repeat;
