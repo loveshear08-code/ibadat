@@ -1,365 +1,227 @@
-/* =====================================================
-   IBADAT — NAMAZ CONDITIONS
-   Main board + 10 cards + footer board
-   Cream background | Green & Gold | Light / Dark
-   Responsive mobile-first design
-   ===================================================== */
+
+/* =========================================
+   IBADAT — শর্ত ও প্রস্তুতি পেজ
+   File: css/namaz-conditions.css
+   ========================================= */
+
+/* ---------- মূল রং ও সেটিংস ---------- */
 
 :root {
-    color-scheme: light;
+    --primary-green: #0f5132;
+    --deep-green: #073b25;
+    --gold: #c6a24a;
 
-    --green: #0f5132;
-    --green-dark: #0b3d26;
-    --green-deep: #082f1e;
+    --text-color: #18372a;
+    --card-background: rgba(255, 255, 250, 0.94);
+    --page-overlay: rgba(255, 252, 241, 0.74);
 
-    --gold: #d4af37;
-    --gold-light: #f3df91;
-    --gold-dark: #9b791c;
+    --border-color: rgba(168, 140, 78, 0.78);
+    --shadow-color: rgba(25, 48, 31, 0.14);
 
-    --page-text: #254632;
-    --muted-text: #647565;
+    --hero-text: #fff9e9;
+    --footer-text: #fff9e9;
 
-    --card-bg: rgba(255, 255, 255, 0.94);
-    --card-border: rgba(15, 81, 50, 0.20);
-    --card-hover: #edf4e7;
-
-    --cream: #fffaf0;
-    --shadow: 0 5px 16px rgba(15, 55, 35, 0.10);
-
-    --page-padding: 12px;
-    --card-gap: 10px;
-    --board-radius: 22px;
+    --page-gap: clamp(8px, 1.5vh, 14px);
 }
 
-/* ---------- Reset ---------- */
+
+/* ---------- সাধারণ রিসেট ---------- */
 
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    -webkit-tap-highlight-color: transparent;
 }
 
 html {
-    width: 100%;
     min-height: 100%;
-    font-family:
-        "Noto Sans Bengali",
-        "Noto Sans Devanagari",
-        "Nirmala UI",
-        Arial,
-        sans-serif;
     scroll-behavior: smooth;
+    scroll-padding-top: 12px;
 }
 
 body {
-    width: 100%;
+    margin: 0;
+    min-width: 280px;
     min-height: 100vh;
-    min-height: 100dvh;
-    color: var(--page-text);
-    line-height: 1.5;
+
+    color: var(--text-color);
+
+    font-family:
+        system-ui,
+        -apple-system,
+        "Noto Sans Bengali",
+        "Nirmala UI",
+        sans-serif;
 
     background:
         linear-gradient(
-            rgba(255, 251, 243, 0.86),
-            rgba(255, 251, 243, 0.86)
+            var(--page-overlay),
+            var(--page-overlay)
         ),
-        url("../assets/main-bg.jpg") center / cover fixed;
-
-    overflow-x: hidden;
+        url("../assets/main-bg.jpg")
+            center center / cover fixed no-repeat,
+        #f8f4e8;
 }
 
-img {
-    display: block;
-    max-width: 100%;
-}
 
-a {
-    color: inherit;
-}
-
-/* ---------- Main page layout ---------- */
+/* ---------- সম্পূর্ণ পেজ ---------- */
 
 .conditions-page {
     width: 100%;
-    max-width: 760px;
+    max-width: 980px;
+
     min-height: 100vh;
     min-height: 100dvh;
 
-    margin: 0 auto;
+    margin-inline: auto;
+
     padding:
-        max(10px, env(safe-area-inset-top))
-        var(--page-padding)
-        max(10px, env(safe-area-inset-bottom));
+        clamp(8px, 1.6vh, 16px)
+        clamp(8px, 2.5vw, 22px);
 
     display: flex;
     flex-direction: column;
-    gap: 12px;
+
+    gap: var(--page-gap);
 }
 
-/* ---------- Top board ---------- */
+
+/* ---------- উপরের হেডার বোর্ড ---------- */
 
 .hero-board {
     position: relative;
-    isolation: isolate;
+
     flex: 0 0 auto;
+    width: 100%;
+
+    min-height: 120px;
+
+    padding: 18px 14px;
 
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 
-    width: 100%;
-    min-height: 112px;
-    padding: 17px 14px;
-
-    overflow: hidden;
     text-align: center;
 
+    color: var(--hero-text);
+
+    overflow: hidden;
+
     border: 2px solid var(--gold);
-    border-radius: var(--board-radius);
+    border-radius: 18px;
 
     background:
         linear-gradient(
-            rgba(8, 55, 34, 0.91),
-            rgba(11, 61, 38, 0.94)
+            110deg,
+            rgba(5, 58, 35, 0.93),
+            rgba(12, 79, 48, 0.82)
         ),
-        url("../assets/hero-bg.jpg") center / cover no-repeat;
+        url("../assets/hero-bg.jpg")
+            center center / cover no-repeat;
 
-    box-shadow: var(--shadow);
+    box-shadow:
+        0 5px 16px var(--shadow-color);
 }
 
-.hero-board::before {
-    content: "";
-    position: absolute;
-    inset: 6px;
-    z-index: -1;
+.hero-content {
+    position: relative;
+    z-index: 1;
 
-    border: 1px solid rgba(243, 223, 145, 0.45);
-    border-radius: calc(var(--board-radius) - 8px);
-    pointer-events: none;
-}
-
-.hero-inner {
     width: 100%;
-    max-width: 620px;
+    max-width: 760px;
+
+    margin-inline: auto;
 }
+
+
+/* ---------- হেডারের শিরোনাম ---------- */
 
 .hero-board h1 {
-    margin: 0 0 6px;
+    margin: 0;
 
-    color: var(--gold-light);
-    font-size: clamp(25px, 5.8vw, 35px);
-    font-weight: 900;
+    font-size: clamp(1.4rem, 4.8vw, 2rem);
+    font-weight: 800;
+
     line-height: 1.35;
+    letter-spacing: 0.01em;
+
     overflow-wrap: anywhere;
 }
+
+
+/* ---------- হেডারের এক লাইনের বিবরণ ---------- */
 
 .hero-board p {
-    color: #fffdf5;
-    font-size: clamp(13px, 3.2vw, 16px);
-    font-weight: 650;
-    line-height: 1.65;
+    margin: 7px 0 0;
+
+    font-size: clamp(0.86rem, 2.8vw, 1.05rem);
+    font-weight: 500;
+
+    line-height: 1.5;
     overflow-wrap: anywhere;
 }
 
-.hero-board .hero-subtitle {
-    margin-top: 4px;
-    color: #f1dda0;
-    font-size: clamp(11px, 2.8vw, 13px);
-    font-weight: 700;
-}
 
-/* ---------- Ten-card area ---------- */
+/* ---------- দশটি অপশনের গ্রিড ---------- */
 
-.options-area {
+.conditions-grid {
+    width: 100%;
+
     flex: 1 0 auto;
 
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-content: center;
-    gap: var(--card-gap);
 
-    width: 100%;
-    min-width: 0;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: var(--page-gap);
+
+    align-content: stretch;
 }
 
-/* ---------- Individual card ---------- */
+
+/* ---------- প্রতিটি অপশন কার্ড ---------- */
 
 .condition-card {
     position: relative;
-    isolation: isolate;
-
-    display: grid;
-    grid-template-columns: 44px minmax(0, 1fr);
-    grid-template-rows: auto auto auto;
-    align-content: center;
-    align-items: center;
-    column-gap: 9px;
-    row-gap: 3px;
 
     min-width: 0;
-    min-height: 112px;
-    padding: 12px 11px;
+    min-height: 92px;
 
-    overflow: hidden;
+    padding: 9px 6px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 6px;
+
+    text-align: center;
     text-decoration: none;
 
-    border: 1px solid var(--card-border);
-    border-radius: 17px;
+    color: var(--text-color);
+    background: var(--card-background);
 
-    background: var(--card-bg);
-    box-shadow: 0 3px 10px rgba(15, 81, 50, 0.07);
+    border: 1.5px solid var(--border-color);
+    border-radius: 14px;
+
+    box-shadow:
+        0 4px 12px var(--shadow-color);
+
+    -webkit-tap-highlight-color: transparent;
 
     transition:
         transform 160ms ease,
-        border-color 160ms ease,
-        background-color 160ms ease,
-        box-shadow 160ms ease;
+        box-shadow 160ms ease,
+        border-color 160ms ease;
 }
 
-/* Gold accent line */
 
-.condition-card::before {
-    content: "";
-    position: absolute;
-    top: 12px;
-    bottom: 12px;
-    left: 0;
-
-    width: 3px;
-    border-radius: 0 4px 4px 0;
-    background: var(--gold);
-}
-
-/* Number badge */
-
-.card-number {
-    position: absolute;
-    top: 7px;
-    right: 8px;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    min-width: 24px;
-    height: 20px;
-    padding: 0 4px;
-
-    border: 1px solid rgba(212, 175, 55, 0.45);
-    border-radius: 7px;
-
-    color: var(--gold-dark);
-    background: rgba(243, 223, 145, 0.22);
-
-    font-family: Arial, sans-serif;
-    font-size: 10px;
-    font-weight: 900;
-    line-height: 1;
-}
-
-/* Icon or image */
-
-.card-icon {
-    grid-column: 1;
-    grid-row: 1 / span 3;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 44px;
-    height: 48px;
-    padding: 3px;
-
-    overflow: hidden;
-
-    border: 1px solid rgba(212, 175, 55, 0.38);
-    border-radius: 12px;
-
-    background: #f2f3df;
-    color: var(--green);
-
-    font-size: 27px;
-    line-height: 1;
-}
-
-.card-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    border-radius: 8px;
-}
-
-/* Card title */
-
-.card-title {
-    grid-column: 2;
-    grid-row: 1;
-
-    display: block;
-    min-width: 0;
-    padding-right: 20px;
-
-    color: var(--green);
-    font-size: clamp(13px, 2.8vw, 16px);
-    font-weight: 900;
-    line-height: 1.5;
-
-    overflow-wrap: anywhere;
-}
-
-/* Card description */
-
-.card-description {
-    grid-column: 2;
-    grid-row: 2;
-
-    display: block;
-    min-width: 0;
-
-    color: var(--muted-text);
-    font-size: clamp(10px, 2.35vw, 12px);
-    font-weight: 600;
-    line-height: 1.55;
-
-    overflow-wrap: anywhere;
-}
-
-/* Direction marker */
-
-.card-arrow {
-    position: absolute;
-    right: 9px;
-    bottom: 7px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 18px;
-    height: 18px;
-
-    color: var(--gold-dark);
-    font-family: Arial, sans-serif;
-    font-size: 21px;
-    font-weight: 900;
-    line-height: 1;
-
-    transform: rotate(180deg);
-}
-
-/* ---------- Card interaction ---------- */
-
-.condition-card:hover {
-    border-color: var(--gold);
-    background: var(--card-hover);
-    box-shadow: 0 5px 14px rgba(15, 81, 50, 0.12);
-    transform: translateY(-2px);
-}
+/* ---------- কার্ডে চাপ দেওয়ার প্রতিক্রিয়া ---------- */
 
 .condition-card:active {
-    transform: scale(0.98);
+    transform: scale(0.985);
 }
 
 .condition-card:focus-visible {
@@ -367,472 +229,321 @@ a {
     outline-offset: 3px;
 }
 
-.condition-card:focus:not(:focus-visible) {
-    outline: none;
-}
 
-/* ---------- Bottom board ---------- */
+/* ---------- কার্ডের ছবির অংশ ---------- */
 
-.footer-board {
+.card-image {
+    width: clamp(34px, 7.5vw, 54px);
+    height: clamp(34px, 7.5vw, 54px);
+
     flex: 0 0 auto;
 
     display: flex;
-    align-items: center;
     justify-content: center;
-
-    width: 100%;
-    min-height: 68px;
-    padding: 13px 16px;
-
-    border: 2px solid var(--gold);
-    border-radius: var(--board-radius);
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--green),
-            var(--green-dark)
-        );
-
-    color: #fffdf5;
-    text-align: center;
-    box-shadow: var(--shadow);
+    align-items: center;
 }
 
-.footer-board p {
-    max-width: 600px;
 
-    color: #fffdf5;
-    font-size: clamp(12px, 3vw, 15px);
+/* ---------- কার্ডের ছবি ---------- */
+
+.card-image img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    max-width: 100%;
+    max-height: 100%;
+
+    object-fit: contain;
+    object-position: center;
+}
+
+
+/* ---------- কার্ডের নাম ---------- */
+
+.card-title {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+
+    font-size: clamp(0.79rem, 2.6vw, 1rem);
     font-weight: 750;
-    line-height: 1.7;
+
+    line-height: 1.35;
+
+    text-align: center;
     overflow-wrap: anywhere;
 }
 
-/* ---------- Dark mode ---------- */
 
-body.dark-mode {
+/* ---------- ওয়াক্ত কার্ডের ঘড়ির প্রতীক ---------- */
+
+.time-card-image {
+    color: var(--primary-green);
+}
+
+.time-icon {
+    display: block;
+
+    font-size: clamp(2rem, 7vw, 2.8rem);
+    font-weight: 500;
+
+    line-height: 1;
+}
+
+
+/* ---------- নিচের ফুটার বোর্ড ---------- */
+
+.footer-board {
+    width: 100%;
+
+    flex: 0 0 auto;
+    min-height: 58px;
+
+    padding: 12px 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    color: var(--footer-text);
+
+    border: 2px solid var(--gold);
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            110deg,
+            rgba(5, 58, 35, 0.97),
+            rgba(12, 79, 48, 0.93)
+        );
+
+    box-shadow:
+        0 5px 16px var(--shadow-color);
+}
+
+.footer-board p {
+    margin: 0;
+
+    font-size: clamp(0.88rem, 2.8vw, 1rem);
+    font-weight: 700;
+
+    line-height: 1.45;
+}
+
+
+/* =========================================
+   ডার্ক মোড
+   ========================================= */
+
+html[data-theme="dark"],
+body[data-theme="dark"] {
     color-scheme: dark;
 
-    --page-text: #e8f1e7;
-    --muted-text: #c3d1c0;
+    --text-color: #f1f4e8;
+    --card-background: rgba(22, 40, 29, 0.96);
 
-    --card-bg: rgba(27, 42, 32, 0.97);
-    --card-border: rgba(204, 226, 194, 0.20);
-    --card-hover: #263d2c;
+    --page-overlay: rgba(8, 20, 13, 0.81);
 
-    --shadow: 0 5px 16px rgba(0, 0, 0, 0.25);
+    --border-color: rgba(198, 162, 74, 0.82);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme="dark"] body,
+body[data-theme="dark"] {
+    color: var(--text-color);
 
     background:
         linear-gradient(
-            rgba(10, 22, 15, 0.88),
-            rgba(10, 22, 15, 0.88)
+            var(--page-overlay),
+            var(--page-overlay)
         ),
-        url("../assets/main-bg.jpg") center / cover fixed;
+        url("../assets/main-bg.jpg")
+            center center / cover fixed no-repeat,
+        #101c14;
 }
 
-body.dark-mode .hero-board {
-    background:
-        linear-gradient(
-            rgba(5, 28, 18, 0.94),
-            rgba(8, 39, 25, 0.96)
-        ),
-        url("../assets/hero-bg.jpg") center / cover no-repeat;
+html[data-theme="dark"] .condition-card,
+body[data-theme="dark"] .condition-card {
+    color: var(--text-color);
+    background: var(--card-background);
 }
 
-body.dark-mode .hero-board h1 {
-    color: #f3df91;
+html[data-theme="dark"] .time-icon,
+body[data-theme="dark"] .time-icon {
+    color: #e0c46d;
 }
 
-body.dark-mode .hero-board p {
-    color: #f0f5e9;
-}
 
-body.dark-mode .hero-board .hero-subtitle {
-    color: #f3df91;
-}
+/* =========================================
+   ছোট মোবাইল
+   ========================================= */
 
-body.dark-mode .condition-card {
-    background: var(--card-bg);
-    border-color: var(--card-border);
-}
+@media (max-width: 420px) {
 
-body.dark-mode .condition-card:hover {
-    background: var(--card-hover);
-    border-color: var(--gold);
-}
-
-body.dark-mode .card-title {
-    color: #e0efda;
-}
-
-body.dark-mode .card-description {
-    color: #c3d1c0;
-}
-
-body.dark-mode .card-number {
-    color: #f3df91;
-    background: rgba(212, 175, 55, 0.12);
-    border-color: rgba(212, 175, 55, 0.4);
-}
-
-body.dark-mode .card-icon {
-    background: #293b2d;
-    border-color: rgba(212, 175, 55, 0.38);
-    color: #f3df91;
-}
-
-body.dark-mode .card-icon img {
-    background: #f7eed6;
-}
-
-body.dark-mode .card-arrow {
-    color: #f3df91;
-}
-
-body.dark-mode .footer-board {
-    background: linear-gradient(135deg, #082f1e, #061f15);
-    color: #ffffff;
-}
-
-body.dark-mode .footer-board p {
-    color: #ffffff;
-}
-
-/* ---------- Tablet ---------- */
-
-@media (min-width: 600px) {
     .conditions-page {
-        gap: 15px;
-        padding: 16px;
-    }
-
-    .hero-board {
-        min-height: 125px;
-        padding: 20px;
-    }
-
-    .options-area {
-        gap: 13px;
-    }
-
-    .condition-card {
-        min-height: 120px;
-        padding: 14px;
-        grid-template-columns: 50px minmax(0, 1fr);
-        column-gap: 12px;
-        border-radius: 19px;
-    }
-
-    .card-icon {
-        width: 50px;
-        height: 54px;
-        font-size: 30px;
-    }
-
-    .card-title {
-        font-size: 16px;
-    }
-
-    .card-description {
-        font-size: 12px;
-    }
-
-    .footer-board {
-        min-height: 74px;
-    }
-}
-
-/* ---------- Standard mobile ---------- */
-
-@media (max-width: 480px) {
-    .conditions-page {
-        gap: 9px;
-        padding-right: 9px;
-        padding-left: 9px;
-    }
-
-    .hero-board {
-        min-height: 102px;
-        padding: 13px 10px;
-        border-radius: 18px;
-    }
-
-    .hero-board::before {
-        inset: 4px;
-        border-radius: 13px;
-    }
-
-    .hero-board h1 {
-        margin-bottom: 4px;
-        font-size: clamp(23px, 6.5vw, 29px);
-    }
-
-    .hero-board p {
-        font-size: 12px;
-        line-height: 1.5;
-    }
-
-    .hero-board .hero-subtitle {
-        margin-top: 3px;
-        font-size: 10px;
-    }
-
-    .options-area {
+        padding: 7px;
         gap: 7px;
     }
 
-    .condition-card {
-        grid-template-columns: 35px minmax(0, 1fr);
-        column-gap: 7px;
-        row-gap: 3px;
+    .hero-board {
+        min-height: 106px;
 
-        min-height: 96px;
-        padding: 10px 7px 10px 8px;
+        padding: 13px 8px;
 
-        border-radius: 13px;
+        border-radius: 14px;
     }
 
-    .condition-card::before {
-        top: 9px;
-        bottom: 9px;
-        width: 2px;
+    .hero-board h1 {
+        font-size: clamp(1.3rem, 5vw, 1.55rem);
     }
 
-    .card-icon {
-        width: 35px;
-        height: 39px;
-        padding: 2px;
-        border-radius: 9px;
-        font-size: 22px;
-    }
+    .hero-board p {
+        margin-top: 5px;
 
-    .card-icon img {
-        border-radius: 6px;
-    }
-
-    .card-number {
-        top: 5px;
-        right: 5px;
-        min-width: 20px;
-        height: 17px;
-        padding: 0 3px;
-        border-radius: 5px;
-        font-size: 9px;
-    }
-
-    .card-title {
-        padding-right: 14px;
-        font-size: clamp(11px, 3.15vw, 14px);
-        line-height: 1.4;
-    }
-
-    .card-description {
-        font-size: clamp(9px, 2.45vw, 11px);
+        font-size: 0.84rem;
         line-height: 1.45;
     }
 
-    .card-arrow {
-        right: 5px;
-        bottom: 4px;
-        width: 14px;
-        height: 14px;
-        font-size: 17px;
-    }
-
-    .footer-board {
-        min-height: 58px;
-        padding: 10px;
-        border-radius: 17px;
-    }
-
-    .footer-board p {
-        font-size: 11px;
-        line-height: 1.55;
-    }
-}
-
-/* ---------- Small mobile ---------- */
-
-@media (max-width: 360px) {
-    .conditions-page {
-        gap: 7px;
-        padding-right: 7px;
-        padding-left: 7px;
-    }
-
-    .hero-board {
-        min-height: 94px;
-        padding: 10px 8px;
-    }
-
-    .hero-board h1 {
-        font-size: 23px;
-    }
-
-    .hero-board p {
-        font-size: 11px;
-    }
-
-    .options-area {
+    .conditions-grid {
         gap: 6px;
     }
 
     .condition-card {
-        grid-template-columns: 30px minmax(0, 1fr);
-        column-gap: 5px;
-        min-height: 88px;
-        padding: 9px 5px 9px 7px;
+        min-height: 82px;
+
+        padding: 6px 4px;
+
+        gap: 5px;
+
+        border-radius: 11px;
     }
 
-    .card-icon {
-        width: 30px;
+    .card-image {
+        width: 34px;
         height: 34px;
-        font-size: 19px;
     }
 
     .card-title {
-        font-size: 11px;
-    }
-
-    .card-description {
-        font-size: 9px;
-    }
-
-    .card-number {
-        min-width: 18px;
-        height: 15px;
-        font-size: 8px;
+        font-size: 0.8rem;
+        line-height: 1.32;
     }
 
     .footer-board {
-        min-height: 52px;
-    }
-}
+        min-height: 49px;
 
-/* ---------- Short screens: fit the layout ---------- */
+        padding: 9px 7px;
 
-@media (max-height: 760px) and (max-width: 480px) {
-    .conditions-page {
-        gap: 6px;
-        padding-top: max(6px, env(safe-area-inset-top));
-        padding-bottom: max(6px, env(safe-area-inset-bottom));
-    }
-
-    .hero-board {
-        min-height: 84px;
-        padding: 8px 10px;
-    }
-
-    .hero-board h1 {
-        margin-bottom: 2px;
-        font-size: 22px;
-    }
-
-    .hero-board p {
-        font-size: 11px;
-        line-height: 1.4;
-    }
-
-    .hero-board .hero-subtitle {
-        margin-top: 2px;
-        font-size: 9px;
-    }
-
-    .options-area {
-        gap: 5px;
-    }
-
-    .condition-card {
-        min-height: 0;
-        padding-top: 7px;
-        padding-bottom: 7px;
-    }
-
-    .card-icon {
-        height: 32px;
-    }
-
-    .footer-board {
-        min-height: 45px;
-        padding: 7px;
+        border-radius: 12px;
     }
 
     .footer-board p {
-        font-size: 10px;
+        font-size: 0.88rem;
     }
 }
 
-/* ---------- Extra short screens ---------- */
 
-@media (max-height: 650px) and (max-width: 480px) {
+/* =========================================
+   কম উচ্চতার মোবাইল স্ক্রিন
+   ========================================= */
+
+@media (max-height: 720px) and (max-width: 600px) {
+
     .conditions-page {
+        padding-top: 5px;
+        padding-bottom: 5px;
+
         gap: 5px;
     }
 
     .hero-board {
-        min-height: 74px;
-        padding: 6px 8px;
+        min-height: 88px;
+        padding: 8px 7px;
     }
 
     .hero-board h1 {
-        font-size: 20px;
+        font-size: 1.25rem;
     }
 
     .hero-board p {
-        font-size: 10px;
+        margin-top: 4px;
+
+        font-size: 0.78rem;
     }
 
-    .hero-board .hero-subtitle {
-        font-size: 8px;
-    }
-
-    .options-area {
+    .conditions-grid {
         gap: 4px;
     }
 
     .condition-card {
-        padding: 5px 5px 5px 7px;
-        column-gap: 5px;
-        border-radius: 10px;
+        min-height: 72px;
+
+        padding: 4px 3px;
+
+        gap: 3px;
     }
 
-    .card-icon {
+    .card-image {
         width: 28px;
         height: 28px;
-        font-size: 17px;
     }
 
     .card-title {
-        font-size: 10px;
+        font-size: 0.74rem;
+        line-height: 1.28;
     }
 
-    .card-description {
-        font-size: 8px;
+    .time-icon {
+        font-size: 1.8rem;
     }
 
     .footer-board {
-        min-height: 39px;
-        padding: 5px;
-    }
-
-    .footer-board p {
-        font-size: 9px;
+        min-height: 42px;
+        padding: 6px;
     }
 }
 
-/* ---------- Reduced motion ---------- */
+
+/* =========================================
+   ট্যাবলেট ও বড় স্ক্রিন
+   ========================================= */
+
+@media (min-width: 700px) {
+
+    .conditions-page {
+        gap: 12px;
+    }
+
+    .conditions-grid {
+        gap: 12px;
+    }
+
+    .condition-card {
+        min-height: 110px;
+        padding: 12px;
+    }
+
+    .card-title {
+        font-size: 1rem;
+    }
+}
+
+
+/* =========================================
+   অ্যানিমেশন কমানোর সিস্টেম সেটিং
+   ========================================= */
 
 @media (prefers-reduced-motion: reduce) {
+
     html {
         scroll-behavior: auto;
     }
 
-    *,
-    *::before,
-    *::after {
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
+    .condition-card {
+        transition: none;
     }
 }
