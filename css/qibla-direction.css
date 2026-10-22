@@ -1,0 +1,641 @@
+
+/* =====================================================
+   IBADAT — কিবলামুখী হওয়া
+   File: css/qibla-direction.css
+
+   Features:
+   - Hero background: hero-bg.jpg
+   - Page background: main-bg.jpg
+   - Cream overlay
+   - Green and gold lesson boards
+   - Responsive images and typography
+   - Light and dark themes
+   - Natural page scrolling
+   ===================================================== */
+
+
+/* -----------------------------------------------------
+   1. Theme variables
+   ----------------------------------------------------- */
+
+:root {
+    color-scheme: light;
+
+    --primary-green: #0f5132;
+    --deep-green: #073b25;
+    --gold: #c6a24a;
+
+    --text-color: #243b2d;
+    --muted-text: #46584a;
+
+    --page-overlay: rgba(255, 252, 241, 0.76);
+
+    --board-background: rgba(255, 255, 250, 0.94);
+    --heading-background: rgba(15, 81, 50, 0.96);
+
+    --board-border: rgba(168, 140, 78, 0.78);
+    --shadow-color: rgba(25, 48, 31, 0.14);
+
+    --hero-text: #fff9e9;
+    --footer-text: #fff9e9;
+
+    --page-padding: clamp(8px, 2.2vw, 20px);
+    --section-gap: clamp(12px, 2.2vh, 20px);
+
+    --board-radius: 17px;
+}
+
+
+/* -----------------------------------------------------
+   2. Reset and base
+   ----------------------------------------------------- */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 12px;
+}
+
+body {
+    margin: 0;
+
+    min-width: 280px;
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    color: var(--text-color);
+
+    font-family:
+        system-ui,
+        -apple-system,
+        "Noto Sans Bengali",
+        "Nirmala UI",
+        sans-serif;
+
+    background:
+        linear-gradient(
+            var(--page-overlay),
+            var(--page-overlay)
+        ),
+        url("../assets/main-bg.jpg")
+            center center / cover fixed no-repeat,
+        #f8f4e8;
+}
+
+img {
+    max-width: 100%;
+}
+
+
+/* -----------------------------------------------------
+   3. Main page layout
+   ----------------------------------------------------- */
+
+.lesson-page {
+    width: 100%;
+    max-width: 980px;
+
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    margin-inline: auto;
+
+    padding: var(--page-padding);
+
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--section-gap);
+}
+
+
+/* -----------------------------------------------------
+   4. Hero board
+   ----------------------------------------------------- */
+
+.hero-board {
+    position: relative;
+
+    flex: 0 0 auto;
+
+    width: 100%;
+    min-height: 150px;
+
+    padding: clamp(18px, 3.5vw, 30px) 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    text-align: center;
+    color: var(--hero-text);
+
+    border: 2px solid var(--gold);
+    border-radius: 19px;
+
+    background:
+        linear-gradient(
+            110deg,
+            rgba(5, 58, 35, 0.93),
+            rgba(12, 79, 48, 0.82)
+        ),
+        url("../assets/hero-bg.jpg")
+            center center / cover no-repeat;
+
+    box-shadow:
+        0 5px 16px var(--shadow-color);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+    max-width: 760px;
+
+    margin-inline: auto;
+}
+
+.hero-board h1 {
+    margin: 0;
+
+    font-size: clamp(1.45rem, 5vw, 2.15rem);
+    font-weight: 800;
+
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.hero-board p {
+    margin: 8px 0 0;
+
+    font-size: clamp(0.9rem, 2.8vw, 1.08rem);
+    font-weight: 500;
+
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+}
+
+
+/* -----------------------------------------------------
+   5. Lesson content wrapper
+   ----------------------------------------------------- */
+
+.lesson-content {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--section-gap);
+}
+
+
+/* -----------------------------------------------------
+   6. Lesson boards
+   ----------------------------------------------------- */
+
+.lesson-board {
+    width: 100%;
+    min-width: 0;
+
+    overflow: hidden;
+
+    border: 1.5px solid var(--board-border);
+    border-radius: var(--board-radius);
+
+    background: var(--board-background);
+
+    box-shadow:
+        0 4px 15px var(--shadow-color);
+
+    scroll-margin-top: 12px;
+}
+
+
+/* -----------------------------------------------------
+   7. Lesson heading strip
+   ----------------------------------------------------- */
+
+.lesson-heading {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    text-align: center;
+
+    color: var(--hero-text);
+    background: var(--heading-background);
+
+    border-bottom: 1.5px solid var(--gold);
+}
+
+.lesson-heading h2 {
+    margin: 0;
+
+    font-size: clamp(1.05rem, 3.7vw, 1.4rem);
+    font-weight: 750;
+
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+
+/* -----------------------------------------------------
+   8. Lesson body
+   ----------------------------------------------------- */
+
+.lesson-body {
+    width: 100%;
+    min-width: 0;
+
+    padding: clamp(13px, 3vw, 24px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 15px;
+}
+
+
+/* -----------------------------------------------------
+   9. Lesson image
+   ----------------------------------------------------- */
+
+.lesson-image {
+    width: min(100%, 420px);
+
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lesson-image img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    max-height: 360px;
+
+    object-fit: contain;
+    object-position: center;
+
+    border-radius: 12px;
+}
+
+
+/* -----------------------------------------------------
+   10. Lesson text
+   ----------------------------------------------------- */
+
+.lesson-text {
+    width: 100%;
+    min-width: 0;
+
+    color: var(--text-color);
+
+    font-size: clamp(0.96rem, 2.7vw, 1.06rem);
+    line-height: 1.95;
+
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+.lesson-text p {
+    margin: 0 0 14px;
+}
+
+.lesson-text p:last-child {
+    margin-bottom: 0;
+}
+
+.lesson-text ul,
+.lesson-text ol {
+    margin: 10px 0 15px;
+
+    padding-inline-start: 25px;
+}
+
+.lesson-text li {
+    padding-inline-start: 3px;
+    margin-bottom: 9px;
+}
+
+.lesson-text li:last-child {
+    margin-bottom: 0;
+}
+
+
+/* -----------------------------------------------------
+   11. Footer board
+   ----------------------------------------------------- */
+
+.footer-board {
+    width: 100%;
+
+    flex: 0 0 auto;
+
+    min-height: 58px;
+
+    padding: 12px 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    color: var(--footer-text);
+
+    border: 2px solid var(--gold);
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            110deg,
+            rgba(5, 58, 35, 0.97),
+            rgba(12, 79, 48, 0.93)
+        );
+
+    box-shadow:
+        0 5px 16px var(--shadow-color);
+}
+
+.footer-board p {
+    margin: 0;
+
+    font-size: clamp(0.9rem, 2.8vw, 1rem);
+    font-weight: 700;
+
+    line-height: 1.5;
+}
+
+
+/* -----------------------------------------------------
+   12. Dark mode
+   ----------------------------------------------------- */
+
+html[data-theme="dark"],
+body[data-theme="dark"] {
+    color-scheme: dark;
+
+    --text-color: #edf3e9;
+    --muted-text: #d0ddcf;
+
+    --page-overlay: rgba(8, 20, 13, 0.82);
+
+    --board-background: rgba(22, 40, 29, 0.96);
+    --heading-background: rgba(5, 48, 29, 0.98);
+
+    --board-border: rgba(198, 162, 74, 0.82);
+    --shadow-color: rgba(0, 0, 0, 0.32);
+}
+
+html[data-theme="dark"] body,
+body[data-theme="dark"] {
+    color: var(--text-color);
+
+    background:
+        linear-gradient(
+            var(--page-overlay),
+            var(--page-overlay)
+        ),
+        url("../assets/main-bg.jpg")
+            center center / cover fixed no-repeat,
+        #101c14;
+}
+
+html[data-theme="dark"] .lesson-board,
+body[data-theme="dark"] .lesson-board {
+    background: var(--board-background);
+}
+
+html[data-theme="dark"] .lesson-text,
+body[data-theme="dark"] .lesson-text {
+    color: var(--text-color);
+}
+
+
+/* -----------------------------------------------------
+   13. Mobile screens
+   ----------------------------------------------------- */
+
+@media (max-width: 600px) {
+
+    .lesson-page {
+        padding: 8px;
+        gap: 12px;
+    }
+
+    .hero-board {
+        min-height: 124px;
+
+        padding: 17px 10px;
+
+        border-radius: 15px;
+    }
+
+    .hero-board h1 {
+        font-size: clamp(1.3rem, 5.3vw, 1.7rem);
+    }
+
+    .hero-board p {
+        margin-top: 6px;
+
+        font-size: 0.88rem;
+        line-height: 1.65;
+    }
+
+    .lesson-content {
+        gap: 12px;
+    }
+
+    .lesson-board {
+        border-radius: 13px;
+    }
+
+    .lesson-heading {
+        padding: 10px 9px;
+    }
+
+    .lesson-heading h2 {
+        font-size: clamp(1rem, 4vw, 1.2rem);
+    }
+
+    .lesson-body {
+        padding: 13px 11px;
+        gap: 12px;
+    }
+
+    .lesson-image {
+        width: min(100%, 340px);
+    }
+
+    .lesson-image img {
+        max-height: 300px;
+    }
+
+    .lesson-text {
+        font-size: 0.95rem;
+        line-height: 1.85;
+    }
+
+    .lesson-text p {
+        margin-bottom: 12px;
+    }
+
+    .lesson-text ul,
+    .lesson-text ol {
+        padding-inline-start: 22px;
+    }
+
+    .footer-board {
+        min-height: 49px;
+
+        padding: 9px 7px;
+
+        border-radius: 12px;
+    }
+}
+
+
+/* -----------------------------------------------------
+   14. Very small mobile screens
+   ----------------------------------------------------- */
+
+@media (max-width: 360px) {
+
+    .lesson-page {
+        padding: 6px;
+        gap: 9px;
+    }
+
+    .hero-board {
+        min-height: 112px;
+        padding: 14px 8px;
+    }
+
+    .hero-board h1 {
+        font-size: 1.25rem;
+    }
+
+    .hero-board p {
+        font-size: 0.82rem;
+    }
+
+    .lesson-heading {
+        padding: 9px 7px;
+    }
+
+    .lesson-heading h2 {
+        font-size: 0.98rem;
+    }
+
+    .lesson-body {
+        padding: 11px 9px;
+    }
+
+    .lesson-text {
+        font-size: 0.91rem;
+        line-height: 1.8;
+    }
+
+    .footer-board {
+        min-height: 46px;
+    }
+}
+
+
+/* -----------------------------------------------------
+   15. Tablet and desktop
+   ----------------------------------------------------- */
+
+@media (min-width: 700px) {
+
+    .lesson-page {
+        padding: 16px 22px;
+        gap: 16px;
+    }
+
+    .hero-board {
+        min-height: 160px;
+    }
+
+    .lesson-content {
+        gap: 16px;
+    }
+
+    .lesson-heading {
+        padding: 14px 18px;
+    }
+
+    .lesson-body {
+        padding: 22px;
+        gap: 18px;
+    }
+
+    .lesson-image {
+        width: min(100%, 460px);
+    }
+
+    .lesson-image img {
+        max-height: 400px;
+    }
+
+    .lesson-text {
+        font-size: 1.04rem;
+        line-height: 2;
+    }
+}
+
+
+/* -----------------------------------------------------
+   16. Landscape phones and short screens
+   ----------------------------------------------------- */
+
+@media (max-height: 480px) and (orientation: landscape) {
+
+    .hero-board {
+        min-height: 100px;
+        padding: 12px;
+    }
+
+    .hero-board p {
+        margin-top: 4px;
+    }
+
+    .lesson-content {
+        gap: 10px;
+    }
+
+    .lesson-body {
+        padding: 12px;
+    }
+
+    .lesson-image img {
+        max-height: 220px;
+    }
+}
+
+
+/* -----------------------------------------------------
+   17. Accessibility: reduced motion
+   ----------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+}
