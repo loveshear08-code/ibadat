@@ -1,410 +1,562 @@
 /* =====================================================
-   IBADAT SETTINGS — FINAL CSS
-   Floral Background + Unified Islamic Theme
+   IBADAT SETTINGS — FINAL RESPONSIVE DESIGN
+   Main background: assets/main-bg.jpg
 ===================================================== */
 
-/* ================= COLOR THEME ================= */
-
 :root {
+    --deep-green: #124C32;
+    --deep-green-dark: #0C3926;
     --primary: #1F6B3A;
-    --primary-dark: #174F2C;
+    --gold: #E8C766;
+    --gold-light: #F5E5A7;
 
+    --cream: #FFFDF5;
     --pistachio: #CFE8C8;
-    --cream: #F8F6F0;
-    --gold: #D4AF37;
-    --red: #D64545;
-
-    --text: #1E4620;
-    --muted: #52705A;
-
-    --card: rgba(255, 255, 255, 0.94);
-    --input-bg: #F4F8F0;
+    --text: #17452F;
+    --muted: #68796B;
     --border: #D5E3D1;
+    --card: rgba(255, 255, 255, 0.96);
+    --input-bg: #F4F8F0;
 
-    --shadow: 0 3px 8px rgba(20, 60, 30, 0.08);
+    --bar-height: 62px;
+    --page-gap: 8px;
 }
 
-/* ================= BASE ================= */
+/* RESET */
 
 * {
     box-sizing: border-box;
 }
 
 html {
-    min-height: 100%;
+    width: 100%;
+    height: 100%;
+    margin: 0;
 }
 
 body {
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    min-height: 0;
     margin: 0;
-    min-height: 100vh;
-    min-height: 100dvh;
 
-    font-family: sans-serif;
+    padding:
+        max(7px, env(safe-area-inset-top))
+        10px
+        max(7px, env(safe-area-inset-bottom));
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--page-gap);
+
+    overflow: hidden;
     color: var(--text);
+    font-family:
+        "Noto Sans Bengali",
+        "Noto Sans Devanagari",
+        "Nirmala UI",
+        Arial,
+        sans-serif;
 
-    /* SAME FLORAL BACKGROUND USED IN OTHER PAGES */
+    /* Main background with cream-white overlay */
     background:
         linear-gradient(
-            rgba(248, 246, 240, 0.76),
-            rgba(248, 246, 240, 0.76)
+            rgba(255, 253, 245, 0.76),
+            rgba(255, 253, 245, 0.76)
         ),
-        url("../assets/bg_pattern.png");
+        url("../assets/main-bg.jpg") center / cover no-repeat;
 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* ================= MAIN CONTAINER ================= */
+/* TOP AND BOTTOM BARS */
 
-.container {
-    height: 100vh;
-    height: 100dvh;
+.top-board,
+.bottom-board {
+    flex: 0 0 var(--bar-height);
+    width: 100%;
+    height: var(--bar-height);
+    min-height: var(--bar-height);
+    max-height: var(--bar-height);
+    min-width: 0;
 
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
 
-    padding: 12px;
-    max-width: 500px;
-    margin: 0 auto;
+    margin: 0;
+    padding: 6px 12px;
+
+    color: var(--gold-light);
+    background: linear-gradient(
+        140deg,
+        var(--deep-green),
+        var(--deep-green-dark)
+    );
+
+    border: 2px solid var(--gold);
+    border-radius: 20px;
+
+    box-shadow:
+        0 3px 9px rgba(30, 49, 28, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.10);
 }
 
-/* ================= PAGE TITLE ================= */
+/* TOP TITLE */
 
 #settingsTitle {
-    flex-shrink: 0;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
 
+    color: var(--gold-light);
+    font-size: clamp(19px, 4.6vw, 24px);
+    font-weight: 650;
+    line-height: 1.3;
     text-align: center;
-    color: var(--primary);
-
-    margin: 5px 0 10px;
-
-    font-size: 22px;
-    font-weight: 700;
+    overflow-wrap: anywhere;
 }
 
-/* ================= CONTENT AREA ================= */
+/* MAIN LAYOUT */
 
-.content {
-    flex: 1;
+.container {
+    flex: 1 1 auto;
     min-height: 0;
+    min-width: 0;
+    width: 100%;
 
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 
-    overflow-y: auto;
-    overscroll-behavior-y: contain;
-
-    padding-bottom: 8px;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 650px;
 }
 
-/* ================= SETTINGS CARDS ================= */
+.content {
+    flex: 1 1 auto;
+    min-height: 0;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+
+    padding: 2px 1px 4px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(18, 76, 50, 0.28) transparent;
+}
+
+.content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.content::-webkit-scrollbar-thumb {
+    background: rgba(18, 76, 50, 0.28);
+    border-radius: 8px;
+}
+
+/* CARDS */
 
 .card {
-    flex-shrink: 0;
-
-    background: var(--card);
+    flex: 0 0 auto;
+    min-width: 0;
 
     padding: 12px;
-    border-radius: 14px;
+    margin: 0;
+
+    color: var(--text);
+    background: var(--card);
 
     border: 1px solid rgba(31, 107, 58, 0.08);
-    box-shadow: var(--shadow);
+    border-radius: 18px;
+
+    box-shadow: 0 3px 9px rgba(20, 60, 30, 0.08);
 }
 
-.card h3 {
-    margin: 0 0 8px;
+.card h2 {
+    margin: 0 0 10px;
+    padding: 0;
 
-    color: var(--primary-dark);
-
-    font-size: 17px;
+    color: var(--deep-green);
+    font-size: 18px;
     font-weight: 700;
+    line-height: 1.4;
 }
 
 .card p {
     margin: 0 0 8px;
 
     color: var(--muted);
-
     font-size: 13px;
+    font-weight: 500;
     line-height: 1.5;
 }
 
-/* ================= AZAN ROWS ================= */
-
-.azan-row {
-    display: grid;
-    grid-template-columns: 80px minmax(0, 1fr) 42px;
-
-    gap: 8px;
-    align-items: center;
-
-    padding: 8px;
-    margin-top: 6px;
-
-    background: var(--pistachio);
-    border: 1px solid rgba(31, 107, 58, 0.06);
-    border-radius: 10px;
-
-    color: var(--primary-dark);
-}
-
-.azan-row span {
-    font-size: 14px;
-    font-weight: 600;
-    overflow-wrap: anywhere;
-}
-
-/* ================= SELECT MENUS ================= */
-
-select {
-    width: 100%;
-    min-width: 0;
-
-    padding: 8px;
-
-    border-radius: 8px;
-    border: 1px solid var(--border);
-
-    background: var(--input-bg);
-    color: var(--text);
-
-    font-family: inherit;
-    font-size: 14px;
-}
-
-select:focus-visible {
-    outline: 2px solid rgba(31, 107, 58, 0.25);
-    outline-offset: 1px;
-    border-color: var(--primary);
-}
-
-/* ================= AZAN PLAY BUTTONS ================= */
-
-button {
-    border: none;
-
-    background: var(--primary);
-    color: var(--cream);
-
-    border-radius: 8px;
-    padding: 7px 8px;
-
-    font-family: inherit;
-    font-size: 14px;
-
-    cursor: pointer;
-
-    transition:
-        background 0.2s ease,
-        transform 0.15s ease;
-}
-
-.azan-row button {
-    width: 42px;
-    min-height: 36px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-button:active {
-    transform: scale(0.95);
-}
-
-button:focus-visible {
-    outline: 2px solid var(--gold);
-    outline-offset: 3px;
-}
-
-/* ================= LANGUAGE ================= */
+/* LANGUAGE */
 
 #langSelect {
-    margin-top: 2px;
-}
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
 
-/* ================= DARK MODE CONTROL ================= */
-
-label {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-
-    min-height: 30px;
+    padding: 9px 12px;
 
     color: var(--text);
-    font-size: 14px;
+    background: var(--input-bg);
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    font: inherit;
+    font-size: 15px;
+}
+
+/* THEME */
+
+.theme-label {
+    min-height: 34px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 500;
 
     cursor: pointer;
 }
 
 #darkMode {
-    width: 18px;
-    height: 18px;
-
+    width: 20px;
+    height: 20px;
     margin: 0;
-    flex-shrink: 0;
+    flex: 0 0 auto;
 
     accent-color: var(--primary);
     cursor: pointer;
 }
 
-/* ================= SAVE BUTTON ================= */
+/* AZAN LIST */
+
+.azan-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.azan-row {
+    min-width: 0;
+
+    display: grid;
+    grid-template-columns: 70px minmax(0, 1fr) 42px;
+    align-items: center;
+    gap: 7px;
+
+    margin: 0;
+    padding: 7px;
+
+    color: var(--deep-green);
+    background: var(--pistachio);
+
+    border: 1px solid rgba(31, 107, 58, 0.07);
+    border-radius: 13px;
+}
+
+.azan-row > span {
+    min-width: 0;
+
+    font-size: 14px;
+    font-weight: 650;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.azan-row select {
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+
+    padding: 7px 9px;
+
+    color: var(--text);
+    background: var(--input-bg);
+
+    border: 1px solid rgba(31, 107, 58, 0.08);
+    border-radius: 11px;
+
+    font: inherit;
+    font-size: 14px;
+}
+
+/* PLAY BUTTON */
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+.play-button {
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--gold-light);
+    background: var(--primary);
+
+    border: 0;
+    border-radius: 11px;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.play-button:active,
+#saveBtn:active {
+    transform: scale(0.97);
+}
+
+button:focus-visible,
+select:focus-visible,
+input:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
+
+/* SAVE BUTTON */
 
 .btn-box {
-    flex-shrink: 0;
-    padding-top: 8px;
+    flex: 0 0 auto;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
 }
 
 #saveBtn {
     width: 100%;
+    min-height: 52px;
+    padding: 11px 14px;
 
-    padding: 12px;
-
-    background: var(--primary);
     color: var(--cream);
+    background: var(--primary);
+
+    border: 0;
+    border-radius: 17px;
 
     font-size: 16px;
     font-weight: 700;
 
-    border-radius: 12px;
-
-    box-shadow: 0 3px 8px rgba(20, 60, 30, 0.12);
+    box-shadow: 0 3px 9px rgba(20, 60, 30, 0.12);
 }
 
 #saveBtn:active {
-    background: var(--primary-dark);
+    background: var(--deep-green);
 }
 
-/* ================= DARK MODE ================= */
+/* FOOTER */
+
+#settingsFooter {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+
+    color: var(--gold-light);
+    font-size: clamp(13px, 3.5vw, 16px);
+    font-weight: 650;
+    line-height: 1.35;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+/* DARK MODE */
 
 body.dark-mode {
     --text: #E2EDE2;
     --muted: #C1D1C0;
-
-    --card: rgba(30, 42, 31, 0.96);
+    --card: rgba(30, 42, 31, 0.97);
     --input-bg: #263529;
     --border: #405744;
-
-    --shadow: 0 3px 10px rgba(0, 0, 0, 0.28);
+    --pistachio: #263B29;
+    --cream: #F8F6F0;
+    --deep-green: #124C32;
+    --deep-green-dark: #092E1E;
 
     color: var(--text);
 
-    /* SAME IMAGE WITH A DARK OVERLAY */
     background:
         linear-gradient(
-            rgba(18, 24, 19, 0.88),
-            rgba(18, 24, 19, 0.88)
+            rgba(14, 27, 18, 0.79),
+            rgba(14, 27, 18, 0.79)
         ),
-        url("../assets/bg_pattern.png");
-
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+        url("../assets/main-bg.jpg") center / cover no-repeat;
 }
 
-/* Dark page title */
-
-body.dark-mode #settingsTitle {
-    color: var(--pistachio);
+body.dark-mode .top-board,
+body.dark-mode .bottom-board {
+    background: linear-gradient(
+        140deg,
+        #124C32,
+        #092E1E
+    );
+    border-color: var(--gold);
 }
 
-/* Dark cards */
+body.dark-mode #settingsTitle,
+body.dark-mode #settingsFooter {
+    color: var(--gold-light);
+}
 
 body.dark-mode .card {
-    background: var(--card);
-    border-color: rgba(207, 232, 200, 0.08);
     color: var(--text);
+    background: var(--card);
+    border-color: rgba(207, 232, 200, 0.09);
 }
 
-body.dark-mode .card h3 {
-    color: var(--pistachio);
+body.dark-mode .card h2 {
+    color: #D8EAC8;
 }
 
-body.dark-mode .card p {
+body.dark-mode .card p,
+body.dark-mode .theme-label {
     color: var(--muted);
 }
 
-/* Dark Azan rows */
-
 body.dark-mode .azan-row {
+    color: #D8EAC8;
     background: #263B29;
-    border-color: rgba(207, 232, 200, 0.08);
-    color: var(--pistachio);
 }
 
-/* Dark select menus */
-
 body.dark-mode select {
-    background: var(--input-bg);
     color: var(--text);
+    background: var(--input-bg);
     border-color: var(--border);
     color-scheme: dark;
 }
 
-body.dark-mode select:focus-visible {
-    border-color: var(--pistachio);
-}
-
-/* Dark Mode label and checkbox */
-
-body.dark-mode label {
-    color: var(--text);
-}
-
 body.dark-mode #darkMode {
-    accent-color: var(--pistachio);
+    accent-color: #CFE8C8;
 }
 
-/* Dark buttons */
-
-body.dark-mode button {
-    background: var(--primary);
-    color: var(--cream);
-}
-
+body.dark-mode .play-button,
 body.dark-mode #saveBtn {
-    background: var(--primary);
     color: var(--cream);
+    background: var(--primary);
 }
 
-/* ================= SMALL SCREENS ================= */
+/* SMALL HEIGHTS */
 
-@media (max-width: 360px) {
-
-    .container {
-        padding: 10px;
+@media (max-height: 760px) {
+    :root {
+        --bar-height: 52px;
+        --page-gap: 5px;
     }
 
-    #settingsTitle {
-        font-size: 20px;
+    body {
+        padding-left: 7px;
+        padding-right: 7px;
     }
 
     .card {
-        padding: 10px;
+        padding: 9px;
+        border-radius: 14px;
+    }
+
+    .card h2 {
+        margin-bottom: 6px;
+        font-size: 16px;
+    }
+
+    .card p {
+        margin-bottom: 5px;
+        font-size: 12px;
+    }
+
+    .content {
+        gap: 6px;
+    }
+
+    .azan-list {
+        gap: 5px;
     }
 
     .azan-row {
-        grid-template-columns: 65px minmax(0, 1fr) 40px;
+        grid-template-columns: 65px minmax(0, 1fr) 38px;
         gap: 5px;
-        padding: 7px;
+        padding: 5px;
+        border-radius: 10px;
     }
 
-    .azan-row span {
-        font-size: 13px;
-    }
-
-    .azan-row button {
-        width: 40px;
-    }
-
-    select {
-        padding: 7px 5px;
+    .azan-row > span {
         font-size: 12px;
+    }
+
+    .azan-row select {
+        min-height: 35px;
+        padding: 5px 6px;
+        font-size: 12px;
+    }
+
+    .play-button {
+        width: 38px;
+        min-width: 38px;
+        height: 36px;
+        font-size: 16px;
+    }
+
+    #saveBtn {
+        min-height: 45px;
+        padding: 8px;
+    }
+}
+
+/* NARROW PHONES */
+
+@media (max-width: 360px) {
+    body {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .azan-row {
+        grid-template-columns: 57px minmax(0, 1fr) 34px;
+        gap: 4px;
+        padding: 5px;
+    }
+
+    .azan-row > span {
+        font-size: 11px;
+    }
+
+    .azan-row select {
+        padding: 5px 4px;
+        font-size: 11px;
+    }
+
+    .play-button {
+        width: 34px;
+        min-width: 34px;
+        height: 35px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
     }
 }
