@@ -1,418 +1,435 @@
+
 /* =====================================================
-   IBADAT — NAMAZ CONDITIONS
-   Bengali / English / Hindi
-   Light / Dark theme
-   Responsive screen fitting
+   IBADAT — শর্ত ও প্রস্তুতি
+   File: js/namaz-conditions.js
+
+   কাজ:
+   1. বাংলা / English / हिन्दी ভাষা
+   2. Light / Dark theme
+   3. দশটি অপশনের সঠিক লিংক
+   4. Deep link ও section navigation
+   5. পুরো পেজে স্বাভাবিক scrolling
+   6. ছোট স্ক্রিনে নিরাপদ responsive behavior
    ===================================================== */
 
 (() => {
     "use strict";
 
+    /* ================================================
+       1. অনুবাদ
+       ================================================ */
+
     const translations = {
         bn: {
-            pageTitle: "শর্ত ও প্রস্তুতি",
-            heroDescription: "নামাজের আগে প্রয়োজনীয় বিষয়গুলো জেনে নাও",
-            heroSubtitle: "পবিত্রতা • সময় • কিবলা • নিয়ত",
-            footer: "পবিত্রতা রক্ষা করো, মনোযোগ দিয়ে ইবাদত করো।",
+            title: "শর্ত ও প্রস্তুতি",
+            description: "নামাজের আগে প্রয়োজনীয় বিষয়গুলো জেনে নাও",
+            footer: "মনোযোগ দিয়ে ইবাদত করো।",
 
-            timeTitle: "নামাজের সময়",
-            timeDesc: "নির্ধারিত ওয়াক্তে নামাজ আদায়",
-
-            purityTitle: "পবিত্রতা",
-            purityDesc: "অজু, গোসল ও তায়াম্মুম",
-
-            bodyTitle: "শরীরের পবিত্রতা",
-            bodyDesc: "শরীরের নাপাকি পরিষ্কার রাখা",
-
-            clothingTitle: "পোশাকের পবিত্রতা",
-            clothingDesc: "পরিষ্কার ও উপযুক্ত পোশাক",
-
-            placeTitle: "নামাজের স্থান",
-            placeDesc: "নামাজের জায়গা পবিত্র রাখা",
-
-            qiblaTitle: "কিবলামুখী হওয়া",
-            qiblaDesc: "কাবা শরিফের দিকে মুখ করা",
-
-            satrTitle: "সতর ঢাকা",
-            satrDesc: "প্রয়োজনীয় অঙ্গ ঢেকে রাখা",
-
-            niyyahTitle: "নিয়ত",
-            niyyahDesc: "কোন নামাজ পড়বে তা মনে স্থির করা",
-
-            specialTitle: "বিশেষ পরিস্থিতি",
-            specialDesc: "অসুস্থতা ও সামর্থ্য অনুযায়ী বিধান",
-
-            checkTitle: "শেষবার যাচাই",
-            checkDesc: "নামাজের আগে প্রস্তুতি মিলিয়ে নাও"
+            cards: {
+                wudu: "ওযু",
+                ghusl: "গোসল",
+                body: "শরীরের পবিত্রতা",
+                clothing: "পোশাকের পবিত্রতা",
+                place: "স্থানের পবিত্রতা",
+                qibla: "কিবলামুখী হওয়া",
+                satr: "সতর ঢাকা",
+                niyyah: "নিয়ত",
+                time: "নামাজের ওয়াক্ত",
+                special: "বিশেষ পরিস্থিতি"
+            }
         },
 
         en: {
-            pageTitle: "Conditions & Preparation",
-            heroDescription: "Learn what you need before offering Salah",
-            heroSubtitle: "Purity • Time • Qiblah • Intention",
-            footer: "Maintain purity and worship with attention.",
+            title: "Conditions & Preparation",
+            description: "Learn what is needed before prayer",
+            footer: "Worship with attention.",
 
-            timeTitle: "Prayer Time",
-            timeDesc: "Pray within the prescribed time",
-
-            purityTitle: "Purification",
-            purityDesc: "Wudu, ghusl and tayammum",
-
-            bodyTitle: "Body Purity",
-            bodyDesc: "Keep the body free from impurity",
-
-            clothingTitle: "Clean Clothing",
-            clothingDesc: "Wear clean and suitable clothing",
-
-            placeTitle: "Prayer Place",
-            placeDesc: "Keep the prayer area clean",
-
-            qiblaTitle: "Facing the Qiblah",
-            qiblaDesc: "Face towards the Ka'bah",
-
-            satrTitle: "Covering the Satr",
-            satrDesc: "Cover the required parts of the body",
-
-            niyyahTitle: "Intention",
-            niyyahDesc: "Know which prayer you intend to offer",
-
-            specialTitle: "Special Situations",
-            specialDesc: "Guidance for illness and limitations",
-
-            checkTitle: "Final Checklist",
-            checkDesc: "Review your preparation before prayer"
+            cards: {
+                wudu: "Wudu",
+                ghusl: "Ghusl",
+                body: "Body Purity",
+                clothing: "Clothing Purity",
+                place: "Place Purity",
+                qibla: "Face the Qibla",
+                satr: "Covering the Awrah",
+                niyyah: "Intention",
+                time: "Prayer Times",
+                special: "Special Situations"
+            }
         },
 
         hi: {
-            pageTitle: "शर्तें और तैयारी",
-            heroDescription: "नमाज़ से पहले ज़रूरी बातें सीखें",
-            heroSubtitle: "पाकी • समय • क़िबला • नीयत",
-            footer: "पाकी बनाए रखें और ध्यान से इबादत करें।",
+            title: "शर्तें और तैयारी",
+            description: "नमाज़ से पहले ज़रूरी बातें जानें",
+            footer: "ध्यान से इबादत करें।",
 
-            timeTitle: "नमाज़ का समय",
-            timeDesc: "निर्धारित समय में नमाज़ पढ़ें",
-
-            purityTitle: "पाकी",
-            purityDesc: "वुज़ू, ग़ुस्ल और तयम्मुम",
-
-            bodyTitle: "शरीर की पाकी",
-            bodyDesc: "शरीर की नापाकी साफ़ रखें",
-
-            clothingTitle: "कपड़ों की पाकी",
-            clothingDesc: "साफ़ और उपयुक्त कपड़े पहनें",
-
-            placeTitle: "नमाज़ की जगह",
-            placeDesc: "नमाज़ की जगह पाक रखें",
-
-            qiblaTitle: "क़िबला की ओर रुख",
-            qiblaDesc: "काबा शरीफ़ की दिशा में रुख करें",
-
-            satrTitle: "सतर ढकना",
-            satrDesc: "ज़रूरी अंगों को ढककर रखें",
-
-            niyyahTitle: "नीयत",
-            niyyahDesc: "दिल में तय करें कि कौन-सी नमाज़ पढ़नी है",
-
-            specialTitle: "विशेष परिस्थितियाँ",
-            specialDesc: "बीमारी और क्षमता के अनुसार नियम",
-
-            checkTitle: "अंतिम जाँच",
-            checkDesc: "नमाज़ से पहले तैयारी जाँचें"
+            cards: {
+                wudu: "वुज़ू",
+                ghusl: "ग़ुस्ल",
+                body: "शरीर की पवित्रता",
+                clothing: "कपड़ों की पवित्रता",
+                place: "जगह की पवित्रता",
+                qibla: "क़िबला की ओर रुख़",
+                satr: "सतर ढकना",
+                niyyah: "नीयत",
+                time: "नमाज़ का समय",
+                special: "विशेष परिस्थितियाँ"
+            }
         }
     };
 
-    const digitSets = {
-        bn: ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"],
-        en: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
-        hi: ["०", "१", "२", "३", "४", "५", "६", "७", "८", "९"]
+
+    /* ================================================
+       2. অপশনগুলোর লিংক
+
+       দ্রষ্টব্য:
+       namaz-purity.html এবং prayer-time.html
+       প্রকৃত HTML filename-এর সঙ্গে মিলিয়ে নেবেন।
+       ================================================ */
+
+    const cardLinks = {
+        wudu:
+            "namaz-purity.html#lesson-wudu",
+
+        ghusl:
+            "namaz-purity.html#lesson-ghusl",
+
+        body:
+            "namaz-purity.html#lesson-body-purity",
+
+        clothing:
+            "namaz-purity.html#lesson-clothing-purity",
+
+        place:
+            "namaz-purity.html#lesson-place-purity",
+
+        qibla:
+            "qibla-direction.html",
+
+        satr:
+            "satr-covering.html",
+
+        niyyah:
+            "niyyah.html",
+
+        time:
+            "prayer-time.html",
+
+        special:
+            "special-situations.html"
     };
 
-    const cardKeys = [
-        "time",
-        "purity",
-        "body",
-        "clothing",
-        "place",
-        "qibla",
-        "satr",
-        "niyyah",
-        "special",
-        "check"
-    ];
 
-    const cardPaths = {
-        time: "prayer-time.html",
-        purity: "purity.html",
-        body: "body-purity.html",
-        clothing: "clothing-purity.html",
-        place: "place-purity.html",
-        qibla: "qibla-direction.html",
-        satr: "satr-covering.html",
-        niyyah: "niyyah.html",
-        special: "special-situations.html",
-        check: "prayer-checklist.html"
-    };
+    /* ================================================
+       3. localStorage থেকে সেটিংস পড়া
+       ================================================ */
 
-    let currentLanguage = "bn";
-    let resizeFrame = 0;
-
-    /* ---------- Settings ---------- */
-
-    function readSettings() {
+    function readAppSettings() {
         try {
-            const value = JSON.parse(
-                localStorage.getItem("appSettings") || "{}"
+            const saved = localStorage.getItem("appSettings");
+
+            if (!saved) {
+                return {};
+            }
+
+            const parsed = JSON.parse(saved);
+
+            return parsed && typeof parsed === "object"
+                ? parsed
+                : {};
+        } catch (error) {
+            console.warn(
+                "IBADAT: appSettings পড়া যায়নি।",
+                error
             );
 
-            return value && typeof value === "object" ? value : {};
-        } catch (error) {
             return {};
         }
     }
 
-    function resolveLanguage(settings) {
-        const value = String(settings.lang || "bn").toLowerCase();
 
-        if (value.startsWith("en")) return "en";
-        if (value.startsWith("hi")) return "hi";
+    /* ================================================
+       4. বর্তমান ভাষা নির্ধারণ
+       ================================================ */
+
+    function getCurrentLanguage() {
+        const settings = readAppSettings();
+
+        const candidates = [
+            settings.lang,
+            settings.language,
+            localStorage.getItem("lang"),
+            localStorage.getItem("language"),
+            document.documentElement.lang
+        ];
+
+        for (const candidate of candidates) {
+            if (
+                typeof candidate === "string" &&
+                Object.prototype.hasOwnProperty.call(
+                    translations,
+                    candidate
+                )
+            ) {
+                return candidate;
+            }
+        }
 
         return "bn";
     }
 
-    /* ---------- Text helpers ---------- */
 
-    function setText(id, value) {
-        const element = document.getElementById(id);
+    /* ================================================
+       5. বর্তমান থিম নির্ধারণ
+       ================================================ */
 
-        if (element && typeof value === "string") {
-            element.textContent = value;
+    function getCurrentTheme() {
+        const settings = readAppSettings();
+
+        const savedTheme =
+            settings.theme ||
+            localStorage.getItem("theme") ||
+            localStorage.getItem("appTheme") ||
+            "";
+
+        if (
+            savedTheme === "dark" ||
+            settings.dark === true
+        ) {
+            return "dark";
         }
+
+        if (
+            savedTheme === "light" ||
+            settings.dark === false
+        ) {
+            return "light";
+        }
+
+        return "light";
     }
 
-    function translatePage(language) {
-        const content = translations[language] || translations.bn;
 
-        currentLanguage = language;
+    /* ================================================
+       6. ভাষা প্রয়োগ
+       ================================================ */
+
+    function applyLanguage() {
+        const language = getCurrentLanguage();
+        const text = translations[language];
+
         document.documentElement.lang = language;
 
-        setText("pageTitle", content.pageTitle);
-        setText("heroDescription", content.heroDescription);
-        setText("heroSubtitle", content.heroSubtitle);
-        setText("footerText", content.footer);
+        const pageTitle =
+            document.getElementById("pageTitle");
 
-        document.querySelectorAll("[data-i18n]").forEach((element) => {
-            const key = element.dataset.i18n;
+        const heroDescription =
+            document.getElementById("heroDescription");
 
-            if (Object.prototype.hasOwnProperty.call(content, key)) {
-                element.textContent = content[key];
-            }
-        });
+        const footerText =
+            document.getElementById("footerText");
 
-        updateCardNumbers(language);
-        updateDocumentTitle(content.pageTitle);
+        if (pageTitle) {
+            pageTitle.textContent = text.title;
+        }
 
-        document.documentElement.setAttribute(
-            "data-language",
-            language
-        );
-    }
+        if (heroDescription) {
+            heroDescription.textContent =
+                text.description;
+        }
 
-    function updateDocumentTitle(title) {
-        document.title = `${title} | IBADAT`;
-    }
+        if (footerText) {
+            footerText.textContent = text.footer;
+        }
 
-    function convertNumber(number, language) {
-        const digits = digitSets[language] || digitSets.bn;
+        /*
+         * data-card-key ব্যবহার করে কার্ড শনাক্ত করা হয়।
+         * ফলে কার্ডের ক্রম বদলালেও ভুল লিংক হবে না।
+         */
 
-        return String(number).replace(/[0-9]/g, (digit) => {
-            return digits[Number(digit)];
-        });
-    }
+        document
+            .querySelectorAll("[data-card-key]")
+            .forEach(card => {
+                const key = card.dataset.cardKey;
 
-    function updateCardNumbers(language) {
-        document.querySelectorAll(".condition-card .card-number")
-            .forEach((element, index) => {
-                element.textContent = convertNumber(index + 1, language);
+                const title = text.cards[key];
+
+                const titleElement =
+                    card.querySelector(".card-title") ||
+                    card.querySelector(
+                        "[data-i18n]"
+                    ) ||
+                    card.querySelector(
+                        "span:last-child"
+                    );
+
+                if (titleElement && title) {
+                    titleElement.textContent = title;
+                }
+
+                if (cardLinks[key]) {
+                    card.setAttribute(
+                        "href",
+                        cardLinks[key]
+                    );
+                }
             });
     }
 
-    /* ---------- Theme ---------- */
 
-    function applyTheme(settings) {
-        const theme = String(
-            settings.theme || (settings.dark ? "dark" : "light")
-        ).toLowerCase();
+    /* ================================================
+       7. থিম প্রয়োগ
+       ================================================ */
 
-        const dark = theme === "dark";
+    function applyTheme() {
+        const theme = getCurrentTheme();
 
-        document.body.classList.toggle("dark-mode", dark);
+        document.documentElement.dataset.theme =
+            theme;
 
-        const themeColor = document.querySelector(
-            'meta[name="theme-color"]'
-        );
-
-        if (themeColor) {
-            themeColor.setAttribute(
-                "content",
-                dark ? "#102820" : "#0F5132"
-            );
-        }
-
-        document.documentElement.style.colorScheme =
-            dark ? "dark" : "light";
-    }
-
-    /* ---------- Card navigation ---------- */
-
-    function normalizeCardLinks() {
-        document.querySelectorAll(".condition-card").forEach((card, index) => {
-            const key = cardKeys[index];
-
-            if (!key || !cardPaths[key]) return;
-
-            /*
-             * HTML-এ দেওয়া লিংক ঠিক থাকলে সেটি ব্যবহার হবে।
-             * লিংক খালি থাকলে নির্ধারিত ফাইলের পথ বসবে।
-             */
-            const href = card.getAttribute("href");
-
-            if (!href || href.trim() === "#") {
-                card.setAttribute("href", cardPaths[key]);
-            }
-
-            card.setAttribute("data-card-key", key);
-        });
-    }
-
-    /* ---------- Responsive fitting ---------- */
-
-    function fitPageToScreen() {
-        cancelAnimationFrame(resizeFrame);
-
-        resizeFrame = requestAnimationFrame(() => {
-            const page = document.querySelector(".conditions-page");
-            const header = document.querySelector(".hero-board");
-            const cards = document.querySelector(".options-area");
-            const footer = document.querySelector(".footer-board");
-
-            if (!page || !header || !cards || !footer) return;
-
-            /*
-             * স্ক্রিনের মাপ অনুযায়ী CSS custom properties আপডেট করা হয়।
-             * কোনো নির্দিষ্ট ফোনের মাপ ধরে নেওয়া হচ্ছে না।
-             */
-            const viewportWidth = document.documentElement.clientWidth;
-            const viewportHeight = window.visualViewport
-                ? window.visualViewport.height
-                : window.innerHeight;
-
-            const compact = viewportWidth <= 480;
-            const veryShort = viewportHeight <= 650;
-            const short = viewportHeight <= 760;
-
-            document.documentElement.style.setProperty(
-                "--available-screen-height",
-                `${Math.max(240, viewportHeight)}px`
-            );
-
-            /*
-             * দশটি কার্ডের জন্য দুই কলাম রাখা হয়।
-             * ছোট স্ক্রিনে গ্যাপ ও padding কমানো হয়,
-             * কিন্তু লেখা লুকিয়ে ফেলা হয় না।
-             */
-            if (compact) {
-                page.style.setProperty("--card-gap", veryShort ? "4px" : "7px");
-                page.style.setProperty("--page-padding", "9px");
-
-                if (veryShort) {
-                    header.style.minHeight = "70px";
-                    footer.style.minHeight = "38px";
-                } else if (short) {
-                    header.style.minHeight = "82px";
-                    footer.style.minHeight = "48px";
-                } else {
-                    header.style.minHeight = "96px";
-                    footer.style.minHeight = "56px";
-                }
-            } else {
-                page.style.setProperty("--card-gap", "10px");
-                page.style.setProperty("--page-padding", "12px");
-
-                header.style.minHeight = "";
-                footer.style.minHeight = "";
-            }
-
-            /*
-             * CSS Grid নিজে থেকেই কলাম ও কার্ডের প্রস্থ ঠিক করবে।
-             * কোনো কার্ডের লেখা JavaScript দিয়ে কেটে ফেলা হবে না।
-             */
-            cards.style.gridTemplateColumns =
-                viewportWidth <= 300
-                    ? "minmax(0, 1fr)"
-                    : "repeat(2, minmax(0, 1fr))";
-
-            /*
-             * অতিরিক্ত ছোট স্ক্রিনে এক কলাম হলে দশটি কার্ডের
-             * জন্য স্ক্রল লাগতে পারে। তাই স্বাভাবিক ফোনের প্রস্থে
-             * দুই কলাম বজায় রাখা হয়।
-             */
-            if (viewportWidth <= 300) {
-                cards.style.alignContent = "start";
-            } else {
-                cards.style.alignContent = "center";
-            }
-        });
-    }
-
-    /* ---------- Refresh ---------- */
-
-    function refreshPage() {
-        const settings = readSettings();
-        const language = resolveLanguage(settings);
-
-        translatePage(language);
-        applyTheme(settings);
-        normalizeCardLinks();
-        fitPageToScreen();
-    }
-
-    /* ---------- Startup ---------- */
-
-    function init() {
-        refreshPage();
-
-        window.addEventListener("resize", fitPageToScreen, {
-            passive: true
-        });
-
-        window.addEventListener("orientationchange", fitPageToScreen, {
-            passive: true
-        });
-
-        if (window.visualViewport) {
-            window.visualViewport.addEventListener(
-                "resize",
-                fitPageToScreen,
-                { passive: true }
-            );
-        }
-
-        window.addEventListener("storage", (event) => {
-            if (event.key === "appSettings") {
-                refreshPage();
-            }
-        });
+        document.body.dataset.theme =
+            theme;
 
         /*
-         * অন্য স্ক্রিপ্ট থেকে সেটিংস পরিবর্তন হলে
-         * পেজ আপডেট করার জন্য এই ফাংশনটি ব্যবহার করা যাবে।
+         * CSS-এ html[data-theme="dark"] এবং
+         * body[data-theme="dark"] ব্যবহৃত হয়েছে।
          */
-        window.refreshConditionsPage = refreshPage;
     }
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", init, { once: true });
-    } else {
-        init();
+
+    /* ================================================
+       8. Deep link navigation
+
+       উদাহরণ:
+       namaz-purity.html#lesson-wudu
+
+       লক্ষ্য সেকশনের শুরু দেখানোর চেষ্টা করে।
+       পুরো পেজের scrolling বন্ধ করে না।
+       ================================================ */
+
+    function scrollToHashTarget() {
+        const hash = window.location.hash;
+
+        if (!hash || hash.length < 2) {
+            return;
+        }
+
+        let targetId;
+
+        try {
+            targetId = decodeURIComponent(
+                hash.substring(1)
+            );
+        } catch (error) {
+            targetId = hash.substring(1);
+        }
+
+        const target =
+            document.getElementById(targetId);
+
+        if (!target) {
+            /*
+             * লিংকের লক্ষ্য এই পেজে না থাকলে
+             * কিছু করা হবে না।
+             */
+            return;
+        }
+
+        requestAnimationFrame(() => {
+            target.scrollIntoView({
+                behavior: "auto",
+                block: "start"
+            });
+        });
     }
+
+
+    /* ================================================
+       9. Scroll behavior
+
+       পেজে overflow:hidden প্রয়োগ করা হচ্ছে না।
+       ছোট স্ক্রিনে কনটেন্ট বেশি হলে পেজ স্ক্রল হবে।
+       ================================================ */
+
+    function prepareScrolling() {
+        document.documentElement.style.scrollBehavior =
+            window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches
+                ? "auto"
+                : "smooth";
+    }
+
+
+    /* ================================================
+       10. সেটিংস পরিবর্তন হলে পুনরায় প্রয়োগ
+       ================================================ */
+
+    function handleStorageChange(event) {
+        const watchedKeys = [
+            "appSettings",
+            "lang",
+            "language",
+            "theme",
+            "appTheme"
+        ];
+
+        if (
+            !event ||
+            event.key === null ||
+            watchedKeys.includes(event.key)
+        ) {
+            applyLanguage();
+            applyTheme();
+        }
+    }
+
+
+    /* ================================================
+       11. শুরু
+       ================================================ */
+
+    function initialize() {
+        applyLanguage();
+        applyTheme();
+        prepareScrolling();
+
+        /*
+         * HTML ও ছবির লোড সম্পন্ন হলে
+         * hash target-এর অবস্থান ঠিক করা।
+         */
+
+        window.addEventListener(
+            "load",
+            scrollToHashTarget,
+            { once: true }
+        );
+
+        window.addEventListener(
+            "hashchange",
+            scrollToHashTarget
+        );
+
+        window.addEventListener(
+            "storage",
+            handleStorageChange
+        );
+    }
+
+
+    /*
+     * DOM প্রস্তুত থাকলে সঙ্গে সঙ্গে শুরু।
+     * অন্যথায় DOMContentLoaded পর্যন্ত অপেক্ষা।
+     */
+
+    if (document.readyState === "loading") {
+        document.addEventListener(
+            "DOMContentLoaded",
+            initialize,
+            { once: true }
+        );
+    } else {
+        initialize();
+    }
+
 })();
