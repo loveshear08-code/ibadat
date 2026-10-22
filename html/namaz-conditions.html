@@ -1,188 +1,249 @@
+
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="bn" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <meta name="theme-color" content="#0F5132">
-    <meta name="description"
-          content="IBADAT — নামাজের শর্ত ও প্রস্তুতির সহজ নির্দেশিকা">
+    <meta
+        name="description"
+        content="নামাজের আগে প্রয়োজনীয় শর্ত ও প্রস্তুতি সম্পর্কে জানুন।"
+    >
 
     <title>শর্ত ও প্রস্তুতি | IBADAT</title>
 
+    <!-- শর্ত ও প্রস্তুতি পেজের CSS -->
     <link rel="stylesheet" href="../css/namaz-conditions.css">
 </head>
 
 <body>
-<main class="conditions-page">
 
-    <!-- উপরের স্থির বোর্ড -->
-    <header class="hero-board">
-        <div class="hero-inner">
-            <h1 id="pageTitle">শর্ত ও প্রস্তুতি</h1>
+    <main class="conditions-page">
 
-            <p id="heroDescription">
-                নামাজের আগে প্রয়োজনীয় বিষয়গুলো জেনে নাও
+        <!-- হেডার বোর্ড -->
+        <header class="hero-board">
+            <div class="hero-content">
+                <h1 id="pageTitle">শর্ত ও প্রস্তুতি</h1>
+
+                <p id="heroDescription">
+                    নামাজের আগে প্রয়োজনীয় বিষয়গুলো জেনে নাও
+                </p>
+            </div>
+        </header>
+
+
+        <!-- শর্ত ও প্রস্তুতির ১০টি অপশন -->
+        <section
+            class="conditions-grid"
+            aria-label="নামাজের শর্ত ও প্রস্তুতি"
+        >
+
+            <!-- ১. ওযু -->
+            <a
+                class="condition-card"
+                data-card-key="wudu"
+                href="namaz-purity.html#lesson-wudu"
+            >
+                <span class="card-image">
+                    <img
+                        src="../assets/images/wudu.png"
+                        alt=""
+                    >
+                </span>
+
+                <span class="card-title" data-i18n="wudu">
+                    ওযু
+                </span>
+            </a>
+
+
+            <!-- ২. গোসল -->
+            <a
+                class="condition-card"
+                data-card-key="ghusl"
+                href="namaz-purity.html#lesson-ghusl"
+            >
+                <span class="card-image">
+                    <img
+                        src="../assets/images/ghusl.png"
+                        alt=""
+                    >
+                </span>
+
+                <span class="card-title" data-i18n="ghusl">
+                    গোসল
+                </span>
+            </a>
+
+
+            <!-- ৩. শরীরের পবিত্রতা -->
+            <a
+                class="condition-card"
+                data-card-key="body"
+                href="namaz-purity.html#lesson-body-purity"
+            >
+                <span class="card-image">
+                    <img
+                        src="../assets/images/body-purity.png"
+                        alt=""
+                    >
+                </span>
+
+                <span class="card-title" data-i18n="body">
+                    শরীরের পবিত্রতা
+                </span>
+            </a>
+
+
+            <!-- ৪. পোশাকের পবিত্রতা -->
+            <a
+                class="condition-card"
+                data-card-key="clothing"
+                href="namaz-purity.html#lesson-clothing-purity"
+            >
+                <span class="card-image">
+                    <img
+                        src="../assets/images/clothing-purity.png"
+                        alt=""
+                    >
+                </span>
+
+                <span class="card-title" data-i18n="clothing">
+                    পোশাকের পবিত্রতা
+                </span>
+            </a>
+
+
+            <!-- ৫. স্থানের পবিত্রতা -->
+            <a
+                class="condition-card"
+                data-card-key="place"
+                href="namaz-purity.html#lesson-place-purity"
+            >
+                <span class="card-image">
+                    <img
+                        src="../assets/images/place-purity.png"
+                        alt=""
+                    >
+                </span>
+
+                <span class="card-title" data-i18n="place">
+                    স্থানের পবিত্রতা
+                </span>
+            </a>
+
+
+            <!-- ৬. কিবলামুখী হওয়া -->
+            <a
+                class="condition-card"
+                data-card-key="qibla"
+                href="qibla-direction.html"
+            >
+                <span class="card-image">
+                    <img
+                        src="../assets/images/qibla-direction.png"
+                        alt=""
+                    >
+                </span>
+
+                <span class="card-title" data-i18n="qibla">
+                    কিবলামুখী হওয়া
+                </span>
+            </a>
+
+
+            <!-- ৭. সতর ঢাকা -->
+            <a
+                class="condition-card"
+                data-card-key="satr"
+                href="satr-covering.html"
+            >
+                <span class="card-image">
+                    <img
+                        src="../assets/images/satr-covering.png"
+                        alt=""
+                    >
+                </span>
+
+                <span class="card-title" data-i18n="satr">
+                    সতর ঢাকা
+                </span>
+            </a>
+
+
+            <!-- ৮. নিয়ত -->
+            <a
+                class="condition-card"
+                data-card-key="niyyah"
+                href="niyyah.html"
+            >
+                <span class="card-image">
+                    <img
+                        src="../assets/images/niyyah.png"
+                        alt=""
+                    >
+                </span>
+
+                <span class="card-title" data-i18n="niyyah">
+                    নিয়ত
+                </span>
+            </a>
+
+
+            <!-- ৯. নামাজের ওয়াক্ত -->
+            <!-- ওয়াক্ত ও রাকাত পেজ তৈরি হলে লিংকটি ঠিক করা হবে -->
+            <a
+                class="condition-card"
+                data-card-key="time"
+                href="prayer-time.html"
+            >
+                <span class="card-image time-card-image">
+                    <span class="time-icon" aria-hidden="true">◷</span>
+                </span>
+
+                <span class="card-title" data-i18n="time">
+                    নামাজের ওয়াক্ত
+                </span>
+            </a>
+
+
+            <!-- ১০. বিশেষ পরিস্থিতি -->
+            <a
+                class="condition-card"
+                data-card-key="special"
+                href="special-situations.html"
+            >
+                <span class="card-image">
+                    <img
+                        src="../assets/images/special-situations.png"
+                        alt=""
+                    >
+                </span>
+
+                <span class="card-title" data-i18n="special">
+                    বিশেষ পরিস্থিতি
+                </span>
+            </a>
+
+        </section>
+
+
+        <!-- ফুটার বোর্ড -->
+        <footer class="footer-board">
+            <p id="footerText">
+                মনোযোগ দিয়ে ইবাদত করো।
             </p>
+        </footer>
 
-            <p class="hero-subtitle" id="heroSubtitle">
-                পবিত্রতা • সময় • কিবলা • নিয়ত
-            </p>
-        </div>
-    </header>
+    </main>
 
-    <!-- দশটি অপশন -->
-    <section class="options-area"
-             aria-label="নামাজের শর্ত ও প্রস্তুতির বিষয়সমূহ">
 
-        <a class="condition-card" href="prayer-time.html">
-            <span class="card-number">০১</span>
-            <span class="card-icon" aria-hidden="true">🕰️</span>
-            <span class="card-title" data-i18n="timeTitle">
-                নামাজের সময়
-            </span>
-            <span class="card-description" data-i18n="timeDesc">
-                নির্ধারিত ওয়াক্তে নামাজ আদায়
-            </span>
-            <span class="card-arrow" aria-hidden="true">‹</span>
-        </a>
+    <!-- সাইটের বিদ্যমান থিম ব্যবস্থাপনা -->
+    <script src="../js/theme.js"></script>
 
-        <a class="condition-card" href="purity.html">
-            <span class="card-number">০২</span>
-            <span class="card-icon" aria-hidden="true">💧</span>
-            <span class="card-title" data-i18n="purityTitle">
-                পবিত্রতা
-            </span>
-            <span class="card-description" data-i18n="purityDesc">
-                অজু, গোসল ও তায়াম্মুম
-            </span>
-            <span class="card-arrow" aria-hidden="true">‹</span>
-        </a>
+    <!-- শর্ত ও প্রস্তুতি পেজের JavaScript -->
+    <script src="../js/namaz-conditions.js"></script>
 
-        <a class="condition-card" href="body-purity.html">
-            <span class="card-number">০৩</span>
-            <span class="card-icon" aria-hidden="true">✨</span>
-            <span class="card-title" data-i18n="bodyTitle">
-                শরীরের পবিত্রতা
-            </span>
-            <span class="card-description" data-i18n="bodyDesc">
-                শরীরের নাপাকি পরিষ্কার রাখা
-            </span>
-            <span class="card-arrow" aria-hidden="true">‹</span>
-        </a>
-
-        <a class="condition-card" href="clothing-purity.html">
-            <span class="card-number">০৪</span>
-            <span class="card-icon" aria-hidden="true">👕</span>
-            <span class="card-title" data-i18n="clothingTitle">
-                পোশাকের পবিত্রতা
-            </span>
-            <span class="card-description" data-i18n="clothingDesc">
-                পরিষ্কার ও উপযুক্ত পোশাক
-            </span>
-            <span class="card-arrow" aria-hidden="true">‹</span>
-        </a>
-
-        <a class="condition-card" href="place-purity.html">
-            <span class="card-number">০৫</span>
-            <span class="card-icon" aria-hidden="true">🕌</span>
-            <span class="card-title" data-i18n="placeTitle">
-                নামাজের স্থান
-            </span>
-            <span class="card-description" data-i18n="placeDesc">
-                নামাজের জায়গা পবিত্র রাখা
-            </span>
-            <span class="card-arrow" aria-hidden="true">‹</span>
-        </a>
-
-        <a class="condition-card" href="qibla-direction.html">
-            <span class="card-number">০৬</span>
-            <span class="card-icon">
-                <img src="../assets/images/qibla-direction.png"
-                     alt=""
-                     loading="lazy">
-            </span>
-            <span class="card-title" data-i18n="qiblaTitle">
-                কিবলামুখী হওয়া
-            </span>
-            <span class="card-description" data-i18n="qiblaDesc">
-                কাবা শরিফের দিকে মুখ করা
-            </span>
-            <span class="card-arrow" aria-hidden="true">‹</span>
-        </a>
-
-        <a class="condition-card" href="satr-covering.html">
-            <span class="card-number">০৭</span>
-            <span class="card-icon">
-                <img src="../assets/images/satr-covering.png"
-                     alt=""
-                     loading="lazy">
-            </span>
-            <span class="card-title" data-i18n="satrTitle">
-                সতর ঢাকা
-            </span>
-            <span class="card-description" data-i18n="satrDesc">
-                প্রয়োজনীয় অঙ্গ ঢেকে রাখা
-            </span>
-            <span class="card-arrow" aria-hidden="true">‹</span>
-        </a>
-
-        <a class="condition-card" href="niyyah.html">
-            <span class="card-number">০৮</span>
-            <span class="card-icon">
-                <img src="../assets/images/niyyah.png"
-                     alt=""
-                     loading="lazy">
-            </span>
-            <span class="card-title" data-i18n="niyyahTitle">
-                নিয়ত
-            </span>
-            <span class="card-description" data-i18n="niyyahDesc">
-                কোন নামাজ পড়বে তা মনে স্থির করা
-            </span>
-            <span class="card-arrow" aria-hidden="true">‹</span>
-        </a>
-
-        <a class="condition-card" href="special-situations.html">
-            <span class="card-number">০৯</span>
-            <span class="card-icon">
-                <img src="../assets/images/special-situations.png"
-                     alt=""
-                     loading="lazy">
-            </span>
-            <span class="card-title" data-i18n="specialTitle">
-                বিশেষ পরিস্থিতি
-            </span>
-            <span class="card-description" data-i18n="specialDesc">
-                অসুস্থতা ও সামর্থ্য অনুযায়ী বিধান
-            </span>
-            <span class="card-arrow" aria-hidden="true">‹</span>
-        </a>
-
-        <a class="condition-card" href="prayer-checklist.html">
-            <span class="card-number">১০</span>
-            <span class="card-icon" aria-hidden="true">☑️</span>
-            <span class="card-title" data-i18n="checkTitle">
-                শেষবার যাচাই
-            </span>
-            <span class="card-description" data-i18n="checkDesc">
-                নামাজের আগে প্রস্তুতি মিলিয়ে নাও
-            </span>
-            <span class="card-arrow" aria-hidden="true">‹</span>
-        </a>
-
-    </section>
-
-    <!-- নিচের স্থির বোর্ড -->
-    <footer class="footer-board">
-        <p id="footerText">
-            পবিত্রতা রক্ষা করো, মনোযোগ দিয়ে ইবাদত করো।
-        </p>
-    </footer>
-
-</main>
-
-<script src="../js/theme.js"></script>
-<script src="../js/namaz-conditions.js"></script>
 </body>
 </html>
