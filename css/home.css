@@ -519,35 +519,46 @@ body.dark-mode .card {
 body.dark-mode .bismillah-card,
 body.dark-mode .status-card,
 body.dark-mode .prayer-card {
+    background-image: none;
+}
+
+body.dark-mode .bismillah-card {
     background-image:
         linear-gradient(
-            rgba(29, 45, 33, 0.88),
-            rgba(29, 45, 33, 0.88)
+            rgba(29, 45, 33, 0.78),
+            rgba(29, 45, 33, 0.78)
         ),
-        url("../assets/main-bg.jpg");
+        url("../assets/images/home-bg1.png");
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-body.dark-mode .status-card::before,
-body.dark-mode .prayer-card::before {
-    background: rgba(16, 21, 16, 0.10);
+body.dark-mode .status-card {
+    background-image:
+        linear-gradient(
+            rgba(29, 45, 33, 0.78),
+            rgba(29, 45, 33, 0.78)
+        ),
+        url("../assets/images/home-bg2.png");
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-body.dark-mode .prayer-box,
-body.dark-mode .feature-card {
-    background: #29402D;
-    color: #DCEFD7;
-}
+body.dark-mode .prayer-card {
+    background-image:
+        linear-gradient(
+            rgba(29, 45, 33, 0.78),
+            rgba(29, 45, 33, 0.78)
+        ),
+        url("../assets/images/home-bg3.png");
 
-body.dark-mode #clock {
-    color: #9EE3A0;
-}
-
-body.dark-mode #countdown {
-    color: #FF8A80;
-}
-
-body.dark-mode #bismillahMeaning {
-    color: #DCEFD7;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 
