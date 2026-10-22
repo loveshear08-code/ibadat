@@ -1,588 +1,601 @@
-/* ===================================================
-   IBADAT HOME - FINAL CSS
-   =================================================== */
 
-:root{
+/* =========================================================
+   IBADAT HOME PAGE — COMPLETE CSS
+   Existing layout and conditions preserved
+   Main background + soft cream-white overlay
+   ========================================================= */
 
-    --primary:#0F5132;
-    --primary-dark:#0B3D26;
 
-    --bg:#F8F6EE;
+/* ================= ROOT VARIABLES ================= */
 
-    --card:#FFFFFF;
+:root {
+    --primary: #0F5132;
+    --primary-dark: #0B3D26;
 
-    --feature:#D7EFD1;
+    --bg: #F8F6EE;
+    --card: #FFFFFF;
+    --feature: #D7EFD1;
 
-    --text:#1E4620;
+    --text: #1E4620;
+    --gold: #D4AF37;
+    --danger: #C62828;
 
-    --gold:#D4AF37;
-
-    --danger:#C62828;
+    --cream-overlay: rgba(255, 252, 243, 0.84);
 }
 
-/* ===================================================
-   RESET
-   =================================================== */
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+/* ================= RESET ================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 html,
-body{
-    width:100%;
-    height:100%;
+body {
+    width: 100%;
+    height: 100%;
 }
 
-body{
+html {
+    -webkit-text-size-adjust: 100%;
+}
 
-    background:var(--bg);
+body {
+    position: relative;
 
-    color:var(--text);
+    background-color: var(--bg);
+
+    /* Main background with soft cream-white overlay */
+    background-image:
+        linear-gradient(
+            var(--cream-overlay),
+            var(--cream-overlay)
+        ),
+        url("../assets/main-bg.jpg");
+
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+
+    color: var(--text);
 
     font-family:
-    "Noto Sans Bengali",
-    sans-serif;
+        "Noto Sans Bengali",
+        sans-serif;
 
-    overflow:hidden;
+    overflow: hidden;
 }
 
-/* ===================================================
-   TOP BAR
-   =================================================== */
 
-.top-bar{
+/* ================= TOP BAR ================= */
 
-    position:fixed;
+.top-bar {
+    position: fixed;
 
-    top:0;
-    left:0;
-    right:0;
+    top: 0;
+    left: 0;
+    right: 0;
 
-    height:50px;
+    height: 50px;
 
-    background:var(--primary);
+    background: var(--primary);
+    color: #FFF8E8;
 
-    color:#FFF8E8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-    display:flex;
+    padding: 0 14px;
 
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:0 14px;
-
-    z-index:1000;
+    z-index: 1000;
 
     box-shadow:
-    0 2px 10px rgba(0,0,0,.15);
+        0 2px 10px rgba(0, 0, 0, 0.15);
 }
 
-.top-city{
+.top-city {
+    font-size: 15px;
+    font-weight: 600;
 
-    font-size:15px;
+    max-width: 50%;
 
-    font-weight:600;
-
-    max-width:50%;
-
-    overflow:hidden;
-
-    text-overflow:ellipsis;
-
-    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.top-date{
-
-    font-size:15px;
-
-    font-weight:600;
+.top-date {
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
 }
 
-/* ===================================================
-   MAIN
-   =================================================== */
 
-.main-container{
+/* ================= MAIN CONTAINER ================= */
 
-    position:fixed;
+.main-container {
+    position: fixed;
 
-    top:50px;
+    top: 50px;
+    bottom: 50px;
+    left: 0;
+    right: 0;
 
-    bottom:50px;
+    padding: 10px;
 
-    left:0;
-    right:0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
-    padding:10px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:10px;
-
-    overflow:hidden;
+    overflow: hidden;
 }
 
-/* ===================================================
-   COMMON CARD
-   =================================================== */
 
-.card{
+/* ================= COMMON CARD ================= */
 
-    width:100%;
+.card {
+    position: relative;
 
-    background:#FFFFFF;
+    width: 100%;
 
-    border-radius:22px;
+    background: rgba(255, 253, 247, 0.90);
 
-    border:1px solid rgba(15,81,50,.06);
+    border-radius: 22px;
+
+    border: 1px solid rgba(15, 81, 50, 0.06);
 
     box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.04),
+        0 8px 18px rgba(0, 0, 0, 0.03);
 
-    0 2px 6px rgba(0,0,0,.04),
-
-    0 8px 18px rgba(0,0,0,.03);
+    background-clip: padding-box;
 }
 
-/* ===================================================
-   3 TOP BOARDS
-   =================================================== */
+
+/* ================= TOP THREE BOARDS ================= */
 
 .bismillah-card,
 .status-card,
-.prayer-card{
+.prayer-card {
+    flex: 0 0 20%;
 
-    flex:0 0 20%;
-
-    min-height:130px;
-
-    background:#FFFFFF;
+    min-height: 130px;
 }
 
-/* ===================================================
-   BISMILLAH
-   =================================================== */
 
-.bismillah-card{
+/* ================= BISMILLAH CARD ================= */
 
-    display:flex;
+.bismillah-card {
+    display: flex;
+    flex-direction: column;
 
-    flex-direction:column;
+    justify-content: center;
+    align-items: center;
 
-    justify-content:center;
+    text-align: center;
 
-    align-items:center;
+    padding: 0;
 
-    text-align:center;
+    overflow: hidden;
 
-    padding:0;
+    background-image:
+        linear-gradient(
+            var(--cream-overlay),
+            var(--cream-overlay)
+        ),
+        url("../assets/main-bg.jpg");
 
-   background-image:url("../assets/home-bg1.jpg");
-
-    background-position:center;
-
-    background-repeat:no-repeat;
-
-    background-size:cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-.bismillah-ar{
+.bismillah-ar {
+    position: relative;
+    z-index: 2;
 
-    position:relative;
+    font-size: 28px;
+    font-weight: 800;
 
-    z-index:2;
+    color: var(--gold);
 
-    font-size:28px;
-
-    font-weight:800;
-
-    color:var(--gold);
-
-    line-height:1.3;
-
-    margin:0;
+    line-height: 1.3;
+    margin: 0;
 
     text-shadow:
-    0 1px 2px rgba(255,255,255,.8);
+        0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
-#bismillahMeaning{
+#bismillahMeaning {
+    position: relative;
+    z-index: 2;
 
-    font-size:13px;
+    font-size: 13px;
+    font-weight: 600;
 
-    font-weight:600;
+    margin-top: 4px;
 
-    margin-top:4px;
-
-    color:var(--text);
+    color: var(--text);
 }
 
-/* ===================================================
-   STATUS
-   =================================================== */
 
-.status-card{
+/* ================= STATUS CARD ================= */
 
-   position:relative;
+.status-card {
+    position: relative;
 
-    display:flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    justify-content:center;
+    padding: 0;
 
-    align-items:center;
+    overflow: hidden;
 
-    padding:0;
-   
-   background-image:url("../assets/home-bg2.jpg");
-   
-   background-position:left center;
+    background-image:
+        linear-gradient(
+            var(--cream-overlay),
+            var(--cream-overlay)
+        ),
+        url("../assets/main-bg.jpg");
 
-    background-repeat:no-repeat;
-
-    background-size:cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-.status-card::before{
+/* Preserve the existing overlay layer */
+.status-card::before {
+    content: "";
 
-    content:"";
+    position: absolute;
+    inset: 0;
 
-    position:absolute;
+    background: rgba(255, 252, 243, 0.10);
 
-    inset:0;
+    z-index: 1;
 
-    background:
-    rgba(255,248,232,0.22);
-
-    z-index:1;
+    pointer-events: none;
 }
 
-.status{
+.status {
+    position: relative;
+    z-index: 2;
 
-   position:relative;
+    width: 100%;
+    height: 100%;
 
-    z-index:2;
-
-    width:100%;
-
-    height:100%;
-
-    display:flex;
-
-    gap:10px;
+    display: flex;
+    gap: 10px;
 }
 
 .status-left,
-.status-right{
+.status-right {
+    flex: 1;
 
-    flex:1;
+    display: flex;
+    flex-direction: column;
 
-    display:flex;
+    justify-content: space-evenly;
+    align-items: center;
 
-    flex-direction:column;
+    text-align: center;
 
-    justify-content:space-evenly;
-
-    align-items:center;
-
-    text-align:center;
+    min-width: 0;
 }
 
 #todayDay,
-#weather{
-
-    font-size:22px;
-
-    font-weight:700;
+#weather {
+    font-size: 22px;
+    font-weight: 700;
 }
 
-#clock{
+#clock {
+    font-size: 24px;
+    font-weight: 800;
 
-    font-size:24px;
-
-    font-weight:800;
-
-    color:var(--primary);
+    color: var(--primary);
 }
 
-#countdown{
+#countdown {
+    font-size: 24px;
+    font-weight: 800;
 
-    font-size:24px;
-
-    font-weight:800;
-
-    color:var(--danger);
+    color: var(--danger);
 }
 
 #currentPrayerName,
-#nextPrayerName{
+#nextPrayerName {
+    display: flex;
 
-    display:flex;
+    align-items: center;
+    justify-content: center;
 
-    align-items:center;
+    gap: 6px;
 
-    justify-content:center;
+    white-space: nowrap;
 
-    gap:6px;
-
-    white-space:nowrap;
-
-    font-size:22px;
-
-    font-weight:700;
-}
-
-/* ===================================================
-   PRAYER GRID
-   =================================================== */
-
-.prayer-card{
-
-   position:relative;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    padding:0;
-
-   overflow:hidden;
-
-   background-image:url("../assets/home-bg3.jpg");
-
-    background-position:center;
-
-    background-repeat:no-repeat;
-
-    background-size:cover;
-}
-
-.prayer-card::before{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-    rgba(255,248,232,0.28);
-
-    z-index:1;
-}
-
-.prayer-grid{
-
-   position:relative;
-
-    z-index:2;
-
-    width:100%;
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    gap:10px;
-
-   padding:12px;
-
-    box-sizing:border-box;
-}
-
-.prayer-box{
-
-    background:#D8EFD2;
-
-    border-radius:16px;
-  
-   height:48px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
-
-    align-items:center;
-
-    text-align:center;
-
-    font-size:13px;
-
-    font-weight:700;
-
-    color:var(--text);
-}
-
-.sunrise-box{
-
-    border:
-    2px solid rgba(212,175,55,.4);
-}
-
-/* ===================================================
-   FEATURES
-   =================================================== */
-
-.feature-grid{
-
-    flex:1;
-
-    display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    grid-template-rows:repeat(3,1fr);
-
-    gap:10px;
-
-   min-height:0;
-}
-
-.feature-card{
-
-    background:var(--feature);
-
-    border-radius:22px;
-
-   border:1px solid rgba(212,175,55,.4);
-
-    display:flex;
-
-    justify-content:flex-start;
-
-    align-items:center;
-
-    gap:10px;
-
-    padding-left:24px;
-
-    color:var(--text);
-
-    font-size:18px;
-
-    font-weight:700;
-
-    height:100%;
-}
-
-.feature-icon{
-
-    width:30px;
-
-    height:30px;
-
-    object-fit:contain;
-
-    flex-shrink:0;
+    font-size: 22px;
+    font-weight: 700;
 }
 
 
-/* ===================================================
-   BOTTOM BAR
-   =================================================== */
+/* ================= PRAYER TIMES CARD ================= */
 
-.bottom-bar{
+.prayer-card {
+    position: relative;
 
-    position:fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    left:0;
-    right:0;
-    bottom:0;
+    padding: 0;
 
-    height:50px;
+    overflow: hidden;
 
-    background:var(--primary);
+    background-image:
+        linear-gradient(
+            var(--cream-overlay),
+            var(--cream-overlay)
+        ),
+        url("../assets/main-bg.jpg");
 
-    color:#FFF8E8;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
-    display:flex;
+/* Preserve the existing prayer-card overlay */
+.prayer-card::before {
+    content: "";
 
-    justify-content:center;
+    position: absolute;
+    inset: 0;
 
-    align-items:center;
+    background: rgba(255, 252, 243, 0.10);
 
-    overflow:hidden;
+    z-index: 1;
+
+    pointer-events: none;
+}
+
+.prayer-grid {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 10px;
+
+    padding: 12px;
+
+    box-sizing: border-box;
+}
+
+.prayer-box {
+    background: #D8EFD2;
+
+    border-radius: 16px;
+
+    height: 48px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    color: var(--text);
+}
+
+.sunrise-box {
+    border: 2px solid rgba(212, 175, 55, 0.4);
+}
+
+
+/* ================= FEATURE GRID ================= */
+
+.feature-grid {
+    flex: 1;
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+
+    gap: 10px;
+
+    min-height: 0;
+}
+
+.feature-card {
+    background: var(--feature);
+
+    border-radius: 22px;
+
+    border: 1px solid rgba(212, 175, 55, 0.4);
+
+    display: flex;
+
+    justify-content: flex-start;
+    align-items: center;
+
+    gap: 10px;
+
+    padding-left: 24px;
+
+    color: var(--text);
+
+    font-size: 18px;
+    font-weight: 700;
+
+    height: 100%;
+
+    min-width: 0;
+}
+
+.feature-icon {
+    width: 30px;
+    height: 30px;
+
+    object-fit: contain;
+
+    flex-shrink: 0;
+}
+
+
+/* ================= BOTTOM BAR ================= */
+
+.bottom-bar {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 50px;
+
+    background: var(--primary);
+    color: #FFF8E8;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
 
     box-shadow:
-    0 -2px 10px rgba(0,0,0,.15);
+        0 -2px 10px rgba(0, 0, 0, 0.15);
+
+    z-index: 1000;
 }
 
-#bottomText{
-
-    white-space:nowrap;
+#bottomText {
+    white-space: nowrap;
 
     animation:
-    scrollText 18s linear infinite;
+        scrollText 18s linear infinite;
 }
 
-@keyframes scrollText{
-
-    from{
-        transform:translateX(100%);
+@keyframes scrollText {
+    from {
+        transform: translateX(100%);
     }
 
-    to{
-        transform:translateX(-100%);
+    to {
+        transform: translateX(-100%);
     }
 }
 
-/* ===================================================
-   DARK MODE
-   =================================================== */
 
-body.dark-mode{
+/* ================= DARK MODE ================= */
 
-    background:#101510;
+body.dark-mode {
+    background-color: #101510;
+
+    background-image:
+        linear-gradient(
+            rgba(16, 21, 16, 0.88),
+            rgba(16, 21, 16, 0.88)
+        ),
+        url("../assets/main-bg.jpg");
 }
 
-body.dark-mode .card{
+body.dark-mode .card {
+    background-color: rgba(29, 45, 33, 0.94);
+}
 
-    background:#1D2D21;
+body.dark-mode .bismillah-card,
+body.dark-mode .status-card,
+body.dark-mode .prayer-card {
+    background-image:
+        linear-gradient(
+            rgba(29, 45, 33, 0.88),
+            rgba(29, 45, 33, 0.88)
+        ),
+        url("../assets/main-bg.jpg");
+}
+
+body.dark-mode .status-card::before,
+body.dark-mode .prayer-card::before {
+    background: rgba(16, 21, 16, 0.10);
 }
 
 body.dark-mode .prayer-box,
-body.dark-mode .feature-card{
-
-    background:#29402D;
-
-    color:#DCEFD7;
+body.dark-mode .feature-card {
+    background: #29402D;
+    color: #DCEFD7;
 }
 
-body.dark-mode #clock{
-
-    color:#9EE3A0;
+body.dark-mode #clock {
+    color: #9EE3A0;
 }
 
-body.dark-mode #countdown{
-
-    color:#FF8A80;
+body.dark-mode #countdown {
+    color: #FF8A80;
 }
 
-/* ===================================================
-   SMALL DEVICES
-   =================================================== */
+body.dark-mode #bismillahMeaning {
+    color: #DCEFD7;
+}
 
-@media (max-width:360px){
 
-    .bismillah-ar{
-        font-size:22px;
+/* ================= SMALL DEVICES ================= */
+
+@media (max-width: 360px) {
+    .bismillah-ar {
+        font-size: 22px;
     }
 
     #clock,
-    #countdown{
-        font-size:20px;
+    #countdown {
+        font-size: 20px;
     }
 
-    .feature-card{
-        font-size:16px;
+    .feature-card {
+        font-size: 16px;
+    }
+}
+
+
+/* ================= SHORT SCREENS ================= */
+
+@media (max-height: 700px) {
+    .main-container {
+        gap: 7px;
+        padding: 8px;
+    }
+
+    .prayer-grid {
+        gap: 7px;
+        padding: 8px;
+    }
+
+    .prayer-box {
+        height: 42px;
+    }
+
+    .feature-grid {
+        gap: 7px;
+    }
+}
+
+
+/* ================= REDUCED MOTION ================= */
+
+@media (prefers-reduced-motion: reduce) {
+    #bottomText {
+        animation-duration: 30s;
     }
 }
