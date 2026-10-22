@@ -183,8 +183,8 @@ body {
 
     background-image:
         linear-gradient(
-            var(--cream-overlay),
-            var(--cream-overlay)
+    rgba(255, 252, 243, 0.12),
+    rgba(255, 252, 243, 0.12)
         ),
         url("../assets/images/home-bg1.png");
 
@@ -237,8 +237,8 @@ body {
 
     background-image:
         linear-gradient(
-            var(--cream-overlay),
-            var(--cream-overlay)
+    rgba(255, 252, 243, 0.12),
+    rgba(255, 252, 243, 0.12)
         ),
         url("../assets/images/home-bg2.png");
 
@@ -338,8 +338,8 @@ body {
 
     background-image:
         linear-gradient(
-            var(--cream-overlay),
-            var(--cream-overlay)
+    rgba(255, 252, 243, 0.12),
+    rgba(255, 252, 243, 0.12)
         ),
         url("../assets/images/home-bg3.png");
 
