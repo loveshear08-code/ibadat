@@ -1,294 +1,188 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0F5132">
-    <meta name="description" content="নামাজের শর্ত, নিয়ত, কিবলা, পোশাক ও প্রস্তুতির সহজ পাঠ">
-    <title>নামাজের শর্ত | IBADAT</title>
+    <meta name="description"
+          content="IBADAT — নামাজের শর্ত ও প্রস্তুতির সহজ নির্দেশিকা">
+
+    <title>শর্ত ও প্রস্তুতি | IBADAT</title>
+
     <link rel="stylesheet" href="../css/namaz-conditions.css">
 </head>
+
 <body>
 <main class="conditions-page">
 
-    <!-- উপরের পরিচিতি বোর্ড -->
-    <header class="hero">
-        <span class="ornament" aria-hidden="true">✦</span>
-        <h1 id="page-title">নামাজের শর্ত</h1>
-        <p class="hero-intro" id="intro-text">
-            নামাজ শুদ্ধভাবে আদায়ের আগে প্রয়োজনীয় শর্তগুলো জেনে নাও।
-        </p>
-        <p class="hero-subtitle" id="page-subtitle">
-            নামাজের আগে কী জানা ও প্রস্তুত রাখা দরকার—তার সহজ পাঠ
-        </p>
+    <!-- উপরের স্থির বোর্ড -->
+    <header class="hero-board">
+        <div class="hero-inner">
+            <h1 id="pageTitle">শর্ত ও প্রস্তুতি</h1>
+
+            <p id="heroDescription">
+                নামাজের আগে প্রয়োজনীয় বিষয়গুলো জেনে নাও
+            </p>
+
+            <p class="hero-subtitle" id="heroSubtitle">
+                পবিত্রতা • সময় • কিবলা • নিয়ত
+            </p>
+        </div>
     </header>
 
-    <!-- ১. পরিচয় ও গুরুত্ব -->
-    <section class="panel lesson" id="intro" aria-labelledby="intro-title">
-        <div class="section-title">
-            <b class="section-number" aria-hidden="true">১</b>
-            <div>
-                <span class="kicker" id="intro-kicker">প্রথম পাঠ</span>
-                <h2 id="intro-title">পরিচয় ও গুরুত্ব</h2>
-            </div>
-        </div>
+    <!-- দশটি অপশন -->
+    <section class="options-area"
+             aria-label="নামাজের শর্ত ও প্রস্তুতির বিষয়সমূহ">
 
-        <figure class="art wide">
-            <img src="../assets/shart-intro.png"
-                 alt="নামাজের শর্ত সম্পর্কে ভাবছে এমন শিশুর ছবি"
-                 width="1536" height="1024" loading="lazy">
-        </figure>
+        <a class="condition-card" href="prayer-time.html">
+            <span class="card-number">০১</span>
+            <span class="card-icon" aria-hidden="true">🕰️</span>
+            <span class="card-title" data-i18n="timeTitle">
+                নামাজের সময়
+            </span>
+            <span class="card-description" data-i18n="timeDesc">
+                নির্ধারিত ওয়াক্তে নামাজ আদায়
+            </span>
+            <span class="card-arrow" aria-hidden="true">‹</span>
+        </a>
 
-        <p class="lead" id="intro-lead">
-            নামাজ ইসলামের গুরুত্বপূর্ণ ইবাদত। নামাজ আদায়ের আগে এর প্রয়োজনীয় শর্তগুলো জানা দরকার, যাতে মনোযোগের সঙ্গে ইবাদত করা যায়।
-        </p>
+        <a class="condition-card" href="purity.html">
+            <span class="card-number">০২</span>
+            <span class="card-icon" aria-hidden="true">💧</span>
+            <span class="card-title" data-i18n="purityTitle">
+                পবিত্রতা
+            </span>
+            <span class="card-description" data-i18n="purityDesc">
+                অজু, গোসল ও তায়াম্মুম
+            </span>
+            <span class="card-arrow" aria-hidden="true">‹</span>
+        </a>
 
-        <h3 id="intro-before-title">নামাজের আগে মূল বিষয়গুলো</h3>
-        <ul id="intro-before">
-            <li>শরীর, পোশাক ও নামাজের স্থান পবিত্র রাখা।</li>
-            <li>নামাজের নির্ধারিত সময় হয়েছে কি না নিশ্চিত হওয়া।</li>
-            <li>কিবলার দিকে মুখ করা এবং সতর ঢেকে রাখা।</li>
-            <li>কোন নামাজ আদায় করবে, তা মনে স্থির করে নিয়ত করা।</li>
-        </ul>
+        <a class="condition-card" href="body-purity.html">
+            <span class="card-number">০৩</span>
+            <span class="card-icon" aria-hidden="true">✨</span>
+            <span class="card-title" data-i18n="bodyTitle">
+                শরীরের পবিত্রতা
+            </span>
+            <span class="card-description" data-i18n="bodyDesc">
+                শরীরের নাপাকি পরিষ্কার রাখা
+            </span>
+            <span class="card-arrow" aria-hidden="true">‹</span>
+        </a>
 
-        <aside class="note">
-            <strong id="intro-note-title">মনে রাখবে</strong>
-            <p id="intro-note">
-                এগুলো নামাজ শেখার প্রাথমিক নির্দেশনা। বিস্তারিত বিধানে মাজহাবভেদে পার্থক্য থাকতে পারে। প্রয়োজনে নির্ভরযোগ্য আলেমের কাছ থেকে শিখবে।
-            </p>
-        </aside>
+        <a class="condition-card" href="clothing-purity.html">
+            <span class="card-number">০৪</span>
+            <span class="card-icon" aria-hidden="true">👕</span>
+            <span class="card-title" data-i18n="clothingTitle">
+                পোশাকের পবিত্রতা
+            </span>
+            <span class="card-description" data-i18n="clothingDesc">
+                পরিষ্কার ও উপযুক্ত পোশাক
+            </span>
+            <span class="card-arrow" aria-hidden="true">‹</span>
+        </a>
+
+        <a class="condition-card" href="place-purity.html">
+            <span class="card-number">০৫</span>
+            <span class="card-icon" aria-hidden="true">🕌</span>
+            <span class="card-title" data-i18n="placeTitle">
+                নামাজের স্থান
+            </span>
+            <span class="card-description" data-i18n="placeDesc">
+                নামাজের জায়গা পবিত্র রাখা
+            </span>
+            <span class="card-arrow" aria-hidden="true">‹</span>
+        </a>
+
+        <a class="condition-card" href="qibla-direction.html">
+            <span class="card-number">০৬</span>
+            <span class="card-icon">
+                <img src="../assets/images/qibla-direction.png"
+                     alt=""
+                     loading="lazy">
+            </span>
+            <span class="card-title" data-i18n="qiblaTitle">
+                কিবলামুখী হওয়া
+            </span>
+            <span class="card-description" data-i18n="qiblaDesc">
+                কাবা শরিফের দিকে মুখ করা
+            </span>
+            <span class="card-arrow" aria-hidden="true">‹</span>
+        </a>
+
+        <a class="condition-card" href="satr-covering.html">
+            <span class="card-number">০৭</span>
+            <span class="card-icon">
+                <img src="../assets/images/satr-covering.png"
+                     alt=""
+                     loading="lazy">
+            </span>
+            <span class="card-title" data-i18n="satrTitle">
+                সতর ঢাকা
+            </span>
+            <span class="card-description" data-i18n="satrDesc">
+                প্রয়োজনীয় অঙ্গ ঢেকে রাখা
+            </span>
+            <span class="card-arrow" aria-hidden="true">‹</span>
+        </a>
+
+        <a class="condition-card" href="niyyah.html">
+            <span class="card-number">০৮</span>
+            <span class="card-icon">
+                <img src="../assets/images/niyyah.png"
+                     alt=""
+                     loading="lazy">
+            </span>
+            <span class="card-title" data-i18n="niyyahTitle">
+                নিয়ত
+            </span>
+            <span class="card-description" data-i18n="niyyahDesc">
+                কোন নামাজ পড়বে তা মনে স্থির করা
+            </span>
+            <span class="card-arrow" aria-hidden="true">‹</span>
+        </a>
+
+        <a class="condition-card" href="special-situations.html">
+            <span class="card-number">০৯</span>
+            <span class="card-icon">
+                <img src="../assets/images/special-situations.png"
+                     alt=""
+                     loading="lazy">
+            </span>
+            <span class="card-title" data-i18n="specialTitle">
+                বিশেষ পরিস্থিতি
+            </span>
+            <span class="card-description" data-i18n="specialDesc">
+                অসুস্থতা ও সামর্থ্য অনুযায়ী বিধান
+            </span>
+            <span class="card-arrow" aria-hidden="true">‹</span>
+        </a>
+
+        <a class="condition-card" href="prayer-checklist.html">
+            <span class="card-number">১০</span>
+            <span class="card-icon" aria-hidden="true">☑️</span>
+            <span class="card-title" data-i18n="checkTitle">
+                শেষবার যাচাই
+            </span>
+            <span class="card-description" data-i18n="checkDesc">
+                নামাজের আগে প্রস্তুতি মিলিয়ে নাও
+            </span>
+            <span class="card-arrow" aria-hidden="true">‹</span>
+        </a>
+
     </section>
 
-    <!-- ২. নিয়ত -->
-    <section class="panel lesson" id="niyot" aria-labelledby="niyot-title">
-        <div class="section-title">
-            <b class="section-number" aria-hidden="true">২</b>
-            <div>
-                <span class="kicker" id="niyot-kicker">দ্বিতীয় পাঠ</span>
-                <h2 id="niyot-title">নিয়ত</h2>
-            </div>
-        </div>
-
-        <figure class="art wide">
-            <img src="../assets/shart-niyot.png"
-                 alt="নামাজের নিয়ত ও আন্তরিকতা বোঝানো ছবি"
-                 width="1536" height="1024" loading="lazy">
-        </figure>
-
-        <p class="lead" id="niyot-lead">
-            নিয়ত হলো কোন ইবাদত আদায় করা হচ্ছে, তা অন্তরে স্থির করা। নামাজের ক্ষেত্রে কোন নামাজ পড়বে, তা মনে নির্ধারণ করাই মূল বিষয়।
+    <!-- নিচের স্থির বোর্ড -->
+    <footer class="footer-board">
+        <p id="footerText">
+            পবিত্রতা রক্ষা করো, মনোযোগ দিয়ে ইবাদত করো।
         </p>
-
-        <h3 id="niyot-how-title">নিয়ত কীভাবে করবে?</h3>
-        <ol id="niyot-how">
-            <li>কোন নামাজ পড়বে—যেমন ফজর, যোহর বা আসর—তা মনে স্থির করো।</li>
-            <li>আল্লাহর সন্তুষ্টির জন্য ইবাদত করার মনোভাব রাখো।</li>
-            <li>নিয়তের বিস্তারিত বিধান সম্পর্কে নির্ভরযোগ্য আলেমের কাছ থেকে শেখো।</li>
-        </ol>
-
-        <aside class="note">
-            <strong id="niyot-note-title">মনে রাখবে</strong>
-            <p id="niyot-note">
-                নিয়ত মূলত অন্তরের বিষয়। অযথা দুশ্চিন্তা না করে নামাজের উদ্দেশ্য বুঝে মনোযোগী হও।
-            </p>
-        </aside>
-    </section>
-
-    <!-- ৩. কিবলামুখী হওয়া -->
-    <section class="panel lesson" id="qibla" aria-labelledby="qibla-title">
-        <div class="section-title">
-            <b class="section-number" aria-hidden="true">৩</b>
-            <div>
-                <span class="kicker" id="qibla-kicker">তৃতীয় পাঠ</span>
-                <h2 id="qibla-title">কিবলামুখী হওয়া</h2>
-            </div>
-        </div>
-
-        <figure class="art wide">
-            <img src="../assets/shart-qibla.png"
-                 alt="কিবলার দিকে মুখ করে দাঁড়ানো শিশুর ছবি"
-                 width="1536" height="1024" loading="lazy">
-        </figure>
-
-        <p class="lead" id="qibla-lead">
-            স্বাভাবিক ও সক্ষম অবস্থায় নামাজে কাবা শরিফের দিকে মুখ করে দাঁড়াতে হয়। তাই কিবলার দিক নির্ভরযোগ্যভাবে নির্ধারণ করার চেষ্টা করবে।
-        </p>
-
-        <h3 id="qibla-check-title">কিবলার দিক নির্ধারণ</h3>
-        <ul id="qibla-check">
-            <li>মসজিদের কিবলা নির্দেশনা অনুসরণ করতে পারো।</li>
-            <li>প্রয়োজনে নির্ভরযোগ্য কিবলা কম্পাস বা অ্যাপ ব্যবহার করো।</li>
-            <li>অপরিচিত স্থানে নির্ভরযোগ্য ব্যক্তির কাছ থেকে দিক জেনে নাও।</li>
-        </ul>
-
-        <aside class="note">
-            <strong id="qibla-note-title">বিশেষ অবস্থা</strong>
-            <p id="qibla-note">
-                অসুস্থতা, ভয় বা জরুরি পরিস্থিতিতে আলাদা বিধান থাকতে পারে। প্রয়োজন হলে বিশ্বস্ত আলেমের পরামর্শ নাও।
-            </p>
-        </aside>
-    </section>
-
-    <!-- ৪. সতর ঢাকা ও পোশাক -->
-    <section class="panel lesson" id="poshak" aria-labelledby="poshak-title">
-        <div class="section-title">
-            <b class="section-number" aria-hidden="true">৪</b>
-            <div>
-                <span class="kicker" id="poshak-kicker">চতুর্থ পাঠ</span>
-                <h2 id="poshak-title">সতর ঢাকা ও পোশাক</h2>
-            </div>
-        </div>
-
-        <figure class="art wide">
-            <img src="../assets/shart-poshak.png"
-                 alt="নামাজের উপযোগী পোশাকের ছবি"
-                 width="1536" height="1024" loading="lazy">
-        </figure>
-
-        <p class="lead" id="poshak-lead">
-            নামাজে সতর ঢেকে রাখা এবং পোশাক পবিত্র ও শালীন হওয়া জরুরি।
-        </p>
-
-        <h3 id="poshak-check-title">পোশাক পরার আগে খেয়াল করো</h3>
-        <ul id="poshak-check">
-            <li>পোশাক শরীরের প্রয়োজনীয় অংশ ঢেকে রাখছে কি না।</li>
-            <li>পোশাকে নিশ্চিত নাপাকি থাকলে তা পরিষ্কার করা হয়েছে কি না।</li>
-            <li>পোশাক স্বচ্ছ বা এমনভাবে খোলা নয়, যাতে সতর প্রকাশ পায়।</li>
-            <li>সতরের বিস্তারিত সীমা নির্ভরযোগ্য নির্দেশনা অনুযায়ী শিখে নাও।</li>
-        </ul>
-
-        <aside class="note">
-            <strong id="poshak-note-title">মনে রাখবে</strong>
-            <p id="poshak-note">
-                পরিচ্ছন্নতা, শালীনতা ও সতর ঢাকার বিষয়ে যত্নবান হও।
-            </p>
-        </aside>
-    </section>
-
-    <!-- ৫. সময় ও প্রস্তুতি -->
-    <section class="panel lesson" id="prostuti" aria-labelledby="prostuti-title">
-        <div class="section-title">
-            <b class="section-number" aria-hidden="true">৫</b>
-            <div>
-                <span class="kicker" id="prostuti-kicker">পঞ্চম পাঠ</span>
-                <h2 id="prostuti-title">সময় ও প্রস্তুতি</h2>
-            </div>
-        </div>
-
-        <figure class="art wide">
-            <img src="../assets/shart-prostuti.png"
-                 alt="নামাজের সময় ও প্রস্তুতির ছবি"
-                 width="1536" height="1024" loading="lazy">
-        </figure>
-
-        <p class="lead" id="prostuti-lead">
-            প্রত্যেক ফরজ নামাজের নির্ধারিত সময় আছে। তাই নামাজের আগে সময় ও পবিত্রতা নিশ্চিত করা দরকার।
-        </p>
-
-        <h3 id="prostuti-check-title">নামাজের আগে প্রস্তুতির তালিকা</h3>
-        <ul id="prostuti-check">
-            <li>নামাজের সঠিক সময় হয়েছে কি না যাচাই করা।</li>
-            <li>প্রয়োজন অনুযায়ী অজু, গোসল বা তায়াম্মুমের মাধ্যমে পবিত্রতা অর্জন করা।</li>
-            <li>শরীর, পোশাক ও নামাজের স্থান পবিত্র রাখা।</li>
-            <li>মনোযোগ নষ্ট করে এমন বিষয় দূরে রাখা।</li>
-            <li>শান্ত মনে ইবাদতের জন্য প্রস্তুত হওয়া।</li>
-        </ul>
-
-        <aside class="note">
-            <strong id="prostuti-note-title">সময় সম্পর্কে সতর্কতা</strong>
-            <p id="prostuti-note">
-                নামাজের সময় স্থান ও ঋতুভেদে বদলে যায়। নির্ভরযোগ্য স্থানীয় সময়সূচি অনুসরণ করবে।
-            </p>
-        </aside>
-    </section>
-
-    <!-- ৬. অসুস্থতা ও বিশেষ অবস্থা -->
-    <section class="panel lesson" id="osusthota" aria-labelledby="osusthota-title">
-        <div class="section-title">
-            <b class="section-number" aria-hidden="true">৬</b>
-            <div>
-                <span class="kicker" id="osusthota-kicker">ষষ্ঠ পাঠ</span>
-                <h2 id="osusthota-title">অসুস্থতা ও বিশেষ অবস্থা</h2>
-            </div>
-        </div>
-
-        <figure class="art wide">
-            <img src="../assets/shart-osusthota.png"
-                 alt="অসুস্থ অবস্থায় নামাজ আদায়ের শিক্ষামূলক ছবি"
-                 width="1536" height="1024" loading="lazy">
-        </figure>
-
-        <p class="lead" id="osusthota-lead">
-            ইসলাম সামর্থ্য অনুযায়ী ইবাদতের নির্দেশনা দেয়। অসুস্থতা বা চলাচলে অসুবিধা হলে নিজের পরিস্থিতি অনুযায়ী নামাজের বিধান শিখতে হবে।
-        </p>
-
-        <h3 id="osusthota-guidance-title">অসুস্থ হলে কী করবে?</h3>
-        <ul id="osusthota-guidance">
-            <li>দাঁড়াতে অক্ষম হলে বসে নামাজ পড়ার বিধান প্রযোজ্য হতে পারে।</li>
-            <li>বসাও সম্ভব না হলে শোয়া অবস্থায় নামাজের নিয়ম জানতে হবে।</li>
-            <li>পানি ব্যবহার ক্ষতিকর হলে নির্দিষ্ট শর্তে তায়াম্মুমের বিধান প্রযোজ্য হতে পারে।</li>
-            <li>বিশেষ পরিস্থিতিতে নির্ভরযোগ্য ধর্মীয় নির্দেশনা অনুসরণ করবে।</li>
-        </ul>
-
-        <aside class="note">
-            <strong id="osusthota-note-title">গুরুত্বপূর্ণ</strong>
-            <p id="osusthota-note">
-                অসুস্থতার ধরন ও সামর্থ্য অনুযায়ী বিধান ভিন্ন হতে পারে। নিজের পরিস্থিতির জন্য বিশ্বস্ত আলেমের পরামর্শ নাও।
-            </p>
-        </aside>
-    </section>
-
-    <!-- ৭. সাধারণ ভুল ও সতর্কতা -->
-    <section class="panel lesson" id="sotorkota" aria-labelledby="sotorkota-title">
-        <div class="section-title">
-            <b class="section-number" aria-hidden="true">৭</b>
-            <div>
-                <span class="kicker" id="sotorkota-kicker">সপ্তম পাঠ</span>
-                <h2 id="sotorkota-title">সাধারণ ভুল ও সতর্কতা</h2>
-            </div>
-        </div>
-
-        <figure class="art wide">
-            <img src="../assets/shart-sotorkota.png"
-                 alt="নামাজের সাধারণ ভুল ও সতর্কতা সম্পর্কে শিক্ষামূলক ছবি"
-                 width="1536" height="1024" loading="lazy">
-        </figure>
-
-        <p class="lead" id="sotorkota-lead">
-            সঠিক জ্ঞান অর্জন ও নিয়মিত শেখার মাধ্যমে নামাজের সাধারণ ভুল কমানো যায়।
-        </p>
-
-        <h3 id="sotorkota-common-title">যে বিষয়গুলোতে সতর্ক থাকবে</h3>
-        <ul id="sotorkota-common">
-            <li>নামাজের সময় নিশ্চিত না হয়ে ফরজ নামাজ শুরু করা।</li>
-            <li>পবিত্রতা ও পোশাকের বিষয়ে নিশ্চিত তথ্য না জেনে অযথা দুশ্চিন্তা করা।</li>
-            <li>কিবলার দিক নির্ধারণে যথাসাধ্য চেষ্টা না করা।</li>
-            <li>সতর ঢাকার প্রয়োজনীয়তা উপেক্ষা করা।</li>
-            <li>যাচাই না করে শোনা কথাকে চূড়ান্ত বিধান মনে করা।</li>
-        </ul>
-
-        <h3 id="sotorkota-what-title">ভুল হলে কী করবে?</h3>
-        <ul id="sotorkota-what">
-            <li>শান্তভাবে সঠিক নিয়ম শিখে তা অনুসরণ করো।</li>
-            <li>নামাজে ভুল হলে কী করতে হয়, তা নির্ভরযোগ্য আলেমের কাছ থেকে শেখো।</li>
-            <li>বিস্তারিত বিধানে পার্থক্য থাকলে যাচাই না করে অন্যকে দোষারোপ করো না।</li>
-        </ul>
-
-        <aside class="note">
-            <strong id="sotorkota-note-title">শেষ কথা</strong>
-            <p id="sotorkota-note">
-                নামাজের শর্ত ও ভুল সংশোধনের বিস্তারিত বিধান শেখার জন্য নির্ভরযোগ্য আলেম বা স্বীকৃত শিক্ষাসামগ্রী অনুসরণ করো।
-            </p>
-        </aside>
-    </section>
-
-    <!-- শেষের বোর্ড: নম্বর ও IBADAT লেখা ছাড়া -->
-    <footer class="conditions-footer">
-        <p id="footerText">পবিত্রতা রক্ষা করো, ইবাদতে প্রশান্তি খুঁজে নাও।</p>
     </footer>
 
 </main>
+
+<script src="../js/theme.js"></script>
 <script src="../js/namaz-conditions.js"></script>
 </body>
 </html>
