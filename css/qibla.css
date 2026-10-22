@@ -1,4 +1,38 @@
+/* =====================================================
+   IBADAT QIBLA — GREEN & GOLD THEME
+   Main background: assets/main-bg.jpg
+===================================================== */
+
+:root {
+    --deep-green: #124C32;
+    --deep-green-dark: #0C3926;
+    --primary: #1F6B3A;
+
+    --gold: #D4AF37;
+    --gold-light: #F5E5A7;
+
+    --cream: #FFFDF5;
+    --pistachio: #CFE8C8;
+
+    --text: #17452F;
+    --muted: #52796F;
+
+    --board-height: 68px;
+
+    --compass-outer: #66BB6A;
+    --compass-face: #DCEBCF;
+    --compass-inner: #F7F5E9;
+    --compass-ticks: #75B77A;
+    --compass-major-tick: #B78B24;
+    --compass-needle: #124C32;
+    --compass-tip: #C62828;
+}
+
 /* ================= BASE ================= */
+
+* {
+    box-sizing: border-box;
+}
 
 html,
 body {
@@ -6,91 +40,160 @@ body {
     padding: 0;
     width: 100%;
     height: 100%;
+    height: 100dvh;
     overflow: hidden;
-    font-family: sans-serif;
+
+    font-family:
+        "Noto Sans Bengali",
+        "Noto Sans Devanagari",
+        Arial,
+        sans-serif;
+
+    color: var(--text);
 
     background:
         linear-gradient(
-            rgba(255,251,244,.70),
-            rgba(255,251,244,.70)
+            rgba(255, 253, 245, 0.76),
+            rgba(255, 253, 245, 0.76)
         ),
-        url("../assets/bg_pattern.png");
+        url("../assets/main-bg.jpg");
 
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
 /* ================= PAGE ================= */
 
 .qibla-page {
+    width: 100%;
+    height: 100%;
     height: 100dvh;
+
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+
+    gap: 8px;
     padding: 8px 12px;
-    box-sizing: border-box;
+
+    overflow: hidden;
 }
 
-/* ================= LOCATION ================= */
+/* ================= TOP BOARD ================= */
 
-.location-card {
-    background: #CFE8C8;
-    border: 2px solid #D8D39A;
-    border-radius: 18px;
-    padding: 12px;
+.location-card,
+.info-card {
+    flex: 0 0 var(--board-height);
+
+    width: 100%;
+    min-width: 0;
+    min-height: var(--board-height);
+    height: var(--board-height);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 8px 12px;
+    margin: 0;
+
     text-align: center;
-    flex-shrink: 0;
+
+    color: var(--gold-light);
+
+    background: linear-gradient(
+        140deg,
+        var(--deep-green),
+        var(--deep-green-dark)
+    );
+
+    border: 2px solid var(--gold);
+    border-radius: 20px;
+
+    box-shadow:
+        0 3px 9px rgba(20, 60, 30, 0.13),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-#locationLabel {
+#locationLabel,
+#distanceLabel {
+    color: var(--gold-light);
+
     font-size: 14px;
-    font-weight: 700;
-    color: #52796F;
+    font-weight: 600;
+    line-height: 1.35;
 }
 
-#locationName {
-    margin-top: 6px;
+#locationName,
+#distance {
+    margin-top: 4px;
+
+    color: var(--cream);
+
     font-size: 18px;
     font-weight: 700;
-    color: #0F5132;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+#distance {
+    font-size: 22px;
 }
 
 /* ================= COMPASS AREA ================= */
 
 .compass-wrapper {
-    flex: 1;
+    flex: 1 1 auto;
+    min-height: 0;
+    min-width: 0;
+
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+
+    overflow: visible;
 }
 
 /* ================= COMPASS ================= */
 
+/* Original compass dimensions and positioning retained */
+
 .compass {
     width: 240px;
     height: 240px;
+
+    flex: 0 0 auto;
+
     position: relative;
     border-radius: 50%;
-    background: #CFE8C8;
 
-    /* Soft Parrot Green outer border */
-    border: 10px solid #66BB6A;
+    background: var(--compass-face);
+    border: 10px solid var(--compass-outer);
 
-    box-shadow: 0 6px 20px rgba(0,0,0,.12);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
 /* ================= DIRECTIONS ================= */
 
 .direction {
     position: absolute;
+
     transform: translate(-50%, -50%);
-    color: #D4AF37;
+
+    color: #A78219;
     font-weight: 700;
     font-size: 11px;
+
     z-index: 2;
     white-space: nowrap;
 }
 
-.n, .e, .s, .w {
+.n,
+.e,
+.s,
+.w {
     font-size: 18px;
 }
 
@@ -117,7 +220,6 @@ body {
 .nw  { top: 48px; left: 18%; }
 .nnw { top: 28px; left: 32%; }
 
-/* Keep east direction labels on one line */
 .ene,
 .ese {
     font-size: 9px;
@@ -129,27 +231,21 @@ body {
 .compass-ring {
     width: 165px;
     height: 165px;
+
     box-sizing: border-box;
 
-    border: 3px solid #66BB6A;
+    border: 3px solid var(--compass-outer);
     border-radius: 50%;
 
     position: absolute;
     top: 50%;
     left: 50%;
+
     transform: translate(-50%, -50%);
 
-    /* Allow page wallpaper to show inside the ring */
-    background:
-    linear-gradient(
-        rgba(255,251,244,.70),
-        rgba(255,251,244,.70)
-    ),
-    url("../assets/bg_pattern.png");
+    background: var(--compass-inner);
 
-background-size: cover;
-background-position: center;
-z-index: 1;
+    z-index: 1;
 }
 
 /* ================= FIXED COMPASS TICKS ================= */
@@ -157,13 +253,14 @@ z-index: 1;
 .compass-ticks {
     position: absolute;
     inset: 0;
+
     border-radius: 50%;
     pointer-events: none;
     z-index: 1;
 
     background: repeating-conic-gradient(
         from 0deg,
-        #66BB6A 0deg 0.8deg,
+        var(--compass-ticks) 0deg 0.8deg,
         transparent 0.8deg 11.25deg
     );
 
@@ -182,21 +279,22 @@ z-index: 1;
     );
 }
 
-/* ================= MAJOR RED TICKS ================= */
+/* ================= MAJOR TICKS ================= */
 
 .major-tick {
     position: absolute;
     left: 50%;
     top: 50%;
+
     width: 2px;
     height: 26px;
-    background: #C62828;
+
+    background: var(--compass-major-tick);
     border-radius: 1px;
+
     z-index: 4;
     pointer-events: none;
 }
-
-/* Place each red tick in the gap between rings */
 
 .tick-n {
     transform: translate(-50%, -50%) translateY(-96px);
@@ -235,13 +333,15 @@ z-index: 1;
 .center-point {
     width: 20px;
     height: 20px;
-    background: #D4AF37;
-    border: 4px solid #ffffff;
+
+    background: var(--gold);
+    border: 4px solid #FFFFFF;
     border-radius: 50%;
 
     position: absolute;
     top: 50%;
     left: 50%;
+
     transform: translate(-50%, -50%);
     z-index: 6;
 }
@@ -252,97 +352,149 @@ z-index: 1;
     position: absolute;
     left: 50%;
     top: 68%;
+
     transform: translate(-50%, -50%);
 
     font-size: 24px;
     font-weight: 700;
-    color: #0F5132;
+
+    color: var(--deep-green);
     white-space: nowrap;
     z-index: 2;
 }
 
-/* ================= DISTANCE ================= */
+/* ================= BOTTOM BOARD ================= */
 
 .info-card {
     margin-bottom: 0;
-    padding: 12px;
-    background: #CFE8C8;
-    border: 2px solid #D8D39A;
-    border-radius: 18px;
-    text-align: center;
 }
-
-#distanceLabel {
-    font-size: 14px;
-    font-weight: 700;
-    color: #52796F;
-}
-
-#distance {
-    margin-top: 6px;
-    font-size: 22px;
-    font-weight: 700;
-    color: #0F5132;
-}
-
 
 /* ================= DARK MODE ================= */
 
 body.dark-mode {
+    --text: #E2EDE2;
+    --muted: #C1D1C0;
+
+    --deep-green: #103F2B;
+    --deep-green-dark: #082D1D;
+
+    --cream: #F8F6F0;
+    --gold-light: #F5E5A7;
+
+    --compass-outer: #4F9660;
+    --compass-face: #263B2B;
+    --compass-inner: #192B20;
+    --compass-ticks: #79A77C;
+    --compass-major-tick: #E0BD58;
+    --compass-needle: #D8EAC8;
+    --compass-tip: #E45B55;
+
+    color: var(--text);
+
     background:
         linear-gradient(
-            rgba(12, 24, 18, 0.94),
-            rgba(12, 24, 18, 0.94)
+            rgba(12, 24, 18, 0.80),
+            rgba(12, 24, 18, 0.80)
         ),
-        url("../assets/bg_pattern.png");
+        url("../assets/main-bg.jpg");
 
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
-/* Location and distance cards */
 body.dark-mode .location-card,
 body.dark-mode .info-card {
-    background: #1E2A1F;
-    border-color: #8A8550;
+    background: linear-gradient(
+        140deg,
+        var(--deep-green),
+        var(--deep-green-dark)
+    );
+
+    border-color: var(--gold);
 }
 
-/* Card labels */
 body.dark-mode #locationLabel,
 body.dark-mode #distanceLabel {
-    color: #B7C9B5;
+    color: var(--gold-light);
 }
 
-/* Location name and distance */
 body.dark-mode #locationName,
 body.dark-mode #distance {
-    color: #CFE8C8;
+    color: var(--cream);
 }
 
-/* Compass background */
 body.dark-mode .compass {
-    background: #1E2A1F;
+    background: var(--compass-face);
+    border-color: var(--compass-outer);
 }
 
-/* Inner ring background */
 body.dark-mode .compass-ring {
-    background:
-        linear-gradient(
-            rgba(18, 28, 21, 0.94),
-            rgba(18, 28, 21, 0.94)
-        ),
-        url("../assets/bg_pattern.png");
-
-    background-size: cover;
-    background-position: center;
+    background: var(--compass-inner);
+    border-color: var(--compass-outer);
 }
 
-/* Degree display */
+body.dark-mode .direction {
+    color: #E6C968;
+}
+
+body.dark-mode .compass-ticks {
+    background: repeating-conic-gradient(
+        from 0deg,
+        var(--compass-ticks) 0deg 0.8deg,
+        transparent 0.8deg 11.25deg
+    );
+}
+
+body.dark-mode .major-tick {
+    background: var(--compass-major-tick);
+}
+
 body.dark-mode .degree {
-    color: #CFE8C8;
+    color: #D8EAC8;
 }
 
-/* Center point */
 body.dark-mode .center-point {
-    border-color: #E0E0E0;
+    background: var(--gold);
+    border-color: #F8F6F0;
+}
+
+/* ================= SHORT SCREENS ================= */
+
+@media (max-height: 600px) {
+    :root {
+        --board-height: 56px;
+    }
+
+    .qibla-page {
+        gap: 5px;
+        padding: 5px 8px;
+    }
+
+    #locationLabel,
+    #distanceLabel {
+        font-size: 12px;
+    }
+
+    #locationName {
+        font-size: 16px;
+    }
+
+    #distance {
+        font-size: 19px;
+    }
+}
+
+/* ================= NARROW SCREENS ================= */
+
+@media (max-width: 320px) {
+    .qibla-page {
+        padding-left: 7px;
+        padding-right: 7px;
+    }
+
+    .location-card,
+    .info-card {
+        padding: 6px;
+    }
 }
