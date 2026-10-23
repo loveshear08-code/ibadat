@@ -3,32 +3,37 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
   <meta name="theme-color" content="#104c32">
+
   <title>আল-কুরআন | IBADAT</title>
 
-  <!-- CSS ফাইল -->
+  <!-- CSS: HTML ফোল্ডার থেকে এক ধাপ উপরে CSS ফোল্ডারে -->
   <link rel="stylesheet" href="../CSS/quran.css">
 
-  <!-- JavaScript ফাইল -->
+  <!-- JavaScript: HTML ফোল্ডার থেকে এক ধাপ উপরে JS ফোল্ডারে -->
   <script src="../JS/quran.js" defer></script>
 </head>
 
 <body>
   <main id="quranApp" class="app">
 
-    <!-- উপরের হিরো বোর্ড -->
+    <!-- HERO BOARD -->
     <header class="hero board">
       <div class="hero-content">
-        <p class="hero-subtitle" data-i18n="subtitle">
-          শুদ্ধতার পথে শেখা ও অনুশীলন
-        </p>
+        <p
+          class="hero-subtitle"
+          data-i18n="subtitle"
+        >শুদ্ধতার পথে শেখা ও অনুশীলন</p>
 
         <h1 id="pageTitle">আল-কুরআন</h1>
       </div>
     </header>
 
-    <!-- মূল পৃষ্ঠা -->
+    <!-- HOME PAGE -->
     <section id="homePage" class="page home-page">
 
       <article class="featured board">
@@ -40,34 +45,47 @@
 
           <div class="gold-divider"></div>
 
-          <p class="meaning" data-i18n="bismillahMeaning">
-            পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে।
-          </p>
+          <p
+            class="meaning"
+            data-i18n="bismillahMeaning"
+          >পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে।</p>
 
-          <p class="reference" data-i18n="bismillahReference">
-            পবিত্র কুরআন
-          </p>
+          <p
+            class="reference"
+            data-i18n="bismillahReference"
+          >পবিত্র কুরআন</p>
 
         </div>
       </article>
 
-      <!-- দুটি প্রধান বাটন -->
+      <!-- HOME OPTIONS -->
       <nav class="home-options" aria-label="কুরআন বিভাগ">
 
-        <button id="openRead" class="option board" type="button">
+        <button
+          id="openRead"
+          class="option board"
+          type="button"
+        >
           <span data-i18n="readQuran">কুরআন পড়ুন</span>
         </button>
 
-        <button id="openListen" class="option board" type="button">
+        <button
+          id="openListen"
+          class="option board"
+          type="button"
+        >
           <span data-i18n="listenQuran">তিলাওয়াত শুনুন</span>
         </button>
 
       </nav>
     </section>
 
-    <!-- কুরআন পড়ার পৃষ্ঠা -->
-    <section id="readPage" class="page read-page" hidden>
-
+    <!-- QURAN READING PAGE -->
+    <section
+      id="readPage"
+      class="page read-page"
+      hidden
+    >
       <article class="content-board board">
 
         <div class="content-toolbar">
@@ -86,7 +104,11 @@
           >A+</button>
         </div>
 
-        <div id="readContent" class="read-content" aria-live="polite">
+        <div
+          id="readContent"
+          class="read-content"
+          aria-live="polite"
+        >
           <p class="status" data-i18n="loading">
             লোড হচ্ছে...
           </p>
@@ -95,12 +117,19 @@
       </article>
     </section>
 
-    <!-- তিলাওয়াত শোনার পৃষ্ঠা -->
-    <section id="listenPage" class="page listen-page" hidden>
-
+    <!-- QURAN LISTENING PAGE -->
+    <section
+      id="listenPage"
+      class="page listen-page"
+      hidden
+    >
       <article class="content-board board">
 
-        <div id="surahList" class="surah-list" aria-live="polite">
+        <div
+          id="surahList"
+          class="surah-list"
+          aria-live="polite"
+        >
           <p class="status" data-i18n="loading">
             লোড হচ্ছে...
           </p>
@@ -109,19 +138,22 @@
       </article>
     </section>
 
-    <!-- সব পৃষ্ঠার ফুটার -->
+    <!-- SHARED FOOTER BOARD -->
     <footer id="appFooter" class="footer board">
 
-      <!-- মূল পৃষ্ঠার ফুটার -->
+      <!-- HOME FOOTER -->
       <div id="homeFooter" class="footer-home">
         <p data-i18n="footerText">
           ইবাদত • শুদ্ধতার পথে শেখা ও অনুশীলন
         </p>
       </div>
 
-      <!-- কুরআন পড়ার পৃষ্ঠার ফুটার -->
-      <div id="readFooter" class="footer-controls read-footer" hidden>
-
+      <!-- READING FOOTER -->
+      <div
+        id="readFooter"
+        class="footer-controls read-footer"
+        hidden
+      >
         <button
           id="prevAyah"
           class="media-control"
@@ -129,9 +161,10 @@
           aria-label="আগের আয়াত"
         >|◀</button>
 
-        <p id="readFooterMessage" class="footer-message">
-          আল-কুরআন
-        </p>
+        <p
+          id="readFooterMessage"
+          class="footer-message"
+        >আল-কুরআন</p>
 
         <button
           id="nextAyah"
@@ -139,12 +172,14 @@
           type="button"
           aria-label="পরের আয়াত"
         >▶|</button>
-
       </div>
 
-      <!-- তিলাওয়াত শোনার পৃষ্ঠার ফুটার -->
-      <div id="listenFooter" class="footer-controls listen-footer" hidden>
-
+      <!-- LISTENING FOOTER -->
+      <div
+        id="listenFooter"
+        class="footer-controls listen-footer"
+        hidden
+      >
         <button
           id="prevTrack"
           class="media-control"
@@ -165,12 +200,11 @@
           type="button"
           aria-label="পরের আয়াত"
         >▶|</button>
-
       </div>
 
     </footer>
 
-    <!-- কুরআনের অডিও -->
+    <!-- AUDIO PLAYER -->
     <audio id="quranAudio" preload="none"></audio>
 
   </main>
