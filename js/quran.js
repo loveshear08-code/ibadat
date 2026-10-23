@@ -21,6 +21,7 @@
   };
 
   const API = "https://api.alquran.cloud/v1";
+
   const LANG_KEYS = [
     "ibadat_language",
     "siteLanguage",
@@ -29,6 +30,7 @@
     "language",
     "lang"
   ];
+
   const THEME_KEYS = [
     "ibadat_theme",
     "siteTheme",
@@ -64,6 +66,7 @@
       medinan: "মাদানী",
       readMessage: "আল-কুরআন"
     },
+
     hi: {
       subtitle: "पवित्रता की राह पर सीखना और अभ्यास",
       home: "अल-क़ुरआन",
@@ -90,6 +93,7 @@
       medinan: "मदनी",
       readMessage: "अल-क़ुरआन"
     },
+
     en: {
       subtitle: "Learning and practice on the path to purity",
       home: "Al-Quran",
@@ -128,13 +132,9 @@
     fontScale: 1,
     audioPlaying: false,
     requestToken: 0,
-    navigationReady: false,
-    navigatingBack: false,
-    audioQueue: false
+    navigationReady: false
   };
 
-  const arabicCache = new Map();
-  const translationCache = new Map();
   const surahCache = new Map();
 
   function safeStorageGet(key) {
@@ -148,9 +148,23 @@
   function normalizeLanguage(value) {
     const v = String(value || "").toLowerCase().trim();
 
-    if (["bn", "bn-bd", "bangla", "bengali", "বাংলা"].includes(v)) return "bn";
-    if (["hi", "hi-in", "hindi", "हिन्दी", "हिंदी"].includes(v)) return "hi";
-    if (["en", "en-us", "en-in", "english"].includes(v)) return "en";
+    if (
+      ["bn", "bn-bd", "bangla", "bengali", "বাংলা"].includes(v)
+    ) {
+      return "bn";
+    }
+
+    if (
+      ["hi", "hi-in", "hindi", "हिन्दी", "हिंदी"].includes(v)
+    ) {
+      return "hi";
+    }
+
+    if (
+      ["en", "en-us", "en-in", "english"].includes(v)
+    ) {
+      return "en";
+    }
 
     if (v.startsWith("bn")) return "bn";
     if (v.startsWith("hi")) return "hi";
@@ -162,8 +176,17 @@
   function normalizeTheme(value) {
     const v = String(value || "").toLowerCase().trim();
 
-    if (["light", "normal", "day", "সাধারণ", "হালকা"].includes(v)) return "light";
-    if (["dark", "night", "ডার্ক", "অন্ধকার"].includes(v)) return "dark";
+    if (
+      ["light", "normal", "day", "সাধারণ", "হালকা"].includes(v)
+    ) {
+      return "light";
+    }
+
+    if (
+      ["dark", "night", "ডার্ক", "অন্ধকার"].includes(v)
+    ) {
+      return "dark";
+    }
 
     return null;
   }
@@ -174,9 +197,11 @@
       if (value) return value;
     }
 
-    return normalizeLanguage(document.documentElement.lang) ||
+    return (
+      normalizeLanguage(document.documentElement.lang) ||
       normalizeLanguage(navigator.language) ||
-      "bn";
+      "bn"
+    );
   }
 
   function detectTheme() {
@@ -189,7 +214,11 @@
   }
 
   function t(key) {
-    return translations[state.language][key] || translations.bn[key] || key;
+    return (
+      translations[state.language][key] ||
+      translations.bn[key] ||
+      key
+    );
   }
 
   function updateStaticText() {
@@ -197,7 +226,10 @@
 
     document.querySelectorAll("[data-i18n]").forEach((node) => {
       const key = node.getAttribute("data-i18n");
-      if (key) node.textContent = t(key);
+
+      if (key) {
+        node.textContent = t(key);
+      }
     });
 
     updatePageTitle();
@@ -216,19 +248,26 @@
       listen: "listenTitle"
     };
 
-    el.title.textContent = t(titleKeys[state.page] || "home");
+    const titleKey = titleKeys[state.page] || "home";
+
+    el.title.textContent = t(titleKey);
     document.title = `${el.title.textContent} | IBADAT`;
   }
 
   function applyTheme(theme) {
     state.theme = normalizeTheme(theme) || "dark";
-    document.body.classList.toggle("theme-light", state.theme === "light");
+
+    document.body.classList.toggle(
+      "theme-light",
+      state.theme === "light"
+    );
   }
 
   function updateAudioButton() {
     if (!el.play) return;
 
     el.play.textContent = state.audioPlaying ? "Ⅱ" : "▶";
+
     el.play.setAttribute(
       "aria-label",
       state.audioPlaying ? t("pause") : t("play")
@@ -236,7 +275,9 @@
   }
 
   function setPage(page, pushHistory = true) {
-    if (!["home", "read", "listen"].includes(page)) return;
+    if (!["home", "read", "listen"].includes(page)) {
+      return;
+    }
 
     state.page = page;
 
@@ -252,7 +293,10 @@
 
     if (pushHistory && state.navigationReady) {
       history.pushState(
-        { quranSection: true, quranPage: page },
+        {
+          quranSection: true,
+          quranPage: page
+        },
         "",
         location.href
       );
@@ -272,7 +316,9 @@
   async function fetchJSON(url) {
     const response = await fetch(url, {
       method: "GET",
-      headers: { Accept: "application/json" },
+      headers: {
+        Accept: "application/json"
+      },
       cache: "default"
     });
 
@@ -289,37 +335,42 @@
     return json.data;
   }
 
-  function translationEdition() {
-    if (state.language === "hi") return "hi.hindi";
-    if (state.language === "en") return "en.sahih";
-    return "bn.bengali";
-  }
-
   async function getSurahMetadata() {
-    if (state.surahs.length) return state.surahs;
+    if (state.surahs.length) {
+      return state.surahs;
+    }
 
     const data = await fetchJSON(`${API}/surah`);
+
     state.surahs = data;
 
     return data;
   }
 
-  async function getSurahData(surahNumber, language = state.language) {
+  async function getSurahData(
+    surahNumber,
+    language = state.language
+  ) {
     const cacheKey = `${surahNumber}-${language}`;
 
     if (surahCache.has(cacheKey)) {
       return surahCache.get(cacheKey);
     }
 
-    const edition = language === "hi"
-      ? "hi.hindi"
-      : language === "en"
-        ? "en.sahih"
-        : "bn.bengali";
+    const edition =
+      language === "hi"
+        ? "hi.hindi"
+        : language === "en"
+          ? "en.sahih"
+          : "bn.bengali";
 
     const [arabic, translated] = await Promise.all([
-      fetchJSON(`${API}/surah/${surahNumber}/quran-uthmani`),
-      fetchJSON(`${API}/surah/${surahNumber}/${edition}`)
+      fetchJSON(
+        `${API}/surah/${surahNumber}/quran-uthmani`
+      ),
+      fetchJSON(
+        `${API}/surah/${surahNumber}/${edition}`
+      )
     ]);
 
     const result = {
@@ -334,6 +385,7 @@
     };
 
     surahCache.set(cacheKey, result);
+
     return result;
   }
 
@@ -352,16 +404,24 @@
 
     const heading = document.createElement("h2");
     heading.className = "surah-heading";
+
     heading.textContent =
       `${data.arabic.name} — ${data.translated.englishName}`;
 
     el.readContent.appendChild(heading);
 
-    if (state.currentSurah !== 1 && state.currentSurah !== 9) {
+    if (
+      state.currentSurah !== 1 &&
+      state.currentSurah !== 9
+    ) {
       const bismillah = document.createElement("p");
+
       bismillah.className = "bismillah-small";
       bismillah.lang = "ar";
-      bismillah.textContent = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ";
+      bismillah.dir = "rtl";
+      bismillah.textContent =
+        "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ";
+
       el.readContent.appendChild(bismillah);
     }
 
@@ -369,21 +429,29 @@
 
     data.ayahs.forEach((ayah) => {
       const item = document.createElement("article");
+
       item.className = "ayah";
       item.dataset.ayah = String(ayah.numberInSurah);
 
       const arabic = document.createElement("p");
+
       arabic.className = "ayah-arabic";
       arabic.lang = "ar";
       arabic.dir = "rtl";
-      arabic.appendChild(document.createTextNode(ayah.text + " "));
+
+      arabic.appendChild(
+        document.createTextNode(ayah.text + " ")
+      );
 
       const number = document.createElement("span");
+
       number.className = "ayah-number";
       number.textContent = String(ayah.numberInSurah);
+
       arabic.appendChild(number);
 
       const translation = document.createElement("p");
+
       translation.className = "ayah-translation";
       translation.textContent = ayah.translation;
 
@@ -392,27 +460,40 @@
     });
 
     el.readContent.appendChild(fragment);
+
     applyFontScale();
 
     el.readMessage.textContent =
-      `${t("surah")} ${state.currentSurah} • ${t("ayah")} ${state.currentAyah}`;
+      `${t("surah")} ${state.currentSurah} • ` +
+      `${t("ayah")} ${state.currentAyah}`;
   }
 
   async function loadReadSurah(surahNumber) {
     const token = ++state.requestToken;
-    state.currentSurah = Math.min(114, Math.max(1, surahNumber));
+
+    state.currentSurah = Math.min(
+      114,
+      Math.max(1, Number(surahNumber) || 1)
+    );
 
     showReadStatus(t("loadingAyahs"));
 
     try {
       const data = await getSurahData(state.currentSurah);
 
-      if (token !== state.requestToken || state.page !== "read") return;
+      if (
+        token !== state.requestToken ||
+        state.page !== "read"
+      ) {
+        return;
+      }
 
       renderReadSurah(data);
       scrollToCurrentAyah();
-    } catch (error) {
-      if (token !== state.requestToken) return;
+    } catch (_) {
+      if (token !== state.requestToken) {
+        return;
+      }
 
       showReadStatus(t("loadError"));
     }
@@ -424,18 +505,27 @@
     );
 
     if (item) {
-      item.scrollIntoView({ block: "start", behavior: "auto" });
+      item.scrollIntoView({
+        block: "start",
+        behavior: "auto"
+      });
     }
   }
 
   function applyFontScale() {
-    el.readContent.style.setProperty("--content-scale", String(state.fontScale));
+    el.readContent.style.setProperty(
+      "--content-scale",
+      String(state.fontScale)
+    );
   }
 
   function changeFont(amount) {
     state.fontScale = Math.max(
       0.7,
-      Math.min(1.7, Math.round((state.fontScale + amount) * 10) / 10)
+      Math.min(
+        1.7,
+        Math.round((state.fontScale + amount) * 10) / 10
+      )
     );
 
     applyFontScale();
@@ -448,6 +538,7 @@
 
     surahs.forEach((surah) => {
       const button = document.createElement("button");
+
       button.type = "button";
       button.className = "surah-item";
       button.dataset.surah = String(surah.number);
@@ -457,6 +548,7 @@
       }
 
       const number = document.createElement("span");
+
       number.className = "surah-number";
       number.textContent = String(surah.number);
 
@@ -464,21 +556,25 @@
       info.className = "surah-info";
 
       const name = document.createElement("span");
+
       name.className = "surah-name";
       name.textContent = surah.englishName;
 
       const meta = document.createElement("span");
       meta.className = "surah-meta";
 
-      const place = surah.revelationType === "Meccan"
-        ? t("meccan")
-        : t("medinan");
+      const place =
+        surah.revelationType === "Meccan"
+          ? t("meccan")
+          : t("medinan");
 
-      meta.textContent = `${place} • ${surah.numberOfAyahs} ${t("ayahs")}`;
+      meta.textContent =
+        `${place} • ${surah.numberOfAyahs} ${t("ayahs")}`;
 
       info.append(name, meta);
 
       const arabic = document.createElement("span");
+
       arabic.className = "surah-arabic";
       arabic.lang = "ar";
       arabic.textContent = surah.name;
@@ -499,8 +595,10 @@
     el.surahList.replaceChildren();
 
     const status = document.createElement("p");
+
     status.className = "status";
     status.textContent = t("loadingSurahs");
+
     el.surahList.appendChild(status);
 
     try {
@@ -509,10 +607,11 @@
       if (state.page === "listen") {
         renderSurahList(surahs);
       }
-    } catch (error) {
+    } catch (_) {
       el.surahList.replaceChildren();
 
       const message = document.createElement("p");
+
       message.className = "status";
       message.textContent = t("loadError");
 
@@ -521,16 +620,25 @@
   }
 
   function updateActiveSurah() {
-    el.surahList.querySelectorAll(".surah-item").forEach((item) => {
-      item.classList.toggle(
-        "active",
-        Number(item.dataset.surah) === state.currentSurah
-      );
-    });
+    el.surahList
+      .querySelectorAll(".surah-item")
+      .forEach((item) => {
+        item.classList.toggle(
+          "active",
+          Number(item.dataset.surah) === state.currentSurah
+        );
+      });
   }
 
-  async function selectSurah(surahNumber, autoplay = false) {
-    state.currentSurah = Math.max(1, Math.min(114, surahNumber));
+  async function selectSurah(
+    surahNumber,
+    autoplay = false
+  ) {
+    state.currentSurah = Math.max(
+      1,
+      Math.min(114, Number(surahNumber) || 1)
+    );
+
     state.currentAyah = 1;
 
     updateActiveSurah();
@@ -544,7 +652,10 @@
     }
   }
 
-  async function getAudioUrl(surahNumber, ayahNumber) {
+  async function getAudioUrl(
+    surahNumber,
+    ayahNumber
+  ) {
     const data = await fetchJSON(
       `${API}/ayah/${surahNumber}:${ayahNumber}/ar.alafasy`
     );
@@ -554,16 +665,23 @@
 
   async function playCurrentAyah() {
     try {
-      const surahData = await getSurahData(state.currentSurah);
+      const surahData = await getSurahData(
+        state.currentSurah
+      );
+
       const ayah = surahData.ayahs.find(
-        (item) => item.numberInSurah === state.currentAyah
+        (item) =>
+          item.numberInSurah === state.currentAyah
       );
 
       if (!ayah) {
         state.currentAyah = 1;
       }
 
-      const url = await getAudioUrl(state.currentSurah, state.currentAyah);
+      const url = await getAudioUrl(
+        state.currentSurah,
+        state.currentAyah
+      );
 
       el.audio.src = url;
       el.audio.load();
@@ -571,9 +689,10 @@
       await el.audio.play();
 
       state.audioPlaying = true;
+
       updateAudioButton();
       updateActiveSurah();
-    } catch (error) {
+    } catch (_) {
       state.audioPlaying = false;
       updateAudioButton();
     }
@@ -581,7 +700,9 @@
 
   function pauseAudio() {
     el.audio.pause();
+
     state.audioPlaying = false;
+
     updateAudioButton();
   }
 
@@ -607,8 +728,10 @@
       if (surah >= 114) {
         state.currentSurah = 114;
         state.currentAyah = totalAyahs;
+
         pauseAudio();
         updateActiveSurah();
+
         return;
       }
 
@@ -618,11 +741,14 @@
       if (surah <= 1) {
         state.currentSurah = 1;
         state.currentAyah = 1;
+
         updateActiveSurah();
+
         return;
       }
 
       surah -= 1;
+
       const previousData = await getSurahData(surah);
       ayah = previousData.ayahs.length;
     }
@@ -656,7 +782,9 @@
     if (state.currentSurah === 114) {
       const data = await getSurahData(114);
 
-      if (state.currentAyah >= data.ayahs.length) {
+      if (
+        state.currentAyah >= data.ayahs.length
+      ) {
         state.currentAyah = data.ayahs.length;
         return;
       }
@@ -673,8 +801,13 @@
     setPage("listen");
   });
 
-  $("fontDown").addEventListener("click", () => changeFont(-0.1));
-  $("fontUp").addEventListener("click", () => changeFont(0.1));
+  $("fontDown").addEventListener("click", () => {
+    changeFont(-0.1);
+  });
+
+  $("fontUp").addEventListener("click", () => {
+    changeFont(0.1);
+  });
 
   $("prevAyah").addEventListener("click", () => {
     moveAyah(-1).catch(() => {});
@@ -693,28 +826,42 @@
   });
 
   $("playPause").addEventListener("click", () => {
-    toggleAudio();
+    toggleAudio().catch(() => {});
   });
 
   el.surahList.addEventListener("click", (event) => {
     const button = event.target.closest(".surah-item");
+
     if (!button) return;
 
     const surahNumber = Number(button.dataset.surah);
+
     if (!Number.isInteger(surahNumber)) return;
 
-    selectSurah(surahNumber, true);
+    selectSurah(surahNumber, true).catch(() => {});
   });
 
+  /*
+   * Main settings integration:
+   * No language or theme toggle is added to this Quran page.
+   * This page only reads the settings selected in the main app.
+   */
+
   function syncSettings(detail) {
-    if (!detail || typeof detail !== "object") return;
+    if (!detail || typeof detail !== "object") {
+      return;
+    }
 
     const lang = normalizeLanguage(
-      detail.language ?? detail.lang ?? detail.locale
+      detail.language ??
+      detail.lang ??
+      detail.locale
     );
 
     const theme = normalizeTheme(
-      detail.theme ?? detail.appearance ?? detail.mode
+      detail.theme ??
+      detail.appearance ??
+      detail.mode
     );
 
     let changedLanguage = false;
@@ -722,12 +869,14 @@
     if (lang && lang !== state.language) {
       state.language = lang;
       changedLanguage = true;
-      translationCache.clear();
+
       surahCache.clear();
       state.surahs = [];
     }
 
-    if (theme) applyTheme(theme);
+    if (theme) {
+      applyTheme(theme);
+    }
 
     updateStaticText();
 
@@ -749,10 +898,14 @@
         language: detectLanguage(),
         theme: detectTheme()
       });
+
       return;
     }
 
-    if (LANG_KEYS.includes(event.key) || THEME_KEYS.includes(event.key)) {
+    if (
+      LANG_KEYS.includes(event.key) ||
+      THEME_KEYS.includes(event.key)
+    ) {
       syncSettings({
         language: detectLanguage(),
         theme: detectTheme()
@@ -763,9 +916,13 @@
   window.addEventListener("message", (event) => {
     const data = event.data;
 
-    if (!data || typeof data !== "object") return;
+    if (!data || typeof data !== "object") {
+      return;
+    }
 
-    const type = String(data.type || data.action || "").toLowerCase();
+    const type = String(
+      data.type || data.action || ""
+    ).toLowerCase();
 
     if (
       type === "ibadat-settings" ||
@@ -777,43 +934,27 @@
     }
   });
 
-  window.addEventListener("popstate", (event) => {
-    if (state.page === "read" || state.page === "listen") {
-      state.page = "home";
-
-      el.home.hidden = false;
-      el.read.hidden = true;
-      el.listen.hidden = true;
-
-      el.homeFooter.hidden = false;
-      el.readFooter.hidden = true;
-      el.listenFooter.hidden = true;
-
-      updatePageTitle();
+  window.addEventListener("popstate", () => {
+    if (
+      state.page === "read" ||
+      state.page === "listen"
+    ) {
+      setPage("home", false);
       pauseAudio();
-
-      return;
     }
-
-    /*
-      Home page থেকে Back হলে browser/WebView-এর আগের
-      host page-এ ফিরে যাওয়ার সুযোগ রাখা হচ্ছে।
-      এখানে host history-কে replace করা হচ্ছে না।
-    */
   });
 
   function initialize() {
     state.language = detectLanguage();
+
     applyTheme(detectTheme());
     updateStaticText();
 
-    /*
-      প্রথমে হোস্ট অ্যাপের বর্তমান history entry অক্ষত রাখা হয়।
-      তারপর Home marker যোগ করা হয়, যাতে ভিতরের পেজ থেকে
-      Back চাপলে Home-এ ফেরা যায়।
-    */
     history.pushState(
-      { quranSection: true, quranPage: "home" },
+      {
+        quranSection: true,
+        quranPage: "home"
+      },
       "",
       location.href
     );
