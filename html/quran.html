@@ -1,996 +1,230 @@
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#164c37">
+  <meta name="description" content="ইবাদত — পবিত্র কুরআন পড়ুন, বুঝুন এবং তিলাওয়াত শুনুন।">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
-    >
+  <title>আল-কুরআন | ইবাদত</title>
 
-    <meta
-        name="theme-color"
-        content="#123b2b"
-    >
+  <link rel="stylesheet" href="../css/quran.css">
 
-    <meta
-        name="description"
-        content="ইবাদত — পবিত্র কুরআন পড়ুন, বুঝুন এবং তিলাওয়াত শুনুন।"
-    >
+  <link rel="preconnect" href="https://api.alquran.cloud">
+  <link rel="preconnect" href="https://cdn.islamic.network">
 
-    <title>আল-কুরআন | ইবাদত</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Quran Page Stylesheet -->
-    <link rel="stylesheet" href="../css/quran.css">
+  <script src="../js/quran.js" defer></script>
 </head>
 
-<body class="quran-page">
+<body>
+  <div class="quran-app" id="quranApp">
 
-    <!--
-        =====================================================
-        QURAN APPLICATION
-        Home, Read and Listen screens
-        =====================================================
-    -->
+    <!-- একই উচ্চতার হেডার: তিনটি পেজেই অপরিবর্তিত থাকবে -->
+    <header class="hero-board">
+      <div class="hero-overlay"></div>
 
-    <div
-        id="quranApp"
-        class="quran-app"
-        data-page="home"
-    >
+      <div class="hero-content">
+        <h1 id="pageHeading">আল-কুরআন</h1>
+        <p id="pageSubtitle">পবিত্র কুরআন শিখি ও বুঝি</p>
+      </div>
+    </header>
 
-        <!-- ================================================
-             FIXED HEADER
-             All three screens use the same header.
-             Background image: assets/hero-bg.jpg
-             ================================================ -->
+    <!-- HOME PAGE -->
+    <main class="page-screen home-screen" id="homeScreen">
 
-        <header
-            id="quranHeader"
-            class="hero-board"
-        >
+      <div class="home-scroll">
 
-            <div class="hero-overlay"></div>
+        <section class="featured-board" aria-labelledby="featuredTitle">
 
-            <div class="hero-content">
+          <div class="ornament" aria-hidden="true">
+            <span></span>
+            <b>۞</b>
+            <span></span>
+          </div>
 
-                <h1
-                    id="heroTitle"
-                    class="hero-title"
-                >
-                    আল-কুরআন
-                </h1>
+          <p class="featured-kicker" id="featuredKicker">
+            পবিত্র কুরআন
+          </p>
 
-                <p
-                    id="heroSubtitle"
-                    class="hero-subtitle"
-                >
-                    পবিত্র কুরআন শিখি ও বুঝি
-                </p>
+          <h2 id="featuredTitle">বিসমিল্লাহির রাহমানির রাহিম</h2>
 
+          <div class="featured-arabic" lang="ar" dir="rtl">
+            بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+          </div>
+
+          <p class="featured-translation" id="featuredTranslation">
+            পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে।
+          </p>
+
+          <p class="featured-reference" id="featuredReference">
+            সূরা ১ · আয়াত ১
+          </p>
+
+        </section>
+
+        <!-- দুটি অপশন পাশাপাশি; featured board-এ আলাদা play button নেই -->
+        <nav class="home-actions" aria-label="কুরআন বিভাগ">
+
+          <button class="home-option" id="openRead" type="button">
+            <span class="option-icon" aria-hidden="true">۞</span>
+
+            <span class="option-copy">
+              <strong id="readOptionTitle">কুরআন পড়ুন</strong>
+              <small id="readOptionDescription">আরবি পড়ুন ও অর্থ বুঝুন</small>
+            </span>
+
+            <span class="option-chevron" aria-hidden="true">›</span>
+          </button>
+
+          <button class="home-option" id="openListen" type="button">
+            <span class="option-icon music-icon" aria-hidden="true">♫</span>
+
+            <span class="option-copy">
+              <strong id="listenOptionTitle">তিলাওয়াত শুনুন</strong>
+              <small id="listenOptionDescription">পবিত্র কুরআনের তিলাওয়াত</small>
+            </span>
+
+            <span class="option-chevron" aria-hidden="true">›</span>
+          </button>
+
+        </nav>
+
+      </div>
+
+      <footer class="app-footer home-footer">
+        <p id="homeFooterText">ইবাদত • শুদ্ধতার পথে শেখা ও অনুশীলন</p>
+      </footer>
+
+    </main>
+
+    <!-- READ PAGE -->
+    <main class="page-screen inner-screen read-screen" id="readScreen" hidden>
+
+      <!-- নির্বাচিত সূরা ও আরবি আয়াতের জন্য স্থির কন্টেন্ট বোর্ড -->
+      <section class="content-board read-board">
+
+        <div class="board-scroll-content" id="readBoardScroll">
+
+          <div class="surah-heading">
+            <div class="surah-heading-copy">
+              <h2 id="readSurahName">সূরা আল-ফাতিহা</h2>
+              <p id="readSurahMeta">৭ আয়াত · মাক্কী</p>
             </div>
 
-        </header>
-
-
-        <!-- ================================================
-             MAIN APPLICATION AREA
-
-             Home screen can scroll when needed.
-
-             Read and Listen screens use a fixed content board
-             with an independently scrolling inner content area.
-             ================================================ -->
-
-        <main
-            id="quranMain"
-            class="quran-main"
-        >
-
-
-            <!-- ============================================
-                 HOME SCREEN
-                 ============================================ -->
-
-            <section
-                id="homeScreen"
-                class="page-screen home-screen active"
-                aria-label="কুরআন মূল পাতা"
-            >
-
-                <div class="home-content">
-
-
-                    <!-- FEATURED QURAN BOARD -->
-
-                    <section
-                        class="featured-board"
-                        aria-labelledby="featuredTitle"
-                    >
-
-                        <div class="featured-decoration" aria-hidden="true">
-                            <span class="featured-decoration-line"></span>
-                            <span class="featured-decoration-symbol">۞</span>
-                            <span class="featured-decoration-line"></span>
-                        </div>
-
-                        <p
-                            id="featuredEyebrow"
-                            class="featured-eyebrow"
-                        >
-                            পবিত্র কুরআন
-                        </p>
-
-                        <h2
-                            id="featuredTitle"
-                            class="featured-title"
-                        >
-                            সূরা আল-ফাতিহা
-                        </h2>
-
-                        <p
-                            id="featuredArabic"
-                            class="featured-arabic arabic-text"
-                            lang="ar"
-                            dir="rtl"
-                        >
-                            بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
-                        </p>
-
-                        <p
-                            id="featuredTranslation"
-                            class="featured-translation"
-                        >
-                            পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে।
-                        </p>
-
-                        <div class="featured-meta">
-
-                            <span
-                                id="featuredSurahMeta"
-                                class="featured-meta-item"
-                            >
-                                সূরা ১
-                            </span>
-
-                            <span
-                                class="featured-meta-separator"
-                                aria-hidden="true"
-                            >
-                                •
-                            </span>
-
-                            <span
-                                id="featuredAyahMeta"
-                                class="featured-meta-item"
-                            >
-                                আয়াত ১
-                            </span>
-
-                        </div>
-
-                        <button
-                            id="featuredPlayButton"
-                            class="featured-play-button"
-                            type="button"
-                            aria-label="সূরা আল-ফাতিহার তিলাওয়াত শুনুন"
-                        >
-
-                            <span
-                                class="featured-play-icon"
-                                aria-hidden="true"
-                            >
-                                ▶
-                            </span>
-
-                            <span
-                                id="featuredPlayText"
-                                class="featured-play-text"
-                            >
-                                তিলাওয়াত শুনুন
-                            </span>
-
-                        </button>
-
-                    </section>
-
-
-                    <!-- HOME OPTIONS -->
-
-                    <section
-                        class="home-actions"
-                        aria-label="কুরআন শেখার বিকল্প"
-                    >
-
-                        <!-- READ OPTION -->
-
-                        <button
-                            id="openReadButton"
-                            class="home-option read-option"
-                            type="button"
-                        >
-
-                            <span
-                                class="home-option-icon read-option-icon"
-                                aria-hidden="true"
-                            >
-                                ﷽
-                            </span>
-
-                            <span class="home-option-content">
-
-                                <span
-                                    id="readOptionTitle"
-                                    class="home-option-title"
-                                >
-                                    কুরআন পড়ুন
-                                </span>
-
-                                <span
-                                    id="readOptionDescription"
-                                    class="home-option-description"
-                                >
-                                    আরবি পড়ুন ও অর্থ বুঝুন
-                                </span>
-
-                            </span>
-
-                            <span
-                                class="home-option-arrow"
-                                aria-hidden="true"
-                            >
-                                ›
-                            </span>
-
-                        </button>
-
-
-                        <!-- LISTEN OPTION -->
-
-                        <button
-                            id="openListenButton"
-                            class="home-option listen-option"
-                            type="button"
-                        >
-
-                            <span
-                                class="home-option-icon listen-option-icon"
-                                aria-hidden="true"
-                            >
-                                ♫
-                            </span>
-
-                            <span class="home-option-content">
-
-                                <span
-                                    id="listenOptionTitle"
-                                    class="home-option-title"
-                                >
-                                    তিলাওয়াত শুনুন
-                                </span>
-
-                                <span
-                                    id="listenOptionDescription"
-                                    class="home-option-description"
-                                >
-                                    শুনুন পবিত্র কুরআনের তিলাওয়াত
-                                </span>
-
-                            </span>
-
-                            <span
-                                class="home-option-arrow"
-                                aria-hidden="true"
-                            >
-                                ›
-                            </span>
-
-                        </button>
-
-                    </section>
-
-                </div>
-
-            </section>
-
-
-
-            <!-- ============================================
-                 READ SCREEN
-                 The content board stays fixed.
-                 Its inner board-scroll-content scrolls.
-                 ============================================ -->
-
-            <section
-                id="readScreen"
-                class="page-screen read-screen"
-                aria-label="কুরআন পড়ুন"
-                hidden
-            >
-
-                <section
-                    class="content-board read-board"
-                    aria-labelledby="readBoardTitle"
-                >
-
-                    <!-- INTERNAL SCROLL AREA -->
-
-                    <div class="board-scroll-content read-scroll-content">
-
-
-                        <!-- READ BOARD HEADING -->
-
-                        <div class="board-heading read-heading">
-
-                            <p
-                                id="readBoardEyebrow"
-                                class="board-eyebrow"
-                            >
-                                শুদ্ধভাবে পড়ুন
-                            </p>
-
-                            <h2
-                                id="readBoardTitle"
-                                class="board-title"
-                            >
-                                কুরআন পড়ুন
-                            </h2>
-
-                            <p
-                                id="readBoardDescription"
-                                class="board-description"
-                            >
-                                আরবি তিলাওয়াত পড়ুন এবং আয়াতের অর্থ জানুন।
-                            </p>
-
-                        </div>
-
-
-                        <!-- SURAH INFORMATION -->
-
-                        <section
-                            id="readSurahInformation"
-                            class="surah-information"
-                            aria-label="নির্বাচিত সূরার তথ্য"
-                        >
-
-                            <div class="surah-information-main">
-
-                                <h3
-                                    id="readSurahTitle"
-                                    class="surah-title"
-                                >
-                                    সূরা আল-ফাতিহা
-                                </h3>
-
-                                <p
-                                    id="readSurahMeta"
-                                    class="surah-meta"
-                                >
-                                    সূরা ১ · ৭ আয়াত
-                                </p>
-
-                            </div>
-
-                            <div
-                                id="readSurahArabicName"
-                                class="surah-arabic-name arabic-text"
-                                lang="ar"
-                                dir="rtl"
-                            >
-                                الْفَاتِحَة
-                            </div>
-
-                        </section>
-
-
-                        <!-- READ CONTROLS -->
-
-                        <section
-                            class="read-toolbar"
-                            aria-label="পড়ার সেটিংস"
-                        >
-
-                            <!-- SURAH SELECTOR -->
-
-                            <div class="surah-selector-group">
-
-                                <label
-                                    id="readSurahSelectLabel"
-                                    class="surah-select-label"
-                                    for="readSurahSelect"
-                                >
-                                    পড়ার জন্য সূরা নির্বাচন করুন
-                                </label>
-
-                                <select
-                                    id="readSurahSelect"
-                                    class="surah-select"
-                                    name="readSurah"
-                                >
-
-                                    <option value="1">
-                                        সূরা আল-ফাতিহা
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-
-                            <!-- ARABIC FONT SIZE -->
-
-                            <div
-                                class="font-size-controls"
-                                role="group"
-                                aria-label="আরবি লেখার আকার"
-                            >
-
-                                <span
-                                    id="fontSizeLabel"
-                                    class="font-size-label"
-                                >
-                                    লেখার আকার
-                                </span>
-
-                                <div class="font-size-buttons">
-
-                                    <button
-                                        id="decreaseArabicFont"
-                                        class="font-size-button"
-                                        type="button"
-                                        aria-label="আরবি লেখা ছোট করুন"
-                                        title="আরবি লেখা ছোট করুন"
-                                    >
-                                        A−
-                                    </button>
-
-                                    <span
-                                        id="arabicFontSizeValue"
-                                        class="font-size-value"
-                                        aria-live="polite"
-                                    >
-                                        30
-                                    </span>
-
-                                    <button
-                                        id="increaseArabicFont"
-                                        class="font-size-button"
-                                        type="button"
-                                        aria-label="আরবি লেখা বড় করুন"
-                                        title="আরবি লেখা বড় করুন"
-                                    >
-                                        A+
-                                    </button>
-
-                                </div>
-
-                            </div>
-
-                        </section>
-
-
-                        <!-- READ STATUS -->
-
-                        <p
-                            id="readLoadingStatus"
-                            class="screen-status"
-                            role="status"
-                            aria-live="polite"
-                            hidden
-                        ></p>
-
-
-                        <!-- AYAH LIST -->
-
-                        <section
-                            id="readAyahList"
-                            class="ayah-list read-ayah-list"
-                            aria-label="সূরার আয়াতসমূহ"
-                        >
-
-                            <!-- Ayah cards are generated by quran.js. -->
-
-                        </section>
-
-
-                        <!-- READ ERROR -->
-
-                        <div
-                            id="readError"
-                            class="error-message"
-                            role="alert"
-                            hidden
-                        ></div>
-
-
-                        <!-- READ EMPTY STATE -->
-
-                        <div
-                            id="readEmptyState"
-                            class="empty-state"
-                            hidden
-                        >
-
-                            <p id="readEmptyText">
-                                আয়াত লোড করার জন্য অপেক্ষা করুন।
-                            </p>
-
-                        </div>
-
-
-                    </div>
-
-                </section>
-
-            </section>
-
-
-
-            <!-- ============================================
-                 LISTEN SCREEN
-                 Fixed content board.
-                 Only its inner content scrolls.
-                 ============================================ -->
-
-            <section
-                id="listenScreen"
-                class="page-screen listen-screen"
-                aria-label="কুরআন তিলাওয়াত শুনুন"
-                hidden
-            >
-
-                <section
-                    class="content-board listen-board"
-                    aria-labelledby="listenBoardTitle"
-                >
-
-                    <!-- INTERNAL SCROLL AREA -->
-
-                    <div class="board-scroll-content listen-scroll-content">
-
-
-                        <!-- LISTEN BOARD HEADING -->
-
-                        <div class="board-heading listen-heading">
-
-                            <p
-                                id="listenBoardEyebrow"
-                                class="board-eyebrow"
-                            >
-                                মনোযোগ দিয়ে শুনুন
-                            </p>
-
-                            <h2
-                                id="listenBoardTitle"
-                                class="board-title"
-                            >
-                                তিলাওয়াত শুনুন
-                            </h2>
-
-                            <p
-                                id="listenBoardDescription"
-                                class="board-description"
-                            >
-                                পবিত্র কুরআনের সুমধুর তিলাওয়াত শুনুন।
-                            </p>
-
-                        </div>
-
-
-                        <!-- LISTEN SURAH INFORMATION -->
-
-                        <section
-                            id="listenSurahInformation"
-                            class="surah-information listen-surah-information"
-                            aria-label="নির্বাচিত সূরার তথ্য"
-                        >
-
-                            <div class="surah-information-main">
-
-                                <h3
-                                    id="listenSurahTitle"
-                                    class="surah-title"
-                                >
-                                    সূরা আল-ফাতিহা
-                                </h3>
-
-                                <p
-                                    id="listenSurahMeta"
-                                    class="surah-meta"
-                                >
-                                    সূরা ১ · ৭ আয়াত
-                                </p>
-
-                            </div>
-
-                            <div
-                                id="listenSurahArabicName"
-                                class="surah-arabic-name arabic-text"
-                                lang="ar"
-                                dir="rtl"
-                            >
-                                الْفَاتِحَة
-                            </div>
-
-                        </section>
-
-
-                        <!-- LISTEN SURAH SELECTOR -->
-
-                        <div class="surah-selector-group listen-selector-group">
-
-                            <label
-                                id="listenSurahSelectLabel"
-                                class="surah-select-label"
-                                for="listenSurahSelect"
-                            >
-                                তিলাওয়াতের জন্য সূরা নির্বাচন করুন
-                            </label>
-
-                            <select
-                                id="listenSurahSelect"
-                                class="surah-select"
-                                name="listenSurah"
-                            >
-
-                                <option value="1">
-                                    সূরা আল-ফাতিহা
-                                </option>
-
-                            </select>
-
-                        </div>
-
-
-                        <!-- CURRENT AYAH PLAYER BOARD -->
-
-                        <section
-                            id="listenCurrentAyahBoard"
-                            class="listen-current-board"
-                            aria-label="বর্তমান আয়াত"
-                        >
-
-                            <div class="listen-current-top">
-
-                                <span
-                                    id="listenCurrentAyahLabel"
-                                    class="listen-current-label"
-                                >
-                                    বর্তমানে চলছে
-                                </span>
-
-                                <span
-                                    id="listenCurrentAyahNumber"
-                                    class="listen-current-number"
-                                >
-                                    আয়াত ১
-                                </span>
-
-                            </div>
-
-
-                            <!-- CURRENT ARABIC AYAH -->
-
-                            <p
-                                id="listenCurrentArabic"
-                                class="listen-current-arabic arabic-text"
-                                lang="ar"
-                                dir="rtl"
-                            >
-                                بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
-                            </p>
-
-
-                            <!-- CURRENT TRANSLATION -->
-
-                            <p
-                                id="listenCurrentTranslation"
-                                class="listen-current-translation"
-                            >
-                                পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে।
-                            </p>
-
-
-                            <!-- AUDIO STATUS -->
-
-                            <p
-                                id="listenAudioStatus"
-                                class="listen-audio-status"
-                                role="status"
-                                aria-live="polite"
-                            >
-                                তিলাওয়াত শুরু করতে প্লে বোতাম চাপুন।
-                            </p>
-
-
-                            <!-- AUDIO PROGRESS -->
-
-                            <div class="audio-progress-container">
-
-                                <div
-                                    id="listenProgressTrack"
-                                    class="audio-progress-track"
-                                    role="progressbar"
-                                    aria-label="তিলাওয়াতের অগ্রগতি"
-                                    aria-valuemin="0"
-                                    aria-valuemax="100"
-                                    aria-valuenow="0"
-                                >
-
-                                    <div
-                                        id="listenProgress"
-                                        class="audio-progress"
-                                    ></div>
-
-                                </div>
-
-                                <div class="audio-time-row">
-
-                                    <span
-                                        id="listenCurrentTime"
-                                        class="audio-time"
-                                    >
-                                        0:00
-                                    </span>
-
-                                    <span
-                                        id="listenDuration"
-                                        class="audio-time"
-                                    >
-                                        0:00
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                        </section>
-
-
-                        <!-- LISTEN LOADING STATUS -->
-
-                        <p
-                            id="listenLoadingStatus"
-                            class="screen-status"
-                            role="status"
-                            aria-live="polite"
-                            hidden
-                        ></p>
-
-
-                        <!-- AYAH LIST -->
-
-                        <section
-                            class="listen-ayah-section"
-                            aria-labelledby="listenAyahListTitle"
-                        >
-
-                            <div class="listen-ayah-heading">
-
-                                <h3
-                                    id="listenAyahListTitle"
-                                    class="listen-ayah-title"
-                                >
-                                    আয়াতের তালিকা
-                                </h3>
-
-                                <p
-                                    id="listenAyahListDescription"
-                                    class="listen-ayah-description"
-                                >
-                                    যে আয়াত শুনতে চান, সেটি নির্বাচন করুন।
-                                </p>
-
-                            </div>
-
-                            <div
-                                id="listenAyahList"
-                                class="ayah-list listen-ayah-list"
-                                aria-label="তিলাওয়াতের আয়াতসমূহ"
-                            >
-
-                                <!-- Ayah cards are generated by quran.js. -->
-
-                            </div>
-
-                        </section>
-
-
-                        <!-- LISTEN ERROR -->
-
-                        <div
-                            id="listenError"
-                            class="error-message"
-                            role="alert"
-                            hidden
-                        ></div>
-
-
-                        <!-- LISTEN EMPTY STATE -->
-
-                        <div
-                            id="listenEmptyState"
-                            class="empty-state"
-                            hidden
-                        >
-
-                            <p id="listenEmptyText">
-                                তিলাওয়াত লোড করার জন্য অপেক্ষা করুন।
-                            </p>
-
-                        </div>
-
-
-                    </div>
-
-                </section>
-
-            </section>
-
-
-        </main>
-
-
-
-        <!-- ================================================
-             FIXED FOOTER
-
-             The footer is shared by all three screens.
-             It has rounded corners and the same height.
-             ================================================ -->
-
-        <footer
-            id="quranFooter"
-            class="app-footer"
-        >
-
-            <!-- HOME FOOTER -->
-
-            <div
-                id="homeFooter"
-                class="footer-content home-footer-content"
-            >
-
-                <p
-                    id="homeFooterMessage"
-                    class="footer-message"
-                >
-                    ইবাদত • শুদ্ধতার পথে শেখা ও অনুশীলন
-                </p>
-
+            <label class="visually-hidden" for="readSurahSelect">
+              সূরা নির্বাচন
+            </label>
+
+            <select id="readSurahSelect" class="surah-select">
+              <option value="1">সূরা আল-ফাতিহা</option>
+            </select>
+          </div>
+
+          <div class="arabic-size-row">
+            <span id="arabicSizeLabel">আরবি লেখার আকার</span>
+
+            <div class="size-buttons">
+              <button id="arabicDecrease" type="button" aria-label="আরবি লেখা ছোট করুন">
+                A−
+              </button>
+
+              <button id="arabicIncrease" type="button" aria-label="আরবি লেখা বড় করুন">
+                A+
+              </button>
             </div>
+          </div>
 
+          <p class="status-message" id="readStatus" role="status" aria-live="polite"></p>
 
-            <!-- READ FOOTER -->
-
-            <div
-                id="readFooter"
-                class="footer-content navigation-footer read-footer"
-                hidden
-            >
-
-                <button
-                    id="previousAyah"
-                    class="footer-navigation-button"
-                    type="button"
-                    aria-label="আগের আয়াত"
-                    title="আগের আয়াত"
-                >
-                    ‹
-                </button>
-
-                <p
-                    id="readFooterMessage"
-                    class="footer-message"
-                >
-                    শুদ্ধভাবে কুরআন পড়ুন
-                </p>
-
-                <button
-                    id="nextAyah"
-                    class="footer-navigation-button"
-                    type="button"
-                    aria-label="পরের আয়াত"
-                    title="পরের আয়াত"
-                >
-                    ›
-                </button>
-
+          <div class="ayah-list" id="readAyahList">
+            <div class="loading-message" id="readLoading">
+              কুরআনের আয়াত লোড হচ্ছে…
             </div>
+          </div>
 
+        </div>
 
-            <!-- LISTEN FOOTER -->
+      </section>
 
-            <div
-                id="listenFooter"
-                class="footer-content navigation-footer listen-footer"
-                hidden
-            >
+      <!-- একই উচ্চতার ফুটার; কেবল সিম্বল ও মাঝের এক লাইনের বার্তা -->
+      <footer class="app-footer read-footer">
 
-                <button
-                    id="listenPrevious"
-                    class="footer-navigation-button listen-navigation-button"
-                    type="button"
-                    aria-label="আগের আয়াত শুনুন"
-                    title="আগের আয়াত"
-                >
-                    ‹
-                </button>
+        <button class="footer-symbol-button" id="readPrevious" type="button"
+          aria-label="আগের আয়াত">
+          <span aria-hidden="true">|◀</span>
+        </button>
 
+        <p class="footer-message" id="readFooterMessage">
+          শুদ্ধভাবে কুরআন পড়ুন
+        </p>
 
-                <button
-                    id="listenPlayPause"
-                    class="listen-main-button"
-                    type="button"
-                    aria-label="তিলাওয়াত চালু করুন"
-                    aria-pressed="false"
-                    title="তিলাওয়াত চালু করুন"
-                >
+        <button class="footer-symbol-button" id="readNext" type="button"
+          aria-label="পরের আয়াত">
+          <span aria-hidden="true">▶|</span>
+        </button>
 
-                    <span
-                        id="listenPlayIcon"
-                        class="listen-main-icon"
-                        aria-hidden="true"
-                    >
-                        ▶
-                    </span>
+      </footer>
 
-                </button>
+    </main>
 
+    <!-- LISTEN PAGE -->
+    <main class="page-screen inner-screen listen-screen" id="listenScreen" hidden>
 
-                <button
-                    id="listenNext"
-                    class="footer-navigation-button listen-navigation-button"
-                    type="button"
-                    aria-label="পরের আয়াত শুনুন"
-                    title="পরের আয়াত"
-                >
-                    ›
-                </button>
+      <!-- বোর্ড স্থির; কেবল বোর্ডের ভেতরের সূরার তালিকা স্ক্রল করবে -->
+      <section class="content-board listen-board">
 
+        <div class="board-scroll-content" id="listenBoardScroll">
+
+          <div class="list-heading">
+            <h2 id="surahListTitle">সূরার তালিকা</h2>
+            <span id="surahCount">১১৪ সূরা</span>
+          </div>
+
+          <p class="status-message" id="listenStatus" role="status" aria-live="polite"></p>
+
+          <div class="surah-list" id="listenSurahList">
+            <div class="loading-message" id="listenLoading">
+              সূরার তালিকা লোড হচ্ছে…
             </div>
+          </div>
 
-        </footer>
+        </div>
 
-    </div>
+      </section>
 
+      <!-- আগের, প্লে/পজ, পরের -->
+      <footer class="app-footer listen-footer">
 
+        <button class="listen-control side-control" id="listenPrevious" type="button"
+          aria-label="আগের আয়াত">
+          <span aria-hidden="true">|◀</span>
+        </button>
 
-    <!-- ================================================
-         AUDIO PLAYER
+        <button class="listen-control play-control" id="listenPlayPause" type="button"
+          aria-label="তিলাওয়াত চালু করুন">
+          <span id="listenPlayIcon" aria-hidden="true">▶</span>
+        </button>
 
-         JavaScript controls playback, pause/resume,
-         progress and automatic ayah transitions.
-         ================================================ -->
+        <button class="listen-control side-control" id="listenNext" type="button"
+          aria-label="পরের আয়াত">
+          <span aria-hidden="true">▶|</span>
+        </button>
 
-    <audio
-        id="quranAudio"
-        preload="metadata"
-        playsinline
-    ></audio>
+      </footer>
 
+    </main>
 
+    <!-- Audio engine -->
+    <audio id="quranAudio" preload="none"></audio>
 
-    <!-- ================================================
-         GLOBAL STATUS / TOAST MESSAGE
-         ================================================ -->
+    <!-- Screen reader status and visible error notification -->
+    <div class="toast-message" id="quranToast" role="status" aria-live="polite"></div>
 
-    <div
-        id="quranToast"
-        class="quran-toast"
-        role="status"
-        aria-live="polite"
-        hidden
-    ></div>
-
-
-
-    <!-- ================================================
-         QURAN APPLICATION JAVASCRIPT
-         ================================================ -->
-
-    <script src="../js/quran.js" defer></script>
-
+  </div>
 </body>
 </html>
