@@ -4,227 +4,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#164c37">
-  <meta name="description" content="ইবাদত — পবিত্র কুরআন পড়ুন, বুঝুন এবং তিলাওয়াত শুনুন।">
-
-  <title>আল-কুরআন | ইবাদত</title>
-
+  <meta name="theme-color" content="#103b2c">
+  <title>আল-কুরআন | IBADAT</title>
   <link rel="stylesheet" href="../css/quran.css">
-
-  <link rel="preconnect" href="https://api.alquran.cloud">
-  <link rel="preconnect" href="https://cdn.islamic.network">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
-
   <script src="../js/quran.js" defer></script>
 </head>
-
 <body>
-  <div class="quran-app" id="quranApp">
+  <main id="quranApp" class="app">
 
-    <!-- একই উচ্চতার হেডার: তিনটি পেজেই অপরিবর্তিত থাকবে -->
-    <header class="hero-board">
-      <div class="hero-overlay"></div>
-
+    <header class="hero board">
       <div class="hero-content">
-        <h1 id="pageHeading">আল-কুরআন</h1>
-        <p id="pageSubtitle">পবিত্র কুরআন শিখি ও বুঝি</p>
+        <p class="hero-subtitle" data-i18n="subtitle">শুদ্ধতার পথে শেখা ও অনুশীলন</p>
+        <h1 id="pageTitle">আল-কুরআন</h1>
       </div>
     </header>
 
-    <!-- HOME PAGE -->
-    <main class="page-screen home-screen" id="homeScreen">
-
-      <div class="home-scroll">
-
-        <section class="featured-board" aria-labelledby="featuredTitle">
-
-          <div class="ornament" aria-hidden="true">
-            <span></span>
-            <b>۞</b>
-            <span></span>
-          </div>
-
-          <p class="featured-kicker" id="featuredKicker">
-            পবিত্র কুরআন
-          </p>
-
-          <h2 id="featuredTitle">বিসমিল্লাহির রাহমানির রাহিম</h2>
-
-          <div class="featured-arabic" lang="ar" dir="rtl">
+    <section id="homePage" class="page home-page">
+      <article class="featured board">
+        <div class="featured-content">
+          <p class="bismillah" lang="ar" dir="rtl">
             بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
-          </div>
-
-          <p class="featured-translation" id="featuredTranslation">
+          </p>
+          <div class="gold-divider"></div>
+          <p class="meaning" data-i18n="bismillahMeaning">
             পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে।
           </p>
-
-          <p class="featured-reference" id="featuredReference">
-            সূরা ১ · আয়াত ১
+          <p class="reference" data-i18n="bismillahReference">
+            পবিত্র কুরআন
           </p>
+        </div>
+      </article>
 
-        </section>
+      <nav class="home-options" aria-label="কুরআন বিভাগ">
+        <button id="openRead" class="option board" type="button">
+          <span data-i18n="readQuran">কুরআন পড়ুন</span>
+        </button>
+        <button id="openListen" class="option board" type="button">
+          <span data-i18n="listenQuran">তিলাওয়াত শুনুন</span>
+        </button>
+      </nav>
+    </section>
 
-        <!-- দুটি অপশন পাশাপাশি; featured board-এ আলাদা play button নেই -->
-        <nav class="home-actions" aria-label="কুরআন বিভাগ">
+    <section id="readPage" class="page read-page" hidden>
+      <article class="content-board board">
+        <div class="content-toolbar">
+          <button id="fontDown" class="font-control" type="button"
+                  aria-label="কন্টেন্টের অক্ষর ছোট করুন">A−</button>
+          <button id="fontUp" class="font-control" type="button"
+                  aria-label="কন্টেন্টের অক্ষর বড় করুন">A+</button>
+        </div>
+        <div id="readContent" class="read-content" aria-live="polite">
+          <p class="status" data-i18n="loading">লোড হচ্ছে...</p>
+        </div>
+      </article>
+    </section>
 
-          <button class="home-option" id="openRead" type="button">
-            <span class="option-icon" aria-hidden="true">۞</span>
+    <section id="listenPage" class="page listen-page" hidden>
+      <article class="content-board board">
+        <div id="surahList" class="surah-list" aria-live="polite">
+          <p class="status" data-i18n="loading">লোড হচ্ছে...</p>
+        </div>
+      </article>
+    </section>
 
-            <span class="option-copy">
-              <strong id="readOptionTitle">কুরআন পড়ুন</strong>
-              <small id="readOptionDescription">আরবি পড়ুন ও অর্থ বুঝুন</small>
-            </span>
-
-            <span class="option-chevron" aria-hidden="true">›</span>
-          </button>
-
-          <button class="home-option" id="openListen" type="button">
-            <span class="option-icon music-icon" aria-hidden="true">♫</span>
-
-            <span class="option-copy">
-              <strong id="listenOptionTitle">তিলাওয়াত শুনুন</strong>
-              <small id="listenOptionDescription">পবিত্র কুরআনের তিলাওয়াত</small>
-            </span>
-
-            <span class="option-chevron" aria-hidden="true">›</span>
-          </button>
-
-        </nav>
-
+    <footer id="appFooter" class="footer board">
+      <div id="homeFooter" class="footer-home">
+        <p data-i18n="footerText">ইবাদত • শুদ্ধতার পথে শেখা ও অনুশীলন</p>
       </div>
 
-      <footer class="app-footer home-footer">
-        <p id="homeFooterText">ইবাদত • শুদ্ধতার পথে শেখা ও অনুশীলন</p>
-      </footer>
+      <div id="readFooter" class="footer-controls read-footer" hidden>
+        <button id="prevAyah" class="media-control" type="button"
+                aria-label="আগের আয়াত">|◀</button>
+        <p id="readFooterMessage" class="footer-message">আল-কুরআন</p>
+        <button id="nextAyah" class="media-control" type="button"
+                aria-label="পরের আয়াত">▶|</button>
+      </div>
 
-    </main>
+      <div id="listenFooter" class="footer-controls listen-footer" hidden>
+        <button id="prevTrack" class="media-control" type="button"
+                aria-label="আগের আয়াত">|◀</button>
+        <button id="playPause" class="play-control" type="button"
+                aria-label="তিলাওয়াত চালু করুন">▶</button>
+        <button id="nextTrack" class="media-control" type="button"
+                aria-label="পরের আয়াত">▶|</button>
+      </div>
+    </footer>
 
-    <!-- READ PAGE -->
-    <main class="page-screen inner-screen read-screen" id="readScreen" hidden>
-
-      <!-- নির্বাচিত সূরা ও আরবি আয়াতের জন্য স্থির কন্টেন্ট বোর্ড -->
-      <section class="content-board read-board">
-
-        <div class="board-scroll-content" id="readBoardScroll">
-
-          <div class="surah-heading">
-            <div class="surah-heading-copy">
-              <h2 id="readSurahName">সূরা আল-ফাতিহা</h2>
-              <p id="readSurahMeta">৭ আয়াত · মাক্কী</p>
-            </div>
-
-            <label class="visually-hidden" for="readSurahSelect">
-              সূরা নির্বাচন
-            </label>
-
-            <select id="readSurahSelect" class="surah-select">
-              <option value="1">সূরা আল-ফাতিহা</option>
-            </select>
-          </div>
-
-          <div class="arabic-size-row">
-            <span id="arabicSizeLabel">আরবি লেখার আকার</span>
-
-            <div class="size-buttons">
-              <button id="arabicDecrease" type="button" aria-label="আরবি লেখা ছোট করুন">
-                A−
-              </button>
-
-              <button id="arabicIncrease" type="button" aria-label="আরবি লেখা বড় করুন">
-                A+
-              </button>
-            </div>
-          </div>
-
-          <p class="status-message" id="readStatus" role="status" aria-live="polite"></p>
-
-          <div class="ayah-list" id="readAyahList">
-            <div class="loading-message" id="readLoading">
-              কুরআনের আয়াত লোড হচ্ছে…
-            </div>
-          </div>
-
-        </div>
-
-      </section>
-
-      <!-- একই উচ্চতার ফুটার; কেবল সিম্বল ও মাঝের এক লাইনের বার্তা -->
-      <footer class="app-footer read-footer">
-
-        <button class="footer-symbol-button" id="readPrevious" type="button"
-          aria-label="আগের আয়াত">
-          <span aria-hidden="true">|◀</span>
-        </button>
-
-        <p class="footer-message" id="readFooterMessage">
-          শুদ্ধভাবে কুরআন পড়ুন
-        </p>
-
-        <button class="footer-symbol-button" id="readNext" type="button"
-          aria-label="পরের আয়াত">
-          <span aria-hidden="true">▶|</span>
-        </button>
-
-      </footer>
-
-    </main>
-
-    <!-- LISTEN PAGE -->
-    <main class="page-screen inner-screen listen-screen" id="listenScreen" hidden>
-
-      <!-- বোর্ড স্থির; কেবল বোর্ডের ভেতরের সূরার তালিকা স্ক্রল করবে -->
-      <section class="content-board listen-board">
-
-        <div class="board-scroll-content" id="listenBoardScroll">
-
-          <div class="list-heading">
-            <h2 id="surahListTitle">সূরার তালিকা</h2>
-            <span id="surahCount">১১৪ সূরা</span>
-          </div>
-
-          <p class="status-message" id="listenStatus" role="status" aria-live="polite"></p>
-
-          <div class="surah-list" id="listenSurahList">
-            <div class="loading-message" id="listenLoading">
-              সূরার তালিকা লোড হচ্ছে…
-            </div>
-          </div>
-
-        </div>
-
-      </section>
-
-      <!-- আগের, প্লে/পজ, পরের -->
-      <footer class="app-footer listen-footer">
-
-        <button class="listen-control side-control" id="listenPrevious" type="button"
-          aria-label="আগের আয়াত">
-          <span aria-hidden="true">|◀</span>
-        </button>
-
-        <button class="listen-control play-control" id="listenPlayPause" type="button"
-          aria-label="তিলাওয়াত চালু করুন">
-          <span id="listenPlayIcon" aria-hidden="true">▶</span>
-        </button>
-
-        <button class="listen-control side-control" id="listenNext" type="button"
-          aria-label="পরের আয়াত">
-          <span aria-hidden="true">▶|</span>
-        </button>
-
-      </footer>
-
-    </main>
-
-    <!-- Audio engine -->
     <audio id="quranAudio" preload="none"></audio>
-
-    <!-- Screen reader status and visible error notification -->
-    <div class="toast-message" id="quranToast" role="status" aria-live="polite"></div>
-
-  </div>
+  </main>
 </body>
 </html>
