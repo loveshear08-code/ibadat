@@ -1,1 +1,184 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#104c32">
+  <title>আল-কুরআন | IBADAT</title>
+  <link rel="stylesheet" href="../css/quran.css">
+  <script src="../js/quran.js" defer></script>
+</head>
+<body>
+  <div class="app-shell" id="appShell">
+    <main id="homeScreen" class="screen home-screen" aria-label="কুরআন মূল পৃষ্ঠা">
+      <header class="hero-board">
+        <div class="bismillah-small" aria-hidden="true">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+        <div class="hero-emblem" aria-hidden="true">۞</div>
+        <h1 data-i18n="quranTitle">আল-কুরআন</h1>
+        <p data-i18n="quranSubtitle">পবিত্র কুরআন শিখি ও বুঝি</p>
+      </header>
 
+      <section class="featured-board" aria-label="প্রথম সূরার পরিচিতি">
+        <div class="featured-topline">
+          <span id="featuredSurahName">সূরা আল-ফাতিহা</span>
+          <span class="surah-number" id="featuredSurahNumber">সূরা ১</span>
+        </div>
+
+        <div class="featured-arabic" id="featuredArabic" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+        <div class="featured-translit" id="featuredTranslit">বিসমিল্লাহির রাহমানির রাহিম</div>
+        <p class="featured-translation" id="featuredTranslation">পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে।</p>
+
+        <div class="featured-audio">
+          <button class="round-play" id="featuredPlay" type="button" aria-label="তিলাওয়াত চালান">
+            <span id="featuredPlayIcon">▶</span>
+          </button>
+          <div class="featured-audio-label">
+            <strong data-i18n="ayahRecitation">আয়াতের তিলাওয়াত</strong>
+            <span id="featuredAudioStatus" data-i18n="audioReady">শোনার জন্য প্রস্তুত</span>
+          </div>
+          <span class="audio-wave" aria-hidden="true">〰</span>
+        </div>
+      </section>
+
+      <nav class="action-grid" aria-label="কুরআন অপশন">
+        <button class="action-tile" type="button" data-open="read">
+          <span class="action-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21z"/>
+              <path d="M4 5.5v13A2.5 2.5 0 0 1 6.5 16H20M8 7h8M8 10h8"/>
+            </svg>
+          </span>
+          <span data-i18n="readQuran">কুরআন পড়ুন</span>
+        </button>
+
+        <button class="action-tile" type="button" data-open="listen">
+          <span class="action-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 14v-4a9 9 0 0 1 18 0v4"/>
+              <path d="M3 13h3v6H5a2 2 0 0 1-2-2zM18 13h3v4a2 2 0 0 1-2 2h-1zM18 19a6 6 0 0 1-6 3"/>
+            </svg>
+          </span>
+          <span data-i18n="listenRecitation">তিলাওয়াত শুনুন</span>
+        </button>
+
+        <button class="action-tile" type="button" data-open="search">
+          <span class="action-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="10.8" cy="10.8" r="6.8"/>
+              <path d="m16 16 5 5"/>
+            </svg>
+          </span>
+          <span data-i18n="findSurah">সূরা খুঁজুন</span>
+        </button>
+
+        <button class="action-tile" type="button" data-open="saved">
+          <span class="action-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 3.5h12v17l-6-4-6 4z"/>
+            </svg>
+          </span>
+          <span data-i18n="saveReading">সংরক্ষণ করুন</span>
+        </button>
+      </nav>
+
+      <footer class="footer-board">
+        <span class="footer-mark">۞</span>
+        <span data-i18n="footerText">ইবাদত • শুদ্ধতার পথে শেখা ও অনুশীলন</span>
+        <button class="theme-toggle" id="themeToggleHome" type="button" aria-label="ডার্ক মোড পরিবর্তন">
+          <span id="themeIconHome">☾</span>
+        </button>
+      </footer>
+
+      <p class="home-error" id="homeStatus" role="status" aria-live="polite"></p>
+    </main>
+
+    <main id="contentScreen" class="screen content-screen hidden" aria-label="কুরআন বিষয়বস্তু">
+      <header class="content-header">
+        <button class="icon-button" id="backHome" type="button" aria-label="মূল পৃষ্ঠায় ফিরুন">‹</button>
+
+        <div class="content-heading">
+          <h1 id="contentTitle">কুরআন পড়ুন</h1>
+          <p id="contentSubtitle">সূরা নির্বাচন করুন</p>
+        </div>
+
+        <button class="icon-button" id="themeToggleContent" type="button" aria-label="ডার্ক মোড পরিবর্তন">
+          <span id="themeIconContent">☾</span>
+        </button>
+      </header>
+
+      <section class="content-tools" id="contentTools">
+        <label class="select-wrap" id="surahSelectWrap">
+          <span data-i18n="chooseSurah">সূরা নির্বাচন</span>
+          <select id="surahSelect" aria-label="সূরা নির্বাচন"></select>
+        </label>
+
+        <label class="font-size-control" id="fontSizeControl">
+          <span data-i18n="arabicSize">আরবি লেখা</span>
+          <button id="fontDown" type="button" aria-label="আরবি লেখা ছোট করুন">A−</button>
+          <button id="fontUp" type="button" aria-label="আরবি লেখা বড় করুন">A+</button>
+        </label>
+      </section>
+
+      <section class="screen-body" id="screenBody" tabindex="-1">
+        <div id="readPanel" class="panel hidden">
+          <div class="panel-intro">
+            <span class="ornament">۞</span>
+            <h2 id="readSurahTitle">সূরা আল-ফাতিহা</h2>
+            <p id="readSurahMeta"></p>
+          </div>
+          <div id="ayahList" class="ayah-list"></div>
+        </div>
+
+        <div id="listenPanel" class="panel hidden">
+          <div class="listen-card">
+            <div class="listen-disc">♫</div>
+            <h2 data-i18n="fullSurahRecitation">সম্পূর্ণ সূরার তিলাওয়াত</h2>
+            <p id="listenSurahName">সূরা আল-ফাতিহা</p>
+            <button class="primary-button" id="playSurahButton" type="button">
+              ▶ <span data-i18n="playSurah">সূরা চালান</span>
+            </button>
+            <p class="muted" id="listenStatus" role="status"></p>
+          </div>
+
+          <h3 class="section-heading" data-i18n="selectSurahToListen">শোনার জন্য সূরা নির্বাচন করুন</h3>
+          <div id="listenSurahList" class="surah-list"></div>
+        </div>
+
+        <div id="searchPanel" class="panel hidden">
+          <form id="searchForm" class="search-form">
+            <label for="searchInput" data-i18n="searchLabel">সূরার নাম, নম্বর বা আয়াত নম্বর লিখুন</label>
+            <div class="search-row">
+              <input id="searchInput" type="search" autocomplete="off" placeholder="যেমন: ফাতিহা, 2 বা 2:255">
+              <button type="submit" class="primary-button" data-i18n="searchButton">খুঁজুন</button>
+            </div>
+            <p class="muted" data-i18n="searchHint">সূরা খুঁজতে নাম/নম্বর, নির্দিষ্ট আয়াতে যেতে সূরা:আয়াত লিখুন।</p>
+          </form>
+          <div id="searchResults" class="result-list"></div>
+        </div>
+
+        <div id="savedPanel" class="panel hidden">
+          <div class="saved-card">
+            <span class="saved-symbol">🔖</span>
+            <h2 data-i18n="savedReadingTitle">আপনার সংরক্ষিত পাঠ</h2>
+            <p id="savedDescription">এখনও কোনো পাঠ সংরক্ষণ করা হয়নি।</p>
+            <div class="saved-actions">
+              <button id="resumeSaved" class="primary-button" type="button" disabled data-i18n="continueReading">পড়া শুরু করুন</button>
+              <button id="removeSaved" class="secondary-button" type="button" disabled data-i18n="removeSaved">সংরক্ষণ সরান</button>
+            </div>
+          </div>
+          <p class="muted saved-note" data-i18n="savedNote">পড়ার সময় পরবর্তী আয়াতে গেলে বর্তমান সংরক্ষিত অবস্থান আপডেট হবে।</p>
+        </div>
+      </section>
+
+      <footer class="content-footer">
+        <button id="previousAyah" class="secondary-button" type="button">‹ <span data-i18n="previous">আগের</span></button>
+        <span id="positionLabel">১ : ১</span>
+        <button id="nextAyah" class="secondary-button" type="button"><span data-i18n="next">পরের</span> ›</button>
+      </footer>
+    </main>
+  </div>
+
+  <audio id="quranAudio" preload="none"></audio>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
