@@ -1,1 +1,2322 @@
 
+/* =========================================================
+   IBADAT — QURAN SECTION
+   File: css/quran.css
+
+   Complete stylesheet for:
+   1. Quran home page
+   2. Quran reading page
+   3. Quran listening page
+
+   Background files:
+   ../assets/hero-bg.jpg
+   ../assets/main-bg.jpg
+
+   Theme:
+   Dark green + gold borders + cream content boards
+========================================================= */
+
+
+/* =========================================================
+   01. ROOT VARIABLES
+========================================================= */
+
+:root {
+    color-scheme: dark;
+
+    --green-950: #03271d;
+    --green-900: #063526;
+    --green-850: #073b2b;
+    --green-800: #084431;
+    --green-700: #0b563d;
+    --green-600: #146c4b;
+
+    --gold: #d8b45b;
+    --gold-light: #f2d78a;
+    --gold-dark: #a77c2c;
+    --gold-transparent: rgba(216, 180, 91, 0.24);
+
+    --cream: #fff8e9;
+    --cream-dark: #f4e9d0;
+    --cream-soft: #fffcf4;
+
+    --text-dark: #173c2e;
+    --text-muted: #657568;
+    --text-light: #fff8e8;
+
+    --danger: #a52f27;
+    --success: #246844;
+
+    --header-height: 158px;
+    --footer-height: 76px;
+
+    --page-padding: 14px;
+    --board-radius: 22px;
+    --small-radius: 14px;
+    --gold-border: 2px solid var(--gold);
+
+    --shadow-soft:
+        0 5px 18px rgba(0, 0, 0, 0.18);
+
+    --shadow-board:
+        0 8px 25px rgba(0, 0, 0, 0.22);
+
+    --transition-fast: 160ms ease;
+    --transition-normal: 240ms ease;
+
+    --arabic-font-size: 32px;
+}
+
+
+/* =========================================================
+   02. RESET AND BASE STYLES
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body.quran-page {
+    width: 100%;
+    min-width: 280px;
+    height: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+
+    color: var(--text-light);
+    background-color: var(--green-950);
+
+    background-image:
+        linear-gradient(
+            rgba(2, 35, 25, 0.48),
+            rgba(2, 35, 25, 0.60)
+        ),
+        url("../assets/main-bg.jpg");
+
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+
+    font-family:
+        "Noto Sans Bengali",
+        "Noto Sans Devanagari",
+        Arial,
+        sans-serif;
+
+    font-size: 15px;
+    line-height: 1.6;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button,
+select,
+input[type="range"] {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button {
+    color: inherit;
+}
+
+button:focus-visible,
+select:focus-visible,
+input:focus-visible {
+    outline: 3px solid var(--gold-light);
+    outline-offset: 3px;
+}
+
+button:disabled,
+select:disabled,
+input:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+p,
+h1,
+h2,
+h3 {
+    margin-top: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* =========================================================
+   03. MAIN APPLICATION LAYOUT
+
+   Header and footer remain fixed.
+   Only the middle content area scrolls.
+========================================================= */
+
+.quran-app {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows:
+        var(--header-height)
+        minmax(0, 1fr)
+        var(--footer-height);
+
+    gap: 0;
+
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+
+    padding:
+        10px
+        var(--page-padding)
+        10px;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   04. SHARED BOARD STYLES
+
+   All main boards have rounded corners on every side.
+========================================================= */
+
+.hero-board,
+.featured-board,
+.home-option,
+.content-board,
+.app-footer {
+    border: var(--gold-border);
+    border-radius: var(--board-radius);
+}
+
+.hero-board,
+.featured-board,
+.home-option,
+.content-board,
+.app-footer {
+    box-shadow: var(--shadow-board);
+}
+
+
+/* =========================================================
+   05. HEADER / HERO BOARD
+========================================================= */
+
+.hero-board {
+    position: relative;
+    isolation: isolate;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: var(--header-height);
+    min-height: 0;
+
+    padding: 12px 18px;
+
+    overflow: hidden;
+
+    background-color: var(--green-900);
+
+    background-image:
+        linear-gradient(
+            100deg,
+            rgba(3, 39, 29, 0.87),
+            rgba(3, 39, 29, 0.58),
+            rgba(3, 39, 29, 0.82)
+        ),
+        url("../assets/hero-bg.jpg");
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+
+    z-index: -1;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(216, 180, 91, 0.10),
+            transparent 70%
+        );
+}
+
+.hero-inner {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    max-width: 900px;
+    min-width: 0;
+
+    gap: 2px;
+
+    text-align: center;
+}
+
+.hero-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-width: 0;
+
+    gap: 9px;
+}
+
+.brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 auto;
+
+    color: var(--gold-light);
+
+    font-family: "Amiri", serif;
+    font-size: 30px;
+    line-height: 1;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    min-width: 0;
+    gap: 0;
+}
+
+.brand-name {
+    margin: 0;
+
+    color: var(--gold-light);
+
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1.35;
+
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.brand-subtitle {
+    margin: 0;
+
+    color: var(--cream);
+
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.45;
+
+    text-align: center;
+}
+
+.hero-heading {
+    width: 100%;
+    min-width: 0;
+
+    margin-top: 3px;
+}
+
+.hero-heading h1 {
+    margin: 0;
+
+    color: var(--gold-light);
+
+    font-size: clamp(20px, 4vw, 27px);
+    font-weight: 700;
+    line-height: 1.4;
+
+    text-align: center;
+
+    overflow-wrap: anywhere;
+
+    text-shadow:
+        0 2px 7px rgba(0, 0, 0, 0.48);
+}
+
+.hero-heading p {
+    margin: 2px 0 0;
+
+    color: var(--cream);
+
+    font-size: 12px;
+    line-height: 1.5;
+
+    text-align: center;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   06. SHARED SCROLLABLE CONTENT AREA
+========================================================= */
+
+.page-content {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+
+    margin: 0;
+    padding: 13px 2px;
+
+    gap: 14px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    overscroll-behavior-y: contain;
+    scrollbar-width: thin;
+    scrollbar-color:
+        var(--gold-dark)
+        rgba(3, 39, 29, 0.45);
+
+    -webkit-overflow-scrolling: touch;
+}
+
+.page-content::-webkit-scrollbar {
+    width: 5px;
+}
+
+.page-content::-webkit-scrollbar-track {
+    background: rgba(3, 39, 29, 0.35);
+    border-radius: 20px;
+}
+
+.page-content::-webkit-scrollbar-thumb {
+    background: var(--gold-dark);
+    border-radius: 20px;
+}
+
+.page-content::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
+}
+
+
+/* =========================================================
+   07. HOME PAGE — FEATURED BOARD
+========================================================= */
+
+.home-content {
+    align-items: stretch;
+}
+
+.featured-board {
+    position: relative;
+    isolation: isolate;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 auto;
+
+    width: 100%;
+    min-height: 230px;
+
+    padding: 25px 18px;
+
+    overflow: hidden;
+
+    color: var(--text-light);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(9, 77, 53, 0.97),
+            rgba(4, 47, 34, 0.98)
+        );
+}
+
+.featured-board::before {
+    content: "";
+
+    position: absolute;
+    inset: 9px;
+
+    z-index: -1;
+
+    border: 1px solid rgba(216, 180, 91, 0.36);
+    border-radius: 16px;
+
+    pointer-events: none;
+}
+
+.featured-decoration {
+    position: absolute;
+
+    top: -18px;
+    right: -7px;
+
+    z-index: -1;
+
+    color: rgba(216, 180, 91, 0.12);
+
+    font-family: "Amiri", serif;
+    font-size: 150px;
+    line-height: 1;
+
+    pointer-events: none;
+    user-select: none;
+}
+
+.featured-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    max-width: 760px;
+    min-width: 0;
+
+    gap: 7px;
+
+    text-align: center;
+}
+
+.featured-eyebrow {
+    margin: 0;
+
+    color: var(--gold-light);
+
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+.featured-title {
+    margin: 3px 0;
+
+    color: var(--gold-light);
+
+    font-family: "Amiri", serif;
+    font-size: clamp(28px, 6vw, 43px);
+    font-weight: 700;
+    line-height: 1.8;
+
+    direction: rtl;
+    text-align: center;
+
+    overflow-wrap: anywhere;
+}
+
+.featured-translation {
+    max-width: 620px;
+
+    margin: 0;
+
+    color: var(--cream);
+
+    font-size: 15px;
+    line-height: 1.9;
+
+    overflow-wrap: anywhere;
+}
+
+.featured-reference {
+    margin: 0;
+
+    color: var(--gold-light);
+
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.featured-play-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 40px;
+
+    margin-top: 8px;
+    padding: 8px 17px;
+
+    gap: 9px;
+
+    color: var(--green-950);
+
+    background: var(--gold-light);
+
+    border: 1px solid var(--gold-light);
+    border-radius: 999px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.featured-play-button:hover {
+    background: var(--gold);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.featured-play-button:active {
+    transform: scale(0.97);
+}
+
+.featured-play-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 14px;
+    line-height: 1;
+}
+
+
+/* =========================================================
+   08. HOME PAGE — TWO SIDE-BY-SIDE OPTIONS
+========================================================= */
+
+.home-actions {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    align-items: stretch;
+
+    width: 100%;
+    gap: 12px;
+}
+
+.home-option {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 0;
+    min-height: 145px;
+
+    padding: 17px 10px;
+
+    gap: 7px;
+
+    color: var(--text-light);
+
+    background:
+        linear-gradient(
+            150deg,
+            rgba(9, 78, 54, 0.98),
+            rgba(4, 47, 34, 0.98)
+        );
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-normal),
+        border-color var(--transition-normal),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.home-option:hover {
+    border-color: var(--gold-light);
+
+    background:
+        linear-gradient(
+            150deg,
+            rgba(17, 100, 68, 0.98),
+            rgba(5, 59, 41, 0.98)
+        );
+
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.27);
+}
+
+.home-option:active {
+    transform: scale(0.985);
+}
+
+.option-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 45px;
+    height: 45px;
+
+    color: var(--gold-light);
+
+    border: 1px solid rgba(216, 180, 91, 0.62);
+    border-radius: 50%;
+
+    background: rgba(216, 180, 91, 0.08);
+
+    font-family: "Amiri", serif;
+    font-size: 30px;
+    line-height: 1;
+}
+
+.option-audio-icon {
+    font-family: Arial, sans-serif;
+    font-size: 26px;
+}
+
+.option-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+    min-width: 0;
+    gap: 3px;
+}
+
+.option-title {
+    display: block;
+
+    color: var(--gold-light);
+
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+.option-description {
+    display: block;
+
+    color: var(--cream);
+
+    font-size: 11px;
+    line-height: 1.6;
+
+    overflow-wrap: anywhere;
+}
+
+.option-arrow {
+    position: absolute;
+
+    top: 9px;
+    left: 12px;
+
+    color: var(--gold);
+
+    font-size: 19px;
+    line-height: 1;
+
+    opacity: 0.8;
+}
+
+
+/* =========================================================
+   09. READING AND LISTENING CONTENT BOARDS
+========================================================= */
+
+.inner-content {
+    align-items: stretch;
+}
+
+.content-board {
+    display: flex;
+    flex-direction: column;
+
+    flex: 0 0 auto;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 100%;
+
+    padding: 17px 14px 20px;
+
+    gap: 16px;
+
+    color: var(--text-dark);
+
+    background: var(--cream);
+    border-color: var(--gold);
+
+    overflow-wrap: anywhere;
+}
+
+.content-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    min-width: 0;
+
+    gap: 12px;
+
+    padding-bottom: 12px;
+
+    border-bottom: 1px solid rgba(167, 124, 44, 0.34);
+}
+
+.content-heading-copy {
+    flex: 1 1 auto;
+
+    min-width: 0;
+}
+
+.section-eyebrow {
+    margin: 0 0 3px;
+
+    color: var(--gold-dark);
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+.content-title {
+    margin: 0;
+
+    color: var(--green-900);
+
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+.content-meta {
+    margin: 4px 0 0;
+
+    color: var(--text-muted);
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   10. ARABIC FONT SIZE CONTROLS
+========================================================= */
+
+.reading-tools {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 auto;
+
+    gap: 7px;
+}
+
+.font-size-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 39px;
+    height: 39px;
+
+    padding: 0;
+
+    color: var(--gold-light);
+
+    background: var(--green-800);
+
+    border: 1px solid var(--gold-dark);
+    border-radius: 11px;
+
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.font-size-button:hover {
+    background: var(--green-600);
+}
+
+.font-size-button:active {
+    transform: scale(0.94);
+}
+
+
+/* =========================================================
+   11. SURAH SELECTOR
+========================================================= */
+
+.surah-selector-wrap {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-width: 0;
+
+    gap: 7px;
+}
+
+.surah-selector-wrap label {
+    color: var(--green-900);
+
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+.surah-select {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+
+    padding: 10px 13px;
+
+    color: var(--green-950);
+
+    background-color: var(--cream-soft);
+
+    border: 1px solid rgba(167, 124, 44, 0.75);
+    border-radius: 12px;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    cursor: pointer;
+}
+
+.surah-select:hover {
+    border-color: var(--green-700);
+}
+
+.surah-select option {
+    color: var(--green-950);
+    background: var(--cream-soft);
+}
+
+
+/* =========================================================
+   12. ARABIC TEXT
+========================================================= */
+
+.arabic-text,
+.ayah-arabic,
+.current-ayah-arabic {
+    font-family: "Amiri", serif;
+
+    direction: rtl;
+    text-align: right;
+
+    font-weight: 400;
+    line-height: 2.15;
+
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+.ayah-arabic {
+    margin: 0;
+
+    color: var(--green-950);
+
+    font-size: var(--arabic-font-size);
+}
+
+.current-ayah-arabic {
+    margin: 0;
+
+    color: var(--green-950);
+
+    font-size: clamp(29px, 6vw, 39px);
+}
+
+
+/* =========================================================
+   13. READING PAGE — AYAH LIST
+========================================================= */
+
+.ayah-list {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-width: 0;
+
+    gap: 12px;
+}
+
+.ayah-card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-width: 0;
+
+    padding: 15px 13px;
+
+    gap: 11px;
+
+    color: var(--text-dark);
+
+    background: var(--cream-soft);
+
+    border: 1px solid rgba(167, 124, 44, 0.42);
+    border-radius: 15px;
+
+    box-shadow: 0 3px 9px rgba(37, 48, 30, 0.06);
+
+    transition:
+        border-color var(--transition-fast),
+        background var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.ayah-card:hover {
+    border-color: var(--gold-dark);
+}
+
+.ayah-card.is-active,
+.ayah-card.active {
+    background: #fff2cf;
+    border: 2px solid var(--gold-dark);
+
+    box-shadow: 0 4px 13px rgba(113, 82, 23, 0.12);
+}
+
+.ayah-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    min-width: 0;
+
+    gap: 10px;
+}
+
+.ayah-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 auto;
+
+    min-width: 35px;
+    height: 35px;
+
+    padding: 0 8px;
+
+    color: var(--cream);
+
+    background: var(--green-800);
+
+    border: 1px solid var(--gold-dark);
+    border-radius: 50%;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.ayah-reference {
+    color: var(--text-muted);
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.ayah-translation {
+    margin: 0;
+
+    color: var(--text-dark);
+
+    font-size: 14px;
+    line-height: 1.95;
+
+    overflow-wrap: anywhere;
+}
+
+.ayah-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    width: 100%;
+
+    gap: 8px;
+}
+
+.ayah-play-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 39px;
+    min-height: 39px;
+
+    padding: 7px 11px;
+
+    color: var(--gold-light);
+
+    background: var(--green-800);
+
+    border: 1px solid var(--gold-dark);
+    border-radius: 11px;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.ayah-play-button:hover {
+    background: var(--green-600);
+}
+
+.ayah-play-button:active {
+    transform: scale(0.95);
+}
+
+.ayah-play-button span {
+    line-height: 1;
+}
+
+
+/* =========================================================
+   14. LISTEN PAGE — CURRENT AYAH PANEL
+========================================================= */
+
+.current-ayah-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    width: 100%;
+    min-width: 0;
+
+    padding: 18px 14px;
+
+    gap: 12px;
+
+    color: var(--text-dark);
+
+    background:
+        linear-gradient(
+            150deg,
+            #fffdf6,
+            #fff4d9
+        );
+
+    border: 1px solid rgba(167, 124, 44, 0.55);
+    border-radius: 17px;
+
+    box-shadow: 0 4px 13px rgba(49, 43, 25, 0.07);
+}
+
+.current-ayah-reference {
+    align-self: flex-start;
+
+    margin: 0;
+
+    padding: 5px 11px;
+
+    color: var(--cream);
+
+    background: var(--green-800);
+
+    border: 1px solid var(--gold-dark);
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.current-ayah-translation {
+    margin: 0;
+
+    color: var(--text-dark);
+
+    font-size: 14px;
+    line-height: 2;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   15. AUDIO STATUS AND PROGRESS
+========================================================= */
+
+.audio-information {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-width: 0;
+
+    gap: 9px;
+}
+
+.audio-status {
+    min-height: 24px;
+
+    margin: 0;
+
+    color: var(--text-muted);
+
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.audio-progress-wrap {
+    display: grid;
+
+    grid-template-columns: auto minmax(0, 1fr) auto;
+
+    align-items: center;
+
+    width: 100%;
+    min-width: 0;
+
+    gap: 10px;
+}
+
+.audio-time {
+    min-width: 35px;
+
+    color: var(--green-900);
+
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+
+    text-align: center;
+}
+
+.audio-progress {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+    height: 24px;
+
+    margin: 0;
+
+    accent-color: var(--green-800);
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   16. LISTEN PAGE — AYAH LIST
+========================================================= */
+
+.listen-ayah-section {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-width: 0;
+
+    gap: 11px;
+}
+
+.ayah-list-heading {
+    margin: 0;
+
+    padding-bottom: 8px;
+
+    color: var(--green-900);
+
+    border-bottom: 1px solid rgba(167, 124, 44, 0.35);
+
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+.listen-ayah-list .ayah-card {
+    gap: 9px;
+}
+
+.listen-ayah-list .ayah-card .ayah-arabic {
+    font-size: 27px;
+}
+
+.listen-ayah-list .ayah-card .ayah-translation {
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   17. SHARED FOOTER
+========================================================= */
+
+.app-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: var(--footer-height);
+    min-height: 0;
+
+    padding: 7px 13px;
+
+    overflow: hidden;
+
+    color: var(--cream);
+
+    background:
+        linear-gradient(
+            110deg,
+            rgba(4, 51, 36, 0.98),
+            rgba(7, 67, 47, 0.98),
+            rgba(4, 51, 36, 0.98)
+        );
+
+    border-color: var(--gold);
+    border-radius: var(--board-radius);
+}
+
+.footer-home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-width: 0;
+
+    text-align: center;
+}
+
+.footer-home p {
+    margin: 0;
+
+    color: var(--gold-light);
+
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.6;
+
+    overflow-wrap: anywhere;
+}
+
+.footer-controls {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr)
+        minmax(0, 1fr);
+
+    align-items: center;
+    justify-items: center;
+
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+
+    gap: 12px;
+}
+
+.footer-message {
+    margin: 0;
+
+    color: var(--gold-light);
+
+    font-size: 11px;
+    line-height: 1.5;
+
+    text-align: center;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   18. READ FOOTER NAVIGATION
+========================================================= */
+
+.read-footer {
+    grid-template-columns:
+        43px
+        minmax(0, 1fr)
+        43px;
+
+    gap: 10px;
+}
+
+.footer-navigation-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 43px;
+    height: 43px;
+    min-width: 43px;
+    min-height: 43px;
+
+    padding: 0;
+
+    color: var(--gold-light);
+
+    background: var(--green-800);
+
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.footer-navigation-button span {
+    display: block;
+
+    font-family: Arial, sans-serif;
+    font-size: 34px;
+    font-weight: 400;
+    line-height: 0.8;
+}
+
+.footer-navigation-button:hover {
+    background: var(--green-600);
+    border-color: var(--gold-light);
+}
+
+.footer-navigation-button:active {
+    transform: scale(0.94);
+}
+
+
+/* =========================================================
+   19. LISTEN FOOTER — THREE CONTROLS
+
+   Left and right: square rounded buttons.
+   Center: one green circular button with one gold border.
+   Center symbol: gold play or pause only.
+========================================================= */
+
+.listen-footer {
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr)
+        minmax(0, 1fr);
+
+    justify-items: stretch;
+
+    gap: 14px;
+
+    padding: 0 5px;
+}
+
+.listen-footer .footer-navigation-button {
+    justify-self: center;
+}
+
+.listen-main-control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    justify-self: center;
+
+    width: 51px;
+    height: 51px;
+    min-width: 51px;
+    min-height: 51px;
+
+    padding: 0;
+
+    color: var(--gold-light);
+
+    background: var(--green-800);
+
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+
+    box-shadow: none;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.listen-main-control:hover {
+    background: var(--green-600);
+    border-color: var(--gold-light);
+}
+
+.listen-main-control:active {
+    transform: scale(0.94);
+}
+
+.listen-main-control:focus-visible {
+    outline: 2px solid var(--gold-light);
+    outline-offset: 3px;
+}
+
+.listen-main-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: auto;
+    height: auto;
+
+    margin: 0;
+    padding: 0;
+
+    color: var(--gold-light);
+
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+
+    font-family: Arial, sans-serif;
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 1;
+
+    transform: none;
+}
+
+.listen-main-control:hover .listen-main-icon {
+    color: #fff0b5;
+}
+
+
+/* =========================================================
+   20. LOADING, ERROR AND EMPTY STATES
+========================================================= */
+
+.loading-message,
+.empty-message,
+.error-message {
+    width: 100%;
+
+    padding: 13px 12px;
+
+    border-radius: 12px;
+
+    font-size: 13px;
+    line-height: 1.8;
+
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+.loading-message {
+    color: var(--green-900);
+
+    background: #f7efd9;
+
+    border: 1px solid rgba(167, 124, 44, 0.45);
+}
+
+.empty-message {
+    color: var(--text-muted);
+
+    background: var(--cream-soft);
+
+    border: 1px dashed rgba(167, 124, 44, 0.65);
+}
+
+.error-message {
+    color: var(--danger);
+
+    background: #fff0ed;
+
+    border: 1px solid rgba(165, 47, 39, 0.38);
+}
+
+
+/* =========================================================
+   21. TOAST MESSAGE
+========================================================= */
+
+.quran-toast {
+    position: fixed;
+
+    right: 50%;
+    bottom: calc(var(--footer-height) + 24px);
+
+    z-index: 1000;
+
+    width: max-content;
+    max-width: min(90vw, 420px);
+
+    padding: 10px 16px;
+
+    color: var(--cream);
+
+    background: rgba(3, 39, 29, 0.97);
+
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+
+    box-shadow: var(--shadow-board);
+
+    font-size: 12px;
+    line-height: 1.7;
+
+    text-align: center;
+
+    transform: translateX(50%);
+}
+
+
+/* =========================================================
+   22. RTL / ARABIC SUPPORT
+========================================================= */
+
+[lang="ar"],
+[dir="rtl"] {
+    font-family: "Amiri", serif;
+}
+
+.featured-title,
+.ayah-arabic,
+.current-ayah-arabic {
+    unicode-bidi: plaintext;
+}
+
+
+/* =========================================================
+   23. LANGUAGE AND THEME COMPATIBILITY
+
+   These classes can be applied by the site's JS settings.
+========================================================= */
+
+body.dark-mode,
+body.theme-dark,
+body[data-theme="dark"] {
+    color-scheme: dark;
+}
+
+body.light-mode,
+body.theme-light,
+body[data-theme="light"] {
+    color-scheme: light;
+}
+
+
+/* =========================================================
+   24. TABLET RESPONSIVENESS
+========================================================= */
+
+@media (min-width: 600px) {
+    :root {
+        --page-padding: 18px;
+        --header-height: 166px;
+        --footer-height: 80px;
+    }
+
+    .quran-app {
+        padding: 12px var(--page-padding);
+    }
+
+    .page-content {
+        padding: 17px 3px;
+        gap: 17px;
+    }
+
+    .hero-board {
+        padding: 14px 24px;
+    }
+
+    .hero-inner {
+        gap: 4px;
+    }
+
+    .brand-name {
+        font-size: 23px;
+    }
+
+    .brand-subtitle {
+        font-size: 12px;
+    }
+
+    .hero-heading h1 {
+        font-size: 28px;
+    }
+
+    .hero-heading p {
+        font-size: 13px;
+    }
+
+    .featured-board {
+        min-height: 265px;
+        padding: 30px 25px;
+    }
+
+    .featured-translation {
+        font-size: 16px;
+    }
+
+    .home-actions {
+        gap: 16px;
+    }
+
+    .home-option {
+        min-height: 165px;
+        padding: 20px 15px;
+    }
+
+    .option-icon {
+        width: 49px;
+        height: 49px;
+        font-size: 32px;
+    }
+
+    .option-title {
+        font-size: 17px;
+    }
+
+    .option-description {
+        font-size: 12px;
+    }
+
+    .content-board {
+        padding: 23px 22px 26px;
+        gap: 18px;
+    }
+
+    .content-title {
+        font-size: 25px;
+    }
+
+    .ayah-card {
+        padding: 19px 18px;
+    }
+
+    .ayah-translation,
+    .current-ayah-translation {
+        font-size: 15px;
+    }
+
+    .listen-ayah-list .ayah-card .ayah-arabic {
+        font-size: 30px;
+    }
+
+    .footer-home p {
+        font-size: 13px;
+    }
+}
+
+
+/* =========================================================
+   25. DESKTOP RESPONSIVENESS
+========================================================= */
+
+@media (min-width: 900px) {
+    :root {
+        --header-height: 172px;
+        --footer-height: 82px;
+    }
+
+    .quran-app {
+        max-width: 1200px;
+
+        margin: 0 auto;
+
+        padding: 14px 22px;
+    }
+
+    .hero-board {
+        padding: 17px 30px;
+    }
+
+    .hero-heading h1 {
+        font-size: 30px;
+    }
+
+    .featured-board {
+        min-height: 285px;
+    }
+
+    .featured-title {
+        font-size: 44px;
+    }
+
+    .home-actions {
+        gap: 18px;
+    }
+
+    .home-option {
+        min-height: 175px;
+    }
+
+    .content-board {
+        padding: 27px 28px 30px;
+    }
+
+    .read-board,
+    .listen-board {
+        gap: 20px;
+    }
+
+    .ayah-list {
+        gap: 14px;
+    }
+
+    .ayah-card {
+        padding: 21px 22px;
+    }
+
+    .ayah-arabic {
+        font-size: 36px;
+    }
+
+    .current-ayah-panel {
+        padding: 24px 25px;
+    }
+
+    .current-ayah-arabic {
+        font-size: 43px;
+    }
+
+    .listen-footer {
+        gap: 22px;
+    }
+
+    .listen-main-control {
+        width: 55px;
+        height: 55px;
+        min-width: 55px;
+        min-height: 55px;
+    }
+}
+
+
+/* =========================================================
+   26. SMALL MOBILE SCREENS
+========================================================= */
+
+@media (max-width: 380px) {
+    :root {
+        --page-padding: 8px;
+        --header-height: 145px;
+        --footer-height: 68px;
+        --board-radius: 18px;
+    }
+
+    .quran-app {
+        padding: 8px var(--page-padding);
+    }
+
+    .hero-board {
+        padding: 9px 10px;
+    }
+
+    .brand-mark {
+        font-size: 25px;
+    }
+
+    .brand-name {
+        font-size: 19px;
+    }
+
+    .brand-subtitle {
+        font-size: 10px;
+    }
+
+    .hero-heading h1 {
+        font-size: 20px;
+    }
+
+    .hero-heading p {
+        font-size: 10px;
+    }
+
+    .page-content {
+        padding: 10px 1px;
+        gap: 11px;
+    }
+
+    .featured-board {
+        min-height: 205px;
+        padding: 20px 11px;
+    }
+
+    .featured-title {
+        font-size: 27px;
+    }
+
+    .featured-translation {
+        font-size: 13px;
+    }
+
+    .featured-eyebrow {
+        font-size: 11px;
+    }
+
+    .featured-reference {
+        font-size: 11px;
+    }
+
+    .featured-play-button {
+        min-height: 36px;
+        padding: 7px 13px;
+        font-size: 12px;
+    }
+
+    .home-actions {
+        gap: 8px;
+    }
+
+    .home-option {
+        min-height: 130px;
+        padding: 14px 7px;
+    }
+
+    .option-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 26px;
+    }
+
+    .option-title {
+        font-size: 13px;
+    }
+
+    .option-description {
+        font-size: 10px;
+    }
+
+    .option-arrow {
+        top: 7px;
+        left: 8px;
+        font-size: 16px;
+    }
+
+    .content-board {
+        padding: 13px 10px 16px;
+        gap: 13px;
+    }
+
+    .content-heading {
+        gap: 7px;
+        padding-bottom: 10px;
+    }
+
+    .content-title {
+        font-size: 19px;
+    }
+
+    .content-meta {
+        font-size: 10px;
+    }
+
+    .section-eyebrow {
+        font-size: 10px;
+    }
+
+    .reading-tools {
+        gap: 5px;
+    }
+
+    .font-size-button {
+        width: 33px;
+        height: 35px;
+        border-radius: 9px;
+        font-size: 12px;
+    }
+
+    .surah-selector-wrap label {
+        font-size: 12px;
+    }
+
+    .surah-select {
+        min-height: 42px;
+        padding: 8px 9px;
+        font-size: 12px;
+    }
+
+    .ayah-card {
+        padding: 12px 9px;
+        gap: 9px;
+        border-radius: 12px;
+    }
+
+    .ayah-arabic {
+        font-size: 27px;
+    }
+
+    .ayah-translation {
+        font-size: 12px;
+    }
+
+    .current-ayah-panel {
+        padding: 14px 10px;
+        gap: 10px;
+    }
+
+    .current-ayah-arabic {
+        font-size: 29px;
+    }
+
+    .current-ayah-translation {
+        font-size: 12px;
+    }
+
+    .audio-progress-wrap {
+        gap: 5px;
+    }
+
+    .audio-time {
+        min-width: 30px;
+        font-size: 10px;
+    }
+
+    .listen-ayah-list .ayah-card .ayah-arabic {
+        font-size: 25px;
+    }
+
+    .footer-home p {
+        font-size: 10px;
+    }
+
+    .footer-controls {
+        gap: 7px;
+    }
+
+    .read-footer {
+        grid-template-columns: 38px minmax(0, 1fr) 38px;
+        gap: 6px;
+    }
+
+    .footer-navigation-button {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        min-height: 38px;
+        border-radius: 10px;
+    }
+
+    .footer-navigation-button span {
+        font-size: 30px;
+    }
+
+    .footer-message {
+        font-size: 9px;
+    }
+
+    .listen-footer {
+        grid-template-columns:
+            minmax(0, 1fr)
+            minmax(0, 1fr)
+            minmax(0, 1fr);
+
+        gap: 8px;
+        padding: 0 2px;
+    }
+
+    .listen-main-control {
+        width: 45px;
+        height: 45px;
+        min-width: 45px;
+        min-height: 45px;
+    }
+
+    .listen-main-icon {
+        font-size: 20px;
+    }
+}
+
+
+/* =========================================================
+   27. SHORT SCREEN HEIGHTS
+========================================================= */
+
+@media (max-height: 650px) {
+    :root {
+        --header-height: 132px;
+        --footer-height: 65px;
+    }
+
+    .quran-app {
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+
+    .hero-board {
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+
+    .hero-heading {
+        margin-top: 1px;
+    }
+
+    .brand-mark {
+        font-size: 24px;
+    }
+
+    .brand-name {
+        font-size: 18px;
+    }
+
+    .brand-subtitle {
+        font-size: 10px;
+    }
+
+    .hero-heading h1 {
+        font-size: 20px;
+    }
+
+    .hero-heading p {
+        font-size: 10px;
+    }
+
+    .page-content {
+        padding-top: 9px;
+        padding-bottom: 9px;
+        gap: 10px;
+    }
+
+    .featured-board {
+        min-height: 190px;
+        padding-top: 17px;
+        padding-bottom: 17px;
+    }
+
+    .home-option {
+        min-height: 120px;
+    }
+
+    .app-footer {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    .listen-main-control {
+        width: 43px;
+        height: 43px;
+        min-width: 43px;
+        min-height: 43px;
+    }
+}
+
+
+/* =========================================================
+   28. EXTRA SMALL / NARROW LAYOUTS
+========================================================= */
+
+@media (max-width: 320px) {
+    .home-actions {
+        gap: 6px;
+    }
+
+    .home-option {
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+
+    .option-title {
+        font-size: 12px;
+    }
+
+    .option-description {
+        font-size: 9px;
+    }
+
+    .featured-title {
+        font-size: 24px;
+    }
+
+    .read-footer {
+        grid-template-columns: 34px minmax(0, 1fr) 34px;
+    }
+
+    .read-footer .footer-navigation-button {
+        width: 34px;
+        height: 36px;
+        min-width: 34px;
+        min-height: 36px;
+    }
+
+    .listen-footer {
+        gap: 5px;
+    }
+
+    .listen-footer .footer-navigation-button {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        min-height: 36px;
+    }
+
+    .listen-main-control {
+        width: 41px;
+        height: 41px;
+        min-width: 41px;
+        min-height: 41px;
+    }
+}
+
+
+/* =========================================================
+   29. REDUCED MOTION ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
+    }
+}
+
+
+/* =========================================================
+   30. PRINT STYLES
+========================================================= */
+
+@media print {
+    html,
+    body.quran-page {
+        width: auto;
+        height: auto;
+        min-height: 0;
+
+        overflow: visible;
+
+        color: #000;
+        background: #fff;
+
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .quran-app {
+        display: block;
+
+        width: auto;
+        height: auto;
+        min-height: 0;
+
+        padding: 0;
+        overflow: visible;
+    }
+
+    .hero-board,
+    .app-footer,
+    .home-actions,
+    .reading-tools,
+    .featured-play-button,
+    .footer-controls,
+    .audio-information,
+    .listen-ayah-section {
+        display: none !important;
+    }
+
+    .page-content {
+        display: block;
+
+        width: auto;
+        height: auto;
+        min-height: 0;
+
+        padding: 0;
+        overflow: visible;
+    }
+
+    .featured-board,
+    .content-board,
+    .ayah-card {
+        color: #000;
+        background: #fff;
+
+        box-shadow: none;
+
+        break-inside: avoid;
+    }
+
+    .ayah-card {
+        margin-bottom: 12px;
+    }
+
+    .ayah-arabic,
+    .current-ayah-arabic {
+        color: #000;
+    }
+}
+
+
+/* =========================================================
+   END OF COMPLETE QURAN STYLESHEET
+========================================================= */
