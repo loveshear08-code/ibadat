@@ -1,6 +1,8 @@
+
 /* =====================================================
    IBADAT QIBLA COMPASS
    Multilingual + Saved Location + Device Sensors
+   Shared layout: Green, Gold and Cream
 ===================================================== */
 
 (() => {
@@ -13,10 +15,15 @@
 
     if (!compass || !wrapper) return;
 
+    const pageTitle = $("pageTitle");
+    const heroSubtitle = $("heroSubtitle");
+    const footerText = $("footerText");
+
     const locationName = $("locationName");
     const locationLabel = $("locationLabel");
     const distanceLabel = $("distanceLabel");
     const distanceEl = $("distance");
+
     const degreeEl = compass.querySelector(".degree");
     const ring = compass.querySelector(".compass-ring");
 
@@ -25,14 +32,20 @@
 
     const LANG = {
         bn: {
+            title: "কিবলা কম্পাস",
+            subtitle: "কম্পাস দেখুন এবং সঠিক দিক নির্বাচন করুন",
+            footer: "সঠিক কিবলার দিক জানতে কম্পাস অনুসরণ করুন",
+
             location: "বর্তমান অবস্থান",
             distance: "মক্কার দূরত্ব",
             km: "কিমি",
-            missing: "হোম পেজের লোকেশন পাওয়া যায়নি",
+
+            missing: "অবস্থান পাওয়া যায়নি",
             waiting: "কম্পাস সেন্সরের অপেক্ষায়",
             active: "কম্পাস সক্রিয়",
             unavailable: "কম্পাস সেন্সর পাওয়া যায়নি",
             denied: "কম্পাসের অনুমতি প্রয়োজন",
+
             directions: [
                 "উ", "উ-উপূ", "উপূ", "পূ-উপূ",
                 "পূ", "পূ-দপূ", "দপূ", "দ-দপূ",
@@ -40,15 +53,22 @@
                 "প", "প-উপ", "উপ", "উ-উপ"
             ]
         },
+
         en: {
+            title: "Qibla Compass",
+            subtitle: "View the compass and find the correct direction",
+            footer: "Follow the compass to find the Qibla direction",
+
             location: "Current Location",
             distance: "Distance to Makkah",
             km: "km",
-            missing: "Home-page location unavailable",
+
+            missing: "Location unavailable",
             waiting: "Waiting for compass sensor",
             active: "Compass active",
             unavailable: "Compass sensor unavailable",
             denied: "Compass permission required",
+
             directions: [
                 "N", "NNE", "NE", "ENE",
                 "E", "ESE", "SE", "SSE",
@@ -56,15 +76,22 @@
                 "W", "WNW", "NW", "NNW"
             ]
         },
+
         hi: {
+            title: "क़िबला कम्पास",
+            subtitle: "कम्पास देखें और सही दिशा चुनें",
+            footer: "क़िबला दिशा जानने के लिए कम्पास का अनुसरण करें",
+
             location: "वर्तमान स्थान",
             distance: "मक्का की दूरी",
             km: "किमी",
-            missing: "होम पेज का स्थान उपलब्ध नहीं",
+
+            missing: "स्थान उपलब्ध नहीं",
             waiting: "कम्पास सेंसर की प्रतीक्षा",
             active: "कम्पास सक्रिय",
             unavailable: "कम्पास सेंसर उपलब्ध नहीं",
             denied: "कम्पास की अनुमति आवश्यक है",
+
             directions: [
                 "उ", "उ-उपू", "उपू", "पू-उपू",
                 "पू", "पू-दपू", "दपू", "द-दपू",
@@ -79,42 +106,51 @@
 
     let userLat = null;
     let userLon = null;
+
     let qiblaBearing = 0;
     let heading = null;
-    let previousHeading = null;
     let sensorStarted = false;
     let permissionRequested = false;
 
     const rad = n => n * Math.PI / 180;
     const norm = n => ((n % 360) + 360) % 360;
 
+    /* ---------- MAIN APP LANGUAGE ---------- */
+
     function getLanguage() {
         try {
             const settings = JSON.parse(
                 localStorage.getItem("appSettings") || "{}"
             );
-            return LANG[settings.lang] ? settings.lang : "bn";
+
+            const selected =
+                settings.lang ||
+                settings.language ||
+                settings.locale ||
+                "bn";
+
+            return LANG[selected] ? selected : "bn";
         } catch {
             return "bn";
         }
     }
 
+    /* ---------- LOCALIZED NUMBERS ---------- */
+
     function number(n) {
-    const value = Math.round(Number(n));
+        const value = Math.round(Number(n));
 
-    const digits = {
-        bn: "০১২৩৪৫৬৭৮৯",
-        hi: "०१२३४५६७८९",
-        en: "0123456789"
-    };
+        const digits = {
+            bn: "০১২৩৪৫৬৭৮৯",
+            hi: "०१२३४५६७८९",
+            en: "0123456789"
+        };
 
-    const formatted = value.toLocaleString("en-US");
+        return String(value).replace(/[0-9]/g, digit =>
+            digits[language][Number(digit)]
+        );
+    }
 
-    return formatted.replace(/[0-9]/g, digit =>
-        digits[language][Number(digit)]
-    );
-}
-   
     function directionName(deg) {
         return T.directions[
             Math.round(norm(deg) / 22.5) % 16
@@ -145,7 +181,7 @@
         ring || compass.firstChild
     );
 
-    /* ---------- QIBLA ARROW ---------- */
+    /* ---------- QIBLA NEEDLE ---------- */
 
     const needle = document.createElement("div");
 
@@ -159,7 +195,7 @@
         transform: "translateX(-50%) rotate(0deg)",
         transformOrigin: "50% 100%",
         borderRadius: "5px",
-       background: "var(--compass-needle)", 
+        background: "var(--compass-needle)",
         pointerEvents: "none"
     });
 
@@ -179,33 +215,34 @@
 
     needle.appendChild(tip);
     compass.appendChild(needle);
-    
-/* ---------- REALISTIC 3D KAABA MARKER ---------- */
 
-const marker = document.createElement("img");
+    /* ---------- KAABA MARKER ---------- */
 
-marker.src = "../assets/kaaba-3d.png";
-marker.alt = "Kaaba";
+    const marker = document.createElement("img");
 
-Object.assign(marker.style, {
-    position: "absolute",
-    zIndex: "5",
-    left: "50%",
-    top: "50%",
-    width: "60px",
-    height: "60px",
-    objectFit: "contain",
-    transform: "translate(-50%, -50%)",
-    pointerEvents: "none",
-    filter: "drop-shadow(0 2px 4px rgba(0,0,0,.25))"
-});
+    marker.src = "../assets/kaaba-3d.png";
+    marker.alt = "Kaaba";
 
-compass.appendChild(marker);
+    Object.assign(marker.style, {
+        position: "absolute",
+        zIndex: "5",
+        left: "50%",
+        top: "50%",
+        width: "60px",
+        height: "60px",
+        objectFit: "contain",
+        transform: "translate(-50%, -50%)",
+        pointerEvents: "none",
+        filter: "drop-shadow(0 2px 4px rgba(0,0,0,.25))"
+    });
 
-    /* ---------- LOCATION AND BEARING ---------- */
+    compass.appendChild(marker);
+
+    /* ---------- DISTANCE AND BEARING ---------- */
 
     function distanceKm(lat1, lon1, lat2, lon2) {
         const R = 6371;
+
         const dLat = rad(lat2 - lat1);
         const dLon = rad(lon2 - lon1);
 
@@ -237,10 +274,15 @@ compass.appendChild(marker);
     }
 
     function updateLocationValues() {
+        if (userLat === null || userLon === null) return;
+
         qiblaBearing = calculateBearing(userLat, userLon);
 
         const km = distanceKm(
-            userLat, userLon, KAABA_LAT, KAABA_LON
+            userLat,
+            userLon,
+            KAABA_LAT,
+            KAABA_LON
         );
 
         if (distanceEl) {
@@ -255,6 +297,8 @@ compass.appendChild(marker);
 
         updateCompass();
     }
+
+    /* ---------- LOAD SAVED LOCATION ---------- */
 
     function loadSavedLocation() {
         let saved;
@@ -276,11 +320,24 @@ compass.appendChild(marker);
             Math.abs(Number(saved.lat)) > 90 ||
             Math.abs(Number(saved.lon)) > 180
         ) {
+            userLat = null;
+            userLon = null;
+
             if (locationName) {
-                locationName.textContent = T.missing;
+                let city = null;
+
+                try {
+                    city = localStorage.getItem("ibadatCityName");
+                } catch {
+                    city = null;
+                }
+
+                locationName.textContent = city || T.missing;
             }
+
             if (distanceEl) distanceEl.textContent = "—";
             if (degreeEl) degreeEl.textContent = "—";
+
             return;
         }
 
@@ -289,15 +346,24 @@ compass.appendChild(marker);
 
         try {
             const city = localStorage.getItem("ibadatCityName");
+
             if (city && locationName) {
                 locationName.textContent = city;
+            } else if (locationName) {
+                locationName.textContent =
+                    `${number(userLat)}, ${number(userLon)}`;
             }
-        } catch {}
+        } catch {
+            if (locationName) {
+                locationName.textContent =
+                    `${number(userLat)}, ${number(userLon)}`;
+            }
+        }
 
         updateLocationValues();
     }
 
-    /* ---------- LIVE DIAL ---------- */
+    /* ---------- LIVE COMPASS ---------- */
 
     function updateCompass() {
         const h = heading === null ? 0 : heading;
@@ -305,7 +371,7 @@ compass.appendChild(marker);
 
         dial.style.transform = `rotate(${-h}deg)`;
 
-        // Keep direction labels upright as the dial rotates.
+        /* Keep labels upright while the dial rotates. */
         directions.forEach(el => {
             el.style.transform =
                 `translate(-50%, -50%) rotate(${h}deg)`;
@@ -314,6 +380,9 @@ compass.appendChild(marker);
         needle.style.transform =
             `translateX(-50%) rotate(${relative}deg)`;
 
+        /*
+         * Preserve the existing marker positioning rule.
+         */
         const rect = compass.getBoundingClientRect();
 
         const radius =
@@ -322,6 +391,7 @@ compass.appendChild(marker);
             Math.max(marker.offsetWidth, marker.offsetHeight) / 2;
 
         const angle = rad(relative);
+
         const x = Math.sin(angle) * radius;
         const y = -Math.cos(angle) * radius;
 
@@ -342,7 +412,6 @@ compass.appendChild(marker);
         if (!Number.isFinite(raw)) return;
 
         heading = norm(raw);
-        previousHeading = heading;
         updateCompass();
     }
 
@@ -416,12 +485,14 @@ compass.appendChild(marker);
         if (
             typeof DeviceOrientationEvent.requestPermission !== "function"
         ) {
-            // Android and browsers that do not require explicit permission.
             startSensors();
             return;
         }
 
-        // Some browsers require a user gesture before granting sensor access.
+        /*
+         * iOS-style permission is requested on a user gesture.
+         * The compass remains otherwise unchanged.
+         */
         compass.addEventListener("click", async function requestSensor() {
             if (permissionRequested) return;
 
@@ -442,6 +513,7 @@ compass.appendChild(marker);
                     "Qibla sensor permission error:",
                     error
                 );
+
                 showStatus(T.denied);
                 permissionRequested = false;
             }
@@ -453,6 +525,20 @@ compass.appendChild(marker);
     function applyLanguage() {
         language = getLanguage();
         T = LANG[language];
+
+        document.documentElement.lang = language;
+
+        if (pageTitle) {
+            pageTitle.textContent = T.title;
+        }
+
+        if (heroSubtitle) {
+            heroSubtitle.textContent = T.subtitle;
+        }
+
+        if (footerText) {
+            footerText.textContent = T.footer;
+        }
 
         if (locationLabel) {
             locationLabel.textContent = T.location;
@@ -504,6 +590,21 @@ compass.appendChild(marker);
             updateCompass();
         }
     });
+
+    /*
+     * Also detect settings changes made in the same tab,
+     * because the storage event does not fire in that tab.
+     */
+    let lastLanguage = getLanguage();
+
+    window.setInterval(() => {
+        const currentLanguage = getLanguage();
+
+        if (currentLanguage !== lastLanguage) {
+            lastLanguage = currentLanguage;
+            applyLanguage();
+        }
+    }, 700);
 
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", init, {
