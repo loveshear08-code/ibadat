@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#123d2c">
 
     <title>IBADAT - দোয়া</title>
 
@@ -11,19 +12,21 @@
 </head>
 
 <body>
-
     <div class="dua-app">
 
-        <!-- Fixed Header Board -->
-        <header class="dua-hero">
+        <!-- Header -->
+        <header class="dua-hero board">
             <div class="dua-hero-content">
-                <h1 id="heroTitle">দোয়া</h1>
-                <p id="heroSubtitle">দোয়া শিখুন, পড়ুন ও প্রশান্তি অনুভব করুন</p>
+                <h1 id="heroTitle" class="hero-title">দোয়া</h1>
+
+                <p id="heroSubtitle" class="hero-subtitle">
+                    দোয়া শিখুন, পড়ুন ও প্রশান্তি অনুভব করুন
+                </p>
             </div>
         </header>
 
-        <!-- Main Content Board -->
-        <main class="dua-main-board">
+        <!-- Main content area -->
+        <main class="dua-main-board board">
 
             <!-- Loading -->
             <div id="loadingBox" class="status-box">
@@ -33,76 +36,40 @@
             <!-- Error -->
             <div id="errorBox" class="status-box error-box hidden">
                 <div id="errorText"></div>
+
                 <button id="retryButton" type="button">
                     আবার চেষ্টা করুন
                 </button>
             </div>
 
-            <!-- Collection / Chapter List -->
+            <!-- First page: Chapter list -->
             <section id="duaHome" class="dua-page hidden">
-
-                <div class="intro-card">
-                    <div class="intro-icon">🤲</div>
-
-                    <div id="introTitle" class="intro-title">
-                        দোয়া
-                    </div>
-
-                    <div id="introText" class="intro-text"></div>
-                </div>
-
                 <div id="chapterList" class="chapter-list"></div>
-
             </section>
 
-            <!-- Entry List -->
+            <!-- Second page: Entry list -->
             <section id="entryPage" class="dua-page hidden">
-
-                <div class="inner-header">
-                    <button
-                        id="entryBackButton"
-                        type="button"
-                        aria-label="Back"
-                    >←</button>
-
-                    <span id="entryPageTitle"></span>
-                </div>
-
                 <div id="entryList" class="entry-list"></div>
-
             </section>
 
-            <!-- Single Dua -->
+            <!-- Third page: Selected dua -->
             <section id="duaPage" class="dua-page hidden">
-
-                <div class="inner-header">
-                    <button
-                        id="duaBackButton"
-                        type="button"
-                        aria-label="Back"
-                    >←</button>
-
-                    <span id="duaPageTitle"></span>
-                </div>
-
                 <div id="duaContent"></div>
-
             </section>
 
         </main>
 
-        <!-- Fixed Footer Board -->
-        <footer class="dua-footer">
+        <!-- Footer -->
+        <footer class="dua-footer board">
             <div class="dua-footer-content">
-                <span class="dua-footer-icon">۞</span>
-                <p id="footerText">দোয়া — আল্লাহর স্মরণে প্রশান্তি</p>
+                <p id="footerText" class="dua-footer-message">
+                    আল্লাহর স্মরণে প্রশান্তি
+                </p>
             </div>
         </footer>
 
     </div>
 
-    <!-- Audio Player: Created and controlled by dua.js -->
-    <script src="../js/dua.js?v=3"></script>
-
+    <script src="../js/dua.js?v=4"></script>
 </body>
 </html>
