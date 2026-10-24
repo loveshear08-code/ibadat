@@ -273,12 +273,40 @@
     };
   }
 
-  function getEditionList(data) {
-    const raw = normalizeArray(data);
-    return raw
+  
+function getEditionList(data) {
+  if (!data || typeof data !== "object") return [];
+
+  if (Array.isArray(data)) {
+    return data
       .filter(item => item && typeof item === "object")
       .map(normalizeEdition);
   }
+
+  const editions = [];
+
+  Object.entries(data).forEach(([bookId, bookData]) => {
+    if (!bookData || typeof bookData !== "object") return;
+
+    const collection = Array.isArray(bookData.collection)
+      ? bookData.collection
+      : [];
+
+    collection.forEach(edition => {
+      if (!edition || typeof edition !== "object") return;
+
+      editions.push(
+        normalizeEdition({
+          ...edition,
+          book: edition.book || bookId,
+          collection: edition.collection || bookId
+        })
+      );
+    });
+  });
+
+  return editions;
+}
 
   function editionMatchesBook(edition, bookId) {
     const collection = String(edition.collection || "").toLowerCase();
