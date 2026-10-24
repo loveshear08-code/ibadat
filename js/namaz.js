@@ -1,16 +1,17 @@
+
 "use strict";
 
 (() => {
   const SETTINGS_KEY = "appSettings";
   const ASSET_BASE = "../assets/icons/";
 
-  /* =========================================
-     SETTINGS
-     ========================================= */
+  /* SETTINGS */
 
   function getAppSettings() {
     try {
-      return JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{}");
+      return JSON.parse(
+        localStorage.getItem(SETTINGS_KEY) || "{}"
+      );
     } catch (error) {
       console.warn("IBADAT: Could not read app settings.", error);
       return {};
@@ -18,7 +19,9 @@
   }
 
   function normalizeLanguage(language) {
-    return ["bn", "en", "hi"].includes(language) ? language : "bn";
+    return ["bn", "en", "hi"].includes(language)
+      ? language
+      : "bn";
   }
 
   function getCurrentLanguage() {
@@ -35,9 +38,7 @@
 
   let currentLanguage = getCurrentLanguage();
 
-  /* =========================================
-     PAGE ROUTES
-     ========================================= */
+  /* PAGE ROUTES: UNCHANGED */
 
   const NAMAZ_ROUTES = {
     "purity": "namaz-purity.html",
@@ -52,9 +53,7 @@
     "daily-amal": "namaz-daily-amal.html"
   };
 
-  /* =========================================
-     FINAL 10 TOPICS
-     ========================================= */
+  /* TEN TOPICS: SAME ORDER AND ICONS */
 
   const topics = [
     {
@@ -79,9 +78,9 @@
       id: "conditions",
       icon: "prayer-conditions.png",
       title: {
-        bn: "নামাজের শর্ত",
-        en: "Prayer Conditions",
-        hi: "नमाज़ की शर्तें"
+        bn: "শর্ত ও প্রস্তুতি",
+        en: "Conditions & Preparation",
+        hi: "शर्तें और तैयारी"
       }
     },
     {
@@ -149,9 +148,7 @@
     }
   ];
 
-  /* =========================================
-     INTRODUCTION TEXT
-     ========================================= */
+  /* INTRODUCTION TEXT */
 
   const introduction = {
     bn: {
@@ -176,9 +173,7 @@
     }
   };
 
-  /* =========================================
-     FOOTER MESSAGE
-     ========================================= */
+  /* FOOTER */
 
   const footerMessages = {
     bn: "নামাজ শিখি, শুদ্ধভাবে ইবাদত করি।",
@@ -187,12 +182,14 @@
   };
 
   function getText(textObject) {
-    return textObject[currentLanguage] || textObject.bn || "";
+    return (
+      textObject[currentLanguage] ||
+      textObject.bn ||
+      ""
+    );
   }
 
-  /* =========================================
-     THEME
-     ========================================= */
+  /* THEME */
 
   function applySavedTheme() {
     const settings = getAppSettings();
@@ -203,12 +200,11 @@
     );
   }
 
-  /* =========================================
-     BUILD INTRODUCTION AND FOOTER
-     ========================================= */
+  /* BUILD INTRODUCTION AND FOOTER */
 
   function buildIntroduction() {
-    const intro = introduction[currentLanguage] || introduction.bn;
+    const intro =
+      introduction[currentLanguage] || introduction.bn;
 
     const heading = document.getElementById("intro-title");
     const paragraph = document.getElementById("intro-paragraph-1");
@@ -243,9 +239,7 @@
     document.title = pageTitles[currentLanguage];
   }
 
-  /* =========================================
-     OPEN TOPIC
-     ========================================= */
+  /* OPEN TOPIC: SAME ROUTES */
 
   function openTopic(topic) {
     const page = NAMAZ_ROUTES[topic.id];
@@ -258,16 +252,17 @@
       return;
     }
 
-    const destination = new URL(page, window.location.href);
+    const destination = new URL(
+      page,
+      window.location.href
+    );
 
     destination.searchParams.set("lang", currentLanguage);
 
     window.location.href = destination.href;
   }
 
-  /* =========================================
-     BUILD 10 TOPIC CARDS
-     ========================================= */
+  /* BUILD THE TEN OPTION CARDS */
 
   function buildLearningGrid() {
     const grid = document.getElementById("learning-grid");
@@ -279,7 +274,7 @@
 
     const fragment = document.createDocumentFragment();
 
-    topics.forEach((topic) => {
+    topics.forEach(topic => {
       const button = document.createElement("button");
 
       button.type = "button";
@@ -327,9 +322,7 @@
     grid.replaceChildren(fragment);
   }
 
-  /* =========================================
-     REFRESH PAGE
-     ========================================= */
+  /* REFRESH PAGE */
 
   function refreshNamazPage() {
     currentLanguage = getCurrentLanguage();
@@ -339,32 +332,50 @@
     buildLearningGrid();
   }
 
-  /*
-   * Allows the existing app language switcher
-   * to refresh this page when invoked.
-   */
-
   window.refreshNamazLanguage = refreshNamazPage;
 
-  /*
-   * Keep the page synchronized when appSettings
-   * changes in another browser tab.
-   */
+  /* OTHER-TAB SETTINGS CHANGES */
 
-  window.addEventListener("storage", (event) => {
+  window.addEventListener("storage", event => {
     if (event.key === SETTINGS_KEY) {
       refreshNamazPage();
     }
   });
 
-  /* =========================================
-     INITIALIZE
-     ========================================= */
+  /* SAME-TAB LANGUAGE AND THEME CHANGES */
+
+  let previousSettings = "";
+
+  function checkSettings() {
+    const settings = getAppSettings();
+    const signature = JSON.stringify({
+      lang: settings.lang || settings.language || "bn",
+      dark: Boolean(settings.dark)
+    });
+
+    if (signature === previousSettings) return;
+
+    previousSettings = signature;
+    refreshNamazPage();
+  }
+
+  /* INITIALIZE */
 
   function initializeNamazPage() {
+    currentLanguage = getCurrentLanguage();
+
     applySavedTheme();
     buildIntroduction();
     buildLearningGrid();
+
+    const settings = getAppSettings();
+
+    previousSettings = JSON.stringify({
+      lang: settings.lang || settings.language || "bn",
+      dark: Boolean(settings.dark)
+    });
+
+    window.setInterval(checkSettings, 700);
   }
 
   if (document.readyState === "loading") {
