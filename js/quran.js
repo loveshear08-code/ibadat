@@ -1,3 +1,4 @@
+
 (() => {
   "use strict";
 
@@ -17,37 +18,15 @@
     hi: "hi-IN"
   };
 
-  const LANGUAGE_KEYS = [
-    "ibadat_language",
-    "siteLanguage",
-    "selectedLanguage",
-    "language",
-    "lang",
-    "preferredLanguage"
-  ];
-
-  const THEME_KEYS = [
-    "ibadat_theme",
-    "siteTheme",
-    "selectedTheme",
-    "theme",
-    "colorScheme",
-    "appearance",
-    "darkMode",
-    "ibadat_dark_mode"
-  ];
-
   const TEXT = {
     bn: {
       homeSubtitle: "পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে।",
       description: "পবিত্র কুরআন আল্লাহর বাণী। এটি আমাদের সঠিক পথ দেখায়, সত্য ও ন্যায়ের শিক্ষা দেয় এবং জীবনের প্রতিটি ক্ষেত্রে আল্লাহর সন্তুষ্টি অর্জনের পথ শেখায়।",
       read: "কুরআন পড়ুন",
       listen: "তিলাওয়াত শুনুন",
-      footer: "শুদ্ধতার পথে ইবাদত",
+      footer: "ইবাদত • শুদ্ধতার পথে শেখা ও অনুশীলন",
       readSubtitle: "মনোযোগ দিয়ে পবিত্র কুরআন পড়ুন",
       listenSubtitle: "কুরআনের তিলাওয়াতে প্রশান্তি অনুভব করুন",
-      readFooter: "মনোযোগ দিয়ে কুরআন পড়ুন",
-      listenFooter: "মন দিয়ে তিলাওয়াত শুনুন",
       choose: "সূরা নির্বাচন করুন",
       search: "সূরার নাম বা নম্বর লিখুন",
       loading: "লোড হচ্ছে...",
@@ -62,7 +41,7 @@
       pauseAudio: "তিলাওয়াত থামান",
       audioError: "অডিও চালানো যাচ্ছে না। আবার চেষ্টা করুন।",
       translationError: "অনুবাদ পাওয়া যায়নি।",
-      readTitle: "আল-কুরআন",
+      readTitle: "শুদ্ধতার পথে ইবাদত",
       listenTitle: "তিলাওয়াত শুনুন"
     },
 
@@ -71,11 +50,9 @@
       description: "The Holy Quran is the word of Allah. It guides us to the right path, teaches truth and justice, and shows us how to seek Allah's pleasure in every part of life.",
       read: "Read Quran",
       listen: "Listen to Recitation",
-      footer: "Worship on the path to purity",
+      footer: "IBADAT • Learning and practice on the path to purity",
       readSubtitle: "Read the Holy Quran with care",
       listenSubtitle: "Find peace in the recitation of the Quran",
-      readFooter: "Read the Quran with care",
-      listenFooter: "Listen with a peaceful heart",
       choose: "Choose a Surah",
       search: "Enter a surah name or number",
       loading: "Loading...",
@@ -84,13 +61,13 @@
       surah: "Surah",
       verses: "verses",
       play: "Listen",
-      prev: "Previous surah",
-      next: "Next surah",
+      prev: "Previous Surah",
+      next: "Next Surah",
       playAudio: "Play recitation",
       pauseAudio: "Pause recitation",
       audioError: "Unable to play audio. Please try again.",
       translationError: "Translation unavailable.",
-      readTitle: "Al-Quran",
+      readTitle: "IBADAT • On the path to purity",
       listenTitle: "Listen to Recitation"
     },
 
@@ -99,11 +76,9 @@
       description: "पवित्र क़ुरआन अल्लाह का कलाम है। यह हमें सही रास्ता दिखाता है, सत्य और न्याय की शिक्षा देता है और जीवन के हर क्षेत्र में अल्लाह की प्रसन्नता प्राप्त करने का मार्ग बताता है।",
       read: "क़ुरआन पढ़ें",
       listen: "तिलावत सुनें",
-      footer: "पवित्रता के मार्ग पर इबादत",
+      footer: "इबादत • पवित्रता के मार्ग पर सीखना और अभ्यास",
       readSubtitle: "ध्यान से पवित्र क़ुरआन पढ़ें",
       listenSubtitle: "क़ुरआन की तिलावत से सुकून पाएँ",
-      readFooter: "ध्यान से क़ुरआन पढ़ें",
-      listenFooter: "सुकून से तिलावत सुनें",
       choose: "सूरह चुनें",
       search: "सूरह का नाम या नंबर लिखें",
       loading: "लोड हो रहा है...",
@@ -118,7 +93,7 @@
       pauseAudio: "तिलावत रोकें",
       audioError: "ऑडियो नहीं चल सका। फिर प्रयास करें।",
       translationError: "अनुवाद उपलब्ध नहीं है।",
-      readTitle: "अल-क़ुरआन",
+      readTitle: "इबादत • पवित्रता के मार्ग पर",
       listenTitle: "तिलावत सुनें"
     }
   };
@@ -138,12 +113,11 @@
     audioIndex: 0,
     audioMode: "single",
     playingSurah: false,
-    requestId: 0,
-    navigationReady: false
+    requestId: 0
   };
 
   function t(key) {
-    return TEXT[state.lang]?.[key] ?? TEXT.bn[key] ?? key;
+    return TEXT[state.lang]?.[key] || TEXT.bn[key] || key;
   }
 
   function digits(value) {
@@ -154,147 +128,59 @@
   }
 
   function escapeHTML(value) {
-    return String(value ?? "").replace(/[&<>"']/g, character => ({
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
       "&": "&amp;",
       "<": "&lt;",
       ">": "&gt;",
       '"': "&quot;",
       "'": "&#39;"
-    })[character]);
+    })[char]);
+  }
+
+  /* মূল IBADAT সেটিংস */
+  function readSiteSettings() {
+    try {
+      return JSON.parse(localStorage.getItem("appSettings") || "{}");
+    } catch (_) {
+      return {};
+    }
   }
 
   function normalizeLanguage(value) {
-    const language = String(value ?? "").trim().toLowerCase();
+    const lang = String(value || "bn").toLowerCase().trim();
 
     if (
-      ["bn", "bn-bd", "bn-in", "bengali", "বাংলা"].includes(language) ||
-      language.startsWith("bn-")
-    ) return "bn";
-
-    if (
-      ["en", "en-us", "en-gb", "english"].includes(language) ||
-      language.startsWith("en-")
-    ) return "en";
-
-    if (
-      ["hi", "hi-in", "hindi", "हिन्दी", "हिंदी"].includes(language) ||
-      language.startsWith("hi-")
-    ) return "hi";
-
-    return null;
-  }
-
-  function readStoredValue(keys) {
-    for (const key of keys) {
-      try {
-        const value = localStorage.getItem(key);
-        if (value === null) continue;
-
-        try {
-          const parsed = JSON.parse(value);
-
-          if (parsed && typeof parsed === "object") {
-            return { key, value: parsed };
-          }
-        } catch (_) {}
-
-        return { key, value };
-      } catch (_) {}
+      ["en", "english", "en-us", "en-gb"].includes(lang) ||
+      lang.startsWith("en-")
+    ) {
+      return "en";
     }
 
-    return null;
+    if (
+      ["hi", "hindi", "हिन्दी", "हिंदी"].includes(lang) ||
+      lang.startsWith("hi-")
+    ) {
+      return "hi";
+    }
+
+    return "bn";
   }
 
   function getLanguage() {
-    const stored = readStoredValue(LANGUAGE_KEYS);
-
-    if (stored) {
-      const value = stored.value;
-
-      if (typeof value === "object") {
-        const language = normalizeLanguage(
-          value.language ?? value.lang ?? value.locale
-        );
-
-        if (language) return language;
-      } else {
-        const language = normalizeLanguage(value);
-        if (language) return language;
-      }
-    }
-
-    const documentLanguage = normalizeLanguage(
-      document.documentElement.lang
-    );
-
-    return documentLanguage || "bn";
-  }
-
-  function getThemePreference() {
-    const stored = readStoredValue(THEME_KEYS);
-
-    if (stored) {
-      const value = stored.value;
-
-      if (typeof value === "boolean") return value;
-
-      if (typeof value === "object") {
-        const mode = String(
-          value.theme ?? value.mode ?? value.appearance ?? ""
-        ).toLowerCase();
-
-        if (["dark", "night"].includes(mode)) return true;
-        if (["light", "day"].includes(mode)) return false;
-
-        if (typeof value.darkMode === "boolean") {
-          return value.darkMode;
-        }
-
-        if (typeof value.dark === "boolean") {
-          return value.dark;
-        }
-      }
-
-      const text = String(value).toLowerCase();
-
-      if (["dark", "night", "true", "1", "enabled"].includes(text)) {
-        return true;
-      }
-
-      if (["light", "day", "false", "0", "disabled"].includes(text)) {
-        return false;
-      }
-    }
-
-    if (document.body.classList.contains("dark")) return true;
-
-    const themeAttribute =
-      document.documentElement.dataset.theme ||
-      document.body.dataset.theme ||
-      "";
-
-    if (String(themeAttribute).toLowerCase() === "dark") return true;
-    if (String(themeAttribute).toLowerCase() === "light") return false;
-
-    return null;
+    return normalizeLanguage(readSiteSettings().lang);
   }
 
   function applyTheme() {
-    const preference = getThemePreference();
+    const settings = readSiteSettings();
 
-    if (preference === true) {
-      document.body.classList.add("dark");
-      document.documentElement.style.colorScheme = "dark";
-    } else if (preference === false) {
-      document.body.classList.remove("dark");
-      document.documentElement.style.colorScheme = "light";
-    }
+    document.body.classList.toggle(
+      "dark-mode",
+      settings.dark === true
+    );
   }
 
   async function api(path) {
-    const response = await fetch(`${API}${path}`, {
-      headers: { Accept: "application/json" }
-    });
+    const response = await fetch(`${API}${path}`);
 
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
@@ -309,18 +195,89 @@
     return result.data;
   }
 
+  /*
+   * সূরার নাম তিনটি ভাষায়।
+   * ক্রমটি কুরআনের ১১৪টি সূরার ক্রমের সঙ্গে মিলিয়ে রাখা হয়েছে।
+   */
+  const SURAH_NAMES = {
+    bn: [
+      "আল-ফাতিহা", "আল-বাকারা", "আলে ইমরান", "আন-নিসা",
+      "আল-মায়িদা", "আল-আনআম", "আল-আরাফ", "আল-আনফাল",
+      "আত-তাওবা", "ইউনুস", "হুদ", "ইউসুফ", "আর-রাদ",
+      "ইবরাহিম", "আল-হিজর", "আন-নাহল", "আল-ইসরা",
+      "আল-কাহফ", "মারইয়াম", "ত্বা-হা", "আল-আম্বিয়া",
+      "আল-হাজ্জ", "আল-মুমিনুন", "আন-নূর", "আল-ফুরকান",
+      "আশ-শুআরা", "আন-নামল", "আল-কাসাস", "আল-আনকাবুত",
+      "আর-রূম", "লুকমান", "আস-সাজদা", "আল-আহযাব",
+      "সাবা", "ফাতির", "ইয়াসিন", "আস-সাফফাত", "সাদ",
+      "আয-যুমার", "গাফির", "ফুসসিলাত", "আশ-শূরা",
+      "আয-যুখরুফ", "আদ-দুখান", "আল-জাসিয়া", "আল-আহকাফ",
+      "মুহাম্মদ", "আল-ফাতহ", "আল-হুজুরাত", "কাফ",
+      "আয-যারিয়াত", "আত-তূর", "আন-নাজম", "আল-কামার",
+      "আর-রহমান", "আল-ওয়াকিয়া", "আল-হাদিদ", "আল-মুজাদিলা",
+      "আল-হাশর", "আল-মুমতাহিনা", "আস-সাফ", "আল-জুমুআ",
+      "আল-মুনাফিকুন", "আত-তাগাবুন", "আত-তালাক", "আত-তাহরিম",
+      "আল-মুলক", "আল-কলম", "আল-হাক্কা", "আল-মাআরিজ",
+      "নূহ", "আল-জিন", "আল-মুযযাম্মিল", "আল-মুদ্দাসসির",
+      "আল-কিয়ামা", "আল-ইনসান", "আল-মুরসালাত", "আন-নাবা",
+      "আন-নাযিআত", "আবাসা", "আত-তাকভির", "আল-ইনফিতার",
+      "আল-মুতাফফিফিন", "আল-ইনশিকাক", "আল-বুরুজ", "আত-তারিক",
+      "আল-আলা", "আল-গাশিয়া", "আল-ফজর", "আল-বালাদ",
+      "আশ-শামস", "আল-লাইল", "আদ-দুহা", "আশ-শারহ",
+      "আত-তিন", "আল-আলাক", "আল-কদর", "আল-বাইয়্যিনা",
+      "আয-যিলযাল", "আল-আদিয়াত", "আল-কারিয়া", "আত-তাকাসুর",
+      "আল-আসর", "আল-হুমাযা", "আল-ফিল", "কুরাইশ",
+      "আল-মাউন", "আল-কাওসার", "আল-কাফিরুন", "আন-নাসর",
+      "আল-মাসাদ", "আল-ইখলাস", "আল-ফালাক", "আন-নাস"
+    ],
+
+    hi: [
+      "अल-फ़ातिहा", "अल-बक़रा", "आल-इमरान", "अन-निसा",
+      "अल-माइदा", "अल-अनआम", "अल-आराफ़", "अल-अनफ़ाल",
+      "अत-तौबा", "यूनुस", "हूद", "यूसुफ़", "अर-रअद",
+      "इब्राहीम", "अल-हिज्र", "अन-नहल", "अल-इसरा",
+      "अल-कहफ़", "मरयम", "ताहा", "अल-अंबिया", "अल-हज्ज",
+      "अल-मुमिनून", "अन-नूर", "अल-फ़ुरक़ान", "अश-शुअरा",
+      "अन-नम्ल", "अल-क़सस", "अल-अनकबूत", "अर-रूम",
+      "लुक़मान", "अस-सज्दा", "अल-अहज़ाब", "सबा", "फ़ातिर",
+      "या-सीन", "अस-साफ़्फ़ात", "साद", "अज़-जुमर", "ग़ाफ़िर",
+      "फ़ुस्सिलत", "अश-शूरा", "अज़-ज़ुख़रुफ़", "अद-दुख़ान",
+      "अल-जासिया", "अल-अहक़ाफ़", "मुहम्मद", "अल-फ़त्ह",
+      "अल-हुजुरात", "क़ाफ़", "अज़-ज़ारियात", "अत-तूर",
+      "अन-नज्म", "अल-क़मर", "अर-रहमान", "अल-वाक़िआ",
+      "अल-हदीद", "अल-मुजादिला", "अल-हश्र", "अल-मुम्तहिना",
+      "अस-सफ़्फ़", "अल-जुमुआ", "अल-मुनाफ़िक़ून",
+      "अत-तग़ाबुन", "अत-तलाक़", "अत-तहरीम", "अल-मुल्क",
+      "अल-क़लम", "अल-हाक़्क़ा", "अल-मआरिज", "नूह",
+      "अल-जिन्न", "अल-मुज़्ज़म्मिल", "अल-मुदस्सिर",
+      "अल-क़ियामा", "अल-इंसान", "अल-मुरसलात", "अन-नबा",
+      "अन-नाज़िआत", "अबसा", "अत-तकवीर", "अल-इन्फ़ितार",
+      "अल-मुतफ़्फ़िफ़ीन", "अल-इन्शिक़ाक़", "अल-बुरूज",
+      "अत-तारिक़", "अल-आला", "अल-ग़ाशिया", "अल-फ़ज्र",
+      "अल-बलद", "अश-शम्स", "अल-लैल", "अद-दुहा",
+      "अश-शरह", "अत-तीन", "अल-अलक़", "अल-क़द्र",
+      "अल-बय्यिना", "अज़-ज़िलज़ाल", "अल-आदियात",
+      "अल-क़ारिआ", "अत-तकासुर", "अल-अस्र", "अल-हुमज़ा",
+      "अल-फ़ील", "क़ुरैश", "अल-माऊन", "अल-कौसर",
+      "अल-काफ़िरून", "अन-नस्र", "अल-मसद", "अल-इख़लास",
+      "अल-फ़लक़", "अन-नास"
+    ]
+  };
+
   function chapterName(chapter) {
     if (!chapter) return "";
 
+    const index = Number(chapter.number) - 1;
+
     if (state.lang === "bn") {
-      return chapter.nameBn || chapter.englishName;
+      return SURAH_NAMES.bn[index] || chapter.englishName || "";
     }
 
     if (state.lang === "hi") {
-      return chapter.nameHindi || chapter.englishName;
+      return SURAH_NAMES.hi[index] || chapter.englishName || "";
     }
 
-    return chapter.englishName;
+    return chapter.englishName || "";
   }
 
   function setHeader() {
@@ -330,9 +287,6 @@
         : state.page === "listen"
           ? t("listenSubtitle")
           : t("homeSubtitle");
-
-    document.title =
-      `${state.page === "listen" ? t("listenTitle") : t("readTitle")} | IBADAT`;
   }
 
   function updateFooter() {
@@ -340,15 +294,15 @@
     $("readFooter").hidden = state.page !== "read";
     $("listenFooter").hidden = state.page !== "listen";
 
-    $("readFooterMessage").textContent = t("readFooter");
-
+    $("readFooterMessage").textContent = t("readTitle");
     updatePlayButton();
   }
 
   function updatePlayButton() {
-    const playing = audio && !audio.paused;
+    const playing = !audio.paused;
 
     $("playPause").textContent = playing ? "Ⅱ" : "▶";
+
     $("playPause").setAttribute(
       "aria-label",
       playing ? t("pauseAudio") : t("playAudio")
@@ -357,7 +311,6 @@
 
   function showMessage(message) {
     const box = $("appMessage");
-    if (!box) return;
 
     box.textContent = message;
     box.classList.add("show");
@@ -370,41 +323,25 @@
   }
 
   function pauseAudio() {
-    if (audio) audio.pause();
-
     state.playingSurah = false;
+    audio.pause();
     updatePlayButton();
   }
 
-  function setPageVisibility(page) {
+  function openPage(page) {
+    pauseAudio();
+
+    state.page = page;
+
     $("homePage").hidden = page !== "home";
     $("readPage").hidden = page !== "read";
     $("listenPage").hidden = page !== "listen";
 
-    state.page = page;
-
     setHeader();
     updateFooter();
-  }
-
-  function openPage(page) {
-    if (!["home", "read", "listen"].includes(page)) return;
-    if (page === state.page) return;
-
-    pauseAudio();
-
-    if (state.navigationReady) {
-      history.pushState(
-        { ibadatQuran: true, quranPage: page },
-        "",
-        location.href
-      );
-    }
-
-    setPageVisibility(page);
 
     if (page === "read") {
-      loadSurah(state.currentSurah, 1);
+      loadSurah(state.currentSurah, state.currentAyah);
     }
 
     if (page === "listen") {
@@ -412,25 +349,18 @@
     }
   }
 
-  function goHomeFromBack() {
-    if (state.page === "home") return;
-
-    pauseAudio();
-    state.requestId++;
-
-    setPageVisibility("home");
-  }
-
+  /* সূরা সার্চ */
   function renderSurahSearchList(query = "") {
     const list = $("surahSearchList");
-    const q = String(query).trim().toLocaleLowerCase();
+    const q = query.trim().toLocaleLowerCase();
 
-    const matches = state.chapters.filter(chapter => {
+    const matches = state.chapters.filter(ch => {
       const values = [
-        chapterName(chapter),
-        chapter.englishName,
-        String(chapter.number),
-        digits(chapter.number)
+        chapterName(ch),
+        ch.englishName,
+        ch.name_arabic,
+        String(ch.number),
+        digits(ch.number)
       ];
 
       return values.some(value =>
@@ -444,19 +374,16 @@
       return;
     }
 
-    list.innerHTML = matches.map(chapter => `
+    list.innerHTML = matches.map(ch => `
       <button
         class="surah-search-row"
         type="button"
-        data-select-surah="${chapter.number}"
+        data-select-surah="${ch.number}"
       >
-        <span class="surah-index">${digits(chapter.number)}</span>
+        <span class="surah-index">${digits(ch.number)}</span>
         <span class="surah-row-copy">
-          <strong>${escapeHTML(chapterName(chapter))}</strong>
-          <small>
-            ${digits(chapter.numberOfAyahs)}
-            ${escapeHTML(t("verses"))}
-          </small>
+          <strong>${escapeHTML(chapterName(ch))}</strong>
+          <small>${digits(ch.numberOfAyahs)} ${escapeHTML(t("verses"))}</small>
         </span>
       </button>
     `).join("");
@@ -474,38 +401,35 @@
     });
   }
 
+  /* তিলাওয়াতের সূরা তালিকা */
   function renderListenList() {
-    const list = $("surahList");
-
     if (!state.chapters.length) {
-      list.innerHTML =
+      $("surahList").innerHTML =
         `<p class="status">${escapeHTML(t("loading"))}</p>`;
       return;
     }
 
-    list.innerHTML = state.chapters.map(chapter => `
+    $("surahList").innerHTML = state.chapters.map(ch => `
       <button
-        class="surah-row ${chapter.number === state.currentSurah ? "active" : ""}"
+        class="surah-row ${ch.number === state.currentSurah ? "active" : ""}"
         type="button"
-        data-listen-surah="${chapter.number}"
+        data-listen-surah="${ch.number}"
       >
-        <span class="surah-index">${digits(chapter.number)}</span>
+        <span class="surah-index">${digits(ch.number)}</span>
         <span class="surah-row-copy">
-          <strong>${escapeHTML(chapterName(chapter))}</strong>
-          <small>
-            ${digits(chapter.numberOfAyahs)}
-            ${escapeHTML(t("verses"))}
-          </small>
+          <strong>${escapeHTML(chapterName(ch))}</strong>
+          <small>${digits(ch.numberOfAyahs)} ${escapeHTML(t("verses"))}</small>
         </span>
       </button>
     `).join("");
 
-    list.querySelectorAll("[data-listen-surah]").forEach(button => {
+    $("surahList").querySelectorAll("[data-listen-surah]").forEach(button => {
       button.addEventListener("click", async () => {
+        pauseAudio();
+
         state.currentSurah = Number(button.dataset.listenSurah);
         state.currentAyah = 1;
         state.audioMode = "surah";
-        state.playingSurah = true;
 
         renderListenList();
 
@@ -515,44 +439,30 @@
     });
   }
 
+  /* ১১৪টি সূরার তথ্য ও নাম লোড */
   async function loadChapters() {
     try {
-      const [chapters, bnData, hiData] = await Promise.all([
-        api("/surah"),
-        api("/quran/bn.bengali").catch(() => null),
-        api("/quran/hi.hindi").catch(() => null)
-      ]);
+      const chapters = await api("/surah");
 
-      state.chapters = chapters.map(chapter => ({ ...chapter }));
+      state.chapters = chapters.map(ch => ({ ...ch }));
 
-      bnData?.surahs?.forEach((chapter, index) => {
-        if (state.chapters[index]) {
-          state.chapters[index].nameBn = chapter.name;
-        }
-      });
-
-      hiData?.surahs?.forEach((chapter, index) => {
-        if (state.chapters[index]) {
-          state.chapters[index].nameHindi = chapter.name;
-        }
-      });
-
-      renderSurahSearchList($("surahSearchInput").value);
+      renderSurahSearchList("");
       renderListenList();
 
       if (state.page === "read") {
         await loadSurah(state.currentSurah, state.currentAyah);
       }
     } catch (_) {
-      const message =
+      const errorHTML =
         `<p class="status">${escapeHTML(t("error"))}</p>`;
 
-      $("readContent").innerHTML = message;
-      $("surahList").innerHTML = message;
-      $("surahSearchList").innerHTML = message;
+      $("readContent").innerHTML = errorHTML;
+      $("surahList").innerHTML = errorHTML;
+      $("surahSearchList").innerHTML = errorHTML;
     }
   }
 
+  /* আরবি, অনুবাদ ও অডিও তথ্য */
   async function getSurahData(number) {
     const key = `${number}:${state.lang}`;
 
@@ -566,10 +476,10 @@
       api(`/surah/${number}/${ARABIC_EDITION}`),
       api(`/surah/${number}/${edition}`).catch(() => null),
       api(`/surah/${number}/${AUDIO_EDITION}`).catch(() => null)
-    ]).then(([arabic, translation, recitation]) => ({
-      arabic: arabic.ayahs || [],
-      translations: translation?.ayahs || [],
-      audio: recitation?.ayahs || []
+    ]).then(([ar, tr, au]) => ({
+      arabic: ar.ayahs || [],
+      translations: tr?.ayahs || [],
+      audio: au?.ayahs || []
     }));
 
     state.cache.set(key, promise);
@@ -631,14 +541,10 @@
 
     const heading = `
       <h2 class="read-surah-heading">
-        ${escapeHTML(t("surah"))}
-        ${escapeHTML(chapterName(chapter))}
+        ${escapeHTML(t("surah"))} ${escapeHTML(chapterName(chapter))}
       </h2>
       <p class="read-surah-meta">
-        ${digits(chapter?.number)}
-        •
-        ${digits(ayahs.length)}
-        ${escapeHTML(t("verses"))}
+        ${digits(chapter?.number)} • ${digits(ayahs.length)} ${escapeHTML(t("verses"))}
       </p>
     `;
 
@@ -658,17 +564,18 @@
                 type="button"
                 data-play-ayah="${number}"
                 ${audioURL ? "" : "disabled"}
-              >
-                ▶ ${escapeHTML(t("play"))}
-              </button>
+              >▶ ${escapeHTML(t("play"))}</button>
             </div>
           </div>
+
           <p class="ayah-arabic" lang="ar" dir="rtl">
             ${escapeHTML(ayah.text)}
           </p>
-          <p class="ayah-translation">
-            ${escapeHTML(translation)}
-          </p>
+
+          <p
+            class="ayah-translation"
+            style="font-size:${translationFontSize()}px"
+          >${escapeHTML(translation)}</p>
         </article>
       `;
     }).join("");
@@ -680,14 +587,12 @@
       button.addEventListener("click", () => {
         state.currentAyah = Number(button.dataset.playAyah);
         state.audioMode = "single";
-        state.playingSurah = false;
-
         playCurrentAyah(true);
         updateFooter();
       });
     });
 
-    updateFooter();
+    $("readFooterMessage").textContent = t("readTitle");
 
     requestAnimationFrame(() => {
       const target = $(`ayah-${jumpAyah}`);
@@ -701,6 +606,12 @@
     });
   }
 
+  function translationFontSize() {
+    const size = 13 + (state.fontSize - 32) * 0.25;
+    return Math.max(10, Math.min(18, size));
+  }
+
+  /* একক আয়াত চালানো */
   async function playCurrentAyah(autoplay = false) {
     try {
       const data = await getSurahData(state.currentSurah);
@@ -728,18 +639,18 @@
     }
   }
 
+  /* একটি সম্পূর্ণ সূরার সব আয়াত চালানো */
   async function playFullSurah() {
     try {
       const data = await getSurahData(state.currentSurah);
 
       if (!data.audio.length) {
-        state.playingSurah = false;
         showMessage(t("audioError"));
         return;
       }
 
       state.audioItems = data.audio;
-      state.audioIndex = state.currentAyah - 1;
+      state.audioIndex = 0;
       state.audioMode = "surah";
       state.playingSurah = true;
 
@@ -761,14 +672,7 @@
 
     if (!item.audio) {
       state.audioIndex++;
-
-      if (state.audioIndex < state.audioItems.length) {
-        return playAudioIndex();
-      }
-
-      state.playingSurah = false;
-      updatePlayButton();
-      return;
+      return playAudioIndex();
     }
 
     state.currentAyah = state.audioIndex + 1;
@@ -777,14 +681,13 @@
     try {
       await audio.play();
       updateFooter();
-      renderListenList();
     } catch (_) {
       state.playingSurah = false;
       showMessage(t("audioError"));
     }
   }
 
-  /* আগের/পরের সূরায় যাওয়া */
+  /* পড়ার পেজে আগের বা পরের সম্পূর্ণ সূরা */
   function moveSurah(direction) {
     const nextSurah = state.currentSurah + direction;
 
@@ -799,64 +702,38 @@
 
     if (state.page === "listen") {
       state.audioMode = "surah";
-      state.playingSurah = true;
-      renderListenList();
 
-      loadSurah(nextSurah, 1).then(() => playFullSurah());
-      return;
+      loadSurah(nextSurah, 1).then(() => {
+        playFullSurah();
+      });
+    } else {
+      loadSurah(nextSurah, 1);
     }
-
-    loadSurah(nextSurah, 1);
   }
 
+  /* মূল সেটিংস থেকে ভাষা ও থিম প্রয়োগ */
   function applyLanguage() {
-    const previousLanguage = state.lang;
     state.lang = getLanguage();
 
     document.documentElement.lang = state.lang;
 
+    applyTheme();
+
     $("quranDescription").textContent = t("description");
-    $("quranHeading").textContent = t("readTitle");
     $("readOptionText").textContent = t("read");
     $("listenOptionText").textContent = t("listen");
     $("footerText").textContent = t("footer");
     $("surahSearchHeading").textContent = t("choose");
     $("surahSearchInput").placeholder = t("search");
-
+    $("listenHeading").textContent = t("listenTitle");
+    $("listenDescription").textContent = t("listenSubtitle");
     $("searchToggle").title = t("search");
+
     $("searchToggle").setAttribute("aria-label", t("search"));
-
-    $("fontDown").setAttribute(
-      "aria-label",
-      state.lang === "en" ? "Decrease font size" :
-      state.lang === "hi" ? "अक्षर छोटे करें" :
-      "অক্ষর ছোট করুন"
-    );
-
-    $("fontUp").setAttribute(
-      "aria-label",
-      state.lang === "en" ? "Increase font size" :
-      state.lang === "hi" ? "अक्षर बड़े करें" :
-      "অক্ষর বড় করুন"
-    );
-
     $("prevAyah").setAttribute("aria-label", t("prev"));
     $("nextAyah").setAttribute("aria-label", t("next"));
     $("prevTrack").setAttribute("aria-label", t("prev"));
     $("nextTrack").setAttribute("aria-label", t("next"));
-
-    const image = $("quranImage");
-
-    image.alt =
-      state.lang === "en"
-        ? "The Holy Quran open on a rehal"
-        : state.lang === "hi"
-          ? "रिहाल पर खुला पवित्र क़ुरआन"
-          : "রেহালের উপর খোলা পবিত্র কুরআন";
-
-    if (previousLanguage !== state.lang) {
-      state.cache.clear();
-    }
 
     setHeader();
     updateFooter();
@@ -869,35 +746,6 @@
         loadSurah(state.currentSurah, state.currentAyah);
       }
     }
-  }
-
-  function changeFont(delta) {
-    state.fontSize = Math.max(
-      22,
-      Math.min(54, state.fontSize + delta)
-    );
-
-    const translationSize = Math.max(
-      11,
-      Math.min(25, 13 + (state.fontSize - 32) * 0.45)
-    );
-
-    document.documentElement.style.setProperty(
-      "--arabic-size",
-      `${state.fontSize}px`
-    );
-
-    document.documentElement.style.setProperty(
-      "--translation-size",
-      `${translationSize}px`
-    );
-
-    try {
-      localStorage.setItem(
-        "ibadat_quran_font_size",
-        String(state.fontSize)
-      );
-    } catch (_) {}
   }
 
   function wireEvents() {
@@ -959,10 +807,7 @@
         return;
       }
 
-      if (
-        state.audioMode === "surah" &&
-        state.audioItems.length
-      ) {
+      if (state.audioMode === "surah" && state.audioItems.length) {
         state.playingSurah = true;
         playAudioIndex();
       } else {
@@ -973,19 +818,37 @@
     audio.addEventListener("play", updatePlayButton);
     audio.addEventListener("pause", updatePlayButton);
 
+    /* বর্তমান সূরার সব আয়াত শেষ হলে পরের সূরা শুরু */
     audio.addEventListener("ended", () => {
-      if (state.audioMode === "surah" && state.playingSurah) {
-        state.audioIndex++;
-
-        if (state.audioIndex < state.audioItems.length) {
-          state.currentAyah = state.audioIndex + 1;
-          playAudioIndex();
-          return;
-        }
-
-        state.playingSurah = false;
+      if (state.audioMode !== "surah" || !state.playingSurah) {
+        updateFooter();
+        return;
       }
 
+      state.audioIndex++;
+
+      if (state.audioIndex < state.audioItems.length) {
+        state.currentAyah = state.audioIndex + 1;
+        playAudioIndex();
+        return;
+      }
+
+      if (state.currentSurah < 114) {
+        state.currentSurah++;
+        state.currentAyah = 1;
+
+        renderListenList();
+
+        loadSurah(state.currentSurah, 1).then(() => {
+          if (state.playingSurah) {
+            playFullSurah();
+          }
+        });
+
+        return;
+      }
+
+      state.playingSurah = false;
       updateFooter();
     });
 
@@ -995,102 +858,65 @@
       }
     });
 
+    /* মূল সেটিংস অন্য ট্যাবে বদলালে */
     window.addEventListener("storage", event => {
-      if (
-        !event.key ||
-        LANGUAGE_KEYS.includes(event.key) ||
-        THEME_KEYS.includes(event.key)
-      ) {
-        if (getLanguage() !== state.lang) {
-          applyLanguage();
-        }
+      if (!event.key || event.key === "appSettings") {
+        const newLanguage = getLanguage();
 
         applyTheme();
-      }
-    });
 
-    window.addEventListener("message", event => {
-      const data = event.data;
-
-      if (!data || typeof data !== "object") return;
-
-      const type = String(
-        data.type || data.action || ""
-      ).toLowerCase();
-
-      const settings = data.settings || data;
-      const language = normalizeLanguage(
-        settings.language ?? settings.lang ?? settings.locale
-      );
-
-      if (
-        language &&
-        [
-          "ibadat-settings",
-          "settings-changed",
-          "language-changed"
-        ].includes(type)
-      ) {
-        try {
-          localStorage.setItem("ibadat_language", language);
-        } catch (_) {}
-
-        applyLanguage();
-      }
-
-      if (
-        [
-          "ibadat-settings",
-          "settings-changed",
-          "theme-changed",
-          "dark-mode-changed"
-        ].includes(type)
-      ) {
-        const mode = String(
-          settings.theme ?? settings.mode ?? settings.appearance ?? ""
-        ).toLowerCase();
-
-        const dark =
-          settings.darkMode === true ||
-          settings.dark === true ||
-          ["dark", "night"].includes(mode);
-
-        const light =
-          settings.darkMode === false ||
-          settings.dark === false ||
-          ["light", "day"].includes(mode);
-
-        if (dark || light) {
-          document.body.classList.toggle("dark", dark);
-          document.documentElement.style.colorScheme =
-            dark ? "dark" : "light";
+        if (newLanguage !== state.lang) {
+          state.cache.clear();
+          applyLanguage();
         }
       }
     });
 
+    /* পেজে ফিরে এলে সর্বশেষ সেটিংস পড়া */
     window.addEventListener("pageshow", () => {
-      if (getLanguage() !== state.lang) {
-        applyLanguage();
-      }
+      const newLanguage = getLanguage();
 
       applyTheme();
-    });
 
-    window.addEventListener("popstate", () => {
-      if (state.page !== "home") {
-        goHomeFromBack();
+      if (newLanguage !== state.lang) {
+        state.cache.clear();
+        applyLanguage();
       }
     });
   }
 
+  /* আরবি লেখা ও অনুবাদ একসঙ্গে ছোট-বড় */
+  function changeFont(delta) {
+    state.fontSize = Math.max(
+      22,
+      Math.min(54, state.fontSize + delta)
+    );
+
+    document.documentElement.style.setProperty(
+      "--arabic-size",
+      `${state.fontSize}px`
+    );
+
+    document.querySelectorAll(".ayah-translation").forEach(element => {
+      element.style.fontSize = `${translationFontSize()}px`;
+    });
+
+    try {
+      localStorage.setItem(
+        "ibadat_quran_font_size",
+        String(state.fontSize)
+      );
+    } catch (_) {}
+  }
+
   async function init() {
     try {
-      const savedFontSize = Number(
+      const saved = Number(
         localStorage.getItem("ibadat_quran_font_size")
       );
 
-      if (savedFontSize >= 22 && savedFontSize <= 54) {
-        state.fontSize = savedFontSize;
+      if (saved >= 22 && saved <= 54) {
+        state.fontSize = saved;
       }
     } catch (_) {}
 
@@ -1099,32 +925,10 @@
       `${state.fontSize}px`
     );
 
-    document.documentElement.style.setProperty(
-      "--translation-size",
-      `${Math.max(11, Math.min(25, 13 + (state.fontSize - 32) * 0.45))}px`
-    );
-
-    applyTheme();
     applyLanguage();
     wireEvents();
-
-    try {
-      history.replaceState(
-        { ibadatQuran: true, quranPage: "home" },
-        "",
-        location.href
-      );
-
-      history.pushState(
-        { ibadatQuran: true, quranPage: "home-entry" },
-        "",
-        location.href
-      );
-
-      state.navigationReady = true;
-    } catch (_) {}
-
     updateFooter();
+
     await loadChapters();
   }
 
