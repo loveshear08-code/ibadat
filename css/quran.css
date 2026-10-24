@@ -1,8 +1,8 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap');
 
 :root {
   color-scheme: light;
+
   --green: #104c32;
   --deep: #0a3825;
   --mid: #1f6240;
@@ -17,7 +17,11 @@
   --muted: #6d7768;
   --border: #d7c58b;
   --shadow: 0 5px 16px rgba(13, 54, 34, .12);
+
   --arabic-size: 32px;
+  --translation-size: 13px;
+  --footer-height: 42px;
+
   font-family: "Noto Sans Bengali", "Noto Sans Devanagari", system-ui, sans-serif;
 }
 
@@ -45,6 +49,7 @@ input {
 
 button {
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 button:focus-visible,
@@ -65,9 +70,12 @@ input:focus-visible {
   display: flex;
   flex-direction: column;
   gap: 9px;
-  padding: max(8px, env(safe-area-inset-top)) clamp(10px, 3vw, 18px) max(7px, env(safe-area-inset-bottom));
+  padding:
+    max(8px, env(safe-area-inset-top))
+    clamp(10px, 3vw, 18px)
+    max(7px, env(safe-area-inset-bottom));
   background:
-    linear-gradient(rgba(247, 242, 223, .16), rgba(247, 242, 223, .16)),
+    linear-gradient(rgba(255, 251, 235, .48), rgba(255, 251, 235, .48)),
     url("../assets/main-bg.jpg") center / cover no-repeat,
     var(--paper);
 }
@@ -78,6 +86,7 @@ input:focus-visible {
   box-shadow: var(--shadow);
 }
 
+/* হেডার */
 .hero {
   position: relative;
   flex: 0 0 132px;
@@ -95,7 +104,9 @@ input:focus-visible {
     url("../assets/hero-bg.jpg") center / cover no-repeat,
     var(--green);
   border-width: 2px;
-  box-shadow: inset 0 0 0 4px rgba(230, 209, 139, .12), var(--shadow);
+  box-shadow:
+    inset 0 0 0 4px rgba(230, 209, 139, .12),
+    var(--shadow);
 }
 
 .hero::before,
@@ -138,6 +149,7 @@ input:focus-visible {
   line-height: 1.6;
 }
 
+/* পেজের সাধারণ বিন্যাস */
 .page {
   flex: 1 1 auto;
   min-height: 0;
@@ -147,6 +159,7 @@ input:focus-visible {
   gap: 9px;
 }
 
+/* মূল পেজের মাঝের বোর্ড */
 .featured {
   flex: 1 1 auto;
   min-height: 0;
@@ -154,10 +167,10 @@ input:focus-visible {
   flex-direction: column;
   justify-content: center;
   overflow-y: auto;
-  padding: clamp(10px, 2vh, 17px) clamp(12px, 3.3vw, 20px);
+  padding: clamp(8px, 1.7vh, 15px) clamp(12px, 3.3vw, 20px);
   border-color: var(--pista-border);
   background:
-    linear-gradient(rgba(220, 232, 197, .86), rgba(220, 232, 197, .91)),
+    linear-gradient(rgba(220, 232, 197, .88), rgba(220, 232, 197, .93)),
     url("../assets/main-bg.jpg") center / cover no-repeat,
     var(--pista);
 }
@@ -181,7 +194,7 @@ input:focus-visible {
 .quran-image {
   display: block;
   width: min(60%, 245px);
-  max-height: clamp(95px, 22vh, 190px);
+  max-height: clamp(90px, 21vh, 180px);
   object-fit: contain;
   filter: drop-shadow(0 5px 5px rgba(35, 49, 29, .2));
 }
@@ -208,6 +221,7 @@ input:focus-visible {
   line-height: 1.85;
 }
 
+/* হোম পেজের দুটি অপশন */
 .home-options {
   flex: 0 0 auto;
   display: grid;
@@ -240,6 +254,7 @@ input:focus-visible {
   font-size: 21px;
 }
 
+/* পড়া ও শোনার পেজ */
 .content-board {
   flex: 1 1 auto;
   min-height: 0;
@@ -254,8 +269,8 @@ input:focus-visible {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 9px 11px;
+  gap: 7px;
+  padding: 7px 10px;
   border-bottom: 1px solid var(--pista-border);
   background: var(--surface);
 }
@@ -265,18 +280,19 @@ input:focus-visible {
 }
 
 .toolbar-button {
-  width: 42px;
-  height: 40px;
-  flex: 0 0 42px;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  padding: 0;
   border: 1px solid var(--pista-border);
-  border-radius: 10px;
+  border-radius: 8px;
   background: var(--pista);
   color: var(--pista-text);
   font-weight: 800;
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1;
 }
 
@@ -285,8 +301,8 @@ input:focus-visible {
 }
 
 .toolbar-button svg {
-  width: 22px;
-  height: 22px;
+  width: 21px;
+  height: 21px;
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
@@ -294,6 +310,7 @@ input:focus-visible {
   stroke-linejoin: round;
 }
 
+/* সূরা সার্চ */
 .surah-search-panel {
   flex: 0 0 auto;
   max-height: 46%;
@@ -382,6 +399,7 @@ input:focus-visible {
 
 .surah-row-copy strong {
   font-size: 13px;
+  font-weight: 700;
 }
 
 .surah-row-copy small {
@@ -396,6 +414,7 @@ input:focus-visible {
   white-space: nowrap;
 }
 
+/* কুরআন পড়ার অংশ */
 .read-content {
   flex: 1 1 auto;
   min-height: 0;
@@ -469,7 +488,7 @@ input:focus-visible {
 .ayah-translation {
   margin: 0;
   color: var(--ink);
-  font-size: 13px;
+  font-size: var(--translation-size);
   line-height: 1.9;
   overflow-wrap: anywhere;
 }
@@ -489,7 +508,12 @@ input:focus-visible {
   font-weight: 700;
 }
 
-/* তিলাওয়াত পেজে অতিরিক্ত intro toolbar রাখা হচ্ছে না */
+.mini-button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+/* শোনার পেজে আলাদা intro রাখা হবে না */
 .listen-intro {
   display: none !important;
 }
@@ -515,25 +539,35 @@ input:focus-visible {
   line-height: 1.7;
 }
 
+/* তিনটি পেজের জন্য একই ফুটার */
 .footer {
-  flex: 0 0 auto;
-  min-height: 42px;
+  flex: 0 0 var(--footer-height);
+  height: var(--footer-height);
+  min-height: var(--footer-height);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 4px 10px;
+  padding: 3px 10px;
   background: var(--green);
   color: #fff;
   border-color: var(--gold);
+}
+
+.footer-home {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .footer-home p {
   margin: 0;
   color: #fff;
   text-align: center;
-  font-size: 10px;
-  line-height: 1.5;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.4;
 }
 
 .footer-controls {
@@ -581,7 +615,8 @@ input:focus-visible {
   color: #fff;
   text-align: center;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
+  line-height: 1.4;
 }
 
 .app-message {
@@ -610,8 +645,10 @@ input:focus-visible {
   transform: translate(-50%, 0);
 }
 
+/* ডার্ক মোড */
 body.dark {
   color-scheme: dark;
+
   --green: #103f2b;
   --deep: #071f15;
   --mid: #b8d7b7;
@@ -628,7 +665,7 @@ body.dark {
 
 body.dark .app {
   background:
-    linear-gradient(rgba(10, 27, 18, .6), rgba(10, 27, 18, .6)),
+    linear-gradient(rgba(10, 27, 18, .76), rgba(10, 27, 18, .76)),
     url("../assets/main-bg.jpg") center / cover no-repeat,
     var(--paper);
 }
@@ -642,9 +679,14 @@ body.dark .hero {
 
 body.dark .featured {
   background:
-    linear-gradient(rgba(16, 27, 22, .82), rgba(16, 27, 22, .88)),
+    linear-gradient(rgba(16, 27, 22, .86), rgba(16, 27, 22, .91)),
     url("../assets/main-bg.jpg") center / cover no-repeat,
     var(--surface);
+  border-color: var(--pista-border);
+}
+
+body.dark .featured h2 {
+  color: var(--gold-light);
 }
 
 body.dark .content-board,
@@ -659,7 +701,7 @@ body.dark .surah-search-panel {
 body.dark .surah-search-row,
 body.dark .surah-row,
 body.dark .ayah-card {
-  background: var(--surface);
+  background: #18271f;
   color: var(--ink);
 }
 
@@ -673,7 +715,31 @@ body.dark .ayah-arabic {
   color: var(--ink);
 }
 
+body.dark .quran-description {
+  color: var(--pista-text);
+}
+
+body.dark .toolbar-button,
+body.dark .mini-button {
+  background: var(--pista);
+  color: var(--pista-text);
+  border-color: var(--pista-border);
+}
+
+body.dark .surah-index {
+  background: var(--pista);
+  color: var(--pista-text);
+}
+
+body.dark .footer {
+  background: #103f2b;
+}
+
 @media (max-height: 680px) {
+  :root {
+    --footer-height: 34px;
+  }
+
   .app {
     gap: 6px;
     padding-top: max(5px, env(safe-area-inset-top));
@@ -702,13 +768,15 @@ body.dark .ayah-arabic {
     font-size: clamp(23px, 4vh, 31px);
   }
 
-  .footer {
-    min-height: 34px;
-  }
-
   .media-control,
   .play-control {
     height: 30px;
+  }
+
+  .toolbar-button {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
   }
 }
 
@@ -722,14 +790,15 @@ body.dark .ayah-arabic {
   }
 
   .toolbar-button {
-    width: 38px;
-    height: 37px;
-    flex-basis: 38px;
+    width: 32px;
+    height: 32px;
+    flex-basis: 32px;
+    font-size: 15px;
   }
 
   .content-toolbar {
-    padding: 7px;
-    gap: 6px;
+    padding: 6px;
+    gap: 5px;
   }
 
   .featured {
@@ -739,5 +808,10 @@ body.dark .ayah-arabic {
 
   .quran-image {
     width: 62%;
+  }
+
+  .footer-home p,
+  .footer-message {
+    font-size: 11px;
   }
 }
