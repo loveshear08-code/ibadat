@@ -3,145 +3,143 @@
 <html lang="bn">
 
 <head>
-    <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <meta name="theme-color" content="#F8F6F0">
-
-    <title>তসবিহ</title>
-
-    <link rel="stylesheet" href="../css/tasbih.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#123d2c">
+  <title>IBADAT | তসবিহ</title>
+  <link rel="stylesheet" href="../css/tasbih.css">
 </head>
 
 <body>
+  <div class="app" id="tasbihApp">
 
-<div class="tasbih-page">
+    <!-- Shared Header -->
+    <header class="hero board">
+      <div class="hero-content">
+        <h1 class="hero-title" id="pageTitle">তসবিহ</h1>
+        <p class="hero-subtitle" id="heroSubtitle">
+          আল্লাহর জিকিরে প্রশান্ত হোক হৃদয়
+        </p>
+      </div>
+    </header>
 
-    <!-- CURRENT ZIKR -->
+    <!-- Main Content -->
+    <main class="page-container">
 
-    <div class="top-area">
+      <!-- Zikr Board -->
+      <section class="zikr-board board" aria-label="বর্তমান জিকির">
 
-        <div class="zikr-card">
-
-            <div id="zikrLabel" class="small-label">
-                বর্তমান জিকির
-            </div>
-
-            <div id="zikrArabic" class="zikr-arabic">
-                سُبْحَانَ اللّٰهِ
-            </div>
-
-            <div id="zikrName" class="zikr-name">
-                সুবহানাল্লাহ
-            </div>
-
-            <div id="stepText" class="step-text">
-                ধাপ ১ / ৪
-            </div>
-
+        <div class="small-label" id="zikrLabel">
+          বর্তমান জিকির
         </div>
 
-        <!-- COUNT -->
+        <div id="zikrArabic" class="zikr-arabic" lang="ar" dir="rtl">
+          سُبْحَانَ اللّٰهِ
+        </div>
+
+        <div id="zikrName" class="zikr-name">
+          সুবহানাল্লাহ
+        </div>
+
+        <div id="stepText" class="step-text">
+          ধাপ ১ / ৪
+        </div>
+
+        <!-- Completion message stays inside the board -->
+        <div
+          id="completeMessage"
+          class="complete-message"
+          role="status"
+          aria-live="polite"
+          hidden
+        ></div>
+
+      </section>
+
+      <!-- Count and Progress Board -->
+      <section class="stats-board board" aria-label="তসবিহের অগ্রগতি">
 
         <div class="count-info">
 
-            <div class="count-card">
-
-                <div id="stepCountLabel" class="small-label">
-                    বর্তমান ধাপ
-                </div>
-
-                <div id="stepCount" class="step-count">
-                    ০ / ৩৩
-                </div>
-
+          <div class="count-card">
+            <div class="small-label" id="stepCountLabel">
+              বর্তমান ধাপ
             </div>
 
-            <div class="count-card">
-
-                <div id="totalCountLabel" class="small-label">
-                    মোট কাউন্ট
-                </div>
-
-                <div id="totalCount" class="total-count">
-                    ০ / ১০০
-                </div>
-
+            <div id="stepCount" class="step-count">
+              ০ / ৩৩
             </div>
+          </div>
+
+          <div class="count-card">
+            <div class="small-label" id="totalCountLabel">
+              মোট কাউন্ট
+            </div>
+
+            <div id="totalCount" class="total-count">
+              ০ / ১০০
+            </div>
+          </div>
 
         </div>
-
-        <!-- PROGRESS -->
 
         <div class="progress-section">
+          <div class="progress-text">
+            <span id="progressLabel">অগ্রগতি</span>
+            <span id="progressPercent">০%</span>
+          </div>
 
-            <div class="progress-text">
-
-                <span id="progressLabel">অগ্রগতি</span>
-
-                <span id="progressPercent">০%</span>
-
-            </div>
-
-            <div class="progress-bar">
-
-                <div id="progressFill" class="progress-fill"></div>
-
-            </div>
-
+          <div
+            class="progress-bar"
+            role="progressbar"
+            id="progressBar"
+            aria-label="তসবিহের অগ্রগতি"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          >
+            <div id="progressFill" class="progress-fill"></div>
+          </div>
         </div>
 
-        <!-- DAILY TOTAL -->
-
-        <div class="today-card">
-
-            <div id="todayLabel" class="small-label">
-                আজ মোট সম্পন্ন
-            </div>
-
-            <div class="today-value">
-
-                <span id="todayComplete" class="today-number">
-                    ০
-                </span>
-
-                <span id="todayTimes">বার</span>
-
-            </div>
-
+        <div class="today-info">
+          <span id="todayLabel">আজ মোট সম্পন্ন</span>
+          <strong id="todayComplete">০</strong>
+          <span id="todayTimes">বার</span>
         </div>
 
-        <!-- COMPLETION MESSAGE -->
+      </section>
 
-        <div id="completeMessage" class="complete-message"></div>
-
-    </div>
-
-    <!-- TAP BUTTON -->
-
-    <div class="tap-area">
-
+      <!-- Tasbih Button -->
+      <section class="tap-area" aria-label="তসবিহ গণনা">
         <button
-            id="tapButton"
-            class="tap-button"
-            type="button"
-            onclick="increase()">
-
-            <img
-    src="../assets/tasbih_touch.png"
-    alt=""
-    class="tap-icon">
-
+          id="tapButton"
+          class="tap-button"
+          type="button"
+          aria-label="তসবিহ গণনা করুন"
+        >
+          <img
+            src="../assets/tasbih_touch.png"
+            alt=""
+            class="tap-icon"
+            draggable="false"
+          >
         </button>
+      </section>
 
-    </div>
+    </main>
 
-</div>
+    <!-- Shared Footer -->
+    <footer class="footer board">
+      <p class="footer-text" id="footerText">
+        সুবহানাল্লাহ, আলহামদুলিল্লাহ, আল্লাহু আকবার
+      </p>
+    </footer>
 
-<script src="../js/tasbih.js?v=5"></script>
-<script src="../js/theme.js"></script>
+  </div>
 
+  <script src="../js/tasbih.js?v=6"></script>
+  <script src="../js/theme.js"></script>
 </body>
+
 </html>
