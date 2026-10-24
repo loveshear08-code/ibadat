@@ -283,10 +283,61 @@ const names = [
 
 ];
 
+
 // ================= RENDER =================
 
 const container = document.getElementById("namesContainer");
 const footerText = document.getElementById("namesFooterText");
+
+function getSafeLanguage() {
+    try {
+        const settings = JSON.parse(
+            localStorage.getItem("appSettings") || "{}"
+        );
+
+        return ["bn", "en", "hi"].includes(settings.lang)
+            ? settings.lang
+            : ["bn", "en", "hi"].includes(settings.language)
+                ? settings.language
+                : "bn";
+    } catch {
+        return "bn";
+    }
+}
+
+function updatePageLanguage() {
+    lang = getSafeLanguage();
+
+    const title = TITLE[lang] || TITLE.bn;
+
+    if (pageTitle) {
+        pageTitle.textContent = title;
+    }
+
+    if (introTitle) {
+        introTitle.textContent = title;
+    }
+
+    document.title = `${title} | IBADAT`;
+    document.documentElement.lang = lang;
+
+    if (footerText) {
+        footerText.textContent =
+            FOOTER_MESSAGES[lang] || FOOTER_MESSAGES.bn;
+    }
+}
+
+function toLocalizedNumber(number) {
+    if (lang === "bn") {
+        return Number(number).toLocaleString("bn-BD");
+    }
+
+    if (lang === "hi") {
+        return Number(number).toLocaleString("hi-IN-u-nu-deva");
+    }
+
+    return Number(number).toLocaleString("en-US");
+}
 
 function renderNames() {
     updatePageLanguage();
@@ -297,43 +348,39 @@ function renderNames() {
 
     let html = "";
 
-    // BISMILLAH CARD — NO NUMBER
+    /* BISMILLAH — FIRST CARD, NO NUMBER */
 
-    const bismillah = BISMILLAH[lang];
+    const bismillah = BISMILLAH[lang] || BISMILLAH.bn;
 
     html += `
-        <div class="bismillah-card">
+        <article class="bismillah-card">
 
             <div class="arabic" lang="ar" dir="rtl">
                 ${bismillah.ar}
             </div>
 
-            <div class="pron">
+            <div class="pron" lang="${lang}">
                 ${bismillah.text}
             </div>
 
-            <div class="meaning">
+            <div class="meaning" lang="${lang}">
                 ${bismillah.meaning}
             </div>
 
-        </div>
+        </article>
     `;
 
-    // ALL 99 NAMES — ORIGINAL ORDER PRESERVED
+    /* ALL 99 NAMES — ORIGINAL ORDER PRESERVED */
 
     names.forEach((item, index) => {
-        const name = item[lang];
-        const meaning = item[`${lang}_mean`];
+        const name = item[lang] || item.bn;
+        const meaning =
+            item[`${lang}_mean`] || item.bn_mean || "";
 
-        const serial =
-            lang === "bn"
-                ? (index + 1).toLocaleString("bn-BD")
-                : lang === "hi"
-                    ? (index + 1).toLocaleString("hi-IN-u-nu-deva")
-                    : (index + 1).toLocaleString("en-US");
+        const serial = toLocalizedNumber(index + 1);
 
         html += `
-            <div class="name-card">
+            <article class="name-card">
 
                 <div class="arabic">
                     <span class="name-number">${serial}.</span>
@@ -348,32 +395,33 @@ function renderNames() {
                     ${meaning}
                 </div>
 
-            </div>
+            </article>
         `;
     });
 
     container.innerHTML = html;
 
-    // FOOTER MESSAGE — LANGUAGE AWARE
+    /* KEEP THE MIDDLE BOARD; RESET SCROLL AFTER LANGUAGE CHANGE */
 
-    if (footerText) {
-        footerText.textContent = FOOTER_MESSAGES[lang];
-    }
+    container.scrollTop = 0;
 }
 
-// ================= INITIAL RENDER =================
+/* INITIAL RENDER */
 
 renderNames();
 
-// ================= LANGUAGE CHANGE SUPPORT =================
+/* LANGUAGE CHANGE IN ANOTHER TAB */
 
-// Update the page when the saved language changes in another tab.
 window.addEventListener("storage", function (event) {
     if (event.key === "appSettings") {
         renderNames();
     }
 });
 
-// Allow other scripts on this page to refresh the names after
-// changing appSettings in the same tab.
+/* LANGUAGE CHANGE IN THE CURRENT APP */
+
 window.addEventListener("languageChanged", renderNames);
+
+/* ALLOW OTHER PAGE SCRIPTS TO REFRESH THIS PAGE */
+
+window.refreshAllahNamesLanguage = renderNames;
