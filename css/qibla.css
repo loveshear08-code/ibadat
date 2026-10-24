@@ -1,31 +1,42 @@
+
 /* =====================================================
-   IBADAT QIBLA — GREEN & GOLD THEME
-   Main background: assets/main-bg.jpg
+   IBADAT QIBLA
+   Shared green-gold theme and cream-white background
 ===================================================== */
 
 :root {
-    --deep-green: #124C32;
-    --deep-green-dark: #0C3926;
-    --primary: #1F6B3A;
+    --deep-green: #123d2c;
+    --dark-green: #0b2c20;
+    --green: #20583e;
 
-    --gold: #D4AF37;
-    --gold-light: #F5E5A7;
+    --light-pista: #e6edce;
+    --option-pista: #e9efda;
 
-    --cream: #FFFDF5;
-    --pistachio: #CFE8C8;
+    --cream: #fff9eb;
+    --cream-white: rgba(255, 252, 242, 0.94);
+    --cream-layer: rgba(255, 252, 242, 0.79);
 
-    --text: #17452F;
-    --muted: #52796F;
+    --gold: #d6b56d;
+    --gold-dark: #9b7837;
 
-    --board-height: 68px;
+    --text: #24382c;
+    --muted: #657367;
+    --border: rgba(214, 181, 109, 0.85);
 
-    --compass-outer: #66BB6A;
-    --compass-face: #DCEBCF;
-    --compass-inner: #F7F5E9;
-    --compass-ticks: #75B77A;
-    --compass-major-tick: #B78B24;
-    --compass-needle: #124C32;
-    --compass-tip: #C62828;
+    --shadow: 0 5px 18px rgba(0, 0, 0, 0.12);
+
+    --header-height: 112px;
+    --footer-height: 48px;
+    --page-gap: 10px;
+    --app-padding: 12px;
+
+    --compass-outer: #66bb6a;
+    --compass-face: #dcebcf;
+    --compass-inner: #f7f5e9;
+    --compass-ticks: #75b77a;
+    --compass-major-tick: #b78b24;
+    --compass-needle: #124c32;
+    --compass-tip: #c62828;
 }
 
 /* ================= BASE ================= */
@@ -36,16 +47,19 @@
 
 html,
 body {
-    margin: 0;
-    padding: 0;
     width: 100%;
     height: 100%;
     height: 100dvh;
+
+    margin: 0;
+    padding: 0;
+
     overflow: hidden;
 
     font-family:
         "Noto Sans Bengali",
         "Noto Sans Devanagari",
+        "Nirmala UI",
         Arial,
         sans-serif;
 
@@ -53,64 +67,165 @@ body {
 
     background:
         linear-gradient(
-            rgba(255, 253, 245, 0.76),
-            rgba(255, 253, 245, 0.76)
+            var(--cream-layer),
+            var(--cream-layer)
         ),
-        url("../assets/main-bg.jpg");
+        url("../assets/main-bg.jpg") center / cover no-repeat;
 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* ================= PAGE ================= */
+/* ================= PAGE LAYOUT ================= */
 
 .qibla-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--page-gap);
+
     width: 100%;
     height: 100%;
     height: 100dvh;
+    min-height: 0;
+
+    padding: var(--app-padding);
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            var(--cream-layer),
+            var(--cream-layer)
+        ),
+        url("../assets/main-bg.jpg") center / cover no-repeat;
+}
+
+/* Shared board border style */
+
+.hero-board,
+.main-board,
+.footer-board {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+}
+
+/* ================= TOP HEADER ================= */
+
+.hero-board {
+    position: relative;
+    isolation: isolate;
 
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    flex: 0 0 var(--header-height);
+    align-items: center;
+    justify-content: center;
 
-    gap: 8px;
+    width: 100%;
+    height: var(--header-height);
+    min-height: var(--header-height);
+
     padding: 8px 12px;
 
     overflow: hidden;
+    text-align: center;
+
+    background:
+        linear-gradient(
+            rgba(255, 252, 242, 0.79),
+            rgba(255, 252, 242, 0.79)
+        ),
+        url("../assets/hero-bg.jpg") center / cover no-repeat;
 }
 
-/* ================= TOP BOARD ================= */
+.hero-content {
+    width: 100%;
+    min-width: 0;
+}
 
-.location-card,
-.info-card {
-    flex: 0 0 var(--board-height);
+#pageTitle {
+    margin: 0;
+
+    color: var(--deep-green);
+
+    font-size: clamp(1.2rem, 4.8vw, 1.65rem);
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+#heroSubtitle {
+    margin: 4px 0 0;
+
+    color: var(--text);
+
+    font-size: clamp(0.72rem, 2.8vw, 0.9rem);
+    font-weight: 500;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+/* ================= MAIN BOARD ================= */
+
+.main-board {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+
+    gap: var(--page-gap);
 
     width: 100%;
     min-width: 0;
-    min-height: var(--board-height);
-    height: var(--board-height);
+    min-height: 0;
+
+    padding: 10px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            var(--cream-layer),
+            var(--cream-layer)
+        ),
+        url("../assets/main-bg.jpg") center / cover no-repeat;
+}
+
+/* ================= LOCATION AND DISTANCE ================= */
+
+.location-card,
+.info-card {
+    position: relative;
 
     display: flex;
+    flex: 0 0 68px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 
-    padding: 8px 12px;
+    width: 100%;
+    min-width: 0;
+    min-height: 68px;
+    height: 68px;
+
     margin: 0;
+    padding: 6px 10px;
+
+    overflow: hidden;
 
     text-align: center;
 
-    color: var(--gold-light);
+    color: var(--gold);
 
     background: linear-gradient(
         140deg,
         var(--deep-green),
-        var(--deep-green-dark)
+        var(--dark-green)
     );
 
     border: 2px solid var(--gold);
-    border-radius: 20px;
+    border-radius: 16px;
 
     box-shadow:
         0 3px 9px rgba(20, 60, 30, 0.13),
@@ -119,58 +234,71 @@ body {
 
 #locationLabel,
 #distanceLabel {
-    color: var(--gold-light);
+    color: var(--gold);
 
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1.35;
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.4;
 }
 
 #locationName,
 #distance {
-    margin-top: 4px;
+    max-width: 100%;
+
+    margin-top: 3px;
 
     color: var(--cream);
 
-    font-size: 18px;
-    font-weight: 700;
+    font-size: clamp(1.05rem, 4.5vw, 1.35rem);
+    font-weight: 800;
     line-height: 1.35;
+
     overflow-wrap: anywhere;
 }
 
 #distance {
-    font-size: 22px;
+    font-size: clamp(1.15rem, 4.8vw, 1.5rem);
 }
 
 /* ================= COMPASS AREA ================= */
 
 .compass-wrapper {
-    flex: 1 1 auto;
-    min-height: 0;
-    min-width: 0;
+    position: relative;
 
     display: flex;
+    flex: 1 1 auto;
     align-items: center;
     justify-content: center;
 
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+
+    padding: 6px;
+
+    /*
+       Keep the compass marker visible.
+       The compass itself retains its original geometry.
+    */
     overflow: visible;
 }
 
-/* ================= COMPASS ================= */
+/* ================= COMPASS DIAL ================= */
 
-/* Original compass dimensions and positioning retained */
+/* Original 240px compass size retained */
 
 .compass {
+    position: relative;
+
     width: 240px;
     height: 240px;
 
     flex: 0 0 auto;
 
-    position: relative;
+    border: 10px solid var(--compass-outer);
     border-radius: 50%;
 
     background: var(--compass-face);
-    border: 10px solid var(--compass-outer);
 
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
@@ -182,12 +310,13 @@ body {
 
     transform: translate(-50%, -50%);
 
-    color: #A78219;
-    font-weight: 700;
-    font-size: 11px;
+    color: #a78219;
 
-    z-index: 2;
+    font-size: 11px;
+    font-weight: 700;
+
     white-space: nowrap;
+    z-index: 2;
 }
 
 .n,
@@ -223,32 +352,31 @@ body {
 .ene,
 .ese {
     font-size: 9px;
-    white-space: nowrap;
 }
 
 /* ================= INNER RING ================= */
 
 .compass-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
     width: 165px;
     height: 165px;
 
     box-sizing: border-box;
 
+    transform: translate(-50%, -50%);
+
     border: 3px solid var(--compass-outer);
     border-radius: 50%;
-
-    position: absolute;
-    top: 50%;
-    left: 50%;
-
-    transform: translate(-50%, -50%);
 
     background: var(--compass-inner);
 
     z-index: 1;
 }
 
-/* ================= FIXED COMPASS TICKS ================= */
+/* ================= COMPASS TICKS ================= */
 
 .compass-ticks {
     position: absolute;
@@ -283,8 +411,8 @@ body {
 
 .major-tick {
     position: absolute;
-    left: 50%;
     top: 50%;
+    left: 50%;
 
     width: 2px;
     height: 26px;
@@ -328,79 +456,144 @@ body {
     transform: translate(-50%, -50%) rotate(315deg) translateY(-96px);
 }
 
-/* ================= CENTER ================= */
+/* ================= CENTER POINT ================= */
 
 .center-point {
-    width: 20px;
-    height: 20px;
-
-    background: var(--gold);
-    border: 4px solid #FFFFFF;
-    border-radius: 50%;
-
     position: absolute;
     top: 50%;
     left: 50%;
 
+    width: 20px;
+    height: 20px;
+
     transform: translate(-50%, -50%);
+
+    background: var(--gold);
+    border: 4px solid #fff;
+    border-radius: 50%;
+
     z-index: 6;
 }
 
-/* ================= DEGREE ================= */
+/* ================= DEGREE LABEL ================= */
 
 .degree {
     position: absolute;
-    left: 50%;
     top: 68%;
+    left: 50%;
 
     transform: translate(-50%, -50%);
 
-    font-size: 24px;
-    font-weight: 700;
-
     color: var(--deep-green);
+
+    font-size: 24px;
+    font-weight: 800;
+
     white-space: nowrap;
     z-index: 2;
 }
 
-/* ================= BOTTOM BOARD ================= */
+/* ================= FOOTER BOARD ================= */
 
-.info-card {
-    margin-bottom: 0;
+.footer-board {
+    display: flex;
+    flex: 0 0 var(--footer-height);
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: var(--footer-height);
+    min-height: var(--footer-height);
+
+    padding: 5px 10px;
+
+    overflow: hidden;
+
+    color: var(--cream);
+    background: var(--deep-green);
+
+    text-align: center;
+}
+
+#footerText {
+    width: 100%;
+    margin: 0;
+
+    color: var(--cream);
+
+    font-size: clamp(0.68rem, 2.8vw, 0.8rem);
+    font-weight: 600;
+    line-height: 1.45;
+
+    overflow-wrap: anywhere;
 }
 
 /* ================= DARK MODE ================= */
 
 body.dark-mode {
-    --text: #E2EDE2;
-    --muted: #C1D1C0;
+    --text: #e2ede2;
+    --muted: #c1d1c0;
 
-    --deep-green: #103F2B;
-    --deep-green-dark: #082D1D;
+    --cream-white: rgba(22, 38, 30, 0.97);
+    --cream-layer: rgba(5, 19, 13, 0.78);
 
-    --cream: #F8F6F0;
-    --gold-light: #F5E5A7;
+    --deep-green: #103f2b;
+    --dark-green: #082d1d;
 
-    --compass-outer: #4F9660;
-    --compass-face: #263B2B;
-    --compass-inner: #192B20;
-    --compass-ticks: #79A77C;
-    --compass-major-tick: #E0BD58;
-    --compass-needle: #D8EAC8;
-    --compass-tip: #E45B55;
+    --light-pista: #263f30;
+    --option-pista: #344a39;
+
+    --cream: #f8f6f0;
+    --gold-light: #f5e5a7;
+
+    --compass-outer: #4f9660;
+    --compass-face: #263b2b;
+    --compass-inner: #192b20;
+    --compass-ticks: #79a77c;
+    --compass-major-tick: #e0bd58;
+    --compass-needle: #d8eac8;
+    --compass-tip: #e45b55;
 
     color: var(--text);
 
     background:
         linear-gradient(
-            rgba(12, 24, 18, 0.80),
-            rgba(12, 24, 18, 0.80)
+            rgba(5, 19, 13, 0.78),
+            rgba(5, 19, 13, 0.78)
         ),
-        url("../assets/main-bg.jpg");
+        url("../assets/main-bg.jpg") center / cover no-repeat;
+}
 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+body.dark-mode .qibla-page {
+    background:
+        linear-gradient(
+            rgba(5, 19, 13, 0.78),
+            rgba(5, 19, 13, 0.78)
+        ),
+        url("../assets/main-bg.jpg") center / cover no-repeat;
+}
+
+body.dark-mode .hero-board {
+    background:
+        linear-gradient(
+            rgba(22, 38, 30, 0.82),
+            rgba(22, 38, 30, 0.82)
+        ),
+        url("../assets/hero-bg.jpg") center / cover no-repeat;
+}
+
+body.dark-mode #pageTitle,
+body.dark-mode #heroSubtitle {
+    color: var(--gold);
+}
+
+body.dark-mode .main-board {
+    background:
+        linear-gradient(
+            rgba(5, 19, 13, 0.78),
+            rgba(5, 19, 13, 0.78)
+        ),
+        url("../assets/main-bg.jpg") center / cover no-repeat;
 }
 
 body.dark-mode .location-card,
@@ -408,7 +601,7 @@ body.dark-mode .info-card {
     background: linear-gradient(
         140deg,
         var(--deep-green),
-        var(--deep-green-dark)
+        var(--dark-green)
     );
 
     border-color: var(--gold);
@@ -416,7 +609,7 @@ body.dark-mode .info-card {
 
 body.dark-mode #locationLabel,
 body.dark-mode #distanceLabel {
-    color: var(--gold-light);
+    color: var(--gold);
 }
 
 body.dark-mode #locationName,
@@ -435,15 +628,7 @@ body.dark-mode .compass-ring {
 }
 
 body.dark-mode .direction {
-    color: #E6C968;
-}
-
-body.dark-mode .compass-ticks {
-    background: repeating-conic-gradient(
-        from 0deg,
-        var(--compass-ticks) 0deg 0.8deg,
-        transparent 0.8deg 11.25deg
-    );
+    color: #e6c968;
 }
 
 body.dark-mode .major-tick {
@@ -451,50 +636,180 @@ body.dark-mode .major-tick {
 }
 
 body.dark-mode .degree {
-    color: #D8EAC8;
+    color: #d8eac8;
 }
 
 body.dark-mode .center-point {
     background: var(--gold);
-    border-color: #F8F6F0;
+    border-color: #f8f6f0;
 }
 
-/* ================= SHORT SCREENS ================= */
+body.dark-mode .footer-board {
+    color: var(--cream);
+    background: var(--deep-green);
+}
 
-@media (max-height: 600px) {
+/* ================= TABLET AND DESKTOP ================= */
+
+@media (min-width: 700px) {
     :root {
-        --board-height: 56px;
+        --header-height: 122px;
+        --footer-height: 50px;
+        --page-gap: 14px;
+        --app-padding: 16px;
     }
 
     .qibla-page {
-        gap: 5px;
-        padding: 5px 8px;
+        width: min(100%, 900px);
+        margin-inline: auto;
     }
 
-    #locationLabel,
-    #distanceLabel {
-        font-size: 12px;
-    }
-
-    #locationName {
-        font-size: 16px;
-    }
-
-    #distance {
-        font-size: 19px;
-    }
-}
-
-/* ================= NARROW SCREENS ================= */
-
-@media (max-width: 320px) {
-    .qibla-page {
-        padding-left: 7px;
-        padding-right: 7px;
+    .main-board {
+        padding: 14px;
     }
 
     .location-card,
     .info-card {
-        padding: 6px;
+        flex-basis: 72px;
+        height: 72px;
+        min-height: 72px;
+    }
+
+    .compass {
+        width: 260px;
+        height: 260px;
+    }
+}
+
+/* ================= SMALL MOBILE ================= */
+
+@media (max-width: 380px) {
+    :root {
+        --header-height: 100px;
+        --footer-height: 44px;
+        --page-gap: 8px;
+        --app-padding: 8px;
+    }
+
+    .hero-board {
+        padding-inline: 8px;
+    }
+
+    #pageTitle {
+        font-size: 1.2rem;
+    }
+
+    #heroSubtitle {
+        font-size: 0.69rem;
+    }
+
+    .main-board {
+        gap: 8px;
+        padding: 7px;
+    }
+
+    .location-card,
+    .info-card {
+        flex-basis: 62px;
+        height: 62px;
+        min-height: 62px;
+        padding: 5px;
+        border-radius: 14px;
+    }
+
+    #locationLabel,
+    #distanceLabel {
+        font-size: 0.73rem;
+    }
+
+    #locationName {
+        font-size: 1rem;
+    }
+
+    #distance {
+        font-size: 1.1rem;
+    }
+
+    .compass {
+        width: 230px;
+        height: 230px;
+        border-width: 9px;
+    }
+
+    .footer-board {
+        padding-inline: 6px;
+    }
+
+    #footerText {
+        font-size: 0.66rem;
+    }
+}
+
+/* ================= SHORT SCREENS ================= */
+
+@media (max-height: 650px) {
+    :root {
+        --page-gap: 6px;
+    }
+
+    .main-board {
+        gap: 6px;
+        padding: 7px;
+    }
+
+    .location-card,
+    .info-card {
+        flex-basis: 54px;
+        height: 54px;
+        min-height: 54px;
+        padding-block: 3px;
+    }
+
+    #locationLabel,
+    #distanceLabel {
+        font-size: 0.72rem;
+    }
+
+    #locationName {
+        margin-top: 1px;
+        font-size: 0.95rem;
+    }
+
+    #distance {
+        margin-top: 1px;
+        font-size: 1.05rem;
+    }
+
+    .compass-wrapper {
+        padding: 2px;
+    }
+
+    .compass {
+        width: 210px;
+        height: 210px;
+        border-width: 8px;
+    }
+
+    .footer-board {
+        padding-block: 3px;
+    }
+}
+
+@media (max-height: 650px) and (max-width: 380px) {
+    .compass {
+        width: 190px;
+        height: 190px;
+    }
+}
+
+/* ================= REDUCED MOTION ================= */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
     }
 }
