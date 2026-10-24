@@ -1,10 +1,6 @@
 
 "use strict";
 
-/* =========================================
-   IBADAT TASBIH
-========================================= */
-
 const TASBIH_STORAGE_KEY = "tasbihData";
 const TASBIH_DAILY_KEY = "tasbihDaily";
 
@@ -33,13 +29,10 @@ const ZIKR = {
   final: {
     arabic:
       "لَا إِلٰهَ إِلَّا اللّٰهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
-
     bn:
       "লা ইলাহা ইল্লাল্লাহু ওয়াহদাহু লা শারীকালাহু, লাহুল মুলকু ওয়ালাহুল হামদু, ওয়া হুয়া আলা কুল্লি শাইইন কাদীর",
-
     en:
       "La ilaha illallahu wahdahu la sharika lah, lahul mulku wa lahul hamd, wa huwa ala kulli shay'in qadir",
-
     hi:
       "ला इलाहा इल्लल्लाहु वहदहू ला शरीक लह, लहुल मुल्कु व लहुल हम्दु, व हुवा अला कुल्लि शयइन क़दीर"
   }
@@ -104,13 +97,10 @@ let resetTimer = null;
 let messageVersion = 0;
 let audioContext = null;
 
-/* Storage */
-
 function readStorage(key) {
   try {
     return localStorage.getItem(key);
   } catch (error) {
-    console.warn("Storage read failed:", error);
     return null;
   }
 }
@@ -123,8 +113,6 @@ function writeStorage(key, value) {
   }
 }
 
-/* Language */
-
 function getLanguage() {
   try {
     const raw = readStorage("appSettings");
@@ -136,9 +124,7 @@ function getLanguage() {
         settings.language ||
         settings.locale;
 
-      if (lang && TEXT[lang]) {
-        return lang;
-      }
+      if (TEXT[lang]) return lang;
     }
   } catch (error) {
     console.warn("Could not read language setting:", error);
@@ -157,13 +143,8 @@ function localizeNumber(number, lang) {
 
 function setText(id, value) {
   const element = document.getElementById(id);
-
-  if (element) {
-    element.textContent = value;
-  }
+  if (element) element.textContent = value;
 }
-
-/* Local calendar date */
 
 function getTodayKey() {
   const now = new Date();
@@ -175,65 +156,14 @@ function getTodayKey() {
   ].join("-");
 }
 
-/* Midnight reset */
-
-function resetForNewDay() {
-  totalCount = 0;
-  dailyComplete = 0;
-
-  saveTasbih();
-  saveDaily();
-
-  clearMessage();
-
-  if (resetTimer) {
-    clearTimeout(resetTimer);
-    resetTimer = null;
-  }
-
-  const button = document.getElementById("tapButton");
-
-  if (button) {
-    button.classList.remove("completed");
-  }
-
-  updateUI();
-}
-
-function checkMidnight() {
-  const today = getTodayKey();
-
-  if (today !== lastDate) {
-    lastDate = today;
-    resetForNewDay();
-  }
-}
-
-/* Daily total */
-
-function loadDaily() {
-  const today = getTodayKey();
-  const raw = readStorage(TASBIH_DAILY_KEY);
-
-  if (!raw) {
-    dailyComplete = 0;
-    saveDaily();
-    return;
-  }
-
-  try {
-    const data = JSON.parse(raw);
-
-    if (data.date === today) {
-      dailyComplete = Math.max(0, Number(data.count) || 0);
-    } else {
-      dailyComplete = 0;
-      saveDaily();
-    }
-  } catch (error) {
-    dailyComplete = 0;
-    saveDaily();
-  }
+function saveTasbih() {
+  writeStorage(
+    TASBIH_STORAGE_KEY,
+    JSON.stringify({
+      date: getTodayKey(),
+      totalCount
+    })
+  );
 }
 
 function saveDaily() {
@@ -246,7 +176,24 @@ function saveDaily() {
   );
 }
 
-/* Total counter */
+function loadDaily() {
+  const today = getTodayKey();
+  const raw = readStorage(TASBIH_DAILY_KEY);
+
+  try {
+    const data = raw ? JSON.parse(raw) : null;
+
+    if (data && data.date === today) {
+      dailyComplete = Math.max(0, Number(data.count) || 0);
+    } else {
+      dailyComplete = 0;
+      saveDaily();
+    }
+  } catch (error) {
+    dailyComplete = 0;
+    saveDaily();
+  }
+}
 
 function loadTasbih() {
   const today = getTodayKey();
@@ -256,10 +203,9 @@ function loadTasbih() {
     const data = raw ? JSON.parse(raw) : null;
 
     if (data && data.date === today) {
-      const savedCount = Number(data.totalCount);
-
-      totalCount = Number.isFinite(savedCount)
-        ? Math.max(0, Math.min(100, Math.floor(savedCount)))
+      const saved = Number(data.totalCount);
+      totalCount = Number.isFinite(saved)
+        ? Math.max(0, Math.min(100, Math.floor(saved)))
         : 0;
     } else {
       totalCount = 0;
@@ -269,27 +215,12 @@ function loadTasbih() {
   }
 
   lastDate = today;
-
   loadDaily();
-
   saveTasbih();
 
   lastLanguage = getLanguage();
-
   updateUI();
 }
-
-function saveTasbih() {
-  writeStorage(
-    TASBIH_STORAGE_KEY,
-    JSON.stringify({
-      date: getTodayKey(),
-      totalCount: totalCount
-    })
-  );
-}
-
-/* Determine current zikr */
 
 function getStepInfo() {
   if (totalCount < 33) {
@@ -323,8 +254,6 @@ function getStepInfo() {
   };
 }
 
-/* Update UI */
-
 function updateUI() {
   const lang = getLanguage();
   const text = TEXT[lang] || TEXT.bn;
@@ -333,7 +262,6 @@ function updateUI() {
 
   setText("pageTitle", text.title);
   setText("heroSubtitle", text.subtitle);
-
   setText("zikrLabel", text.zikr);
   setText("zikrArabic", zikr.arabic);
   setText("zikrName", zikr[lang] || zikr.bn);
@@ -363,15 +291,13 @@ function updateUI() {
     localizeNumber(dailyComplete, lang)
   );
 
-  const progressFill = document.getElementById("progressFill");
-  const progressBar = document.getElementById("progressBar");
+  const fill = document.getElementById("progressFill");
+  const bar = document.getElementById("progressBar");
 
-  if (progressFill) {
-    progressFill.style.width = totalCount + "%";
-  }
+  if (fill) fill.style.width = totalCount + "%";
 
-  if (progressBar) {
-    progressBar.setAttribute("aria-valuenow", String(totalCount));
+  if (bar) {
+    bar.setAttribute("aria-valuenow", String(totalCount));
   }
 
   const button = document.getElementById("tapButton");
@@ -384,7 +310,7 @@ function updateUI() {
   document.documentElement.lang = lang;
 }
 
-/* Short click sound using Web Audio */
+/* Small touch sound */
 
 function playClickSound() {
   try {
@@ -410,7 +336,7 @@ function playClickSound() {
     oscillator.frequency.exponentialRampToValueAtTime(650, now + 0.025);
 
     gain.gain.setValueAtTime(0.0001, now);
-    gain.gain.exponentialRampToValueAtTime(0.055, now + 0.004);
+    gain.gain.exponentialRampToValueAtTime(0.05, now + 0.004);
     gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.04);
 
     oscillator.connect(gain);
@@ -419,7 +345,7 @@ function playClickSound() {
     oscillator.start(now);
     oscillator.stop(now + 0.045);
   } catch (error) {
-    /* Sound is optional on unsupported browsers. */
+    /* Optional audio effect */
   }
 }
 
@@ -427,87 +353,137 @@ function playClickSound() {
 
 function vibrateOnce() {
   try {
-    if (navigator.vibrate) {
-      navigator.vibrate(100);
-    }
+    if (navigator.vibrate) navigator.vibrate(100);
   } catch (error) {
-    /* Vibration is optional. */
+    /* Unsupported vibration */
   }
 }
 
 function vibrateDouble() {
   try {
-    if (navigator.vibrate) {
-      navigator.vibrate([180, 100, 260]);
-    }
+    if (navigator.vibrate) navigator.vibrate([180, 100, 260]);
   } catch (error) {
-    /* Vibration is optional. */
+    /* Unsupported vibration */
   }
 }
 
-/* Completion message */
+/* Message and sparks */
 
 function clearMessage() {
-  messageVersion++;
-
   if (messageTimer) {
     clearTimeout(messageTimer);
     messageTimer = null;
   }
 
-  const element = document.getElementById("completeMessage");
+  messageVersion++;
 
-  if (element) {
-    element.hidden = true;
-    element.textContent = "";
-    element.classList.remove("show", "final-message");
+  const message = document.getElementById("completeMessage");
+  const sparkLayer = document.getElementById("sparkLayer");
+
+  if (message) {
+    message.hidden = true;
+    message.textContent = "";
+    message.classList.remove("message-enter", "message-exit");
   }
+
+  if (sparkLayer) {
+    sparkLayer.replaceChildren();
+  }
+}
+
+function createSparks() {
+  const layer = document.getElementById("sparkLayer");
+  if (!layer) return;
+
+  layer.replaceChildren();
+
+  const colors = [
+    "#d6b56d",
+    "#f2d58b",
+    "#ffffff",
+    "#e8a94a",
+    "#20583e"
+  ];
+
+  const count = 32;
+
+  for (let i = 0; i < count; i++) {
+    const spark = document.createElement("span");
+    const angle = (Math.PI * 2 * i) / count +
+      (Math.random() - 0.5) * 0.25;
+
+    const distance = 18 + Math.random() * 60;
+    const moveX = Math.cos(angle) * distance;
+    const moveY = Math.sin(angle) * (distance * 0.5);
+
+    spark.className = "spark" + (i % 4 === 0 ? " star" : "");
+    spark.style.setProperty("--start-x", `${48 + Math.random() * 4}%`);
+    spark.style.setProperty("--start-y", `${30 + Math.random() * 30}%`);
+    spark.style.setProperty("--move-x", `${moveX}px`);
+    spark.style.setProperty("--move-y", `${moveY}px`);
+    spark.style.setProperty("--spark-size", `${2 + Math.random() * 2}px`);
+    spark.style.setProperty("--spark-duration", `${450 + Math.random() * 450}ms`);
+    spark.style.setProperty("--spark-color", colors[i % colors.length]);
+    spark.style.setProperty("--rotation", `${Math.random() * 300}deg`);
+
+    layer.appendChild(spark);
+  }
+
+  window.setTimeout(() => {
+    layer.replaceChildren();
+  }, 1100);
 }
 
 function showMessage(message, isFinal = false, duration = 1800) {
   const element = document.getElementById("completeMessage");
-
   if (!element) return;
-
-  messageVersion++;
-  const version = messageVersion;
 
   if (messageTimer) {
     clearTimeout(messageTimer);
     messageTimer = null;
   }
 
-  element.textContent = message;
-  element.classList.toggle("final-message", isFinal);
-  element.hidden = false;
+  const version = ++messageVersion;
 
-  element.classList.remove("show");
+  element.textContent = message;
+  element.hidden = false;
+  element.classList.remove("message-exit", "message-enter");
   void element.offsetWidth;
-  element.classList.add("show");
+  element.classList.add("message-enter");
+
+  createSparks();
 
   if (duration > 0) {
-    messageTimer = setTimeout(() => {
-      if (version === messageVersion) {
-        clearMessage();
-      }
+    messageTimer = window.setTimeout(() => {
+      if (version !== messageVersion) return;
+
+      element.classList.remove("message-enter");
+      element.classList.add("message-exit");
+
+      window.setTimeout(() => {
+        if (version !== messageVersion) return;
+
+        element.hidden = true;
+        element.textContent = "";
+        element.classList.remove("message-exit");
+      }, 360);
     }, duration);
   }
 }
 
 function showMilestoneMessage(key) {
-  const lang = getLanguage();
-  const text = TEXT[lang] || TEXT.bn;
+  const text = TEXT[getLanguage()] || TEXT.bn;
 
-  const messageMap = {
+  const messages = {
     subhanallah: text.subComplete,
     alhamdulillah: text.hamdComplete,
     allahuakbar: text.akbarComplete
   };
 
-  showMessage(messageMap[key], false, 1800);
+  showMessage(messages[key], false, 1800);
 }
 
-/* Full tasbih completion */
+/* Complete the full 100-count cycle */
 
 function completeTasbih() {
   totalCount = 100;
@@ -518,48 +494,38 @@ function completeTasbih() {
   saveDaily();
 
   updateUI();
-
   vibrateDouble();
 
-  const lang = getLanguage();
-  const text = TEXT[lang] || TEXT.bn;
-
-  showMessage(text.complete, true, 0);
+  const text = TEXT[getLanguage()] || TEXT.bn;
+  showMessage(text.complete, true, 2400);
 
   const button = document.getElementById("tapButton");
 
-  if (button) {
-    button.classList.add("completed");
-  }
+  if (button) button.classList.add("completed");
 
-  if (resetTimer) {
-    clearTimeout(resetTimer);
-  }
+  if (resetTimer) clearTimeout(resetTimer);
 
-  resetTimer = setTimeout(() => {
+  resetTimer = window.setTimeout(() => {
     totalCount = 0;
-
     saveTasbih();
+
     clearMessage();
     updateUI();
 
     resetTimer = null;
-  }, 2500);
+  }, 2800);
 }
 
-/* Count one tap */
+/* Count */
 
 function increase() {
   checkMidnight();
 
-  if (totalCount >= 100) {
-    return;
-  }
+  if (totalCount >= 100) return;
 
   playClickSound();
 
   totalCount++;
-
   saveTasbih();
   updateUI();
 
@@ -589,34 +555,57 @@ function increase() {
   clearMessage();
 }
 
+/* Midnight reset */
+
+function checkMidnight() {
+  const today = getTodayKey();
+
+  if (today === lastDate) return;
+
+  lastDate = today;
+  totalCount = 0;
+  dailyComplete = 0;
+
+  if (resetTimer) {
+    clearTimeout(resetTimer);
+    resetTimer = null;
+  }
+
+  saveTasbih();
+  saveDaily();
+
+  clearMessage();
+  updateUI();
+}
+
 /* Language changes */
 
 function checkLanguage() {
   const lang = getLanguage();
 
-  if (lang !== lastLanguage) {
-    lastLanguage = lang;
-    updateUI();
+  if (lang === lastLanguage) return;
 
-    const message = document.getElementById("completeMessage");
+  lastLanguage = lang;
+  updateUI();
 
-    if (message && !message.hidden) {
-      const text = TEXT[lang] || TEXT.bn;
+  const message = document.getElementById("completeMessage");
 
-      if (totalCount === 100) {
-        showMessage(text.complete, true, 0);
-      } else if (totalCount === 33) {
-        showMilestoneMessage("subhanallah");
-      } else if (totalCount === 66) {
-        showMilestoneMessage("alhamdulillah");
-      } else if (totalCount === 99) {
-        showMilestoneMessage("allahuakbar");
-      }
-    }
+  if (!message || message.hidden) return;
+
+  const text = TEXT[lang] || TEXT.bn;
+
+  if (totalCount === 100) {
+    showMessage(text.complete, true, 2400);
+  } else if (totalCount === 33) {
+    showMilestoneMessage("subhanallah");
+  } else if (totalCount === 66) {
+    showMilestoneMessage("alhamdulillah");
+  } else if (totalCount === 99) {
+    showMilestoneMessage("allahuakbar");
   }
 }
 
-/* Initialize */
+/* Init */
 
 document.addEventListener("DOMContentLoaded", () => {
   loadTasbih();
@@ -627,12 +616,6 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", increase);
   }
 
-  setInterval(checkLanguage, 500);
-
-  /*
-   * Check the local date regularly.
-   * The first interaction after midnight also checks it,
-   * so the counter does not stay on yesterday's total.
-   */
-  setInterval(checkMidnight, 1000);
+  window.setInterval(checkLanguage, 500);
+  window.setInterval(checkMidnight, 1000);
 });
