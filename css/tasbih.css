@@ -22,7 +22,7 @@
 
   --header-height: 112px;
   --footer-height: 48px;
-  --page-gap: 12px;
+  --page-gap: 10px;
   --app-padding: 12px;
 }
 
@@ -33,7 +33,6 @@
 html {
   width: 100%;
   height: 100%;
-  min-height: 100%;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -60,8 +59,8 @@ body {
 
 button {
   font: inherit;
-  -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 button:focus-visible {
@@ -92,10 +91,7 @@ button:focus-visible {
   overflow: hidden;
 
   background:
-    linear-gradient(
-      var(--cream-layer),
-      var(--cream-layer)
-    ),
+    linear-gradient(var(--cream-layer), var(--cream-layer)),
     url("../assets/main-bg.jpg") center / cover no-repeat;
 }
 
@@ -105,7 +101,7 @@ button:focus-visible {
   box-shadow: var(--shadow);
 }
 
-/* Shared header */
+/* Header */
 
 .hero {
   position: relative;
@@ -120,7 +116,7 @@ button:focus-visible {
   height: var(--header-height);
   min-height: var(--header-height);
 
-  padding: 12px 16px;
+  padding: 8px 14px;
   overflow: hidden;
 
   text-align: center;
@@ -143,22 +139,63 @@ button:focus-visible {
   margin: 0;
 
   color: var(--deep-green);
-  font-size: clamp(1.35rem, 5vw, 1.8rem);
+  font-size: clamp(1.3rem, 5vw, 1.8rem);
   font-weight: 800;
+  line-height: 1.4;
+}
+
+.hero-subtitle {
+  margin: 3px 0 0;
+
+  color: var(--text);
+  font-size: clamp(0.74rem, 2.8vw, 0.92rem);
   line-height: 1.5;
   overflow-wrap: anywhere;
 }
 
-.hero-subtitle {
-  margin: 4px 0 0;
+/* Completion message inside the header */
 
-  color: var(--text);
-  font-size: clamp(0.76rem, 2.8vw, 0.95rem);
-  line-height: 1.6;
+.complete-message {
+  width: 100%;
+  margin: 4px auto 0;
+  padding: 3px 7px;
+
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+
+  color: var(--deep-green);
+  background: rgba(230, 237, 206, 0.95);
+
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.4;
+  text-align: center;
+
   overflow-wrap: anywhere;
 }
 
-/* Main page area */
+.complete-message.show {
+  animation: messageReveal 300ms ease both;
+}
+
+.complete-message.final-message {
+  border-color: var(--gold-dark);
+  background: rgba(214, 181, 109, 0.32);
+}
+
+@keyframes messageReveal {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Main content */
 
 .page-container {
   display: flex;
@@ -169,14 +206,13 @@ button:focus-visible {
   width: 100%;
   min-width: 0;
   min-height: 0;
+
   overflow: hidden;
 }
 
 /* Zikr board */
 
 .zikr-board {
-  position: relative;
-
   display: flex;
   flex: 0 1 auto;
   flex-direction: column;
@@ -187,24 +223,25 @@ button:focus-visible {
   min-width: 0;
   min-height: 0;
 
-  padding: 12px 10px;
-
+  padding: 8px 10px;
   overflow: hidden;
-  text-align: center;
 
+  text-align: center;
   background: var(--light-pista);
 }
 
-.small-label {
+.zikr-heading {
+  margin: 0;
+
   color: var(--muted);
-  font-size: 0.85rem;
-  line-height: 1.5;
-  overflow-wrap: anywhere;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
 .zikr-arabic {
   width: 100%;
-  margin: 4px 0;
+  margin: 3px 0;
 
   color: var(--gold-dark);
 
@@ -213,9 +250,9 @@ button:focus-visible {
     "Amiri",
     serif;
 
-  font-size: clamp(1.7rem, 6.3vw, 2.6rem);
+  font-size: clamp(1.45rem, 6vw, 2.4rem);
   font-weight: 800;
-  line-height: 1.75;
+  line-height: 1.55;
 
   overflow-wrap: anywhere;
 }
@@ -224,142 +261,80 @@ button:focus-visible {
   width: 100%;
 
   color: var(--deep-green);
-  font-size: clamp(1rem, 4vw, 1.3rem);
+  font-size: clamp(0.94rem, 3.7vw, 1.2rem);
   font-weight: 800;
-  line-height: 1.65;
+  line-height: 1.55;
 
   overflow-wrap: anywhere;
 }
 
-.step-text {
-  margin-top: 4px;
-
-  color: var(--muted);
-  font-size: 0.85rem;
-  line-height: 1.5;
-}
-
-/* Completion message integrated into zikr board */
-
-.complete-message {
-  width: 100%;
-  max-width: 100%;
-
-  margin-top: 8px;
-  padding: 7px 9px;
-
-  border: 1px solid var(--gold);
-  border-radius: 10px;
-
-  color: var(--deep-green);
-  background: rgba(255, 252, 242, 0.78);
-
-  box-shadow:
-    inset 0 0 0 1px rgba(214, 181, 109, 0.15),
-    0 2px 8px rgba(18, 61, 44, 0.08);
-
-  font-size: 0.88rem;
-  font-weight: 800;
-  line-height: 1.6;
-  text-align: center;
-
-  overflow-wrap: anywhere;
-}
-
-.complete-message.show {
-  animation: completionReveal 350ms ease both;
-}
-
-.complete-message.final-message {
-  border-color: var(--gold-dark);
-  background: rgba(214, 181, 109, 0.2);
-}
-
-@keyframes completionReveal {
-  from {
-    opacity: 0;
-    transform: translateY(5px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Count and progress board */
+/* Compact counter board */
 
 .stats-board {
   display: flex;
-  flex: 0 1 auto;
+  flex: 0 0 auto;
   flex-direction: column;
-  justify-content: center;
 
-  gap: 10px;
+  gap: 7px;
   width: 100%;
   min-width: 0;
-  min-height: 0;
 
-  padding: 10px;
-
+  padding: 7px 9px;
   overflow: hidden;
+
   background: var(--cream-white);
 }
 
 .count-info {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+  gap: 7px;
 
   width: 100%;
   min-width: 0;
 }
 
 .count-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 1px;
   min-width: 0;
-  padding: 6px 4px;
+
+  padding: 4px 3px;
 
   border: 1px solid var(--border);
-  border-radius: 11px;
+  border-radius: 10px;
 
   background: var(--option-pista);
   text-align: center;
 }
 
+.count-label {
+  color: var(--muted);
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
 .step-count,
 .total-count {
   color: var(--deep-green);
-  font-size: clamp(1.1rem, 4.7vw, 1.55rem);
+  font-size: clamp(1.05rem, 4.4vw, 1.35rem);
   font-weight: 800;
-  line-height: 1.5;
+  line-height: 1.4;
   overflow-wrap: anywhere;
 }
 
-.progress-section {
-  width: 100%;
-  min-width: 0;
-}
-
-.progress-text {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-
-  margin-bottom: 6px;
-
-  color: var(--muted);
-  font-size: 0.8rem;
-  line-height: 1.5;
-}
+/* Animated progress line: no text label */
 
 .progress-bar {
   width: 100%;
-  height: 9px;
-
-  border-radius: 20px;
+  height: 7px;
   overflow: hidden;
 
+  border-radius: 20px;
   background: #dce7d5;
 }
 
@@ -370,32 +345,32 @@ button:focus-visible {
   border-radius: inherit;
   background: var(--green);
 
-  transition: width 180ms ease;
+  transition: width 220ms ease-out;
+  will-change: width;
 }
+
+/* Daily completed total */
 
 .today-info {
   display: flex;
   align-items: baseline;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 6px;
-
-  padding-top: 7px;
-  border-top: 1px solid rgba(155, 120, 55, 0.25);
+  gap: 5px;
 
   color: var(--muted);
-  font-size: 0.85rem;
-  line-height: 1.5;
+  font-size: 0.8rem;
+  line-height: 1.4;
   text-align: center;
 }
 
 .today-info strong {
   color: var(--deep-green);
-  font-size: 1.25rem;
+  font-size: 1.05rem;
   font-weight: 800;
 }
 
-/* Tasbih button area */
+/* Tasbih button takes the remaining space */
 
 .tap-area {
   display: flex;
@@ -407,28 +382,28 @@ button:focus-visible {
   min-width: 0;
   min-height: 0;
 
-  padding: 2px;
+  padding: 0;
   overflow: hidden;
 }
 
 .tap-button {
   display: flex;
+  flex: 0 1 auto;
   align-items: center;
   justify-content: center;
 
-  flex: 0 1 auto;
+  width: min(54vw, 225px);
+  height: min(54vw, 225px);
 
-  width: min(55vw, 230px);
-  height: min(55vw, 230px);
-
-  min-width: 112px;
-  min-height: 112px;
+  min-width: 100px;
+  min-height: 100px;
 
   max-width: 100%;
   max-height: 100%;
   aspect-ratio: 1;
 
   padding: 0;
+  overflow: hidden;
 
   border: 2px solid var(--gold);
   border-radius: 50%;
@@ -439,7 +414,6 @@ button:focus-visible {
     0 7px 20px rgba(18, 61, 44, 0.2),
     0 0 0 4px rgba(214, 181, 109, 0.14);
 
-  overflow: hidden;
   cursor: pointer;
   user-select: none;
 
@@ -450,7 +424,6 @@ button:focus-visible {
 
 .tap-icon {
   display: block;
-
   width: 100%;
   height: 100%;
 
@@ -464,19 +437,15 @@ button:focus-visible {
 
 .tap-button:active {
   transform: scale(0.94);
-
-  box-shadow:
-    0 3px 10px rgba(18, 61, 44, 0.2),
-    0 0 0 3px rgba(214, 181, 109, 0.2);
 }
 
 .tap-button.completed {
   box-shadow:
     0 0 0 5px rgba(214, 181, 109, 0.35),
-    0 0 22px rgba(214, 181, 109, 0.5);
+    0 0 20px rgba(214, 181, 109, 0.5);
 }
 
-/* Shared footer */
+/* Footer */
 
 .footer {
   display: flex;
@@ -488,7 +457,7 @@ button:focus-visible {
   height: var(--footer-height);
   min-height: var(--footer-height);
 
-  padding: 4px 10px;
+  padding: 4px 9px;
   overflow: hidden;
 
   color: var(--cream);
@@ -500,8 +469,8 @@ button:focus-visible {
   margin: 0;
 
   color: var(--cream);
-  font-size: 0.8rem;
-  line-height: 1.5;
+  font-size: 0.78rem;
+  line-height: 1.45;
   text-align: center;
 
   overflow: hidden;
@@ -509,7 +478,7 @@ button:focus-visible {
   white-space: nowrap;
 }
 
-/* Dark mode from the main app settings */
+/* Dark mode */
 
 body.dark-mode {
   --text: #f0eee5;
@@ -550,12 +519,21 @@ body.dark-mode .hero-subtitle {
   color: var(--gold);
 }
 
+body.dark-mode .complete-message {
+  color: var(--gold);
+  background: #1b3025;
+}
+
 body.dark-mode .zikr-board {
   background: var(--light-pista);
 }
 
+body.dark-mode .zikr-heading {
+  color: var(--muted);
+}
+
 body.dark-mode .zikr-arabic {
-  color: var(--gold-dark);
+  color: var(--gold);
 }
 
 body.dark-mode .zikr-name,
@@ -573,26 +551,12 @@ body.dark-mode .count-card {
   background: var(--option-pista);
 }
 
-body.dark-mode .complete-message {
-  color: var(--gold);
-  background: #1b3025;
-}
-
 body.dark-mode .progress-bar {
   background: #3a4d3d;
 }
 
 body.dark-mode .progress-fill {
   background: var(--gold);
-}
-
-body.dark-mode .tap-button {
-  background: var(--deep-green);
-}
-
-body.dark-mode .footer {
-  color: var(--cream);
-  background: var(--deep-green);
 }
 
 /* Tablet and desktop */
@@ -611,16 +575,16 @@ body.dark-mode .footer {
   }
 
   .zikr-board {
-    padding: 16px;
+    padding: 12px 16px;
   }
 
   .stats-board {
-    padding: 14px;
+    padding: 10px 12px;
   }
 
   .tap-button {
-    width: min(30vw, 240px);
-    height: min(30vw, 240px);
+    width: min(30vw, 235px);
+    height: min(30vw, 235px);
   }
 }
 
@@ -630,12 +594,12 @@ body.dark-mode .footer {
   :root {
     --header-height: 100px;
     --footer-height: 44px;
-    --page-gap: 9px;
+    --page-gap: 8px;
     --app-padding: 8px;
   }
 
   .hero {
-    padding-inline: 10px;
+    padding-inline: 9px;
   }
 
   .hero-title {
@@ -643,47 +607,55 @@ body.dark-mode .footer {
   }
 
   .hero-subtitle {
-    font-size: 0.73rem;
+    font-size: 0.72rem;
+  }
+
+  .complete-message {
+    font-size: 0.7rem;
+    padding: 2px 5px;
   }
 
   .zikr-board {
-    padding: 8px 7px;
+    padding: 6px 7px;
   }
 
   .zikr-arabic {
-    font-size: clamp(1.35rem, 6vw, 1.8rem);
-    line-height: 1.6;
+    font-size: clamp(1.3rem, 5.8vw, 1.75rem);
+    line-height: 1.5;
   }
 
   .zikr-name {
-    font-size: 0.95rem;
+    font-size: 0.88rem;
   }
 
   .stats-board {
-    gap: 7px;
-    padding: 7px;
+    gap: 6px;
+    padding: 6px 7px;
   }
 
   .count-info {
-    gap: 6px;
+    gap: 5px;
   }
 
   .count-card {
-    padding: 5px 3px;
+    padding: 3px 2px;
+  }
+
+  .count-label {
+    font-size: 0.7rem;
   }
 
   .step-count,
   .total-count {
-    font-size: 1.08rem;
+    font-size: 1rem;
+  }
+
+  .progress-bar {
+    height: 6px;
   }
 
   .today-info {
-    padding-top: 5px;
-    font-size: 0.78rem;
-  }
-
-  .today-info strong {
-    font-size: 1.1rem;
+    font-size: 0.75rem;
   }
 
   .tap-button {
@@ -696,7 +668,7 @@ body.dark-mode .footer {
   }
 
   .footer-text {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
   }
 }
 
@@ -704,48 +676,45 @@ body.dark-mode .footer {
 
 @media (max-height: 650px) {
   :root {
-    --page-gap: 6px;
+    --page-gap: 5px;
   }
 
   .zikr-board {
-    padding-block: 5px;
+    padding-block: 4px;
+  }
+
+  .zikr-heading {
+    font-size: 0.76rem;
   }
 
   .zikr-arabic {
-    font-size: clamp(1.2rem, 5vw, 1.8rem);
-    line-height: 1.4;
+    font-size: clamp(1.15rem, 4.5vw, 1.6rem);
+    line-height: 1.35;
   }
 
   .zikr-name {
-    font-size: 0.9rem;
-    line-height: 1.4;
-  }
-
-  .step-text {
-    margin-top: 2px;
-    font-size: 0.75rem;
-  }
-
-  .complete-message {
-    margin-top: 4px;
-    padding: 4px 6px;
-    font-size: 0.75rem;
+    font-size: 0.82rem;
+    line-height: 1.35;
   }
 
   .stats-board {
-    gap: 5px;
-    padding: 6px;
+    gap: 4px;
+    padding: 5px 7px;
+  }
+
+  .count-card {
+    padding-block: 2px;
   }
 
   .progress-bar {
-    height: 7px;
+    height: 5px;
   }
 
   .tap-button {
-    width: min(39vw, 150px);
-    height: min(39vw, 150px);
-    min-width: 100px;
-    min-height: 100px;
+    width: min(36vw, 145px);
+    height: min(36vw, 145px);
+    min-width: 92px;
+    min-height: 92px;
   }
 }
 
