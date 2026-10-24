@@ -1,75 +1,106 @@
+
 <!DOCTYPE html>
 <html lang="bn">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta name="theme-color" content="#124C32">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#123d2c">
 
-    <title>Qibla</title>
+    <title>IBADAT | কিবলা কম্পাস</title>
 
-    <link rel="stylesheet" href="../css/qibla.css?v=2">
+    <link rel="stylesheet" href="../css/qibla.css?v=3">
 </head>
 
 <body>
 
-<div class="qibla-page">
+    <div class="qibla-page">
 
-    <div class="location-card">
-        <div id="locationLabel">বর্তমান অবস্থান</div>
-        <div id="locationName">কলকাতা</div>
+        <!-- TOP HEADER BOARD -->
+        <header class="hero-board">
+            <div class="hero-content">
+                <h1 id="pageTitle">কিবলা কম্পাস</h1>
+
+                <p id="heroSubtitle">
+                    কম্পাস দেখুন এবং সঠিক দিক নির্বাচন করুন
+                </p>
+            </div>
+        </header>
+
+        <!-- MAIN BOARD -->
+        <main class="main-board">
+
+            <!-- CURRENT LOCATION -->
+            <section class="location-card">
+                <div id="locationLabel">বর্তমান অবস্থান</div>
+                <div id="locationName">কলকাতা</div>
+            </section>
+
+            <!-- COMPASS AREA -->
+            <section class="compass-wrapper" aria-label="Qibla compass">
+
+                <div class="compass">
+
+                    <div class="direction n">N</div>
+                    <div class="direction nne">NNE</div>
+                    <div class="direction ne">NE</div>
+                    <div class="direction ene">ENE</div>
+
+                    <div class="direction e">E</div>
+                    <div class="direction ese">ESE</div>
+                    <div class="direction se">SE</div>
+                    <div class="direction sse">SSE</div>
+
+                    <div class="direction s">S</div>
+                    <div class="direction ssw">SSW</div>
+                    <div class="direction sw">SW</div>
+                    <div class="direction wsw">WSW</div>
+
+                    <div class="direction w">W</div>
+                    <div class="direction wnw">WNW</div>
+                    <div class="direction nw">NW</div>
+                    <div class="direction nnw">NNW</div>
+
+                    <div class="compass-ring"></div>
+                    <div class="compass-ticks"></div>
+
+                    <div class="major-tick tick-n"></div>
+                    <div class="major-tick tick-ne"></div>
+                    <div class="major-tick tick-e"></div>
+                    <div class="major-tick tick-se"></div>
+                    <div class="major-tick tick-s"></div>
+                    <div class="major-tick tick-sw"></div>
+                    <div class="major-tick tick-w"></div>
+                    <div class="major-tick tick-nw"></div>
+
+                    <div class="center-point"></div>
+
+                    <div class="degree">—</div>
+
+                </div>
+
+            </section>
+
+            <!-- DISTANCE TO MAKKAH -->
+            <section class="info-card">
+                <div id="distanceLabel">মক্কার দূরত্ব</div>
+                <div id="distance">—</div>
+            </section>
+
+        </main>
+
+        <!-- BOTTOM FOOTER BOARD -->
+        <footer class="footer-board">
+            <p id="footerText">
+                সঠিক কিবলার দিক জানতে কম্পাস অনুসরণ করুন
+            </p>
+        </footer>
+
     </div>
 
-    <div class="compass-wrapper">
-        <div class="compass">
-
-            <div class="direction n">N</div>
-            <div class="direction nne">NNE</div>
-            <div class="direction ne">NE</div>
-            <div class="direction ene">ENE</div>
-
-            <div class="direction e">E</div>
-            <div class="direction ese">ESE</div>
-            <div class="direction se">SE</div>
-            <div class="direction sse">SSE</div>
-
-            <div class="direction s">S</div>
-            <div class="direction ssw">SSW</div>
-            <div class="direction sw">SW</div>
-            <div class="direction wsw">WSW</div>
-
-            <div class="direction w">W</div>
-            <div class="direction wnw">WNW</div>
-            <div class="direction nw">NW</div>
-            <div class="direction nnw">NNW</div>
-
-            <div class="compass-ring"></div>
-            <div class="compass-ticks"></div>
-
-            <div class="major-tick tick-n"></div>
-            <div class="major-tick tick-ne"></div>
-            <div class="major-tick tick-e"></div>
-            <div class="major-tick tick-se"></div>
-            <div class="major-tick tick-s"></div>
-            <div class="major-tick tick-sw"></div>
-            <div class="major-tick tick-w"></div>
-            <div class="major-tick tick-nw"></div>
-
-            <div class="center-point"></div>
-
-            <div class="degree">278° প</div>
-
-        </div>
-    </div>
-
-    <div class="info-card">
-        <div id="distanceLabel">মক্কার দূরত্ব</div>
-        <div id="distance">4911 কিমি</div>
-    </div>
-
-</div>
-
-<script src="../js/theme.js"></script>
-<script src="../js/qibla.js?v=2"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/qibla.js?v=3"></script>
 
 </body>
+
 </html>
