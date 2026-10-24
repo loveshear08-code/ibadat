@@ -1,69 +1,82 @@
+
 <!DOCTYPE html>
 <html lang="bn">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="theme-color" content="#1F6B3A">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
 
-    <title>Allah Names</title>
+    <meta name="theme-color" content="#123d2c">
 
-    <!-- Allah Names CSS -->
-    <link rel="stylesheet" href="../css/allah-names.css?v=2">
+    <meta
+        name="description"
+        content="আল্লাহর ৯৯টি নাম, আরবি, উচ্চারণ ও অর্থসহ"
+    >
+
+    <title>আল্লাহর নামসমূহ | IBADAT</title>
+
+    <link rel="stylesheet" href="../css/allah-names.css?v=3">
 </head>
 
 <body>
 
-    <!-- Hidden title for JavaScript compatibility -->
     <span id="pageTitle" hidden></span>
 
-    <!-- MAIN PAGE -->
     <main class="names-page">
 
-        <!-- INTRODUCTION BOARD -->
-        <section class="intro-board">
+        <!-- FIXED TOP BOARD -->
+        <header class="intro-board">
+            <div class="intro-content">
 
-            <!-- Arabic Heading -->
-            <div class="intro-arabic" lang="ar" dir="rtl">
-                أَسْمَاءُ اللَّهِ
+                <div
+                    class="intro-arabic"
+                    lang="ar"
+                    dir="rtl"
+                >
+                    أَسْمَاءُ اللَّهِ
+                </div>
+
+                <h1 class="intro-title" id="introTitle">
+                    আল্লাহর নামসমূহ
+                </h1>
+
+                <div class="intro-divider" aria-hidden="true">
+                    <span></span>
+                    <span class="divider-ornament">❈</span>
+                    <span></span>
+                </div>
+
             </div>
+        </header>
 
-            <!-- Localized Heading -->
-            <div class="intro-title" id="introTitle">
-                আল্লাহর নামসমূহ
-            </div>
-
-            <!-- Gold Decorative Divider -->
-            <div class="intro-divider" aria-hidden="true">
-                <span></span>
-                <span class="divider-ornament">❈</span>
-                <span></span>
-            </div>
-
-        </section>
-
-        <!-- BISMILLAH AND 99 NAMES -->
+        <!-- FIXED MIDDLE BOARD; ONLY ITS CONTENT SCROLLS -->
         <section
-            class="names-container"
-            id="namesContainer"
-            aria-label="Allah's names">
+            class="names-board"
+            aria-label="আল্লাহর নামসমূহের তালিকা"
+        >
+            <div
+                class="names-container"
+                id="namesContainer"
+                aria-label="বিসমিল্লাহ এবং আল্লাহর ৯৯টি নাম"
+            >
+                <!-- Bismillah and 99 names are rendered by JavaScript -->
+            </div>
         </section>
+
+        <!-- FIXED FOOTER BOARD -->
+        <footer class="names-footer">
+            <p id="namesFooterText">
+                আল্লাহকে জানুন, স্মরণে রাখুন।
+            </p>
+        </footer>
 
     </main>
 
-    <!-- FOOTER BOARD -->
-    <footer class="names-footer">
-        <p id="namesFooterText">
-            আল্লাহকে জানুন, স্মরণে রাখুন।
-        </p>
-    </footer>
-
-    <!-- Allah Names JavaScript -->
-    <script src="../js/allah-names.js?v=2"></script>
-
-    <!-- Theme JavaScript -->
-    <script src="../js/theme.js"></script>
+    <script src="../js/allah-names.js?v=3" defer></script>
+    <script src="../js/theme.js" defer></script>
 
 </body>
 </html>
