@@ -2,211 +2,121 @@
 (() => {
   "use strict";
 
-  const API = "https://api.alquran.cloud/v1";
+  /* =========================================
+     IBADAT - QURAN MODULE
+     Compatible with quran.html and quran.css
+  ========================================= */
+
+  const API_BASE = "https://api.alquran.cloud/v1";
   const ARABIC_EDITION = "quran-uthmani";
-  const AUDIO_EDITION = "ar.alafasy";
+  const AUDIO_BASE =
+    "https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/";
 
-  const EDITIONS = {
-    bn: "bn.bengali",
-    en: "en.sahih",
-    hi: "hi.hindi"
-  };
+  const $ = (id) => document.getElementById(id);
 
-  const LOCALES = {
-    bn: "bn-BD",
-    en: "en-US",
-    hi: "hi-IN"
-  };
-
-  const TEXT = {
+  const translations = {
     bn: {
-      homeSubtitle: "পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে।",
-      description: "পবিত্র কুরআন আল্লাহর বাণী। এটি আমাদের সঠিক পথ দেখায়, সত্য ও ন্যায়ের শিক্ষা দেয় এবং জীবনের প্রতিটি ক্ষেত্রে আল্লাহর সন্তুষ্টি অর্জনের পথ শেখায়।",
-      read: "কুরআন পড়ুন",
-      listen: "তিলাওয়াত শুনুন",
-      footer: "ইবাদত • শুদ্ধতার পথে শেখা ও অনুশীলন",
-      readSubtitle: "মনোযোগ দিয়ে পবিত্র কুরআন পড়ুন",
-      listenSubtitle: "কুরআনের তিলাওয়াতে প্রশান্তি অনুভব করুন",
-      choose: "সূরা নির্বাচন করুন",
-      search: "সূরার নাম বা নম্বর লিখুন",
-      loading: "লোড হচ্ছে...",
-      error: "তথ্য লোড করা যায়নি। ইন্টারনেট সংযোগ পরীক্ষা করুন।",
-      none: "কোনো সূরা পাওয়া যায়নি।",
-      surah: "সূরা",
-      verses: "আয়াত",
-      play: "শুনুন",
-      prev: "আগের সূরা",
+      appTitle: "IBADAT | আল-কুরআন",
+      homeHeading: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+      homeSubtitle: "পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে",
+      readHeading: "কুরআন পড়ুন",
+      readSubtitle: "কুরআন পড়ুন, প্রশান্তি অনুভব করুন",
+      listenHeading: "তিলাওয়াত শুনুন",
+      listenSubtitle: "তিলাওয়াত শুনুন ও প্রশান্তি অনুভব করুন",
+      quranTitle: "আল-কুরআন",
+      quranDescription: "পবিত্র কুরআন পড়ুন, শুনুন এবং প্রশান্তি অনুভব করুন।",
+      readOption: "কুরআন পড়ুন",
+      listenOption: "তিলাওয়াত শুনুন",
+      homeFooter: "আল-কুরআন — হেদায়েত ও প্রশান্তির আলো",
+      readFooter: "কুরআন পড়ুন, প্রশান্তি অনুভব করুন",
+      searchHeading: "সূরা খুঁজুন",
+      searchPlaceholder: "সূরার নাম লিখুন...",
+      loadingRead: "কুরআনের আয়াত লোড হচ্ছে...",
+      loadingListen: "সূরার তালিকা লোড হচ্ছে...",
+      noResults: "কোনো সূরা পাওয়া যায়নি।",
+      loadError: "তথ্য লোড করা যায়নি। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।",
+      previous: "আগের সূরা",
       next: "পরের সূরা",
-      playAudio: "তিলাওয়াত চালু করুন",
-      pauseAudio: "তিলাওয়াত থামান",
-      audioError: "অডিও চালানো যাচ্ছে না। আবার চেষ্টা করুন।",
-      translationError: "অনুবাদ পাওয়া যায়নি।",
-      readTitle: "শুদ্ধতার পথে ইবাদত",
-      listenTitle: "তিলাওয়াত শুনুন"
+      play: "তিলাওয়াত চালান",
+      pause: "তিলাওয়াত থামান",
+      audioError: "অডিও চালানো যায়নি। আবার চেষ্টা করুন।",
+      beginning: "এটাই প্রথম সূরা।",
+      end: "এটাই শেষ সূরা।",
+      surah: "সূরা",
+      backHome: "কুরআনের মূল পেজে ফিরে এসেছেন।"
     },
 
     en: {
-      homeSubtitle: "In the name of Allah, the Most Compassionate, the Most Merciful.",
-      description: "The Holy Quran is the word of Allah. It guides us to the right path, teaches truth and justice, and shows us how to seek Allah's pleasure in every part of life.",
-      read: "Read Quran",
-      listen: "Listen to Recitation",
-      footer: "IBADAT • Learning and practice on the path to purity",
-      readSubtitle: "Read the Holy Quran with care",
-      listenSubtitle: "Find peace in the recitation of the Quran",
-      choose: "Choose a Surah",
-      search: "Enter a surah name or number",
-      loading: "Loading...",
-      error: "Unable to load data. Check your internet connection.",
-      none: "No surahs found.",
-      surah: "Surah",
-      verses: "verses",
-      play: "Listen",
-      prev: "Previous Surah",
+      appTitle: "IBADAT | Al-Quran",
+      homeHeading: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+      homeSubtitle: "In the name of Allah, the Most Compassionate, the Most Merciful",
+      readHeading: "Read Quran",
+      readSubtitle: "Read Quran, feel tranquility",
+      listenHeading: "Listen to Recitation",
+      listenSubtitle: "Listen to recitation and feel tranquility",
+      quranTitle: "Al-Quran",
+      quranDescription: "Read the Holy Quran, listen to it, and feel tranquility.",
+      readOption: "Read Quran",
+      listenOption: "Listen",
+      homeFooter: "Al-Quran — A light of guidance and tranquility",
+      readFooter: "Read Quran, feel tranquility",
+      searchHeading: "Find a Surah",
+      searchPlaceholder: "Enter a Surah name...",
+      loadingRead: "Loading Quran verses...",
+      loadingListen: "Loading Surah list...",
+      noResults: "No Surahs found.",
+      loadError: "Could not load the content. Check your internet connection and try again.",
+      previous: "Previous Surah",
       next: "Next Surah",
-      playAudio: "Play recitation",
-      pauseAudio: "Pause recitation",
+      play: "Play recitation",
+      pause: "Pause recitation",
       audioError: "Unable to play audio. Please try again.",
-      translationError: "Translation unavailable.",
-      readTitle: "IBADAT • On the path to purity",
-      listenTitle: "Listen to Recitation"
+      beginning: "This is the first Surah.",
+      end: "This is the last Surah.",
+      surah: "Surah",
+      backHome: "Returned to the Quran home page."
     },
 
     hi: {
-      homeSubtitle: "अत्यंत कृपाशील, परम दयालु अल्लाह के नाम से।",
-      description: "पवित्र क़ुरआन अल्लाह का कलाम है। यह हमें सही रास्ता दिखाता है, सत्य और न्याय की शिक्षा देता है और जीवन के हर क्षेत्र में अल्लाह की प्रसन्नता प्राप्त करने का मार्ग बताता है।",
-      read: "क़ुरआन पढ़ें",
-      listen: "तिलावत सुनें",
-      footer: "इबादत • पवित्रता के मार्ग पर सीखना और अभ्यास",
-      readSubtitle: "ध्यान से पवित्र क़ुरआन पढ़ें",
-      listenSubtitle: "क़ुरआन की तिलावत से सुकून पाएँ",
-      choose: "सूरह चुनें",
-      search: "सूरह का नाम या नंबर लिखें",
-      loading: "लोड हो रहा है...",
-      error: "जानकारी लोड नहीं हो सकी। इंटरनेट जाँचें।",
-      none: "कोई सूरह नहीं मिली।",
-      surah: "सूरह",
-      verses: "आयतें",
-      play: "सुनें",
-      prev: "पिछली सूरह",
+      appTitle: "IBADAT | अल-क़ुरआन",
+      homeHeading: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+      homeSubtitle: "परम कृपाशील, अत्यंत दयावान अल्लाह के नाम से",
+      readHeading: "क़ुरआन पढ़ें",
+      readSubtitle: "क़ुरआन पढ़ें, सुकून महसूस करें",
+      listenHeading: "तिलावत सुनें",
+      listenSubtitle: "तिलावत सुनें और सुकून महसूस करें",
+      quranTitle: "अल-क़ुरआन",
+      quranDescription: "पवित्र क़ुरआन पढ़ें, सुनें और सुकून महसूस करें।",
+      readOption: "क़ुरआन पढ़ें",
+      listenOption: "तिलावत सुनें",
+      homeFooter: "अल-क़ुरआन — मार्गदर्शन और सुकून की रोशनी",
+      readFooter: "क़ुरआन पढ़ें, सुकून महसूस करें",
+      searchHeading: "सूरह खोजें",
+      searchPlaceholder: "सूरह का नाम लिखें...",
+      loadingRead: "क़ुरआन की आयतें लोड हो रही हैं...",
+      loadingListen: "सूरह की सूची लोड हो रही है...",
+      noResults: "कोई सूरह नहीं मिली।",
+      loadError: "सामग्री लोड नहीं हुई। इंटरनेट जाँचकर फिर कोशिश करें।",
+      previous: "पिछली सूरह",
       next: "अगली सूरह",
-      playAudio: "तिलावत चलाएँ",
-      pauseAudio: "तिलावत रोकें",
-      audioError: "ऑडियो नहीं चल सका। फिर प्रयास करें।",
-      translationError: "अनुवाद उपलब्ध नहीं है।",
-      readTitle: "इबादत • पवित्रता के मार्ग पर",
-      listenTitle: "तिलावत सुनें"
+      play: "तिलावत चलाएँ",
+      pause: "तिलावत रोकें",
+      audioError: "ऑडियो नहीं चल सका। फिर कोशिश करें।",
+      beginning: "यह पहली सूरह है।",
+      end: "यह आख़िरी सूरह है।",
+      surah: "सूरह",
+      backHome: "क़ुरआन के मुख्य पेज पर लौट आए।"
     }
   };
 
-  const $ = id => document.getElementById(id);
-  const audio = $("quranAudio");
-
-  const state = {
-    lang: "bn",
-    page: "home",
-    chapters: [],
-    currentSurah: 1,
-    currentAyah: 1,
-    fontSize: 32,
-    cache: new Map(),
-    audioItems: [],
-    audioIndex: 0,
-    audioMode: "single",
-    playingSurah: false,
-    requestId: 0
-  };
-
-  function t(key) {
-    return TEXT[state.lang]?.[key] || TEXT.bn[key] || key;
-  }
-
-  function digits(value) {
-    return new Intl.NumberFormat(
-      LOCALES[state.lang] || "bn-BD",
-      { useGrouping: false }
-    ).format(Number(value) || 0);
-  }
-
-  function escapeHTML(value) {
-    return String(value ?? "").replace(/[&<>"']/g, char => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#39;"
-    })[char]);
-  }
-
-  /* মূল IBADAT সেটিংস */
-  function readSiteSettings() {
-    try {
-      return JSON.parse(localStorage.getItem("appSettings") || "{}");
-    } catch (_) {
-      return {};
-    }
-  }
-
-  function normalizeLanguage(value) {
-    const lang = String(value || "bn").toLowerCase().trim();
-
-    if (
-      ["en", "english", "en-us", "en-gb"].includes(lang) ||
-      lang.startsWith("en-")
-    ) {
-      return "en";
-    }
-
-    if (
-      ["hi", "hindi", "हिन्दी", "हिंदी"].includes(lang) ||
-      lang.startsWith("hi-")
-    ) {
-      return "hi";
-    }
-
-    return "bn";
-  }
-
-  function getLanguage() {
-    return normalizeLanguage(readSiteSettings().lang);
-  }
-
-  function applyTheme() {
-    const settings = readSiteSettings();
-
-    document.body.classList.toggle(
-      "dark-mode",
-      settings.dark === true
-    );
-  }
-
-  async function api(path) {
-    const response = await fetch(`${API}${path}`);
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-
-    const result = await response.json();
-
-    if (result.code !== 200) {
-      throw new Error("Quran API error");
-    }
-
-    return result.data;
-  }
-
-  /*
-   * সূরার নাম তিনটি ভাষায়।
-   * ক্রমটি কুরআনের ১১৪টি সূরার ক্রমের সঙ্গে মিলিয়ে রাখা হয়েছে।
-   */
-  const SURAH_NAMES = {
+  const surahNames = {
     bn: [
       "আল-ফাতিহা", "আল-বাকারা", "আলে ইমরান", "আন-নিসা",
       "আল-মায়িদা", "আল-আনআম", "আল-আরাফ", "আল-আনফাল",
       "আত-তাওবা", "ইউনুস", "হুদ", "ইউসুফ", "আর-রাদ",
       "ইবরাহিম", "আল-হিজর", "আন-নাহল", "আল-ইসরা",
-      "আল-কাহফ", "মারইয়াম", "ত্বা-হা", "আল-আম্বিয়া",
-      "আল-হাজ্জ", "আল-মুমিনুন", "আন-নূর", "আল-ফুরকান",
+      "আল-কাহফ", "মারইয়াম", "ত্ব-হা", "আল-আম্বিয়া",
+      "আল-হজ", "আল-মুমিনুন", "আন-নূর", "আল-ফুরকান",
       "আশ-শুআরা", "আন-নামল", "আল-কাসাস", "আল-আনকাবুত",
       "আর-রূম", "লুকমান", "আস-সাজদা", "আল-আহযাব",
       "সাবা", "ফাতির", "ইয়াসিন", "আস-সাফফাত", "সাদ",
@@ -217,119 +127,224 @@
       "আর-রহমান", "আল-ওয়াকিয়া", "আল-হাদিদ", "আল-মুজাদিলা",
       "আল-হাশর", "আল-মুমতাহিনা", "আস-সাফ", "আল-জুমুআ",
       "আল-মুনাফিকুন", "আত-তাগাবুন", "আত-তালাক", "আত-তাহরিম",
-      "আল-মুলক", "আল-কলম", "আল-হাক্কা", "আল-মাআরিজ",
+      "আল-মুলক", "আল-কলম", "আল-হাক্কাহ", "আল-মাআরিজ",
       "নূহ", "আল-জিন", "আল-মুযযাম্মিল", "আল-মুদ্দাসসির",
-      "আল-কিয়ামা", "আল-ইনসান", "আল-মুরসালাত", "আন-নাবা",
+      "আল-কিয়ামাহ", "আল-ইনসান", "আল-মুরসালাত", "আন-নাবা",
       "আন-নাযিআত", "আবাসা", "আত-তাকভির", "আল-ইনফিতার",
       "আল-মুতাফফিফিন", "আল-ইনশিকাক", "আল-বুরুজ", "আত-তারিক",
-      "আল-আলা", "আল-গাশিয়া", "আল-ফজর", "আল-বালাদ",
+      "আল-আলা", "আল-গাশিয়াহ", "আল-ফজর", "আল-বালাদ",
       "আশ-শামস", "আল-লাইল", "আদ-দুহা", "আশ-শারহ",
-      "আত-তিন", "আল-আলাক", "আল-কদর", "আল-বাইয়্যিনা",
-      "আয-যিলযাল", "আল-আদিয়াত", "আল-কারিয়া", "আত-তাকাসুর",
-      "আল-আসর", "আল-হুমাযা", "আল-ফিল", "কুরাইশ",
-      "আল-মাউন", "আল-কাওসার", "আল-কাফিরুন", "আন-নাসর",
+      "আত-তিন", "আল-আলাক", "আল-কদর", "আল-বাইয়্যিনাহ",
+      "আয-যিলযাল", "আল-আদিয়াত", "আল-কারিআহ", "আত-তাকাসুর",
+      "আল-আসর", "আল-হুমাযাহ", "আল-ফিল", "কুরাইশ",
+      "আল-মাউন", "আল-কাউসার", "আল-কাফিরুন", "আন-নাসর",
       "আল-মাসাদ", "আল-ইখলাস", "আল-ফালাক", "আন-নাস"
     ],
 
+    en: [
+      "Al-Fatihah", "Al-Baqarah", "Ali 'Imran", "An-Nisa",
+      "Al-Ma'idah", "Al-An'am", "Al-A'raf", "Al-Anfal",
+      "At-Tawbah", "Yunus", "Hud", "Yusuf", "Ar-Ra'd",
+      "Ibrahim", "Al-Hijr", "An-Nahl", "Al-Isra",
+      "Al-Kahf", "Maryam", "Ta-Ha", "Al-Anbya",
+      "Al-Hajj", "Al-Mu'minun", "An-Nur", "Al-Furqan",
+      "Ash-Shu'ara", "An-Naml", "Al-Qasas", "Al-Ankabut",
+      "Ar-Rum", "Luqman", "As-Sajdah", "Al-Ahzab",
+      "Saba", "Fatir", "Ya-Sin", "As-Saffat", "Sad",
+      "Az-Zumar", "Ghafir", "Fussilat", "Ash-Shura",
+      "Az-Zukhruf", "Ad-Dukhan", "Al-Jathiyah", "Al-Ahqaf",
+      "Muhammad", "Al-Fath", "Al-Hujurat", "Qaf",
+      "Adh-Dhariyat", "At-Tur", "An-Najm", "Al-Qamar",
+      "Ar-Rahman", "Al-Waqi'ah", "Al-Hadid", "Al-Mujadilah",
+      "Al-Hashr", "Al-Mumtahanah", "As-Saff", "Al-Jumu'ah",
+      "Al-Munafiqun", "At-Taghabun", "At-Talaq", "At-Tahrim",
+      "Al-Mulk", "Al-Qalam", "Al-Haqqah", "Al-Ma'arij",
+      "Nuh", "Al-Jinn", "Al-Muzzammil", "Al-Muddaththir",
+      "Al-Qiyamah", "Al-Insan", "Al-Mursalat", "An-Naba",
+      "An-Nazi'at", "Abasa", "At-Takwir", "Al-Infitar",
+      "Al-Mutaffifin", "Al-Inshiqaq", "Al-Buruj", "At-Tariq",
+      "Al-A'la", "Al-Ghashiyah", "Al-Fajr", "Al-Balad",
+      "Ash-Shams", "Al-Layl", "Ad-Duha", "Ash-Sharh",
+      "At-Tin", "Al-Alaq", "Al-Qadr", "Al-Bayyinah",
+      "Az-Zalzalah", "Al-Adiyat", "Al-Qari'ah", "At-Takathur",
+      "Al-Asr", "Al-Humazah", "Al-Fil", "Quraysh",
+      "Al-Ma'un", "Al-Kawthar", "Al-Kafirun", "An-Nasr",
+      "Al-Masad", "Al-Ikhlas", "Al-Falaq", "An-Nas"
+    ],
+
     hi: [
-      "अल-फ़ातिहा", "अल-बक़रा", "आल-इमरान", "अन-निसा",
+      "अल-फ़ातिहा", "अल-बक़रा", "आले-इमरान", "अन-निसा",
       "अल-माइदा", "अल-अनआम", "अल-आराफ़", "अल-अनफ़ाल",
       "अत-तौबा", "यूनुस", "हूद", "यूसुफ़", "अर-रअद",
       "इब्राहीम", "अल-हिज्र", "अन-नहल", "अल-इसरा",
-      "अल-कहफ़", "मरयम", "ताहा", "अल-अंबिया", "अल-हज्ज",
-      "अल-मुमिनून", "अन-नूर", "अल-फ़ुरक़ान", "अश-शुअरा",
-      "अन-नम्ल", "अल-क़सस", "अल-अनकबूत", "अर-रूम",
-      "लुक़मान", "अस-सज्दा", "अल-अहज़ाब", "सबा", "फ़ातिर",
-      "या-सीन", "अस-साफ़्फ़ात", "साद", "अज़-जुमर", "ग़ाफ़िर",
-      "फ़ुस्सिलत", "अश-शूरा", "अज़-ज़ुख़रुफ़", "अद-दुख़ान",
-      "अल-जासिया", "अल-अहक़ाफ़", "मुहम्मद", "अल-फ़त्ह",
-      "अल-हुजुरात", "क़ाफ़", "अज़-ज़ारियात", "अत-तूर",
-      "अन-नज्म", "अल-क़मर", "अर-रहमान", "अल-वाक़िआ",
-      "अल-हदीद", "अल-मुजादिला", "अल-हश्र", "अल-मुम्तहिना",
-      "अस-सफ़्फ़", "अल-जुमुआ", "अल-मुनाफ़िक़ून",
-      "अत-तग़ाबुन", "अत-तलाक़", "अत-तहरीम", "अल-मुल्क",
-      "अल-क़लम", "अल-हाक़्क़ा", "अल-मआरिज", "नूह",
-      "अल-जिन्न", "अल-मुज़्ज़म्मिल", "अल-मुदस्सिर",
-      "अल-क़ियामा", "अल-इंसान", "अल-मुरसलात", "अन-नबा",
-      "अन-नाज़िआत", "अबसा", "अत-तकवीर", "अल-इन्फ़ितार",
-      "अल-मुतफ़्फ़िफ़ीन", "अल-इन्शिक़ाक़", "अल-बुरूज",
-      "अत-तारिक़", "अल-आला", "अल-ग़ाशिया", "अल-फ़ज्र",
-      "अल-बलद", "अश-शम्स", "अल-लैल", "अद-दुहा",
-      "अश-शरह", "अत-तीन", "अल-अलक़", "अल-क़द्र",
-      "अल-बय्यिना", "अज़-ज़िलज़ाल", "अल-आदियात",
-      "अल-क़ारिआ", "अत-तकासुर", "अल-अस्र", "अल-हुमज़ा",
-      "अल-फ़ील", "क़ुरैश", "अल-माऊन", "अल-कौसर",
-      "अल-काफ़िरून", "अन-नस्र", "अल-मसद", "अल-इख़लास",
-      "अल-फ़लक़", "अन-नास"
+      "अल-कहफ़", "मरयम", "ता-हा", "अल-अंबिया",
+      "अल-हज्ज", "अल-मुमिनून", "अन-नूर", "अल-फ़ुरकान",
+      "अश-शुअरा", "अन-नम्ल", "अल-क़सस", "अल-अंकबूत",
+      "अर-रूम", "लुक़मान", "अस-सज्दा", "अल-अहज़ाब",
+      "सबा", "फ़ातिर", "या-सीन", "अस-साफ़्फ़ात", "साद",
+      "अज़-ज़ुमर", "ग़ाफ़िर", "फ़ुस्सिलत", "अश-शूरा",
+      "अज़-ज़ुख़रुफ़", "अद-दुख़ान", "अल-जासिया", "अल-अहक़ाफ़",
+      "मुहम्मद", "अल-फ़त्ह", "अल-हुजुरात", "क़ाफ़",
+      "अज़-ज़ारियात", "अत-तूर", "अन-नज्म", "अल-क़मर",
+      "अर-रहमान", "अल-वाक़िआ", "अल-हदीद", "अल-मुजादिला",
+      "अल-हश्र", "अल-मुम्तहिना", "अस-सफ़", "अल-जुमुआ",
+      "अल-मुनाफ़िक़ून", "अत-तग़ाबुन", "अत-तलाक़", "अत-तहरीम",
+      "अल-मुल्क", "अल-क़लम", "अल-हाक़्क़ा", "अल-मआरिज",
+      "नूह", "अल-जिन्न", "अल-मुज़्ज़म्मिल", "अल-मुद्दस्सिर",
+      "अल-क़ियामा", "अल-इंसान", "अल-मुर्सलात", "अन-नबा",
+      "अन-नाज़िआत", "अबस", "अत-तकवीर", "अल-इन्फ़ितार",
+      "अल-मुतफ़्फ़िफ़ीन", "अल-इन्शिक़ाक़", "अल-बुरूज", "अत-तारिक़",
+      "अल-अला", "अल-ग़ाशिया", "अल-फ़ज्र", "अल-बलद",
+      "अश-शम्स", "अल-लैल", "अद-दुहा", "अश-शर्ह",
+      "अत-तीन", "अल-अलक़", "अल-क़द्र", "अल-बय्यिना",
+      "अज़-ज़िलज़ाल", "अल-आदियात", "अल-क़ारिआ", "अत-तकासुर",
+      "अल-अस्र", "अल-हुमज़ा", "अल-फ़ील", "क़ुरैश",
+      "अल-माऊन", "अल-कौसर", "अल-काफ़िरून", "अन-नस्र",
+      "अल-मसद", "अल-इख़लास", "अल-फ़लक़", "अन-नास"
     ]
   };
 
-  function chapterName(chapter) {
-    if (!chapter) return "";
+  const state = {
+    lang: "bn",
+    dark: false,
+    page: "home",
+    surahs: [],
+    currentSurah: 1,
+    arabicFontSize: 1.75,
+    translationFontSize: 1,
+    readRequest: 0,
+    audioRequest: 0,
+    messageTimer: null,
+    historyEntryAdded: false,
+    initialized: false
+  };
 
-    const index = Number(chapter.number) - 1;
+  const audio = $("quranAudio");
 
-    if (state.lang === "bn") {
-      return SURAH_NAMES.bn[index] || chapter.englishName || "";
+  function t(key) {
+    const language = translations[state.lang] || translations.bn;
+    return language[key] ?? translations.bn[key] ?? key;
+  }
+
+  function readSettings() {
+    try {
+      const raw = localStorage.getItem("appSettings");
+      if (!raw) return;
+
+      const settings = JSON.parse(raw);
+
+      if (["bn", "en", "hi"].includes(settings.lang)) {
+        state.lang = settings.lang;
+      }
+
+      state.dark = Boolean(settings.dark);
+    } catch (error) {
+      console.warn("IBADAT settings could not be read.", error);
     }
-
-    if (state.lang === "hi") {
-      return SURAH_NAMES.hi[index] || chapter.englishName || "";
-    }
-
-    return chapter.englishName || "";
-  }
-
-  function setHeader() {
-    $("pageSubtitle").textContent =
-      state.page === "read"
-        ? t("readSubtitle")
-        : state.page === "listen"
-          ? t("listenSubtitle")
-          : t("homeSubtitle");
-  }
-
-  function updateFooter() {
-    $("homeFooter").hidden = state.page !== "home";
-    $("readFooter").hidden = state.page !== "read";
-    $("listenFooter").hidden = state.page !== "listen";
-
-    $("readFooterMessage").textContent = t("readTitle");
-    updatePlayButton();
-  }
-
-  function updatePlayButton() {
-    const playing = !audio.paused;
-
-    $("playPause").textContent = playing ? "Ⅱ" : "▶";
-
-    $("playPause").setAttribute(
-      "aria-label",
-      playing ? t("pauseAudio") : t("playAudio")
-    );
   }
 
   function showMessage(message) {
     const box = $("appMessage");
+    if (!box) return;
 
     box.textContent = message;
-    box.classList.add("show");
+    box.hidden = false;
 
-    clearTimeout(showMessage.timer);
+    if (state.messageTimer) {
+      clearTimeout(state.messageTimer);
+    }
 
-    showMessage.timer = setTimeout(() => {
-      box.classList.remove("show");
+    state.messageTimer = setTimeout(() => {
+      box.hidden = true;
     }, 2600);
   }
 
-  function pauseAudio() {
-    state.playingSurah = false;
-    audio.pause();
-    updatePlayButton();
+  function updateHeader() {
+    const heading = $("pageSubtitle");
+    const subtitle = $("heroSubtitle");
+
+    if (state.page === "home") {
+      heading.textContent = t("homeHeading");
+      heading.lang = "ar";
+      heading.dir = "rtl";
+      subtitle.textContent = t("homeSubtitle");
+    } else if (state.page === "read") {
+      heading.textContent = t("readHeading");
+      heading.lang = state.lang;
+      heading.dir = "auto";
+      subtitle.textContent = t("readSubtitle");
+    } else {
+      heading.textContent = t("listenHeading");
+      heading.lang = state.lang;
+      heading.dir = "auto";
+      subtitle.textContent = t("listenSubtitle");
+    }
+
+    document.title = t("appTitle");
   }
 
-  function openPage(page) {
-    pauseAudio();
+  function applyTheme() {
+    document.body.classList.toggle("dark-mode", state.dark);
+  }
+
+  function getSurahName(number) {
+    const names = surahNames[state.lang] || surahNames.bn;
+    return names[number - 1] || `Surah ${number}`;
+  }
+
+  function getTranslationEdition() {
+    if (state.lang === "en") return "en.sahih";
+    if (state.lang === "hi") return "hi.hindi";
+    return "bn.bengali";
+  }
+
+  async function fetchJson(url) {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.code && result.code !== 200) {
+      throw new Error(result.status || "API request failed");
+    }
+
+    return result.data;
+  }
+
+  async function ensureSurahs() {
+    if (state.surahs.length === 114) {
+      return state.surahs;
+    }
+
+    const result = await fetchJson(`${API_BASE}/surah`);
+
+    if (!Array.isArray(result) || result.length !== 114) {
+      throw new Error("Invalid Surah list.");
+    }
+
+    state.surahs = result;
+    return result;
+  }
+
+  function makeElement(tag, className, text) {
+    const element = document.createElement(tag);
+
+    if (className) {
+      element.className = className;
+    }
+
+    if (text !== undefined && text !== null) {
+      element.textContent = text;
+    }
+
+    return element;
+  }
+
+  function setPage(page, options = {}) {
+    if (!["home", "read", "listen"].includes(page)) return;
 
     state.page = page;
 
@@ -337,599 +352,568 @@
     $("readPage").hidden = page !== "read";
     $("listenPage").hidden = page !== "listen";
 
-    setHeader();
-    updateFooter();
+    $("homePage").classList.toggle("active", page === "home");
+    $("readPage").classList.toggle("active", page === "read");
+    $("listenPage").classList.toggle("active", page === "listen");
 
-    if (page === "read") {
-      loadSurah(state.currentSurah, state.currentAyah);
+    $("homeFooter").hidden = page !== "home";
+    $("readFooter").hidden = page !== "read";
+    $("listenFooter").hidden = page !== "listen";
+
+    updateHeader();
+
+    if (page !== "listen" && audio && !audio.paused) {
+      audio.pause();
     }
 
-    if (page === "listen") {
+    updatePlayButton();
+
+    if (page === "read" && !options.skipLoad) {
+      loadSurah(state.currentSurah);
+    }
+
+    if (page === "listen" && !options.skipLoad) {
       renderListenList();
     }
-  }
 
-  /* সূরা সার্চ */
-  function renderSurahSearchList(query = "") {
-    const list = $("surahSearchList");
-    const q = query.trim().toLocaleLowerCase();
-
-    const matches = state.chapters.filter(ch => {
-      const values = [
-        chapterName(ch),
-        ch.englishName,
-        ch.name_arabic,
-        String(ch.number),
-        digits(ch.number)
-      ];
-
-      return values.some(value =>
-        String(value || "").toLocaleLowerCase().includes(q)
-      );
-    });
-
-    if (!matches.length) {
-      list.innerHTML =
-        `<p class="status">${escapeHTML(t("none"))}</p>`;
-      return;
+    if (page === "home") {
+      $("surahSearchPanel").hidden = true;
+      $("searchToggle").setAttribute("aria-expanded", "false");
     }
 
-    list.innerHTML = matches.map(ch => `
-      <button
-        class="surah-search-row"
-        type="button"
-        data-select-surah="${ch.number}"
-      >
-        <span class="surah-index">${digits(ch.number)}</span>
-        <span class="surah-row-copy">
-          <strong>${escapeHTML(chapterName(ch))}</strong>
-          <small>${digits(ch.numberOfAyahs)} ${escapeHTML(t("verses"))}</small>
-        </span>
-      </button>
-    `).join("");
-
-    list.querySelectorAll("[data-select-surah]").forEach(button => {
-      button.addEventListener("click", () => {
-        state.currentSurah = Number(button.dataset.selectSurah);
-        state.currentAyah = 1;
-
-        $("surahSearchPanel").hidden = true;
-        $("searchToggle").setAttribute("aria-expanded", "false");
-
-        loadSurah(state.currentSurah, 1);
-      });
-    });
+    window.scrollTo(0, 0);
   }
 
-  /* তিলাওয়াতের সূরা তালিকা */
-  function renderListenList() {
-    if (!state.chapters.length) {
-      $("surahList").innerHTML =
-        `<p class="status">${escapeHTML(t("loading"))}</p>`;
-      return;
-    }
+  /*
+   * Back navigation strategy:
+   *
+   * Opening Read or Listen creates one same-URL history entry.
+   * The first Back is handled by popstate and returns to Quran Home.
+   * From Quran Home, the next Back can return to the parent IBADAT page.
+   *
+   * If this document is opened inside an iframe or a parent app that
+   * manages its own navigation, that parent must cooperate with browser
+   * history for fully native back-stack behavior.
+   */
 
-    $("surahList").innerHTML = state.chapters.map(ch => `
-      <button
-        class="surah-row ${ch.number === state.currentSurah ? "active" : ""}"
-        type="button"
-        data-listen-surah="${ch.number}"
-      >
-        <span class="surah-index">${digits(ch.number)}</span>
-        <span class="surah-row-copy">
-          <strong>${escapeHTML(chapterName(ch))}</strong>
-          <small>${digits(ch.numberOfAyahs)} ${escapeHTML(t("verses"))}</small>
-        </span>
-      </button>
-    `).join("");
+  function openSubpage(page) {
+    if (page !== "read" && page !== "listen") return;
+    if (state.page === page) return;
 
-    $("surahList").querySelectorAll("[data-listen-surah]").forEach(button => {
-      button.addEventListener("click", async () => {
-        pauseAudio();
-
-        state.currentSurah = Number(button.dataset.listenSurah);
-        state.currentAyah = 1;
-        state.audioMode = "surah";
-
-        renderListenList();
-
-        await loadSurah(state.currentSurah, 1);
-        await playFullSurah();
-      });
-    });
-  }
-
-  /* ১১৪টি সূরার তথ্য ও নাম লোড */
-  async function loadChapters() {
-    try {
-      const chapters = await api("/surah");
-
-      state.chapters = chapters.map(ch => ({ ...ch }));
-
-      renderSurahSearchList("");
-      renderListenList();
-
-      if (state.page === "read") {
-        await loadSurah(state.currentSurah, state.currentAyah);
+    if (state.page === "home") {
+      try {
+        history.pushState(
+          { ibadatQuranSubpage: true },
+          "",
+          window.location.href
+        );
+        state.historyEntryAdded = true;
+      } catch (error) {
+        console.warn("Could not add Quran navigation history.", error);
       }
-    } catch (_) {
-      const errorHTML =
-        `<p class="status">${escapeHTML(t("error"))}</p>`;
+    }
 
-      $("readContent").innerHTML = errorHTML;
-      $("surahList").innerHTML = errorHTML;
-      $("surahSearchList").innerHTML = errorHTML;
+    setPage(page);
+  }
+
+  window.addEventListener("popstate", () => {
+    if (state.page === "read" || state.page === "listen") {
+      setPage("home");
+      showMessage(t("backHome"));
+      state.historyEntryAdded = false;
+    }
+  });
+
+  function applyLanguage() {
+    $("quranTitle").textContent = t("quranTitle");
+    $("quranDescription").textContent = t("quranDescription");
+    $("readOptionText").textContent = t("readOption");
+    $("listenOptionText").textContent = t("listenOption");
+    $("footerText").textContent = t("homeFooter");
+    $("readFooterMessage").textContent = t("readFooter");
+
+    $("surahSearchHeading").textContent = t("searchHeading");
+    $("surahSearchInput").placeholder = t("searchPlaceholder");
+
+    $("readLoading").textContent = t("loadingRead");
+    $("listenLoading").textContent = t("loadingListen");
+
+    $("prevAyah").setAttribute("aria-label", t("previous"));
+    $("nextAyah").setAttribute("aria-label", t("next"));
+    $("prevTrack").setAttribute("aria-label", t("previous"));
+    $("nextTrack").setAttribute("aria-label", t("next"));
+
+    $("openRead").setAttribute("aria-label", t("readOption"));
+    $("openListen").setAttribute("aria-label", t("listenOption"));
+
+    updateHeader();
+    updatePlayButton();
+
+    if (state.surahs.length) {
+      renderSearchList($("surahSearchInput").value);
+      renderListenList();
+    }
+
+    if (state.page === "read") {
+      loadSurah(state.currentSurah);
     }
   }
 
-  /* আরবি, অনুবাদ ও অডিও তথ্য */
-  async function getSurahData(number) {
-    const key = `${number}:${state.lang}`;
+  function createSurahButton(surah, mode) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "surah-item";
+    button.dataset.surah = String(surah.number);
 
-    if (state.cache.has(key)) {
-      return state.cache.get(key);
+    if (mode === "listen" && surah.number === state.currentSurah) {
+      button.classList.add("playing");
     }
 
-    const edition = EDITIONS[state.lang] || EDITIONS.bn;
+    const number = makeElement(
+      "span",
+      "surah-item-number",
+      String(surah.number)
+    );
 
-    const promise = Promise.all([
-      api(`/surah/${number}/${ARABIC_EDITION}`),
-      api(`/surah/${number}/${edition}`).catch(() => null),
-      api(`/surah/${number}/${AUDIO_EDITION}`).catch(() => null)
-    ]).then(([ar, tr, au]) => ({
-      arabic: ar.ayahs || [],
-      translations: tr?.ayahs || [],
-      audio: au?.ayahs || []
-    }));
+    const name = makeElement(
+      "span",
+      "surah-item-name",
+      `${getSurahName(surah.number)} (${surah.englishName || ""})`
+    );
 
-    state.cache.set(key, promise);
+    const arabic = makeElement(
+      "span",
+      "surah-item-arabic",
+      surah.name || ""
+    );
+
+    arabic.dir = "rtl";
+
+    button.append(number, name, arabic);
+
+    button.addEventListener("click", () => {
+      state.currentSurah = surah.number;
+
+      if (mode === "listen") {
+        playSurah(surah.number);
+      } else {
+        loadSurah(surah.number);
+      }
+    });
+
+    return button;
+  }
+
+  async function renderSearchList(query = "") {
+    const list = $("surahList");
+    if (!list) return;
+
+    list.replaceChildren();
 
     try {
-      const data = await promise;
-      state.cache.set(key, data);
-      return data;
+      const surahs = await ensureSurahs();
+      const normalized = query.trim().toLocaleLowerCase();
+
+      const matches = surahs.filter((surah) => {
+        const localName = getSurahName(surah.number).toLocaleLowerCase();
+        const englishName = (surah.englishName || "").toLocaleLowerCase();
+        const arabicName = (surah.name || "").toLocaleLowerCase();
+
+        return (
+          !normalized ||
+          localName.includes(normalized) ||
+          englishName.includes(normalized) ||
+          arabicName.includes(normalized) ||
+          String(surah.number) === normalized
+        );
+      });
+
+      if (!matches.length) {
+        list.appendChild(
+          makeElement("p", "empty-message", t("noResults"))
+        );
+        return;
+      }
+
+      matches.forEach((surah) => {
+        list.appendChild(createSurahButton(surah, "read"));
+      });
     } catch (error) {
-      state.cache.delete(key);
-      throw error;
-    }
-  }
-
-  async function loadSurah(number, jumpAyah = 1) {
-    if (number < 1 || number > 114) return;
-
-    state.currentSurah = Number(number);
-    state.currentAyah = Number(jumpAyah) || 1;
-
-    const request = ++state.requestId;
-
-    $("readContent").innerHTML =
-      `<p class="status">${escapeHTML(t("loading"))}</p>`;
-
-    try {
-      const data = await getSurahData(number);
-
-      if (request !== state.requestId) return;
-
-      state.audioItems = data.audio;
-
-      if (state.currentAyah > data.arabic.length) {
-        state.currentAyah = 1;
-      }
-
-      renderAyahs(
-        state.chapters[number - 1],
-        data,
-        state.currentAyah
+      list.replaceChildren(
+        makeElement("p", "error-message", t("loadError"))
       );
 
-      updateFooter();
-
-      if (state.page === "listen") {
-        renderListenList();
-      }
-    } catch (_) {
-      if (request === state.requestId) {
-        $("readContent").innerHTML =
-          `<p class="status">${escapeHTML(t("error"))}</p>`;
-      }
+      console.error("Search list error:", error);
     }
   }
 
-  function renderAyahs(chapter, data, jumpAyah) {
-    const ayahs = data.arabic || [];
-    const translations = data.translations || [];
+  async function renderListenList() {
+    const list = $("listenSurahList");
+    if (!list) return;
 
-    const heading = `
-      <h2 class="read-surah-heading">
-        ${escapeHTML(t("surah"))} ${escapeHTML(chapterName(chapter))}
-      </h2>
-      <p class="read-surah-meta">
-        ${digits(chapter?.number)} • ${digits(ayahs.length)} ${escapeHTML(t("verses"))}
-      </p>
-    `;
+    list.replaceChildren();
 
-    const cards = ayahs.map((ayah, index) => {
-      const number = ayah.numberInSurah || index + 1;
-      const translation =
-        translations[index]?.text || t("translationError");
-      const audioURL = data.audio[index]?.audio || "";
+    try {
+      const surahs = await ensureSurahs();
 
-      return `
-        <article class="ayah-card" id="ayah-${number}">
-          <div class="ayah-card-top">
-            <span class="ayah-number">${digits(number)}</span>
-            <div class="ayah-actions">
-              <button
-                class="mini-button"
-                type="button"
-                data-play-ayah="${number}"
-                ${audioURL ? "" : "disabled"}
-              >▶ ${escapeHTML(t("play"))}</button>
-            </div>
-          </div>
-
-          <p class="ayah-arabic" lang="ar" dir="rtl">
-            ${escapeHTML(ayah.text)}
-          </p>
-
-          <p
-            class="ayah-translation"
-            style="font-size:${translationFontSize()}px"
-          >${escapeHTML(translation)}</p>
-        </article>
-      `;
-    }).join("");
-
-    $("readContent").innerHTML =
-      `${heading}<div class="ayah-list">${cards}</div>`;
-
-    $("readContent").querySelectorAll("[data-play-ayah]").forEach(button => {
-      button.addEventListener("click", () => {
-        state.currentAyah = Number(button.dataset.playAyah);
-        state.audioMode = "single";
-        playCurrentAyah(true);
-        updateFooter();
+      surahs.forEach((surah) => {
+        list.appendChild(createSurahButton(surah, "listen"));
       });
-    });
+    } catch (error) {
+      list.appendChild(
+        makeElement("p", "error-message", t("loadError"))
+      );
 
-    $("readFooterMessage").textContent = t("readTitle");
-
-    requestAnimationFrame(() => {
-      const target = $(`ayah-${jumpAyah}`);
-
-      if (target) {
-        target.scrollIntoView({
-          block: "start",
-          behavior: "auto"
-        });
-      }
-    });
-  }
-
-  function translationFontSize() {
-    const size = 13 + (state.fontSize - 32) * 0.25;
-    return Math.max(10, Math.min(18, size));
-  }
-
-  /* একক আয়াত চালানো */
-  async function playCurrentAyah(autoplay = false) {
-    try {
-      const data = await getSurahData(state.currentSurah);
-      const item = data.audio[state.currentAyah - 1];
-
-      if (!item?.audio) {
-        showMessage(t("audioError"));
-        return;
-      }
-
-      state.audioItems = data.audio;
-      state.audioIndex = state.currentAyah - 1;
-      state.audioMode = "single";
-      state.playingSurah = false;
-
-      audio.src = item.audio;
-
-      if (autoplay) {
-        await audio.play();
-      }
-
-      updateFooter();
-    } catch (_) {
-      showMessage(t("audioError"));
+      console.error("Listen list error:", error);
     }
   }
 
-  /* একটি সম্পূর্ণ সূরার সব আয়াত চালানো */
-  async function playFullSurah() {
+  function applyFontSizes() {
+    document.documentElement.style.setProperty(
+      "--arabic-font-size",
+      `${state.arabicFontSize}rem`
+    );
+
+    document.documentElement.style.setProperty(
+      "--translation-font-size",
+      `${state.translationFontSize}rem`
+    );
+  }
+
+  function changeFont(direction) {
+    state.arabicFontSize = Math.max(
+      1.1,
+      Math.min(3, state.arabicFontSize + direction * 0.1)
+    );
+
+    state.translationFontSize = Math.max(
+      0.75,
+      Math.min(1.8, state.translationFontSize + direction * 0.05)
+    );
+
+    applyFontSizes();
+  }
+
+  function renderSurah(arabicData, translationData) {
+    const content = $("readContent");
+    content.replaceChildren();
+
+    const heading = makeElement("div", "surah-heading");
+
+    const headingName = makeElement(
+      "h2",
+      "surah-heading-name",
+      `${t("surah")} ${arabicData.number}: ${getSurahName(arabicData.number)}`
+    );
+
+    const headingArabic = makeElement(
+      "p",
+      "surah-heading-arabic",
+      arabicData.name || ""
+    );
+
+    headingArabic.dir = "rtl";
+    heading.append(headingName, headingArabic);
+    content.appendChild(heading);
+
+    if (arabicData.number !== 1 && arabicData.number !== 9) {
+      const basmala = makeElement(
+        "p",
+        "bismillah",
+        "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ"
+      );
+
+      basmala.dir = "rtl";
+      content.appendChild(basmala);
+    }
+
+    const arabicAyahs = arabicData.ayahs || [];
+    const translatedAyahs = translationData.ayahs || [];
+
+    arabicAyahs.forEach((ayah, index) => {
+      const article = makeElement("article", "ayah");
+
+      const arabic = makeElement("p", "ayah-arabic", ayah.text);
+      arabic.dir = "rtl";
+
+      const number = makeElement(
+        "span",
+        "ayah-number",
+        String(ayah.numberInSurah)
+      );
+
+      arabic.appendChild(number);
+
+      const translationText = translatedAyahs[index]
+        ? translatedAyahs[index].text
+        : "";
+
+      const translation = makeElement(
+        "p",
+        "ayah-translation",
+        translationText
+      );
+
+      article.append(arabic, translation);
+      content.appendChild(article);
+    });
+
+    applyFontSizes();
+  }
+
+  async function loadSurah(number) {
+    if (!Number.isInteger(number) || number < 1 || number > 114) {
+      return;
+    }
+
+    state.currentSurah = number;
+
+    const requestId = ++state.readRequest;
+    const content = $("readContent");
+
+    content.replaceChildren(
+      makeElement("p", "loading-message", t("loadingRead"))
+    );
+
     try {
-      const data = await getSurahData(state.currentSurah);
+      const translationEdition = getTranslationEdition();
 
-      if (!data.audio.length) {
-        showMessage(t("audioError"));
-        return;
-      }
+      const [arabicData, translationData] = await Promise.all([
+        fetchJson(
+          `${API_BASE}/surah/${number}/${ARABIC_EDITION}`
+        ),
+        fetchJson(
+          `${API_BASE}/surah/${number}/${translationEdition}`
+        )
+      ]);
 
-      state.audioItems = data.audio;
-      state.audioIndex = 0;
-      state.audioMode = "surah";
-      state.playingSurah = true;
+      if (requestId !== state.readRequest) return;
 
-      await playAudioIndex();
-    } catch (_) {
-      state.playingSurah = false;
-      showMessage(t("audioError"));
+      renderSurah(arabicData, translationData);
+      renderSearchList($("surahSearchInput").value);
+    } catch (error) {
+      if (requestId !== state.readRequest) return;
+
+      content.replaceChildren(
+        makeElement("p", "error-message", t("loadError"))
+      );
+
+      console.error("Quran content error:", error);
     }
   }
 
-  async function playAudioIndex() {
-    const item = state.audioItems[state.audioIndex];
+  function updatePlayButton() {
+    const button = $("playPause");
+    if (!button || !audio) return;
 
-    if (!item) {
-      state.playingSurah = false;
+    const playing = !audio.paused;
+
+    button.innerHTML = playing
+      ? '<span aria-hidden="true">⏸</span>'
+      : '<span aria-hidden="true">▶</span>';
+
+    button.setAttribute("aria-label", playing ? t("pause") : t("play"));
+    button.title = playing ? t("pause") : t("play");
+  }
+
+  function updateListenSelection() {
+    document.querySelectorAll(
+      "#listenSurahList .surah-item"
+    ).forEach((button) => {
+      const selected =
+        Number(button.dataset.surah) === state.currentSurah;
+
+      button.classList.toggle("playing", selected);
+
+      if (selected) {
+        button.setAttribute("aria-current", "true");
+      } else {
+        button.removeAttribute("aria-current");
+      }
+    });
+  }
+
+  async function playSurah(number) {
+    if (!audio || number < 1 || number > 114) return;
+
+    state.currentSurah = number;
+
+    const requestId = ++state.audioRequest;
+
+    audio.pause();
+    audio.removeAttribute("src");
+    audio.load();
+
+    audio.src = `${AUDIO_BASE}${number}.mp3`;
+
+    updateListenSelection();
+    updatePlayButton();
+
+    try {
+      await audio.play();
+
+      if (requestId !== state.audioRequest) {
+        audio.pause();
+        return;
+      }
+
+      updatePlayButton();
+      updateListenSelection();
+    } catch (error) {
+      if (requestId !== state.audioRequest) return;
+
+      updatePlayButton();
+      showMessage(t("audioError"));
+      console.error("Audio playback error:", error);
+    }
+  }
+
+  function toggleAudio() {
+    if (!audio) return;
+
+    if (!audio.paused) {
+      audio.pause();
       updatePlayButton();
       return;
     }
 
-    if (!item.audio) {
-      state.audioIndex++;
-      return playAudioIndex();
-    }
-
-    state.currentAyah = state.audioIndex + 1;
-    audio.src = item.audio;
-
-    try {
-      await audio.play();
-      updateFooter();
-    } catch (_) {
-      state.playingSurah = false;
-      showMessage(t("audioError"));
-    }
-  }
-
-  /* পড়ার পেজে আগের বা পরের সম্পূর্ণ সূরা */
-  function moveSurah(direction) {
-    const nextSurah = state.currentSurah + direction;
-
-    if (nextSurah < 1 || nextSurah > 114) {
+    if (!audio.src) {
+      playSurah(state.currentSurah);
       return;
     }
 
-    pauseAudio();
-
-    state.currentSurah = nextSurah;
-    state.currentAyah = 1;
-
-    if (state.page === "listen") {
-      state.audioMode = "surah";
-
-      loadSurah(nextSurah, 1).then(() => {
-        playFullSurah();
+    audio.play()
+      .then(updatePlayButton)
+      .catch((error) => {
+        console.error("Audio resume error:", error);
+        showMessage(t("audioError"));
       });
+  }
+
+  function changeSurah(direction, mode) {
+    const nextNumber = state.currentSurah + direction;
+
+    if (nextNumber < 1) {
+      showMessage(t("beginning"));
+      return;
+    }
+
+    if (nextNumber > 114) {
+      showMessage(t("end"));
+      return;
+    }
+
+    state.currentSurah = nextNumber;
+
+    if (mode === "listen") {
+      playSurah(nextNumber);
     } else {
-      loadSurah(nextSurah, 1);
+      loadSurah(nextNumber);
     }
   }
 
-  /* মূল সেটিংস থেকে ভাষা ও থিম প্রয়োগ */
-  function applyLanguage() {
-    state.lang = getLanguage();
+  function toggleSearch() {
+    const panel = $("surahSearchPanel");
+    const button = $("searchToggle");
+    const shouldOpen = panel.hidden;
 
-    document.documentElement.lang = state.lang;
+    panel.hidden = !shouldOpen;
+    button.setAttribute("aria-expanded", String(shouldOpen));
 
-    applyTheme();
-
-    $("quranDescription").textContent = t("description");
-    $("readOptionText").textContent = t("read");
-    $("listenOptionText").textContent = t("listen");
-    $("footerText").textContent = t("footer");
-    $("surahSearchHeading").textContent = t("choose");
-    $("surahSearchInput").placeholder = t("search");
-    $("listenHeading").textContent = t("listenTitle");
-    $("listenDescription").textContent = t("listenSubtitle");
-    $("searchToggle").title = t("search");
-
-    $("searchToggle").setAttribute("aria-label", t("search"));
-    $("prevAyah").setAttribute("aria-label", t("prev"));
-    $("nextAyah").setAttribute("aria-label", t("next"));
-    $("prevTrack").setAttribute("aria-label", t("prev"));
-    $("nextTrack").setAttribute("aria-label", t("next"));
-
-    setHeader();
-    updateFooter();
-
-    if (state.chapters.length) {
-      renderSurahSearchList($("surahSearchInput").value);
-      renderListenList();
-
-      if (state.page === "read") {
-        loadSurah(state.currentSurah, state.currentAyah);
-      }
+    if (shouldOpen) {
+      renderSearchList($("surahSearchInput").value);
+      $("surahSearchInput").focus();
     }
   }
 
-  function wireEvents() {
+  function bindEvents() {
     $("openRead").addEventListener("click", () => {
-      openPage("read");
+      openSubpage("read");
     });
 
     $("openListen").addEventListener("click", () => {
-      openPage("listen");
-    });
-
-    $("searchToggle").addEventListener("click", () => {
-      const panel = $("surahSearchPanel");
-
-      panel.hidden = !panel.hidden;
-
-      $("searchToggle").setAttribute(
-        "aria-expanded",
-        String(!panel.hidden)
-      );
-
-      if (!panel.hidden) {
-        renderSurahSearchList($("surahSearchInput").value);
-        $("surahSearchInput").focus();
-      }
-    });
-
-    $("surahSearchInput").addEventListener("input", event => {
-      renderSurahSearchList(event.target.value);
+      openSubpage("listen");
     });
 
     $("fontDown").addEventListener("click", () => {
-      changeFont(-2);
+      changeFont(-1);
     });
 
     $("fontUp").addEventListener("click", () => {
-      changeFont(2);
+      changeFont(1);
+    });
+
+    $("searchToggle").addEventListener("click", toggleSearch);
+
+    $("surahSearchInput").addEventListener("input", (event) => {
+      renderSearchList(event.target.value);
     });
 
     $("prevAyah").addEventListener("click", () => {
-      moveSurah(-1);
+      changeSurah(-1, "read");
     });
 
     $("nextAyah").addEventListener("click", () => {
-      moveSurah(1);
+      changeSurah(1, "read");
     });
 
     $("prevTrack").addEventListener("click", () => {
-      moveSurah(-1);
+      changeSurah(-1, "listen");
     });
 
     $("nextTrack").addEventListener("click", () => {
-      moveSurah(1);
+      changeSurah(1, "listen");
     });
 
-    $("playPause").addEventListener("click", () => {
-      if (!audio.paused) {
-        pauseAudio();
-        return;
-      }
-
-      if (state.audioMode === "surah" && state.audioItems.length) {
-        state.playingSurah = true;
-        playAudioIndex();
-      } else {
-        playCurrentAyah(true);
-      }
-    });
+    $("playPause").addEventListener("click", toggleAudio);
 
     audio.addEventListener("play", updatePlayButton);
     audio.addEventListener("pause", updatePlayButton);
 
-    /* বর্তমান সূরার সব আয়াত শেষ হলে পরের সূরা শুরু */
     audio.addEventListener("ended", () => {
-      if (state.audioMode !== "surah" || !state.playingSurah) {
-        updateFooter();
-        return;
-      }
-
-      state.audioIndex++;
-
-      if (state.audioIndex < state.audioItems.length) {
-        state.currentAyah = state.audioIndex + 1;
-        playAudioIndex();
-        return;
-      }
-
-      if (state.currentSurah < 114) {
-        state.currentSurah++;
-        state.currentAyah = 1;
-
-        renderListenList();
-
-        loadSurah(state.currentSurah, 1).then(() => {
-          if (state.playingSurah) {
-            playFullSurah();
-          }
-        });
-
-        return;
-      }
-
-      state.playingSurah = false;
-      updateFooter();
-    });
-
-    audio.addEventListener("error", () => {
-      if (state.page !== "home") {
-        showMessage(t("audioError"));
+      if (state.page === "listen" && state.currentSurah < 114) {
+        playSurah(state.currentSurah + 1);
+      } else {
+        updatePlayButton();
       }
     });
 
-    /* মূল সেটিংস অন্য ট্যাবে বদলালে */
-    window.addEventListener("storage", event => {
-      if (!event.key || event.key === "appSettings") {
-        const newLanguage = getLanguage();
+    audio.addEventListener("error", updatePlayButton);
 
-        applyTheme();
+    window.addEventListener("storage", (event) => {
+      if (event.key !== "appSettings") return;
 
-        if (newLanguage !== state.lang) {
-          state.cache.clear();
-          applyLanguage();
-        }
-      }
-    });
-
-    /* পেজে ফিরে এলে সর্বশেষ সেটিংস পড়া */
-    window.addEventListener("pageshow", () => {
-      const newLanguage = getLanguage();
-
+      const previousLanguage = state.lang;
+      readSettings();
       applyTheme();
 
-      if (newLanguage !== state.lang) {
-        state.cache.clear();
+      if (previousLanguage !== state.lang) {
         applyLanguage();
+      } else {
+        updateHeader();
       }
     });
-  }
-
-  /* আরবি লেখা ও অনুবাদ একসঙ্গে ছোট-বড় */
-  function changeFont(delta) {
-    state.fontSize = Math.max(
-      22,
-      Math.min(54, state.fontSize + delta)
-    );
-
-    document.documentElement.style.setProperty(
-      "--arabic-size",
-      `${state.fontSize}px`
-    );
-
-    document.querySelectorAll(".ayah-translation").forEach(element => {
-      element.style.fontSize = `${translationFontSize()}px`;
-    });
-
-    try {
-      localStorage.setItem(
-        "ibadat_quran_font_size",
-        String(state.fontSize)
-      );
-    } catch (_) {}
   }
 
   async function init() {
-    try {
-      const saved = Number(
-        localStorage.getItem("ibadat_quran_font_size")
-      );
+    if (state.initialized) return;
+    state.initialized = true;
 
-      if (saved >= 22 && saved <= 54) {
-        state.fontSize = saved;
-      }
-    } catch (_) {}
-
-    document.documentElement.style.setProperty(
-      "--arabic-size",
-      `${state.fontSize}px`
-    );
-
+    readSettings();
+    applyTheme();
+    applyFontSizes();
+    bindEvents();
     applyLanguage();
-    wireEvents();
-    updateFooter();
 
-    await loadChapters();
+    setPage("home", { skipLoad: true });
+
+    try {
+      await ensureSurahs();
+      await renderSearchList("");
+      await renderListenList();
+    } catch (error) {
+      console.error("Quran initialization error:", error);
+    }
   }
 
   init();
