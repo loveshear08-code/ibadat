@@ -1,178 +1,303 @@
-/* =====================================
-   ALLAH NAMES — COMPLETE CSS
-   Existing conditions preserved
-   ===================================== */
+
+/* =========================================
+   IBADAT — ALLAH NAMES PAGE
+   Fixed top board
+   Fixed middle board with internal scrolling
+   Fixed footer board
+   Bengali / English / Hindi
+   Light & Dark Mode
+========================================= */
 
 :root {
-    --primary: #1F6B3A;
-    --primary-dark: #0B3D26;
-    --bg: #F8F6F0;
-    --card: #CFE8C8;
-    --card-border: #A8C99D;
-    --text: #1E4620;
-    --gold: #D4AF37;
-    --danger: #D64545;
-    --shadow: 0 3px 10px rgba(31, 107, 58, 0.12);
+    --deep-green: #123d2c;
+    --dark-green: #0b2c20;
+    --green: #20583e;
+
+    --light-pista: #e6edce;
+    --option-pista: #e9efda;
+
+    --cream: #fff9eb;
+    --cream-white: rgba(255, 252, 242, 0.94);
+    --cream-layer: rgba(255, 252, 242, 0.79);
+
+    --gold: #d6b56d;
+    --gold-dark: #9b7837;
+
+    --text: #24382c;
+    --muted: #657367;
+    --border: rgba(214, 181, 109, 0.85);
+
+    --shadow: 0 5px 18px rgba(0, 0, 0, 0.12);
+
+    --header-height: 112px;
+    --footer-height: 48px;
+    --page-gap: 10px;
+    --app-padding: 12px;
+
+    --card-gap: 8px;
+    --card-radius: 15px;
 }
 
 /* RESET */
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
-html {
-    min-height: 100%;
+html,
+body {
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    min-width: 280px;
+    overflow: hidden;
 }
 
 body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: sans-serif;
     color: var(--text);
+    font-family:
+        "Noto Sans Bengali",
+        "Nirmala UI",
+        "Noto Sans Devanagari",
+        Arial,
+        sans-serif;
 
-    /* SAME MAIN BACKGROUND AS HOME PAGE */
     background:
         linear-gradient(
-            rgba(255, 252, 243, 0.76),
-            rgba(255, 252, 243, 0.76)
+            var(--cream-layer),
+            var(--cream-layer)
         ),
-        url("../assets/main-bg.jpg");
+        url("../assets/main-bg.jpg") center / cover no-repeat;
 
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
+    overscroll-behavior: none;
 }
 
 /* MAIN PAGE */
 
 .names-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--page-gap);
+
     width: 100%;
-    max-width: 900px;
-    min-height: 100vh;
+    height: 100%;
+    height: 100dvh;
+    min-height: 0;
+
     margin: 0 auto;
-    padding: 12px;
-}
+    padding: var(--app-padding);
 
-/* INTRODUCTION BOARD */
+    overflow: hidden;
 
-.intro-board {
-    width: 100%;
-    margin: 0 auto 14px;
-    padding: 18px 12px 14px;
-    text-align: center;
-
-    /* HERO BACKGROUND WITH LIGHT OVERLAY */
     background:
         linear-gradient(
-            rgba(255, 252, 243, 0.62),
-            rgba(255, 252, 243, 0.62)
+            var(--cream-layer),
+            var(--cream-layer)
         ),
-        url("../assets/hero-bg.jpg");
+        url("../assets/main-bg.jpg") center / cover no-repeat;
+}
 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+/* TOP BOARD */
 
-    border: 1px solid var(--card-border);
-    border-radius: 20px;
+.intro-board {
+    position: relative;
+    isolation: isolate;
+
+    display: flex;
+    flex: 0 0 var(--header-height);
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: var(--header-height);
+    min-height: var(--header-height);
+
+    padding: 7px 12px;
+    overflow: hidden;
+
+    text-align: center;
+
+    border: 1px solid var(--border);
+    border-radius: 17px;
+
+    background:
+        linear-gradient(
+            rgba(255, 252, 242, 0.79),
+            rgba(255, 252, 242, 0.79)
+        ),
+        url("../assets/hero-bg.jpg") center / cover no-repeat;
+
     box-shadow: var(--shadow);
 }
 
-/* ARABIC HEADING */
+.intro-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+
+    width: 100%;
+    min-width: 0;
+    max-height: 100%;
+    overflow: hidden;
+}
 
 .intro-arabic {
     width: 100%;
-    margin: 0 auto 8px;
 
-    color: var(--gold);
+    color: var(--gold-dark);
     font-family: serif;
-    font-size: clamp(23px, 5.4vw, 36px);
+    font-size: clamp(23px, 5.4vw, 32px);
     font-weight: 700;
-    line-height: 1.5;
+    line-height: 1.35;
 
-    white-space: nowrap;
     text-align: center;
+    white-space: nowrap;
     direction: rtl;
 }
 
-/* LOCALIZED HEADING */
-
 .intro-title {
-    margin: 0;
-    color: var(--primary);
-    font-size: clamp(17px, 4vw, 23px);
-    font-weight: 700;
-    line-height: 1.5;
-    text-align: center;
-}
+    width: 100%;
 
-/* GOLD DECORATIVE DIVIDER */
+    color: var(--deep-green);
+    font-family: inherit;
+    font-size: clamp(16px, 4vw, 22px);
+    font-weight: 800;
+    line-height: 1.35;
+
+    text-align: center;
+    overflow-wrap: anywhere;
+}
 
 .intro-divider {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     gap: 8px;
 
-    width: 78%;
-    margin: 10px auto 0;
+    width: 62%;
+    max-width: 230px;
+    margin-top: 2px;
 }
 
 .intro-divider span:not(.divider-ornament) {
     flex: 1;
-    height: 2px;
+    height: 1.5px;
     background: var(--gold);
 }
 
 .divider-ornament {
-    color: var(--gold);
-    font-size: 19px;
+    color: var(--gold-dark);
+    font-size: 15px;
     line-height: 1;
 }
 
-/* TWO-COLUMN GRID */
+/* FIXED MIDDLE BOARD */
 
-.names-container {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    align-items: stretch;
-
-    width: 100%;
-    padding: 0;
-}
-
-/* NAME AND BISMILLAH CARDS */
-
-.name-card,
-.bismillah-card {
-    min-width: 0;
-    min-height: 145px;
+.names-board {
+    position: relative;
 
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
+    flex: 1 1 auto;
 
-    padding: 12px 8px;
-    text-align: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
 
-    background: rgba(207, 232, 200, 0.96);
-    border: 1px solid var(--card-border);
-    border-radius: 15px;
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            var(--cream-white),
+            var(--cream-white)
+        ),
+        url("../assets/main-bg.jpg") center / cover no-repeat;
+
     box-shadow: var(--shadow);
 }
 
-/* ARABIC TEXT — GOLDEN */
+/* ONLY THIS CONTENT SCROLLS */
+
+.names-container {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-content: start;
+    align-items: stretch;
+
+    gap: var(--card-gap);
+
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+
+    padding: 9px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold-dark) transparent;
+}
+
+.names-container::-webkit-scrollbar {
+    width: 4px;
+}
+
+.names-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.names-container::-webkit-scrollbar-thumb {
+    background: var(--gold-dark);
+    border-radius: 10px;
+}
+
+/* NAME CARDS */
+
+.name-card,
+.bismillah-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 145px;
+
+    padding: 12px 8px;
+    overflow-wrap: anywhere;
+
+    text-align: center;
+
+    background: rgba(207, 232, 200, 0.96);
+
+    border: 1px solid #a8c99d;
+    border-radius: var(--card-radius);
+
+    box-shadow: var(--shadow);
+}
+
+/* ARABIC NAME */
 
 .arabic {
     width: 100%;
     margin: 0;
 
-    color: var(--gold);
+    color: var(--gold-dark);
     font-family: serif;
     font-size: clamp(23px, 5.2vw, 32px);
     font-weight: 700;
@@ -183,13 +308,22 @@ body {
     overflow-wrap: anywhere;
 }
 
+.arabic-name {
+    color: var(--gold-dark);
+    font-family: serif;
+}
+
 /* PRONUNCIATION */
 
 .pron {
     color: var(--text);
+
+    font-family: inherit;
     font-size: clamp(13px, 3.2vw, 17px);
     font-weight: 700;
     line-height: 1.45;
+
+    text-align: center;
     overflow-wrap: anywhere;
 }
 
@@ -197,8 +331,13 @@ body {
 
 .meaning {
     color: var(--text);
+
+    font-family: inherit;
     font-size: clamp(12px, 2.9vw, 15px);
+    font-weight: 400;
     line-height: 1.5;
+
+    text-align: center;
     overflow-wrap: anywhere;
 }
 
@@ -213,49 +352,71 @@ body {
     font-size: clamp(12px, 2.8vw, 15px);
 }
 
-/* NUMBER BADGE */
+/* SERIAL NUMBER */
 
 .name-number {
-    color: #D64545;
+    color: #d64545;
     font-size: inherit;
     font-weight: 700;
-}
-
-.arabic-name {
-    color: #D4AF37;
-    font-family: serif;
 }
 
 /* FOOTER BOARD */
 
 .names-footer {
-    width: calc(100% - 24px);
-    max-width: 876px;
-    min-height: 50px;
+    position: relative;
+    isolation: isolate;
 
     display: flex;
-    justify-content: center;
+    flex: 0 0 var(--footer-height);
     align-items: center;
+    justify-content: center;
 
-    margin: 0 auto 12px;
-    padding: 12px 10px;
+    width: 100%;
+    height: var(--footer-height);
+    min-height: var(--footer-height);
 
-    background: rgba(31, 107, 58, 0.96);
+    padding: 6px 10px;
+    overflow: hidden;
+
+    color: var(--cream);
+    background: var(--deep-green);
+
     border: 1px solid var(--gold);
     border-radius: 16px;
-    box-shadow: var(--shadow);
 
-    text-align: center;
+    box-shadow: var(--shadow);
+}
+
+.names-footer::after {
+    content: "";
+    position: absolute;
+
+    left: 10px;
+    right: 10px;
+    bottom: 0;
+
+    height: 3px;
+
+    background: var(--gold);
+    border-radius: 50% 50% 0 0;
+
+    pointer-events: none;
 }
 
 .names-footer p {
-    margin: 0;
-    padding: 0;
+    position: relative;
+    z-index: 1;
 
-    color: #FFF9E8;
-    font-size: clamp(13px, 3.2vw, 16px);
-    font-weight: 700;
-    line-height: 1.5;
+    width: 100%;
+    margin: 0;
+    padding: 0 2px;
+
+    color: #fff9eb;
+
+    font-family: inherit;
+    font-size: clamp(12px, 3.3vw, 16px);
+    font-weight: 800;
+    line-height: 1.4;
 
     text-align: center;
     overflow-wrap: anywhere;
@@ -264,113 +425,224 @@ body {
 /* DARK MODE */
 
 body.dark-mode {
-    color: var(--bg);
+    --text: #e1ebd9;
+    --muted: #c1d1c0;
 
-    /* SAME MAIN BACKGROUND, DARK OVERLAY */
+    --cream: #f8f6f0;
+    --cream-white: rgba(18, 30, 22, 0.94);
+    --cream-layer: rgba(12, 24, 18, 0.84);
+
+    --gold-dark: #e7d18a;
+    --border: rgba(214, 181, 109, 0.65);
+
+    color: var(--text);
+
     background:
         linear-gradient(
-            rgba(18, 18, 18, 0.86),
-            rgba(18, 18, 18, 0.86)
+            var(--cream-layer),
+            var(--cream-layer)
         ),
-        url("../assets/main-bg.jpg");
-
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
+        url("../assets/main-bg.jpg") center / cover no-repeat;
 }
 
-/* DARK MODE INTRO BOARD */
+body.dark-mode .names-page {
+    background:
+        linear-gradient(
+            var(--cream-layer),
+            var(--cream-layer)
+        ),
+        url("../assets/main-bg.jpg") center / cover no-repeat;
+}
 
 body.dark-mode .intro-board {
     background:
         linear-gradient(
-            rgba(18, 24, 19, 0.72),
-            rgba(18, 24, 19, 0.72)
+            rgba(18, 30, 22, 0.82),
+            rgba(18, 30, 22, 0.82)
         ),
-        url("../assets/hero-bg.jpg");
-
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    border-color: #47684A;
+        url("../assets/hero-bg.jpg") center / cover no-repeat;
 }
 
-/* DARK MODE HEADINGS AND TEXT */
-
 body.dark-mode .intro-arabic,
-body.dark-mode .arabic {
+body.dark-mode .divider-ornament {
     color: var(--gold);
 }
 
-body.dark-mode .intro-title,
-body.dark-mode .pron,
-body.dark-mode .meaning {
-    color: #E1EBD9;
+body.dark-mode .intro-title {
+    color: var(--cream);
 }
 
-/* DARK MODE NAME CARDS */
+body.dark-mode .names-board {
+    background:
+        linear-gradient(
+            rgba(18, 30, 22, 0.90),
+            rgba(18, 30, 22, 0.90)
+        ),
+        url("../assets/main-bg.jpg") center / cover no-repeat;
+}
 
 body.dark-mode .name-card,
 body.dark-mode .bismillah-card {
     background: rgba(30, 42, 31, 0.97);
-    border-color: #47684A;
+    border-color: #47684a;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
 }
 
-body.dark-mode .name-number {
-    color: var(--bg);
-    background: var(--primary-dark);
-    border-color: var(--gold);
+body.dark-mode .arabic,
+body.dark-mode .arabic-name {
+    color: var(--gold);
 }
 
-/* DARK MODE FOOTER */
+body.dark-mode .pron,
+body.dark-mode .meaning {
+    color: #e1ebd9;
+}
+
+body.dark-mode .name-number {
+    color: #f0d9a0;
+}
 
 body.dark-mode .names-footer {
-    background: rgba(11, 61, 38, 0.97);
+    background: var(--dark-green);
     border-color: var(--gold);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
 }
 
 body.dark-mode .names-footer p {
-    color: #FFF9E8;
+    color: #fff9eb;
 }
 
-/* SMALL MOBILE SCREENS */
+/* COMPACT PHONES */
 
-@media (max-width: 360px) {
-    .names-page {
-        padding: 8px;
-    }
-
-    .names-container {
-        gap: 8px;
+@media (max-width: 380px) {
+    :root {
+        --header-height: 100px;
+        --footer-height: 44px;
+        --page-gap: 8px;
+        --app-padding: 8px;
+        --card-gap: 6px;
+        --card-radius: 12px;
     }
 
     .intro-board {
-        padding: 14px 7px 12px;
+        padding: 5px 8px;
+        border-radius: 14px;
+    }
+
+    .intro-arabic {
+        font-size: clamp(21px, 5.8vw, 26px);
+    }
+
+    .intro-title {
+        font-size: clamp(14px, 3.8vw, 18px);
+    }
+
+    .intro-divider {
+        width: 55%;
+        margin-top: 1px;
+    }
+
+    .names-board {
+        border-radius: 13px;
+    }
+
+    .names-container {
+        gap: 6px;
+        padding: 6px;
     }
 
     .name-card,
     .bismillah-card {
-        min-height: 135px;
-        padding: 10px 5px;
-        border-radius: 12px;
+        min-height: 132px;
+        padding: 9px 5px;
+        border-radius: 11px;
     }
 
     .arabic {
-        font-size: 22px;
+        font-size: clamp(20px, 5.6vw, 24px);
     }
 
     .bismillah-card .arabic {
-        font-size: 18px;
+        font-size: clamp(17px, 4.6vw, 20px);
+    }
+
+    .pron {
+        font-size: clamp(11px, 3vw, 14px);
+    }
+
+    .meaning {
+        font-size: clamp(10px, 2.8vw, 13px);
     }
 
     .names-footer {
-        width: calc(100% - 16px);
-        margin-bottom: 8px;
-        padding: 10px 7px;
-        border-radius: 12px;
+        padding-inline: 6px;
+        border-radius: 13px;
+    }
+
+    .names-footer p {
+        font-size: clamp(10px, 3vw, 13px);
+    }
+}
+
+/* SHORT SCREENS */
+
+@media (max-height: 650px) {
+    :root {
+        --header-height: 88px;
+        --footer-height: 40px;
+        --page-gap: 5px;
+        --app-padding: 7px;
+        --card-gap: 5px;
+    }
+
+    .intro-board {
+        padding-block: 4px;
+    }
+
+    .intro-arabic {
+        font-size: clamp(19px, 4.8vw, 25px);
+    }
+
+    .intro-title {
+        font-size: clamp(13px, 3.4vw, 18px);
+    }
+
+    .intro-divider {
+        margin-top: 0;
+    }
+
+    .names-container {
+        padding: 6px;
+    }
+
+    .name-card,
+    .bismillah-card {
+        min-height: 120px;
+        padding: 8px 5px;
+        gap: 4px;
+    }
+
+    .arabic {
+        font-size: clamp(19px, 4.8vw, 26px);
+    }
+
+    .bismillah-card .arabic {
+        font-size: clamp(16px, 4.1vw, 22px);
+    }
+
+    .pron {
+        font-size: clamp(11px, 2.9vw, 14px);
+    }
+
+    .meaning {
+        font-size: clamp(10px, 2.6vw, 13px);
+    }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+    .names-container {
+        scroll-behavior: auto;
     }
 }
