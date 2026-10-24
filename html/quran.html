@@ -12,10 +12,10 @@
 <body>
   <div class="app" id="quranApp">
 
-    <!-- Header -->
+    <!-- Shared Header -->
     <header class="hero board">
       <div class="hero-content">
-        <h1 class="hero-title" id="pageSubtitle">
+        <h1 class="hero-title" id="pageSubtitle" dir="rtl" lang="ar">
           بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
         </h1>
         <p class="hero-subtitle" id="heroSubtitle">
@@ -31,6 +31,7 @@
 
         <div class="featured board">
           <div class="featured-content">
+
             <div class="quran-image-wrap">
               <img
                 class="quran-image"
@@ -47,20 +48,29 @@
             <p class="quran-description" id="quranDescription">
               পবিত্র কুরআন পড়ুন, শুনুন এবং প্রশান্তি অনুভব করুন।
             </p>
+
           </div>
         </div>
 
-        <!-- Options remain outside the featured board -->
+        <!-- Home Options -->
         <nav class="home-options" aria-label="কুরআনের বিকল্প">
 
-          <button class="option board" id="openRead" type="button">
+          <button
+            class="option board"
+            id="openRead"
+            type="button"
+          >
             <span class="option-icon" aria-hidden="true">📖</span>
             <span class="option-text" id="readOptionText">
               কুরআন পড়ুন
             </span>
           </button>
 
-          <button class="option board" id="openListen" type="button">
+          <button
+            class="option board"
+            id="openListen"
+            type="button"
+          >
             <span class="option-icon" aria-hidden="true">🎧</span>
             <span class="option-text" id="listenOptionText">
               তিলাওয়াত শুনুন
@@ -72,26 +82,11 @@
 
       <!-- Quran Reading Page -->
       <section class="page read-page" id="readPage" hidden>
+
         <div class="content-board board">
 
+          <!-- Compact Toolbar: Search Left, Font Controls Right -->
           <div class="content-toolbar">
-            <div class="font-controls">
-              <button
-                class="toolbar-button"
-                id="fontDown"
-                type="button"
-                aria-label="লেখা ছোট করুন"
-                title="A−"
-              >A−</button>
-
-              <button
-                class="toolbar-button"
-                id="fontUp"
-                type="button"
-                aria-label="লেখা বড় করুন"
-                title="A+"
-              >A+</button>
-            </div>
 
             <button
               class="toolbar-button search-toggle"
@@ -104,11 +99,38 @@
             >
               <span aria-hidden="true">⌕</span>
             </button>
+
+            <div class="font-controls">
+
+              <button
+                class="toolbar-button"
+                id="fontDown"
+                type="button"
+                aria-label="আরবি লেখা ছোট করুন"
+                title="A−"
+              >A−</button>
+
+              <button
+                class="toolbar-button"
+                id="fontUp"
+                type="button"
+                aria-label="আরবি লেখা বড় করুন"
+                title="A+"
+              >A+</button>
+
+            </div>
           </div>
 
-          <!-- Surah Search -->
-          <div class="surah-search-panel" id="surahSearchPanel" hidden>
-            <h2 class="surah-search-heading" id="surahSearchHeading">
+          <!-- Surah Search Panel -->
+          <div
+            class="surah-search-panel"
+            id="surahSearchPanel"
+            hidden
+          >
+            <h2
+              class="surah-search-heading"
+              id="surahSearchHeading"
+            >
               সূরা খুঁজুন
             </h2>
 
@@ -126,7 +148,7 @@
             </div>
           </div>
 
-          <!-- Reading Content -->
+          <!-- Only the content inside this area will scroll -->
           <div class="read-content" id="readContent">
             <p class="loading-message" id="readLoading">
               কুরআনের আয়াত লোড হচ্ছে...
@@ -138,18 +160,22 @@
 
       <!-- Quran Listening Page -->
       <section class="page listen-page" id="listenPage" hidden>
+
         <div class="content-board board">
+
+          <!-- No toolbar on the listening page -->
           <div class="listen-surah-list" id="listenSurahList">
             <p class="loading-message" id="listenLoading">
               সূরার তালিকা লোড হচ্ছে...
             </p>
           </div>
+
         </div>
       </section>
 
     </main>
 
-    <!-- Shared Footer -->
+    <!-- Shared Fixed Footer -->
     <footer class="footer board">
 
       <!-- Home Footer -->
@@ -161,6 +187,7 @@
 
       <!-- Reading Footer -->
       <div class="footer-content footer-read" id="readFooter" hidden>
+
         <button
           class="footer-control"
           id="prevAyah"
@@ -184,10 +211,12 @@
         >
           <span aria-hidden="true">›</span>
         </button>
+
       </div>
 
       <!-- Listening Footer -->
       <div class="footer-content footer-listen" id="listenFooter" hidden>
+
         <button
           class="footer-control"
           id="prevTrack"
@@ -202,7 +231,7 @@
           class="footer-control play-pause"
           id="playPause"
           type="button"
-          aria-label="তিলাওয়াত চালান বা থামান"
+          aria-label="তিলাওয়াত চালান"
           title="Play / Pause"
         >
           <span aria-hidden="true">▶</span>
@@ -217,14 +246,15 @@
         >
           <span aria-hidden="true">⏭</span>
         </button>
+
       </div>
 
     </footer>
 
-    <!-- Audio Player -->
+    <!-- Quran Audio Player -->
     <audio id="quranAudio" preload="none"></audio>
 
-    <!-- Status Message -->
+    <!-- Optional Status Message -->
     <div
       class="app-message"
       id="appMessage"
