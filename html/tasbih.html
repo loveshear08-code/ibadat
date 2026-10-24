@@ -13,43 +13,53 @@
 <body>
   <div class="app" id="tasbihApp">
 
-    <header class="hero board">
+    <header class="hero board" id="tasbihHero">
       <div class="hero-content">
         <h1 class="hero-title" id="pageTitle">তসবিহ</h1>
+
         <p class="hero-subtitle" id="heroSubtitle">
           আল্লাহর জিকিরে প্রশান্ত হোক হৃদয়
         </p>
 
-        <div
-          id="completeMessage"
-          class="complete-message"
-          role="status"
-          aria-live="polite"
-          hidden
-        ></div>
+        <!-- Fixed message area: never changes the header height -->
+        <div class="message-slot" id="messageSlot">
+          <div
+            class="spark-layer"
+            id="sparkLayer"
+            aria-hidden="true"
+          ></div>
+
+          <div
+            class="complete-message"
+            id="completeMessage"
+            role="status"
+            aria-live="polite"
+            hidden
+          ></div>
+        </div>
       </div>
     </header>
 
     <main class="page-container">
 
       <section class="zikr-board board" aria-label="জিকির">
-
         <h2 class="zikr-heading" id="zikrLabel">জিকির</h2>
 
-        <div id="zikrArabic" class="zikr-arabic" lang="ar" dir="rtl">
-          سُبْحَانَ اللّٰهِ
-        </div>
+        <div
+          id="zikrArabic"
+          class="zikr-arabic"
+          lang="ar"
+          dir="rtl"
+        >سُبْحَانَ اللّٰهِ</div>
 
         <div id="zikrName" class="zikr-name">
           সুবহানাল্লাহ
         </div>
-
       </section>
 
       <section class="stats-board board" aria-label="তসবিহের হিসাব">
 
         <div class="count-info">
-
           <div class="count-card">
             <div class="count-label" id="stepCountLabel">
               বর্তমান ধাপ
@@ -63,7 +73,6 @@
             </div>
             <div id="totalCount" class="total-count">০ / ১০০</div>
           </div>
-
         </div>
 
         <div
@@ -86,22 +95,23 @@
 
       </section>
 
-      <section class="tap-area" aria-label="তসবিহ গণনা">
-
-        <button
-          id="tapButton"
-          class="tap-button"
-          type="button"
-          aria-label="তসবিহ গণনা করুন"
-        >
-          <img
-            src="../assets/tasbih_touch.png"
-            alt=""
-            class="tap-icon"
-            draggable="false"
+      <!-- Same background image and cream-white overlay as the main page -->
+      <section class="tap-board board" aria-label="তসবিহ গণনা">
+        <div class="tap-area">
+          <button
+            id="tapButton"
+            class="tap-button"
+            type="button"
+            aria-label="তসবিহ গণনা করুন"
           >
-        </button>
-
+            <img
+              src="../assets/tasbih_touch.png"
+              alt=""
+              class="tap-icon"
+              draggable="false"
+            >
+          </button>
+        </div>
       </section>
 
     </main>
@@ -114,7 +124,7 @@
 
   </div>
 
-  <script src="../js/tasbih.js?v=7"></script>
+  <script src="../js/tasbih.js?v=8"></script>
   <script src="../js/theme.js"></script>
 </body>
 
