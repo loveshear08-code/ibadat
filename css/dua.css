@@ -1,47 +1,65 @@
 
 /* =========================================================
-   IBADAT — DUA
-   Unified Islamic Green Theme
+   IBADAT — DUA SECTION
+   Fixed Header + Scrollable Main Board + Fixed Footer
+   Unified Islamic Green, Cream and Gold Theme
 ========================================================= */
 
 :root {
-    --primary: #1F6B3A;
-    --primary-dark: #0F5132;
-    --primary-deep: #0B3D26;
+    --primary: #1f6b3a;
+    --primary-dark: #0f5132;
+    --primary-deep: #0b3d26;
 
-    --bg: #F8F6F0;
-    --card: #FFFFFF;
-    --pistachio: #CFE8C8;
+    --bg: #f8f6f0;
+    --cream: #f8f6f0;
+    --card: #ffffff;
+    --pistachio: #cfe8c8;
 
-    --text: #1E4620;
-    --text-muted: #59645B;
+    --text: #1e4620;
+    --text-muted: #59645b;
 
-    --gold: #D4AF37;
-    --danger: #D64545;
+    --gold: #d4af37;
+    --danger: #d64545;
 
     --border: rgba(31, 107, 58, 0.16);
     --shadow: 0 3px 12px rgba(15, 81, 50, 0.09);
 
     --radius: 18px;
+
+    /* Shared page board dimensions */
+    --page-max-width: 720px;
+    --page-side-gap: 12px;
+    --hero-height: 94px;
+    --footer-height: 70px;
 }
+
+/* =========================================================
+   RESET
+========================================================= */
 
 * {
     box-sizing: border-box;
 }
 
 html {
+    width: 100%;
+    height: 100%;
     margin: 0;
     padding: 0;
-    min-height: 100%;
+
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
 }
 
 body {
-    margin: 0;
-    padding: 0 0 170px;
-
+    width: 100%;
+    height: 100%;
     min-height: 100vh;
     min-height: 100dvh;
+
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 
     font-family:
         system-ui,
@@ -51,6 +69,7 @@ body {
         sans-serif;
 
     background-color: var(--bg);
+
     background-image:
         linear-gradient(
             rgba(248, 246, 240, 0.82),
@@ -80,17 +99,172 @@ input:focus-visible {
     outline-offset: 3px;
 }
 
+button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
 /* =========================================================
-   MAIN LAYOUT
+   APP LAYOUT
 ========================================================= */
 
-.main {
+.dua-app {
+    display: flex;
+    flex-direction: column;
+
     width: 100%;
-    max-width: 720px;
+    max-width: var(--page-max-width);
+
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
 
     margin: 0 auto;
-    padding: 12px 12px 24px;
+    padding: 10px var(--page-side-gap) 0;
+
+    overflow: hidden;
 }
+
+/* =========================================================
+   FIXED HEADER BOARD
+========================================================= */
+
+.dua-hero {
+    position: relative;
+    z-index: 5;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 var(--hero-height);
+    width: 100%;
+    min-height: var(--hero-height);
+
+    margin: 0 0 10px;
+    padding: 10px 14px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--gold);
+    border-radius: var(--radius);
+
+    background-color: var(--primary-deep);
+
+    background-image:
+        linear-gradient(
+            rgba(11, 61, 38, 0.48),
+            rgba(11, 61, 38, 0.60)
+        ),
+        url("../assets/hero-bg.jpg");
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    color: var(--cream);
+    text-align: center;
+
+    box-shadow: var(--shadow);
+}
+
+.dua-hero-content {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+    min-width: 0;
+}
+
+.dua-hero h1 {
+    margin: 0;
+
+    color: var(--gold);
+
+    font-size: 23px;
+    font-weight: 800;
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+}
+
+.dua-hero p {
+    margin: 3px 0 0;
+
+    color: #fffdf5;
+
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   MAIN CONTENT BOARD
+   The board stays in place; its contents scroll inside it.
+========================================================= */
+
+.dua-main-board {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    flex: 1 1 0;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+
+    margin: 0 0 10px;
+    padding: 12px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--gold);
+    border-radius: var(--radius);
+
+    background: rgba(248, 246, 240, 0.94);
+
+    box-shadow: var(--shadow);
+}
+
+/* Each active page fills the board and scrolls internally. */
+
+.dua-page {
+    display: flex;
+    flex-direction: column;
+
+    flex: 1 1 0;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba(31, 107, 58, 0.42) transparent;
+}
+
+.dua-page::-webkit-scrollbar {
+    width: 4px;
+}
+
+.dua-page::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.dua-page::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(31, 107, 58, 0.42);
+}
+
+/* Hide elements without changing the JavaScript flow. */
 
 .hidden {
     display: none !important;
@@ -101,8 +275,10 @@ input:focus-visible {
 ========================================================= */
 
 .status-box {
+    flex: 0 0 auto;
+
     width: 100%;
-    margin-bottom: 12px;
+    margin: 0 0 12px;
     padding: 18px 14px;
 
     border: 1px solid var(--border);
@@ -115,6 +291,8 @@ input:focus-visible {
     font-size: 15px;
     line-height: 1.7;
 
+    overflow-wrap: anywhere;
+
     box-shadow: var(--shadow);
 }
 
@@ -124,14 +302,19 @@ input:focus-visible {
 }
 
 #errorBox button {
-    margin-top: 10px;
-    padding: 10px 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-    border: 0;
+    min-height: 42px;
+    margin-top: 10px;
+    padding: 9px 18px;
+
+    border: 1px solid var(--gold);
     border-radius: 12px;
 
     background: var(--primary);
-    color: #F8F6F0;
+    color: var(--cream);
 
     font-weight: 700;
     cursor: pointer;
@@ -142,31 +325,38 @@ input:focus-visible {
 ========================================================= */
 
 .intro-card {
+    flex: 0 0 auto;
+
     width: 100%;
-    margin-bottom: 14px;
+    margin: 0 0 14px;
     padding: 18px 14px;
 
     border: 1px solid var(--gold);
     border-radius: var(--radius);
 
     background: var(--primary);
-    color: #F8F6F0;
+    color: var(--cream);
 
     text-align: center;
+
     box-shadow: var(--shadow);
 }
 
 .intro-icon {
     margin-bottom: 8px;
+
     font-size: 30px;
     line-height: 1.2;
 }
 
 .intro-title {
     color: var(--gold);
+
     font-size: 22px;
     font-weight: 800;
     line-height: 1.5;
+
+    overflow-wrap: anywhere;
 }
 
 .intro-text {
@@ -174,23 +364,33 @@ input:focus-visible {
 }
 
 /* =========================================================
-   CHAPTER LIST
+   CHAPTER AND ENTRY LISTS
 ========================================================= */
 
 .chapter-list,
 .entry-list {
     display: flex;
     flex-direction: column;
+
+    flex: 0 0 auto;
+    width: 100%;
+    min-width: 0;
+
     gap: 10px;
 }
 
 .chapter-item,
-.chapter-card {
+.chapter-card,
+.entry-item,
+.entry-card {
     display: flex;
     align-items: center;
 
+    flex: 0 0 auto;
     width: 100%;
-    min-height: 62px;
+    min-width: 0;
+    min-height: 60px;
+
     padding: 12px 15px;
 
     border: 1px solid var(--gold);
@@ -205,6 +405,9 @@ input:focus-visible {
     font-weight: 700;
     line-height: 1.55;
 
+    overflow-wrap: anywhere;
+    word-break: normal;
+
     cursor: pointer;
     user-select: none;
 
@@ -216,11 +419,13 @@ input:focus-visible {
 }
 
 .chapter-item:active,
-.chapter-card:active {
+.chapter-card:active,
+.entry-item:active,
+.entry-card:active {
     transform: scale(0.985);
 }
 
-/* Compatibility with existing chapter markup */
+/* Chapter number compatibility */
 
 .chapter-number {
     display: flex;
@@ -230,6 +435,7 @@ input:focus-visible {
     flex: 0 0 36px;
     width: 36px;
     height: 36px;
+
     margin-right: 11px;
 
     border: 1px solid var(--gold);
@@ -243,7 +449,7 @@ input:focus-visible {
 }
 
 .chapter-info {
-    flex: 1;
+    flex: 1 1 auto;
     min-width: 0;
 }
 
@@ -251,6 +457,7 @@ input:focus-visible {
     font-size: 15px;
     line-height: 1.5;
     font-weight: 700;
+
     overflow-wrap: anywhere;
 }
 
@@ -262,25 +469,66 @@ input:focus-visible {
     font-size: 25px;
 }
 
+/* Entry number */
+
+.entry-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 38px;
+    width: 38px;
+    height: 36px;
+
+    margin-right: 10px;
+
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+
+    background: var(--primary);
+    color: var(--gold);
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.entry-title {
+    flex: 1 1 auto;
+    min-width: 0;
+
+    color: var(--text);
+
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.55;
+
+    overflow-wrap: anywhere;
+}
+
 /* =========================================================
    INNER PAGE HEADER
 ========================================================= */
 
 .inner-header {
+    position: relative;
+
     display: flex;
     align-items: center;
+
+    flex: 0 0 auto;
     gap: 5px;
 
     width: 100%;
     min-height: 54px;
-    margin-bottom: 12px;
+
+    margin: 0 0 12px;
     padding: 7px;
 
     border: 1px solid var(--gold);
     border-radius: 16px;
 
     background: var(--primary);
-    color: #F8F6F0;
+    color: var(--cream);
 
     box-shadow: var(--shadow);
 }
@@ -293,6 +541,8 @@ input:focus-visible {
     flex: 0 0 40px;
     width: 40px;
     height: 40px;
+
+    padding: 0;
 
     border: 1px solid rgba(212, 175, 55, 0.5);
     border-radius: 12px;
@@ -307,11 +557,13 @@ input:focus-visible {
 }
 
 .inner-header span {
-    flex: 1;
+    flex: 1 1 auto;
     min-width: 0;
+
     padding: 0 8px;
 
-    color: #F8F6F0;
+    color: var(--cream);
+
     font-size: 16px;
     font-weight: 700;
     line-height: 1.5;
@@ -321,80 +573,12 @@ input:focus-visible {
 }
 
 /* =========================================================
-   ENTRY LIST
-========================================================= */
-
-.entry-item,
-.entry-card {
-    display: flex;
-    align-items: center;
-
-    width: 100%;
-    min-height: 58px;
-    padding: 12px 15px;
-
-    border: 1px solid var(--gold);
-    border-left: 4px solid var(--primary);
-    border-radius: 16px;
-
-    background: var(--pistachio);
-    color: var(--text);
-
-    text-align: left;
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 1.55;
-
-    overflow-wrap: anywhere;
-    cursor: pointer;
-
-    box-shadow: var(--shadow);
-
-    transition: transform 0.15s ease;
-}
-
-.entry-item:active,
-.entry-card:active {
-    transform: scale(0.985);
-}
-
-.entry-number {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    flex: 0 0 38px;
-    width: 38px;
-    height: 36px;
-    margin-right: 10px;
-
-    border: 1px solid var(--gold);
-    border-radius: 10px;
-
-    background: var(--primary);
-    color: var(--gold);
-
-    font-size: 13px;
-    font-weight: 800;
-}
-
-.entry-title {
-    flex: 1;
-    min-width: 0;
-
-    color: var(--text);
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 1.55;
-
-    overflow-wrap: anywhere;
-}
-
-/* =========================================================
    SINGLE DUA PAGE
 ========================================================= */
 
 #duaContent {
+    flex: 0 0 auto;
+
     width: 100%;
     min-width: 0;
 }
@@ -402,7 +586,8 @@ input:focus-visible {
 .dua-card {
     width: 100%;
     min-width: 0;
-    margin-bottom: 12px;
+
+    margin: 0 0 12px;
     padding: 18px 15px;
 
     border: 1px solid var(--gold);
@@ -416,7 +601,7 @@ input:focus-visible {
     overflow-wrap: anywhere;
 }
 
-/* Dua title, when supplied by the content */
+/* Dua title, when provided by content */
 
 .dua-title {
     margin-bottom: 17px;
@@ -425,10 +610,13 @@ input:focus-visible {
     border-bottom: 1px solid var(--border);
 
     color: var(--primary);
+
     font-size: 19px;
     font-weight: 800;
     line-height: 1.6;
+
     text-align: center;
+    overflow-wrap: anywhere;
 }
 
 /* =========================================================
@@ -441,10 +629,13 @@ input:focus-visible {
     margin-bottom: 7px;
 
     color: var(--primary);
+
     font-size: 13px;
     font-weight: 800;
     line-height: 1.5;
     letter-spacing: 0.15px;
+
+    overflow-wrap: anywhere;
 }
 
 .dua-card .dua-label:first-child {
@@ -464,7 +655,8 @@ input:focus-visible {
         "Scheherazade New",
         serif;
 
-    color: #A77C12;
+    color: #a77c12;
+
     font-size: 27px;
     font-weight: 600;
     line-height: 2.15;
@@ -473,6 +665,7 @@ input:focus-visible {
     direction: rtl;
 
     overflow-wrap: anywhere;
+    word-break: normal;
 }
 
 /* =========================================================
@@ -482,7 +675,8 @@ input:focus-visible {
 .dua-transliteration {
     margin-bottom: 14px;
 
-    color: #303B32;
+    color: #303b32;
+
     font-size: 15px;
     line-height: 1.9;
 
@@ -496,7 +690,8 @@ input:focus-visible {
 .dua-translation {
     margin-bottom: 14px;
 
-    color: #303B32;
+    color: #303b32;
+
     font-size: 15px;
     line-height: 1.85;
 
@@ -514,6 +709,7 @@ input:focus-visible {
     border-top: 1px solid var(--border);
 
     color: var(--text-muted);
+
     font-size: 12px;
     line-height: 1.65;
 
@@ -522,24 +718,28 @@ input:focus-visible {
 
 /* =========================================================
    FIXED AUDIO PLAYER
+   Preserves existing JavaScript-created player
 ========================================================= */
 
 .dua-audio-player {
     position: fixed;
-    left: 0;
-    right: 0;
+    left: 50%;
+    right: auto;
     bottom: 0;
 
     z-index: 9999;
 
-    width: 100%;
-    max-width: 720px;
-    margin: 0 auto;
+    width: calc(100% - 24px);
+    max-width: calc(var(--page-max-width) - 24px);
+
+    margin: 0;
 
     padding:
         10px
         14px
         calc(10px + env(safe-area-inset-bottom));
+
+    transform: translateX(-50%);
 
     border: 1px solid var(--gold);
     border-bottom: 0;
@@ -558,8 +758,8 @@ input:focus-visible {
     margin: 0;
 
     color: var(--primary);
-    text-align: center;
 
+    text-align: center;
     font-size: 13px;
     font-weight: 800;
     line-height: 1.5;
@@ -574,8 +774,8 @@ input:focus-visible {
     margin-top: 3px;
 
     color: var(--text-muted);
-    text-align: center;
 
+    text-align: center;
     font-size: 11px;
     line-height: 1.4;
 }
@@ -625,6 +825,7 @@ input:focus-visible {
     justify-content: center;
 
     gap: 22px;
+
     width: 100%;
     margin-top: 4px;
 }
@@ -634,8 +835,10 @@ input:focus-visible {
     align-items: center;
     justify-content: center;
 
+    flex: 0 0 44px;
     width: 44px;
     height: 40px;
+
     padding: 0;
 
     border: 1px solid transparent;
@@ -657,6 +860,8 @@ input:focus-visible {
 /* Main play/pause button */
 
 #audioPlay {
+    flex: 0 0 48px;
+
     width: 48px;
     height: 44px;
 
@@ -664,7 +869,7 @@ input:focus-visible {
     border-radius: 50%;
 
     background: var(--primary);
-    color: #F8F6F0;
+    color: var(--cream);
 
     font-size: 21px;
 
@@ -672,16 +877,78 @@ input:focus-visible {
 }
 
 /* =========================================================
+   FIXED FOOTER BOARD
+========================================================= */
+
+.dua-footer {
+    position: relative;
+    z-index: 5;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 var(--footer-height);
+    width: 100%;
+    min-height: var(--footer-height);
+
+    margin: 0 0 10px;
+    padding: 8px 12px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--gold);
+    border-radius: var(--radius);
+
+    background: var(--primary-deep);
+    color: var(--cream);
+
+    box-shadow: var(--shadow);
+}
+
+.dua-footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+.dua-footer-icon {
+    flex: 0 0 auto;
+
+    color: var(--gold);
+    font-size: 22px;
+    line-height: 1;
+}
+
+#footerText {
+    margin: 0;
+
+    color: var(--cream);
+
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+/* =========================================================
    DARK MODE
 ========================================================= */
 
 body.dark-mode {
-    --bg: #121A14;
-    --card: #1B2920;
-    --pistachio: #263B2D;
+    --bg: #121a14;
+    --card: #1b2920;
+    --pistachio: #263b2d;
 
-    --text: #F0F2E9;
-    --text-muted: #B9C6BB;
+    --text: #f0f2e9;
+    --text-muted: #b9c6bb;
 
     --border: rgba(212, 175, 55, 0.25);
     --shadow: 0 3px 12px rgba(0, 0, 0, 0.28);
@@ -698,10 +965,32 @@ body.dark-mode {
     color: var(--text);
 }
 
+body.dark-mode .dua-main-board {
+    background: rgba(18, 26, 20, 0.96);
+    border-color: #b99a42;
+}
+
+body.dark-mode .dua-hero,
+body.dark-mode .dua-footer {
+    background-color: var(--primary-deep);
+
+    background-image:
+        linear-gradient(
+            rgba(11, 61, 38, 0.68),
+            rgba(11, 61, 38, 0.78)
+        ),
+        url("../assets/hero-bg.jpg");
+
+    background-position: center;
+    background-size: cover;
+
+    border-color: var(--gold);
+}
+
 body.dark-mode .intro-card,
 body.dark-mode .inner-header {
     background: var(--primary-deep);
-    color: #F8F6F0;
+    color: var(--cream);
     border-color: var(--gold);
 }
 
@@ -709,52 +998,51 @@ body.dark-mode .chapter-item,
 body.dark-mode .chapter-card,
 body.dark-mode .entry-item,
 body.dark-mode .entry-card {
-    background: #263B2D;
-    color: #F0F2E9;
-    border-color: #B99A42;
+    background: #263b2d;
+    color: #f0f2e9;
+    border-color: #b99a42;
 }
 
 body.dark-mode .entry-title,
 body.dark-mode .chapter-title {
-    color: #F0F2E9;
+    color: #f0f2e9;
 }
 
 body.dark-mode .chapter-number,
 body.dark-mode .entry-number {
     background: var(--primary-deep);
-    color: #E2C15B;
+    color: #e2c15b;
     border-color: var(--gold);
 }
 
 body.dark-mode .status-box,
-body.dark-mode .intro-card,
 body.dark-mode .dua-card {
     background: var(--card);
     color: var(--text);
-    border-color: #B99A42;
+    border-color: #b99a42;
 }
 
 body.dark-mode .intro-title {
-    color: #E2C15B;
+    color: #e2c15b;
 }
 
 body.dark-mode .dua-title,
 body.dark-mode .dua-label,
 body.dark-mode .dua-section-label {
-    color: #8ED0A0;
+    color: #8ed0a0;
 }
 
 body.dark-mode .dua-arabic {
-    color: #E2C15B;
+    color: #e2c15b;
 }
 
 body.dark-mode .dua-transliteration,
 body.dark-mode .dua-translation {
-    color: #F0F2E9;
+    color: #f0f2e9;
 }
 
 body.dark-mode .dua-reference {
-    color: #C5CEC6;
+    color: #c5cec6;
     border-top-color: #465348;
 }
 
@@ -763,47 +1051,90 @@ body.dark-mode .dua-title {
 }
 
 body.dark-mode .dua-audio-player {
-    background: #1B2920;
-    color: #F0F2E9;
-    border-color: #B99A42;
+    background: #1b2920;
+    color: #f0f2e9;
+
+    border-color: #b99a42;
+
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
 }
 
 body.dark-mode #audioTitle {
-    color: #8ED0A0;
+    color: #8ed0a0;
 }
 
 body.dark-mode #audioPart,
 body.dark-mode #audioCurrentTime,
 body.dark-mode #audioDuration {
-    color: #B9C6BB;
+    color: #b9c6bb;
 }
 
 body.dark-mode .dua-audio-controls button {
-    color: #8ED0A0;
+    color: #8ed0a0;
 }
 
 body.dark-mode #audioPlay {
     background: var(--primary);
-    color: #FFFFFF;
+    color: #ffffff;
     border-color: var(--gold);
 }
 
 body.dark-mode #audioProgress {
-    accent-color: #8ED0A0;
+    accent-color: #8ed0a0;
 }
 
 body.dark-mode #errorBox {
-    color: #FF8888;
+    color: #ff8888;
+}
+
+body.dark-mode .dua-page {
+    scrollbar-color: rgba(142, 208, 160, 0.45) transparent;
+}
+
+body.dark-mode .dua-page::-webkit-scrollbar-thumb {
+    background: rgba(142, 208, 160, 0.45);
 }
 
 /* =========================================================
    SMALL SCREENS
 ========================================================= */
 
-@media (max-width: 360px) {
-    .main {
-        padding: 9px 8px 20px;
+@media (max-width: 480px) {
+    :root {
+        --page-side-gap: 9px;
+        --hero-height: 88px;
+        --footer-height: 64px;
+    }
+
+    .dua-app {
+        padding-top: 8px;
+    }
+
+    .dua-hero {
+        margin-bottom: 8px;
+        padding: 8px 11px;
+    }
+
+    .dua-hero h1 {
+        font-size: 21px;
+    }
+
+    .dua-hero p {
+        font-size: 11px;
+    }
+
+    .dua-main-board {
+        margin-bottom: 8px;
+        padding: 10px;
+    }
+
+    .dua-footer {
+        margin-bottom: 8px;
+        padding: 7px 9px;
+    }
+
+    #footerText {
+        font-size: 11px;
     }
 
     .intro-card {
@@ -838,8 +1169,103 @@ body.dark-mode #errorBox {
     }
 
     .dua-audio-player {
-        padding-left: 10px;
         padding-right: 10px;
+        padding-left: 10px;
+    }
+}
+
+@media (max-width: 360px) {
+    :root {
+        --page-side-gap: 7px;
+        --hero-height: 84px;
+        --footer-height: 60px;
+    }
+
+    .dua-main-board {
+        padding: 8px;
+    }
+
+    .dua-hero h1 {
+        font-size: 19px;
+    }
+
+    .dua-hero p {
+        font-size: 10px;
+    }
+
+    .intro-title {
+        font-size: 20px;
+    }
+
+    .chapter-item,
+    .chapter-card,
+    .entry-item,
+    .entry-card {
+        padding: 10px;
+    }
+
+    .dua-card {
+        padding: 13px 10px;
+    }
+
+    .dua-arabic {
+        font-size: 22px;
+    }
+
+    .dua-audio-controls {
+        gap: 12px;
+    }
+
+    .dua-footer-content {
+        gap: 6px;
+    }
+}
+
+/* =========================================================
+   SHORT SCREENS
+========================================================= */
+
+@media (max-height: 520px) {
+    :root {
+        --hero-height: 70px;
+        --footer-height: 54px;
+    }
+
+    .dua-app {
+        padding-top: 6px;
+    }
+
+    .dua-hero {
+        margin-bottom: 6px;
+        padding: 5px 10px;
+    }
+
+    .dua-hero h1 {
+        font-size: 18px;
+    }
+
+    .dua-hero p {
+        margin-top: 1px;
+        font-size: 10px;
+    }
+
+    .dua-main-board {
+        margin-bottom: 6px;
+        padding: 8px;
+    }
+
+    .dua-footer {
+        margin-bottom: 6px;
+        padding: 5px 8px;
+    }
+
+    .intro-card {
+        padding: 10px;
+    }
+
+    .intro-icon {
+        margin-bottom: 4px;
+        font-size: 24px;
     }
 }
 
