@@ -2,211 +2,67 @@
 (() => {
   "use strict";
 
-  const API_BASE =
-    "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1";
+  const API_BASE = "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1";
 
   const BOOKS = [
-    {
-      id: "bukhari",
-      names: {
-        bn: "সহিহ বুখারি",
-        en: "Sahih al-Bukhari",
-        hi: "सहीह अल-बुखारी"
-      },
-      icon: "ب",
-      description: {
-        bn: "ইমাম বুখারির সংকলন",
-        en: "Collection of Imam Bukhari",
-        hi: "इमाम बुखारी का संग्रह"
-      }
-    },
-    {
-      id: "muslim",
-      names: {
-        bn: "সহিহ মুসলিম",
-        en: "Sahih Muslim",
-        hi: "सहीह मुस्लिम"
-      },
-      icon: "م",
-      description: {
-        bn: "ইমাম মুসলিমের সংকলন",
-        en: "Collection of Imam Muslim",
-        hi: "इमाम मुस्लिम का संग्रह"
-      }
-    },
-    {
-      id: "abudawud",
-      names: {
-        bn: "সুনানে আবু দাউদ",
-        en: "Sunan Abi Dawud",
-        hi: "सुनन अबू दाऊद"
-      },
-      icon: "د",
-      description: {
-        bn: "আবু দাউদের সংকলন",
-        en: "Collection of Abu Dawud",
-        hi: "अबू दाऊद का संग्रह"
-      }
-    },
-    {
-      id: "tirmidhi",
-      names: {
-        bn: "জামে আত-তিরমিজি",
-        en: "Jami at-Tirmidhi",
-        hi: "जामे अत-तिर्मिज़ी"
-      },
-      icon: "ت",
-      description: {
-        bn: "ইমাম তিরমিজির সংকলন",
-        en: "Collection of Imam Tirmidhi",
-        hi: "इमाम तिर्मिज़ी का संग्रह"
-      }
-    },
-    {
-      id: "nasai",
-      names: {
-        bn: "সুনানে নাসাঈ",
-        en: "Sunan an-Nasa'i",
-        hi: "सुनन नसाई"
-      },
-      icon: "ن",
-      description: {
-        bn: "ইমাম নাসাঈর সংকলন",
-        en: "Collection of Imam Nasa'i",
-        hi: "इमाम नसाई का संग्रह"
-      }
-    },
-    {
-      id: "ibnmajah",
-      names: {
-        bn: "সুনানে ইবনে মাজাহ",
-        en: "Sunan Ibn Majah",
-        hi: "सुनन इब्न माजा"
-      },
-      icon: "ج",
-      description: {
-        bn: "ইবনে মাজাহর সংকলন",
-        en: "Collection of Ibn Majah",
-        hi: "इब्न माजा का संग्रह"
-      }
-    },
-    {
-      id: "malik",
-      names: {
-        bn: "মুয়াত্তা ইমাম মালিক",
-        en: "Muwatta Malik",
-        hi: "मुवत्ता इमाम मालिक"
-      },
-      icon: "م",
-      description: {
-        bn: "ইমাম মালিকের সংকলন",
-        en: "Collection of Imam Malik",
-        hi: "इमाम मालिक का संग्रह"
-      }
-    },
-    {
-      id: "nawawi",
-      names: {
-        bn: "ইমাম নববির ৪০ হাদিস",
-        en: "Forty Hadith of Nawawi",
-        hi: "इमाम नववी की चालीस हदीसें"
-      },
-      icon: "أ",
-      description: {
-        bn: "নির্বাচিত চল্লিশটি হাদিস",
-        en: "Forty selected Hadith",
-        hi: "चालीस चयनित हदीसें"
-      }
-    }
+    { id: "bukhari", names: { bn: "সহিহ বুখারি", en: "Sahih al-Bukhari", hi: "सहीह अल-बुखारी" }, icon: "ب", description: { bn: "ইমাম বুখারির সংকলন", en: "Collection of Imam Bukhari", hi: "इमाम बुखारी का संग्रह" } },
+    { id: "muslim", names: { bn: "সহিহ মুসলিম", en: "Sahih Muslim", hi: "सहीह मुस्लिम" }, icon: "م", description: { bn: "ইমাম মুসলিমের সংকলন", en: "Collection of Imam Muslim", hi: "इमाम मुस्लिम का संग्रह" } },
+    { id: "abudawud", names: { bn: "সুনানে আবু দাউদ", en: "Sunan Abi Dawud", hi: "सुनन अबू दाऊद" }, icon: "د", description: { bn: "আবু দাউদের সংকলন", en: "Collection of Abu Dawud", hi: "अबू दाऊद का संग्रह" } },
+    { id: "tirmidhi", names: { bn: "জামে আত-তিরমিজি", en: "Jami at-Tirmidhi", hi: "जामे अत-तिर्मिज़ी" }, icon: "ت", description: { bn: "ইমাম তিরমিজির সংকলন", en: "Collection of Imam Tirmidhi", hi: "इमाम तिर्मिज़ी का संग्रह" } },
+    { id: "nasai", names: { bn: "সুনানে নাসাঈ", en: "Sunan an-Nasa'i", hi: "सुनन नसाई" }, icon: "ن", description: { bn: "ইমাম নাসাঈর সংকলন", en: "Collection of Imam Nasa'i", hi: "इमाम नसाई का संग्रह" } },
+    { id: "ibnmajah", names: { bn: "সুনানে ইবনে মাজাহ", en: "Sunan Ibn Majah", hi: "सुनन इब्न माजा" }, icon: "ج", description: { bn: "ইবনে মাজাহর সংকলন", en: "Collection of Ibn Majah", hi: "इब्न माजा का संग्रह" } },
+    { id: "malik", names: { bn: "মুয়াত্তা ইমাম মালিক", en: "Muwatta Malik", hi: "मुवत्ता इमाम मालिक" }, icon: "م", description: { bn: "ইমাম মালিকের সংকলন", en: "Collection of Imam Malik", hi: "इमाम मालिक का संग्रह" } },
+    { id: "nawawi", names: { bn: "ইমাম নববির ৪০ হাদিস", en: "Forty Hadith of Nawawi", hi: "इमाम नववी की चालीस हदीसें" }, icon: "أ", description: { bn: "নির্বাচিত চল্লিশটি হাদিস", en: "Forty selected Hadith", hi: "चालीस चयनित हदीसें" } }
   ];
 
   const TEXT = {
     bn: {
-      title: "হাদিস সংকলন",
-      subtitle: "হাদিস পড়ুন, শিক্ষা গ্রহণ করুন",
-      books: "হাদিসের বই",
-      loadingBooks: "হাদিসের বই লোড হচ্ছে...",
+      title: "হাদিস সংকলন", subtitle: "হাদিস পড়ুন, শিক্ষা গ্রহণ করুন",
+      books: "হাদিসের বই", loadingBooks: "হাদিসের বই লোড হচ্ছে...",
       loadingHadith: "হাদিস লোড হচ্ছে...",
       loadBooksError: "হাদিসের বই লোড করা যায়নি। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।",
       loadHadithError: "হাদিস লোড করা যায়নি। আবার চেষ্টা করুন।",
-      retry: "আবার চেষ্টা করুন",
-      search: "হাদিস খুঁজুন...",
-      searchLabel: "হাদিস খুঁজুন",
-      noResults: "কোনো হাদিস পাওয়া যায়নি।",
-      arabic: "আরবি",
-      translation: "অনুবাদ",
-      reference: "রেফারেন্স",
-      detail: "হাদিসের বিবরণ",
-      hadithNumber: "হাদিস নম্বর",
-      previous: "← আগের",
-      next: "পরের →",
+      retry: "আবার চেষ্টা করুন", search: "হাদিস খুঁজুন...",
+      searchLabel: "হাদিস খুঁজুন", noResults: "কোনো হাদিস পাওয়া যায়নি।",
+      arabic: "আরবি", translation: "অনুবাদ", reference: "রেফারেন্স",
+      detail: "হাদিসের বিবরণ", hadithNumber: "হাদিস নম্বর",
+      previous: "← আগের", next: "পরের →",
       footer: "পড়ুন • চিন্তা করুন • আমল করুন",
       noTranslation: "এই ভাষায় অনুবাদ পাওয়া যায়নি।",
-      noArabic: "আরবি পাঠ পাওয়া যায়নি।",
-      noReference: "রেফারেন্স পাওয়া যায়নি।",
-      first: "প্রথম হাদিসে পৌঁছে গেছেন।",
-      last: "শেষ হাদিসে পৌঁছে গেছেন।",
-      untitled: "হাদিস",
-      item: "হাদিস",
-      network: "ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।"
+      noArabic: "আরবি পাঠ পাওয়া যায়নি.", noReference: "রেফারেন্স পাওয়া যায়নি।",
+      untitled: "হাদিস", item: "হাদিস"
     },
     en: {
-      title: "Hadith Collection",
-      subtitle: "Read Hadith and learn from its teachings",
-      books: "Hadith Books",
-      loadingBooks: "Loading Hadith collections...",
+      title: "Hadith Collection", subtitle: "Read Hadith and learn from its teachings",
+      books: "Hadith Books", loadingBooks: "Loading Hadith collections...",
       loadingHadith: "Loading Hadith...",
       loadBooksError: "Could not load Hadith collections. Check your internet connection and try again.",
       loadHadithError: "Could not load Hadith. Please try again.",
-      retry: "Try Again",
-      search: "Search Hadith...",
-      searchLabel: "Search Hadith",
-      noResults: "No Hadith found.",
-      arabic: "Arabic",
-      translation: "Translation",
-      reference: "Reference",
-      detail: "Hadith Details",
-      hadithNumber: "Hadith No.",
-      previous: "← Previous",
-      next: "Next →",
+      retry: "Try Again", search: "Search Hadith...",
+      searchLabel: "Search Hadith", noResults: "No Hadith found.",
+      arabic: "Arabic", translation: "Translation", reference: "Reference",
+      detail: "Hadith Details", hadithNumber: "Hadith No.",
+      previous: "← Previous", next: "Next →",
       footer: "Read • Reflect • Practice",
       noTranslation: "Translation is not available in this language.",
-      noArabic: "Arabic text is unavailable.",
-      noReference: "Reference is unavailable.",
-      first: "You are at the first Hadith.",
-      last: "You are at the last Hadith.",
-      untitled: "Hadith",
-      item: "Hadith",
-      network: "Check your internet connection and try again."
+      noArabic: "Arabic text is unavailable.", noReference: "Reference is unavailable.",
+      untitled: "Hadith", item: "Hadith"
     },
     hi: {
-      title: "हदीस संग्रह",
-      subtitle: "हदीस पढ़ें और उससे शिक्षा प्राप्त करें",
-      books: "हदीस की पुस्तकें",
-      loadingBooks: "हदीस संग्रह लोड हो रहे हैं...",
+      title: "हदीस संग्रह", subtitle: "हदीस पढ़ें और उससे शिक्षा प्राप्त करें",
+      books: "हदीस की पुस्तकें", loadingBooks: "हदीस संग्रह लोड हो रहे हैं...",
       loadingHadith: "हदीस लोड हो रही हैं...",
       loadBooksError: "हदीस संग्रह लोड नहीं हो सके। इंटरनेट कनेक्शन जाँचें और फिर प्रयास करें।",
       loadHadithError: "हदीस लोड नहीं हो सकीं। कृपया फिर प्रयास करें।",
-      retry: "फिर प्रयास करें",
-      search: "हदीस खोजें...",
-      searchLabel: "हदीस खोजें",
-      noResults: "कोई हदीस नहीं मिली।",
-      arabic: "अरबी",
-      translation: "अनुवाद",
-      reference: "संदर्भ",
-      detail: "हदीस का विवरण",
-      hadithNumber: "हदीस संख्या",
-      previous: "← पिछली",
-      next: "अगली →",
+      retry: "फिर प्रयास करें", search: "हदीस खोजें...",
+      searchLabel: "हदीस खोजें", noResults: "कोई हदीस नहीं मिली।",
+      arabic: "अरबी", translation: "अनुवाद", reference: "संदर्भ",
+      detail: "हदीस का विवरण", hadithNumber: "हदीस संख्या",
+      previous: "← पिछली", next: "अगली →",
       footer: "पढ़ें • विचार करें • अमल करें",
       noTranslation: "इस भाषा में अनुवाद उपलब्ध नहीं है।",
-      noArabic: "अरबी पाठ उपलब्ध नहीं है।",
-      noReference: "संदर्भ उपलब्ध नहीं है।",
-      first: "आप पहली हदीस पर हैं।",
-      last: "आप आखिरी हदीस पर हैं।",
-      untitled: "हदीस",
-      item: "हदीस",
-      network: "इंटरनेट कनेक्शन जाँचें और फिर प्रयास करें।"
+      noArabic: "अरबी पाठ उपलब्ध नहीं है।", noReference: "संदर्भ उपलब्ध नहीं है।",
+      untitled: "हदीस", item: "हदीस"
     }
   };
 
@@ -222,37 +78,35 @@
     searchQuery: "",
     currentScreen: "books",
     requestId: 0,
+    booksRequestId: 0,
     loadingBooks: false,
     loadingHadith: false
   };
 
-  const $ = (id) => document.getElementById(id);
+  const $ = id => document.getElementById(id);
 
   function readSettings() {
-    let result = {};
+    let settings = {};
 
-    for (const key of ["appSettings", "ibadatSettings"]) {
+    ["appSettings", "ibadatSettings"].forEach(key => {
       try {
-        const raw = localStorage.getItem(key);
-        if (raw) {
-          const parsed = JSON.parse(raw);
+        const value = localStorage.getItem(key);
+        if (value) {
+          const parsed = JSON.parse(value);
           if (parsed && typeof parsed === "object") {
-            result = { ...result, ...parsed };
+            settings = { ...settings, ...parsed };
           }
         }
-      } catch (_) {
-        // Invalid settings are ignored.
-      }
-    }
+      } catch (_) {}
+    });
 
-    return result;
+    return settings;
   }
 
   function normalizeLanguage(value) {
-    const lang = String(value || "").toLowerCase().trim();
-
-    if (["en", "english", "eng"].includes(lang)) return "en";
-    if (["hi", "hindi", "hin"].includes(lang)) return "hi";
+    const language = String(value || "").toLowerCase().trim();
+    if (["en", "english", "eng"].includes(language)) return "en";
+    if (["hi", "hindi", "hin"].includes(language)) return "hi";
     return "bn";
   }
 
@@ -277,19 +131,17 @@
     document.documentElement.lang = state.lang;
     document.body.classList.toggle("dark-mode", state.dark);
 
-    const themeColor = document.querySelector('meta[name="theme-color"]');
-    if (themeColor) {
-      themeColor.content = state.dark ? "#081b13" : "#123d2c";
-    }
+    const theme = document.querySelector('meta[name="theme-color"]');
+    if (theme) theme.content = state.dark ? "#081b13" : "#123d2c";
   }
 
   function t(key) {
-    return TEXT[state.lang][key] || TEXT.bn[key] || key;
+    return TEXT[state.lang]?.[key] || TEXT.bn[key] || key;
   }
 
   function setText(id, value) {
     const element = $(id);
-    if (element) element.textContent = value;
+    if (element) element.textContent = value ?? "";
   }
 
   function show(element, visible) {
@@ -297,23 +149,20 @@
   }
 
   function formatNumber(value) {
-    const stringValue = String(value ?? "");
-
-    if (state.lang === "en") return stringValue;
+    const input = String(value ?? "");
+    if (state.lang === "en") return input;
 
     const digits = state.lang === "hi"
       ? "०१२३४५६७८९"
       : "০১২৩৪৫৬৭৮৯";
 
-    return stringValue.replace(/\d/g, digit => digits[Number(digit)]);
+    return input.replace(/\d/g, digit => digits[Number(digit)]);
   }
 
   function safeText(value) {
-    if (value === null || value === undefined) return "";
-    if (typeof value === "string" || typeof value === "number") {
-      return String(value);
-    }
-    return "";
+    return typeof value === "string" || typeof value === "number"
+      ? String(value)
+      : "";
   }
 
   function getBookName(book) {
@@ -321,14 +170,16 @@
   }
 
   function updateStaticText() {
-    setText("pageTitle", t("title"));
-    setText("pageSubtitle", t("subtitle"));
     setText("booksHeading", t("books"));
     setText("arabicHeading", t("arabic"));
     setText("translationHeading", t("translation"));
     setText("referenceHeading", t("reference"));
-    setText("footerText", t("footer"));
     setText("footerBrand", "IBADAT");
+    setText("footerText", t("footer"));
+    setText("retryButton", t("retry"));
+    setText("listRetryButton", t("retry"));
+    setText("previousHadithButton", t("previous"));
+    setText("nextHadithButton", t("next"));
 
     const search = $("hadithSearch");
     if (search) {
@@ -336,24 +187,16 @@
       search.setAttribute("aria-label", t("searchLabel"));
     }
 
-    setText("previousHadithButton", t("previous"));
-    setText("nextHadithButton", t("next"));
-    setText("retryButton", t("retry"));
-    setText("listRetryButton", t("retry"));
-
     if (state.currentScreen === "books") {
       setText("pageTitle", t("title"));
       setText("pageSubtitle", t("subtitle"));
-    } else if (state.currentScreen === "list" && state.currentBook) {
+    } else if (state.currentBook) {
       setText("pageTitle", getBookName(state.currentBook));
-      setText("pageSubtitle", t("books"));
-    } else if (state.currentScreen === "detail" && state.currentBook) {
-      setText("pageTitle", getBookName(state.currentBook));
-      setText("pageSubtitle", t("detail"));
+      setText("pageSubtitle", state.currentScreen === "detail" ? t("detail") : t("books"));
     }
   }
 
-  function showScreen(name, addHistory = true) {
+  function showScreen(name, pushHistory = true) {
     state.currentScreen = name;
 
     const screens = {
@@ -364,46 +207,22 @@
 
     Object.entries(screens).forEach(([key, element]) => {
       if (!element) return;
-
       const active = key === name;
       element.hidden = !active;
       element.classList.toggle("active", active);
     });
 
-    if (addHistory) {
+    if (pushHistory) {
       try {
         history.pushState({ hadithScreen: name }, "");
-      } catch (_) {
-        // Navigation still works without History API.
-      }
+      } catch (_) {}
     }
 
     updateStaticText();
 
-    if (name === "books") {
-      renderBooks();
-    } else if (name === "list") {
-      renderHadithList();
-    } else if (name === "detail") {
-      renderHadithDetail();
-    }
-  }
-
-  function goBack() {
-    if (state.currentScreen === "detail") {
-      showScreen("list", false);
-      return;
-    }
-
-    if (state.currentScreen === "list") {
-      showScreen("books", false);
-      return;
-    }
-
-    // At the first screen, allow the normal browser/app back behavior.
-    if (history.state?.hadithScreen) {
-      history.back();
-    }
+    if (name === "books") renderBooks();
+    if (name === "list") renderHadithList();
+    if (name === "detail") renderHadithDetail();
   }
 
   function makeElement(tag, className, text) {
@@ -419,47 +238,111 @@
       headers: { Accept: "application/json" }
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
     return response.json();
   }
 
-  function setBooksLoading(loading) {
-    state.loadingBooks = loading;
+  /*
+   * API data normalizer:
+   * API response can be a direct array or an object containing data/metadata.
+   */
+  function normalizeArray(data) {
+    if (Array.isArray(data)) return data;
+    if (Array.isArray(data?.data)) return data.data;
+    if (Array.isArray(data?.hadiths)) return data.hadiths;
+    if (Array.isArray(data?.books)) return data.books;
+    return [];
+  }
 
-    show($("loadingMessage"), loading);
-    show($("errorMessage"), false);
+  function normalizeEdition(edition) {
+    return {
+      ...edition,
+      name: String(edition?.name || edition?.id || ""),
+      collection: String(
+        edition?.collection ||
+        edition?.collectionName ||
+        edition?.book ||
+        ""
+      ).toLowerCase(),
+      language: String(
+        edition?.language ||
+        edition?.lang ||
+        ""
+      ).toLowerCase()
+    };
+  }
 
-    if (loading) {
-      setText("loadingMessage", t("loadingBooks"));
-      $("bookGrid").replaceChildren();
-    }
+  function getEditionList(data) {
+    const raw = normalizeArray(data);
+    return raw
+      .filter(item => item && typeof item === "object")
+      .map(normalizeEdition);
+  }
+
+  function editionMatchesBook(edition, bookId) {
+    const collection = String(edition.collection || "").toLowerCase();
+    const name = String(edition.name || "").toLowerCase();
+    const book = String(bookId).toLowerCase();
+
+    return collection === book ||
+      collection.endsWith(`-${book}`) ||
+      collection.endsWith(`_${book}`) ||
+      name.includes(`-${book}-`) ||
+      name.endsWith(`-${book}`);
+  }
+
+  function editionLanguage(edition) {
+    const name = String(edition.name || "").toLowerCase();
+    const language = String(edition.language || "").toLowerCase();
+
+    if (language === "ara" || name.startsWith("ara-") || name.startsWith("ara_")) return "ara";
+    if (language === "ben" || language === "bn" || name.startsWith("ben-") || name.startsWith("ben_")) return "bn";
+    if (language === "eng" || language === "en" || name.startsWith("eng-") || name.startsWith("eng_")) return "en";
+    if (language === "hin" || language === "hi" || name.startsWith("hin-") || name.startsWith("hin_")) return "hi";
+
+    return language;
   }
 
   async function loadEditions() {
-    setBooksLoading(true);
+    const requestId = ++state.booksRequestId;
+    state.loadingBooks = true;
+
+    show($("loadingMessage"), true);
+    show($("errorMessage"), false);
+    setText("loadingMessage", t("loadingBooks"));
 
     try {
       const data = await fetchJson(`${API_BASE}/editions.json`);
+      const editions = getEditionList(data);
 
-      if (!Array.isArray(data)) {
-        throw new Error("Invalid editions response");
+      if (requestId !== state.booksRequestId) return;
+
+      if (!editions.length) {
+        throw new Error("The editions response did not contain an edition list.");
       }
 
-      state.editions = data;
-      renderBooks();
-
+      state.editions = editions;
       show($("loadingMessage"), false);
       show($("errorMessage"), false);
+      renderBooks();
     } catch (error) {
-      console.error("Hadith editions error:", error);
+      if (requestId !== state.booksRequestId) return;
+
+      console.error("Unable to load Hadith editions:", error);
+
+      /*
+       * Books are local UI choices, not API results.
+       * Keep the book grid visible even when the edition index is unavailable.
+       */
+      state.editions = [];
       show($("loadingMessage"), false);
-      show($("errorMessage"), true);
-      setText("errorText", t("loadBooksError"));
+      show($("errorMessage"), false);
+      renderBooks();
     } finally {
-      state.loadingBooks = false;
+      if (requestId === state.booksRequestId) {
+        state.loadingBooks = false;
+      }
     }
   }
 
@@ -491,37 +374,40 @@
     });
   }
 
-  function findEdition(collection, language) {
-    const exact = state.editions.find(edition =>
-      edition.collection === collection &&
-      String(edition.language || "").toLowerCase() === language
+  function findEdition(bookId, language) {
+    const matches = state.editions.filter(edition =>
+      editionMatchesBook(edition, bookId)
     );
 
-    if (exact) return exact;
+    return matches.find(edition => editionLanguage(edition) === language) || null;
+  }
 
-    return state.editions.find(edition =>
-      edition.collection === collection &&
-      String(edition.name || "").toLowerCase().includes(language)
+  function getArabicEdition(book) {
+    return findEdition(book.id, "ara");
+  }
+
+  function getTranslationEdition(book) {
+    const settings = readSettings();
+    const language = normalizeLanguage(
+      settings.translationLanguage ||
+      settings.translationLang ||
+      state.lang
     );
+
+    return findEdition(book.id, language);
   }
 
-  function normalizeHadithArray(data) {
-    if (Array.isArray(data)) return data;
-    if (Array.isArray(data?.hadiths)) return data.hadiths;
-    if (Array.isArray(data?.data)) return data.data;
-    return [];
-  }
-
-  function getHadithNumber(item, fallbackIndex) {
+  function getHadithNumber(item, index) {
     return item?.hadithnumber ??
       item?.hadithNumber ??
       item?.number ??
       item?.id ??
-      fallbackIndex + 1;
+      index + 1;
   }
 
   function getHadithText(item) {
     if (!item || typeof item !== "object") return "";
+
     return safeText(
       item.text ??
       item.hadith ??
@@ -533,54 +419,49 @@
     );
   }
 
-  function findMatchingTranslation(number) {
-    const key = String(number);
+  function getHadithArray(data) {
+    const direct = normalizeArray(data);
+    if (direct.length) return direct;
 
-    return state.translatedHadith.find(item =>
-      String(getHadithNumber(item, -1)) === key
+    if (data?.metadata && Array.isArray(data?.hadiths)) {
+      return data.hadiths;
+    }
+
+    return [];
+  }
+
+  function findMatchingTranslation(number) {
+    const target = String(number);
+
+    return state.translatedHadith.find((item, index) =>
+      String(getHadithNumber(item, index)) === target
     ) || null;
   }
 
-  function getTranslationLanguage() {
-    const settings = readSettings();
+  function buildHadithItems() {
+    const arabic = state.arabicHadith;
+    const translated = state.translatedHadith;
+    const base = arabic.length ? arabic : translated;
 
-    return normalizeLanguage(
-      settings.translationLanguage ||
-      settings.translationLang ||
-      state.lang
-    );
-  }
+    return base.map((item, index) => {
+      const number = getHadithNumber(item, index);
+      const translationItem = findMatchingTranslation(number);
 
-  function getTranslationEdition(book) {
-    const language = getTranslationLanguage();
-
-    const editionCode = {
-      bn: "ben",
-      en: "eng",
-      hi: "hin"
-    }[language];
-
-    const collection = book.id;
-
-    return findEdition(collection, language) ||
-      state.editions.find(edition =>
-        edition.collection === collection &&
-        String(edition.name || "").toLowerCase().startsWith(editionCode + "-")
-      ) ||
-      state.editions.find(edition =>
-        edition.collection === collection &&
-        String(edition.language || "").toLowerCase().startsWith(language)
-      );
-  }
-
-  function getArabicEdition(book) {
-    return state.editions.find(edition =>
-      edition.collection === book.id &&
-      (
-        String(edition.language || "").toLowerCase() === "ara" ||
-        String(edition.name || "").toLowerCase().startsWith("ara-")
-      )
-    );
+      return {
+        number,
+        arabic: arabic.length ? getHadithText(item) : "",
+        translation: translationItem
+          ? getHadithText(translationItem)
+          : (!arabic.length ? getHadithText(item) : ""),
+        reference: safeText(
+          item.reference ??
+          item.referenceText ??
+          translationItem?.reference ??
+          translationItem?.referenceText ??
+          ""
+        )
+      };
+    });
   }
 
   async function openBook(book) {
@@ -591,7 +472,6 @@
     if (search) search.value = "";
 
     showScreen("list");
-
     await loadHadith(book);
   }
 
@@ -607,44 +487,45 @@
     setText("listLoadingMessage", t("loadingHadith"));
     show($("listErrorMessage"), false);
     show($("emptySearchMessage"), false);
-    $("hadithList").replaceChildren();
+
+    $("hadithList")?.replaceChildren();
 
     try {
+      /*
+       * If the edition index has not loaded, retry it before resolving URLs.
+       */
       if (!state.editions.length) {
-        const data = await fetchJson(`${API_BASE}/editions.json`);
-        state.editions = Array.isArray(data) ? data : [];
+        const editionData = await fetchJson(`${API_BASE}/editions.json`);
+        state.editions = getEditionList(editionData);
+      }
+
+      if (!state.editions.length) {
+        throw new Error("No editions available from the API.");
       }
 
       const arabicEdition = getArabicEdition(book);
       const translationEdition = getTranslationEdition(book);
 
       if (!arabicEdition && !translationEdition) {
-        throw new Error("No matching editions found");
+        throw new Error(`No Arabic or translation edition found for ${book.id}.`);
       }
 
-      const requests = [];
-
-      requests.push(
+      const [arabicData, translationData] = await Promise.all([
         arabicEdition
-          ? fetchJson(`${API_BASE}/editions/${arabicEdition.name}.json`)
-          : Promise.resolve(null)
-      );
-
-      requests.push(
+          ? fetchJson(`${API_BASE}/editions/${encodeURIComponent(arabicEdition.name)}.json`)
+          : Promise.resolve(null),
         translationEdition
-          ? fetchJson(`${API_BASE}/editions/${translationEdition.name}.json`)
+          ? fetchJson(`${API_BASE}/editions/${encodeURIComponent(translationEdition.name)}.json`)
           : Promise.resolve(null)
-      );
-
-      const [arabicData, translationData] = await Promise.all(requests);
+      ]);
 
       if (requestId !== state.requestId) return;
 
-      state.arabicHadith = normalizeHadithArray(arabicData);
-      state.translatedHadith = normalizeHadithArray(translationData);
+      state.arabicHadith = getHadithArray(arabicData);
+      state.translatedHadith = getHadithArray(translationData);
 
       if (!state.arabicHadith.length && !state.translatedHadith.length) {
-        throw new Error("No Hadith data found");
+        throw new Error("The selected edition contains no Hadith entries.");
       }
 
       state.displayedHadith = buildHadithItems();
@@ -656,7 +537,7 @@
     } catch (error) {
       if (requestId !== state.requestId) return;
 
-      console.error("Hadith loading error:", error);
+      console.error("Hadith data loading error:", error);
       show($("listLoadingMessage"), false);
       show($("listErrorMessage"), true);
       setText("listErrorText", t("loadHadithError"));
@@ -665,34 +546,6 @@
         state.loadingHadith = false;
       }
     }
-  }
-
-  function buildHadithItems() {
-    const arabic = state.arabicHadith;
-    const translated = state.translatedHadith;
-
-    const base = arabic.length ? arabic : translated;
-
-    return base.map((item, index) => {
-      const number = getHadithNumber(item, index);
-      const translationItem = findMatchingTranslation(number);
-
-      return {
-        number,
-        arabic: arabic.length ? getHadithText(item) : "",
-        translation: translationItem ? getHadithText(translationItem) :
-          (translated.length && !arabic.length ? getHadithText(item) : ""),
-        reference: safeText(
-          item.reference ??
-          item.referenceText ??
-          translationItem?.reference ??
-          translationItem?.referenceText ??
-          ""
-        ),
-        arabicItem: item,
-        translationItem
-      };
-    });
   }
 
   function renderHadithList() {
@@ -717,7 +570,10 @@
         );
       });
 
-    show($("emptySearchMessage"), results.length === 0 && !state.loadingHadith);
+    show(
+      $("emptySearchMessage"),
+      results.length === 0 && !state.loadingHadith
+    );
 
     results.forEach(({ item, index }) => {
       const button = makeElement("button", "hadith-item");
@@ -739,13 +595,10 @@
       const preview = makeElement(
         "p",
         "",
-        previewText.length > 170
-          ? `${previewText.slice(0, 170)}…`
-          : previewText
+        previewText.length > 170 ? `${previewText.slice(0, 170)}…` : previewText
       );
 
       button.append(number, heading, preview);
-
       button.addEventListener("click", () => {
         state.currentHadithIndex = index;
         showScreen("detail");
@@ -772,7 +625,6 @@
       "detailHadithNumber",
       `${t("hadithNumber")} ${formatNumber(item.number)}`
     );
-
     setText("arabicText", item.arabic || t("noArabic"));
     setText("translationText", item.translation || t("noTranslation"));
     setText("referenceText", item.reference || t("noReference"));
@@ -780,13 +632,9 @@
     const previous = $("previousHadithButton");
     const next = $("nextHadithButton");
 
-    if (previous) {
-      previous.disabled = state.currentHadithIndex <= 0;
-    }
-
+    if (previous) previous.disabled = state.currentHadithIndex <= 0;
     if (next) {
-      next.disabled =
-        state.currentHadithIndex >= state.displayedHadith.length - 1;
+      next.disabled = state.currentHadithIndex >= state.displayedHadith.length - 1;
     }
 
     const detailCard = document.querySelector(".hadith-detail-card");
@@ -794,68 +642,47 @@
   }
 
   function moveHadith(direction) {
-    const nextIndex = state.currentHadithIndex + direction;
+    const index = state.currentHadithIndex + direction;
+    if (index < 0 || index >= state.displayedHadith.length) return;
 
-    if (nextIndex < 0 || nextIndex >= state.displayedHadith.length) {
-      return;
-    }
-
-    state.currentHadithIndex = nextIndex;
+    state.currentHadithIndex = index;
     renderHadithDetail();
   }
 
-  function retryBooks() {
-    loadEditions();
-  }
-
-  function retryHadith() {
-    if (state.currentBook) loadHadith(state.currentBook);
-  }
-
-  function refreshLanguage() {
+  function refreshSettings() {
     applySettings();
     updateStaticText();
     renderBooks();
     renderHadithList();
 
-    if (state.currentScreen === "detail") {
-      renderHadithDetail();
-    }
-  }
-
-  function onStorageChange(event) {
-    if (
-      !event.key ||
-      event.key === "appSettings" ||
-      event.key === "ibadatSettings"
-    ) {
-      refreshLanguage();
-    }
-  }
-
-  function onPageShow() {
-    refreshLanguage();
+    if (state.currentScreen === "detail") renderHadithDetail();
   }
 
   function bindEvents() {
-    $("retryButton")?.addEventListener("click", retryBooks);
-    $("listRetryButton")?.addEventListener("click", retryHadith);
-
-    $("previousHadithButton")?.addEventListener("click", () => {
-      moveHadith(-1);
+    $("retryButton")?.addEventListener("click", loadEditions);
+    $("listRetryButton")?.addEventListener("click", () => {
+      if (state.currentBook) loadHadith(state.currentBook);
     });
 
-    $("nextHadithButton")?.addEventListener("click", () => {
-      moveHadith(1);
-    });
+    $("previousHadithButton")?.addEventListener("click", () => moveHadith(-1));
+    $("nextHadithButton")?.addEventListener("click", () => moveHadith(1));
 
     $("hadithSearch")?.addEventListener("input", event => {
       state.searchQuery = event.target.value || "";
       renderHadithList();
     });
 
-    window.addEventListener("storage", onStorageChange);
-    window.addEventListener("pageshow", onPageShow);
+    window.addEventListener("storage", event => {
+      if (
+        !event.key ||
+        event.key === "appSettings" ||
+        event.key === "ibadatSettings"
+      ) {
+        refreshSettings();
+      }
+    });
+
+    window.addEventListener("pageshow", refreshSettings);
 
     window.addEventListener("popstate", () => {
       if (state.currentScreen === "detail") {
@@ -865,24 +692,26 @@
       }
     });
 
-    // Android/WebView back button events, where supported by the host.
     document.addEventListener("backbutton", event => {
       event.preventDefault?.();
-      goBack();
+
+      if (state.currentScreen === "detail") {
+        showScreen("list", false);
+      } else if (state.currentScreen === "list") {
+        showScreen("books", false);
+      }
     });
   }
 
   function init() {
     applySettings();
     bindEvents();
-    updateStaticText();
 
     try {
       history.replaceState({ hadithScreen: "books" }, "");
-    } catch (_) {
-      // Continue without history state.
-    }
+    } catch (_) {}
 
+    updateStaticText();
     renderBooks();
     loadEditions();
   }
