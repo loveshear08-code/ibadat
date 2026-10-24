@@ -1,503 +1,762 @@
-/* =====================================================
-   IBADAT TASBIH
-   Green + Pistachio + Cream + Gold
-   ===================================================== */
 
 :root {
-    --primary: #1F6B3A;
-    --primary-dark: #174F2C;
-    --pistachio: #CFE8C8;
-    --cream: #F8F6F0;
-    --gold: #D4AF37;
-    --red: #D64545;
-    --text: #1E4620;
-    --muted: #777D76;
-    --progress-track: #DCEBDD;
-    --card-shadow: 0 4px 14px rgba(31, 107, 58, 0.10);
-}
+  --deep-green: #123d2c;
+  --dark-green: #0b2c20;
+  --green: #20583e;
 
-/* ================= BASIC ================= */
+  --light-pista: #e6edce;
+  --option-pista: #e9efda;
+
+  --cream: #fff9eb;
+  --cream-white: rgba(255, 252, 242, 0.94);
+  --cream-layer: rgba(255, 252, 242, 0.79);
+
+  --gold: #d6b56d;
+  --gold-dark: #9b7837;
+
+  --text: #24382c;
+  --muted: #657367;
+  --border: rgba(214, 181, 109, 0.85);
+
+  --shadow: 0 5px 18px rgba(0, 0, 0, 0.12);
+
+  --header-height: 112px;
+  --footer-height: 48px;
+  --page-gap: 12px;
+  --app-padding: 12px;
+}
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-html,
-body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
-    color: var(--text);
-    -webkit-tap-highlight-color: transparent;
+html {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  -webkit-text-size-adjust: 100%;
 }
-
-/* ================= BACKGROUND ================= */
 
 body {
-    background:
-        linear-gradient(
-            rgba(248, 246, 240, 0.76),
-            rgba(248, 246, 240, 0.76)
-        ),
-        url("../assets/bg_pattern.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+  width: 100%;
+  height: 100%;
+  min-width: 280px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  overflow: hidden;
+
+  font-family:
+    "Noto Sans Bengali",
+    "Nirmala UI",
+    Arial,
+    sans-serif;
+
+  color: var(--text);
+  background: var(--deep-green);
+
+  -webkit-tap-highlight-color: transparent;
 }
 
-.tasbih-page {
-    width: 100%;
-    height: 100vh;
-    height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+button {
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
-/* ================= TOP AREA ================= */
-
-.top-area {
-    height: 66.6667%;
-    min-height: 0;
-    padding: 10px 14px 5px;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    overflow-y: auto;
-    overflow-x: hidden;
+button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
 }
 
-/* ================= PISTACHIO BOARDS ================= */
-
-.zikr-card,
-.count-card,
-.progress-section,
-.today-card {
-    background: var(--pistachio);
-    border: 2px solid var(--gold);
-    border-radius: 18px;
-    box-shadow: var(--card-shadow);
+[hidden] {
+  display: none !important;
 }
 
-/* ================= ZIKR CARD ================= */
+/* Main layout */
 
-.zikr-card {
-    padding: 8px 10px;
-    text-align: center;
-    flex-shrink: 0;
+.app {
+  position: relative;
+  isolation: isolate;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-gap);
+
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+
+  padding: var(--app-padding);
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      var(--cream-layer),
+      var(--cream-layer)
+    ),
+    url("../assets/main-bg.jpg") center / cover no-repeat;
+}
+
+.board {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+/* Shared header */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+
+  display: flex;
+  flex: 0 0 var(--header-height);
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: var(--header-height);
+  min-height: var(--header-height);
+
+  padding: 12px 16px;
+  overflow: hidden;
+
+  text-align: center;
+  color: var(--deep-green);
+
+  background:
+    linear-gradient(
+      rgba(255, 252, 242, 0.79),
+      rgba(255, 252, 242, 0.79)
+    ),
+    url("../assets/hero-bg.jpg") center / cover no-repeat;
+}
+
+.hero-content {
+  width: 100%;
+  min-width: 0;
+}
+
+.hero-title {
+  margin: 0;
+
+  color: var(--deep-green);
+  font-size: clamp(1.35rem, 5vw, 1.8rem);
+  font-weight: 800;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.hero-subtitle {
+  margin: 4px 0 0;
+
+  color: var(--text);
+  font-size: clamp(0.76rem, 2.8vw, 0.95rem);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+/* Main page area */
+
+.page-container {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+
+  gap: var(--page-gap);
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Zikr board */
+
+.zikr-board {
+  position: relative;
+
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+
+  padding: 12px 10px;
+
+  overflow: hidden;
+  text-align: center;
+
+  background: var(--light-pista);
 }
 
 .small-label {
-    font-size: 13px;
-    line-height: 1.4;
-    color: var(--muted);
-    margin-bottom: 3px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
 .zikr-arabic {
-    font-family: "Noto Naskh Arabic", "Amiri", serif;
-    font-size: 30px;
-    font-weight: bold;
-    line-height: 1.5;
-    color: var(--gold);
-    margin: 2px 0;
-    overflow-wrap: anywhere;
+  width: 100%;
+  margin: 4px 0;
+
+  color: var(--gold-dark);
+
+  font-family:
+    "Noto Naskh Arabic",
+    "Amiri",
+    serif;
+
+  font-size: clamp(1.7rem, 6.3vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.75;
+
+  overflow-wrap: anywhere;
 }
 
 .zikr-name {
-    font-size: 17px;
-    font-weight: bold;
-    line-height: 1.4;
-    color: var(--primary);
-    overflow-wrap: anywhere;
+  width: 100%;
+
+  color: var(--deep-green);
+  font-size: clamp(1rem, 4vw, 1.3rem);
+  font-weight: 800;
+  line-height: 1.65;
+
+  overflow-wrap: anywhere;
 }
 
 .step-text {
-    font-size: 13px;
-    line-height: 1.4;
-    color: var(--muted);
-    margin-top: 3px;
+  margin-top: 4px;
+
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
 }
 
-/* ================= COUNT CARDS ================= */
+/* Completion message integrated into zikr board */
+
+.complete-message {
+  width: 100%;
+  max-width: 100%;
+
+  margin-top: 8px;
+  padding: 7px 9px;
+
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+
+  color: var(--deep-green);
+  background: rgba(255, 252, 242, 0.78);
+
+  box-shadow:
+    inset 0 0 0 1px rgba(214, 181, 109, 0.15),
+    0 2px 8px rgba(18, 61, 44, 0.08);
+
+  font-size: 0.88rem;
+  font-weight: 800;
+  line-height: 1.6;
+  text-align: center;
+
+  overflow-wrap: anywhere;
+}
+
+.complete-message.show {
+  animation: completionReveal 350ms ease both;
+}
+
+.complete-message.final-message {
+  border-color: var(--gold-dark);
+  background: rgba(214, 181, 109, 0.2);
+}
+
+@keyframes completionReveal {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Count and progress board */
+
+.stats-board {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+  justify-content: center;
+
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+
+  padding: 10px;
+
+  overflow: hidden;
+  background: var(--cream-white);
+}
 
 .count-info {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
-    flex-shrink: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+
+  width: 100%;
+  min-width: 0;
 }
 
 .count-card {
-    min-width: 0;
-    padding: 7px 5px;
-    text-align: center;
+  min-width: 0;
+  padding: 6px 4px;
+
+  border: 1px solid var(--border);
+  border-radius: 11px;
+
+  background: var(--option-pista);
+  text-align: center;
 }
 
 .step-count,
 .total-count {
-    font-size: 22px;
-    font-weight: bold;
-    line-height: 1.4;
-    overflow-wrap: anywhere;
+  color: var(--deep-green);
+  font-size: clamp(1.1rem, 4.7vw, 1.55rem);
+  font-weight: 800;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
 }
-
-.step-count {
-    color: var(--primary);
-}
-
-.total-count {
-    color: var(--text);
-}
-
-/* ================= PROGRESS ================= */
 
 .progress-section {
-    padding: 7px 10px;
-    flex-shrink: 0;
+  width: 100%;
+  min-width: 0;
 }
 
 .progress-text {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    font-size: 13px;
-    line-height: 1.4;
-    color: var(--muted);
-    margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  margin-bottom: 6px;
+
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
 }
 
 .progress-bar {
-    width: 100%;
-    height: 9px;
-    background: var(--progress-track);
-    border-radius: 20px;
-    overflow: hidden;
+  width: 100%;
+  height: 9px;
+
+  border-radius: 20px;
+  overflow: hidden;
+
+  background: #dce7d5;
 }
 
 .progress-fill {
-    width: 0%;
-    height: 100%;
-    background: var(--primary);
-    border-radius: 20px;
-    transition: width 0.18s ease;
+  width: 0;
+  height: 100%;
+
+  border-radius: inherit;
+  background: var(--green);
+
+  transition: width 180ms ease;
 }
 
-/* ================= DAILY TOTAL ================= */
+.today-info {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
 
-.today-card {
-    padding: 6px 8px;
-    text-align: center;
-    flex-shrink: 0;
+  padding-top: 7px;
+  border-top: 1px solid rgba(155, 120, 55, 0.25);
+
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  text-align: center;
 }
 
-.today-value {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 5px;
-    font-size: 17px;
-    line-height: 1.4;
+.today-info strong {
+  color: var(--deep-green);
+  font-size: 1.25rem;
+  font-weight: 800;
 }
 
-.today-number {
-    font-size: 23px;
-    font-weight: bold;
-    color: var(--primary);
-}
-
-/* ================= COMPLETION MESSAGE ================= */
-
-@keyframes completePop {
-    0% {
-        transform: scale(0.7);
-        opacity: 0;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-@keyframes celebrationGlow {
-    0% {
-        text-shadow: 0 0 0 transparent;
-        filter: brightness(1);
-    }
-    30% {
-        text-shadow:
-            0 0 8px rgba(212, 175, 55, 0.65),
-            0 0 18px rgba(212, 175, 55, 0.35);
-        filter: brightness(1.25);
-    }
-    100% {
-        text-shadow: 0 0 0 transparent;
-        filter: brightness(1);
-    }
-}
-
-/* ================= TAP AREA ================= */
+/* Tasbih button area */
 
 .tap-area {
-    flex: 1;
-    height: 33.3333%;
-    min-height: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4px;
-    overflow: hidden;
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+
+  padding: 2px;
+  overflow: hidden;
 }
 
-/* ================= IMAGE BUTTON ================= */
-
 .tap-button {
-    width: min(72vw, 180px);
-    height: min(72vw, 180px);
-    max-width: calc(33.3333vh - 28px);
-    max-height: calc(33.3333vh - 28px);
-    min-width: 140px;
-    min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    padding: 0;
-    border: 2px solid var(--gold);
-    border-radius: 50%;
-    outline: none;
+  flex: 0 1 auto;
 
-    background: var(--primary);
+  width: min(55vw, 230px);
+  height: min(55vw, 230px);
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+  min-width: 112px;
+  min-height: 112px;
 
-    box-shadow: 0 8px 22px rgba(23, 79, 44, 0.25);
+  max-width: 100%;
+  max-height: 100%;
+  aspect-ratio: 1;
 
-    cursor: pointer;
-    user-select: none;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
+  padding: 0;
 
-    transition:
-        transform 0.12s ease,
-        box-shadow 0.12s ease;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+
+  background: var(--deep-green);
+
+  box-shadow:
+    0 7px 20px rgba(18, 61, 44, 0.2),
+    0 0 0 4px rgba(214, 181, 109, 0.14);
+
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+
+  transition:
+    transform 120ms ease,
+    box-shadow 160ms ease;
 }
 
 .tap-icon {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-    pointer-events: none;
-    user-select: none;
-    -webkit-user-drag: none;
-}
+  display: block;
 
-/* Touch feedback: the whole icon presses in */
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  border-radius: 50%;
+
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
 
 .tap-button:active {
-    transform: scale(0.93);
-    box-shadow: 0 4px 12px rgba(23, 79, 44, 0.22);
-}
+  transform: scale(0.94);
 
-/* Keep completion styling */
+  box-shadow:
+    0 3px 10px rgba(18, 61, 44, 0.2),
+    0 0 0 3px rgba(214, 181, 109, 0.2);
+}
 
 .tap-button.completed {
-    box-shadow:
-        0 0 0 5px rgba(212, 175, 55, 0.22),
-        0 8px 22px rgba(23, 79, 44, 0.25);
+  box-shadow:
+    0 0 0 5px rgba(214, 181, 109, 0.35),
+    0 0 22px rgba(214, 181, 109, 0.5);
 }
 
-/* ================= DARK MODE ================= */
+/* Shared footer */
+
+.footer {
+  display: flex;
+  flex: 0 0 var(--footer-height);
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: var(--footer-height);
+  min-height: var(--footer-height);
+
+  padding: 4px 10px;
+  overflow: hidden;
+
+  color: var(--cream);
+  background: var(--deep-green);
+}
+
+.footer-text {
+  width: 100%;
+  margin: 0;
+
+  color: var(--cream);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  text-align: center;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Dark mode from the main app settings */
 
 body.dark-mode {
-    --text: #1E4620;
-    --muted: #536653;
-    --progress-track: #B5D4AE;
-    --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  --text: #f0eee5;
+  --muted: #c3c8bd;
 
-    background:
-        linear-gradient(
-            rgba(18, 24, 19, 0.88),
-            rgba(18, 24, 19, 0.88)
-        ),
-        url("../assets/bg_pattern.png");
+  --cream-white: rgba(22, 38, 30, 0.97);
+  --cream-layer: rgba(5, 19, 13, 0.78);
 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    color: var(--text);
+  --light-pista: #263f30;
+  --option-pista: #344a39;
+
+  --border: rgba(214, 181, 109, 0.75);
+
+  color: var(--text);
+  background: #081b13;
 }
 
-body.dark-mode .zikr-card,
-body.dark-mode .count-card,
-body.dark-mode .progress-section,
-body.dark-mode .today-card {
-    background: var(--pistachio);
-    border-color: var(--gold);
+body.dark-mode .app {
+  background:
+    linear-gradient(
+      rgba(5, 19, 13, 0.77),
+      rgba(5, 19, 13, 0.77)
+    ),
+    url("../assets/main-bg.jpg") center / cover no-repeat;
+}
+
+body.dark-mode .hero {
+  background:
+    linear-gradient(
+      rgba(22, 38, 30, 0.82),
+      rgba(22, 38, 30, 0.82)
+    ),
+    url("../assets/hero-bg.jpg") center / cover no-repeat;
+}
+
+body.dark-mode .hero-title,
+body.dark-mode .hero-subtitle {
+  color: var(--gold);
+}
+
+body.dark-mode .zikr-board {
+  background: var(--light-pista);
 }
 
 body.dark-mode .zikr-arabic {
-    color: #A98616;
+  color: var(--gold-dark);
 }
 
 body.dark-mode .zikr-name,
 body.dark-mode .step-count,
-body.dark-mode .today-number,
+body.dark-mode .total-count,
+body.dark-mode .today-info strong {
+  color: var(--gold);
+}
+
+body.dark-mode .stats-board {
+  background: var(--cream-white);
+}
+
+body.dark-mode .count-card {
+  background: var(--option-pista);
+}
+
 body.dark-mode .complete-message {
-    color: var(--primary);
-}
-
-body.dark-mode .small-label,
-body.dark-mode .step-text,
-body.dark-mode .progress-text {
-    color: var(--muted);
-}
-
-body.dark-mode .total-count {
-    color: var(--text);
+  color: var(--gold);
+  background: #1b3025;
 }
 
 body.dark-mode .progress-bar {
-    background: var(--progress-track);
+  background: #3a4d3d;
 }
 
 body.dark-mode .progress-fill {
-    background: var(--primary);
+  background: var(--gold);
 }
 
 body.dark-mode .tap-button {
-    background: var(--primary);
+  background: var(--deep-green);
 }
 
-/* ================= SMALL HEIGHT SCREENS ================= */
+body.dark-mode .footer {
+  color: var(--cream);
+  background: var(--deep-green);
+}
+
+/* Tablet and desktop */
+
+@media (min-width: 700px) {
+  :root {
+    --header-height: 122px;
+    --footer-height: 50px;
+    --page-gap: 14px;
+    --app-padding: 16px;
+  }
+
+  .app {
+    width: min(100%, 900px);
+    margin-inline: auto;
+  }
+
+  .zikr-board {
+    padding: 16px;
+  }
+
+  .stats-board {
+    padding: 14px;
+  }
+
+  .tap-button {
+    width: min(30vw, 240px);
+    height: min(30vw, 240px);
+  }
+}
+
+/* Small mobile */
+
+@media (max-width: 380px) {
+  :root {
+    --header-height: 100px;
+    --footer-height: 44px;
+    --page-gap: 9px;
+    --app-padding: 8px;
+  }
+
+  .hero {
+    padding-inline: 10px;
+  }
+
+  .hero-title {
+    font-size: 1.3rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.73rem;
+  }
+
+  .zikr-board {
+    padding: 8px 7px;
+  }
+
+  .zikr-arabic {
+    font-size: clamp(1.35rem, 6vw, 1.8rem);
+    line-height: 1.6;
+  }
+
+  .zikr-name {
+    font-size: 0.95rem;
+  }
+
+  .stats-board {
+    gap: 7px;
+    padding: 7px;
+  }
+
+  .count-info {
+    gap: 6px;
+  }
+
+  .count-card {
+    padding: 5px 3px;
+  }
+
+  .step-count,
+  .total-count {
+    font-size: 1.08rem;
+  }
+
+  .today-info {
+    padding-top: 5px;
+    font-size: 0.78rem;
+  }
+
+  .today-info strong {
+    font-size: 1.1rem;
+  }
+
+  .tap-button {
+    width: min(48vw, 190px);
+    height: min(48vw, 190px);
+  }
+
+  .footer {
+    padding-inline: 6px;
+  }
+
+  .footer-text {
+    font-size: 0.7rem;
+  }
+}
+
+/* Short screens */
 
 @media (max-height: 650px) {
-    .top-area {
-        padding-top: 5px;
-        gap: 4px;
-    }
+  :root {
+    --page-gap: 6px;
+  }
 
-    .zikr-card {
-        padding: 4px 7px;
-    }
+  .zikr-board {
+    padding-block: 5px;
+  }
 
-    .zikr-arabic {
-        font-size: 23px;
-        line-height: 1.35;
-    }
-
-    .zikr-name {
-        font-size: 15px;
-    }
-
-    .step-text {
-        font-size: 11px;
-    }
-
-    .count-card {
-        padding: 4px;
-    }
-
-    .step-count,
-    .total-count {
-        font-size: 18px;
-    }
-
-    .progress-section {
-        padding: 4px 8px;
-    }
-
-    .today-card {
-        padding: 4px;
-    }
-
-    .today-number {
-        font-size: 18px;
-    }
-
-    .complete-message {
-       main-height:22px;
-        font-size: 12px;
-       line-height:1.35;
-    }
-
-    .tap-button {
-        min-width: 140px;
-        min-height: 140px;
-    }
-}
-
-/* ================= NARROW SCREENS ================= */
-
-@media (max-width: 360px) {
-    .top-area {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-
-    .count-info {
-        gap: 6px;
-    }
-
-    .zikr-arabic {
-        font-size: 27px;
-    }
-
-    .step-count,
-    .total-count {
-        font-size: 20px;
-    }
-}
-
-/* ===== COMPLETION MESSAGE ABOVE TASBIH BUTTON ===== */
-
-.tasbih-page {
-    position: relative;
-}
-
-.complete-message {
-    position: absolute;
-    left: 14px;
-    right: 14px;
-    bottom: calc(33.3333% - 4px);
-    transform: translateY(50%);
-
-    min-height: 0;
-    margin: 0;
-    padding: 4px 8px;
-
-    display: block;
-    text-align: center;
+  .zikr-arabic {
+    font-size: clamp(1.2rem, 5vw, 1.8rem);
     line-height: 1.4;
-    font-size: 14px;
-    font-weight: bold;
+  }
 
-    color: var(--primary);
-    overflow-wrap: anywhere;
+  .zikr-name {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
 
-    z-index: 5;
-    pointer-events: none;
+  .step-text {
+    margin-top: 2px;
+    font-size: 0.75rem;
+  }
+
+  .complete-message {
+    margin-top: 4px;
+    padding: 4px 6px;
+    font-size: 0.75rem;
+  }
+
+  .stats-board {
+    gap: 5px;
+    padding: 6px;
+  }
+
+  .progress-bar {
+    height: 7px;
+  }
+
+  .tap-button {
+    width: min(39vw, 150px);
+    height: min(39vw, 150px);
+    min-width: 100px;
+    min-height: 100px;
+  }
 }
 
-.complete-message:not(.show) {
-    visibility: hidden;
-}
+/* Reduced motion */
 
-.complete-message.show {
-    visibility: visible;
-    animation:
-        completePop 0.4s ease,
-        celebrationGlow 1.8s ease-out;
-}
-
-body.dark-mode .complete-message {
-    color: var(--primary);
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
