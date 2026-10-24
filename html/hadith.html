@@ -1,197 +1,264 @@
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="theme-color" content="#1F6B3A">
-  <meta name="description" content="IBADAT - Read Hadith in Arabic, Bengali, English and Hindi">
+    <meta name="theme-color" content="#123d2c">
+    <meta
+        name="description"
+        content="IBADAT — আরবি, বাংলা, ইংরেজি ও হিন্দি ভাষায় হাদিস পড়ুন"
+    >
 
-  <title>Hadith | IBADAT</title>
+    <title>হাদিস | IBADAT</title>
 
-  <!-- Hadith CSS -->
-  <link rel="stylesheet" href="../css/hadith.css">
+    <link rel="stylesheet" href="../css/hadith.css">
 </head>
 
 <body>
 
-  <main class="hadith-page">
+    <main class="hadith-page">
 
-   <!-- Header -->
-<header class="hadith-header hadith-header-compact">
+        <!-- Shared header -->
+        <header class="hadith-header board">
+            <div class="header-title">
+                <h1 id="pageTitle">হাদিস সংকলন</h1>
 
-  <div class="header-title">
-    <h1 id="pageTitle">হাদিস সংকলন</h1>
-    <p id="pageSubtitle">বিভিন্ন হাদিসের বই পড়ুন এবং শিক্ষা গ্রহণ করুন</p>
-  </div>
+                <p id="pageSubtitle">
+                    হাদিস পড়ুন, শিক্ষা গ্রহণ করুন
+                </p>
+            </div>
+        </header>
 
-</header> 
+        <!-- Fixed content board -->
+        <section class="hadith-content board">
 
+            <!-- First page: Hadith books -->
+            <section class="screen active" id="booksScreen">
 
-    <!-- Main content -->
-    <section class="hadith-content">
+                <div class="section-heading">
+                    <h2 id="booksHeading">হাদিসের বই</h2>
 
-      <!-- Home / Books screen -->
-      <section class="screen active" id="booksScreen">
+                    <span
+                        id="bookCount"
+                        class="book-count"
+                        aria-label="বইয়ের সংখ্যা"
+                    >০</span>
+                </div>
 
-        <div class="section-heading">
-          <h2 id="booksHeading">Hadith Books</h2>
-          <span id="bookCount" class="book-count">0</span>
-        </div>
+                <div
+                    id="loadingMessage"
+                    class="status-message"
+                    role="status"
+                    aria-live="polite"
+                >
+                    হাদিসের বই লোড হচ্ছে...
+                </div>
 
-        <div id="loadingMessage" class="status-message">
-          Loading Hadith collections...
-        </div>
+                <div
+                    id="errorMessage"
+                    class="status-message error-message"
+                    role="alert"
+                    hidden
+                >
+                    <p id="errorText">
+                        হাদিসের বই লোড করা যায়নি।
+                    </p>
 
-        <div id="errorMessage" class="status-message error-message" hidden>
-          <p id="errorText">
-            Could not load Hadith collections. Please try again.
-          </p>
+                    <button
+                        type="button"
+                        id="retryButton"
+                        class="retry-button"
+                    >
+                        আবার চেষ্টা করুন
+                    </button>
+                </div>
 
-          <button type="button" id="retryButton" class="retry-button">
-            Retry
-          </button>
-        </div>
+                <div
+                    class="book-grid"
+                    id="bookGrid"
+                    aria-label="হাদিসের বইসমূহ"
+                ></div>
 
-        <div class="book-grid" id="bookGrid">
+            </section>
 
-          <!-- Hadith books will be added by JavaScript -->
-
-        </div>
-
-      </section>
-
-
-      <!-- Hadith list screen -->
-      <section class="screen" id="listScreen" hidden>
-
-        <div class="search-container">
-          <span class="search-icon" aria-hidden="true">&#9906;</span>
-
-          <input
-            type="search"
-            id="hadithSearch"
-            placeholder="Search Hadith..."
-            aria-label="Search Hadith"
-            autocomplete="off"
-          >
-        </div>
-
-        <div id="listLoadingMessage" class="status-message" hidden>
-          Loading Hadith...
-        </div>
-
-        <div id="listErrorMessage" class="status-message error-message" hidden>
-          <p id="listErrorText">
-            Could not load Hadith.
-          </p>
-
-          <button type="button" id="listRetryButton" class="retry-button">
-            Retry
-          </button>
-        </div>
-
-        <div class="hadith-list" id="hadithList">
-
-          <!-- Hadith list items will be added by JavaScript -->
-
-        </div>
-
-        <div id="emptySearchMessage" class="status-message" hidden>
-          No Hadith found.
-        </div>
-
-      </section>
-
-
-      <!-- Hadith details screen -->
-      <section class="screen" id="detailScreen" hidden>
-
-        <div class="detail-header-card">
-          <p id="detailBookName">Hadith Book</p>
-          <h2 id="detailHeading">Hadith Details</h2>
-          <span id="detailHadithNumber" class="hadith-number">
-            Hadith No. —
-          </span>
-        </div>
-
-        <article class="hadith-detail-card">
-
-          <div class="detail-section">
-            <h3 id="arabicHeading">Arabic</h3>
-
-            <p
-              id="arabicText"
-              class="arabic-text"
-              lang="ar"
-              dir="rtl"
+            <!-- Second page: Hadith list -->
+            <section
+                class="screen"
+                id="listScreen"
+                aria-label="হাদিসের তালিকা"
+                hidden
             >
-              <!-- Arabic Hadith text will be added by JavaScript -->
-            </p>
-          </div>
 
-          <div class="detail-divider"></div>
+                <div class="list-toolbar">
 
-          <div class="detail-section">
-            <h3 id="translationHeading">Translation</h3>
+                    <div class="search-container">
+                        <span
+                            class="search-icon"
+                            aria-hidden="true"
+                        >⌕</span>
 
-            <p
-              id="translationText"
-              class="translation-text"
+                        <input
+                            type="search"
+                            id="hadithSearch"
+                            placeholder="হাদিস খুঁজুন..."
+                            aria-label="হাদিস খুঁজুন"
+                            autocomplete="off"
+                        >
+                    </div>
+
+                </div>
+
+                <div
+                    id="listLoadingMessage"
+                    class="status-message"
+                    role="status"
+                    aria-live="polite"
+                    hidden
+                >
+                    হাদিস লোড হচ্ছে...
+                </div>
+
+                <div
+                    id="listErrorMessage"
+                    class="status-message error-message"
+                    role="alert"
+                    hidden
+                >
+                    <p id="listErrorText">
+                        হাদিস লোড করা যায়নি।
+                    </p>
+
+                    <button
+                        type="button"
+                        id="listRetryButton"
+                        class="retry-button"
+                    >
+                        আবার চেষ্টা করুন
+                    </button>
+                </div>
+
+                <div
+                    class="hadith-list"
+                    id="hadithList"
+                ></div>
+
+                <div
+                    id="emptySearchMessage"
+                    class="status-message"
+                    hidden
+                >
+                    কোনো হাদিস পাওয়া যায়নি।
+                </div>
+
+            </section>
+
+            <!-- Third page: Hadith details -->
+            <section
+                class="screen"
+                id="detailScreen"
+                aria-label="হাদিসের বিস্তারিত"
+                hidden
             >
-              <!-- Translated Hadith will be added by JavaScript -->
-            </p>
-          </div>
 
-          <div class="detail-divider" id="referenceDivider"></div>
+                <div class="detail-header-card">
+                    <p id="detailBookName">হাদিসের বই</p>
 
-          <div class="detail-section reference-section" id="referenceSection">
-            <h3 id="referenceHeading">Reference</h3>
+                    <h2 id="detailHeading">হাদিসের বিবরণ</h2>
 
-            <p id="referenceText">—</p>
-          </div>
+                    <span
+                        id="detailHadithNumber"
+                        class="hadith-number"
+                    >
+                        হাদিস নম্বর
+                    </span>
+                </div>
 
-        </article>
+                <article class="hadith-detail-card">
 
-        <nav class="hadith-navigation" aria-label="Hadith navigation">
+                    <section class="detail-section">
+                        <h3 id="arabicHeading">আরবি</h3>
 
-          <button
-            type="button"
-            id="previousHadithButton"
-            class="navigation-button"
-          >
-            &#8592; Previous
-          </button>
+                        <p
+                            id="arabicText"
+                            class="arabic-text"
+                            lang="ar"
+                            dir="rtl"
+                        ></p>
+                    </section>
 
-          <button
-            type="button"
-            id="nextHadithButton"
-            class="navigation-button"
-          >
-            Next &#8594;
-          </button>
+                    <div
+                        class="detail-divider"
+                        aria-hidden="true"
+                    ></div>
 
-        </nav>
+                    <section class="detail-section">
+                        <h3 id="translationHeading">অনুবাদ</h3>
 
-      </section>
+                        <p
+                            id="translationText"
+                            class="translation-text"
+                        ></p>
+                    </section>
 
-    </section>
+                    <div
+                        class="detail-divider"
+                        id="referenceDivider"
+                        aria-hidden="true"
+                    ></div>
 
+                    <section
+                        class="detail-section reference-section"
+                        id="referenceSection"
+                    >
+                        <h3 id="referenceHeading">রেফারেন্স</h3>
 
-    <!-- Footer -->
-    <footer class="hadith-footer">
-      <p>IBADAT</p>
-      <span id="footerText">Read • Reflect • Practice</span>
-    </footer>
+                        <p id="referenceText">—</p>
+                    </section>
 
-  </main>
+                </article>
 
+                <nav
+                    class="hadith-navigation"
+                    aria-label="হাদিস নেভিগেশন"
+                >
 
-  <!-- Hadith JavaScript -->
-  <script src="../js/hadith.js?v=1"></script>
+                    <button
+                        type="button"
+                        id="previousHadithButton"
+                        class="navigation-button"
+                    >
+                        ← আগের
+                    </button>
 
-  <!-- Shared theme support, if present in the project -->
-  <script src="../js/theme.js"></script>
+                    <button
+                        type="button"
+                        id="nextHadithButton"
+                        class="navigation-button"
+                    >
+                        পরের →
+                    </button>
+
+                </nav>
+
+            </section>
+
+        </section>
+
+        <!-- Shared footer -->
+        <footer class="hadith-footer board">
+            <p id="footerBrand">IBADAT</p>
+
+            <span id="footerText">
+                পড়ুন • চিন্তা করুন • আমল করুন
+            </span>
+        </footer>
+
+    </main>
+
+    <script src="../js/hadith.js?v=2"></script>
+    <script src="../js/theme.js"></script>
 
 </body>
 </html>
