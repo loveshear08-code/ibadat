@@ -1,4 +1,3 @@
-
 (() => {
   "use strict";
 
@@ -27,6 +26,17 @@
     "preferredLanguage"
   ];
 
+  const THEME_KEYS = [
+    "ibadat_theme",
+    "siteTheme",
+    "selectedTheme",
+    "theme",
+    "colorScheme",
+    "appearance",
+    "darkMode",
+    "ibadat_dark_mode"
+  ];
+
   const TEXT = {
     bn: {
       homeSubtitle: "পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে।",
@@ -36,6 +46,8 @@
       footer: "শুদ্ধতার পথে ইবাদত",
       readSubtitle: "মনোযোগ দিয়ে পবিত্র কুরআন পড়ুন",
       listenSubtitle: "কুরআনের তিলাওয়াতে প্রশান্তি অনুভব করুন",
+      readFooter: "মনোযোগ দিয়ে কুরআন পড়ুন",
+      listenFooter: "মন দিয়ে তিলাওয়াত শুনুন",
       choose: "সূরা নির্বাচন করুন",
       search: "সূরার নাম বা নম্বর লিখুন",
       loading: "লোড হচ্ছে...",
@@ -44,8 +56,8 @@
       surah: "সূরা",
       verses: "আয়াত",
       play: "শুনুন",
-      prev: "আগের আয়াত",
-      next: "পরের আয়াত",
+      prev: "আগের সূরা",
+      next: "পরের সূরা",
       playAudio: "তিলাওয়াত চালু করুন",
       pauseAudio: "তিলাওয়াত থামান",
       audioError: "অডিও চালানো যাচ্ছে না। আবার চেষ্টা করুন।",
@@ -59,9 +71,11 @@
       description: "The Holy Quran is the word of Allah. It guides us to the right path, teaches truth and justice, and shows us how to seek Allah's pleasure in every part of life.",
       read: "Read Quran",
       listen: "Listen to Recitation",
-      footer: "IBADAT • Worship on the path to purity",
+      footer: "Worship on the path to purity",
       readSubtitle: "Read the Holy Quran with care",
       listenSubtitle: "Find peace in the recitation of the Quran",
+      readFooter: "Read the Quran with care",
+      listenFooter: "Listen with a peaceful heart",
       choose: "Choose a Surah",
       search: "Enter a surah name or number",
       loading: "Loading...",
@@ -70,8 +84,8 @@
       surah: "Surah",
       verses: "verses",
       play: "Listen",
-      prev: "Previous ayah",
-      next: "Next ayah",
+      prev: "Previous surah",
+      next: "Next surah",
       playAudio: "Play recitation",
       pauseAudio: "Pause recitation",
       audioError: "Unable to play audio. Please try again.",
@@ -85,9 +99,11 @@
       description: "पवित्र क़ुरआन अल्लाह का कलाम है। यह हमें सही रास्ता दिखाता है, सत्य और न्याय की शिक्षा देता है और जीवन के हर क्षेत्र में अल्लाह की प्रसन्नता प्राप्त करने का मार्ग बताता है।",
       read: "क़ुरआन पढ़ें",
       listen: "तिलावत सुनें",
-      footer: "इबादत • पवित्रता के मार्ग पर",
+      footer: "पवित्रता के मार्ग पर इबादत",
       readSubtitle: "ध्यान से पवित्र क़ुरआन पढ़ें",
       listenSubtitle: "क़ुरआन की तिलावत से सुकून पाएँ",
+      readFooter: "ध्यान से क़ुरआन पढ़ें",
+      listenFooter: "सुकून से तिलावत सुनें",
       choose: "सूरह चुनें",
       search: "सूरह का नाम या नंबर लिखें",
       loading: "लोड हो रहा है...",
@@ -96,8 +112,8 @@
       surah: "सूरह",
       verses: "आयतें",
       play: "सुनें",
-      prev: "पिछली आयत",
-      next: "अगली आयत",
+      prev: "पिछली सूरह",
+      next: "अगली सूरह",
       playAudio: "तिलावत चलाएँ",
       pauseAudio: "तिलावत रोकें",
       audioError: "ऑडियो नहीं चल सका। फिर प्रयास करें।",
@@ -127,9 +143,7 @@
   };
 
   function t(key) {
-    return (TEXT[state.lang] && TEXT[state.lang][key]) ||
-      TEXT.bn[key] ||
-      key;
+    return TEXT[state.lang]?.[key] ?? TEXT.bn[key] ?? key;
   }
 
   function digits(value) {
@@ -155,46 +169,58 @@
     if (
       ["bn", "bn-bd", "bn-in", "bengali", "বাংলা"].includes(language) ||
       language.startsWith("bn-")
-    ) {
-      return "bn";
-    }
+    ) return "bn";
 
     if (
       ["en", "en-us", "en-gb", "english"].includes(language) ||
       language.startsWith("en-")
-    ) {
-      return "en";
-    }
+    ) return "en";
 
     if (
       ["hi", "hi-in", "hindi", "हिन्दी", "हिंदी"].includes(language) ||
       language.startsWith("hi-")
-    ) {
-      return "hi";
+    ) return "hi";
+
+    return null;
+  }
+
+  function readStoredValue(keys) {
+    for (const key of keys) {
+      try {
+        const value = localStorage.getItem(key);
+        if (value === null) continue;
+
+        try {
+          const parsed = JSON.parse(value);
+
+          if (parsed && typeof parsed === "object") {
+            return { key, value: parsed };
+          }
+        } catch (_) {}
+
+        return { key, value };
+      } catch (_) {}
     }
 
     return null;
   }
 
   function getLanguage() {
-    for (const key of LANGUAGE_KEYS) {
-      try {
-        const value = localStorage.getItem(key);
-        const language = normalizeLanguage(value);
+    const stored = readStoredValue(LANGUAGE_KEYS);
+
+    if (stored) {
+      const value = stored.value;
+
+      if (typeof value === "object") {
+        const language = normalizeLanguage(
+          value.language ?? value.lang ?? value.locale
+        );
 
         if (language) return language;
-
-        if (value && value.trim().startsWith("{")) {
-          const settings = JSON.parse(value);
-          const nestedLanguage = normalizeLanguage(
-            settings.language ??
-            settings.lang ??
-            settings.locale
-          );
-
-          if (nestedLanguage) return nestedLanguage;
-        }
-      } catch (_) {}
+      } else {
+        const language = normalizeLanguage(value);
+        if (language) return language;
+      }
     }
 
     const documentLanguage = normalizeLanguage(
@@ -202,6 +228,67 @@
     );
 
     return documentLanguage || "bn";
+  }
+
+  function getThemePreference() {
+    const stored = readStoredValue(THEME_KEYS);
+
+    if (stored) {
+      const value = stored.value;
+
+      if (typeof value === "boolean") return value;
+
+      if (typeof value === "object") {
+        const mode = String(
+          value.theme ?? value.mode ?? value.appearance ?? ""
+        ).toLowerCase();
+
+        if (["dark", "night"].includes(mode)) return true;
+        if (["light", "day"].includes(mode)) return false;
+
+        if (typeof value.darkMode === "boolean") {
+          return value.darkMode;
+        }
+
+        if (typeof value.dark === "boolean") {
+          return value.dark;
+        }
+      }
+
+      const text = String(value).toLowerCase();
+
+      if (["dark", "night", "true", "1", "enabled"].includes(text)) {
+        return true;
+      }
+
+      if (["light", "day", "false", "0", "disabled"].includes(text)) {
+        return false;
+      }
+    }
+
+    if (document.body.classList.contains("dark")) return true;
+
+    const themeAttribute =
+      document.documentElement.dataset.theme ||
+      document.body.dataset.theme ||
+      "";
+
+    if (String(themeAttribute).toLowerCase() === "dark") return true;
+    if (String(themeAttribute).toLowerCase() === "light") return false;
+
+    return null;
+  }
+
+  function applyTheme() {
+    const preference = getThemePreference();
+
+    if (preference === true) {
+      document.body.classList.add("dark");
+      document.documentElement.style.colorScheme = "dark";
+    } else if (preference === false) {
+      document.body.classList.remove("dark");
+      document.documentElement.style.colorScheme = "light";
+    }
   }
 
   async function api(path) {
@@ -245,11 +332,7 @@
           : t("homeSubtitle");
 
     document.title =
-      `${state.page === "read"
-        ? t("readTitle")
-        : state.page === "listen"
-          ? t("listenTitle")
-          : t("readTitle")} | IBADAT`;
+      `${state.page === "listen" ? t("listenTitle") : t("readTitle")} | IBADAT`;
   }
 
   function updateFooter() {
@@ -257,8 +340,7 @@
     $("readFooter").hidden = state.page !== "read";
     $("listenFooter").hidden = state.page !== "listen";
 
-    $("readFooterMessage").textContent =
-      `${digits(state.currentSurah)} : ${digits(state.currentAyah)}`;
+    $("readFooterMessage").textContent = t("readFooter");
 
     updatePlayButton();
   }
@@ -275,7 +357,6 @@
 
   function showMessage(message) {
     const box = $("appMessage");
-
     if (!box) return;
 
     box.textContent = message;
@@ -308,7 +389,6 @@
 
   function openPage(page) {
     if (!["home", "read", "listen"].includes(page)) return;
-
     if (page === state.page) return;
 
     pauseAudio();
@@ -324,7 +404,7 @@
     setPageVisibility(page);
 
     if (page === "read") {
-      loadSurah(state.currentSurah, state.currentAyah);
+      loadSurah(state.currentSurah, 1);
     }
 
     if (page === "listen") {
@@ -349,7 +429,6 @@
       const values = [
         chapterName(chapter),
         chapter.englishName,
-        chapter.name_arabic,
         String(chapter.number),
         digits(chapter.number)
       ];
@@ -378,9 +457,6 @@
             ${digits(chapter.numberOfAyahs)}
             ${escapeHTML(t("verses"))}
           </small>
-        </span>
-        <span class="surah-arabic" lang="ar" dir="rtl">
-          ${escapeHTML(chapter.name_arabic || "")}
         </span>
       </button>
     `).join("");
@@ -420,9 +496,6 @@
             ${digits(chapter.numberOfAyahs)}
             ${escapeHTML(t("verses"))}
           </small>
-        </span>
-        <span class="surah-arabic" lang="ar" dir="rtl">
-          ${escapeHTML(chapter.name_arabic || "")}
         </span>
       </button>
     `).join("");
@@ -614,8 +687,7 @@
       });
     });
 
-    $("readFooterMessage").textContent =
-      `${digits(state.currentSurah)} : ${digits(state.currentAyah)}`;
+    updateFooter();
 
     requestAnimationFrame(() => {
       const target = $(`ayah-${jumpAyah}`);
@@ -689,7 +761,14 @@
 
     if (!item.audio) {
       state.audioIndex++;
-      return playAudioIndex();
+
+      if (state.audioIndex < state.audioItems.length) {
+        return playAudioIndex();
+      }
+
+      state.playingSurah = false;
+      updatePlayButton();
+      return;
     }
 
     state.currentAyah = state.audioIndex + 1;
@@ -705,40 +784,29 @@
     }
   }
 
-  function moveAyah(direction) {
-    const chapter = state.chapters[state.currentSurah - 1];
+  /* আগের/পরের সূরায় যাওয়া */
+  function moveSurah(direction) {
+    const nextSurah = state.currentSurah + direction;
 
-    if (!chapter) return;
-
-    if (direction < 0) {
-      if (state.currentAyah > 1) {
-        state.currentAyah--;
-      } else if (state.currentSurah > 1) {
-        state.currentSurah--;
-        state.currentAyah =
-          state.chapters[state.currentSurah - 1].numberOfAyahs;
-      } else {
-        return;
-      }
-    } else {
-      if (state.currentAyah < chapter.numberOfAyahs) {
-        state.currentAyah++;
-      } else if (state.currentSurah < 114) {
-        state.currentSurah++;
-        state.currentAyah = 1;
-      } else {
-        pauseAudio();
-        return;
-      }
+    if (nextSurah < 1 || nextSurah > 114) {
+      return;
     }
 
-    loadSurah(state.currentSurah, state.currentAyah);
+    pauseAudio();
+
+    state.currentSurah = nextSurah;
+    state.currentAyah = 1;
 
     if (state.page === "listen") {
-      state.audioMode = "single";
-      state.playingSurah = false;
-      playCurrentAyah(true);
+      state.audioMode = "surah";
+      state.playingSurah = true;
+      renderListenList();
+
+      loadSurah(nextSurah, 1).then(() => playFullSurah());
+      return;
     }
+
+    loadSurah(nextSurah, 1);
   }
 
   function applyLanguage() {
@@ -779,14 +847,12 @@
 
     const image = $("quranImage");
 
-    if (image) {
-      image.alt =
-        state.lang === "en"
-          ? "The Holy Quran open on a rehal"
-          : state.lang === "hi"
-            ? "रिहाल पर खुला पवित्र क़ुरआन"
-            : "রেহালের উপর খোলা পবিত্র কুরআন";
-    }
+    image.alt =
+      state.lang === "en"
+        ? "The Holy Quran open on a rehal"
+        : state.lang === "hi"
+          ? "रिहाल पर खुला पवित्र क़ुरआन"
+          : "রেহালের উপর খোলা পবিত্র কুরআন";
 
     if (previousLanguage !== state.lang) {
       state.cache.clear();
@@ -811,9 +877,19 @@
       Math.min(54, state.fontSize + delta)
     );
 
+    const translationSize = Math.max(
+      11,
+      Math.min(25, 13 + (state.fontSize - 32) * 0.45)
+    );
+
     document.documentElement.style.setProperty(
       "--arabic-size",
       `${state.fontSize}px`
+    );
+
+    document.documentElement.style.setProperty(
+      "--translation-size",
+      `${translationSize}px`
     );
 
     try {
@@ -862,19 +938,19 @@
     });
 
     $("prevAyah").addEventListener("click", () => {
-      moveAyah(-1);
+      moveSurah(-1);
     });
 
     $("nextAyah").addEventListener("click", () => {
-      moveAyah(1);
+      moveSurah(1);
     });
 
     $("prevTrack").addEventListener("click", () => {
-      moveAyah(-1);
+      moveSurah(-1);
     });
 
     $("nextTrack").addEventListener("click", () => {
-      moveAyah(1);
+      moveSurah(1);
     });
 
     $("playPause").addEventListener("click", () => {
@@ -920,12 +996,16 @@
     });
 
     window.addEventListener("storage", event => {
-      if (!event.key || LANGUAGE_KEYS.includes(event.key)) {
-        const language = getLanguage();
-
-        if (language !== state.lang) {
+      if (
+        !event.key ||
+        LANGUAGE_KEYS.includes(event.key) ||
+        THEME_KEYS.includes(event.key)
+      ) {
+        if (getLanguage() !== state.lang) {
           applyLanguage();
         }
+
+        applyTheme();
       }
     });
 
@@ -938,22 +1018,52 @@
         data.type || data.action || ""
       ).toLowerCase();
 
+      const settings = data.settings || data;
+      const language = normalizeLanguage(
+        settings.language ?? settings.lang ?? settings.locale
+      );
+
       if (
+        language &&
         [
           "ibadat-settings",
           "settings-changed",
           "language-changed"
         ].includes(type)
       ) {
-        const settings = data.settings || data;
-        const language = normalizeLanguage(
-          settings.language ??
-          settings.lang ??
-          settings.locale
-        );
+        try {
+          localStorage.setItem("ibadat_language", language);
+        } catch (_) {}
 
-        if (language && language !== state.lang) {
-          applyLanguage();
+        applyLanguage();
+      }
+
+      if (
+        [
+          "ibadat-settings",
+          "settings-changed",
+          "theme-changed",
+          "dark-mode-changed"
+        ].includes(type)
+      ) {
+        const mode = String(
+          settings.theme ?? settings.mode ?? settings.appearance ?? ""
+        ).toLowerCase();
+
+        const dark =
+          settings.darkMode === true ||
+          settings.dark === true ||
+          ["dark", "night"].includes(mode);
+
+        const light =
+          settings.darkMode === false ||
+          settings.dark === false ||
+          ["light", "day"].includes(mode);
+
+        if (dark || light) {
+          document.body.classList.toggle("dark", dark);
+          document.documentElement.style.colorScheme =
+            dark ? "dark" : "light";
         }
       }
     });
@@ -962,6 +1072,8 @@
       if (getLanguage() !== state.lang) {
         applyLanguage();
       }
+
+      applyTheme();
     });
 
     window.addEventListener("popstate", () => {
@@ -987,13 +1099,15 @@
       `${state.fontSize}px`
     );
 
+    document.documentElement.style.setProperty(
+      "--translation-size",
+      `${Math.max(11, Math.min(25, 13 + (state.fontSize - 32) * 0.45))}px`
+    );
+
+    applyTheme();
     applyLanguage();
     wireEvents();
 
-    /*
-     * একটি প্রাথমিক history entry রাখা হয়, যাতে
-     * Read/Listen পেজ থেকে Back চাপলে Quran home-এ ফেরা যায়।
-     */
     try {
       history.replaceState(
         { ibadatQuran: true, quranPage: "home" },
