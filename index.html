@@ -1,188 +1,163 @@
+
 <!DOCTYPE html>
 <html lang="bn">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#1b7f4b">
+  <meta name="description" content="IBADAT — নামাজ, আল-কুরআন ও ইসলামী শিক্ষা">
+  <title>IBADAT | ইসলামী শিক্ষা</title>
 
-<meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>IBADAT</title>
-
-<link rel="stylesheet"
-      href="css/home.css">
-
-<link rel="manifest"
-      href="manifest.json">
-
-<meta name="theme-color"
-      content="#0F5132">
-
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/home.css">
 </head>
 
 <body>
+  <div class="app-shell">
 
-<!-- ================= TOP BAR ================= -->
+    <!-- TOP BOARD -->
+    <header class="top-board">
+      <div class="top-info">
+        <span id="city">লোকেশন খোঁজা হচ্ছে...</span>
+        <span id="date">তারিখ খোঁজা হচ্ছে...</span>
+      </div>
+      <div class="top-clock" id="clock">--:--:--</div>
+    </header>
 
-<header class="top-bar">
+    <!-- MAIN CONTENT -->
+    <main class="main-container">
 
-    <div id="city"
-         class="top-city">
-         ...
-    </div>
-
-    <div id="date"
-         class="top-date">
-         ...
-    </div>
-
-</header>
-
-
-<!-- ================= MAIN ================= -->
-
-<main class="main-container">
-
-
-    <!-- ================= BISMILLAH ================= -->
-
-    <section
-        id="bismillahCard"
-        class="card bismillah-card">
-
-        <div class="bismillah-ar">
-
-            بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
-
+      <!-- BOARD 1: BISMILLAH -->
+      <section class="info-board bismillah-board">
+        <div class="board-image image-one" aria-hidden="true"></div>
+        <div class="board-content">
+          <div class="arabic-bismillah" lang="ar" dir="rtl">
+            بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+          </div>
+          <p id="bismillahMeaning">
+            পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে।
+          </p>
         </div>
+      </section>
 
-        <div id="bismillahMeaning">
+      <!-- BOARD 2: CURRENT STATUS -->
+      <section class="info-board status-board">
+        <div class="board-image image-two" aria-hidden="true"></div>
+        <div class="board-content">
+          <div class="status-heading" id="statusHeading">
+            আজকের ইবাদত
+          </div>
 
+          <div class="status-main">
+            <div class="status-item">
+              <span class="status-label" id="dayLabel">আজ</span>
+              <strong id="dayName">—</strong>
+            </div>
+
+            <div class="status-item">
+              <span class="status-label" id="currentPrayerLabel">
+                বর্তমান ওয়াক্ত
+              </span>
+              <strong id="currentPrayer">—</strong>
+            </div>
+
+            <div class="status-item">
+              <span class="status-label" id="nextPrayerLabel">
+                পরবর্তী ওয়াক্ত
+              </span>
+              <strong id="nextPrayer">—</strong>
+              <small id="nextPrayerTime">--:--</small>
+            </div>
+          </div>
         </div>
+      </section>
 
-    </section>
+      <!-- BOARD 3: PRAYER TIMES -->
+      <section class="info-board prayer-board">
+        <div class="board-image image-three" aria-hidden="true"></div>
+        <div class="board-content">
+          <h2 class="prayer-board-title" id="prayerTimesTitle">
+            আজকের নামাজের সময়
+          </h2>
 
+          <div class="prayer-times-grid">
+            <div class="prayer-time">
+              <span data-prayer-label="fajr">ফজর</span>
+              <strong id="fajrTime">--:--</strong>
+            </div>
 
+            <div class="prayer-time">
+              <span data-prayer-label="sunrise">সূর্যোদয়</span>
+              <strong id="sunriseTime">--:--</strong>
+            </div>
 
-    <!-- ================= STATUS ================= -->
+            <div class="prayer-time">
+              <span data-prayer-label="dhuhr">যোহর</span>
+              <strong id="dhuhrTime">--:--</strong>
+            </div>
 
-    <section
-    id="statusCard"
-    class="card status-card">
+            <div class="prayer-time">
+              <span data-prayer-label="asr">আসর</span>
+              <strong id="asrTime">--:--</strong>
+            </div>
 
-    <div class="status">
+            <div class="prayer-time">
+              <span data-prayer-label="maghrib">মাগরিব</span>
+              <strong id="maghribTime">--:--</strong>
+            </div>
 
-        <div class="status-left">
-
-            <div id="todayDay"></div>
-
-            <div id="clock"></div>
-
-            <div id="currentPrayerName"></div>
-
+            <div class="prayer-time">
+              <span data-prayer-label="isha">ইশা</span>
+              <strong id="ishaTime">--:--</strong>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <div class="status-right">
+      <!-- SIX FEATURE OPTIONS -->
+      <nav class="feature-grid" aria-label="প্রধান মেনু">
 
-            <div id="weather"></div>
+        <a class="feature-card" href="html/namaz.html" data-feature="namaz">
+          <img src="assets/icon/namaz.png" alt="" class="feature-icon">
+          <span data-feature-label="namaz">নামাজ</span>
+        </a>
 
-            <div id="countdown"></div>
+        <a class="feature-card" href="html/quran.html" data-feature="quran">
+          <img src="assets/icon/quran.png" alt="" class="feature-icon">
+          <span data-feature-label="quran">আল-কুরআন</span>
+        </a>
 
-            <div id="nextPrayerName"></div>
+        <a class="feature-card" href="html/dua.html" data-feature="dua">
+          <img src="assets/icon/dua.png" alt="" class="feature-icon">
+          <span data-feature-label="dua">দোয়া</span>
+        </a>
 
-        </div>
+        <a class="feature-card" href="html/hadith.html" data-feature="hadith">
+          <img src="assets/icon/hadith.png" alt="" class="feature-icon">
+          <span data-feature-label="hadith">হাদিস</span>
+        </a>
 
-    </div>
+        <a class="feature-card" href="html/qibla.html" data-feature="qibla">
+          <img src="assets/icon/qibla.png" alt="" class="feature-icon">
+          <span data-feature-label="qibla">কিবলা</span>
+        </a>
 
-    </section>
+        <a class="feature-card" href="html/tasbih.html" data-feature="tasbih">
+          <img src="assets/icon/tasbih.png" alt="" class="feature-icon">
+          <span data-feature-label="tasbih">তাসবিহ</span>
+        </a>
 
+      </nav>
+    </main>
 
-    <!-- ================= PRAYER TIMES ================= -->
+    <!-- FOOTER BOARD -->
+    <footer class="footer-board">
+      <p id="footerMessage">আল্লাহকে স্মরণ করো, অন্তরে প্রশান্তি লাভ করো।</p>
+    </footer>
 
-    <section
-        class="card prayer-card">
+  </div>
 
-        <div id="prayerGrid"
-             class="prayer-grid">
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ================= FEATURES ================= -->
-
-    <section
-        class="feature-grid">
-
-
-        <div id="namaz"
-             class="feature-card">
-        </div>
-
-
-        <div id="quran"
-             class="feature-card">
-        </div>
-
-
-        <div id="dua"
-             class="feature-card">
-        </div>
-
-
-        <div id="hadith"
-             class="feature-card">
-        </div>
-
-
-        <div id="qibla"
-             class="feature-card">
-        </div>
-
-
-        <div id="tasbih"
-             class="feature-card">
-        </div>
-
-
-    </section>
-
-
-</main>
-
-
-
-<!-- ================= BOTTOM BAR ================= -->
-
-<footer class="bottom-bar">
-
-    <div id="bottomText">
-
-    </div>
-
-</footer>
-
-
-
-<!-- ================= SCRIPTS ================= -->
-
-<script src="js/home.js?v=10"></script>
-
-<script src="js/theme.js"></script>
-
-
-<script>
-
-if ("serviceWorker" in navigator) {
-
-    navigator.serviceWorker.register(
-        "service-worker.js"
-    );
-}
-
-</script>
-
+  <script src="js/theme.js"></script>
+  <script src="js/home.js"></script>
 </body>
 </html>
