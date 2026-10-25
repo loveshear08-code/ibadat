@@ -3,118 +3,109 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#1b7f4b">
-  <meta name="description" content="IBADAT — নামাজ, আল-কুরআন ও ইসলামী শিক্ষা">
-  <title>IBADAT | ইসলামী শিক্ষা</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#123d2c">
+  <meta name="description" content="IBADAT — ইসলামী শিক্ষা ও ইবাদতের সহায়ক">
+  <title>IBADAT</title>
 
-  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="css/home.css">
 </head>
-
 <body>
   <div class="app-shell">
 
-    <!-- TOP BOARD -->
     <header class="top-board">
-      <div class="top-info">
-        <span id="city">লোকেশন খোঁজা হচ্ছে...</span>
-        <span id="date">তারিখ খোঁজা হচ্ছে...</span>
+      <div class="location-area">
+        <span class="location-symbol" aria-hidden="true">●</span>
+        <span id="city">কলকাতা</span>
       </div>
-      <div class="top-clock" id="clock">--:--:--</div>
+      <div class="date-area" id="date">—</div>
     </header>
 
-    <!-- MAIN CONTENT -->
-    <main class="main-container">
+    <main class="home-content">
 
-      <!-- BOARD 1: BISMILLAH -->
-      <section class="info-board bismillah-board">
-        <div class="board-image image-one" aria-hidden="true"></div>
-        <div class="board-content">
+      <section class="home-board bismillah-board">
+        <div class="board-overlay"></div>
+        <div class="bismillah-content">
+          <div class="bismillah-decoration" aria-hidden="true">❧ ❖ ❧</div>
           <div class="arabic-bismillah" lang="ar" dir="rtl">
             بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
           </div>
           <p id="bismillahMeaning">
-            পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে।
+            পরম করুণাময় অসীম দয়ালু আল্লাহর নামে
           </p>
         </div>
       </section>
 
-      <!-- BOARD 2: CURRENT STATUS -->
-      <section class="info-board status-board">
-        <div class="board-image image-two" aria-hidden="true"></div>
-        <div class="board-content">
-          <div class="status-heading" id="statusHeading">
-            আজকের ইবাদত
+      <section class="home-board daily-board">
+        <div class="board-overlay"></div>
+
+        <div class="daily-top">
+          <div class="daily-day" id="dayName">রবিবার</div>
+          <div class="weather-info">
+            <span class="weather-icon" id="weatherIcon" aria-hidden="true">☀️</span>
+            <span id="temperature">--°</span>
+            <span id="temperatureUnit">সে.</span>
+          </div>
+        </div>
+
+        <div class="daily-middle">
+          <div class="clock-time" id="clock">--:--:--</div>
+          <div class="countdown-time" id="countdown">--:--:--</div>
+        </div>
+
+        <div class="daily-bottom">
+          <div class="current-prayer">
+            <span class="prayer-dot"></span>
+            <span id="currentPrayer">ফজর</span>
           </div>
 
-          <div class="status-main">
-            <div class="status-item">
-              <span class="status-label" id="dayLabel">আজ</span>
-              <strong id="dayName">—</strong>
-            </div>
-
-            <div class="status-item">
-              <span class="status-label" id="currentPrayerLabel">
-                বর্তমান ওয়াক্ত
-              </span>
-              <strong id="currentPrayer">—</strong>
-            </div>
-
-            <div class="status-item">
-              <span class="status-label" id="nextPrayerLabel">
-                পরবর্তী ওয়াক্ত
-              </span>
-              <strong id="nextPrayer">—</strong>
-              <small id="nextPrayerTime">--:--</small>
-            </div>
+          <div class="next-prayer">
+            <span class="next-arrow" aria-hidden="true">❯❯</span>
+            <span id="nextPrayer">যোহর</span>
           </div>
         </div>
       </section>
 
-      <!-- BOARD 3: PRAYER TIMES -->
-      <section class="info-board prayer-board">
-        <div class="board-image image-three" aria-hidden="true"></div>
-        <div class="board-content">
-          <h2 class="prayer-board-title" id="prayerTimesTitle">
-            আজকের নামাজের সময়
-          </h2>
+      <section class="home-board prayer-board">
+        <div class="board-overlay"></div>
 
-          <div class="prayer-times-grid">
-            <div class="prayer-time">
-              <span data-prayer-label="fajr">ফজর</span>
-              <strong id="fajrTime">--:--</strong>
-            </div>
+        <div class="prayer-grid">
+          <div class="prayer-cell" id="fajrCell">
+            <span data-prayer-label="Fajr">ফজর</span>
+            <strong id="fajrTime">--:--</strong>
+          </div>
 
-            <div class="prayer-time">
-              <span data-prayer-label="sunrise">সূর্যোদয়</span>
-              <strong id="sunriseTime">--:--</strong>
-            </div>
+          <button class="prayer-cell sunrise-cell" id="sunriseSettings" type="button"
+            aria-label="সূর্যোদয় ও সেটিংস খুলুন">
+            <span class="sunrise-label">
+              <span data-prayer-label="Sunrise">সূর্যোদয়</span>
+              <span class="settings-symbol" aria-hidden="true">⚙</span>
+            </span>
+            <strong id="sunriseTime">--:--</strong>
+          </button>
 
-            <div class="prayer-time">
-              <span data-prayer-label="dhuhr">যোহর</span>
-              <strong id="dhuhrTime">--:--</strong>
-            </div>
+          <div class="prayer-cell" id="dhuhrCell">
+            <span data-prayer-label="Dhuhr">যোহর</span>
+            <strong id="dhuhrTime">--:--</strong>
+          </div>
 
-            <div class="prayer-time">
-              <span data-prayer-label="asr">আসর</span>
-              <strong id="asrTime">--:--</strong>
-            </div>
+          <div class="prayer-cell" id="asrCell">
+            <span data-prayer-label="Asr">আসর</span>
+            <strong id="asrTime">--:--</strong>
+          </div>
 
-            <div class="prayer-time">
-              <span data-prayer-label="maghrib">মাগরিব</span>
-              <strong id="maghribTime">--:--</strong>
-            </div>
+          <div class="prayer-cell" id="maghribCell">
+            <span data-prayer-label="Maghrib">মাগরিব</span>
+            <strong id="maghribTime">--:--</strong>
+          </div>
 
-            <div class="prayer-time">
-              <span data-prayer-label="isha">ইশা</span>
-              <strong id="ishaTime">--:--</strong>
-            </div>
+          <div class="prayer-cell" id="ishaCell">
+            <span data-prayer-label="Isha">ইশা</span>
+            <strong id="ishaTime">--:--</strong>
           </div>
         </div>
       </section>
 
-      <!-- SIX FEATURE OPTIONS -->
       <nav class="feature-grid" aria-label="প্রধান মেনু">
 
         <a class="feature-card" href="html/namaz.html" data-feature="namaz">
@@ -124,7 +115,7 @@
 
         <a class="feature-card" href="html/quran.html" data-feature="quran">
           <img src="assets/icon/quran.png" alt="" class="feature-icon">
-          <span data-feature-label="quran">আল-কুরআন</span>
+          <span data-feature-label="quran">কুরআন</span>
         </a>
 
         <a class="feature-card" href="html/dua.html" data-feature="dua">
@@ -150,9 +141,9 @@
       </nav>
     </main>
 
-    <!-- FOOTER BOARD -->
     <footer class="footer-board">
-      <p id="footerMessage">আল্লাহকে স্মরণ করো, অন্তরে প্রশান্তি লাভ করো।</p>
+      <span class="footer-icon" aria-hidden="true">📖</span>
+      <p id="footerMessage">আল্লাহর স্মরণেই অন্তর প্রশান্ত হয়।</p>
     </footer>
 
   </div>
