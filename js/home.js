@@ -4,27 +4,13 @@
 (() => {
   const $ = (selector) => document.querySelector(selector);
 
-  const prayerIds = {
-    Fajr: "fajrTime",
-    Sunrise: "sunriseTime",
-    Dhuhr: "dhuhrTime",
-    Asr: "asrTime",
-    Maghrib: "maghribTime",
-    Isha: "ishaTime"
-  };
-
-  const translations = {
+  const LANGUAGES = {
     bn: {
-      location: "লোকেশন খোঁজা হচ্ছে...",
-      locationError: "লোকেশন পাওয়া যায়নি",
-      dateLoading: "তারিখ খোঁজা হচ্ছে...",
-      statusHeading: "আজকের ইবাদত",
-      today: "আজ",
-      currentPrayer: "বর্তমান ওয়াক্ত",
-      nextPrayer: "পরবর্তী ওয়াক্ত",
-      prayerTimes: "আজকের নামাজের সময়",
-      bismillah: "পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে।",
-      footer: "আল্লাহকে স্মরণ করো, অন্তরে প্রশান্তি লাভ করো।",
+      locale: "bn-BD",
+      cityFallback: "কলকাতা",
+      dateFallback: "তারিখ পাওয়া যায়নি",
+      bismillah: "পরম করুণাময় অসীম দয়ালু আল্লাহর নামে",
+      footer: "আল্লাহর স্মরণেই অন্তর প্রশান্ত হয়।",
       days: ["রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার", "শনিবার"],
       prayers: {
         Fajr: "ফজর",
@@ -36,7 +22,7 @@
       },
       features: {
         namaz: "নামাজ",
-        quran: "আল-কুরআন",
+        quran: "কুরআন",
         dua: "দোয়া",
         hadith: "হাদিস",
         qibla: "কিবলা",
@@ -45,16 +31,11 @@
     },
 
     en: {
-      location: "Finding location...",
-      locationError: "Location unavailable",
-      dateLoading: "Loading date...",
-      statusHeading: "Daily Worship",
-      today: "Today",
-      currentPrayer: "Current Prayer",
-      nextPrayer: "Next Prayer",
-      prayerTimes: "Today's Prayer Times",
-      bismillah: "In the name of Allah, the Most Compassionate, the Most Merciful.",
-      footer: "Remember Allah; find peace in your heart.",
+      locale: "en-IN",
+      cityFallback: "Kolkata",
+      dateFallback: "Date unavailable",
+      bismillah: "In the name of Allah, the Most Compassionate, the Most Merciful",
+      footer: "In the remembrance of Allah, hearts find peace.",
       days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
       prayers: {
         Fajr: "Fajr",
@@ -66,7 +47,7 @@
       },
       features: {
         namaz: "Prayer",
-        quran: "Al-Quran",
+        quran: "Quran",
         dua: "Dua",
         hadith: "Hadith",
         qibla: "Qibla",
@@ -75,16 +56,11 @@
     },
 
     hi: {
-      location: "स्थान खोजा जा रहा है...",
-      locationError: "स्थान उपलब्ध नहीं",
-      dateLoading: "तारीख लोड हो रही है...",
-      statusHeading: "आज की इबादत",
-      today: "आज",
-      currentPrayer: "वर्तमान नमाज़",
-      nextPrayer: "अगली नमाज़",
-      prayerTimes: "आज की नमाज़ के समय",
-      bismillah: "परम कृपालु, अत्यंत दयावान अल्लाह के नाम से।",
-      footer: "अल्लाह को याद करें और दिल में सुकून पाएं।",
+      locale: "hi-IN",
+      cityFallback: "कोलकाता",
+      dateFallback: "तारीख उपलब्ध नहीं",
+      bismillah: "परम कृपालु, अत्यंत दयावान अल्लाह के नाम से",
+      footer: "अल्लाह के स्मरण से दिल को सुकून मिलता है।",
       days: ["रविवार", "सोमवार", "मंगलवार", "बुधवार", "गुरुवार", "शुक्रवार", "शनिवार"],
       prayers: {
         Fajr: "फ़ज्र",
@@ -96,7 +72,7 @@
       },
       features: {
         namaz: "नमाज़",
-        quran: "अल-क़ुरआन",
+        quran: "क़ुरआन",
         dua: "दुआ",
         hadith: "हदीस",
         qibla: "क़िबला",
@@ -105,28 +81,37 @@
     }
   };
 
-  let currentLanguage = "bn";
-  let prayerSchedule = null;
-  let prayerDateKey = "";
-  let lastSettingsKey = "";
+  const PRAYER_IDS = {
+    Fajr: "fajrTime",
+    Sunrise: "sunriseTime",
+    Dhuhr: "dhuhrTime",
+    Asr: "asrTime",
+    Maghrib: "maghribTime",
+    Isha: "ishaTime"
+  };
+
+  let language = "bn";
+  let settingsSnapshot = "";
+  let prayerTimes = null;
+  let coordinates = null;
+  let weatherLoaded = false;
+  let lastPrayerDate = "";
 
   function readSettings() {
     try {
-      const raw = localStorage.getItem("appSettings");
-      return raw ? JSON.parse(raw) : {};
-    } catch (error) {
-      console.warn("Could not read appSettings:", error);
+      return JSON.parse(localStorage.getItem("appSettings") || "{}");
+    } catch {
       return {};
     }
   }
 
   function getLanguage(settings) {
-    const lang = settings.lang || settings.language || "bn";
-    return ["bn", "en", "hi"].includes(lang) ? lang : "bn";
+    const value = settings.lang || settings.language || "bn";
+    return LANGUAGES[value] ? value : "bn";
   }
 
-  function getThemeName(settings) {
-    const theme = settings.themeColor || settings.theme || "classic";
+  function getTheme(settings) {
+    const raw = settings.themeColor || settings.theme || "classic";
 
     const aliases = {
       green: "classic",
@@ -139,121 +124,115 @@
       fresh: "pista"
     };
 
-    return aliases[theme] || "classic";
+    return aliases[raw] || "classic";
   }
 
   function applySettings() {
     const settings = readSettings();
+    language = getLanguage(settings);
 
-    currentLanguage = getLanguage(settings);
-
-    document.documentElement.lang = currentLanguage;
-    document.body.dataset.themeColor = getThemeName(settings);
-
-    const darkMode = Boolean(
+    const dark = Boolean(
       settings.dark ??
       settings.darkMode ??
       settings.isDarkMode ??
       false
     );
 
-    document.body.classList.toggle("dark-mode", darkMode);
+    document.documentElement.lang = language;
+    document.body.classList.toggle("dark-mode", dark);
+    document.body.dataset.themeColor = getTheme(settings);
 
-    const settingsKey = JSON.stringify({
-      lang: currentLanguage,
-      theme: getThemeName(settings),
-      dark: darkMode
+    const snapshot = JSON.stringify({
+      language,
+      dark,
+      theme: getTheme(settings)
     });
 
-    if (settingsKey !== lastSettingsKey) {
-      lastSettingsKey = settingsKey;
+    if (snapshot !== settingsSnapshot) {
+      settingsSnapshot = snapshot;
       updateLanguage();
     }
   }
 
-  function T() {
-    return translations[currentLanguage] || translations.bn;
+  function text() {
+    return LANGUAGES[language] || LANGUAGES.bn;
   }
 
   function updateLanguage() {
-    const text = T();
+    const t = text();
 
-    $("#city").textContent = text.location;
-    $("#date").textContent = text.dateLoading;
-    $("#statusHeading").textContent = text.statusHeading;
-    $("#dayLabel").textContent = text.today;
-    $("#currentPrayerLabel").textContent = text.currentPrayer;
-    $("#nextPrayerLabel").textContent = text.nextPrayer;
-    $("#prayerTimesTitle").textContent = text.prayerTimes;
-    $("#bismillahMeaning").textContent = text.bismillah;
-    $("#footerMessage").textContent = text.footer;
+    $("#bismillahMeaning").textContent = t.bismillah;
+    $("#footerMessage").textContent = t.footer;
 
     document.querySelectorAll("[data-prayer-label]").forEach((element) => {
       const key = element.dataset.prayerLabel;
-      const englishKeys = {
-        fajr: "Fajr",
-        sunrise: "Sunrise",
-        dhuhr: "Dhuhr",
-        asr: "Asr",
-        maghrib: "Maghrib",
-        isha: "Isha"
-      };
-
-      element.textContent = text.prayers[englishKeys[key]] || key;
+      element.textContent = t.prayers[key] || key;
     });
 
     document.querySelectorAll("[data-feature-label]").forEach((element) => {
       const key = element.dataset.featureLabel;
-      element.textContent = text.features[key] || key;
+      element.textContent = t.features[key] || key;
     });
 
-    updateClockAndDate();
-    updatePrayerStatus();
+    updateDateAndClock();
+
+    if (prayerTimes) {
+      renderPrayerTimes();
+      updatePrayerStatus();
+    }
   }
 
-  function updateClockAndDate() {
+  function numberLocale() {
+    return text().locale;
+  }
+
+  function formatClock(date, seconds = true) {
+    return new Intl.DateTimeFormat(numberLocale(), {
+      hour: "2-digit",
+      minute: "2-digit",
+      ...(seconds ? { second: "2-digit" } : {}),
+      hour12: false
+    }).format(date);
+  }
+
+  function updateDateAndClock() {
     const now = new Date();
 
-    $("#clock").textContent = new Intl.DateTimeFormat(
-      currentLanguage === "bn" ? "bn-BD" :
-      currentLanguage === "hi" ? "hi-IN" : "en-IN",
-      {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: true
-      }
-    ).format(now);
+    $("#clock").textContent = formatClock(now, true);
 
-    $("#date").textContent = new Intl.DateTimeFormat(
-      currentLanguage === "bn" ? "bn-BD" :
-      currentLanguage === "hi" ? "hi-IN" : "en-IN",
-      {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-      }
-    ).format(now);
+    $("#date").textContent = new Intl.DateTimeFormat(numberLocale(), {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    }).format(now);
 
-    $("#dayName").textContent = T().days[now.getDay()];
+    $("#dayName").textContent = text().days[now.getDay()];
   }
 
-  function parseTime(value) {
+  function dateKey() {
+    const now = new Date();
+    return [
+      now.getFullYear(),
+      String(now.getMonth() + 1).padStart(2, "0"),
+      String(now.getDate()).padStart(2, "0")
+    ].join("-");
+  }
+
+  function parsePrayerTime(value) {
     if (!value) return null;
 
     const match = String(value).match(/(\d{1,2}):(\d{2})/);
     if (!match) return null;
 
-    const hours = Number(match[1]);
-    const minutes = Number(match[2]);
+    const hour = Number(match[1]);
+    const minute = Number(match[2]);
 
-    if (hours > 23 || minutes > 59) return null;
+    if (hour > 23 || minute > 59) return null;
 
-    return hours * 60 + minutes;
+    return hour * 60 + minute;
   }
 
-  function formatPrayerTime(value) {
+  function displayPrayerTime(value) {
     if (!value) return "--:--";
 
     const match = String(value).match(/(\d{1,2}):(\d{2})/);
@@ -262,150 +241,166 @@
     const date = new Date();
     date.setHours(Number(match[1]), Number(match[2]), 0, 0);
 
-    return new Intl.DateTimeFormat(
-      currentLanguage === "bn" ? "bn-BD" :
-      currentLanguage === "hi" ? "hi-IN" : "en-IN",
-      {
-        hour: "numeric",
-        minute: "2-digit",
-        hour12: true
-      }
-    ).format(date);
+    return new Intl.DateTimeFormat(numberLocale(), {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false
+    }).format(date);
   }
 
-  function updatePrayerStatus() {
-    if (!prayerSchedule) return;
+  function renderPrayerTimes() {
+    if (!prayerTimes) return;
 
-    const now = new Date();
-    const nowMinutes = now.getHours() * 60 + now.getMinutes();
+    Object.entries(PRAYER_IDS).forEach(([key, id]) => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.textContent = displayPrayerTime(prayerTimes[key]);
+      }
+    });
+  }
 
-    const prayerOrder = [
-      "Fajr",
-      "Dhuhr",
-      "Asr",
-      "Maghrib",
-      "Isha"
-    ];
+  function getPrayerState() {
+    if (!prayerTimes) return null;
 
-    const prayerValues = prayerOrder
+    const order = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
+
+    const entries = order
       .map((key) => ({
         key,
-        minutes: parseTime(prayerSchedule[key])
+        minutes: parsePrayerTime(prayerTimes[key])
       }))
       .filter((item) => item.minutes !== null);
 
-    if (!prayerValues.length) return;
+    if (!entries.length) return null;
+
+    const now = new Date();
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
     let current = null;
     let next = null;
 
-    for (let i = 0; i < prayerValues.length; i++) {
-      if (nowMinutes >= prayerValues[i].minutes) {
-        current = prayerValues[i];
-      }
-
-      if (nowMinutes < prayerValues[i].minutes) {
-        next = prayerValues[i];
+    for (const entry of entries) {
+      if (entry.minutes <= currentMinutes) {
+        current = entry;
+      } else {
+        next = entry;
         break;
       }
     }
 
-    if (!current) {
-      current = prayerValues[prayerValues.length - 1];
-    }
+    if (!current) current = entries[entries.length - 1];
+    if (!next) next = entries[0];
 
-    if (!next) {
-      next = prayerValues[0];
-    }
-
-    $("#currentPrayer").textContent = T().prayers[current.key];
-    $("#nextPrayer").textContent = T().prayers[next.key];
-    $("#nextPrayerTime").textContent = formatPrayerTime(
-      prayerSchedule[next.key]
+    let nextDate = new Date();
+    nextDate.setHours(
+      Math.floor(next.minutes / 60),
+      next.minutes % 60,
+      0,
+      0
     );
+
+    if (next.minutes <= currentMinutes) {
+      nextDate.setDate(nextDate.getDate() + 1);
+    }
+
+    return { current, next, nextDate };
   }
 
-  function getLocalDateKey() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
+  function updatePrayerStatus() {
+    const state = getPrayerState();
+    if (!state) return;
 
-    return `${year}-${month}-${day}`;
+    $("#currentPrayer").textContent = text().prayers[state.current.key];
+    $("#nextPrayer").textContent = text().prayers[state.next.key];
+
+    const remaining = Math.max(0, state.nextDate.getTime() - Date.now());
+    const totalSeconds = Math.floor(remaining / 1000);
+
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    const formatter = new Intl.NumberFormat(numberLocale(), {
+      minimumIntegerDigits: 2,
+      useGrouping: false
+    });
+
+    $("#countdown").textContent = [
+      formatter.format(hours),
+      formatter.format(minutes),
+      formatter.format(seconds)
+    ].join(":");
   }
 
   async function loadPrayerTimes(latitude, longitude) {
-    const dateKey = getLocalDateKey();
-
-    if (prayerDateKey === dateKey && prayerSchedule) {
-      return;
-    }
-
     try {
-      const timestamp = Math.floor(Date.now() / 1000);
+      const today = dateKey();
+      const unixTime = Math.floor(Date.now() / 1000);
 
-      const response = await fetch(
-        `https://api.aladhan.com/v1/timings/${timestamp}?latitude=${latitude}&longitude=${longitude}&method=1`
-      );
+      const url = new URL(`https://api.aladhan.com/v1/timings/${unixTime}`);
+      url.searchParams.set("latitude", latitude);
+      url.searchParams.set("longitude", longitude);
+      url.searchParams.set("method", "1");
 
-      if (!response.ok) {
-        throw new Error("Prayer time service unavailable");
-      }
+      const response = await fetch(url.toString());
+      if (!response.ok) throw new Error("Prayer times unavailable");
 
       const result = await response.json();
       const timings = result?.data?.timings;
 
-      if (!timings) {
-        throw new Error("Prayer times not found");
-      }
+      if (!timings) throw new Error("Prayer timings missing");
 
-      prayerSchedule = timings;
-      prayerDateKey = dateKey;
+      prayerTimes = timings;
+      lastPrayerDate = today;
 
-      Object.entries(prayerIds).forEach(([prayer, elementId]) => {
-        const element = document.getElementById(elementId);
-        if (element) {
-          element.textContent = formatPrayerTime(timings[prayer]);
-        }
-      });
-
+      renderPrayerTimes();
       updatePrayerStatus();
     } catch (error) {
-      console.warn("Unable to load prayer times:", error);
+      console.warn("IBADAT: prayer times could not be loaded.", error);
     }
   }
 
-  async function loadLocation() {
-    const fallbackLatitude = 22.5726;
-    const fallbackLongitude = 88.3639;
+  async function loadWeather(latitude, longitude) {
+    try {
+      const url = new URL("https://api.open-meteo.com/v1/forecast");
+      url.searchParams.set("latitude", latitude);
+      url.searchParams.set("longitude", longitude);
+      url.searchParams.set("current", "temperature_2m,weather_code");
+      url.searchParams.set("timezone", "auto");
 
-    if (!navigator.geolocation) {
-      $("#city").textContent = T().locationError;
-      await loadPrayerTimes(fallbackLatitude, fallbackLongitude);
-      return;
+      const response = await fetch(url.toString());
+      if (!response.ok) throw new Error("Weather unavailable");
+
+      const result = await response.json();
+      const current = result.current;
+
+      if (!current) throw new Error("Current weather missing");
+
+      const temp = Math.round(current.temperature_2m);
+
+      $("#temperature").textContent = new Intl.NumberFormat(numberLocale(), {
+        maximumFractionDigits: 0
+      }).format(temp);
+
+      $("#weatherIcon").textContent = weatherIcon(current.weather_code);
+      weatherLoaded = true;
+    } catch (error) {
+      console.warn("IBADAT: weather could not be loaded.", error);
     }
-
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-
-        await loadPrayerTimes(latitude, longitude);
-        await loadCityName(latitude, longitude);
-      },
-      async () => {
-        $("#city").textContent = T().locationError;
-        await loadPrayerTimes(fallbackLatitude, fallbackLongitude);
-      },
-      {
-        enableHighAccuracy: false,
-        timeout: 8000,
-        maximumAge: 600000
-      }
-    );
   }
 
-  async function loadCityName(latitude, longitude) {
+  function weatherIcon(code) {
+    if (code === 0) return "☀️";
+    if ([1, 2].includes(code)) return "🌤️";
+    if (code === 3) return "☁️";
+    if ([45, 48].includes(code)) return "🌫️";
+    if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) return "🌧️";
+    if ([71, 73, 75, 85, 86].includes(code)) return "❄️";
+    if ([95, 96, 99].includes(code)) return "⛈️";
+    return "🌤️";
+  }
+
+  async function loadCity(latitude, longitude) {
     try {
       const url = new URL("https://nominatim.openstreetmap.org/reverse");
       url.searchParams.set("format", "jsonv2");
@@ -413,12 +408,10 @@
       url.searchParams.set("lon", longitude);
 
       const response = await fetch(url.toString(), {
-        headers: {
-          "Accept": "application/json"
-        }
+        headers: { Accept: "application/json" }
       });
 
-      if (!response.ok) throw new Error("Location lookup failed");
+      if (!response.ok) throw new Error("Location name unavailable");
 
       const data = await response.json();
       const address = data.address || {};
@@ -427,49 +420,98 @@
         address.city ||
         address.town ||
         address.village ||
-        address.county ||
+        address.municipality ||
+        address.state_district ||
         address.state ||
-        T().locationError;
+        text().cityFallback;
 
       $("#city").textContent = city;
     } catch (error) {
-      console.warn("Unable to determine city:", error);
-      $("#city").textContent = T().locationError;
+      console.warn("IBADAT: city name could not be loaded.", error);
+      $("#city").textContent = text().cityFallback;
     }
   }
 
-  function startClock() {
-    updateClockAndDate();
+  async function useCoordinates(latitude, longitude) {
+    coordinates = { latitude, longitude };
 
-    window.setInterval(() => {
-      updateClockAndDate();
-      updatePrayerStatus();
-
-      const dateKey = getLocalDateKey();
-
-      if (prayerDateKey && dateKey !== prayerDateKey) {
-        prayerDateKey = "";
-        loadLocation();
-      }
-    }, 1000);
+    await Promise.all([
+      loadPrayerTimes(latitude, longitude),
+      loadWeather(latitude, longitude),
+      loadCity(latitude, longitude)
+    ]);
   }
 
-  function registerServiceWorker() {
-    if (!("serviceWorker" in navigator)) return;
+  function loadLocation() {
+    if (!navigator.geolocation) {
+      useDefaultLocation();
+      return;
+    }
 
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("service-worker.js")
-        .catch((error) => {
-          console.warn("Service worker registration failed:", error);
-        });
-    });
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        useCoordinates(
+          position.coords.latitude,
+          position.coords.longitude
+        );
+      },
+      () => useDefaultLocation(),
+      {
+        enableHighAccuracy: false,
+        timeout: 8000,
+        maximumAge: 600000
+      }
+    );
+  }
+
+  function useDefaultLocation() {
+    /*
+      Kolkata fallback is used only when location access is unavailable.
+      The user can allow location access to get local prayer times.
+    */
+    $("#city").textContent = text().cityFallback;
+
+    useCoordinates(22.5726, 88.3639);
+  }
+
+  function openSettings() {
+    const candidates = [
+      "html/settings.html",
+      "settings.html"
+    ];
+
+    const settings = readSettings();
+    const configuredPath = settings.settingsPage || settings.settingsUrl;
+
+    if (configuredPath && typeof configuredPath === "string") {
+      window.location.href = configuredPath;
+      return;
+    }
+
+    /*
+      Change this path if the existing Settings page uses a different
+      filename in the project.
+    */
+    window.location.href = candidates[0];
   }
 
   function init() {
     applySettings();
-    startClock();
+
+    $("#sunriseSettings").addEventListener("click", openSettings);
+
     loadLocation();
-    registerServiceWorker();
+    updateDateAndClock();
+
+    window.setInterval(() => {
+      updateDateAndClock();
+      updatePrayerStatus();
+
+      if (lastPrayerDate && lastPrayerDate !== dateKey() && coordinates) {
+        lastPrayerDate = "";
+        loadPrayerTimes(coordinates.latitude, coordinates.longitude);
+      }
+    }, 1000);
 
     window.addEventListener("storage", (event) => {
       if (!event.key || event.key === "appSettings") {
@@ -479,7 +521,15 @@
 
     window.addEventListener("pageshow", () => {
       applySettings();
-      updateClockAndDate();
+      updateDateAndClock();
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) {
+        applySettings();
+        updateDateAndClock();
+        updatePrayerStatus();
+      }
     });
   }
 
