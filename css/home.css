@@ -321,8 +321,9 @@ a.home-board:active {
 
 .daily-day {
   width: 100%;
+  min-width: 0;
   justify-self: stretch;
-  text-align: left;
+  text-align: center;
 }
 
 .weather-info {
@@ -331,7 +332,7 @@ a.home-board:active {
   justify-self: stretch;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 4px;
   white-space: nowrap;
 }
@@ -349,17 +350,16 @@ a.home-board:active {
   overflow: hidden;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
+  text-align: center;
 }
 
 .clock-time {
   justify-self: stretch;
-  text-align: left;
 }
 
 .countdown-time {
   justify-self: stretch;
   color: #B52D25;
-  text-align: right;
 }
 
 .current-prayer,
@@ -367,6 +367,7 @@ a.home-board:active {
   min-width: 0;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   padding: 0;
   color: #10452F;
@@ -379,13 +380,10 @@ a.home-board:active {
 
 .current-prayer {
   justify-self: stretch;
-  text-align: left;
 }
 
 .next-prayer {
   justify-self: stretch;
-  justify-content: flex-end;
-  text-align: right;
 }
 
 .prayer-dot {
