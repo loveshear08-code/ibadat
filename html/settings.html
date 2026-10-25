@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -5,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#124C32">
     <title>Settings</title>
-    <link rel="stylesheet" href="../css/settings.css?v=22">
+    <link rel="stylesheet" href="../css/settings.css?v=23">
 </head>
 <body>
 
+    <!-- MAIN BOARD: DESIGN UNCHANGED -->
     <header class="top-board">
         <h1 id="settingsTitle">সেটিংস</h1>
     </header>
@@ -16,23 +18,116 @@
     <main class="container">
         <div class="content">
 
-            <!-- LANGUAGE -->
+            <!-- LANGUAGE SETTINGS -->
             <section class="card language-card">
                 <h2 id="langTitle">ভাষা</h2>
+
                 <select id="langSelect" aria-label="Language">
-                    <option value="bn">বাংলা</option>
                     <option value="en">English</option>
+                    <option value="bn">বাংলা</option>
                     <option value="hi">हिन्दी</option>
                 </select>
             </section>
 
-            <!-- THEME -->
+            <!-- LIGHT / DARK MODE -->
             <section class="card theme-card">
                 <h2 id="themeTitle">থিম</h2>
+
                 <label for="darkMode" class="theme-label">
                     <input type="checkbox" id="darkMode">
                     <span id="darkLabel">ডার্ক মোড</span>
                 </label>
+            </section>
+
+            <!-- NEW THEME COLOR SETTINGS -->
+            <section class="card theme-color-card">
+                <h2 id="themeColorTitle">থিম কালার</h2>
+                <p id="themeColorDesc">আপনার পছন্দের রঙ নির্বাচন করুন</p>
+
+                <div
+                    class="theme-options"
+                    id="themeOptions"
+                    role="radiogroup"
+                    aria-labelledby="themeColorTitle"
+                >
+
+                    <button
+                        type="button"
+                        class="theme-option"
+                        data-theme="classic"
+                        role="radio"
+                        aria-checked="true"
+                    >
+                        <span class="theme-swatches" aria-hidden="true">
+                            <span style="--swatch:#1B7F4B"></span>
+                            <span style="--swatch:#E8F5E9"></span>
+                            <span style="--swatch:#F2C94C"></span>
+                            <span style="--swatch:#0F5132"></span>
+                        </span>
+                        <span class="theme-option-name" data-theme-name="classic">
+                            Classic Green
+                        </span>
+                        <span class="theme-check" aria-hidden="true">✓</span>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="theme-option"
+                        data-theme="royal"
+                        role="radio"
+                        aria-checked="false"
+                    >
+                        <span class="theme-swatches" aria-hidden="true">
+                            <span style="--swatch:#285A8E"></span>
+                            <span style="--swatch:#E5EFF9"></span>
+                            <span style="--swatch:#E8BD55"></span>
+                            <span style="--swatch:#173A60"></span>
+                        </span>
+                        <span class="theme-option-name" data-theme-name="royal">
+                            Royal Blue
+                        </span>
+                        <span class="theme-check" aria-hidden="true">✓</span>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="theme-option"
+                        data-theme="rose"
+                        role="radio"
+                        aria-checked="false"
+                    >
+                        <span class="theme-swatches" aria-hidden="true">
+                            <span style="--swatch:#B96F79"></span>
+                            <span style="--swatch:#F8E9E7"></span>
+                            <span style="--swatch:#D9B875"></span>
+                            <span style="--swatch:#7D414B"></span>
+                        </span>
+                        <span class="theme-option-name" data-theme-name="rose">
+                            Rose Champagne
+                        </span>
+                        <span class="theme-check" aria-hidden="true">✓</span>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="theme-option"
+                        data-theme="pista"
+                        role="radio"
+                        aria-checked="false"
+                    >
+                        <span class="theme-swatches" aria-hidden="true">
+                            <span style="--swatch:#4CAF50"></span>
+                            <span style="--swatch:#DFF5E1"></span>
+                            <span style="--swatch:#A7D129"></span>
+                            <span style="--swatch:#FFFFFF"></span>
+                        </span>
+                        <span class="theme-option-name" data-theme-name="pista">
+                            Fresh Pista
+                        </span>
+                        <span class="theme-check" aria-hidden="true">✓</span>
+                    </button>
+
+                </div>
             </section>
 
             <!-- AZAN SETTINGS -->
@@ -88,15 +183,18 @@
         </div>
 
         <div class="btn-box">
-            <button type="button" id="saveBtn" onclick="saveSettings()">সেভ</button>
+            <button type="button" id="saveBtn" onclick="saveSettings()">
+                সেভ
+            </button>
         </div>
     </main>
 
+    <!-- FOOTER BOARD: DESIGN UNCHANGED -->
     <footer class="bottom-board">
         <p id="settingsFooter">আল্লাহকে স্মরণ করুন</p>
     </footer>
 
-    <script src="../js/settings.js?v=22"></script>
+    <script src="../js/settings.js?v=23"></script>
     <script src="../js/theme.js"></script>
 </body>
 </html>
