@@ -1,16 +1,19 @@
-
 :root {
-  --primary: #1b7f4b;
-  --surface: #dff0d9;
-  --accent: #e8c766;
-  --deep: #123d2c;
-  --text: #10452f;
-  --page-padding: 10px;
-  --page-gap: 9px;
-  --header-height: 62px;
-  --footer-height: 68px;
-  --card-radius: 22px;
-  --card-border: rgba(214, 181, 109, 0.85);
+  --deep-green: #124C32;
+  --deep-green-dark: #0C3926;
+  --gold: #E8C766;
+  --gold-light: #F5E5A7;
+
+  --theme-primary: #1B7F4B;
+  --theme-soft: #E8F5E9;
+  --theme-accent: #F2C94C;
+  --theme-deep: #0F5132;
+  --theme-text: #17452F;
+  --theme-card: rgba(255,255,255,.90);
+  --theme-border: #D5E3D1;
+
+  --bar-height: 48px;
+  --page-gap: 4px;
 }
 
 * {
@@ -28,9 +31,20 @@ body {
 }
 
 body {
-  color: var(--text);
-  font-family: "Noto Sans Bengali", "Nirmala UI", "Hind Siliguri", sans-serif;
-  background: #f8f5e9 url("../assets/main-bg.jpg") center center / cover fixed;
+  color: var(--theme-text);
+  font-family:
+    "Noto Sans Bengali",
+    "Noto Sans Devanagari",
+    "Nirmala UI",
+    Arial,
+    sans-serif;
+
+  background:
+    linear-gradient(
+      rgba(255,253,245,.48),
+      rgba(255,253,245,.48)
+    ),
+    url("../assets/main-bg.jpg") center / cover no-repeat fixed;
 }
 
 button,
@@ -44,29 +58,37 @@ a {
   height: 100dvh;
   min-height: 0;
   display: grid;
-  grid-template-rows: var(--header-height) minmax(0, 1fr) var(--footer-height);
+  grid-template-rows: var(--bar-height) minmax(0,1fr) var(--bar-height);
   gap: var(--page-gap);
-  padding: max(7px, env(safe-area-inset-top)) var(--page-padding)
-    max(7px, env(safe-area-inset-bottom));
+  padding:
+    max(5px,env(safe-area-inset-top))
+    7px
+    max(5px,env(safe-area-inset-bottom));
   overflow: hidden;
 }
 
-/* Settings page matching top board */
+/* Header and footer */
 .top-board,
 .footer-board {
+  width: 100%;
+  height: var(--bar-height);
   min-width: 0;
-  min-height: 0;
+  min-height: var(--bar-height);
+  max-height: var(--bar-height);
+  margin: 0;
+  padding: 5px 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
   overflow: hidden;
-  padding: 6px 12px;
-  color: #fff3c6;
-  background: linear-gradient(115deg, #124c32, #0c3926);
-  border: 2px solid #e8c766;
+  color: var(--gold-light);
+  background: linear-gradient(140deg,var(--theme-deep),var(--deep-green-dark));
+  border: 2px solid var(--theme-accent);
   border-radius: 20px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.16);
+  box-shadow:
+    0 3px 9px rgba(30,49,28,.14),
+    inset 0 1px 0 rgba(255,255,255,.10);
 }
 
 .location-area {
@@ -74,12 +96,18 @@ a {
   display: flex;
   align-items: center;
   gap: 9px;
-  font-size: clamp(16px, 4.4vw, 22px);
+  font-size: clamp(15px,4.3vw,21px);
   font-weight: 800;
 }
 
+.location-area #city {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .location-symbol {
-  flex-shrink: 0;
+  flex: 0 0 22px;
   position: relative;
   width: 22px;
   height: 22px;
@@ -93,7 +121,7 @@ a {
   top: 1px;
   width: 15px;
   height: 18px;
-  background: #fff0bd;
+  background: var(--gold-light);
   border-radius: 60% 60% 60% 0;
   transform: rotate(-45deg);
 }
@@ -105,126 +133,136 @@ a {
   top: 6px;
   width: 5px;
   height: 5px;
-  background: #124c32;
+  background: var(--theme-deep);
   border-radius: 50%;
 }
 
-#city {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
 .date-area {
-  flex-shrink: 0;
   max-width: 58%;
-  font-size: clamp(12px, 3.5vw, 19px);
+  flex-shrink: 0;
+  font-size: clamp(10px,3.2vw,17px);
   font-weight: 700;
   text-align: right;
-  line-height: 1.35;
+  line-height: 1.25;
 }
 
-/* Main area: exactly three boards and six compact options */
+/* Main page boards */
 .home-content {
+  min-width: 0;
   min-height: 0;
   display: grid;
   grid-template-rows:
-    minmax(0, 1.05fr)
-    minmax(0, 1fr)
-    minmax(0, 0.94fr)
-    minmax(0, 1.35fr);
-  gap: var(--page-gap);
+    minmax(0,1.02fr)
+    minmax(0,1fr)
+    minmax(0,.96fr)
+    minmax(0,1.30fr);
+  gap: 4px;
   overflow: hidden;
 }
 
 .home-board {
+  position: relative;
   min-width: 0;
   min-height: 0;
-  position: relative;
-  isolation: isolate;
   overflow: hidden;
-  border-radius: var(--card-radius);
-  border: 1px solid rgba(211, 188, 128, 0.65);
-  box-shadow: 0 2px 6px rgba(48, 54, 30, 0.12);
-  background-color: rgba(255, 250, 233, 0.45);
+  isolation: isolate;
+  border: 1px solid rgba(211,188,128,.65);
+  border-radius: 22px;
+  box-shadow: 0 2px 6px rgba(48,54,30,.10);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .board-overlay {
   position: absolute;
   z-index: -1;
   inset: 0;
+  background: rgba(255,250,235,.48);
   pointer-events: none;
 }
 
-/* Board images: filenames kept lowercase */
 .bismillah-board {
-  background: url("../assets/image/home-bg-1.png") center center / cover no-repeat;
+  background-image: url("../assets/image/home-bg-1.png");
 }
 
 .daily-board {
-  background: url("../assets/image/home-bg-2.png") center center / cover no-repeat;
+  background-image: url("../assets/image/home-bg-2.png");
 }
 
 .prayer-board {
-  background: url("../assets/image/home-bg-3.png") center center / cover no-repeat;
+  background-image: url("../assets/image/home-bg-3.png");
 }
 
-.bismillah-board .board-overlay {
-  background: rgba(255, 250, 229, 0.15);
-}
-
-.daily-board .board-overlay {
-  background: rgba(255, 247, 224, 0.12);
-}
-
-.prayer-board .board-overlay {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-/* Bismillah */
+/* Bismillah board and matching mirrored leaves */
 .bismillah-content {
   width: 100%;
   height: 100%;
   min-height: 0;
+  padding: 5px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 5px 10px;
   text-align: center;
 }
 
 .bismillah-decoration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(7px,2.2vw,13px);
   margin-bottom: 1px;
-  color: #b68a31;
-  font-size: clamp(14px, 3.8vw, 22px);
+  color: #B68A31;
+  font-size: clamp(17px,4.5vw,25px);
   line-height: 1;
+}
+
+.decoration-leaf,
+.decoration-diamond {
+  display: inline-block;
+  flex: 0 0 auto;
+  font-size: 1em;
+  line-height: 1;
+  transform-origin: center;
+}
+
+.decoration-left {
+  transform: scaleX(-1);
+}
+
+.decoration-right {
+  transform: scaleX(1);
+}
+
+.decoration-diamond {
+  transform: none;
 }
 
 .arabic-bismillah {
   max-width: 100%;
-  color: #8a681d;
-  font-family: "Noto Naskh Arabic", "Amiri", serif;
-  font-size: clamp(23px, 6.2vw, 36px);
-  font-weight: 800;
-  line-height: 1.45;
-}
-
-#bismillahMeaning {
-  margin: 3px 0 0;
-  color: #10452f;
-  font-size: clamp(12px, 3.7vw, 19px);
+  color: #8A681D;
+  font-family: "Noto Naskh Arabic","Amiri",serif;
+  font-size: clamp(22px,6vw,35px);
   font-weight: 800;
   line-height: 1.4;
 }
 
-/* Daily board */
+#bismillahMeaning {
+  margin: 3px 0 0;
+  color: #10452F;
+  font-size: clamp(11px,3.4vw,18px);
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+/* Date, clock, weather and prayer countdown */
 .daily-board {
+  padding: 7px 12px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 8px 13px;
-  color: #10452f;
+  color: #10452F;
 }
 
 .daily-top,
@@ -235,11 +273,11 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 7px;
 }
 
 .daily-day {
-  font-size: clamp(20px, 6vw, 34px);
+  font-size: clamp(19px,5.8vw,33px);
   font-weight: 900;
   line-height: 1.2;
 }
@@ -247,14 +285,14 @@ a {
 .weather-info {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   white-space: nowrap;
-  font-size: clamp(17px, 5.2vw, 29px);
+  font-size: clamp(15px,4.8vw,27px);
   font-weight: 900;
 }
 
 .weather-icon {
-  font-size: clamp(20px, 6vw, 34px);
+  font-size: clamp(20px,5.7vw,32px);
 }
 
 .daily-middle {
@@ -266,13 +304,13 @@ a {
   min-width: 0;
   overflow: hidden;
   white-space: nowrap;
-  font-size: clamp(21px, 6.3vw, 35px);
+  font-size: clamp(18px,5.9vw,33px);
   font-weight: 900;
   font-variant-numeric: tabular-nums;
 }
 
 .countdown-time {
-  color: #b52d25;
+  color: #B52D25;
   text-align: right;
 }
 
@@ -282,33 +320,32 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  padding: 4px 11px;
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: 15px;
-  background: rgba(16, 48, 34, 0.28);
+  gap: 6px;
+  padding: 4px 10px;
   color: white;
-  font-size: clamp(14px, 4.2vw, 23px);
+  background: rgba(16,48,34,.34);
+  border: 1px solid rgba(255,255,255,.8);
+  border-radius: 15px;
+  font-size: clamp(13px,3.8vw,21px);
   font-weight: 900;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 1px 3px rgba(0,0,0,.35);
 }
 
 .prayer-dot {
-  flex-shrink: 0;
   width: 12px;
   height: 12px;
+  flex-shrink: 0;
   border-radius: 50%;
-  background: #20bd48;
+  background: #20BD48;
 }
 
 .next-arrow {
-  color: #f4c928;
-  font-size: 0.95em;
+  color: #F4C928;
 }
 
-/* Prayer time board */
+/* Six prayer time cells */
 .prayer-board {
-  padding: 9px 10px;
+  padding: 7px;
 }
 
 .prayer-grid {
@@ -316,36 +353,35 @@ a {
   height: 100%;
   min-height: 0;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  grid-template-rows: repeat(2,minmax(0,1fr));
+  gap: 5px;
 }
 
 .prayer-cell {
   min-width: 0;
   min-height: 0;
+  padding: 4px 2px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 3px;
-  padding: 4px 2px;
-  border: 1px solid rgba(255, 255, 255, 0.68);
-  border-radius: 24px;
-  background: #d9f0d4;
-  color: #10452f;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  color: var(--theme-deep);
+  background: var(--theme-soft);
+  border: 1px solid rgba(255,255,255,.8);
+  border-radius: 20px;
   text-align: center;
 }
 
 .prayer-cell > span {
-  font-size: clamp(12px, 3.5vw, 19px);
+  font-size: clamp(11px,3.4vw,18px);
   font-weight: 800;
   line-height: 1.25;
 }
 
 .prayer-cell strong {
-  font-size: clamp(14px, 4.1vw, 21px);
+  font-size: clamp(13px,3.9vw,21px);
   font-weight: 900;
   line-height: 1.25;
   font-variant-numeric: tabular-nums;
@@ -353,7 +389,7 @@ a {
 
 .sunrise-cell {
   cursor: pointer;
-  border: 2px solid #e8c766;
+  border: 2px solid var(--theme-accent);
 }
 
 .sunrise-label {
@@ -364,52 +400,47 @@ a {
 }
 
 .settings-symbol {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 14px;
-  height: 14px;
-  color: #8d7228;
   font-size: 12px;
+  color: #8D7228;
 }
 
-/* Six compact option cards */
+/* Six compact feature cards */
 .feature-grid {
   min-width: 0;
   min-height: 0;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(3, minmax(0, 1fr));
-  gap: var(--page-gap);
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  grid-template-rows: repeat(3,minmax(0,1fr));
+  gap: 4px;
   overflow: hidden;
 }
 
 .feature-card {
   min-width: 0;
   min-height: 0;
+  padding: 3px 5px;
   display: grid;
-  grid-template-columns: minmax(32px, 0.75fr) minmax(0, 1.25fr);
+  grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr);
   align-items: center;
   justify-items: center;
-  gap: 4px;
-  padding: 4px 7px;
+  gap: 3px;
   overflow: hidden;
-  color: #10452f;
-  background: #d9f0d4;
-  border: 1.5px solid #c7dba1;
-  border-radius: 25px;
-  box-shadow: 0 2px 7px rgba(33, 75, 35, 0.12);
+  color: var(--theme-deep);
+  background: var(--theme-soft);
+  border: 1.5px solid #C7DBA1;
+  border-radius: 22px;
+  box-shadow: 0 2px 7px rgba(33,75,35,.10);
   text-decoration: none;
 }
 
 .feature-card:active {
-  transform: scale(0.98);
+  transform: scale(.98);
 }
 
 .feature-icon {
   display: block;
-  width: clamp(32px, 10vw, 58px);
-  height: clamp(32px, 10vw, 58px);
+  width: clamp(26px,8vw,45px);
+  height: clamp(26px,8vw,45px);
   max-width: 100%;
   object-fit: contain;
 }
@@ -418,274 +449,212 @@ a {
   max-width: 100%;
   overflow-wrap: anywhere;
   text-align: center;
-  font-size: clamp(15px, 4.5vw, 25px);
+  font-size: clamp(13px,4vw,22px);
   font-weight: 900;
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
-/* Settings page matching footer */
+/* Footer */
 .footer-board {
   justify-content: center;
-  padding: 8px 12px;
-  gap: 9px;
+  gap: 8px;
+  padding: 5px 10px;
 }
 
 .footer-icon {
   flex-shrink: 0;
-  font-size: clamp(18px, 5vw, 26px);
+  font-size: 20px;
 }
 
 .footer-board p {
   min-width: 0;
   margin: 0;
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
+  white-space: nowrap;
   text-align: center;
-  font-size: clamp(13px, 3.8vw, 18px);
+  font-size: clamp(11px,3.4vw,16px);
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.25;
 }
 
-/* Four Settings color themes */
+/* Theme colors from Settings */
 body[data-theme-color="classic"] {
-  --primary: #1b7f4b;
-  --surface: #e8f5e9;
-  --accent: #f2c94c;
-  --deep: #0f5132;
+  --theme-primary: #1B7F4B;
+  --theme-soft: #E8F5E9;
+  --theme-accent: #F2C94C;
+  --theme-deep: #0F5132;
 }
 
 body[data-theme-color="royal"] {
-  --primary: #285a8e;
-  --surface: #e5eff9;
-  --accent: #e8bd55;
-  --deep: #173a60;
+  --theme-primary: #285A8E;
+  --theme-soft: #E5EFF9;
+  --theme-accent: #E8BD55;
+  --theme-deep: #173A60;
 }
 
 body[data-theme-color="rose"] {
-  --primary: #b96f79;
-  --surface: #f8e9e7;
-  --accent: #d9b875;
-  --deep: #7d414b;
+  --theme-primary: #B96F79;
+  --theme-soft: #F8E9E7;
+  --theme-accent: #D9B875;
+  --theme-deep: #7D414B;
 }
 
 body[data-theme-color="pista"] {
-  --primary: #4caf50;
-  --surface: #dff5e1;
-  --accent: #a7d129;
-  --deep: #214a35;
+  --theme-primary: #4CAF50;
+  --theme-soft: #DFF5E1;
+  --theme-accent: #A7D129;
+  --theme-deep: #214A35;
+}
+
+body[data-theme-color="classic"] .top-board,
+body[data-theme-color="classic"] .footer-board {
+  background: linear-gradient(140deg,#0F5132,#0C3926);
 }
 
 body[data-theme-color="royal"] .top-board,
 body[data-theme-color="royal"] .footer-board {
-  background: linear-gradient(115deg, #173a60, #285a8e);
+  background: linear-gradient(140deg,#173A60,#102B48);
 }
 
 body[data-theme-color="rose"] .top-board,
 body[data-theme-color="rose"] .footer-board {
-  background: linear-gradient(115deg, #7d414b, #b96f79);
+  background: linear-gradient(140deg,#7D414B,#A65F6A);
 }
 
 body[data-theme-color="pista"] .top-board,
 body[data-theme-color="pista"] .footer-board {
-  background: linear-gradient(115deg, #214a35, #357c43);
+  background: linear-gradient(140deg,#2F7135,#214A35);
 }
 
 body[data-theme-color="royal"] .feature-card,
 body[data-theme-color="royal"] .prayer-cell {
-  background: #e5eff9;
-  color: #173a60;
+  color: #173A60;
 }
 
 body[data-theme-color="rose"] .feature-card,
 body[data-theme-color="rose"] .prayer-cell {
-  background: #f8e9e7;
-  color: #7d414b;
+  color: #7D414B;
 }
 
 body[data-theme-color="pista"] .feature-card,
 body[data-theme-color="pista"] .prayer-cell {
-  background: #dff5e1;
-  color: #214a35;
+  color: #214A35;
 }
 
-/* Dark mode from Settings */
+/* Dark mode */
 body.dark-mode {
-  --text: #f2f5e9;
+  --theme-text: #E5EDE7;
+  --theme-card: rgba(25,35,29,.94);
+  background-image:
+    linear-gradient(rgba(12,22,16,.70),rgba(12,22,16,.70)),
+    url("../assets/main-bg.jpg");
 }
 
-body.dark-mode {
-  background-color: #101b16;
-}
-
-body.dark-mode .bismillah-board .board-overlay {
-  background: rgba(20, 37, 27, 0.38);
-}
-
-body.dark-mode .daily-board .board-overlay {
-  background: rgba(17, 32, 24, 0.36);
-}
-
-body.dark-mode .prayer-board .board-overlay {
-  background: rgba(17, 32, 24, 0.34);
+body.dark-mode .home-board .board-overlay {
+  background: rgba(12,22,16,.44);
 }
 
 body.dark-mode .bismillah-board #bismillahMeaning {
-  color: #fff3cc;
+  color: #FFF3CC;
 }
 
 body.dark-mode .arabic-bismillah {
-  color: #f1d28a;
+  color: #F1D28A;
 }
 
 body.dark-mode .prayer-cell,
 body.dark-mode .feature-card {
-  background: #1c3528;
-  color: #f0f4e7;
-  border-color: #526a51;
+  color: #F0F4E7;
+  background: #1C3528;
+  border-color: #526A51;
 }
 
 body.dark-mode .sunrise-cell {
-  border-color: var(--accent);
+  border-color: var(--theme-accent);
 }
 
-body.dark-mode .settings-symbol {
-  color: var(--accent);
-}
-
-/* Narrow screens */
-@media (max-width: 380px) {
-  :root {
-    --page-padding: 5px;
-    --page-gap: 6px;
-    --card-radius: 18px;
-  }
-
-  .top-board,
-  .footer-board {
-    padding: 6px 9px;
-  }
-
-  .daily-board {
-    padding: 6px 9px;
-  }
-
-  .prayer-board {
-    padding: 6px;
-  }
-
-  .prayer-grid {
-    gap: 5px;
-  }
-
-  .prayer-cell {
-    border-radius: 18px;
-  }
-
-  .feature-card {
-    grid-template-columns: minmax(25px, 0.72fr) minmax(0, 1.28fr);
-    padding: 3px;
-    border-radius: 19px;
-  }
-
-  .feature-icon {
-    width: clamp(28px, 9vw, 40px);
-    height: clamp(28px, 9vw, 40px);
-  }
-}
-
-/* Short viewport: keep all content visible */
-@media (max-height: 760px) {
-  :root {
-    --header-height: 52px;
-    --footer-height: 52px;
-    --page-gap: 5px;
+/* Small screens */
+@media (max-width: 360px) {
+  .app-shell {
+    padding-left: 5px;
+    padding-right: 5px;
   }
 
   .home-content {
-    gap: 5px;
-    grid-template-rows:
-      minmax(0, 1.02fr)
-      minmax(0, 1fr)
-      minmax(0, 0.95fr)
-      minmax(0, 1.25fr);
-  }
-
-  .daily-board {
-    padding: 5px 9px;
-  }
-
-  .prayer-board {
-    padding: 6px;
-  }
-
-  .prayer-grid {
-    gap: 5px;
-  }
-
-  .feature-card {
     gap: 3px;
   }
 
-  .feature-icon {
-    width: clamp(27px, 8vw, 42px);
-    height: clamp(27px, 8vw, 42px);
+  .feature-grid {
+    gap: 3px;
   }
 
-  .feature-card span {
-    font-size: clamp(13px, 4vw, 21px);
+  .feature-card {
+    padding: 2px;
+    border-radius: 17px;
+  }
+
+  .feature-icon {
+    width: 26px;
+    height: 26px;
+  }
+
+  .prayer-grid {
+    gap: 4px;
+  }
+
+  .prayer-cell {
+    border-radius: 16px;
   }
 }
 
+/* Short screens */
 @media (max-height: 650px) {
-  :root {
-    --header-height: 46px;
-    --footer-height: 44px;
-    --page-padding: 5px;
-    --page-gap: 4px;
+  .app-shell {
+    grid-template-rows: 48px minmax(0,1fr) 48px;
+    gap: 3px;
   }
 
   .home-content {
-    gap: 4px;
+    gap: 3px;
     grid-template-rows:
-      minmax(0, 0.95fr)
-      minmax(0, 1fr)
-      minmax(0, 0.95fr)
-      minmax(0, 1.2fr);
+      minmax(0,1fr)
+      minmax(0,1fr)
+      minmax(0,.95fr)
+      minmax(0,1.2fr);
   }
 
   .bismillah-decoration {
-    display: none;
+    display: flex;
+    font-size: clamp(15px,4vw,21px);
   }
 
   .arabic-bismillah {
-    font-size: clamp(18px, 5vw, 27px);
+    font-size: clamp(17px,4.8vw,25px);
   }
 
   #bismillahMeaning {
-    font-size: clamp(10px, 3vw, 15px);
+    font-size: clamp(10px,2.8vw,14px);
   }
 
-  .daily-day {
-    font-size: clamp(17px, 5vw, 27px);
-  }
-
-  .clock-time,
-  .countdown-time {
-    font-size: clamp(17px, 5vw, 27px);
-  }
-
-  .current-prayer,
-  .next-prayer {
-    padding: 3px 7px;
+  .daily-board {
+    padding: 4px 8px;
   }
 
   .feature-icon {
-    width: 27px;
-    height: 27px;
+    width: 25px;
+    height: 25px;
   }
 
-  .footer-board p {
-    font-size: 12px;
+  .feature-card span {
+    font-size: clamp(11px,3.4vw,17px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
   }
 }
