@@ -1,3 +1,4 @@
+
 "use strict";
 
 (() => {
@@ -8,9 +9,8 @@
       locale: "bn-BD",
       city: "কলকাতা",
       bismillah: "পরম করুণাময় অসীম দয়ালু আল্লাহর নামে",
-      footer: "আল্লাহর স্মরণেই অন্তর প্রশান্ত হয়।",
-      days: ["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"],
       unit: "সে.",
+      days: ["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"],
       prayers: {
         Fajr: "ফজর",
         Sunrise: "সূর্যোদয়",
@@ -26,16 +26,27 @@
         hadith: "হাদিস",
         qibla: "কিবলা",
         tasbih: "তাসবিহ"
-      }
+      },
+      quotes: [
+        "আল্লাহর স্মরণেই অন্তর প্রশান্ত হয়।",
+        "নিশ্চয়ই আল্লাহ ধৈর্যশীলদের সঙ্গে আছেন।",
+        "আল্লাহর রহমত থেকে নিরাশ হয়ো না।",
+        "নামাজ কায়েম করো এবং আল্লাহকে স্মরণ করো।",
+        "আল্লাহ উত্তম পরিকল্পনাকারী।",
+        "কৃতজ্ঞ হলে আল্লাহ নিয়ামত বাড়িয়ে দেন।",
+        "নিশ্চয়ই কষ্টের সঙ্গে স্বস্তি রয়েছে।",
+        "আল্লাহর ওপর ভরসা করো।",
+        "সৎকাজের প্রতিদান উত্তম।",
+        "আল্লাহ ক্ষমাশীল ও পরম দয়ালু।"
+      ]
     },
 
     en: {
       locale: "en-IN",
       city: "Kolkata",
       bismillah: "In the name of Allah, the Most Compassionate, the Most Merciful",
-      footer: "In the remembrance of Allah, hearts find peace.",
-      days: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
       unit: "°C",
+      days: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
       prayers: {
         Fajr: "Fajr",
         Sunrise: "Sunrise",
@@ -51,16 +62,27 @@
         hadith: "Hadith",
         qibla: "Qibla",
         tasbih: "Tasbih"
-      }
+      },
+      quotes: [
+        "Indeed, in the remembrance of Allah hearts find peace.",
+        "Indeed, Allah is with those who are patient.",
+        "Do not despair of the mercy of Allah.",
+        "Establish prayer and remember Allah.",
+        "Allah is the best of planners.",
+        "If you are grateful, He will increase you.",
+        "Indeed, with hardship comes ease.",
+        "Put your trust in Allah.",
+        "Good deeds bring a good reward.",
+        "Allah is Forgiving and Merciful."
+      ]
     },
 
     hi: {
       locale: "hi-IN-u-nu-deva",
       city: "कोलकाता",
       bismillah: "परम कृपालु, अत्यंत दयावान अल्लाह के नाम से",
-      footer: "अल्लाह के स्मरण से दिल को सुकून मिलता है।",
-      days: ["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"],
       unit: "°से.",
+      days: ["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"],
       prayers: {
         Fajr: "फ़ज्र",
         Sunrise: "सूर्योदय",
@@ -76,7 +98,19 @@
         hadith: "हदीस",
         qibla: "क़िबला",
         tasbih: "तस्बीह"
-      }
+      },
+      quotes: [
+        "अल्लाह के स्मरण से दिलों को सुकून मिलता है।",
+        "निश्चय ही अल्लाह धैर्य रखने वालों के साथ है।",
+        "अल्लाह की रहमत से निराश न हों।",
+        "नमाज़ क़ायम करें और अल्लाह को याद करें।",
+        "अल्लाह सबसे अच्छी योजना बनाने वाला है।",
+        "शुक्र करने पर अल्लाह नेमतें बढ़ाता है।",
+        "निश्चय ही कठिनाई के साथ आसानी है।",
+        "अल्लाह पर भरोसा रखें।",
+        "नेक काम का बदला अच्छा है।",
+        "अल्लाह क्षमाशील और दयालु है।"
+      ]
     }
   };
 
@@ -96,7 +130,7 @@
     Mumbai: { bn: "মুম্বাই", en: "Mumbai", hi: "मुंबई" },
     Chennai: { bn: "চেন্নাই", en: "Chennai", hi: "चेन्नई" },
     Hyderabad: { bn: "হায়দরাবাদ", en: "Hyderabad", hi: "हैदराबाद" },
-    Dhaka: { bn: "ঢাকা", en: "Dhaka", hi: "ढাকা" },
+    Dhaka: { bn: "ঢাকা", en: "Dhaka", hi: "ढाका" },
     London: { bn: "লন্ডন", en: "London", hi: "लंदन" }
   };
 
@@ -107,17 +141,13 @@
   let weatherTemperature = null;
   let locationName = null;
   let lastDate = "";
+  let quoteIndex = 0;
+  let quoteTimer = null;
+  let quoteAnimationTimer = null;
 
-  /*
-   * Feature icon image handling:
-   * If an icon image is missing or cannot load, remove only that image.
-   * The feature card and its translated label remain visible.
-   */
   function hideMissingFeatureIcons() {
     document.querySelectorAll(".feature-icon").forEach((image) => {
-      image.addEventListener("error", () => {
-        image.remove();
-      }, { once: true });
+      image.addEventListener("error", () => image.remove(), { once: true });
 
       if (image.complete && image.naturalWidth === 0) {
         image.remove();
@@ -156,6 +186,16 @@
     return aliases[raw] || "classic";
   }
 
+  function t() {
+    return LANG[language] || LANG.bn;
+  }
+
+  function localizeCity(name) {
+    if (!name) return t().city;
+    const mapped = CITY_NAMES[name];
+    return mapped ? (mapped[language] || mapped.en) : name;
+  }
+
   function applySettings() {
     const settings = readSettings();
     language = getLanguage(settings);
@@ -178,30 +218,23 @@
     });
 
     if (snapshot !== settingsSnapshot) {
+      const languageChanged = settingsSnapshot !== "" &&
+        JSON.parse(settingsSnapshot).language !== language;
+
       settingsSnapshot = snapshot;
       updateLanguage();
+
+      if (languageChanged) {
+        quoteIndex = 0;
+        showQuote();
+      }
     }
-  }
-
-  function t() {
-    return LANG[language] || LANG.bn;
-  }
-
-  function localizeCity(name) {
-    if (!name) return t().city;
-
-    const mapped = CITY_NAMES[name];
-
-    if (mapped) return mapped[language] || mapped.en;
-
-    return name;
   }
 
   function updateLanguage() {
     const strings = t();
 
     $("#bismillahMeaning").textContent = strings.bismillah;
-    $("#footerMessage").textContent = strings.footer;
     $("#temperatureUnit").textContent = strings.unit;
 
     document.querySelectorAll("[data-prayer-label]").forEach((element) => {
@@ -220,14 +253,14 @@
 
     updateClockAndDate();
 
-    if (weatherTemperature !== null) {
-      renderTemperature();
-    }
+    if (weatherTemperature !== null) renderTemperature();
 
     if (prayerTimes) {
       renderPrayerTimes();
       updatePrayerStatus();
     }
+
+    showQuote();
   }
 
   function formatNumber(value, minimumDigits = 2) {
@@ -299,10 +332,7 @@
 
     Object.entries(PRAYER_IDS).forEach(([key, id]) => {
       const element = document.getElementById(id);
-
-      if (element) {
-        element.textContent = formatPrayerTime(prayerTimes[key]);
-      }
+      if (element) element.textContent = formatPrayerTime(prayerTimes[key]);
     });
   }
 
@@ -310,12 +340,8 @@
     if (!prayerTimes) return null;
 
     const order = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
-
     const entries = order
-      .map((key) => ({
-        key,
-        minutes: parseTime(prayerTimes[key])
-      }))
+      .map((key) => ({ key, minutes: parseTime(prayerTimes[key]) }))
       .filter((item) => item.minutes !== null);
 
     if (!entries.length) return null;
@@ -354,11 +380,28 @@
   }
 
   function updatePrayerStatus() {
-    const state = prayerState();
-    if (!state) return;
+    const currentPrayer = $("#currentPrayer");
+    const nextPrayer = $("#nextPrayer");
+    const countdown = $("#countdown");
 
-    $("#currentPrayer").textContent = t().prayers[state.current.key];
-    $("#nextPrayer").textContent = t().prayers[state.next.key];
+    if (!prayerTimes) {
+      currentPrayer.textContent = "--";
+      nextPrayer.textContent = "--";
+      countdown.textContent = "--:--:--";
+      return;
+    }
+
+    const state = prayerState();
+
+    if (!state) {
+      currentPrayer.textContent = "--";
+      nextPrayer.textContent = "--";
+      countdown.textContent = "--:--:--";
+      return;
+    }
+
+    currentPrayer.textContent = t().prayers[state.current.key];
+    nextPrayer.textContent = t().prayers[state.next.key];
 
     const secondsLeft = Math.max(
       0,
@@ -369,7 +412,7 @@
     const minutes = Math.floor((secondsLeft % 3600) / 60);
     const seconds = secondsLeft % 60;
 
-    $("#countdown").textContent = [
+    countdown.textContent = [
       formatNumber(hours),
       formatNumber(minutes),
       formatNumber(seconds)
@@ -416,7 +459,9 @@
     if ([1, 2].includes(code)) return "🌤️";
     if (code === 3) return "☁️";
     if ([45, 48].includes(code)) return "🌫️";
-    if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) return "🌧️";
+    if ([51, 53, 55, 56, 57].includes(code)) return "🌦️";
+    if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return "🌧️";
+    if ([71, 73, 75, 77, 85, 86].includes(code)) return "🌨️";
     if ([95, 96, 99].includes(code)) return "⛈️";
     return "🌤️";
   }
@@ -437,7 +482,6 @@
 
       weatherTemperature = Math.round(data.current.temperature_2m);
       $("#weatherIcon").textContent = weatherSymbol(data.current.weather_code);
-
       renderTemperature();
     } catch (error) {
       console.warn("IBADAT: weather unavailable.", error);
@@ -496,10 +540,7 @@
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        loadAll(
-          position.coords.latitude,
-          position.coords.longitude
-        );
+        loadAll(position.coords.latitude, position.coords.longitude);
       },
       () => {
         loadAll(22.5726, 88.3639);
@@ -524,6 +565,38 @@
     window.location.href = "html/settings.html";
   }
 
+  /* Show one localized quote and change it every 30 seconds */
+  function showQuote() {
+    const message = $("#footerMessage");
+    const windowElement = document.querySelector(".footer-message-window");
+    if (!message || !windowElement) return;
+
+    const quotes = t().quotes;
+    const quote = quotes[quoteIndex % quotes.length];
+
+    if (quoteTimer) window.clearTimeout(quoteTimer);
+    if (quoteAnimationTimer) window.clearTimeout(quoteAnimationTimer);
+
+    message.style.animation = "none";
+    message.textContent = quote;
+
+    /* Allow the browser to measure the current text before animating */
+    requestAnimationFrame(() => {
+      const availableWidth = windowElement.clientWidth;
+      const textWidth = message.scrollWidth;
+      const distance = availableWidth + textWidth;
+      const duration = Math.max(14, distance / 24);
+
+      message.style.setProperty("--message-duration", `${duration}s`);
+      message.style.animation = "footer-message-scroll var(--message-duration) linear infinite";
+    });
+
+    quoteTimer = window.setTimeout(() => {
+      quoteIndex = (quoteIndex + 1) % quotes.length;
+      showQuote();
+    }, 30000);
+  }
+
   function init() {
     hideMissingFeatureIcons();
     applySettings();
@@ -531,6 +604,7 @@
     $("#sunriseSettings").addEventListener("click", openSettings);
 
     updateClockAndDate();
+    showQuote();
     loadLocation();
 
     window.setInterval(() => {
