@@ -271,27 +271,33 @@ a.home-board:active {
   line-height: 1.35;
 }
 
-/* Status board: six information items, no separate boxes */
+/* Status board: six items on one board, without dividers */
 .daily-board {
-  padding: 8px 10px;
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: repeat(3, minmax(0, 1fr));
-  align-items: stretch;
+  padding: 8px 10px;
   color: #10452F;
+}
+
+.daily-board > .board-overlay {
+  grid-column: 1;
+  grid-row: 1 / 4;
+  z-index: -1;
 }
 
 .daily-top,
 .daily-middle,
 .daily-bottom {
+  grid-column: 1;
   width: 100%;
-  height: 100%;
   min-width: 0;
   min-height: 0;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
-  justify-items: center;
+  justify-items: stretch;
   column-gap: 0;
 }
 
@@ -316,9 +322,10 @@ a.home-board:active {
   width: 100%;
   min-width: 0;
   max-width: 100%;
+  margin: 0;
   align-self: center;
-  justify-self: center;
-  font-size: clamp(18px, 5.2vw, 27px);
+  justify-self: stretch;
+  font-size: clamp(17px, 4.8vw, 25px);
   font-weight: 900;
   line-height: 1.15;
 }
@@ -347,8 +354,8 @@ a.home-board:active {
 
 .clock-time,
 .countdown-time {
-  overflow: hidden;
   white-space: nowrap;
+  overflow: hidden;
 }
 
 .countdown-time {
@@ -367,7 +374,6 @@ a.home-board:active {
   border: 0;
   border-radius: 0;
   text-align: center;
-  text-shadow: none;
   white-space: nowrap;
   overflow: hidden;
 }
@@ -381,12 +387,11 @@ a.home-board:active {
 }
 
 .next-arrow {
-  color: #B68A31;
   flex: 0 0 auto;
+  color: #B68A31;
   font-size: .82em;
 }
 
-/* Keep all six status items readable on small screens */
 @media (max-width: 360px) {
   .daily-board {
     padding: 5px 3px;
@@ -398,19 +403,13 @@ a.home-board:active {
   .countdown-time,
   .current-prayer,
   .next-prayer {
-    font-size: clamp(15px, 4.5vw, 20px);
-  }
-
-  .current-prayer,
-  .next-prayer {
-    gap: 3px;
+    font-size: clamp(15px, 4.4vw, 20px);
   }
 }
 
-/* Short screens */
 @media (max-height: 650px) {
   .daily-board {
-    padding: 4px 4px;
+    padding: 4px;
   }
 
   .daily-day,
@@ -419,7 +418,7 @@ a.home-board:active {
   .countdown-time,
   .current-prayer,
   .next-prayer {
-    font-size: clamp(15px, 4.5vw, 22px);
+    font-size: clamp(15px, 4.4vw, 21px);
   }
 }
 
