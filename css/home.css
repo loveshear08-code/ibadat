@@ -200,10 +200,14 @@ a.home-board:active {
 /* Background images */
 .bismillah-board {
   background-image: url("../assets/image/home-bg1.png");
+  border: 1px solid #C6A34B;
+  border-radius: 22px;
 }
 
 .daily-board {
   background-image: url("../assets/image/home-bg2.png");
+  border: 1px solid #C6A34B;
+  border-radius: 22px;
 }
 
 .prayer-board {
@@ -273,7 +277,7 @@ a.home-board:active {
   line-height: 1.35;
 }
 
-/* Daily board: three rows, two balanced columns */
+/* Daily board: three rows, two equal halves */
 .daily-board {
   padding: 8px 15px;
   display: grid;
@@ -306,7 +310,7 @@ a.home-board:active {
   grid-row: 3;
 }
 
-/* All six daily items use the same font size and weight */
+/* Same font size and weight for all six status items */
 .daily-day,
 .weather-info,
 .clock-time,
@@ -314,18 +318,19 @@ a.home-board:active {
 .current-prayer,
 .next-prayer {
   min-width: 0;
-  font-size: clamp(15px,4.2vw,21px);
+  font-size: clamp(17px,4.8vw,24px);
   font-weight: 900;
   line-height: 1.2;
 }
 
+/* Left half: each item centered within the left column */
 .daily-day {
   width: 100%;
-  min-width: 0;
   justify-self: stretch;
   text-align: center;
 }
 
+/* Right half: weather centered within the right column */
 .weather-info {
   width: 100%;
   min-width: 0;
@@ -342,6 +347,7 @@ a.home-board:active {
   font-size: 1em;
 }
 
+/* Clock and countdown */
 .clock-time,
 .countdown-time {
   width: 100%;
@@ -362,8 +368,10 @@ a.home-board:active {
   color: #B52D25;
 }
 
+/* Current and next prayer: centered groups, no inner border */
 .current-prayer,
 .next-prayer {
+  width: 100%;
   min-width: 0;
   display: flex;
   align-items: center;
@@ -492,11 +500,8 @@ a.home-board:active {
 }
 
 /*
-  Icon image:
-  - no background, frame or decorative container
-  - no forced square shape
-  - preserve the image's original aspect ratio
-  - scale down proportionally to fit beside the label
+  Icons remain transparent and keep their original proportions.
+  No decorative background, frame, or forced square.
 */
 .feature-icon {
   display: block;
@@ -707,7 +712,7 @@ body.dark-mode .next-prayer {
   .countdown-time,
   .current-prayer,
   .next-prayer {
-    font-size: 14px;
+    font-size: clamp(17px,4.8vw,24px);
   }
 
   .current-prayer,
@@ -761,7 +766,7 @@ body.dark-mode .next-prayer {
   .countdown-time,
   .current-prayer,
   .next-prayer {
-    font-size: 14px;
+    font-size: clamp(17px,4.8vw,24px);
   }
 
   .feature-icon {
