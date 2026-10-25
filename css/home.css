@@ -199,19 +199,19 @@ a.home-board:active {
 
 /* Background images: paths are relative to css/home.css */
 .bismillah-board {
-  background-image: url("../assets/image/home-bg1.png");
+  background-image: url("../assets/images/home-bg1.png");
   border: 1px solid #C6A34B;
   border-radius: 22px;
 }
 
 .daily-board {
-  background-image: url("../assets/image/home-bg2.png");
+  background-image: url("../assets/images/home-bg2.png");
   border: 1px solid #C6A34B;
   border-radius: 22px;
 }
 
 .prayer-board {
-  background-image: url("../assets/image/home-bg3.png");
+  background-image: url("../assets/images/home-bg3.png");
   padding: 7px;
 }
 
