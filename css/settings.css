@@ -1,6 +1,7 @@
+
 /* =====================================================
-   IBADAT SETTINGS — FINAL RESPONSIVE DESIGN
-   Main background: assets/main-bg.jpg
+   IBADAT SETTINGS — RESPONSIVE DESIGN
+   Main background: ../assets/main-bg.jpg
 ===================================================== */
 
 :root {
@@ -20,6 +21,12 @@
 
     --bar-height: 62px;
     --page-gap: 8px;
+
+    /* Default theme: Classic Green */
+    --theme-primary: #1B7F4B;
+    --theme-soft: #E8F5E9;
+    --theme-accent: #F2C94C;
+    --theme-deep: #0F5132;
 }
 
 /* RESET */
@@ -52,6 +59,7 @@ body {
 
     overflow: hidden;
     color: var(--text);
+
     font-family:
         "Noto Sans Bengali",
         "Noto Sans Devanagari",
@@ -59,7 +67,6 @@ body {
         Arial,
         sans-serif;
 
-    /* Main background with cream-white overlay */
     background:
         linear-gradient(
             rgba(255, 253, 245, 0.76),
@@ -70,7 +77,7 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
-/* TOP AND BOTTOM BARS */
+/* TOP AND BOTTOM BOARDS — PRESERVED */
 
 .top-board,
 .bottom-board {
@@ -89,6 +96,7 @@ body {
     padding: 6px 12px;
 
     color: var(--gold-light);
+
     background: linear-gradient(
         140deg,
         var(--deep-green),
@@ -102,8 +110,6 @@ body {
         0 3px 9px rgba(30, 49, 28, 0.14),
         inset 0 1px 0 rgba(255, 255, 255, 0.10);
 }
-
-/* TOP TITLE */
 
 #settingsTitle {
     min-width: 0;
@@ -150,6 +156,7 @@ body {
     -webkit-overflow-scrolling: touch;
 
     padding: 2px 1px 4px;
+
     scrollbar-width: thin;
     scrollbar-color: rgba(18, 76, 50, 0.28) transparent;
 }
@@ -219,7 +226,7 @@ body {
     font-size: 15px;
 }
 
-/* THEME */
+/* DARK MODE TOGGLE */
 
 .theme-label {
     min-height: 34px;
@@ -245,7 +252,117 @@ body {
     cursor: pointer;
 }
 
-/* AZAN LIST */
+/* THEME COLOR PICKER */
+
+.theme-color-card {
+    padding: 10px;
+}
+
+.theme-color-card h2 {
+    margin-bottom: 4px;
+}
+
+.theme-color-card p {
+    margin-bottom: 8px;
+}
+
+.theme-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.theme-option {
+    position: relative;
+    min-width: 0;
+    min-height: 72px;
+    padding: 9px;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 20px;
+    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: 5px;
+    row-gap: 6px;
+
+    text-align: left;
+    font: inherit;
+    color: var(--text);
+    background: var(--input-bg);
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+.theme-option[aria-checked="true"] {
+    border: 2px solid var(--theme-primary);
+    padding: 8px;
+
+    background: var(--theme-soft);
+}
+
+.theme-swatches {
+    min-width: 0;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.theme-swatches span {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 17px;
+
+    background: var(--swatch);
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    border-radius: 5px;
+}
+
+.theme-option-name {
+    grid-column: 1;
+    min-width: 0;
+
+    font-size: 12px;
+    font-weight: 650;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+.theme-check {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+
+    width: 20px;
+    height: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: transparent;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.theme-option[aria-checked="true"] .theme-check {
+    color: #FFFFFF;
+    background: var(--theme-primary);
+    border-color: var(--theme-primary);
+}
+
+.theme-option:focus-visible {
+    outline: 2px solid var(--theme-accent);
+    outline-offset: 2px;
+}
+
+/* AZAN SETTINGS */
 
 .azan-list {
     display: flex;
@@ -382,6 +499,57 @@ input:focus-visible {
     overflow-wrap: anywhere;
 }
 
+/* THEME PALETTES */
+
+body[data-color-theme="classic"] {
+    --theme-primary: #1B7F4B;
+    --theme-soft: #E8F5E9;
+    --theme-accent: #F2C94C;
+    --theme-deep: #0F5132;
+}
+
+body[data-color-theme="royal"] {
+    --theme-primary: #285A8E;
+    --theme-soft: #E5EFF9;
+    --theme-accent: #E8BD55;
+    --theme-deep: #173A60;
+}
+
+body[data-color-theme="rose"] {
+    --theme-primary: #B96F79;
+    --theme-soft: #F8E9E7;
+    --theme-accent: #D9B875;
+    --theme-deep: #7D414B;
+}
+
+body[data-color-theme="pista"] {
+    --theme-primary: #4CAF50;
+    --theme-soft: #DFF5E1;
+    --theme-accent: #A7D129;
+    --theme-deep: #2F7135;
+}
+
+/* Apply selected palette to shared controls */
+
+body[data-color-theme] #saveBtn,
+body[data-color-theme] .play-button {
+    background: var(--theme-primary);
+}
+
+body[data-color-theme] #darkMode {
+    accent-color: var(--theme-primary);
+}
+
+body[data-color-theme] .theme-option[aria-checked="true"] {
+    border-color: var(--theme-primary);
+    background: var(--theme-soft);
+}
+
+body[data-color-theme] .theme-option[aria-checked="true"] .theme-check {
+    background: var(--theme-primary);
+    border-color: var(--theme-primary);
+}
+
 /* DARK MODE */
 
 body.dark-mode {
@@ -392,6 +560,7 @@ body.dark-mode {
     --border: #405744;
     --pistachio: #263B29;
     --cream: #F8F6F0;
+
     --deep-green: #124C32;
     --deep-green-dark: #092E1E;
 
@@ -412,6 +581,7 @@ body.dark-mode .bottom-board {
         #124C32,
         #092E1E
     );
+
     border-color: var(--gold);
 }
 
@@ -447,14 +617,26 @@ body.dark-mode select {
     color-scheme: dark;
 }
 
-body.dark-mode #darkMode {
-    accent-color: #CFE8C8;
+body.dark-mode .theme-option {
+    color: var(--text);
+    background: #263529;
+    border-color: #405744;
+}
+
+body.dark-mode .theme-option[aria-checked="true"] {
+    background: #263B29;
+    border-color: var(--theme-accent);
+}
+
+body.dark-mode .theme-option[aria-checked="true"] .theme-check {
+    color: #FFFFFF;
+    background: var(--theme-primary);
+    border-color: var(--theme-primary);
 }
 
 body.dark-mode .play-button,
 body.dark-mode #saveBtn {
-    color: var(--cream);
-    background: var(--primary);
+    color: #FFFFFF;
 }
 
 /* SMALL HEIGHTS */
@@ -487,6 +669,37 @@ body.dark-mode #saveBtn {
 
     .content {
         gap: 6px;
+    }
+
+    .theme-color-card {
+        padding: 8px;
+    }
+
+    .theme-options {
+        gap: 5px;
+    }
+
+    .theme-option {
+        min-height: 58px;
+        padding: 6px;
+        row-gap: 4px;
+    }
+
+    .theme-option[aria-checked="true"] {
+        padding: 5px;
+    }
+
+    .theme-swatches span {
+        height: 13px;
+    }
+
+    .theme-option-name {
+        font-size: 11px;
+    }
+
+    .theme-check {
+        width: 18px;
+        height: 18px;
     }
 
     .azan-list {
