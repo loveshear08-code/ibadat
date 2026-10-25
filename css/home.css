@@ -273,9 +273,9 @@ a.home-board:active {
   line-height: 1.35;
 }
 
-/* Daily board: three balanced rows */
+/* Daily board: balanced three-row layout */
 .daily-board {
-  padding: 9px 14px;
+  padding: 8px 15px;
   display: grid;
   grid-template-rows: repeat(3,minmax(0,1fr));
   align-items: stretch;
@@ -291,7 +291,7 @@ a.home-board:active {
   display: grid;
   grid-template-columns: minmax(0,1fr) minmax(0,1fr);
   align-items: center;
-  column-gap: 12px;
+  column-gap: clamp(10px,3vw,18px);
 }
 
 .daily-top {
@@ -306,43 +306,44 @@ a.home-board:active {
   grid-row: 3;
 }
 
-.daily-day {
+/* All six daily-board text items use the same bold sizing */
+.daily-day,
+.weather-info,
+.clock-time,
+.countdown-time,
+.current-prayer,
+.next-prayer {
   min-width: 0;
-  justify-self: start;
-  text-align: left;
   font-size: clamp(15px,4.2vw,21px);
   font-weight: 900;
   line-height: 1.2;
 }
 
+.daily-day {
+  justify-self: start;
+  text-align: left;
+}
+
 .weather-info {
-  min-width: 0;
   justify-self: end;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 4px;
   white-space: nowrap;
-  font-size: clamp(15px,4.2vw,21px);
-  font-weight: 900;
-  line-height: 1.2;
 }
 
 .weather-icon {
   flex-shrink: 0;
-  font-size: 1.15em;
+  font-size: 1em;
 }
 
 .clock-time,
 .countdown-time {
-  min-width: 0;
   max-width: 100%;
   overflow: hidden;
   white-space: nowrap;
-  font-size: clamp(15px,4.2vw,21px);
-  font-weight: 900;
   font-variant-numeric: tabular-nums;
-  line-height: 1.2;
 }
 
 .clock-time {
@@ -358,43 +359,40 @@ a.home-board:active {
 
 .current-prayer,
 .next-prayer {
-  min-width: 0;
-  max-width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 6px;
-  padding: 4px 10px;
-  color: white;
-  background: rgba(16,48,34,.34);
-  border: 1px solid rgba(255,255,255,.8);
-  border-radius: 15px;
-  font-size: clamp(15px,4.2vw,21px);
-  font-weight: 900;
-  text-shadow: 0 1px 3px rgba(0,0,0,.35);
+  padding: 0;
+  color: #10452F;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  text-shadow: none;
   white-space: nowrap;
-  line-height: 1.2;
 }
 
 .current-prayer {
   justify-self: start;
+  text-align: left;
 }
 
 .next-prayer {
   justify-self: end;
+  text-align: right;
 }
 
 .prayer-dot {
-  width: 12px;
-  height: 12px;
-  flex-shrink: 0;
+  width: .55em;
+  height: .55em;
+  flex: 0 0 .55em;
   border-radius: 50%;
   background: #20BD48;
 }
 
 .next-arrow {
-  color: #F4C928;
+  color: #B68A31;
   flex-shrink: 0;
+  font-size: .85em;
 }
 
 /* Prayer times grid */
@@ -474,7 +472,6 @@ a.home-board:active {
   align-items: center;
   justify-items: center;
   gap: 5px;
-  overflow: hidden;
   color: var(--theme-deep);
   background: var(--theme-soft);
   border: 1.5px solid #C7DBA1;
@@ -487,15 +484,11 @@ a.home-board:active {
   transform: scale(.98);
 }
 
-/*
-  Icon sizing follows the label's text height.
-  The image keeps its original aspect ratio and is never cropped.
-  No icon background, border or extra frame is applied.
-*/
+/* Icons retain their own aspect ratio without a crop or frame */
 .feature-icon {
   display: block;
   width: auto;
-  height: 1.2em;
+  height: 1em;
   max-width: 100%;
   min-width: 0;
   object-fit: contain;
@@ -639,6 +632,15 @@ body.dark-mode .sunrise-cell {
   border-color: var(--theme-accent);
 }
 
+body.dark-mode .daily-board {
+  color: #F0F4E7;
+}
+
+body.dark-mode .current-prayer,
+body.dark-mode .next-prayer {
+  color: #F0F4E7;
+}
+
 /* Small screens */
 @media (max-width: 360px) {
   .app-shell {
@@ -661,7 +663,7 @@ body.dark-mode .sunrise-cell {
   }
 
   .feature-icon {
-    height: 1.2em;
+    height: 1em;
     width: auto;
     max-width: 100%;
   }
@@ -696,7 +698,6 @@ body.dark-mode .sunrise-cell {
   .current-prayer,
   .next-prayer {
     gap: 4px;
-    padding: 3px 6px;
   }
 
   .date-area,
@@ -749,7 +750,7 @@ body.dark-mode .sunrise-cell {
   }
 
   .feature-icon {
-    height: 1.2em;
+    height: 1em;
     width: auto;
     max-width: 100%;
   }
