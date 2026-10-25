@@ -197,7 +197,7 @@ a.home-board:active {
   pointer-events: none;
 }
 
-/* Background images */
+/* Background images: paths are relative to css/home.css */
 .bismillah-board {
   background-image: url("../assets/image/home-bg1.png");
   border: 1px solid #C6A34B;
@@ -277,11 +277,12 @@ a.home-board:active {
   line-height: 1.35;
 }
 
-/* Daily board: three rows, two balanced halves */
+/* Daily status board: three full-width rows, two equal halves */
 .daily-board {
-  padding: 9px 12px;
+  padding: 7px 8px;
   display: grid;
-  grid-template-rows: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0,1fr);
+  grid-template-rows: repeat(3,minmax(0,1fr));
   align-items: stretch;
   color: #10452F;
 }
@@ -292,10 +293,12 @@ a.home-board:active {
   width: 100%;
   min-width: 0;
   min-height: 0;
+  grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr);
   align-items: center;
-  column-gap: 8px;
+  justify-items: center;
+  column-gap: 0;
 }
 
 .daily-top {
@@ -310,7 +313,7 @@ a.home-board:active {
   grid-row: 3;
 }
 
-/* All six status items: identical size and boldness */
+/* Six items use the same large, bold type */
 .daily-day,
 .weather-info,
 .clock-time,
@@ -321,49 +324,49 @@ a.home-board:active {
   min-width: 0;
   max-width: 100%;
   justify-self: stretch;
-  font-size: clamp(17px, 4.8vw, 23px);
+  font-size: clamp(21px,6vw,30px);
   font-weight: 900;
-  line-height: 1.15;
+  line-height: 1.12;
 }
 
-/* Row 1: day | weather */
-.daily-day {
+/* Each item is centered inside its own half */
+.daily-day,
+.clock-time,
+.countdown-time {
   text-align: center;
+  font-variant-numeric: tabular-nums;
 }
 
 .weather-info {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 3px;
   white-space: nowrap;
 }
 
 .weather-icon {
-  flex: 0 0 auto;
+  flex: 0 1 auto;
+  min-width: 0;
   font-size: 1em;
 }
 
-/* Row 2: current time | countdown */
 .clock-time,
 .countdown-time {
   overflow: hidden;
   white-space: nowrap;
-  text-align: center;
-  font-variant-numeric: tabular-nums;
 }
 
 .countdown-time {
   color: #B52D25;
 }
 
-/* Row 3: current prayer | next prayer */
 .current-prayer,
 .next-prayer {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 4px;
   padding: 0;
   color: #10452F;
   background: transparent;
@@ -375,16 +378,16 @@ a.home-board:active {
 }
 
 .prayer-dot {
-  width: .48em;
-  height: .48em;
-  flex: 0 0 .48em;
+  width: .42em;
+  height: .42em;
+  flex: 0 0 .42em;
   border-radius: 50%;
   background: #20BD48;
 }
 
 .next-arrow {
   color: #B68A31;
-  flex: 0 0 auto;
+  flex: 0 1 auto;
   font-size: .82em;
 }
 
@@ -677,13 +680,7 @@ body.dark-mode .next-prayer {
   }
 
   .daily-board {
-    padding: 7px 9px;
-  }
-
-  .daily-top,
-  .daily-middle,
-  .daily-bottom {
-    column-gap: 7px;
+    padding: 5px 4px;
   }
 
   .daily-day,
@@ -692,12 +689,12 @@ body.dark-mode .next-prayer {
   .countdown-time,
   .current-prayer,
   .next-prayer {
-    font-size: clamp(17px,4.8vw,24px);
+    font-size: clamp(19px,5.7vw,25px);
   }
 
   .current-prayer,
   .next-prayer {
-    gap: 4px;
+    gap: 3px;
   }
 
   .date-area,
@@ -737,7 +734,7 @@ body.dark-mode .next-prayer {
   }
 
   .daily-board {
-    padding: 4px 8px;
+    padding: 4px 5px;
   }
 
   .daily-day,
@@ -746,7 +743,7 @@ body.dark-mode .next-prayer {
   .countdown-time,
   .current-prayer,
   .next-prayer {
-    font-size: clamp(17px,4.8vw,24px);
+    font-size: clamp(19px,5.7vw,25px);
   }
 
   .feature-icon {
