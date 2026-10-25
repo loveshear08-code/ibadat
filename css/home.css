@@ -277,9 +277,9 @@ a.home-board:active {
   line-height: 1.35;
 }
 
-/* Daily board: three rows, two equal columns */
+/* Daily board: three rows, two balanced halves */
 .daily-board {
-  padding: 8px 12px;
+  padding: 9px 12px;
   display: grid;
   grid-template-rows: repeat(3, minmax(0, 1fr));
   align-items: stretch;
@@ -295,7 +295,7 @@ a.home-board:active {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
-  column-gap: 6px;
+  column-gap: 8px;
 }
 
 .daily-top {
@@ -310,7 +310,7 @@ a.home-board:active {
   grid-row: 3;
 }
 
-/* All six items: same font size, boldness and line height */
+/* All six status items: identical size and boldness */
 .daily-day,
 .weather-info,
 .clock-time,
@@ -319,13 +319,14 @@ a.home-board:active {
 .next-prayer {
   width: 100%;
   min-width: 0;
+  max-width: 100%;
   justify-self: stretch;
-  font-size: clamp(16px, 4.3vw, 21px);
+  font-size: clamp(17px, 4.8vw, 23px);
   font-weight: 900;
-  line-height: 1.2;
+  line-height: 1.15;
 }
 
-/* Row 1: day and weather */
+/* Row 1: day | weather */
 .daily-day {
   text-align: center;
 }
@@ -334,19 +335,18 @@ a.home-board:active {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: 4px;
   white-space: nowrap;
 }
 
 .weather-icon {
-  flex-shrink: 0;
+  flex: 0 0 auto;
   font-size: 1em;
 }
 
-/* Row 2: current time and countdown */
+/* Row 2: current time | countdown */
 .clock-time,
 .countdown-time {
-  max-width: 100%;
   overflow: hidden;
   white-space: nowrap;
   text-align: center;
@@ -357,13 +357,13 @@ a.home-board:active {
   color: #B52D25;
 }
 
-/* Row 3: current prayer and next prayer */
+/* Row 3: current prayer | next prayer */
 .current-prayer,
 .next-prayer {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 5px;
   padding: 0;
   color: #10452F;
   background: transparent;
@@ -384,7 +384,7 @@ a.home-board:active {
 
 .next-arrow {
   color: #B68A31;
-  flex-shrink: 0;
+  flex: 0 0 auto;
   font-size: .82em;
 }
 
