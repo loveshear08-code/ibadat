@@ -199,15 +199,15 @@ a.home-board:active {
 
 /* Background images */
 .bismillah-board {
-  background-image: url("../assets/image/home-bg-1.png");
+  background-image: url("../assets/image/home-bg1.png");
 }
 
 .daily-board {
-  background-image: url("../assets/image/home-bg-2.png");
+  background-image: url("../assets/image/home-bg2.png");
 }
 
 .prayer-board {
-  background-image: url("../assets/image/home-bg-3.png");
+  background-image: url("../assets/image/home-bg3.png");
   padding: 7px;
 }
 
@@ -273,12 +273,12 @@ a.home-board:active {
   line-height: 1.35;
 }
 
-/* Daily board: same positions as reference */
+/* Daily board: balanced three-row layout */
 .daily-board {
-  padding: 7px 12px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  padding: 10px 16px;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  align-items: stretch;
   color: #10452F;
 }
 
@@ -287,43 +287,43 @@ a.home-board:active {
 .daily-bottom {
   width: 100%;
   min-width: 0;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr);
   align-items: center;
-  justify-content: space-between;
-  gap: 7px;
+  column-gap: 12px;
 }
 
-.daily-top,
-.daily-bottom {
-  flex: 0 0 auto;
+.daily-top {
+  grid-row: 1;
 }
 
 .daily-middle {
-  flex: 1 1 auto;
-  align-items: center;
+  grid-row: 2;
 }
 
-.daily-day,
-.weather-info,
-.clock-time,
-.countdown-time,
-.current-prayer,
-.next-prayer {
-  font-size: clamp(15px,4.2vw,21px);
-  font-weight: 900;
+.daily-bottom {
+  grid-row: 3;
 }
 
 .daily-day {
   min-width: 0;
+  justify-self: start;
+  text-align: left;
+  font-size: clamp(15px,4.2vw,21px);
+  font-weight: 900;
   line-height: 1.2;
 }
 
 .weather-info {
   min-width: 0;
+  justify-self: end;
   display: flex;
   align-items: center;
-  gap: 3px;
+  justify-content: flex-end;
+  gap: 4px;
   white-space: nowrap;
+  font-size: clamp(15px,4.2vw,21px);
+  font-weight: 900;
 }
 
 .weather-icon {
@@ -331,25 +331,25 @@ a.home-board:active {
   font-size: 1.15em;
 }
 
-.daily-middle {
-  justify-content: space-between;
-}
-
 .clock-time,
 .countdown-time {
   min-width: 0;
-  max-width: 49%;
+  max-width: 100%;
   overflow: hidden;
   white-space: nowrap;
+  font-size: clamp(15px,4.2vw,21px);
+  font-weight: 900;
   font-variant-numeric: tabular-nums;
   line-height: 1.2;
 }
 
 .clock-time {
+  justify-self: start;
   text-align: left;
 }
 
 .countdown-time {
+  justify-self: end;
   color: #B52D25;
   text-align: right;
 }
@@ -357,7 +357,7 @@ a.home-board:active {
 .current-prayer,
 .next-prayer {
   min-width: 0;
-  max-width: 48%;
+  max-width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -367,8 +367,18 @@ a.home-board:active {
   background: rgba(16,48,34,.34);
   border: 1px solid rgba(255,255,255,.8);
   border-radius: 15px;
+  font-size: clamp(15px,4.2vw,21px);
+  font-weight: 900;
   text-shadow: 0 1px 3px rgba(0,0,0,.35);
   white-space: nowrap;
+}
+
+.current-prayer {
+  justify-self: start;
+}
+
+.next-prayer {
+  justify-self: end;
 }
 
 .prayer-dot {
