@@ -1,3 +1,4 @@
+
 :root {
   --deep-green: #124C32;
   --deep-green-dark: #0C3926;
@@ -28,6 +29,7 @@ body {
   min-height: 0;
   margin: 0;
   overflow: hidden;
+  overscroll-behavior: none;
 }
 
 body {
@@ -40,10 +42,7 @@ body {
     sans-serif;
 
   background:
-    linear-gradient(
-      rgba(255,253,245,.48),
-      rgba(255,253,245,.48)
-    ),
+    linear-gradient(rgba(255,253,245,.48),rgba(255,253,245,.48)),
     url("../assets/main-bg.jpg") center / cover no-repeat fixed;
 }
 
@@ -67,7 +66,6 @@ a {
   overflow: hidden;
 }
 
-/* Header and footer */
 .top-board,
 .footer-board {
   width: 100%;
@@ -150,7 +148,7 @@ a {
   text-overflow: ellipsis;
 }
 
-/* Main page layout */
+/* Main layout: header and footer stay fixed; middle fits remaining space */
 .home-content {
   min-width: 0;
   min-height: 0;
@@ -197,7 +195,7 @@ a.home-board:active {
   pointer-events: none;
 }
 
-/* Background images: paths are relative to css/home.css */
+/* Image paths intentionally preserved */
 .bismillah-board {
   background-image: url("../assets/images/home-bg1.png");
   border: 1px solid #C6A34B;
@@ -256,10 +254,6 @@ a.home-board:active {
   transform: scaleX(1);
 }
 
-.decoration-diamond {
-  transform: none;
-}
-
 .arabic-bismillah {
   max-width: 100%;
   color: #8A681D;
@@ -277,9 +271,9 @@ a.home-board:active {
   line-height: 1.35;
 }
 
-/* Daily status board: three full-width rows, two equal halves */
+/* Status board: equal-height rows and equal-width halves */
 .daily-board {
-  padding: 7px 8px;
+  padding: 4px 6px;
   display: grid;
   grid-template-columns: minmax(0,1fr);
   grid-template-rows: repeat(3,minmax(0,1fr));
@@ -291,13 +285,14 @@ a.home-board:active {
 .daily-middle,
 .daily-bottom {
   width: 100%;
+  height: 100%;
   min-width: 0;
   min-height: 0;
-  grid-column: 1 / -1;
+  grid-column: 1;
   display: grid;
   grid-template-columns: minmax(0,1fr) minmax(0,1fr);
   align-items: center;
-  justify-items: center;
+  justify-items: stretch;
   column-gap: 0;
 }
 
@@ -313,7 +308,6 @@ a.home-board:active {
   grid-row: 3;
 }
 
-/* Six items use the same large, bold type */
 .daily-day,
 .weather-info,
 .clock-time,
@@ -323,13 +317,13 @@ a.home-board:active {
   width: 100%;
   min-width: 0;
   max-width: 100%;
+  align-self: center;
   justify-self: stretch;
-  font-size: clamp(21px,6vw,30px);
+  font-size: clamp(18px,5.2vw,27px);
   font-weight: 900;
-  line-height: 1.12;
+  line-height: 1.15;
 }
 
-/* Each item is centered inside its own half */
 .daily-day,
 .clock-time,
 .countdown-time {
@@ -343,6 +337,7 @@ a.home-board:active {
   justify-content: center;
   gap: 3px;
   white-space: nowrap;
+  overflow: hidden;
 }
 
 .weather-icon {
@@ -375,6 +370,7 @@ a.home-board:active {
   text-align: center;
   text-shadow: none;
   white-space: nowrap;
+  overflow: hidden;
 }
 
 .prayer-dot {
@@ -387,7 +383,7 @@ a.home-board:active {
 
 .next-arrow {
   color: #B68A31;
-  flex: 0 1 auto;
+  flex: 0 0 auto;
   font-size: .82em;
 }
 
@@ -482,10 +478,6 @@ a.home-board:active {
   transform: scale(.98);
 }
 
-/*
-  Icons remain transparent and keep their original proportions.
-  No decorative background, frame, or forced square.
-*/
 .feature-icon {
   display: block;
   flex: 0 1 auto;
@@ -515,7 +507,7 @@ a.home-board:active {
   line-height: 1.2;
 }
 
-/* Footer */
+/* Smooth, continuous footer message */
 .footer-board {
   justify-content: center;
   gap: 8px;
@@ -523,20 +515,45 @@ a.home-board:active {
 }
 
 .footer-icon {
-  flex-shrink: 0;
+  flex: 0 0 auto;
   font-size: 20px;
 }
 
-.footer-board p {
+.footer-message-window {
+  position: relative;
+  flex: 1 1 auto;
   min-width: 0;
-  margin: 0;
+  height: 100%;
   overflow: hidden;
-  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
   white-space: nowrap;
-  text-align: center;
-  font-size: clamp(14px,3.4vw,16px);
+  direction: ltr;
+}
+
+.footer-message {
+  display: inline-block;
+  width: max-content;
+  min-width: max-content;
+  margin: 0;
+  padding-left: 100%;
+  color: var(--gold-light);
+  white-space: nowrap;
+  text-align: left;
+  font-size: clamp(13px,3.3vw,16px);
   font-weight: 800;
   line-height: 1.25;
+  animation: footer-message-scroll var(--message-duration, 22s) linear infinite;
+  will-change: transform;
+}
+
+@keyframes footer-message-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
 }
 
 /* Theme colors from Settings */
@@ -680,7 +697,7 @@ body.dark-mode .next-prayer {
   }
 
   .daily-board {
-    padding: 5px 4px;
+    padding: 4px 3px;
   }
 
   .daily-day,
@@ -689,7 +706,7 @@ body.dark-mode .next-prayer {
   .countdown-time,
   .current-prayer,
   .next-prayer {
-    font-size: clamp(19px,5.7vw,25px);
+    font-size: clamp(16px,4.7vw,21px);
   }
 
   .current-prayer,
@@ -698,17 +715,25 @@ body.dark-mode .next-prayer {
   }
 
   .date-area,
-  .location-area,
-  .footer-board p {
+  .location-area {
     font-size: 13px;
   }
 }
 
-/* Short screens */
+/* Short screens: fit all content without page scrolling */
 @media (max-height: 650px) {
   .app-shell {
-    grid-template-rows: 48px minmax(0,1fr) 48px;
+    grid-template-rows: 44px minmax(0,1fr) 44px;
     gap: 3px;
+    padding-top: max(3px,env(safe-area-inset-top));
+    padding-bottom: max(3px,env(safe-area-inset-bottom));
+  }
+
+  .top-board,
+  .footer-board {
+    height: 44px;
+    min-height: 44px;
+    max-height: 44px;
   }
 
   .home-content {
@@ -721,7 +746,6 @@ body.dark-mode .next-prayer {
   }
 
   .bismillah-decoration {
-    display: flex;
     font-size: clamp(15px,4vw,21px);
   }
 
@@ -734,7 +758,7 @@ body.dark-mode .next-prayer {
   }
 
   .daily-board {
-    padding: 4px 5px;
+    padding: 3px 4px;
   }
 
   .daily-day,
@@ -743,7 +767,7 @@ body.dark-mode .next-prayer {
   .countdown-time,
   .current-prayer,
   .next-prayer {
-    font-size: clamp(19px,5.7vw,25px);
+    font-size: clamp(16px,4.8vw,23px);
   }
 
   .feature-icon {
@@ -766,5 +790,16 @@ body.dark-mode .next-prayer {
   *::before,
   *::after {
     transition: none !important;
+  }
+
+  .footer-message {
+    animation: none;
+    padding-left: 0;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .footer-message-window {
+    justify-content: center;
   }
 }
