@@ -96,7 +96,7 @@
     Mumbai: { bn: "মুম্বাই", en: "Mumbai", hi: "मुंबई" },
     Chennai: { bn: "চেন্নাই", en: "Chennai", hi: "चेन्नई" },
     Hyderabad: { bn: "হায়দরাবাদ", en: "Hyderabad", hi: "हैदराबाद" },
-    Dhaka: { bn: "ঢাকা", en: "Dhaka", hi: "ढाका" },
+    Dhaka: { bn: "ঢাকা", en: "Dhaka", hi: "ढাকা" },
     London: { bn: "লন্ডন", en: "London", hi: "लंदन" }
   };
 
