@@ -1,17 +1,16 @@
-
 "use strict";
 
 (() => {
   const $ = (selector) => document.querySelector(selector);
 
-  const LANGUAGES = {
+  const LANG = {
     bn: {
       locale: "bn-BD",
-      cityFallback: "কলকাতা",
-      dateFallback: "তারিখ পাওয়া যায়নি",
+      city: "কলকাতা",
       bismillah: "পরম করুণাময় অসীম দয়ালু আল্লাহর নামে",
       footer: "আল্লাহর স্মরণেই অন্তর প্রশান্ত হয়।",
-      days: ["রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার", "শনিবার"],
+      days: ["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"],
+      unit: "সে.",
       prayers: {
         Fajr: "ফজর",
         Sunrise: "সূর্যোদয়",
@@ -32,11 +31,11 @@
 
     en: {
       locale: "en-IN",
-      cityFallback: "Kolkata",
-      dateFallback: "Date unavailable",
+      city: "Kolkata",
       bismillah: "In the name of Allah, the Most Compassionate, the Most Merciful",
       footer: "In the remembrance of Allah, hearts find peace.",
-      days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      days: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      unit: "°C",
       prayers: {
         Fajr: "Fajr",
         Sunrise: "Sunrise",
@@ -57,11 +56,11 @@
 
     hi: {
       locale: "hi-IN",
-      cityFallback: "कोलकाता",
-      dateFallback: "तारीख उपलब्ध नहीं",
+      city: "कोलकाता",
       bismillah: "परम कृपालु, अत्यंत दयावान अल्लाह के नाम से",
       footer: "अल्लाह के स्मरण से दिल को सुकून मिलता है।",
-      days: ["रविवार", "सोमवार", "मंगलवार", "बुधवार", "गुरुवार", "शुक्रवार", "शनिवार"],
+      days: ["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"],
+      unit: "°से.",
       prayers: {
         Fajr: "फ़ज्र",
         Sunrise: "सूर्योदय",
@@ -90,24 +89,37 @@
     Isha: "ishaTime"
   };
 
+  const CITY_NAMES = {
+    Kolkata: { bn: "কলকাতা", en: "Kolkata", hi: "कोलकाता" },
+    "New Delhi": { bn: "নয়াদিল্লি", en: "New Delhi", hi: "नई दिल्ली" },
+    Delhi: { bn: "দিল্লি", en: "Delhi", hi: "दिल्ली" },
+    Mumbai: { bn: "মুম্বাই", en: "Mumbai", hi: "मुंबई" },
+    Chennai: { bn: "চেন্নাই", en: "Chennai", hi: "चेन्नई" },
+    Hyderabad: { bn: "হায়দরাবাদ", en: "Hyderabad", hi: "हैदराबाद" },
+    Dhaka: { bn: "ঢাকা", en: "Dhaka", hi: "ढाका" },
+    London: { bn: "লন্ডন", en: "London", hi: "लंदन" }
+  };
+
   let language = "bn";
   let settingsSnapshot = "";
-  let prayerTimes = null;
   let coordinates = null;
-  let weatherLoaded = false;
-  let lastPrayerDate = "";
+  let prayerTimes = null;
+  let weatherTemperature = null;
+  let locationName = null;
+  let lastDate = "";
 
   function readSettings() {
     try {
       return JSON.parse(localStorage.getItem("appSettings") || "{}");
-    } catch {
+    } catch (error) {
+      console.warn("Unable to read appSettings.", error);
       return {};
     }
   }
 
   function getLanguage(settings) {
     const value = settings.lang || settings.language || "bn";
-    return LANGUAGES[value] ? value : "bn";
+    return LANG[value] ? value : "bn";
   }
 
   function getTheme(settings) {
@@ -139,13 +151,13 @@
     );
 
     document.documentElement.lang = language;
-    document.body.classList.toggle("dark-mode", dark);
     document.body.dataset.themeColor = getTheme(settings);
+    document.body.classList.toggle("dark-mode", dark);
 
     const snapshot = JSON.stringify({
       language,
-      dark,
-      theme: getTheme(settings)
+      theme: getTheme(settings),
+      dark
     });
 
     if (snapshot !== settingsSnapshot) {
@@ -154,27 +166,46 @@
     }
   }
 
-  function text() {
-    return LANGUAGES[language] || LANGUAGES.bn;
+  function t() {
+    return LANG[language] || LANG.bn;
+  }
+
+  function localizeCity(name) {
+    if (!name) return t().city;
+
+    const mapped = CITY_NAMES[name];
+
+    if (mapped) return mapped[language] || mapped.en;
+
+    return name;
   }
 
   function updateLanguage() {
-    const t = text();
+    const strings = t();
 
-    $("#bismillahMeaning").textContent = t.bismillah;
-    $("#footerMessage").textContent = t.footer;
+    $("#bismillahMeaning").textContent = strings.bismillah;
+    $("#footerMessage").textContent = strings.footer;
+    $("#temperatureUnit").textContent = strings.unit;
 
     document.querySelectorAll("[data-prayer-label]").forEach((element) => {
       const key = element.dataset.prayerLabel;
-      element.textContent = t.prayers[key] || key;
+      element.textContent = strings.prayers[key] || key;
     });
 
     document.querySelectorAll("[data-feature-label]").forEach((element) => {
       const key = element.dataset.featureLabel;
-      element.textContent = t.features[key] || key;
+      element.textContent = strings.features[key] || key;
     });
 
-    updateDateAndClock();
+    $("#city").textContent = locationName
+      ? localizeCity(locationName)
+      : strings.city;
+
+    updateClockAndDate();
+
+    if (weatherTemperature !== null) {
+      renderTemperature();
+    }
 
     if (prayerTimes) {
       renderPrayerTimes();
@@ -182,12 +213,16 @@
     }
   }
 
-  function numberLocale() {
-    return text().locale;
+  function formatNumber(value, minimumDigits = 2) {
+    return new Intl.NumberFormat(t().locale, {
+      minimumIntegerDigits: minimumDigits,
+      maximumFractionDigits: 0,
+      useGrouping: false
+    }).format(value);
   }
 
   function formatClock(date, seconds = true) {
-    return new Intl.DateTimeFormat(numberLocale(), {
+    return new Intl.DateTimeFormat(t().locale, {
       hour: "2-digit",
       minute: "2-digit",
       ...(seconds ? { second: "2-digit" } : {}),
@@ -195,22 +230,23 @@
     }).format(date);
   }
 
-  function updateDateAndClock() {
+  function updateClockAndDate() {
     const now = new Date();
 
     $("#clock").textContent = formatClock(now, true);
 
-    $("#date").textContent = new Intl.DateTimeFormat(numberLocale(), {
+    $("#date").textContent = new Intl.DateTimeFormat(t().locale, {
       day: "numeric",
       month: "long",
       year: "numeric"
     }).format(now);
 
-    $("#dayName").textContent = text().days[now.getDay()];
+    $("#dayName").textContent = t().days[now.getDay()];
   }
 
-  function dateKey() {
+  function todayKey() {
     const now = new Date();
+
     return [
       now.getFullYear(),
       String(now.getMonth() + 1).padStart(2, "0"),
@@ -218,34 +254,27 @@
     ].join("-");
   }
 
-  function parsePrayerTime(value) {
+  function parseTime(value) {
     if (!value) return null;
 
     const match = String(value).match(/(\d{1,2}):(\d{2})/);
     if (!match) return null;
 
-    const hour = Number(match[1]);
-    const minute = Number(match[2]);
+    const hours = Number(match[1]);
+    const minutes = Number(match[2]);
 
-    if (hour > 23 || minute > 59) return null;
+    if (hours > 23 || minutes > 59) return null;
 
-    return hour * 60 + minute;
+    return hours * 60 + minutes;
   }
 
-  function displayPrayerTime(value) {
+  function formatPrayerTime(value) {
     if (!value) return "--:--";
 
     const match = String(value).match(/(\d{1,2}):(\d{2})/);
     if (!match) return "--:--";
 
-    const date = new Date();
-    date.setHours(Number(match[1]), Number(match[2]), 0, 0);
-
-    return new Intl.DateTimeFormat(numberLocale(), {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false
-    }).format(date);
+    return `${formatNumber(Number(match[1]))}:${formatNumber(Number(match[2]))}`;
   }
 
   function renderPrayerTimes() {
@@ -253,13 +282,14 @@
 
     Object.entries(PRAYER_IDS).forEach(([key, id]) => {
       const element = document.getElementById(id);
+
       if (element) {
-        element.textContent = displayPrayerTime(prayerTimes[key]);
+        element.textContent = formatPrayerTime(prayerTimes[key]);
       }
     });
   }
 
-  function getPrayerState() {
+  function prayerState() {
     if (!prayerTimes) return null;
 
     const order = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
@@ -267,23 +297,23 @@
     const entries = order
       .map((key) => ({
         key,
-        minutes: parsePrayerTime(prayerTimes[key])
+        minutes: parseTime(prayerTimes[key])
       }))
       .filter((item) => item.minutes !== null);
 
     if (!entries.length) return null;
 
     const now = new Date();
-    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+    const nowMinutes = now.getHours() * 60 + now.getMinutes();
 
     let current = null;
     let next = null;
 
-    for (const entry of entries) {
-      if (entry.minutes <= currentMinutes) {
-        current = entry;
+    for (const item of entries) {
+      if (item.minutes <= nowMinutes) {
+        current = item;
       } else {
-        next = entry;
+        next = item;
         break;
       }
     }
@@ -291,7 +321,7 @@
     if (!current) current = entries[entries.length - 1];
     if (!next) next = entries[0];
 
-    let nextDate = new Date();
+    const nextDate = new Date();
     nextDate.setHours(
       Math.floor(next.minutes / 60),
       next.minutes % 60,
@@ -299,7 +329,7 @@
       0
     );
 
-    if (next.minutes <= currentMinutes) {
+    if (next.minutes <= nowMinutes) {
       nextDate.setDate(nextDate.getDate() + 1);
     }
 
@@ -307,37 +337,34 @@
   }
 
   function updatePrayerStatus() {
-    const state = getPrayerState();
+    const state = prayerState();
     if (!state) return;
 
-    $("#currentPrayer").textContent = text().prayers[state.current.key];
-    $("#nextPrayer").textContent = text().prayers[state.next.key];
+    $("#currentPrayer").textContent = t().prayers[state.current.key];
+    $("#nextPrayer").textContent = t().prayers[state.next.key];
 
-    const remaining = Math.max(0, state.nextDate.getTime() - Date.now());
-    const totalSeconds = Math.floor(remaining / 1000);
+    const secondsLeft = Math.max(
+      0,
+      Math.floor((state.nextDate.getTime() - Date.now()) / 1000)
+    );
 
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-
-    const formatter = new Intl.NumberFormat(numberLocale(), {
-      minimumIntegerDigits: 2,
-      useGrouping: false
-    });
+    const hours = Math.floor(secondsLeft / 3600);
+    const minutes = Math.floor((secondsLeft % 3600) / 60);
+    const seconds = secondsLeft % 60;
 
     $("#countdown").textContent = [
-      formatter.format(hours),
-      formatter.format(minutes),
-      formatter.format(seconds)
+      formatNumber(hours),
+      formatNumber(minutes),
+      formatNumber(seconds)
     ].join(":");
   }
 
   async function loadPrayerTimes(latitude, longitude) {
     try {
-      const today = dateKey();
-      const unixTime = Math.floor(Date.now() / 1000);
+      const url = new URL(
+        `https://api.aladhan.com/v1/timings/${Math.floor(Date.now() / 1000)}`
+      );
 
-      const url = new URL(`https://api.aladhan.com/v1/timings/${unixTime}`);
       url.searchParams.set("latitude", latitude);
       url.searchParams.set("longitude", longitude);
       url.searchParams.set("method", "1");
@@ -345,19 +372,36 @@
       const response = await fetch(url.toString());
       if (!response.ok) throw new Error("Prayer times unavailable");
 
-      const result = await response.json();
-      const timings = result?.data?.timings;
+      const data = await response.json();
+      if (!data?.data?.timings) throw new Error("Missing prayer times");
 
-      if (!timings) throw new Error("Prayer timings missing");
-
-      prayerTimes = timings;
-      lastPrayerDate = today;
+      prayerTimes = data.data.timings;
+      lastDate = todayKey();
 
       renderPrayerTimes();
       updatePrayerStatus();
     } catch (error) {
-      console.warn("IBADAT: prayer times could not be loaded.", error);
+      console.warn("IBADAT: prayer times unavailable.", error);
     }
+  }
+
+  function renderTemperature() {
+    $("#temperature").textContent = new Intl.NumberFormat(t().locale, {
+      maximumFractionDigits: 0,
+      useGrouping: false
+    }).format(weatherTemperature);
+
+    $("#temperatureUnit").textContent = t().unit;
+  }
+
+  function weatherSymbol(code) {
+    if (code === 0) return "☀️";
+    if ([1, 2].includes(code)) return "🌤️";
+    if (code === 3) return "☁️";
+    if ([45, 48].includes(code)) return "🌫️";
+    if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) return "🌧️";
+    if ([95, 96, 99].includes(code)) return "⛈️";
+    return "🌤️";
   }
 
   async function loadWeather(latitude, longitude) {
@@ -371,33 +415,16 @@
       const response = await fetch(url.toString());
       if (!response.ok) throw new Error("Weather unavailable");
 
-      const result = await response.json();
-      const current = result.current;
+      const data = await response.json();
+      if (!data.current) throw new Error("Missing current weather");
 
-      if (!current) throw new Error("Current weather missing");
+      weatherTemperature = Math.round(data.current.temperature_2m);
+      $("#weatherIcon").textContent = weatherSymbol(data.current.weather_code);
 
-      const temp = Math.round(current.temperature_2m);
-
-      $("#temperature").textContent = new Intl.NumberFormat(numberLocale(), {
-        maximumFractionDigits: 0
-      }).format(temp);
-
-      $("#weatherIcon").textContent = weatherIcon(current.weather_code);
-      weatherLoaded = true;
+      renderTemperature();
     } catch (error) {
-      console.warn("IBADAT: weather could not be loaded.", error);
+      console.warn("IBADAT: weather unavailable.", error);
     }
-  }
-
-  function weatherIcon(code) {
-    if (code === 0) return "☀️";
-    if ([1, 2].includes(code)) return "🌤️";
-    if (code === 3) return "☁️";
-    if ([45, 48].includes(code)) return "🌫️";
-    if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) return "🌧️";
-    if ([71, 73, 75, 85, 86].includes(code)) return "❄️";
-    if ([95, 96, 99].includes(code)) return "⛈️";
-    return "🌤️";
   }
 
   async function loadCity(latitude, longitude) {
@@ -406,6 +433,7 @@
       url.searchParams.set("format", "jsonv2");
       url.searchParams.set("lat", latitude);
       url.searchParams.set("lon", longitude);
+      url.searchParams.set("accept-language", language);
 
       const response = await fetch(url.toString(), {
         headers: { Accept: "application/json" }
@@ -416,23 +444,24 @@
       const data = await response.json();
       const address = data.address || {};
 
-      const city =
+      locationName =
         address.city ||
         address.town ||
         address.village ||
         address.municipality ||
         address.state_district ||
         address.state ||
-        text().cityFallback;
+        t().city;
 
-      $("#city").textContent = city;
+      $("#city").textContent = localizeCity(locationName);
     } catch (error) {
-      console.warn("IBADAT: city name could not be loaded.", error);
-      $("#city").textContent = text().cityFallback;
+      console.warn("IBADAT: location name unavailable.", error);
+      locationName = null;
+      $("#city").textContent = t().city;
     }
   }
 
-  async function useCoordinates(latitude, longitude) {
+  async function loadAll(latitude, longitude) {
     coordinates = { latitude, longitude };
 
     await Promise.all([
@@ -444,18 +473,20 @@
 
   function loadLocation() {
     if (!navigator.geolocation) {
-      useDefaultLocation();
+      loadAll(22.5726, 88.3639);
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        useCoordinates(
+        loadAll(
           position.coords.latitude,
           position.coords.longitude
         );
       },
-      () => useDefaultLocation(),
+      () => {
+        loadAll(22.5726, 88.3639);
+      },
       {
         enableHighAccuracy: false,
         timeout: 8000,
@@ -464,35 +495,16 @@
     );
   }
 
-  function useDefaultLocation() {
-    /*
-      Kolkata fallback is used only when location access is unavailable.
-      The user can allow location access to get local prayer times.
-    */
-    $("#city").textContent = text().cityFallback;
-
-    useCoordinates(22.5726, 88.3639);
-  }
-
   function openSettings() {
-    const candidates = [
-      "html/settings.html",
-      "settings.html"
-    ];
-
     const settings = readSettings();
-    const configuredPath = settings.settingsPage || settings.settingsUrl;
+    const configured = settings.settingsPage || settings.settingsUrl;
 
-    if (configuredPath && typeof configuredPath === "string") {
-      window.location.href = configuredPath;
+    if (typeof configured === "string" && configured.trim()) {
+      window.location.href = configured;
       return;
     }
 
-    /*
-      Change this path if the existing Settings page uses a different
-      filename in the project.
-    */
-    window.location.href = candidates[0];
+    window.location.href = "html/settings.html";
   }
 
   function init() {
@@ -500,15 +512,14 @@
 
     $("#sunriseSettings").addEventListener("click", openSettings);
 
+    updateClockAndDate();
     loadLocation();
-    updateDateAndClock();
 
     window.setInterval(() => {
-      updateDateAndClock();
+      updateClockAndDate();
       updatePrayerStatus();
 
-      if (lastPrayerDate && lastPrayerDate !== dateKey() && coordinates) {
-        lastPrayerDate = "";
+      if (lastDate && lastDate !== todayKey() && coordinates) {
         loadPrayerTimes(coordinates.latitude, coordinates.longitude);
       }
     }, 1000);
@@ -521,13 +532,13 @@
 
     window.addEventListener("pageshow", () => {
       applySettings();
-      updateDateAndClock();
+      updateClockAndDate();
     });
 
     document.addEventListener("visibilitychange", () => {
       if (!document.hidden) {
         applySettings();
-        updateDateAndClock();
+        updateClockAndDate();
         updatePrayerStatus();
       }
     });
