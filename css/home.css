@@ -273,7 +273,7 @@ a.home-board:active {
   line-height: 1.35;
 }
 
-/* Daily board: balanced three-row layout */
+/* Daily board: three rows, two balanced columns */
 .daily-board {
   padding: 8px 15px;
   display: grid;
@@ -306,7 +306,7 @@ a.home-board:active {
   grid-row: 3;
 }
 
-/* All six daily-board text items use the same bold sizing */
+/* All six daily items use the same font size and weight */
 .daily-day,
 .weather-info,
 .clock-time,
@@ -320,12 +320,15 @@ a.home-board:active {
 }
 
 .daily-day {
-  justify-self: start;
+  width: 100%;
+  justify-self: stretch;
   text-align: left;
 }
 
 .weather-info {
-  justify-self: end;
+  width: 100%;
+  min-width: 0;
+  justify-self: stretch;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -340,6 +343,8 @@ a.home-board:active {
 
 .clock-time,
 .countdown-time {
+  width: 100%;
+  min-width: 0;
   max-width: 100%;
   overflow: hidden;
   white-space: nowrap;
@@ -347,18 +352,19 @@ a.home-board:active {
 }
 
 .clock-time {
-  justify-self: start;
+  justify-self: stretch;
   text-align: left;
 }
 
 .countdown-time {
-  justify-self: end;
+  justify-self: stretch;
   color: #B52D25;
   text-align: right;
 }
 
 .current-prayer,
 .next-prayer {
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -372,12 +378,13 @@ a.home-board:active {
 }
 
 .current-prayer {
-  justify-self: start;
+  justify-self: stretch;
   text-align: left;
 }
 
 .next-prayer {
-  justify-self: end;
+  justify-self: stretch;
+  justify-content: flex-end;
   text-align: right;
 }
 
@@ -467,29 +474,39 @@ a.home-board:active {
   min-width: 0;
   min-height: 0;
   padding: 3px 12px;
-  display: grid;
-  grid-template-columns: minmax(0,1fr) minmax(0,1.3fr);
+  display: flex;
   align-items: center;
-  justify-items: center;
-  gap: 5px;
+  justify-content: center;
+  gap: .45em;
   color: var(--theme-deep);
   background: var(--theme-soft);
   border: 1.5px solid #C7DBA1;
   border-radius: 22px;
   box-shadow: 0 2px 7px rgba(33,75,35,.10);
   text-decoration: none;
+  font-size: clamp(13px,4vw,22px);
+  font-weight: 900;
+  line-height: 1.2;
 }
 
 .feature-card:active {
   transform: scale(.98);
 }
 
-/* Icons retain their own aspect ratio without a crop or frame */
+/*
+  Icon image:
+  - no background, frame or decorative container
+  - no forced square shape
+  - preserve the image's original aspect ratio
+  - scale down proportionally to fit beside the label
+*/
 .feature-icon {
   display: block;
+  flex: 0 1 auto;
   width: auto;
-  height: 1em;
-  max-width: 100%;
+  height: 1.2em;
+  max-width: 35%;
+  max-height: 1.2em;
   min-width: 0;
   object-fit: contain;
   object-position: center;
@@ -498,16 +515,16 @@ a.home-board:active {
   border-radius: 0;
   background: transparent;
   box-shadow: none;
-  flex-shrink: 1;
 }
 
 .feature-card span {
-  width: 100%;
+  flex: 0 1 auto;
+  width: auto;
   max-width: 100%;
   min-width: 0;
   overflow-wrap: anywhere;
   text-align: center;
-  font-size: clamp(13px,4vw,22px);
+  font-size: inherit;
   font-weight: 900;
   line-height: 1.2;
 }
@@ -659,13 +676,13 @@ body.dark-mode .next-prayer {
   .feature-card {
     padding: 2px 5px;
     border-radius: 17px;
-    gap: 4px;
+    gap: .35em;
   }
 
   .feature-icon {
-    height: 1em;
-    width: auto;
-    max-width: 100%;
+    height: 1.2em;
+    max-height: 1.2em;
+    max-width: 32%;
   }
 
   .prayer-grid {
@@ -750,13 +767,17 @@ body.dark-mode .next-prayer {
   }
 
   .feature-icon {
-    height: 1em;
-    width: auto;
-    max-width: 100%;
+    height: 1.2em;
+    max-height: 1.2em;
+    max-width: 32%;
+  }
+
+  .feature-card {
+    font-size: clamp(11px,3.4vw,17px);
   }
 
   .feature-card span {
-    font-size: clamp(11px,3.4vw,17px);
+    font-size: inherit;
   }
 }
 
