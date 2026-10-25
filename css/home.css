@@ -271,12 +271,12 @@ a.home-board:active {
   line-height: 1.35;
 }
 
-/* Status board: equal-height rows and equal-width halves */
+/* Status board: six information items, no separate boxes */
 .daily-board {
-  padding: 4px 6px;
+  padding: 8px 10px;
   display: grid;
-  grid-template-columns: minmax(0,1fr);
-  grid-template-rows: repeat(3,minmax(0,1fr));
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: repeat(3, minmax(0, 1fr));
   align-items: stretch;
   color: #10452F;
 }
@@ -288,11 +288,10 @@ a.home-board:active {
   height: 100%;
   min-width: 0;
   min-height: 0;
-  grid-column: 1;
   display: grid;
-  grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
-  justify-items: stretch;
+  justify-items: center;
   column-gap: 0;
 }
 
@@ -318,8 +317,8 @@ a.home-board:active {
   min-width: 0;
   max-width: 100%;
   align-self: center;
-  justify-self: stretch;
-  font-size: clamp(18px,5.2vw,27px);
+  justify-self: center;
+  font-size: clamp(18px, 5.2vw, 27px);
   font-weight: 900;
   line-height: 1.15;
 }
@@ -385,6 +384,43 @@ a.home-board:active {
   color: #B68A31;
   flex: 0 0 auto;
   font-size: .82em;
+}
+
+/* Keep all six status items readable on small screens */
+@media (max-width: 360px) {
+  .daily-board {
+    padding: 5px 3px;
+  }
+
+  .daily-day,
+  .weather-info,
+  .clock-time,
+  .countdown-time,
+  .current-prayer,
+  .next-prayer {
+    font-size: clamp(15px, 4.5vw, 20px);
+  }
+
+  .current-prayer,
+  .next-prayer {
+    gap: 3px;
+  }
+}
+
+/* Short screens */
+@media (max-height: 650px) {
+  .daily-board {
+    padding: 4px 4px;
+  }
+
+  .daily-day,
+  .weather-info,
+  .clock-time,
+  .countdown-time,
+  .current-prayer,
+  .next-prayer {
+    font-size: clamp(15px, 4.5vw, 22px);
+  }
 }
 
 /* Prayer times grid */
