@@ -271,22 +271,33 @@ a.home-board:active {
   line-height: 1.35;
 }
 
-/* Status board: six items on one board, without dividers */
+/* =========================================
+   STATUS BOARD — SIX INFORMATION ITEMS
+   ========================================= */
+
 .daily-board {
   position: relative;
+  isolation: isolate;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: repeat(3, minmax(0, 1fr));
-  padding: 8px 10px;
+  align-items: stretch;
+
+  padding: 10px 14px;
   color: #10452F;
 }
 
+/* Keep the background overlay behind all six items */
 .daily-board > .board-overlay {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
   grid-column: 1;
   grid-row: 1 / 4;
-  z-index: -1;
+  pointer-events: none;
 }
 
+/* Three equal-height rows, each with two equal columns */
 .daily-top,
 .daily-middle,
 .daily-bottom {
@@ -294,10 +305,12 @@ a.home-board:active {
   width: 100%;
   min-width: 0;
   min-height: 0;
+
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
   justify-items: stretch;
+
   column-gap: 0;
 }
 
@@ -313,6 +326,7 @@ a.home-board:active {
   grid-row: 3;
 }
 
+/* Large, bold and balanced text */
 .daily-day,
 .weather-info,
 .clock-time,
@@ -323,25 +337,47 @@ a.home-board:active {
   min-width: 0;
   max-width: 100%;
   margin: 0;
+  padding: 0;
+
   align-self: center;
   justify-self: stretch;
-  font-size: clamp(17px, 4.8vw, 25px);
+
+  font-size: clamp(20px, 5.2vw, 28px);
   font-weight: 900;
-  line-height: 1.15;
+  line-height: 1.2;
 }
 
+/* First column: day, clock and current prayer */
+.daily-day,
+.clock-time,
+.current-prayer {
+  grid-column: 1;
+  text-align: center;
+}
+
+/* Second column: weather, countdown and next prayer */
+.weather-info,
+.countdown-time,
+.next-prayer {
+  grid-column: 2;
+  text-align: center;
+}
+
+/* Day and clock digits remain evenly aligned */
 .daily-day,
 .clock-time,
 .countdown-time {
-  text-align: center;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
+/* Weather icon and temperature stay on one line */
 .weather-info {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: 5px;
   white-space: nowrap;
   overflow: hidden;
 }
@@ -352,49 +388,56 @@ a.home-board:active {
   font-size: 1em;
 }
 
-.clock-time,
-.countdown-time {
-  white-space: nowrap;
-  overflow: hidden;
-}
-
+/* Countdown color */
 .countdown-time {
   color: #B52D25;
 }
 
+/* Current and next prayer */
 .current-prayer,
 .next-prayer {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  padding: 0;
-  color: #10452F;
+  gap: 5px;
+
   background: transparent;
   border: 0;
   border-radius: 0;
-  text-align: center;
+  text-shadow: none;
   white-space: nowrap;
   overflow: hidden;
 }
 
+.current-prayer {
+  color: #10452F;
+}
+
+.next-prayer {
+  color: #10452F;
+}
+
+/* Green dot for current prayer */
 .prayer-dot {
-  width: .42em;
-  height: .42em;
-  flex: 0 0 .42em;
+  display: inline-block;
+  width: 0.42em;
+  height: 0.42em;
+  flex: 0 0 0.42em;
   border-radius: 50%;
   background: #20BD48;
 }
 
+/* Gold arrow for next prayer */
 .next-arrow {
   flex: 0 0 auto;
   color: #B68A31;
-  font-size: .82em;
+  font-size: 0.82em;
 }
 
+/* Small mobile screens */
 @media (max-width: 360px) {
   .daily-board {
-    padding: 5px 3px;
+    padding: 7px 5px;
   }
 
   .daily-day,
@@ -403,13 +446,20 @@ a.home-board:active {
   .countdown-time,
   .current-prayer,
   .next-prayer {
-    font-size: clamp(15px, 4.4vw, 20px);
+    font-size: clamp(16px, 4.6vw, 21px);
+  }
+
+  .weather-info,
+  .current-prayer,
+  .next-prayer {
+    gap: 3px;
   }
 }
 
+/* Short screens */
 @media (max-height: 650px) {
   .daily-board {
-    padding: 4px;
+    padding: 5px 7px;
   }
 
   .daily-day,
@@ -418,7 +468,7 @@ a.home-board:active {
   .countdown-time,
   .current-prayer,
   .next-prayer {
-    font-size: clamp(15px, 4.4vw, 21px);
+    font-size: clamp(16px, 4.6vw, 23px);
   }
 }
 
