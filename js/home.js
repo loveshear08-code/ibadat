@@ -108,6 +108,23 @@
   let locationName = null;
   let lastDate = "";
 
+  /*
+   * Feature icon image handling:
+   * If an icon image is missing or cannot load, remove only that image.
+   * The feature card and its translated label remain visible.
+   */
+  function hideMissingFeatureIcons() {
+    document.querySelectorAll(".feature-icon").forEach((image) => {
+      image.addEventListener("error", () => {
+        image.remove();
+      }, { once: true });
+
+      if (image.complete && image.naturalWidth === 0) {
+        image.remove();
+      }
+    });
+  }
+
   function readSettings() {
     try {
       return JSON.parse(localStorage.getItem("appSettings") || "{}");
@@ -508,6 +525,7 @@
   }
 
   function init() {
+    hideMissingFeatureIcons();
     applySettings();
 
     $("#sunriseSettings").addEventListener("click", openSettings);
