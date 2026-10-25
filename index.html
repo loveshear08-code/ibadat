@@ -1,13 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#123d2c">
-  <meta name="description" content="IBADAT — ইসলামী শিক্ষা ও ইবাদতের সহায়ক">
+  <meta name="theme-color" content="#124C32">
   <title>IBADAT</title>
-
   <link rel="stylesheet" href="css/home.css">
 </head>
 <body>
@@ -18,7 +15,7 @@
         <span class="location-symbol" aria-hidden="true">●</span>
         <span id="city">কলকাতা</span>
       </div>
-      <div class="date-area" id="date">—</div>
+      <div id="date" class="date-area">—</div>
     </header>
 
     <main class="home-content">
@@ -26,13 +23,16 @@
       <section class="home-board bismillah-board">
         <div class="board-overlay"></div>
         <div class="bismillah-content">
-          <div class="bismillah-decoration" aria-hidden="true">❧ ❖ ❧</div>
+          <div class="bismillah-decoration" aria-hidden="true">
+            <span class="decoration-leaf decoration-left">❧</span>
+            <span class="decoration-diamond">❖</span>
+            <span class="decoration-leaf decoration-right">❧</span>
+          </div>
+
           <div class="arabic-bismillah" lang="ar" dir="rtl">
             بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
           </div>
-          <p id="bismillahMeaning">
-            পরম করুণাময় অসীম দয়ালু আল্লাহর নামে
-          </p>
+          <p id="bismillahMeaning">পরম করুণাময় অসীম দয়ালু আল্লাহর নামে</p>
         </div>
       </section>
 
@@ -40,17 +40,17 @@
         <div class="board-overlay"></div>
 
         <div class="daily-top">
-          <div class="daily-day" id="dayName">রবিবার</div>
+          <div id="dayName" class="daily-day">রবিবার</div>
           <div class="weather-info">
-            <span class="weather-icon" id="weatherIcon" aria-hidden="true">☀️</span>
-            <span id="temperature">--°</span>
+            <span id="weatherIcon" class="weather-icon" aria-hidden="true">☀️</span>
+            <span id="temperature">--</span>
             <span id="temperatureUnit">সে.</span>
           </div>
         </div>
 
         <div class="daily-middle">
-          <div class="clock-time" id="clock">--:--:--</div>
-          <div class="countdown-time" id="countdown">--:--:--</div>
+          <div id="clock" class="clock-time">--:--:--</div>
+          <div id="countdown" class="countdown-time">--:--:--</div>
         </div>
 
         <div class="daily-bottom">
@@ -58,7 +58,6 @@
             <span class="prayer-dot"></span>
             <span id="currentPrayer">ফজর</span>
           </div>
-
           <div class="next-prayer">
             <span class="next-arrow" aria-hidden="true">❯❯</span>
             <span id="nextPrayer">যোহর</span>
@@ -70,13 +69,13 @@
         <div class="board-overlay"></div>
 
         <div class="prayer-grid">
-          <div class="prayer-cell" id="fajrCell">
+          <div class="prayer-cell">
             <span data-prayer-label="Fajr">ফজর</span>
             <strong id="fajrTime">--:--</strong>
           </div>
 
-          <button class="prayer-cell sunrise-cell" id="sunriseSettings" type="button"
-            aria-label="সূর্যোদয় ও সেটিংস খুলুন">
+          <button class="prayer-cell sunrise-cell" id="sunriseSettings"
+            type="button" aria-label="Settings">
             <span class="sunrise-label">
               <span data-prayer-label="Sunrise">সূর্যোদয়</span>
               <span class="settings-symbol" aria-hidden="true">⚙</span>
@@ -84,61 +83,60 @@
             <strong id="sunriseTime">--:--</strong>
           </button>
 
-          <div class="prayer-cell" id="dhuhrCell">
+          <div class="prayer-cell">
             <span data-prayer-label="Dhuhr">যোহর</span>
             <strong id="dhuhrTime">--:--</strong>
           </div>
 
-          <div class="prayer-cell" id="asrCell">
+          <div class="prayer-cell">
             <span data-prayer-label="Asr">আসর</span>
             <strong id="asrTime">--:--</strong>
           </div>
 
-          <div class="prayer-cell" id="maghribCell">
+          <div class="prayer-cell">
             <span data-prayer-label="Maghrib">মাগরিব</span>
             <strong id="maghribTime">--:--</strong>
           </div>
 
-          <div class="prayer-cell" id="ishaCell">
+          <div class="prayer-cell">
             <span data-prayer-label="Isha">ইশা</span>
             <strong id="ishaTime">--:--</strong>
           </div>
         </div>
       </section>
 
-      <nav class="feature-grid" aria-label="প্রধান মেনু">
-
-        <a class="feature-card" href="html/namaz.html" data-feature="namaz">
+      <nav class="feature-grid" aria-label="Main menu">
+        <a class="feature-card" href="html/namaz.html">
           <img src="assets/icon/namaz.png" alt="" class="feature-icon">
           <span data-feature-label="namaz">নামাজ</span>
         </a>
 
-        <a class="feature-card" href="html/quran.html" data-feature="quran">
+        <a class="feature-card" href="html/quran.html">
           <img src="assets/icon/quran.png" alt="" class="feature-icon">
           <span data-feature-label="quran">কুরআন</span>
         </a>
 
-        <a class="feature-card" href="html/dua.html" data-feature="dua">
+        <a class="feature-card" href="html/dua.html">
           <img src="assets/icon/dua.png" alt="" class="feature-icon">
           <span data-feature-label="dua">দোয়া</span>
         </a>
 
-        <a class="feature-card" href="html/hadith.html" data-feature="hadith">
+        <a class="feature-card" href="html/hadith.html">
           <img src="assets/icon/hadith.png" alt="" class="feature-icon">
           <span data-feature-label="hadith">হাদিস</span>
         </a>
 
-        <a class="feature-card" href="html/qibla.html" data-feature="qibla">
+        <a class="feature-card" href="html/qibla.html">
           <img src="assets/icon/qibla.png" alt="" class="feature-icon">
           <span data-feature-label="qibla">কিবলা</span>
         </a>
 
-        <a class="feature-card" href="html/tasbih.html" data-feature="tasbih">
+        <a class="feature-card" href="html/tasbih.html">
           <img src="assets/icon/tasbih.png" alt="" class="feature-icon">
           <span data-feature-label="tasbih">তাসবিহ</span>
         </a>
-
       </nav>
+
     </main>
 
     <footer class="footer-board">
