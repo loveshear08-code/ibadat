@@ -150,7 +150,7 @@ a {
   text-overflow: ellipsis;
 }
 
-/* Main page boards */
+/* Main page layout */
 .home-content {
   min-width: 0;
   min-height: 0;
@@ -197,6 +197,7 @@ a.home-board:active {
   pointer-events: none;
 }
 
+/* Background images */
 .bismillah-board {
   background-image: url("../assets/image/home-bg-1.png");
 }
@@ -207,9 +208,10 @@ a.home-board:active {
 
 .prayer-board {
   background-image: url("../assets/image/home-bg-3.png");
+  padding: 7px;
 }
 
-/* Bismillah decoration */
+/* Bismillah board */
 .bismillah-content {
   width: 100%;
   height: 100%;
@@ -271,7 +273,7 @@ a.home-board:active {
   line-height: 1.35;
 }
 
-/* Date, clock, weather and prayer countdown */
+/* Daily board: same positions as reference */
 .daily-board {
   padding: 7px 12px;
   display: flex;
@@ -291,13 +293,23 @@ a.home-board:active {
   gap: 7px;
 }
 
+.daily-top,
+.daily-bottom {
+  flex: 0 0 auto;
+}
+
+.daily-middle {
+  flex: 1 1 auto;
+  align-items: center;
+}
+
 .daily-day,
 .weather-info,
 .clock-time,
 .countdown-time,
 .current-prayer,
 .next-prayer {
-  font-size: clamp(16px,4.2vw,22px);
+  font-size: clamp(15px,4.2vw,21px);
   font-weight: 900;
 }
 
@@ -315,19 +327,26 @@ a.home-board:active {
 }
 
 .weather-icon {
+  flex-shrink: 0;
   font-size: 1.15em;
 }
 
 .daily-middle {
-  flex: 1;
+  justify-content: space-between;
 }
 
 .clock-time,
 .countdown-time {
   min-width: 0;
+  max-width: 49%;
   overflow: hidden;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.clock-time {
+  text-align: left;
 }
 
 .countdown-time {
@@ -338,6 +357,7 @@ a.home-board:active {
 .current-prayer,
 .next-prayer {
   min-width: 0;
+  max-width: 48%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -363,11 +383,7 @@ a.home-board:active {
   color: #F4C928;
 }
 
-/* Six prayer time cells */
-.prayer-board {
-  padding: 7px;
-}
-
+/* Prayer times grid */
 .prayer-grid {
   width: 100%;
   height: 100%;
@@ -424,7 +440,7 @@ a.home-board:active {
   color: #8D7228;
 }
 
-/* Six compact feature cards */
+/* Feature cards: image itself only, no square frame */
 .feature-grid {
   min-width: 0;
   min-height: 0;
@@ -438,12 +454,12 @@ a.home-board:active {
 .feature-card {
   min-width: 0;
   min-height: 0;
-  padding: 3px 5px;
+  padding: 3px 12px;
   display: grid;
-  grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr);
+  grid-template-columns:  minmax(0,1fr) minmax(0,1.3fr);
   align-items: center;
   justify-items: center;
-  gap: 3px;
+  gap: 5px;
   overflow: hidden;
   color: var(--theme-deep);
   background: var(--theme-soft);
@@ -459,13 +475,20 @@ a.home-board:active {
 
 .feature-icon {
   display: block;
-  width: clamp(26px,8vw,45px);
-  height: clamp(26px,8vw,45px);
+  width: clamp(44px,12vw,72px);
+  height: clamp(44px,12vw,72px);
   max-width: 100%;
   object-fit: contain;
+  object-position: center;
+  border: 0;
+  outline: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .feature-card span {
+  width: 100%;
   max-width: 100%;
   overflow-wrap: anywhere;
   text-align: center;
@@ -474,7 +497,7 @@ a.home-board:active {
   line-height: 1.2;
 }
 
-/* Footer font matches the location and date */
+/* Footer */
 .footer-board {
   justify-content: center;
   gap: 8px;
@@ -610,13 +633,13 @@ body.dark-mode .sunrise-cell {
   }
 
   .feature-card {
-    padding: 2px;
+    padding: 2px 5px;
     border-radius: 17px;
   }
 
   .feature-icon {
-    width: 26px;
-    height: 26px;
+    width: 40px;
+    height: 40px;
   }
 
   .prayer-grid {
@@ -686,8 +709,8 @@ body.dark-mode .sunrise-cell {
   }
 
   .feature-icon {
-    width: 25px;
-    height: 25px;
+    width: 40px;
+    height: 40px;
   }
 
   .feature-card span {
