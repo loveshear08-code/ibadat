@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -6,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#124C32">
     <title>Settings | IBADAT</title>
-    <link rel="stylesheet" href="../css/settings.css?v=24">
+    <link rel="stylesheet" href="../css/settings.css?v=25">
 </head>
 <body>
 
@@ -17,86 +16,94 @@
     <main class="container">
         <div class="content">
 
+            <!-- 1. LANGUAGE -->
             <section class="card language-card">
                 <h2 id="langTitle">ভাষা</h2>
                 <select id="langSelect" aria-label="Language">
-                    <option value="en">English</option>
                     <option value="bn">বাংলা</option>
+                    <option value="en">English</option>
                     <option value="hi">हिन्दी</option>
                 </select>
             </section>
 
+            <!-- 2. SINGLE THEME BOARD -->
             <section class="card theme-card">
-                <h2 id="themeTitle">থিম</h2>
-                <label for="darkMode" class="theme-label">
-                    <input type="checkbox" id="darkMode">
-                    <span id="darkLabel">ডার্ক মোড</span>
-                </label>
-            </section>
 
-            <section class="card theme-color-card">
-                <h2 id="themeColorTitle">থিম কালার</h2>
-                <p id="themeColorDesc">আপনার পছন্দের রঙ নির্বাচন করুন</p>
+                <div class="theme-heading-row">
+                    <h2 id="themeTitle">থিম</h2>
 
-                <div class="theme-options" id="themeOptions"
-                     role="radiogroup" aria-labelledby="themeColorTitle">
+                    <label for="darkMode" class="dark-mode-control">
+                        <span id="darkLabel">ডার্ক মোড</span>
+                        <input type="checkbox" id="darkMode">
+                        <span class="dark-check" aria-hidden="true">✓</span>
+                    </label>
+                </div>
 
-                    <button type="button" class="theme-option"
-                            data-theme="classic" role="radio" aria-checked="true">
-                        <span class="theme-swatches" aria-hidden="true">
-                            <span style="--swatch:#1B7F4B"></span>
-                            <span style="--swatch:#E8F5E9"></span>
-                            <span style="--swatch:#F2C94C"></span>
-                            <span style="--swatch:#0F5132"></span>
-                        </span>
-                        <span class="theme-option-name" data-theme-name="classic">Classic Green</span>
-                        <span class="theme-check" aria-hidden="true">✓</span>
-                    </button>
+                <div class="theme-color-section">
+                    <p id="themeColorDesc">আপনার পছন্দের রঙ নির্বাচন করুন</p>
 
-                    <button type="button" class="theme-option"
-                            data-theme="royal" role="radio" aria-checked="false">
-                        <span class="theme-swatches" aria-hidden="true">
-                            <span style="--swatch:#285A8E"></span>
-                            <span style="--swatch:#E5EFF9"></span>
-                            <span style="--swatch:#E8BD55"></span>
-                            <span style="--swatch:#173A60"></span>
-                        </span>
-                        <span class="theme-option-name" data-theme-name="royal">Royal Blue</span>
-                        <span class="theme-check" aria-hidden="true">✓</span>
-                    </button>
+                    <div class="theme-options" id="themeOptions"
+                         role="radiogroup" aria-label="Theme color">
 
-                    <button type="button" class="theme-option"
-                            data-theme="rose" role="radio" aria-checked="false">
-                        <span class="theme-swatches" aria-hidden="true">
-                            <span style="--swatch:#B96F79"></span>
-                            <span style="--swatch:#F8E9E7"></span>
-                            <span style="--swatch:#D9B875"></span>
-                            <span style="--swatch:#7D414B"></span>
-                        </span>
-                        <span class="theme-option-name" data-theme-name="rose">Rose Champagne</span>
-                        <span class="theme-check" aria-hidden="true">✓</span>
-                    </button>
+                        <button type="button"
+                                class="theme-option"
+                                data-theme="classic"
+                                role="radio"
+                                aria-checked="true"
+                                aria-label="Classic Green">
+                            <span class="theme-dot" aria-hidden="true">
+                                <span class="theme-check">✓</span>
+                            </span>
+                            <span class="theme-option-name" data-theme-name="classic">ক্লাসিক সবুজ</span>
+                        </button>
 
-                    <button type="button" class="theme-option"
-                            data-theme="pista" role="radio" aria-checked="false">
-                        <span class="theme-swatches" aria-hidden="true">
-                            <span style="--swatch:#4CAF50"></span>
-                            <span style="--swatch:#DFF5E1"></span>
-                            <span style="--swatch:#A7D129"></span>
-                            <span style="--swatch:#FFFFFF"></span>
-                        </span>
-                        <span class="theme-option-name" data-theme-name="pista">Fresh Pista</span>
-                        <span class="theme-check" aria-hidden="true">✓</span>
-                    </button>
+                        <button type="button"
+                                class="theme-option"
+                                data-theme="royal"
+                                role="radio"
+                                aria-checked="false"
+                                aria-label="Royal Blue">
+                            <span class="theme-dot" aria-hidden="true">
+                                <span class="theme-check">✓</span>
+                            </span>
+                            <span class="theme-option-name" data-theme-name="royal">রয়্যাল নীল</span>
+                        </button>
 
+                        <button type="button"
+                                class="theme-option"
+                                data-theme="rose"
+                                role="radio"
+                                aria-checked="false"
+                                aria-label="Rose Champagne">
+                            <span class="theme-dot" aria-hidden="true">
+                                <span class="theme-check">✓</span>
+                            </span>
+                            <span class="theme-option-name" data-theme-name="rose">রোজ ও শ্যাম্পেন</span>
+                        </button>
+
+                        <button type="button"
+                                class="theme-option"
+                                data-theme="pista"
+                                role="radio"
+                                aria-checked="false"
+                                aria-label="Fresh Pista">
+                            <span class="theme-dot" aria-hidden="true">
+                                <span class="theme-check">✓</span>
+                            </span>
+                            <span class="theme-option-name" data-theme-name="pista">ফ্রেশ পিস্তা</span>
+                        </button>
+
+                    </div>
                 </div>
             </section>
 
+            <!-- 3. AZAN -->
             <section class="card azan-card">
-                <h2 id="azanTitle">আজান সেটিং</h2>
+                <h2 id="azanTitle">আযান</h2>
                 <p id="azanDesc">কোন ওয়াক্তে কোন আজান বাজবে</p>
 
                 <div class="azan-list">
+
                     <div class="azan-row">
                         <span id="prayer_fajr">ফজর</span>
                         <select id="azan_fajr" aria-label="Fajr Azan"></select>
@@ -131,20 +138,23 @@
                         <button type="button" class="play-button"
                                 data-prayer="isha" aria-label="Play Isha Azan">▶</button>
                     </div>
+
                 </div>
             </section>
 
         </div>
 
+        <!-- FULL-WIDTH SAVE BOARD -->
         <div class="btn-box">
-            <button type="button" id="saveBtn">সেভ</button>
+            <button type="button" id="saveBtn">সংরক্ষণ</button>
         </div>
+
     </main>
 
     <footer class="bottom-board">
         <p id="settingsFooter">আল্লাহকে স্মরণ করুন</p>
     </footer>
 
-    <script src="../js/settings.js?v=24"></script>
+    <script src="../js/settings.js?v=25"></script>
 </body>
 </html>
