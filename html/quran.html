@@ -8,7 +8,7 @@
   <title>আল-কুরআন | IBADAT</title>
   <link rel="stylesheet" href="../css/quran.css">
 </head>
-<body>
+<body data-color-theme="classic">
   <div class="app" id="quranApp">
     <header class="hero board">
       <h1 id="pageSubtitle">আল-কুরআন</h1>
@@ -22,13 +22,16 @@
             <p class="bismillah-translation" id="bismillahTranslation">পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে</p>
 
             <div class="quran-art-wrap">
-              <img class="quran-art" src="../assets/images/quran.png" alt="পবিত্র কুরআন">
+              <img class="quran-art" src="../assets/images/quran.png" alt="কুরআনের ছবি">
             </div>
 
-            <h2 id="quranTitle">পবিত্র আল-কুরআন</h2>
+            <div class="ornament-divider" aria-hidden="true">
+              <span></span><b>۞</b><span></span>
+            </div>
+
             <p id="quranDescription" class="quran-description">
               আল-কুরআন মানবজাতির জন্য হিদায়াত, রহমত ও আলোর পথ।
-              নিয়মিত তিলাওয়াত করুন, অর্থ বুঝুন এবং জীবনে কুরআনের শিক্ষা অনুসরণ করুন।
+              কুরআন তিলাওয়াত করুন, অর্থ অনুধাবন করুন এবং অনুসরণ করুন।
             </p>
           </article>
 
@@ -52,9 +55,8 @@
         <div class="content-board board">
           <div class="read-toolbar">
             <button id="searchToggle" class="tool-button" type="button"
-              aria-expanded="false" aria-controls="surahSearchPanel" title="Search">
-              ⌕ <span id="searchLabel">খুঁজুন</span>
-            </button>
+              aria-expanded="false" aria-controls="surahSearchPanel" title="Search"
+              aria-label="Search surah">⌕</button>
 
             <div class="font-tools">
               <button id="fontDown" class="tool-button font-button" type="button"
@@ -71,7 +73,7 @@
               aria-label="Clear search">×</button>
           </div>
 
-          <div class="read-layout">
+          <div id="readLayout" class="read-layout">
             <aside id="surahList" class="surah-list" aria-label="Surah list">
               <div class="loading" id="surahListLoading">সূরার তালিকা লোড হচ্ছে…</div>
             </aside>
@@ -94,8 +96,8 @@
 
     <footer class="app-footer board">
       <div id="homeFooter" class="footer-view active">
-        <div class="quote-track">
-          <span id="footerText">“নিশ্চয়ই এই কুরআন এমন পথ দেখায়, যা সবচেয়ে সরল।”</span>
+        <div class="quote-track" aria-label="ইসলামিক বার্তা">
+          <div id="quoteMarquee" class="quote-marquee"></div>
         </div>
       </div>
 
@@ -111,7 +113,7 @@
         <button id="prevTrack" class="footer-control media-control" type="button"
           aria-label="Previous surah">⏮</button>
         <button id="playPause" class="footer-control media-control play-control" type="button"
-          aria-label="Play or pause">▶</button>
+          aria-label="Play">▶</button>
         <button id="nextTrack" class="footer-control media-control" type="button"
           aria-label="Next surah">⏭</button>
       </div>
