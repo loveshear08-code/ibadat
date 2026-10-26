@@ -1,42 +1,93 @@
 
-/* =========================================
+/* =====================================================
    IBADAT — NAMAZ LEARNING PAGE
-   Shared page layout: Quran / Dua / Hadith
-   10 options | Bengali / English / Hindi
-   Main background with cream-white overlay
-========================================= */
+   Shared Header / Footer / Settings Themes
+   10 cards | 3 languages | No page scrolling
+===================================================== */
 
 :root {
-  --deep-green: #123d2c;
-  --dark-green: #0b2c20;
-  --green: #20583e;
+  --primary: #1B7F4B;
+  --soft: #E8F5E9;
+  --accent: #F2C94C;
+  --deep: #0F5132;
+  --text: #17452F;
+  --muted: #68796B;
+  --card: rgba(255, 255, 255, 0.96);
+  --input: #F4F8F0;
+  --row: #DDEED8;
+  --border: #D5E3D1;
 
-  --light-pista: #e6edce;
-  --option-pista: #e9efda;
+  --gold: #E8C766;
+  --gold-light: #F5E5A7;
 
-  --cream: #fff9eb;
-  --cream-white: rgba(255, 252, 242, 0.94);
-  --cream-layer: rgba(255, 252, 242, 0.79);
-
-  --gold: #d6b56d;
-  --gold-dark: #9b7837;
-
-  --text: #24382c;
-  --muted: #657367;
-  --border: rgba(214, 181, 109, 0.85);
-
-  --shadow: 0 5px 18px rgba(0, 0, 0, 0.12);
-
-  --header-height: 112px;
-  --footer-height: 48px;
-  --page-gap: 10px;
-  --app-padding: 12px;
-
-  --card-gap: 8px;
-  --card-radius: 16px;
+  --header-height: 64px;
+  --footer-height: 64px;
+  --page-gap: 8px;
+  --app-padding: 10px;
+  --content-gap: 8px;
+  --card-gap: 7px;
+  --card-radius: 17px;
 }
 
-/* RESET */
+/* =====================================================
+   COLOR THEMES — MATCH SETTINGS
+===================================================== */
+
+body[data-color-theme="classic"] {
+  --primary: #1B7F4B;
+  --soft: #E8F5E9;
+  --accent: #F2C94C;
+  --deep: #0F5132;
+  --text: #17452F;
+  --muted: #68796B;
+  --card: rgba(255, 255, 255, 0.96);
+  --input: #F4F8F0;
+  --row: #DDEED8;
+  --border: #D5E3D1;
+}
+
+body[data-color-theme="royal"] {
+  --primary: #285A8E;
+  --soft: #E5EFF9;
+  --accent: #E8BD55;
+  --deep: #173A60;
+  --text: #1B3652;
+  --muted: #65798E;
+  --card: rgba(255, 255, 255, 0.96);
+  --input: #F0F5FC;
+  --row: #DCE9F7;
+  --border: #C8D9EB;
+}
+
+body[data-color-theme="rose"] {
+  --primary: #B96F79;
+  --soft: #F8E9E7;
+  --accent: #D9B875;
+  --deep: #7D414B;
+  --text: #633B42;
+  --muted: #846D70;
+  --card: rgba(255, 252, 251, 0.97);
+  --input: #FBF1EF;
+  --row: #F2DCD8;
+  --border: #E8CBC8;
+}
+
+body[data-color-theme="pista"] {
+  --primary: #4CAF50;
+  --soft: #DFF5E1;
+  --accent: #A7D129;
+  --deep: #2F7135;
+  --text: #254D2A;
+  --muted: #6D806D;
+  --card: rgba(255, 255, 255, 0.96);
+  --input: #F3FAF0;
+  --row: #DFF0D9;
+  --border: #CDE3C8;
+}
+
+/* =====================================================
+   RESET
+===================================================== */
 
 * {
   box-sizing: border-box;
@@ -51,6 +102,7 @@ body {
   height: 100%;
   height: 100dvh;
   min-width: 280px;
+  min-height: 0;
   overflow: hidden;
 }
 
@@ -66,15 +118,17 @@ body {
 
   background:
     linear-gradient(
-      var(--cream-layer),
-      var(--cream-layer)
+      rgba(255, 252, 242, 0.79),
+      rgba(255, 252, 242, 0.79)
     ),
     url("../assets/main-bg.jpg") center / cover no-repeat;
 
   overscroll-behavior: none;
 }
 
-/* MAIN PAGE */
+/* =====================================================
+   MAIN PAGE
+===================================================== */
 
 .namaz-page {
   display: flex;
@@ -91,93 +145,136 @@ body {
 
   background:
     linear-gradient(
-      var(--cream-layer),
-      var(--cream-layer)
+      rgba(255, 252, 242, 0.30),
+      rgba(255, 252, 242, 0.30)
     ),
     url("../assets/main-bg.jpg") center / cover no-repeat;
 }
 
-/* SHARED BOARD STYLE */
+/* =====================================================
+   COMMON HEADER AND FOOTER
+===================================================== */
 
-.intro-board,
-.namaz-footer {
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-}
-
-/* TOP BOARD */
-
-.intro-board {
+.top-board,
+.bottom-board {
   position: relative;
-  isolation: isolate;
+  z-index: 2;
+
+  flex: 0 0 var(--header-height);
 
   display: flex;
-  flex: 0 0 var(--header-height);
   align-items: center;
   justify-content: center;
 
   width: 100%;
   height: var(--header-height);
   min-height: var(--header-height);
+  max-height: var(--header-height);
+  min-width: 0;
 
-  padding: 8px 12px;
-  overflow: hidden;
+  padding: 6px 12px;
 
-  text-align: center;
+  color: var(--gold-light);
+  background: linear-gradient(140deg, var(--deep), #0B2C20);
 
-  background:
-    linear-gradient(
-      rgba(255, 252, 242, 0.79),
-      rgba(255, 252, 242, 0.79)
-    ),
-    url("../assets/hero-bg.jpg") center / cover no-repeat;
+  border: 2px solid var(--gold);
+  border-radius: 22px;
+
+  box-shadow:
+    0 3px 9px rgba(30, 49, 28, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-.intro-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-
+.top-board h1 {
   width: 100%;
   min-width: 0;
-  max-height: 100%;
-  overflow: hidden;
-}
 
-.intro-content h1 {
-  flex: 0 0 auto;
+  color: var(--gold-light);
 
-  color: var(--gold-dark);
-
-  font-size: clamp(21px, 5.8vw, 30px);
-  font-weight: 900;
+  font-size: clamp(20px, 5vw, 26px);
+  font-weight: 800;
   line-height: 1.25;
   text-align: center;
-}
 
-.intro-content > p {
-  width: 100%;
-  max-width: 100%;
-
-  color: var(--deep-green);
-
-  font-size: clamp(12px, 3.3vw, 16px);
-  font-weight: 750;
-  line-height: 1.35;
-
-  text-align: center;
   overflow-wrap: anywhere;
 }
 
-/* TEN OPTIONS: 2 COLUMNS × 5 ROWS */
+/* =====================================================
+   CONTENT AREA
+===================================================== */
 
-.learning-grid {
-  display: grid;
+.namaz-content {
   flex: 1 1 auto;
 
+  display: flex;
+  flex-direction: column;
+  gap: var(--content-gap);
+
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+
+  overflow: hidden;
+}
+
+/* =====================================================
+   INTRODUCTION BOARD
+===================================================== */
+
+.intro-board {
+  position: relative;
+  isolation: isolate;
+
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-width: 0;
+
+  padding: 10px 12px;
+
+  overflow: hidden;
+
+  color: var(--deep);
+
+  background:
+    linear-gradient(
+      rgba(255, 252, 242, 0.67),
+      rgba(255, 252, 242, 0.67)
+    ),
+    url("../assets/hero-bg.jpg") center / cover no-repeat;
+
+  border: 1px solid var(--border);
+  border-radius: 20px;
+
+  box-shadow: 0 3px 10px rgba(30, 49, 28, 0.10);
+}
+
+.intro-board p {
+  width: 100%;
+  min-width: 0;
+
+  color: var(--deep);
+
+  font-size: clamp(12px, 3.25vw, 16px);
+  font-weight: 750;
+  line-height: 1.4;
+  text-align: center;
+
+  overflow-wrap: anywhere;
+}
+
+/* =====================================================
+   10 OPTION CARDS — 2 COLUMNS × 5 ROWS
+===================================================== */
+
+.learning-grid {
+  flex: 1 1 auto;
+
+  display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-template-rows: repeat(5, minmax(0, 1fr));
 
@@ -190,7 +287,9 @@ body {
   overflow: hidden;
 }
 
-/* OPTION CARD */
+/* =====================================================
+   OPTION CARD
+===================================================== */
 
 .learning-card {
   display: flex;
@@ -204,24 +303,25 @@ body {
   min-width: 0;
   min-height: 0;
 
-  padding: 5px 7px;
+  padding: 4px 7px;
   overflow: hidden;
 
-  border: 1px solid rgba(32, 88, 62, 0.24);
+  color: var(--deep);
+  background: var(--soft);
+
+  border: 1px solid var(--border);
   border-radius: var(--card-radius);
 
-  background: var(--light-pista);
-  color: var(--deep-green);
-
-  box-shadow: var(--shadow);
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.09);
 
   font-family: inherit;
-  font-size: clamp(11px, 3.1vw, 16px);
+  font-size: clamp(11px, 3vw, 16px);
   font-weight: 800;
   line-height: 1.25;
   text-align: center;
 
   cursor: pointer;
+  touch-action: manipulation;
 
   transition:
     background-color 0.18s ease,
@@ -233,11 +333,10 @@ body {
 
 .topic-icon {
   display: block;
-
   flex: 0 0 auto;
 
-  width: clamp(29px, 8vw, 43px);
-  height: clamp(29px, 8vw, 43px);
+  width: clamp(27px, 7.8vw, 42px);
+  height: clamp(27px, 7.8vw, 42px);
 
   object-fit: contain;
   object-position: center;
@@ -253,7 +352,7 @@ body {
   flex: 1 1 auto;
   min-width: 0;
 
-  color: var(--deep-green);
+  color: var(--deep);
 
   font-family: inherit;
   font-size: inherit;
@@ -268,12 +367,12 @@ body {
 /* INTERACTION */
 
 .learning-card:active {
-  background: var(--option-pista);
+  background: var(--row);
   transform: scale(0.985);
 }
 
 .learning-card:focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--accent);
   outline-offset: -3px;
 }
 
@@ -283,76 +382,139 @@ body {
 
 @media (hover: hover) {
   .learning-card:hover {
-    background: var(--option-pista);
+    background: var(--row);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   }
 }
 
-/* FOOTER BOARD */
+/* =====================================================
+   FOOTER
+===================================================== */
 
 .namaz-footer {
-  position: relative;
-  isolation: isolate;
-
-  display: flex;
-  flex: 0 0 var(--footer-height);
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
+  flex-basis: var(--footer-height);
   height: var(--footer-height);
   min-height: var(--footer-height);
+  max-height: var(--footer-height);
 
   padding: 6px 10px;
-  overflow: hidden;
 
-  color: var(--cream);
-  background: var(--deep-green);
+  color: var(--gold-light);
+  background: linear-gradient(140deg, var(--deep), #0B2C20);
 }
 
 .namaz-footer p {
-  position: relative;
-  z-index: 1;
-
   width: 100%;
-  margin: 0;
+  min-width: 0;
 
-  color: var(--cream);
+  color: var(--gold-light);
 
   font-family: inherit;
   font-size: clamp(12px, 3.4vw, 16px);
   font-weight: 800;
-  line-height: 1.4;
-
+  line-height: 1.35;
   text-align: center;
+
   overflow-wrap: anywhere;
 }
 
-/* COMPACT PHONES */
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+body.dark-mode {
+  --text: #E9EFE6;
+  --muted: #C0CBBD;
+  --card: rgba(32, 45, 35, 0.97);
+  --input: #26352A;
+  --row: #344A39;
+  --border: rgba(218, 190, 105, 0.48);
+
+  color: var(--text);
+
+  background:
+    linear-gradient(
+      rgba(13, 33, 22, 0.72),
+      rgba(13, 33, 22, 0.72)
+    ),
+    url("../assets/main-bg.jpg") center / cover no-repeat;
+}
+
+body.dark-mode .namaz-page {
+  background:
+    linear-gradient(
+      rgba(13, 33, 22, 0.45),
+      rgba(13, 33, 22, 0.45)
+    ),
+    url("../assets/main-bg.jpg") center / cover no-repeat;
+}
+
+body.dark-mode .top-board,
+body.dark-mode .bottom-board {
+  background: linear-gradient(140deg, #103E29, #092E1E);
+  border-color: var(--gold);
+}
+
+body.dark-mode .top-board h1,
+body.dark-mode .namaz-footer p {
+  color: var(--gold-light);
+}
+
+body.dark-mode .intro-board {
+  background:
+    linear-gradient(
+      rgba(24, 35, 26, 0.72),
+      rgba(24, 35, 26, 0.72)
+    ),
+    url("../assets/hero-bg.jpg") center / cover no-repeat;
+
+  border-color: var(--border);
+}
+
+body.dark-mode .intro-board p {
+  color: #E9EFE6;
+}
+
+body.dark-mode .learning-card {
+  color: var(--text);
+  background: #263F30;
+  border-color: var(--border);
+}
+
+body.dark-mode .learning-card span {
+  color: var(--text);
+}
+
+body.dark-mode .learning-card:active,
+body.dark-mode .learning-card:hover {
+  background: #344A39;
+}
+
+/* =====================================================
+   COMPACT PHONES
+===================================================== */
 
 @media (max-width: 380px) {
   :root {
-    --header-height: 100px;
-    --footer-height: 44px;
-    --page-gap: 8px;
-    --app-padding: 8px;
-    --card-gap: 6px;
+    --app-padding: 7px;
+    --page-gap: 6px;
+    --content-gap: 6px;
+    --card-gap: 5px;
     --card-radius: 13px;
   }
 
+  .top-board,
+  .bottom-board {
+    padding-inline: 7px;
+    border-radius: 18px;
+  }
+
   .intro-board {
-    padding-inline: 8px;
+    padding: 7px 8px;
+    border-radius: 16px;
   }
 
-  .intro-content {
-    gap: 3px;
-  }
-
-  .intro-content h1 {
-    font-size: clamp(19px, 5.5vw, 24px);
-  }
-
-  .intro-content > p {
+  .intro-board p {
     font-size: clamp(11px, 3vw, 13px);
     line-height: 1.3;
   }
@@ -360,18 +522,12 @@ body {
   .learning-card {
     gap: 4px;
     padding: 3px 4px;
-
     font-size: clamp(10px, 2.8vw, 12px);
-    border-radius: 11px;
   }
 
   .topic-icon {
-    width: clamp(26px, 7.2vw, 32px);
-    height: clamp(26px, 7.2vw, 32px);
-  }
-
-  .namaz-footer {
-    padding-inline: 6px;
+    width: clamp(24px, 7vw, 32px);
+    height: clamp(24px, 7vw, 32px);
   }
 
   .namaz-footer p {
@@ -379,32 +535,37 @@ body {
   }
 }
 
-/* SHORT SCREENS */
+/* =====================================================
+   SHORT SCREENS
+===================================================== */
 
-@media (max-height: 650px) {
+@media (max-height: 760px) {
   :root {
-    --header-height: 88px;
-    --footer-height: 40px;
-    --page-gap: 5px;
+    --header-height: 52px;
+    --footer-height: 52px;
+    --page-gap: 6px;
     --app-padding: 7px;
+    --content-gap: 6px;
     --card-gap: 5px;
   }
 
+  .top-board,
+  .bottom-board {
+    border-radius: 17px;
+    padding-block: 4px;
+  }
+
+  .top-board h1 {
+    font-size: clamp(18px, 4.5vw, 23px);
+  }
+
   .intro-board {
-    padding-block: 5px;
+    padding: 6px 8px;
   }
 
-  .intro-content {
-    gap: 2px;
-  }
-
-  .intro-content h1 {
-    font-size: clamp(18px, 4.8vw, 23px);
-  }
-
-  .intro-content > p {
+  .intro-board p {
     font-size: clamp(10px, 2.8vw, 13px);
-    line-height: 1.25;
+    line-height: 1.28;
   }
 
   .learning-card {
@@ -414,12 +575,8 @@ body {
   }
 
   .topic-icon {
-    width: clamp(24px, 6.8vw, 32px);
-    height: clamp(24px, 6.8vw, 32px);
-  }
-
-  .namaz-footer {
-    padding-block: 3px;
+    width: clamp(23px, 6.5vw, 31px);
+    height: clamp(23px, 6.5vw, 31px);
   }
 
   .namaz-footer p {
@@ -427,76 +584,60 @@ body {
   }
 }
 
-/* DARK MODE: USE THE MAIN APP SETTING */
+/* =====================================================
+   VERY SHORT SCREENS
+===================================================== */
 
-body.dark-mode {
-  --text: #e7f0e4;
-  --muted: #c3cfc2;
+@media (max-height: 600px) {
+  :root {
+    --header-height: 44px;
+    --footer-height: 44px;
+    --page-gap: 4px;
+    --app-padding: 5px;
+    --content-gap: 4px;
+    --card-gap: 3px;
+  }
 
-  --light-pista: #263f30;
-  --option-pista: #344a39;
+  .top-board,
+  .bottom-board {
+    border-radius: 14px;
+    padding: 3px 6px;
+  }
 
-  --border: rgba(214, 181, 109, 0.72);
-  --cream: #f8f6f0;
-  --gold-dark: #e7d18a;
+  .top-board h1 {
+    font-size: 17px;
+  }
 
-  color: var(--text);
+  .intro-board {
+    padding: 4px 6px;
+    border-radius: 12px;
+  }
 
-  background:
-    linear-gradient(
-      rgba(5, 19, 13, 0.78),
-      rgba(5, 19, 13, 0.78)
-    ),
-    url("../assets/main-bg.jpg") center / cover no-repeat;
+  .intro-board p {
+    font-size: 10px;
+    line-height: 1.2;
+  }
+
+  .learning-card {
+    gap: 3px;
+    padding: 2px 3px;
+    font-size: 10px;
+    border-radius: 9px;
+  }
+
+  .topic-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .namaz-footer p {
+    font-size: 10px;
+  }
 }
 
-body.dark-mode .namaz-page {
-  background:
-    linear-gradient(
-      rgba(5, 19, 13, 0.78),
-      rgba(5, 19, 13, 0.78)
-    ),
-    url("../assets/main-bg.jpg") center / cover no-repeat;
-}
-
-body.dark-mode .intro-board {
-  background:
-    linear-gradient(
-      rgba(22, 38, 30, 0.82),
-      rgba(22, 38, 30, 0.82)
-    ),
-    url("../assets/hero-bg.jpg") center / cover no-repeat;
-}
-
-body.dark-mode .intro-content h1 {
-  color: var(--gold);
-}
-
-body.dark-mode .intro-content > p {
-  color: var(--cream);
-}
-
-body.dark-mode .learning-card {
-  color: var(--text);
-  background: var(--light-pista);
-  border-color: rgba(214, 181, 109, 0.35);
-}
-
-body.dark-mode .learning-card span {
-  color: var(--text);
-}
-
-body.dark-mode .learning-card:active,
-body.dark-mode .learning-card:hover {
-  background: var(--option-pista);
-}
-
-body.dark-mode .namaz-footer {
-  color: var(--cream);
-  background: var(--deep-green);
-}
-
-/* ACCESSIBILITY */
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
 
 @media (prefers-reduced-motion: reduce) {
   .learning-card {
