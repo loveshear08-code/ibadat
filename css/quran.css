@@ -1,5 +1,10 @@
 
-/* IBADAT — QURAN — RESPONSIVE DESIGN */
+/* =========================================================
+   IBADAT — QURAN.CSS
+   Complete responsive stylesheet
+   Main background: ../assets/main-bg.jpg
+   Home board background: ../assets/hero-bg.jpg
+   ========================================================= */
 
 :root {
   --header-height: 48px;
@@ -31,9 +36,12 @@
 
   --home-overlay: rgba(255,253,245,.70);
   --content-overlay: rgba(255,253,245,.48);
+
   --shadow: 0 3px 10px rgba(30,49,28,.12);
   --arabic-size: 30px;
 }
+
+/* ---------- GLOBAL ---------- */
 
 * {
   box-sizing: border-box;
@@ -53,9 +61,16 @@ body {
     max(5px, env(safe-area-inset-top, 0px))
     var(--page-padding)
     max(5px, env(safe-area-inset-bottom, 0px));
+
   color: var(--text);
-  font-family: "Noto Sans Bengali", "Hind Siliguri",
-    "Noto Sans Devanagari", Arial, sans-serif;
+
+  font-family:
+    "Noto Sans Bengali",
+    "Hind Siliguri",
+    "Noto Sans Devanagari",
+    Arial,
+    sans-serif;
+
   background:
     var(--page-overlay),
     url("../assets/main-bg.jpg") center / cover no-repeat;
@@ -68,14 +83,25 @@ input {
 
 button {
   touch-action: manipulation;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 #quranApp {
+  width: 100%;
   height: 100%;
   min-height: 0;
+
   display: flex;
   flex-direction: column;
   gap: var(--page-gap);
+
   overflow: hidden;
 }
 
@@ -88,17 +114,24 @@ button {
   overflow: hidden;
 }
 
+/* ---------- HEADER ---------- */
+
 .hero {
   flex: 0 0 var(--header-height);
+  width: 100%;
   height: var(--header-height);
   min-height: var(--header-height);
   max-height: var(--header-height);
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   padding: 3px 10px;
+
   background: var(--header-bg);
   color: var(--header-text);
+
   border: 2px solid var(--accent);
   border-radius: 20px;
 }
@@ -106,15 +139,19 @@ button {
 #pageSubtitle {
   width: 100%;
   margin: 0;
+
   color: var(--header-text);
   font-size: clamp(16px, 4vw, 20px);
   font-weight: 800;
-  text-align: center;
   line-height: 1.3;
+  text-align: center;
+
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* ---------- PAGE CONTAINER ---------- */
 
 .page-container {
   position: relative;
@@ -125,6 +162,7 @@ button {
 
 .page {
   display: none;
+  width: 100%;
   height: 100%;
   min-height: 0;
 }
@@ -134,70 +172,107 @@ button {
   flex-direction: column;
 }
 
-/* HOME: main background outside, hero-bg.jpg inside the home board. */
+/* =========================================================
+   HOME PAGE
+   Outside background: main-bg.jpg
+   Featured board background: hero-bg.jpg
+   ========================================================= */
+
 #homePage {
   min-height: 0;
 }
 
 .home-scroll {
+  width: 100%;
   height: 100%;
   min-height: 0;
+
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
+
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
-  padding: 0 1px;
+  -webkit-overflow-scrolling: touch;
+
+  padding: 5px 1px 3px;
 }
 
 .featured {
   flex: 1 0 auto;
-  padding: 9px 12px 12px;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: clamp(14px, 3vh, 24px) 12px 14px;
+
   text-align: center;
   border-radius: 22px;
+
   background:
-    linear-gradient(var(--home-overlay), var(--home-overlay)),
+    linear-gradient(
+      var(--home-overlay),
+      var(--home-overlay)
+    ),
     url("../assets/hero-bg.jpg") center / cover no-repeat;
 }
 
 .bismillah {
+  margin-top: 2px;
+
   color: var(--deep);
   font-family: "Amiri", "Noto Naskh Arabic", serif;
   font-size: clamp(27px, 7vw, 39px);
-  line-height: 1.55;
+  line-height: 1.65;
   font-weight: 700;
 }
 
 .bismillah-translation {
-  margin: 0 0 5px;
+  margin: 3px 0 0;
+
   color: var(--muted);
   font-size: 13px;
   font-weight: 700;
+  line-height: 1.7;
 }
 
 .quran-art-wrap {
-  height: clamp(100px, 19vh, 155px);
+  width: 100%;
+  height: clamp(105px, 22vh, 165px);
+  flex: 0 0 auto;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  margin-top: clamp(12px, 3vh, 23px);
 }
 
 .quran-art {
   width: auto;
   height: 100%;
   max-width: 90%;
+
   object-fit: contain;
   filter: drop-shadow(0 8px 8px rgba(0,0,0,.2));
 }
 
+/* Islamic geometric ornament and gold lines */
+
 .ornament-divider {
   width: min(100%, 270px);
-  margin: 4px auto 7px;
+  flex: 0 0 auto;
+
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+
+  margin: clamp(10px, 2vh, 15px) auto 0;
+
   color: var(--primary);
 }
 
@@ -213,44 +288,56 @@ button {
 }
 
 .quran-description {
+  width: 100%;
   max-width: 540px;
-  margin: 4px auto 0;
+
+  margin: clamp(9px, 2vh, 15px) auto 0;
+
+  color: var(--text);
   font-size: 14px;
-  line-height: 1.75;
+  line-height: 1.8;
   font-weight: 600;
+  text-align: center;
 }
 
+/* Home navigation options */
+
 .home-options {
+  width: 100%;
   flex: 0 0 auto;
+
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
+
+  margin-top: 0;
   padding: 0 1px 2px;
 }
 
 .option-button {
   min-width: 0;
   min-height: 54px;
+
   display: flex;
   align-items: center;
   gap: 7px;
+
   padding: 8px;
+
   border: 1px solid var(--border);
   border-radius: 17px;
+
   background: var(--card);
   color: var(--deep);
+
   font-size: clamp(12px, 3.2vw, 16px);
   font-weight: 800;
+
   cursor: pointer;
 }
 
-.option-button:active,
-.tool-button:active,
-.footer-control:active {
-  filter: brightness(.92);
-}
-
 .option-icon {
+  flex: 0 0 auto;
   font-size: 21px;
 }
 
@@ -261,28 +348,50 @@ button {
   font-weight: 900;
 }
 
-/* READ/LISTEN: main-bg.jpg also remains visible through the content board. */
+.option-button:active,
+.tool-button:active,
+.footer-control:active {
+  filter: brightness(.92);
+}
+
+/* =========================================================
+   READ AND LISTEN CONTENT BOARDS
+   Both use main-bg.jpg, with a theme-sensitive overlay.
+   ========================================================= */
+
 .content-board {
+  width: 100%;
   height: 100%;
   min-height: 0;
+
   display: flex;
   flex-direction: column;
+
   padding: 8px;
   border-radius: 22px;
+
   background:
-    linear-gradient(var(--content-overlay), var(--content-overlay)),
+    linear-gradient(
+      var(--content-overlay),
+      var(--content-overlay)
+    ),
     url("../assets/main-bg.jpg") center / cover no-repeat;
 }
+
+/* ---------- READ TOOLBAR ---------- */
 
 .read-toolbar {
   flex: 0 0 auto;
   min-height: 38px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+
   padding: 0 0 6px;
   margin-bottom: 7px;
+
   border-bottom: 1px solid var(--border);
 }
 
@@ -290,13 +399,19 @@ button {
   width: 38px;
   height: 38px;
   flex: 0 0 38px;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
+  padding: 0;
+
   border: 1px solid var(--border);
   border-radius: 10px;
+
   background: var(--card);
   color: var(--deep);
+
   font-size: 19px;
   font-weight: 800;
   cursor: pointer;
@@ -312,6 +427,8 @@ button {
   font-size: 17px;
 }
 
+/* Search input */
+
 .search-panel {
   flex: 0 0 auto;
   display: flex;
@@ -326,9 +443,12 @@ button {
 .search-panel input {
   width: 100%;
   min-width: 0;
+
   border: 1px solid var(--border);
   border-radius: 10px;
+
   padding: 9px 10px;
+
   color: var(--text);
   background: var(--card);
   font-size: 14px;
@@ -338,9 +458,12 @@ button {
   font-size: 22px;
 }
 
+/* ---------- READ LAYOUT ---------- */
+
 .read-layout {
   flex: 1 1 0;
   min-height: 0;
+
   display: flex;
   overflow: hidden;
 }
@@ -349,9 +472,12 @@ button {
   display: none;
   flex: 0 0 40%;
   min-width: 0;
+
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+
   border-right: 1px solid var(--border);
   padding-right: 5px;
 }
@@ -368,34 +494,48 @@ button {
   flex: 1 1 100%;
   min-width: 0;
   min-height: 0;
+
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+
   padding: 0 3px 8px;
 }
+
+/* ---------- SURAH ITEMS ---------- */
 
 .surah-item,
 .listen-item {
   width: 100%;
+  min-width: 0;
+
   display: flex;
   align-items: center;
   gap: 8px;
+
   margin: 0 0 6px;
   padding: 9px 8px;
+
   text-align: left;
+
   color: var(--text);
   background: var(--card);
+
   border: 1px solid var(--border);
   border-radius: 13px;
+
   cursor: pointer;
 }
 
 .surah-number {
   flex: 0 0 30px;
   height: 30px;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
   border-radius: 9px;
   background: var(--soft);
   color: var(--deep);
@@ -405,6 +545,7 @@ button {
 .surah-item-text {
   flex: 1;
   min-width: 0;
+
   display: flex;
   flex-direction: column;
   gap: 3px;
@@ -418,11 +559,12 @@ button {
 }
 
 .surah-item-meta {
-  font-size: 11px;
   color: var(--muted);
+  font-size: 11px;
 }
 
 .surah-item-arabic {
+  flex: 0 0 auto;
   font: 18px "Amiri", "Noto Naskh Arabic", serif;
   white-space: nowrap;
 }
@@ -433,8 +575,11 @@ button {
   border-color: var(--primary);
 }
 
+/* ---------- SURAH HEADING ---------- */
+
 .surah-heading {
   text-align: center;
+
   padding: 10px 4px;
   border-bottom: 1px solid var(--border);
   margin-bottom: 9px;
@@ -453,15 +598,19 @@ button {
 }
 
 .surah-bismillah {
-  font: 26px/1.8 "Amiri", "Noto Naskh Arabic", serif;
   color: var(--deep);
+  font: 26px/1.8 "Amiri", "Noto Naskh Arabic", serif;
 }
+
+/* ---------- AYAH CARDS ---------- */
 
 .ayah {
   margin-bottom: 8px;
   padding: 11px 9px;
+
   border: 1px solid var(--border);
   border-radius: 13px;
+
   background: var(--card);
 }
 
@@ -474,25 +623,32 @@ button {
 .ayah-number {
   padding: 4px 8px;
   border-radius: 8px;
+
   background: var(--soft);
   color: var(--deep);
+
   font-size: 12px;
   font-weight: 800;
 }
 
 .ayah-play {
   border: 0;
+  padding: 4px;
+
   background: transparent;
   color: var(--primary);
+
   font-size: 18px;
   cursor: pointer;
 }
 
 .ayah-arabic {
   margin-top: 8px;
+
   font-family: "Amiri", "Noto Naskh Arabic", serif;
   font-size: var(--arabic-size);
   line-height: 2;
+
   text-align: right;
   direction: rtl;
   overflow-wrap: anywhere;
@@ -500,18 +656,25 @@ button {
 
 .ayah-translation {
   margin-top: 9px;
+
+  color: var(--text);
   font-size: 14px;
   line-height: 1.85;
   white-space: pre-line;
 }
 
-/* LISTEN */
+/* =========================================================
+   LISTEN PAGE
+   ========================================================= */
+
 .listen-surah-list {
   flex: 1 1 0;
   min-height: 0;
+
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
 }
 
 .listen-item {
@@ -523,24 +686,34 @@ button {
 }
 
 .listen-play-icon {
+  flex: 0 0 auto;
   margin-left: auto;
+
   color: var(--primary);
   font-size: 20px;
   font-weight: 900;
 }
 
-/* FOOTER */
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
 .app-footer {
   flex: 0 0 var(--footer-height);
+  width: 100%;
   height: var(--footer-height);
   min-height: var(--footer-height);
   max-height: var(--footer-height);
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   padding: 3px 7px;
+
   border: 2px solid var(--accent);
   border-radius: 20px;
+
   background: var(--footer-bg);
   color: var(--footer-text);
 }
@@ -550,6 +723,7 @@ button {
   width: 100%;
   height: 100%;
   min-width: 0;
+
   align-items: center;
   justify-content: center;
   gap: 5px;
@@ -559,6 +733,8 @@ button {
   display: flex;
 }
 
+/* Home footer scrolling messages */
+
 .quote-track {
   width: 100%;
   overflow: hidden;
@@ -567,9 +743,11 @@ button {
 
 .quote-marquee {
   width: max-content;
+
   display: flex;
   align-items: center;
   gap: 40px;
+
   will-change: transform;
   animation: quote-scroll 65s linear infinite;
 }
@@ -582,33 +760,48 @@ button {
 }
 
 @keyframes quote-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
+
+/* Read footer message */
 
 .footer-message {
   flex: 1;
   min-width: 0;
+
   color: var(--footer-text);
   font-size: 12px;
   font-weight: 800;
   text-align: center;
+
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+/* Footer controls */
+
 .footer-control {
   flex: 0 0 38px;
   width: 38px;
   height: 40px;
+
   border: 0;
   padding: 0;
+
   background: transparent;
   color: var(--accent);
+
   font-family: sans-serif;
   font-size: 23px;
   font-weight: 900;
+
   cursor: pointer;
 }
 
@@ -628,20 +821,28 @@ button {
   opacity: .35;
 }
 
+/* ---------- STATUS MESSAGE ---------- */
+
 .app-message {
   position: fixed;
   z-index: 10;
+
   left: 50%;
   bottom: calc(var(--footer-height) + 16px);
   transform: translateX(-50%);
+
   max-width: 90%;
   padding: 9px 13px;
+
   border-radius: 10px;
+
   background: var(--deep);
-  color: white;
+  color: #fff;
+
   font-size: 12px;
   opacity: 0;
   pointer-events: none;
+
   transition: opacity .15s ease;
 }
 
@@ -652,13 +853,19 @@ button {
 .loading,
 .empty-state {
   padding: 18px 8px;
-  text-align: center;
+
   color: var(--muted);
   font-size: 13px;
+  text-align: center;
 }
 
-/* THEMES */
-body[data-color-theme="classic"] {}
+/* =========================================================
+   COLOR THEMES
+   ========================================================= */
+
+body[data-color-theme="classic"] {
+  /* Default green theme */
+}
 
 body[data-color-theme="royal"] {
   --primary: #285A8E;
@@ -668,6 +875,7 @@ body[data-color-theme="royal"] {
   --text: #1B3652;
   --muted: #65798E;
   --border: #C8D9EB;
+
   --header-bg: #173A60;
   --footer-bg: #173A60;
 }
@@ -680,6 +888,7 @@ body[data-color-theme="rose"] {
   --text: #633B42;
   --muted: #846D70;
   --border: #E8CBC8;
+
   --header-bg: #7D414B;
   --footer-bg: #7D414B;
 }
@@ -692,18 +901,26 @@ body[data-color-theme="pista"] {
   --text: #254D2A;
   --muted: #6D806D;
   --border: #CDE3C8;
+
   --header-bg: #2F7135;
   --footer-bg: #2F7135;
 }
 
-/* Dark mode affects boards, overlays, cards, text and controls. */
+/* ---------- DARK MODE ---------- */
+
 body.dark-mode {
   --text: #E5EDE7;
   --muted: #BECBBF;
   --card: rgba(25,38,29,.96);
   --border: #405746;
   --soft: #263B2C;
-  --page-overlay: linear-gradient(rgba(8,15,10,.80),rgba(8,15,10,.80));
+
+  --page-overlay:
+    linear-gradient(
+      rgba(8,15,10,.80),
+      rgba(8,15,10,.80)
+    );
+
   --home-overlay: rgba(12,20,14,.73);
   --content-overlay: rgba(12,20,14,.60);
 }
@@ -740,6 +957,10 @@ body.dark-mode .surah-bismillah {
   color: var(--text);
 }
 
+/* =========================================================
+   RESPONSIVE LAYOUT
+   ========================================================= */
+
 @media (max-width: 380px) {
   :root {
     --page-padding: 5px;
@@ -747,7 +968,7 @@ body.dark-mode .surah-bismillah {
   }
 
   .featured {
-    padding: 8px 9px 10px;
+    padding: 10px 9px 12px;
   }
 
   .bismillah {
@@ -779,24 +1000,30 @@ body.dark-mode .surah-bismillah {
 
 @media (max-height: 600px) {
   .featured {
-    padding: 6px 9px;
+    padding: 8px 9px 10px;
   }
 
   .bismillah {
     font-size: 27px;
-    line-height: 1.35;
+    line-height: 1.4;
   }
 
   .quran-art-wrap {
     height: 85px;
+    margin-top: 10px;
   }
 
   .bismillah-translation {
     margin-bottom: 2px;
   }
 
+  .ornament-divider {
+    margin-top: 8px;
+  }
+
   .quran-description {
-    line-height: 1.5;
+    margin-top: 7px;
+    line-height: 1.55;
   }
 }
 
