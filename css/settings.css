@@ -1,11 +1,7 @@
-
 /* =====================================================
-   IBADAT SETTINGS — COMPLETE RESPONSIVE CSS
+   IBADAT SETTINGS — RESPONSIVE LAYOUT
    File: css/settings.css
-   Background: ../assets/main-bg.jpg
 ===================================================== */
-
-/* ================= ROOT VARIABLES ================= */
 
 :root {
     --deep-green: #124C32;
@@ -28,38 +24,39 @@
     --theme-border: #D5E3D1;
 }
 
-/* ================= RESET ================= */
+/* RESET */
 
 * {
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
-html {
+html,
+body {
     width: 100%;
     height: 100%;
+    min-height: 0;
     margin: 0;
     overflow: hidden;
 }
 
-body {
-    width: 100%;
-    height: 100%;
-    height: 100dvh;
-    min-height: 0;
-    margin: 0;
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
 
+body {
+    height: 100dvh;
     padding:
-        max(5px, env(safe-area-inset-top))
+        max(5px, env(safe-area-inset-top, 0px))
         7px
-        max(5px, env(safe-area-inset-bottom));
+        max(5px, env(safe-area-inset-bottom, 0px));
 
     display: flex;
     flex-direction: column;
     gap: var(--page-gap);
 
-    overflow: hidden;
     color: var(--theme-text);
-
     font-family:
         "Noto Sans Bengali",
         "Noto Sans Devanagari",
@@ -73,11 +70,9 @@ body {
             rgba(255,253,245,.76)
         ),
         url("../assets/main-bg.jpg") center / cover no-repeat;
-
-    -webkit-tap-highlight-color: transparent;
 }
 
-/* ================= FIXED TOP AND FOOTER ================= */
+/* HEADER AND FOOTER — PRESERVED */
 
 .top-board,
 .bottom-board {
@@ -96,7 +91,6 @@ body {
     justify-content: center;
 
     color: var(--gold-light);
-
     background:
         linear-gradient(
             140deg,
@@ -116,20 +110,17 @@ body {
     min-width: 0;
     margin: 0;
     padding: 0;
-
     color: var(--gold-light);
     font-size: clamp(18px,4.6vw,23px);
     font-weight: 700;
     line-height: 1.2;
     text-align: center;
-    overflow-wrap: anywhere;
 }
 
 #settingsFooter {
     min-width: 0;
     margin: 0;
     padding: 0;
-
     color: var(--gold-light);
     font-size: clamp(12px,3.5vw,16px);
     font-weight: 700;
@@ -138,7 +129,7 @@ body {
     overflow-wrap: anywhere;
 }
 
-/* ================= MAIN LAYOUT ================= */
+/* MAIN LAYOUT */
 
 .container {
     flex: 1 1 0;
@@ -146,7 +137,6 @@ body {
     min-height: 0;
     width: 100%;
     max-width: 650px;
-
     margin: 0 auto;
 
     display: flex;
@@ -167,12 +157,11 @@ body {
     overflow: hidden;
 }
 
-/* ================= COMMON CARDS ================= */
+/* COMMON CARDS */
 
 .card {
     flex: 0 0 auto;
     min-width: 0;
-
     margin: 0;
     padding: 7px;
 
@@ -202,10 +191,10 @@ body {
     color: var(--theme-muted);
     font-size: 11px;
     font-weight: 500;
-    line-height: 1.3;
+    line-height: 1.35;
 }
 
-/* ================= LANGUAGE ================= */
+/* LANGUAGE */
 
 #langSelect,
 .azan-row select {
@@ -214,7 +203,6 @@ body {
 
     color: var(--theme-text);
     background: var(--theme-input);
-
     border: 1px solid var(--theme-border);
     border-radius: 11px;
 
@@ -228,148 +216,205 @@ body {
     padding: 5px 9px;
 }
 
-/* ================= LIGHT / DARK MODE ================= */
+/* SINGLE THEME BOARD */
 
-.theme-label {
-    min-height: 27px;
+.theme-card {
+    padding: 8px 9px;
+}
 
+.theme-heading-row {
     display: flex;
     align-items: center;
-    gap: 9px;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.theme-heading-row h2 {
+    margin: 0;
+    flex: 0 1 auto;
+    text-align: left;
+}
+
+.dark-mode-control {
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 7px;
 
     color: var(--theme-text);
-    font-size: 13px;
-    font-weight: 500;
-
+    font-size: 12px;
+    font-weight: 650;
     cursor: pointer;
 }
 
 #darkMode {
-    width: 19px;
-    height: 19px;
-    flex: 0 0 auto;
-    margin: 0;
-
-    accent-color: var(--theme-primary);
-    cursor: pointer;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
 }
 
-/* ================= COMPACT THEME COLOR CARD ================= */
+.dark-check {
+    width: 25px;
+    height: 25px;
+    flex: 0 0 25px;
 
-.theme-color-card {
-    padding: 6px 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    color: transparent;
+    background: var(--theme-input);
+    border: 2px solid var(--theme-border);
+    border-radius: 7px;
+
+    font-size: 16px;
+    font-weight: 900;
+    line-height: 1;
 }
 
-.theme-color-card h2 {
-    margin-bottom: 2px;
+#darkMode:checked + .dark-check {
+    color: #FFFFFF;
+    background: var(--theme-primary);
+    border-color: var(--theme-primary);
 }
 
-.theme-color-card p {
-    margin-bottom: 5px;
-    line-height: 1.25;
+#darkMode:focus-visible + .dark-check {
+    outline: 2px solid var(--theme-accent);
+    outline-offset: 3px;
 }
+
+.theme-color-section {
+    margin-top: 8px;
+    padding-top: 7px;
+    border-top: 1px solid var(--theme-border);
+}
+
+.theme-color-section p {
+    margin: 0 0 8px;
+    text-align: left;
+}
+
+/* FOUR ROUND COLOR DOTS */
 
 .theme-options {
     display: grid;
-    grid-template-columns: repeat(2,minmax(0,1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: start;
+    justify-items: center;
     gap: 5px;
 }
 
 .theme-option {
+    width: 100%;
     min-width: 0;
-    min-height: 35px;
-
     margin: 0;
-    padding: 5px 7px;
+    padding: 2px;
 
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    gap: 5px;
+    justify-content: flex-start;
+    gap: 4px;
 
     color: var(--theme-text);
-    background: var(--theme-input);
-
-    border: 1px solid var(--theme-border);
-    border-radius: 11px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 12px;
 
     font: inherit;
-    text-align: left;
-
     cursor: pointer;
     touch-action: manipulation;
 }
 
-.theme-option[aria-checked="true"] {
-    padding: 4px 6px;
-
-    background: var(--theme-soft);
-    border: 2px solid var(--theme-primary);
-}
-
-.theme-swatches {
-    min-width: 0;
+.theme-dot {
+    width: 43px;
+    height: 43px;
+    max-width: 100%;
 
     display: flex;
     align-items: center;
-    gap: 5px;
+    justify-content: center;
 
-    overflow: hidden;
-}
-
-.theme-swatches span {
-    flex: 0 0 16px;
-
-    width: 16px;
-    min-width: 16px;
-    height: 16px;
-
-    display: block;
-
-    background: var(--swatch);
-    border: 1px solid rgba(0,0,0,.10);
+    background: var(--dot-color);
+    border: 3px solid transparent;
     border-radius: 50%;
+
+    box-shadow: 0 2px 5px rgba(0,0,0,.12);
 }
 
-/* Compact layout intentionally hides palette names */
+.theme-option[data-theme="classic"] {
+    --dot-color: #1B7F4B;
+}
 
-.theme-option-name {
-    display: none;
+.theme-option[data-theme="royal"] {
+    --dot-color: #285A8E;
+}
+
+.theme-option[data-theme="rose"] {
+    --dot-color: #B96F79;
+}
+
+.theme-option[data-theme="pista"] {
+    --dot-color: #4CAF50;
+}
+
+.theme-option[data-theme="classic"] .theme-dot {
+    background-color: #1B7F4B;
+}
+
+.theme-option[data-theme="royal"] .theme-dot {
+    background-color: #285A8E;
+}
+
+.theme-option[data-theme="rose"] .theme-dot {
+    background-color: #B96F79;
+}
+
+.theme-option[data-theme="pista"] .theme-dot {
+    background-color: #4CAF50;
 }
 
 .theme-check {
-    flex: 0 0 17px;
-
-    width: 17px;
-    height: 17px;
+    width: 100%;
+    height: 100%;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
     color: transparent;
-    background: transparent;
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1;
+    text-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
 
-    border: 1px solid var(--theme-border);
-    border-radius: 50%;
-
-    font-size: 11px;
-    font-weight: 800;
+.theme-option[aria-checked="true"] .theme-dot {
+    border-color: var(--theme-accent);
+    box-shadow:
+        0 0 0 2px var(--theme-primary),
+        0 3px 7px rgba(0,0,0,.16);
 }
 
 .theme-option[aria-checked="true"] .theme-check {
     color: #FFFFFF;
-    background: var(--theme-primary);
-    border-color: var(--theme-primary);
 }
 
-/* ================= AZAN SETTINGS ================= */
+.theme-option-name {
+    max-width: 100%;
+    font-size: 10px;
+    font-weight: 650;
+    line-height: 1.25;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+/* AZAN CARD */
 
 .azan-card {
-    /*
-      The Azan card expands into available space.
-      The top cards retain their natural height.
-    */
     flex: 1 1 0;
     min-height: 0;
 
@@ -425,11 +470,9 @@ body {
 
 .azan-row > span {
     min-width: 0;
-
     font-size: 11px;
     font-weight: 700;
     line-height: 1.25;
-
     overflow-wrap: anywhere;
 }
 
@@ -438,7 +481,7 @@ body {
     padding: 4px 6px;
 }
 
-/* ================= PLAY / PAUSE BUTTON ================= */
+/* PLAY / PAUSE */
 
 button {
     font-family: inherit;
@@ -450,7 +493,6 @@ button {
     width: 34px;
     min-width: 34px;
     height: 32px;
-
     padding: 0;
 
     display: flex;
@@ -459,7 +501,6 @@ button {
 
     color: var(--gold-light);
     background: var(--theme-primary);
-
     border: 0;
     border-radius: 10px;
 
@@ -473,40 +514,43 @@ button {
     background: var(--theme-accent);
 }
 
-.play-button:active,
-#saveBtn:active {
-    transform: scale(.97);
-}
-
-/* ================= SAVE BUTTON ================= */
+/* FULL-WIDTH SAVE BOARD */
 
 .btn-box {
     flex: 0 0 auto;
     min-width: 0;
-
+    width: 100%;
     margin: 0;
     padding: 0;
+
+    background: var(--theme-card);
+    border: 1px solid var(--theme-border);
+    border-radius: 16px;
+
+    box-shadow: 0 2px 7px rgba(20,60,30,.06);
 }
 
 #saveBtn {
+    display: block;
     width: 100%;
     min-height: 40px;
-
     padding: 7px 10px;
 
     color: #FFFFFF;
     background: var(--theme-primary);
-
     border: 0;
-    border-radius: 16px;
+    border-radius: 15px;
 
     font-size: 15px;
     font-weight: 750;
-
-    box-shadow: 0 3px 8px rgba(20,60,30,.10);
 }
 
-/* ================= FOUR COLOR PALETTES ================= */
+.play-button:active,
+#saveBtn:active {
+    transform: scale(.98);
+}
+
+/* COLOR PALETTES */
 
 body[data-color-theme="classic"] {
     --theme-primary: #1B7F4B;
@@ -560,7 +604,7 @@ body[data-color-theme="pista"] {
     --theme-border: #CDE3C8;
 }
 
-/* ================= APPLY SELECTED PALETTE ================= */
+/* SELECTED THEME APPLICATION */
 
 body[data-color-theme] .top-board,
 body[data-color-theme] .bottom-board {
@@ -569,7 +613,6 @@ body[data-color-theme] .bottom-board {
         var(--theme-deep),
         var(--deep-green-dark)
     );
-
     border-color: var(--theme-accent);
 }
 
@@ -577,26 +620,16 @@ body[data-color-theme] .card h2 {
     color: var(--theme-deep);
 }
 
-body[data-color-theme] #darkMode {
-    accent-color: var(--theme-primary);
-}
-
 body[data-color-theme] #saveBtn,
 body[data-color-theme] .play-button {
     background: var(--theme-primary);
 }
 
-body[data-color-theme] .theme-option[aria-checked="true"] {
-    background: var(--theme-soft);
-    border-color: var(--theme-primary);
+body[data-color-theme] .theme-option[aria-checked="true"] .theme-dot {
+    border-color: var(--theme-accent);
 }
 
-body[data-color-theme] .theme-option[aria-checked="true"] .theme-check {
-    background: var(--theme-primary);
-    border-color: var(--theme-primary);
-}
-
-/* ================= DARK MODE ================= */
+/* DARK MODE */
 
 body.dark-mode {
     --theme-text: #E5EDE7;
@@ -623,7 +656,6 @@ body.dark-mode .bottom-board {
         var(--theme-deep),
         #101D16
     );
-
     border-color: var(--theme-accent);
 }
 
@@ -638,7 +670,7 @@ body.dark-mode .card h2 {
 }
 
 body.dark-mode .card p,
-body.dark-mode .theme-label {
+body.dark-mode .dark-mode-control {
     color: var(--theme-muted);
 }
 
@@ -649,19 +681,11 @@ body.dark-mode select {
     color-scheme: dark;
 }
 
-body.dark-mode .theme-option {
+body.dark-mode .theme-option-name {
     color: var(--theme-text);
-    background: var(--theme-input);
-    border-color: var(--theme-border);
 }
 
-body.dark-mode .theme-option[aria-checked="true"] {
-    background: color-mix(
-        in srgb,
-        var(--theme-primary) 25%,
-        #1A241D
-    );
-
+body.dark-mode .theme-option[aria-checked="true"] .theme-dot {
     border-color: var(--theme-accent);
 }
 
@@ -678,15 +702,16 @@ body.dark-mode .play-button.is-playing {
     color: #172018;
 }
 
-body.dark-mode #saveBtn {
-    color: #FFFFFF;
+body.dark-mode .btn-box {
+    background: var(--theme-card);
+    border-color: var(--theme-border);
 }
 
-/* ================= ACCESSIBILITY ================= */
+/* ACCESSIBILITY */
 
 button:focus-visible,
 select:focus-visible,
-input:focus-visible {
+input:focus-visible + .dark-check {
     outline: 2px solid var(--theme-accent);
     outline-offset: 2px;
 }
@@ -699,7 +724,7 @@ input:focus-visible {
     }
 }
 
-/* ================= VERY SHORT SCREENS ================= */
+/* SHORT SCREENS */
 
 @media (max-height: 700px) {
     :root {
@@ -732,44 +757,40 @@ input:focus-visible {
         font-size: 10px;
     }
 
-    .theme-color-card {
-        padding: 4px 6px;
+    .theme-card {
+        padding: 5px 7px;
+    }
+
+    .theme-color-section {
+        margin-top: 5px;
+        padding-top: 5px;
+    }
+
+    .theme-color-section p {
+        margin-bottom: 5px;
     }
 
     .theme-options {
-        gap: 3px;
+        gap: 2px;
     }
 
-    .theme-option {
-        min-height: 27px;
-        padding: 3px 5px;
-        gap: 3px;
-    }
-
-    .theme-option[aria-checked="true"] {
-        padding: 2px 4px;
-    }
-
-    .theme-swatches {
-        gap: 3px;
-    }
-
-    .theme-swatches span {
-        flex-basis: 13px;
-        width: 13px;
-        min-width: 13px;
-        height: 13px;
+    .theme-dot {
+        width: 34px;
+        height: 34px;
     }
 
     .theme-check {
-        flex-basis: 15px;
-        width: 15px;
-        height: 15px;
-        font-size: 10px;
+        font-size: 18px;
     }
 
-    .theme-label {
-        min-height: 21px;
+    .theme-option-name {
+        font-size: 9px;
+    }
+
+    .dark-check {
+        width: 22px;
+        height: 22px;
+        flex-basis: 22px;
     }
 
     #langSelect {
@@ -815,7 +836,7 @@ input:focus-visible {
     }
 }
 
-/* ================= NARROW PHONES ================= */
+/* NARROW PHONES */
 
 @media (max-width: 360px) {
     body {
@@ -823,15 +844,13 @@ input:focus-visible {
         padding-right: 4px;
     }
 
-    .theme-swatches {
-        gap: 3px;
+    .theme-dot {
+        width: 36px;
+        height: 36px;
     }
 
-    .theme-swatches span {
-        flex-basis: 14px;
-        width: 14px;
-        min-width: 14px;
-        height: 14px;
+    .theme-option-name {
+        font-size: 9px;
     }
 
     .azan-row {
