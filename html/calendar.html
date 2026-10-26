@@ -1,23 +1,18 @@
 <!DOCTYPE html>
 <html lang="bn">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#1F6B3A">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#1B7F4B" id="themeColorMeta">
 
-    <title>Calendar</title>
+    <title>ক্যালেন্ডার | IBADAT</title>
 
-    <!-- Calendar CSS -->
-    <link rel="stylesheet" href="../css/calendar.css?v=final5">
+    <link rel="stylesheet" href="../css/calendar.css?v=final7">
 </head>
-
 <body>
 
-    <!-- FIXED TOP BOARD -->
+    <!-- হেডার বোর্ড -->
     <header class="top-board">
-
-        <!-- PREVIOUS MONTH -->
         <button
             id="prevMonth"
             class="month-button"
@@ -27,10 +22,8 @@
             <span aria-hidden="true">◀</span>
         </button>
 
-        <!-- CENTER HEADING -->
         <h1 id="calendarHeading">ক্যালেন্ডার</h1>
 
-        <!-- NEXT MONTH -->
         <button
             id="nextMonth"
             class="month-button"
@@ -39,27 +32,21 @@
             title="Next month">
             <span aria-hidden="true">▶</span>
         </button>
-
     </header>
 
-    <!-- MAIN CALENDAR CONTENT -->
+    <!-- মূল কনটেন্ট -->
     <main class="calendar">
 
-        <!-- CALENDAR BOARD -->
-        <section
-            class="calendar-board"
-            aria-label="Calendar">
+        <!-- মাসের ক্যালেন্ডার বোর্ড -->
+        <section class="calendar-board" aria-label="Calendar">
 
-            <!-- MONTH AND YEAR -->
             <h2 id="monthTitle"></h2>
 
-            <!-- WEEKDAY NAMES -->
             <div
                 class="day-names"
                 id="dayNames">
             </div>
 
-            <!-- CALENDAR DATE GRID -->
             <div
                 id="calendarGrid"
                 class="grid">
@@ -67,7 +54,7 @@
 
         </section>
 
-        <!-- ISLAMIC SPECIAL DAYS BOARD -->
+        <!-- ইসলামিক বিশেষ দিনের বোর্ড -->
         <section
             class="events-section"
             aria-label="Islamic special days">
@@ -87,19 +74,15 @@
 
     </main>
 
-    <!-- FIXED BOTTOM FOOTER BOARD -->
+    <!-- ফুটার বোর্ড -->
     <footer class="bottom-board">
-
-        <p id="calendarFooter">
-            আল্লাহকে স্মরণ করুন
-        </p>
-
+        <p id="calendarFooter">আল্লাহকে স্মরণ করুন</p>
     </footer>
 
-    <!-- Calendar JavaScript -->
-    <script src="../js/calendar.js?v=final5"></script>
+    <!-- ক্যালেন্ডারের JavaScript -->
+    <script src="../js/calendar.js?v=final7"></script>
 
-    <!-- Existing Theme JavaScript -->
+    <!-- বিদ্যমান থিম সিস্টেম -->
     <script src="../js/theme.js"></script>
 
 </body>
