@@ -4,11 +4,10 @@
 
   const API = 'https://api.alquran.cloud/v1';
   const AUDIO_BASE = 'https://cdn.islamic.network/quran/audio/128/ar.alafasy/';
-  const AYAH_AUDIO = 'https://api.alquran.cloud/v1/ayah/';
+  const AYAH_AUDIO = `${API}/ayah/`;
   const $ = id => document.getElementById(id);
 
   const els = {
-    app: $('quranApp'),
     title: $('pageSubtitle'),
     home: $('homePage'),
     read: $('readPage'),
@@ -22,6 +21,7 @@
     searchPanel: $('surahSearchPanel'),
     searchInput: $('surahSearchInput'),
     clearSearch: $('clearSearch'),
+    readLayout: $('readLayout'),
     surahList: $('surahList'),
     readContent: $('readContent'),
     listenList: $('listenSurahList'),
@@ -39,49 +39,103 @@
 
   const TEXT = {
     bn: {
-      home:'আল-কুরআন', read:'কুরআন পড়ুন', listen:'তিলাওয়াত শুনুন',
-      bismillah:'পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে',
-      homeTitle:'পবিত্র আল-কুরআন',
-      description:'আল-কুরআন মানবজাতির জন্য হিদায়াত, রহমত ও আলোর পথ। নিয়মিত তিলাওয়াত করুন, অর্থ বুঝুন এবং জীবনে কুরআনের শিক্ষা অনুসরণ করুন।',
-      readOption:'কুরআন পড়ুন', listenOption:'তিলাওয়াত শুনুন',
-      search:'খুঁজুন', searchPlaceholder:'সূরার নাম বা নম্বর লিখুন',
-      choose:'সূরা নির্বাচন করুন', loading:'লোড হচ্ছে…',
-      loadingSurah:'সূরার তালিকা লোড হচ্ছে…',
-      error:'তথ্য লোড করা যায়নি। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।',
-      noResults:'কোনো সূরা পাওয়া যায়নি।', ayah:'আয়াত',
-      meccan:'মাক্কী', medinan:'মাদানী',
-      quote:'“নিশ্চয়ই এই কুরআন এমন পথ দেখায়, যা সবচেয়ে সরল।”',
-      play:'চালান', pause:'বিরতি'
+      home: 'আল-কুরআন',
+      read: 'আল-কুরআন',
+      listen: 'আল-কুরআন',
+      bismillah: 'পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে',
+      description: 'আল-কুরআন মানবজাতির জন্য হিদায়াত, রহমত ও আলোর পথ। কুরআন তিলাওয়াত করুন, অর্থ অনুধাবন করুন এবং অনুসরণ করুন।',
+      readOption: 'কুরআন পড়ুন',
+      listenOption: 'তিলাওয়াত শুনুন',
+      search: 'সূরা খুঁজুন',
+      searchPlaceholder: 'সূরার নাম বা নম্বর লিখুন',
+      choose: 'সূরা নির্বাচন করুন',
+      loading: 'কুরআন লোড হচ্ছে…',
+      loadingSurah: 'সূরার তালিকা লোড হচ্ছে…',
+      error: 'তথ্য লোড করা যায়নি। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।',
+      noResults: 'কোনো সূরা পাওয়া যায়নি।',
+      ayah: 'আয়াত',
+      meccan: 'মাক্কী',
+      medinan: 'মাদানী',
+      play: 'চালান',
+      pause: 'বিরতি',
+      quotes: [
+        'কুরআন তিলাওয়াত করুন, অন্তরকে প্রশান্ত করুন।',
+        'নিশ্চয়ই আল্লাহর স্মরণেই অন্তর প্রশান্ত হয়।',
+        'কুরআন পড়ুন, বুঝুন এবং জীবনে অনুসরণ করুন।',
+        'সালাত কায়েম করুন এবং আল্লাহর ওপর ভরসা রাখুন।',
+        'আল্লাহর রহমত থেকে কখনো নিরাশ হবেন না।',
+        'সত্য কথা বলুন এবং উত্তম চরিত্র গড়ে তুলুন।',
+        'দয়া করুন, ক্ষমা করুন এবং মানুষের উপকার করুন।',
+        'প্রতিদিন কুরআনের জন্য কিছু সময় রাখুন।',
+        'আল্লাহর শুকরিয়া আদায় করুন।',
+        'নেক আমলে জীবনকে সুন্দর করে তুলুন।'
+      ]
     },
     en: {
-      home:'The Holy Quran', read:'Read Quran', listen:'Listen to Quran',
-      bismillah:'In the name of Allah, the Most Compassionate, the Most Merciful',
-      homeTitle:'The Holy Quran',
-      description:'The Quran is guidance, mercy, and light for humanity. Recite it regularly, understand its meaning, and follow its teachings in your life.',
-      readOption:'Read Quran', listenOption:'Listen to Quran',
-      search:'Search', searchPlaceholder:'Search by surah name or number',
-      choose:'Choose a surah', loading:'Loading…',
-      loadingSurah:'Loading surah list…',
-      error:'Could not load the data. Check your internet connection and try again.',
-      noResults:'No surahs found.', ayah:'Ayah',
-      meccan:'Meccan', medinan:'Medinan',
-      quote:'“Indeed, this Quran guides to that which is most upright.”',
-      play:'Play', pause:'Pause'
+      home: 'Al-Quran',
+      read: 'Al-Quran',
+      listen: 'Al-Quran',
+      bismillah: 'In the name of Allah, the Most Compassionate, the Most Merciful',
+      description: 'The Quran is guidance, mercy, and light for humanity. Recite the Quran, understand its meaning, and follow its teachings.',
+      readOption: 'Read Quran',
+      listenOption: 'Listen to Quran',
+      search: 'Search surah',
+      searchPlaceholder: 'Search by surah name or number',
+      choose: 'Choose a surah',
+      loading: 'Loading Quran…',
+      loadingSurah: 'Loading surah list…',
+      error: 'Could not load the data. Check your internet connection and try again.',
+      noResults: 'No surahs found.',
+      ayah: 'Ayahs',
+      meccan: 'Meccan',
+      medinan: 'Medinan',
+      play: 'Play',
+      pause: 'Pause',
+      quotes: [
+        'Recite the Quran and bring peace to your heart.',
+        'Surely, in the remembrance of Allah hearts find peace.',
+        'Read the Quran, understand it, and follow its guidance.',
+        'Establish prayer and put your trust in Allah.',
+        'Never lose hope in the mercy of Allah.',
+        'Speak truthfully and build good character.',
+        'Show kindness, forgive, and help others.',
+        'Make time for the Quran every day.',
+        'Be grateful to Allah for His blessings.',
+        'Make life beautiful through righteous deeds.'
+      ]
     },
     hi: {
-      home:'पवित्र कुरआन', read:'कुरआन पढ़ें', listen:'कुरआन सुनें',
-      bismillah:'अल्लाह के नाम से, जो अत्यंत कृपाशील, दयावान है',
-      homeTitle:'पवित्र अल-कुरआन',
-      description:'कुरआन मानवता के लिए मार्गदर्शन, दया और प्रकाश है। नियमित तिलावत करें, अर्थ समझें और इसकी शिक्षाओं पर अमल करें।',
-      readOption:'कुरआन पढ़ें', listenOption:'कुरआन सुनें',
-      search:'खोजें', searchPlaceholder:'सूरह का नाम या नंबर लिखें',
-      choose:'सूरह चुनें', loading:'लोड हो रहा है…',
-      loadingSurah:'सूरह सूची लोड हो रही है…',
-      error:'जानकारी लोड नहीं हो सकी। इंटरनेट कनेक्शन जाँचकर फिर कोशिश करें।',
-      noResults:'कोई सूरह नहीं मिली।', ayah:'आयत',
-      meccan:'मक्की', medinan:'मदनी',
-      quote:'“निश्चय ही यह कुरआन सबसे सीधे मार्ग की ओर मार्गदर्शन करता है।”',
-      play:'चलाएँ', pause:'रोकें'
+      home: 'अल-क़ुरआन',
+      read: 'अल-क़ुरआन',
+      listen: 'अल-क़ुरआन',
+      bismillah: 'अत्यंत कृपाशील, दयावान अल्लाह के नाम से',
+      description: 'क़ुरआन मानवता के लिए मार्गदर्शन, दया और प्रकाश है। क़ुरआन पढ़ें, अर्थ समझें और उसकी शिक्षाओं पर अमल करें।',
+      readOption: 'क़ुरआन पढ़ें',
+      listenOption: 'क़ुरआन सुनें',
+      search: 'सूरह खोजें',
+      searchPlaceholder: 'सूरह का नाम या नंबर लिखें',
+      choose: 'सूरह चुनें',
+      loading: 'क़ुरआन लोड हो रहा है…',
+      loadingSurah: 'सूरह सूची लोड हो रही है…',
+      error: 'जानकारी लोड नहीं हो सकी। इंटरनेट जाँचकर फिर कोशिश करें।',
+      noResults: 'कोई सूरह नहीं मिली।',
+      ayah: 'आयतें',
+      meccan: 'मक्की',
+      medinan: 'मदनी',
+      play: 'चलाएँ',
+      pause: 'रोकें',
+      quotes: [
+        'क़ुरआन पढ़ें और अपने दिल को सुकून दें।',
+        'अल्लाह के ज़िक्र से दिलों को सुकून मिलता है।',
+        'क़ुरआन पढ़ें, समझें और उसकी शिक्षाओं पर अमल करें।',
+        'नमाज़ क़ायम करें और अल्लाह पर भरोसा रखें।',
+        'अल्लाह की रहमत से कभी निराश न हों।',
+        'सच बोलें और अच्छा चरित्र बनाएँ।',
+        'दया करें, माफ़ करें और दूसरों की मदद करें।',
+        'हर दिन क़ुरआन के लिए समय निकालें।',
+        'अल्लाह की नेमतों के लिए शुक्रगुज़ार रहें।',
+        'नेक अमल से जीवन सुंदर बनाएँ।'
+      ]
     }
   };
 
@@ -93,14 +147,6 @@
       'अल-फ़ातिहा','अल-बक़रा','आल-इमरान','अन-निसा','अल-माइदा','अल-अनआम','अल-आराफ़','अल-अनफ़ाल','अत-तौबा','यूनुस','हूद','यूसुफ़','अर-रअद','इब्राहीम','अल-हिज्र','अन-नहल','बनी इसराईल','अल-कहफ़','मरयम','ता-हा','अल-अंबिया','अल-हज्ज','अल-मुमिनून','अन-नूर','अल-फ़ुरक़ान','अश-शुअरा','अन-नम्ल','अल-क़सस','अल-अनकबूत','अर-रूम','लुक़मान','अस-सज्दा','अल-अहज़ाब','सबा','फ़ातिर','या-सीन','अस-साफ़्फ़ात','साद','अज़-ज़ुमर','ग़ाफ़िर','फ़ुस्सिलात','अश-शूरा','अज़-ज़ुख़रुफ़','अद-दुख़ान','अल-जासिया','अल-अहक़ाफ़','मुहम्मद','अल-फ़त्ह','अल-हुजुरात','क़ाफ़','अज़-ज़ारियात','अत-तूर','अन-नज्म','अल-क़मर','अर-रहमान','अल-वाक़िआ','अल-हदीद','अल-मुजादिला','अल-हश्र','अल-मुम्तहिना','अस-सफ़्फ़','अल-जुमुआ','अल-मुनाफ़िक़ून','अत-तग़ाबुन','अत-तलाक़','अत-तहरीम','अल-मुल्क','अल-क़लम','अल-हाक़्क़ा','अल-मआरिज','नूह','अल-जिन्न','अल-मुज़्ज़म्मिल','अल-मुद्दस्सिर','अल-क़ियामा','अल-इंसान','अल-मुरसलात','अन-नबा','अन-नाज़िआत','अबस','अत-तकवीर','अल-इन्फ़ितार','अल-मुतफ़्फ़िफ़ीन','अल-इन्शिक़ाक़','अल-बुरूज','अत-तारिक़','अल-आला','अल-ग़ाशिया','अल-फ़ज्र','अल-बलद','अश-शम्स','अल-लैल','अद-दुहा','अल-इन्शिराह','अत-तीन','अल-अलक़','अल-क़द्र','अल-बय्यिना','अज़-ज़िलज़ाल','अल-आदियात','अल-क़ारिआ','अत-तकासुर','अल-अस्र','अल-हुमज़ा','अल-फ़ील','क़ुरैश','अल-माऊन','अल-कौसर','अल-काफ़िरून','अन-नस्र','अल-मसद','अल-इख़लास','अल-फ़लक़','अन-नास'
     ]
   };
-
-  let settings = { lang: 'bn', dark: false, themeColor: 'classic' };
-  let surahs = [];
-  let currentSurah = null;
-  let currentPage = 'home';
-  let currentAyahAudio = null;
-  let toastTimer = null;
-  let arabicSize = 30;
 
   const translationEdition = {
     bn: 'bn.bengali',
@@ -114,7 +160,18 @@
     en: '0123456789'
   };
 
-  const t = key => (TEXT[settings.lang] || TEXT.bn)[key] || key;
+  let settings = { lang: 'bn', dark: false, themeColor: 'classic' };
+  let surahs = [];
+  let currentSurah = null;
+  let currentPage = 'home';
+  let currentAyahAudio = null;
+  let toastTimer = null;
+  let arabicSize = 30;
+  let navigationLock = false;
+  let readRequestId = 0;
+  let pageHistory = ['home'];
+
+  const t = key => (TEXT[settings.lang] || TEXT.bn)[key] ?? key;
 
   const localizedNumber = value => String(value).replace(
     /\d/g,
@@ -129,7 +186,7 @@
     els.message.textContent = message;
     els.message.classList.add('show');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => els.message.classList.remove('show'), 2800);
+    toastTimer = setTimeout(() => els.message.classList.remove('show'), 2600);
   }
 
   function readSettings() {
@@ -139,84 +196,125 @@
     } catch (_) {}
 
     if (!['bn', 'en', 'hi'].includes(settings.lang)) settings.lang = 'bn';
+
     if (!['classic', 'royal', 'rose', 'pista'].includes(settings.themeColor)) {
       settings.themeColor = 'classic';
     }
+
     settings.dark = Boolean(settings.dark);
   }
 
   function applyTheme() {
+    document.body.dataset.colorTheme = settings.themeColor;
     document.body.classList.toggle('dark-mode', settings.dark);
-    document.documentElement.dataset.theme = settings.themeColor;
     document.documentElement.style.colorScheme = settings.dark ? 'dark' : 'light';
+  }
+
+  function renderQuoteMarquee() {
+    const track = $('quoteMarquee');
+    const messages = t('quotes');
+    const doubled = [...messages, ...messages];
+
+    track.innerHTML = doubled.map(message =>
+      `<span>${escapeHTML(message)}</span>`
+    ).join('');
   }
 
   function applyLabels() {
     document.documentElement.lang = settings.lang;
+
     $('bismillahTranslation').textContent = t('bismillah');
-    $('quranTitle').textContent = t('homeTitle');
     $('quranDescription').textContent = t('description');
     $('readOptionLabel').textContent = t('readOption');
     $('listenOptionLabel').textContent = t('listenOption');
-    $('searchLabel').textContent = t('search');
+    els.searchToggle.setAttribute('aria-label', t('search'));
     els.searchInput.placeholder = t('searchPlaceholder');
-    $('footerText').textContent = t('quote');
-
-    els.title.textContent =
-      currentPage === 'home' ? t('home') :
-      currentPage === 'read' ? t('read') : t('listen');
 
     $('surahListLoading').textContent = t('loadingSurah');
     $('listenLoading').textContent = t('loadingSurah');
+    $('readLoading').textContent = t('loading');
+
+    renderQuoteMarquee();
+    updatePageTitle();
 
     if (surahs.length) {
       renderSurahList();
       renderListenList();
     }
 
-    if (currentSurah && currentPage === 'read') {
-      loadSurah(currentSurah.number, false);
+    updateFooterMessage();
+  }
+
+  function updatePageTitle() {
+    els.title.textContent = t('home');
+  }
+
+  function setPage(page, options = {}) {
+    const { push = true, replace = false } = options;
+
+    if (!['home', 'read', 'listen'].includes(page)) page = 'home';
+    if (page === currentPage && !push) return;
+
+    currentPage = page;
+
+    els.home.classList.toggle('active', page === 'home');
+    els.read.classList.toggle('active', page === 'read');
+    els.listen.classList.toggle('active', page === 'listen');
+
+    els.homeFooter.classList.toggle('active', page === 'home');
+    els.readFooter.classList.toggle('active', page === 'read');
+    els.listenFooter.classList.toggle('active', page === 'listen');
+
+    updatePageTitle();
+
+    if (push) {
+      const state = { quranPage: page };
+
+      if (replace) {
+        history.replaceState(state, '', `#quran-${page}`);
+      } else {
+        history.pushState(state, '', `#quran-${page}`);
+      }
+
+      pageHistory.push(page);
+    }
+
+    if (page === 'read') {
+      if (!currentSurah && surahs.length) loadSurah(1);
     }
 
     updateFooterMessage();
   }
 
-  function setPage(page, push = true) {
-    if (!['home', 'read', 'listen'].includes(page)) page = 'home';
-    currentPage = page;
+  function navigateBack() {
+    if (currentPage === 'home') return;
 
-    for (const [key, element] of [
-      ['home', els.home],
-      ['read', els.read],
-      ['listen', els.listen]
-    ]) {
-      element.classList.toggle('active', key === page);
-    }
+    const previous = pageHistory.length > 1
+      ? pageHistory[pageHistory.length - 2]
+      : 'home';
 
-    for (const [key, element] of [
-      ['home', els.homeFooter],
-      ['read', els.readFooter],
-      ['listen', els.listenFooter]
-    ]) {
-      element.classList.toggle('active', key === page);
-    }
-
-    els.title.textContent =
-      page === 'home' ? t('home') :
-      page === 'read' ? t('read') : t('listen');
-
-    if (push) history.pushState({ quranPage: page }, '', `#quran-${page}`);
-
-    if (page === 'read' && !currentSurah && surahs.length) {
-      loadSurah(1);
+    if (history.state?.quranPage && history.length > 1) {
+      history.back();
+    } else {
+      pageHistory.pop();
+      setPage(previous, { push: false });
+      history.replaceState({ quranPage: previous }, '', `#quran-${previous}`);
     }
   }
 
   async function fetchJSON(url) {
     const response = await fetch(url);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
     const json = await response.json();
-    if (json.code && json.code !== 200) throw new Error(json.status || 'API error');
+
+    if (json.code && json.code !== 200) {
+      throw new Error(json.status || 'API error');
+    }
+
     return json.data;
   }
 
@@ -234,16 +332,22 @@
     if (!surahs.length) return;
 
     const query = (els.searchInput.value || '').trim().toLocaleLowerCase();
-    const filtered = surahs.filter(s =>
-      !query ||
-      String(s.number).includes(query) ||
-      localizedName(s).toLocaleLowerCase().includes(query) ||
-      s.englishName.toLocaleLowerCase().includes(query) ||
-      s.name.includes(query)
-    );
+
+    const filtered = surahs.filter(s => {
+      const number = String(s.number);
+      const localizedDigits = localizedNumber(number);
+
+      return !query ||
+        number.includes(query) ||
+        localizedDigits.includes(query) ||
+        localizedName(s).toLocaleLowerCase().includes(query) ||
+        s.englishName.toLocaleLowerCase().includes(query) ||
+        s.name.includes(query);
+    });
 
     if (!filtered.length) {
-      els.surahList.innerHTML = `<div class="empty-state">${t('noResults')}</div>`;
+      els.surahList.innerHTML =
+        `<div class="empty-state">${escapeHTML(t('noResults'))}</div>`;
       return;
     }
 
@@ -261,7 +365,11 @@
     `).join('');
 
     els.surahList.querySelectorAll('[data-surah]').forEach(button => {
-      button.addEventListener('click', () => loadSurah(Number(button.dataset.surah)));
+      button.addEventListener('click', () => {
+        const number = Number(button.dataset.surah);
+        closeSearchPanel();
+        loadSurah(number);
+      });
     });
   }
 
@@ -285,7 +393,9 @@
     `).join('');
 
     els.listenList.querySelectorAll('[data-surah]').forEach(button => {
-      button.addEventListener('click', () => playSurah(Number(button.dataset.surah)));
+      button.addEventListener('click', () => {
+        playSurah(Number(button.dataset.surah));
+      });
     });
   }
 
@@ -293,7 +403,9 @@
     const surah = surahs.find(item => item.number === number);
     if (!surah) return;
 
+    const requestId = ++readRequestId;
     currentSurah = surah;
+
     renderSurahList();
     renderListenList();
     updateFooterMessage();
@@ -301,11 +413,14 @@
     els.readContent.innerHTML = `<div class="loading">${t('loading')}</div>`;
 
     try {
+      const edition = translationEdition[settings.lang] || translationEdition.bn;
+
       const [arabicData, translationData] = await Promise.all([
         fetchJSON(`${API}/surah/${number}/quran-uthmani`),
-        fetchJSON(`${API}/surah/${number}/${translationEdition[settings.lang] || translationEdition.bn}`)
-          .catch(() => null)
+        fetchJSON(`${API}/surah/${number}/${edition}`).catch(() => null)
       ]);
+
+      if (requestId !== readRequestId) return;
 
       const translations = translationData?.ayahs || [];
 
@@ -343,10 +458,12 @@
       });
 
       if (scrollTop) els.readContent.scrollTop = 0;
+
       renderSurahList();
       updateFooterMessage();
     } catch (error) {
-      els.readContent.innerHTML = `<div class="empty-state">${t('error')}</div>`;
+      if (requestId !== readRequestId) return;
+      els.readContent.innerHTML = `<div class="empty-state">${escapeHTML(t('error'))}</div>`;
       showMessage(t('error'));
     }
   }
@@ -363,21 +480,22 @@
   }
 
   function moveSurah(delta, page) {
-    if (!currentSurah) {
-      if (surahs.length) {
-        page === 'listen' ? playSurah(1) : loadSurah(1);
-      }
-      return;
-    }
+    const number = currentSurah ? currentSurah.number : 1;
+    const next = Math.max(1, Math.min(114, number + delta));
 
-    const next = Math.max(1, Math.min(114, currentSurah.number + delta));
-    if (page === 'listen') playSurah(next);
-    else loadSurah(next);
+    if (next === number && currentSurah) return;
+
+    if (page === 'listen') {
+      playSurah(next);
+    } else {
+      loadSurah(next);
+    }
   }
 
   async function playAyah(key) {
     try {
       const data = await fetchJSON(`${AYAH_AUDIO}${key}/ar.alafasy`);
+
       currentAyahAudio = key;
       els.audio.src = data.audio;
       await els.audio.play();
@@ -391,13 +509,15 @@
     if (!surah) return;
 
     currentSurah = surah;
+    currentAyahAudio = null;
+
     renderListenList();
     renderSurahList();
     updateFooterMessage();
+
     setPage('listen');
 
     els.audio.src = `${AUDIO_BASE}${number}.mp3`;
-    currentAyahAudio = null;
 
     try {
       await els.audio.play();
@@ -436,27 +556,48 @@
     document.documentElement.style.setProperty('--arabic-size', `${arabicSize}px`);
   }
 
+  function openSearchPanel() {
+    els.searchPanel.hidden = false;
+    els.readLayout.classList.add('search-open');
+    els.searchToggle.setAttribute('aria-expanded', 'true');
+
+    renderSurahList();
+    els.searchInput.focus({ preventScroll: true });
+  }
+
+  function closeSearchPanel() {
+    els.searchPanel.hidden = true;
+    els.readLayout.classList.remove('search-open');
+    els.searchToggle.setAttribute('aria-expanded', 'false');
+    els.searchInput.value = '';
+    renderSurahList();
+  }
+
+  function toggleSearchPanel() {
+    if (els.searchPanel.hidden) openSearchPanel();
+    else closeSearchPanel();
+  }
+
+  function initQuoteMarquee() {
+    renderQuoteMarquee();
+  }
+
   function init() {
     readSettings();
     applyTheme();
     applyLabels();
+    initQuoteMarquee();
 
     els.homeRead.addEventListener('click', () => setPage('read'));
     els.homeListen.addEventListener('click', () => setPage('listen'));
 
-    els.searchToggle.addEventListener('click', () => {
-      const open = els.searchPanel.hidden;
-      els.searchPanel.hidden = !open;
-      els.searchToggle.setAttribute('aria-expanded', String(open));
-      if (open) els.searchInput.focus();
-    });
-
+    els.searchToggle.addEventListener('click', toggleSearchPanel);
     els.searchInput.addEventListener('input', renderSurahList);
 
     els.clearSearch.addEventListener('click', () => {
       els.searchInput.value = '';
       renderSurahList();
-      els.searchInput.focus();
+      els.searchInput.focus({ preventScroll: true });
     });
 
     els.fontDown.addEventListener('click', () => changeFont(-2));
@@ -481,14 +622,25 @@
     els.audio.addEventListener('ended', onAudioEnded);
 
     window.addEventListener('popstate', event => {
-      setPage(event.state?.quranPage || 'home', false);
+      const page = event.state?.quranPage ||
+        (location.hash === '#quran-read' ? 'read' :
+        location.hash === '#quran-listen' ? 'listen' : 'home');
+
+      pageHistory = pageHistory.slice(0, -1);
+      if (!pageHistory.length) pageHistory = ['home'];
+
+      setPage(page, { push: false });
     });
 
     window.addEventListener('storage', event => {
-      if (event.key === 'appSettings') {
+      if (event.key === 'appSettings' || event.key === null) {
         readSettings();
         applyTheme();
         applyLabels();
+
+        if (currentPage === 'read' && currentSurah) {
+          loadSurah(currentSurah.number, false);
+        }
       }
     });
 
@@ -497,42 +649,25 @@
         surahs = data;
         renderSurahList();
         renderListenList();
-        if (currentPage === 'read') loadSurah(1);
+
+        const requestedPage =
+          location.hash === '#quran-read' ? 'read' :
+          location.hash === '#quran-listen' ? 'listen' : 'home';
+
+        if (requestedPage !== 'home') {
+          setPage(requestedPage, { push: false });
+        }
+
+        if (currentPage === 'read') {
+          loadSurah(currentSurah?.number || 1);
+        }
       })
       .catch(() => {
         $('surahListLoading').textContent = t('error');
         $('listenLoading').textContent = t('error');
+        $('readLoading').textContent = t('error');
         showMessage(t('error'));
       });
-
-    if (location.hash === '#quran-read') setPage('read', false);
-    else if (location.hash === '#quran-listen') setPage('listen', false);
-  }
-
-  function applyLabels() {
-    document.documentElement.lang = settings.lang;
-    $('bismillahTranslation').textContent = t('bismillah');
-    $('quranTitle').textContent = t('homeTitle');
-    $('quranDescription').textContent = t('description');
-    $('readOptionLabel').textContent = t('readOption');
-    $('listenOptionLabel').textContent = t('listenOption');
-    $('searchLabel').textContent = t('search');
-    els.searchInput.placeholder = t('searchPlaceholder');
-    $('footerText').textContent = t('quote');
-
-    els.title.textContent =
-      currentPage === 'home' ? t('home') :
-      currentPage === 'read' ? t('read') : t('listen');
-
-    $('surahListLoading').textContent = t('loadingSurah');
-    $('listenLoading').textContent = t('loadingSurah');
-
-    if (surahs.length) {
-      renderSurahList();
-      renderListenList();
-    }
-
-    updateFooterMessage();
   }
 
   init();
