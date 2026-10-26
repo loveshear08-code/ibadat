@@ -5,7 +5,9 @@
   const SETTINGS_KEY = "appSettings";
   const ASSET_BASE = "../assets/icons/";
 
-  /* SETTINGS */
+  /* ==================================================
+     READ SETTINGS
+  ================================================== */
 
   function getAppSettings() {
     try {
@@ -19,26 +21,46 @@
   }
 
   function normalizeLanguage(language) {
-    return ["bn", "en", "hi"].includes(language)
-      ? language
+    const value = String(language || "bn").toLowerCase();
+
+    return ["bn", "en", "hi"].includes(value)
+      ? value
       : "bn";
   }
 
   function getCurrentLanguage() {
-    const params = new URLSearchParams(window.location.search);
     const settings = getAppSettings();
 
     return normalizeLanguage(
-      params.get("lang") ||
       settings.lang ||
       settings.language ||
       "bn"
     );
   }
 
+  function getCurrentTheme() {
+    const settings = getAppSettings();
+
+    const theme = String(
+      settings.themeColor ||
+      settings.theme ||
+      "classic"
+    ).toLowerCase();
+
+    return ["classic", "royal", "rose", "pista"].includes(theme)
+      ? theme
+      : "classic";
+  }
+
+  function isDarkMode() {
+    return getAppSettings().dark === true;
+  }
+
   let currentLanguage = getCurrentLanguage();
 
-  /* PAGE ROUTES: UNCHANGED */
+  /* ==================================================
+     PAGE ROUTES — KEEP EXISTING ROUTES
+  ================================================== */
 
   const NAMAZ_ROUTES = {
     "purity": "namaz-purity.html",
@@ -53,7 +75,9 @@
     "daily-amal": "namaz-daily-amal.html"
   };
 
-  /* TEN TOPICS: SAME ORDER AND ICONS */
+  /* ==================================================
+     TEN TOPICS — SAME ORDER AND ICONS
+  ================================================== */
 
   const topics = [
     {
@@ -148,7 +172,9 @@
     }
   ];
 
-  /* INTRODUCTION TEXT */
+  /* ==================================================
+     INTRODUCTION TEXT
+  ================================================== */
 
   const introduction = {
     bn: {
@@ -173,7 +199,9 @@
     }
   };
 
-  /* FOOTER */
+  /* ==================================================
+     FOOTER TEXT
+  ================================================== */
 
   const footerMessages = {
     bn: "নামাজ শিখি, শুদ্ধভাবে ইবাদত করি।",
@@ -181,30 +209,44 @@
     hi: "नमाज़ सीखें, सच्चे मन से इबादत करें।"
   };
 
-  function getText(textObject) {
-    return (
-      textObject[currentLanguage] ||
-      textObject.bn ||
-      ""
-    );
-  }
+  /* ==================================================
+     APPLY SHARED SETTINGS
+  ================================================== */
 
-  /* THEME */
+  function applySavedSettings() {
+    const theme = getCurrentTheme();
 
-  function applySavedTheme() {
-    const settings = getAppSettings();
+    document.body.dataset.colorTheme = theme;
 
     document.body.classList.toggle(
       "dark-mode",
-      Boolean(settings.dark)
+      isDarkMode()
     );
+
+    const themeColors = {
+      classic: "#1B7F4B",
+      royal: "#285A8E",
+      rose: "#B96F79",
+      pista: "#4CAF50"
+    };
+
+    const meta = document.getElementById("themeColorMeta");
+
+    if (meta) {
+      meta.content = isDarkMode()
+        ? "#103E29"
+        : themeColors[theme];
+    }
   }
 
-  /* BUILD INTRODUCTION AND FOOTER */
+  /* ==================================================
+     BUILD INTRODUCTION AND FOOTER
+  ================================================== */
 
   function buildIntroduction() {
     const intro =
-      introduction[currentLanguage] || introduction.bn;
+      introduction[currentLanguage] ||
+      introduction.bn;
 
     const heading = document.getElementById("intro-title");
     const paragraph = document.getElementById("intro-paragraph-1");
@@ -225,7 +267,8 @@
 
     if (footerMessage) {
       footerMessage.textContent =
-        footerMessages[currentLanguage] || footerMessages.bn;
+        footerMessages[currentLanguage] ||
+        footerMessages.bn;
     }
 
     document.documentElement.lang = currentLanguage;
@@ -239,7 +282,9 @@
     document.title = pageTitles[currentLanguage];
   }
 
-  /* OPEN TOPIC: SAME ROUTES */
+  /* ==================================================
+     OPEN TOPIC — SAME ROUTES AND LANGUAGE PARAMETER
+  ================================================== */
 
   function openTopic(topic) {
     const page = NAMAZ_ROUTES[topic.id];
@@ -257,12 +302,17 @@
       window.location.href
     );
 
-    destination.searchParams.set("lang", currentLanguage);
+    destination.searchParams.set(
+      "lang",
+      currentLanguage
+    );
 
     window.location.href = destination.href;
   }
 
-  /* BUILD THE TEN OPTION CARDS */
+  /* ==================================================
+     BUILD THE TEN OPTION CARDS
+  ================================================== */
 
   function buildLearningGrid() {
     const grid = document.getElementById("learning-grid");
@@ -281,7 +331,9 @@
       button.className = "learning-card";
       button.dataset.topic = topic.id;
 
-      const labelText = getText(topic.title);
+      const labelText =
+        topic.title[currentLanguage] ||
+        topic.title.bn;
 
       button.setAttribute("aria-label", labelText);
 
@@ -322,19 +374,23 @@
     grid.replaceChildren(fragment);
   }
 
-  /* REFRESH PAGE */
+  /* ==================================================
+     REFRESH PAGE
+  ================================================== */
 
   function refreshNamazPage() {
     currentLanguage = getCurrentLanguage();
 
-    applySavedTheme();
+    applySavedSettings();
     buildIntroduction();
     buildLearningGrid();
   }
 
   window.refreshNamazLanguage = refreshNamazPage;
 
-  /* OTHER-TAB SETTINGS CHANGES */
+  /* ==================================================
+     SETTINGS CHANGED IN ANOTHER TAB
+  ================================================== */
 
   window.addEventListener("storage", event => {
     if (event.key === SETTINGS_KEY) {
@@ -342,38 +398,47 @@
     }
   });
 
-  /* SAME-TAB LANGUAGE AND THEME CHANGES */
+  /* ==================================================
+     SAME-TAB SETTINGS CHANGE DETECTION
+  ================================================== */
 
   let previousSettings = "";
 
-  function checkSettings() {
+  function getSettingsSignature() {
     const settings = getAppSettings();
-    const signature = JSON.stringify({
-      lang: settings.lang || settings.language || "bn",
-      dark: Boolean(settings.dark)
-    });
 
-    if (signature === previousSettings) return;
+    return JSON.stringify({
+      lang: normalizeLanguage(
+        settings.lang || settings.language || "bn"
+      ),
+      themeColor: getCurrentTheme(),
+      dark: isDarkMode()
+    });
+  }
+
+  function checkSettings() {
+    const signature = getSettingsSignature();
+
+    if (signature === previousSettings) {
+      return;
+    }
 
     previousSettings = signature;
     refreshNamazPage();
   }
 
-  /* INITIALIZE */
+  /* ==================================================
+     INITIALIZE
+  ================================================== */
 
   function initializeNamazPage() {
     currentLanguage = getCurrentLanguage();
 
-    applySavedTheme();
+    applySavedSettings();
     buildIntroduction();
     buildLearningGrid();
 
-    const settings = getAppSettings();
-
-    previousSettings = JSON.stringify({
-      lang: settings.lang || settings.language || "bn",
-      dark: Boolean(settings.dark)
-    });
+    previousSettings = getSettingsSignature();
 
     window.setInterval(checkSettings, 700);
   }
