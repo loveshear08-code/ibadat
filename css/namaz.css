@@ -1,13 +1,7 @@
-
 /* =====================================================
    IBADAT — NAMAZ LEARNING PAGE
    Shared Header / Footer / Settings Themes
-   10 Cards | Bengali / English / Hindi
-   Fixed Header & Footer | No Page Scrolling
-===================================================== */
-
-/* =====================================================
-   ROOT VARIABLES
+   10 cards | 3 languages | No page scrolling
 ===================================================== */
 
 :root {
@@ -25,17 +19,18 @@
   --gold: #E8C766;
   --gold-light: #F5E5A7;
 
+  /* Match the calendar page */
   --header-height: 64px;
   --footer-height: 64px;
+  --page-gap: 9px;
+  --app-padding-top: 9px;
+  --app-padding-side: 10px;
+  --app-padding-bottom: 9px;
 
-  --page-gap: 8px;
-  --app-padding: 10px;
   --content-gap: 8px;
   --card-gap: 7px;
   --card-radius: 17px;
-
-  --header-footer-radius: 22px;
-  --board-radius: 18px;
+  --board-radius: 22px;
 }
 
 /* =====================================================
@@ -105,42 +100,43 @@ body[data-color-theme="pista"] {
   -webkit-tap-highlight-color: transparent;
 }
 
-html {
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  overflow: hidden;
-}
-
+html,
 body {
   width: 100%;
   height: 100%;
   height: 100dvh;
   min-width: 280px;
   min-height: 0;
-
   overflow: hidden;
-  overscroll-behavior: none;
+}
 
+body {
   color: var(--text);
 
   font-family:
     "Noto Sans Bengali",
-    "Nirmala UI",
     "Noto Sans Devanagari",
+    "Nirmala UI",
     Arial,
     sans-serif;
 
   background:
     linear-gradient(
-      rgba(255, 252, 242, 0.50),
-      rgba(255, 252, 242, 0.50)
+      rgba(255, 253, 245, 0.48),
+      rgba(255, 253, 245, 0.48)
     ),
-    url("../assets/main-bg.jpg") center / cover no-repeat;
+    url("../assets/main-bg.jpg") center / cover no-repeat fixed;
+
+  overscroll-behavior: none;
+}
+
+button,
+a {
+  font: inherit;
 }
 
 /* =====================================================
-   MAIN PAGE
+   MAIN PAGE LAYOUT
 ===================================================== */
 
 .namaz-page {
@@ -151,13 +147,12 @@ body {
   width: 100%;
   height: 100%;
   height: 100dvh;
-  min-width: 0;
   min-height: 0;
 
   padding:
-    var(--app-padding)
-    var(--app-padding)
-    max(var(--app-padding), env(safe-area-inset-bottom));
+    max(var(--app-padding-top), env(safe-area-inset-top))
+    var(--app-padding-side)
+    max(var(--app-padding-bottom), env(safe-area-inset-bottom));
 
   overflow: hidden;
 
@@ -170,10 +165,12 @@ body {
 }
 
 /* =====================================================
-   FIXED-HEIGHT HEADER
+   HEADER AND FOOTER
+   Match calendar board height, border and radius
 ===================================================== */
 
-.top-board {
+.top-board,
+.bottom-board {
   position: relative;
   z-index: 2;
 
@@ -185,24 +182,18 @@ body {
 
   width: 100%;
   height: var(--header-height);
-  min-width: 0;
   min-height: var(--header-height);
   max-height: var(--header-height);
+  min-width: 0;
 
-  padding: 5px 12px;
-  overflow: hidden;
+  margin: 0;
+  padding: 7px 12px;
 
   color: var(--gold-light);
-
-  background:
-    linear-gradient(
-      140deg,
-      var(--deep),
-      #0B2C20
-    );
+  background: linear-gradient(140deg, var(--deep), var(--deep));
 
   border: 2px solid var(--gold);
-  border-radius: var(--header-footer-radius);
+  border-radius: var(--board-radius);
 
   box-shadow:
     0 3px 9px rgba(30, 49, 28, 0.15),
@@ -213,23 +204,25 @@ body {
   width: 100%;
   min-width: 0;
 
+  margin: 0;
+  padding: 0;
+
   color: var(--gold-light);
 
-  font-family: inherit;
-  font-size: clamp(19px, 4.8vw, 25px);
+  font-size: clamp(19px, 4.6vw, 25px);
   font-weight: 800;
-  line-height: 1.2;
+  line-height: 1.3;
   text-align: center;
 
   overflow-wrap: anywhere;
 }
 
 /* =====================================================
-   CONTENT AREA BETWEEN HEADER AND FOOTER
+   CONTENT AREA
 ===================================================== */
 
 .namaz-content {
-  flex: 1 1 0;
+  flex: 1 1 auto;
 
   display: flex;
   flex-direction: column;
@@ -243,85 +236,87 @@ body {
 }
 
 /* =====================================================
-   MOSQUE BACKGROUND INTRODUCTION BOARD
-   Contains "কী ও কেন?" and its description
+   INTRODUCTION BOARD
+   Calendar-board style background and padding
 ===================================================== */
 
 .intro-board {
   position: relative;
   isolation: isolate;
 
+  /*
+    Keep the board large enough to resemble the calendar
+    background board while preserving room for all 10 cards.
+  */
   flex: 0 0 auto;
-  align-self: stretch;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
 
   width: 100%;
   min-width: 0;
-  min-height: 0;
+  min-height: 104px;
 
-  padding: 9px 12px;
+  padding: 10px;
+
   overflow: hidden;
 
   color: var(--deep);
 
   background:
     linear-gradient(
-      rgba(255, 252, 242, 0.55),
-      rgba(255, 252, 242, 0.55)
+      rgba(255, 253, 244, 0.48),
+      rgba(255, 252, 239, 0.52)
     ),
     url("../assets/hero-bg.jpg") center / cover no-repeat;
 
   border: 1px solid var(--border);
   border-radius: var(--board-radius);
 
-  box-shadow: 0 3px 10px rgba(30, 49, 28, 0.10);
+  box-shadow:
+    0 3px 10px rgba(30, 49, 28, 0.10);
 }
 
-/* Introduction heading */
-
 .intro-board h2 {
-  flex: 0 0 auto;
-
   width: 100%;
   min-width: 0;
 
-  color: var(--gold-dark, #9B7837);
+  margin: 0 0 4px;
+  padding: 0;
+
+  color: var(--deep);
 
   font-family: inherit;
-  font-size: clamp(19px, 4.8vw, 25px);
-  font-weight: 900;
-  line-height: 1.2;
+  font-size: clamp(18px, 4.2vw, 23px);
+  font-weight: 800;
+  line-height: 1.3;
   text-align: center;
 
   overflow-wrap: anywhere;
 }
 
-/* Introduction paragraph */
-
 .intro-board p {
-  flex: 0 1 auto;
-
   width: 100%;
   min-width: 0;
 
-  color: var(--deep);
+  margin: 0;
+  padding: 0;
+
+  color: var(--text);
 
   font-family: inherit;
-  font-size: clamp(11px, 3vw, 15px);
+  font-size: clamp(12px, 3.25vw, 16px);
   font-weight: 750;
-  line-height: 1.35;
+  line-height: 1.4;
   text-align: center;
 
   overflow-wrap: anywhere;
 }
 
 /* =====================================================
-   TEN OPTION CARDS — TWO COLUMNS × FIVE ROWS
+   10 OPTION CARDS — 2 COLUMNS × 5 ROWS
 ===================================================== */
 
 .learning-grid {
@@ -382,7 +377,7 @@ body {
     box-shadow 0.18s ease;
 }
 
-/* Option icon */
+/* OPTION ICON */
 
 .topic-icon {
   display: block;
@@ -399,7 +394,7 @@ body {
   background: transparent;
 }
 
-/* Option label */
+/* OPTION LABEL */
 
 .learning-card span {
   flex: 1 1 auto;
@@ -417,7 +412,7 @@ body {
   word-break: normal;
 }
 
-/* Card interaction */
+/* INTERACTION */
 
 .learning-card:active {
   background: var(--row);
@@ -441,64 +436,43 @@ body {
 }
 
 /* =====================================================
-   FIXED-HEIGHT FOOTER
+   FOOTER TEXT
 ===================================================== */
 
-.namaz-footer,
-.bottom-board {
-  position: relative;
-  z-index: 2;
-
+.namaz-footer {
   flex: 0 0 var(--footer-height);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
   width: 100%;
   height: var(--footer-height);
-  min-width: 0;
   min-height: var(--footer-height);
   max-height: var(--footer-height);
 
-  padding: 5px 10px;
-  overflow: hidden;
+  padding: 7px 12px;
 
   color: var(--gold-light);
-
-  background:
-    linear-gradient(
-      140deg,
-      var(--deep),
-      #0B2C20
-    );
-
-  border: 2px solid var(--gold);
-  border-radius: var(--header-footer-radius);
-
-  box-shadow:
-    0 3px 9px rgba(30, 49, 28, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  background: linear-gradient(140deg, var(--deep), var(--deep));
 }
 
-.namaz-footer p,
-.bottom-board p {
+.namaz-footer p {
   width: 100%;
   min-width: 0;
+
+  margin: 0;
+  padding: 0;
 
   color: var(--gold-light);
 
   font-family: inherit;
   font-size: clamp(12px, 3.4vw, 16px);
   font-weight: 800;
-  line-height: 1.3;
+  line-height: 1.35;
   text-align: center;
 
   overflow-wrap: anywhere;
 }
 
 /* =====================================================
-   DARK MODE — GLOBAL APP SETTING
+   DARK MODE
 ===================================================== */
 
 body.dark-mode {
@@ -516,7 +490,7 @@ body.dark-mode {
       rgba(13, 33, 22, 0.72),
       rgba(13, 33, 22, 0.72)
     ),
-    url("../assets/main-bg.jpg") center / cover no-repeat;
+    url("../assets/main-bg.jpg") center / cover no-repeat fixed;
 }
 
 body.dark-mode .namaz-page {
@@ -529,43 +503,28 @@ body.dark-mode .namaz-page {
 }
 
 body.dark-mode .top-board,
-body.dark-mode .namaz-footer,
 body.dark-mode .bottom-board {
-  color: var(--gold-light);
-
-  background:
-    linear-gradient(
-      140deg,
-      #103E29,
-      #092E1E
-    );
-
+  background: linear-gradient(140deg, var(--deep), #092E1E);
   border-color: var(--gold);
 }
 
 body.dark-mode .top-board h1,
-body.dark-mode .namaz-footer p,
-body.dark-mode .bottom-board p {
+body.dark-mode .namaz-footer p {
   color: var(--gold-light);
 }
 
 body.dark-mode .intro-board {
-  color: #E9EFE6;
-
   background:
     linear-gradient(
-      rgba(24, 35, 26, 0.72),
-      rgba(24, 35, 26, 0.72)
+      rgba(24, 35, 26, 0.36),
+      rgba(24, 35, 26, 0.42)
     ),
     url("../assets/hero-bg.jpg") center / cover no-repeat;
 
   border-color: var(--border);
 }
 
-body.dark-mode .intro-board h2 {
-  color: var(--gold-light);
-}
-
+body.dark-mode .intro-board h2,
 body.dark-mode .intro-board p {
   color: #E9EFE6;
 }
@@ -591,37 +550,33 @@ body.dark-mode .learning-card:hover {
 
 @media (max-width: 380px) {
   :root {
-    --app-padding: 7px;
+    --app-padding-side: 7px;
     --page-gap: 6px;
     --content-gap: 6px;
     --card-gap: 5px;
     --card-radius: 13px;
-    --header-footer-radius: 18px;
-    --board-radius: 16px;
   }
 
   .top-board,
-  .namaz-footer,
   .bottom-board {
     padding-inline: 7px;
-  }
-
-  .top-board h1 {
-    font-size: clamp(18px, 4.8vw, 23px);
+    border-radius: 18px;
   }
 
   .intro-board {
+    min-height: 96px;
     padding: 7px 8px;
-    gap: 3px;
+    border-radius: 16px;
   }
 
   .intro-board h2 {
-    font-size: clamp(17px, 4.6vw, 22px);
+    margin-bottom: 3px;
+    font-size: clamp(17px, 4.3vw, 21px);
   }
 
   .intro-board p {
-    font-size: clamp(10px, 2.9vw, 13px);
-    line-height: 1.28;
+    font-size: clamp(11px, 3vw, 13px);
+    line-height: 1.3;
   }
 
   .learning-card {
@@ -631,71 +586,68 @@ body.dark-mode .learning-card:hover {
   }
 
   .topic-icon {
-    width: clamp(23px, 7vw, 32px);
-    height: clamp(23px, 7vw, 32px);
+    width: clamp(24px, 7vw, 32px);
+    height: clamp(24px, 7vw, 32px);
   }
 
-  .namaz-footer p,
-  .bottom-board p {
+  .namaz-footer p {
     font-size: clamp(10px, 3vw, 13px);
   }
 }
 
 /* =====================================================
    SHORT SCREENS
-   Header and footer remain 64px high.
-   Middle content gets the remaining available height.
 ===================================================== */
 
 @media (max-height: 760px) {
   :root {
-    --header-height: 64px;
-    --footer-height: 64px;
-
-    --page-gap: 5px;
-    --app-padding: 6px;
-    --content-gap: 5px;
-    --card-gap: 4px;
+    --header-height: 52px;
+    --footer-height: 52px;
+    --page-gap: 6px;
+    --app-padding-top: 6px;
+    --app-padding-side: 7px;
+    --app-padding-bottom: 6px;
+    --content-gap: 6px;
+    --card-gap: 5px;
   }
 
   .top-board,
-  .namaz-footer,
   .bottom-board {
-    flex-basis: 64px;
-    height: 64px;
-    min-height: 64px;
-    max-height: 64px;
-
+    border-radius: 17px;
     padding-block: 4px;
   }
 
+  .top-board h1 {
+    font-size: clamp(18px, 4.5vw, 23px);
+  }
+
   .intro-board {
-    padding: 5px 7px;
-    gap: 2px;
+    min-height: 88px;
+    padding: 6px 8px;
   }
 
   .intro-board h2 {
-    font-size: clamp(16px, 4.2vw, 21px);
+    margin-bottom: 2px;
+    font-size: clamp(16px, 4vw, 20px);
   }
 
   .intro-board p {
-    font-size: clamp(10px, 2.7vw, 13px);
-    line-height: 1.22;
+    font-size: clamp(10px, 2.8vw, 13px);
+    line-height: 1.28;
   }
 
   .learning-card {
-    gap: 3px;
-    padding: 2px 3px;
-    font-size: clamp(9px, 2.6vw, 12px);
+    gap: 4px;
+    padding: 3px 4px;
+    font-size: clamp(10px, 2.7vw, 13px);
   }
 
   .topic-icon {
-    width: clamp(21px, 6vw, 29px);
-    height: clamp(21px, 6vw, 29px);
+    width: clamp(23px, 6.5vw, 31px);
+    height: clamp(23px, 6.5vw, 31px);
   }
 
-  .namaz-footer p,
-  .bottom-board p {
+  .namaz-footer p {
     font-size: clamp(10px, 2.8vw, 13px);
   }
 }
@@ -706,25 +658,20 @@ body.dark-mode .learning-card:hover {
 
 @media (max-height: 600px) {
   :root {
-    --header-height: 64px;
-    --footer-height: 64px;
-
-    --page-gap: 3px;
-    --app-padding: 4px;
-    --content-gap: 3px;
-    --card-gap: 2px;
+    --header-height: 44px;
+    --footer-height: 44px;
+    --page-gap: 4px;
+    --app-padding-top: 4px;
+    --app-padding-side: 5px;
+    --app-padding-bottom: 4px;
+    --content-gap: 4px;
+    --card-gap: 3px;
   }
 
   .top-board,
-  .namaz-footer,
   .bottom-board {
-    flex-basis: 64px;
-    height: 64px;
-    min-height: 64px;
-    max-height: 64px;
-
-    padding: 3px 5px;
-    border-radius: 13px;
+    border-radius: 14px;
+    padding: 3px 6px;
   }
 
   .top-board h1 {
@@ -732,43 +679,41 @@ body.dark-mode .learning-card:hover {
   }
 
   .intro-board {
-    padding: 3px 5px;
-    gap: 1px;
-    border-radius: 11px;
+    min-height: 72px;
+    padding: 4px 6px;
+    border-radius: 12px;
   }
 
   .intro-board h2 {
+    margin-bottom: 1px;
     font-size: 15px;
-    line-height: 1.1;
+    line-height: 1.2;
   }
 
   .intro-board p {
-    font-size: 9px;
-    line-height: 1.15;
+    font-size: 10px;
+    line-height: 1.2;
   }
 
   .learning-card {
-    gap: 2px;
-    padding: 1px 2px;
-    font-size: 9px;
-    line-height: 1.15;
-    border-radius: 8px;
+    gap: 3px;
+    padding: 2px 3px;
+    font-size: 10px;
+    border-radius: 9px;
   }
 
   .topic-icon {
-    width: 19px;
-    height: 19px;
+    width: 22px;
+    height: 22px;
   }
 
-  .namaz-footer p,
-  .bottom-board p {
+  .namaz-footer p {
     font-size: 10px;
-    line-height: 1.15;
   }
 }
 
 /* =====================================================
-   ACCESSIBILITY — REDUCED MOTION
+   REDUCED MOTION
 ===================================================== */
 
 @media (prefers-reduced-motion: reduce) {
