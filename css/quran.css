@@ -1,5 +1,5 @@
 
-/* IBADAT — QURAN PAGE — FRESH DESIGN */
+/* IBADAT — QURAN — RESPONSIVE DESIGN */
 
 :root {
   --header-height: 48px;
@@ -29,7 +29,8 @@
     rgba(232,244,222,.58)
   );
 
-  --board-overlay: rgba(255,253,245,.77);
+  --home-overlay: rgba(255,253,245,.70);
+  --content-overlay: rgba(255,253,245,.48);
   --shadow: 0 3px 10px rgba(30,49,28,.12);
   --arabic-size: 30px;
 }
@@ -39,7 +40,8 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -48,15 +50,24 @@ html, body {
 
 body {
   padding:
-    max(5px,env(safe-area-inset-top,0px))
+    max(5px, env(safe-area-inset-top, 0px))
     var(--page-padding)
-    max(5px,env(safe-area-inset-bottom,0px));
+    max(5px, env(safe-area-inset-bottom, 0px));
   color: var(--text);
-  font-family: "Noto Sans Bengali","Hind Siliguri",
-    "Noto Sans Devanagari",Arial,sans-serif;
+  font-family: "Noto Sans Bengali", "Hind Siliguri",
+    "Noto Sans Devanagari", Arial, sans-serif;
   background:
     var(--page-overlay),
-    url("../assets/main-bg.jpg") center/cover no-repeat;
+    url("../assets/main-bg.jpg") center / cover no-repeat;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  touch-action: manipulation;
 }
 
 #quranApp {
@@ -96,7 +107,7 @@ body {
   width: 100%;
   margin: 0;
   color: var(--header-text);
-  font-size: clamp(16px,4vw,20px);
+  font-size: clamp(16px, 4vw, 20px);
   font-weight: 800;
   text-align: center;
   line-height: 1.3;
@@ -123,44 +134,50 @@ body {
   flex-direction: column;
 }
 
-/* The mosque background belongs to the content boards. */
-.featured,
-.content-board {
-  background:
-    linear-gradient(var(--board-overlay),var(--board-overlay)),
-    url("../assets/main-bg.jpg") center/cover no-repeat;
+/* HOME: main background outside, hero-bg.jpg inside the home board. */
+#homePage {
+  min-height: 0;
 }
 
 .home-scroll {
   height: 100%;
   min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   overflow-y: auto;
-  padding: 0 1px 5px;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  padding: 0 1px;
 }
 
 .featured {
-  padding: 12px 12px 15px;
+  flex: 1 0 auto;
+  padding: 9px 12px 12px;
   text-align: center;
   border-radius: 22px;
+  background:
+    linear-gradient(var(--home-overlay), var(--home-overlay)),
+    url("../assets/hero-bg.jpg") center / cover no-repeat;
 }
 
 .bismillah {
   color: var(--deep);
-  font-family: "Amiri",serif;
-  font-size: clamp(27px,7vw,39px);
-  line-height: 1.7;
+  font-family: "Amiri", "Noto Naskh Arabic", serif;
+  font-size: clamp(27px, 7vw, 39px);
+  line-height: 1.55;
   font-weight: 700;
 }
 
 .bismillah-translation {
-  margin: 0 0 8px;
+  margin: 0 0 5px;
   color: var(--muted);
   font-size: 13px;
   font-weight: 700;
 }
 
 .quran-art-wrap {
-  height: clamp(105px,20vh,175px);
+  height: clamp(100px, 19vh, 155px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -174,44 +191,69 @@ body {
   filter: drop-shadow(0 8px 8px rgba(0,0,0,.2));
 }
 
-.featured h2 {
-  color: var(--deep);
-  margin: 5px 0;
-  font-size: 20px;
-  font-weight: 800;
+.ornament-divider {
+  width: min(100%, 270px);
+  margin: 4px auto 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--primary);
+}
+
+.ornament-divider span {
+  flex: 1;
+  height: 1px;
+  background: var(--accent);
+}
+
+.ornament-divider b {
+  font-size: 22px;
+  line-height: 1;
 }
 
 .quran-description {
-  margin: 4px 0 0;
+  max-width: 540px;
+  margin: 4px auto 0;
   font-size: 14px;
-  line-height: 1.8;
+  line-height: 1.75;
+  font-weight: 600;
 }
 
 .home-options {
+  flex: 0 0 auto;
   display: grid;
-  grid-template-columns: repeat(2,minmax(0,1fr));
-  gap: 6px;
-  margin-top: 6px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 0 1px 2px;
 }
 
 .option-button {
   min-width: 0;
-  min-height: 56px;
+  min-height: 54px;
   display: flex;
   align-items: center;
   gap: 7px;
   padding: 8px;
   border: 1px solid var(--border);
-  border-radius: 19px;
+  border-radius: 17px;
   background: var(--card);
   color: var(--deep);
-  font: inherit;
-  font-size: clamp(12px,3.2vw,16px);
+  font-size: clamp(12px, 3.2vw, 16px);
   font-weight: 800;
   cursor: pointer;
 }
 
-.option-icon { font-size: 21px; }
+.option-button:active,
+.tool-button:active,
+.footer-control:active {
+  filter: brightness(.92);
+}
+
+.option-icon {
+  font-size: 21px;
+}
+
 .option-arrow {
   margin-left: auto;
   color: var(--primary);
@@ -219,66 +261,81 @@ body {
   font-weight: 900;
 }
 
-/* Read/listen content boards fill the available space. */
+/* READ/LISTEN: main-bg.jpg also remains visible through the content board. */
 .content-board {
   height: 100%;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  padding: 9px;
+  padding: 8px;
   border-radius: 22px;
+  background:
+    linear-gradient(var(--content-overlay), var(--content-overlay)),
+    url("../assets/main-bg.jpg") center / cover no-repeat;
 }
 
 .read-toolbar {
   flex: 0 0 auto;
-  min-height: 43px;
+  min-height: 38px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding: 0 0 8px;
+  padding: 0 0 6px;
+  margin-bottom: 7px;
   border-bottom: 1px solid var(--border);
-  margin-bottom: 8px;
 }
 
 .tool-button {
-  width: 43px;
-  height: 43px;
-  flex: 0 0 43px;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 10px;
   background: var(--card);
   color: var(--deep);
-  font: 800 18px "Noto Sans Bengali",sans-serif;
+  font-size: 19px;
+  font-weight: 800;
   cursor: pointer;
 }
 
 .font-tools {
   display: flex;
-  gap: 7px;
+  gap: 6px;
+}
+
+.font-button {
+  font-family: Arial, sans-serif;
+  font-size: 17px;
 }
 
 .search-panel {
   flex: 0 0 auto;
   display: flex;
   gap: 6px;
-  margin-bottom: 8px;
+  margin-bottom: 7px;
 }
 
-.search-panel[hidden] { display: none; }
+.search-panel[hidden] {
+  display: none;
+}
 
 .search-panel input {
   width: 100%;
   min-width: 0;
   border: 1px solid var(--border);
-  border-radius: 11px;
-  padding: 10px;
+  border-radius: 10px;
+  padding: 9px 10px;
   color: var(--text);
   background: var(--card);
-  font: inherit;
+  font-size: 14px;
+}
+
+.clear-search {
+  font-size: 22px;
 }
 
 .read-layout {
@@ -290,9 +347,11 @@ body {
 
 .surah-list {
   display: none;
-  flex: 0 0 38%;
+  flex: 0 0 40%;
   min-width: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
   border-right: 1px solid var(--border);
   padding-right: 5px;
 }
@@ -301,33 +360,34 @@ body {
   display: block;
 }
 
+.read-layout.search-open .read-content {
+  flex: 1 1 60%;
+}
+
 .read-content {
-  flex: 1 1 0;
+  flex: 1 1 100%;
   min-width: 0;
   min-height: 0;
   overflow-y: auto;
-  padding: 0 4px 8px;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  padding: 0 3px 8px;
 }
 
-.surah-item, .listen-item {
+.surah-item,
+.listen-item {
   width: 100%;
   display: flex;
   align-items: center;
   gap: 8px;
   margin: 0 0 6px;
-  padding: 10px 8px;
+  padding: 9px 8px;
   text-align: left;
   color: var(--text);
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  font: inherit;
+  border-radius: 13px;
   cursor: pointer;
-}
-
-.surah-item.selected, .listen-item.selected {
-  background: var(--soft);
-  border-color: var(--primary);
 }
 
 .surah-number {
@@ -336,7 +396,7 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
+  border-radius: 9px;
   background: var(--soft);
   color: var(--deep);
   font-weight: 800;
@@ -363,15 +423,21 @@ body {
 }
 
 .surah-item-arabic {
-  font: 18px "Amiri",serif;
+  font: 18px "Amiri", "Noto Naskh Arabic", serif;
   white-space: nowrap;
+}
+
+.surah-item.selected,
+.listen-item.selected {
+  background: var(--soft);
+  border-color: var(--primary);
 }
 
 .surah-heading {
   text-align: center;
-  padding: 12px 4px;
+  padding: 10px 4px;
   border-bottom: 1px solid var(--border);
-  margin-bottom: 10px;
+  margin-bottom: 9px;
 }
 
 .surah-heading h2 {
@@ -387,13 +453,13 @@ body {
 }
 
 .surah-bismillah {
-  font: 26px/1.8 "Amiri",serif;
+  font: 26px/1.8 "Amiri", "Noto Naskh Arabic", serif;
   color: var(--deep);
 }
 
 .ayah {
   margin-bottom: 8px;
-  padding: 12px 9px;
+  padding: 11px 9px;
   border: 1px solid var(--border);
   border-radius: 13px;
   background: var(--card);
@@ -419,11 +485,14 @@ body {
   background: transparent;
   color: var(--primary);
   font-size: 18px;
+  cursor: pointer;
 }
 
 .ayah-arabic {
   margin-top: 8px;
-  font: var(--arabic-size)/2 "Amiri",serif;
+  font-family: "Amiri", "Noto Naskh Arabic", serif;
+  font-size: var(--arabic-size);
+  line-height: 2;
   text-align: right;
   direction: rtl;
   overflow-wrap: anywhere;
@@ -436,18 +505,23 @@ body {
   white-space: pre-line;
 }
 
-/* Listen page: the list scrolls inside the content board. */
+/* LISTEN */
 .listen-surah-list {
   flex: 1 1 0;
   min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
 }
 
 .listen-item {
-  min-height: 60px;
+  min-height: 58px;
 }
 
-.listen-item .surah-item-name { font-size: 15px; }
+.listen-item .surah-item-name {
+  font-size: 15px;
+}
+
 .listen-play-icon {
   margin-left: auto;
   color: var(--primary);
@@ -455,7 +529,7 @@ body {
   font-weight: 900;
 }
 
-/* Footer: 48px, matching Namaz page. */
+/* FOOTER */
 .app-footer {
   flex: 0 0 var(--footer-height);
   height: var(--footer-height);
@@ -464,12 +538,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3px 10px;
+  padding: 3px 7px;
   border: 2px solid var(--accent);
   border-radius: 20px;
   background: var(--footer-bg);
   color: var(--footer-text);
-  box-shadow: 0 3px 9px rgba(30,49,28,.15);
 }
 
 .footer-view {
@@ -479,30 +552,38 @@ body {
   min-width: 0;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 5px;
 }
 
-.footer-view.active { display: flex; }
+.footer-view.active {
+  display: flex;
+}
 
 .quote-track {
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
-  text-align: right;
 }
 
-.quote-track span {
-  display: inline-block;
-  padding-left: 100%;
+.quote-marquee {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  will-change: transform;
+  animation: quote-scroll 65s linear infinite;
+}
+
+.quote-marquee span {
+  flex: 0 0 auto;
   color: var(--footer-text);
   font-size: 12px;
   font-weight: 700;
-  animation: quote-scroll 24s linear infinite;
 }
 
 @keyframes quote-scroll {
   from { transform: translateX(0); }
-  to { transform: translateX(100%); }
+  to { transform: translateX(-50%); }
 }
 
 .footer-message {
@@ -518,24 +599,34 @@ body {
 }
 
 .footer-control {
-  flex: 0 0 42px;
-  width: 42px;
+  flex: 0 0 38px;
+  width: 38px;
   height: 40px;
   border: 0;
   padding: 0;
   background: transparent;
-  color: #F2C94C;
+  color: var(--accent);
   font-family: sans-serif;
-  font-size: 24px;
+  font-size: 23px;
   font-weight: 900;
   cursor: pointer;
 }
 
-.surah-control { font-size: 22px; }
-.media-control { font-size: 24px; }
-.play-control { font-size: 30px; }
+.surah-control {
+  font-size: 21px;
+}
 
-.footer-control:disabled { opacity: .35; }
+.media-control {
+  font-size: 24px;
+}
+
+.play-control {
+  font-size: 29px;
+}
+
+.footer-control:disabled {
+  opacity: .35;
+}
 
 .app-message {
   position: fixed;
@@ -551,48 +642,70 @@ body {
   font-size: 12px;
   opacity: 0;
   pointer-events: none;
+  transition: opacity .15s ease;
 }
 
-.app-message.show { opacity: 1; }
-.loading, .empty-state {
+.app-message.show {
+  opacity: 1;
+}
+
+.loading,
+.empty-state {
   padding: 18px 8px;
   text-align: center;
   color: var(--muted);
   font-size: 13px;
 }
 
-/* Settings themes use the same data attribute as Namaz CSS. */
+/* THEMES */
 body[data-color-theme="classic"] {}
 
 body[data-color-theme="royal"] {
-  --primary:#285A8E; --soft:#E5EFF9; --accent:#E8BD55;
-  --deep:#173A60; --text:#1B3652; --muted:#65798E;
-  --border:#C8D9EB; --header-bg:#173A60;
-  --footer-bg:#173A60;
+  --primary: #285A8E;
+  --soft: #E5EFF9;
+  --accent: #E8BD55;
+  --deep: #173A60;
+  --text: #1B3652;
+  --muted: #65798E;
+  --border: #C8D9EB;
+  --header-bg: #173A60;
+  --footer-bg: #173A60;
 }
 
 body[data-color-theme="rose"] {
-  --primary:#B96F79; --soft:#F8E9E7; --accent:#D9B875;
-  --deep:#7D414B; --text:#633B42; --muted:#846D70;
-  --border:#E8CBC8; --header-bg:#7D414B;
-  --footer-bg:#7D414B;
+  --primary: #B96F79;
+  --soft: #F8E9E7;
+  --accent: #D9B875;
+  --deep: #7D414B;
+  --text: #633B42;
+  --muted: #846D70;
+  --border: #E8CBC8;
+  --header-bg: #7D414B;
+  --footer-bg: #7D414B;
 }
 
 body[data-color-theme="pista"] {
-  --primary:#4CAF50; --soft:#DFF5E1; --accent:#A7D129;
-  --deep:#2F7135; --text:#254D2A; --muted:#6D806D;
-  --border:#CDE3C8; --header-bg:#2F7135;
-  --footer-bg:#2F7135;
+  --primary: #4CAF50;
+  --soft: #DFF5E1;
+  --accent: #A7D129;
+  --deep: #2F7135;
+  --text: #254D2A;
+  --muted: #6D806D;
+  --border: #CDE3C8;
+  --header-bg: #2F7135;
+  --footer-bg: #2F7135;
 }
 
+/* Dark mode affects boards, overlays, cards, text and controls. */
 body.dark-mode {
-  --text:#E5EDE7;
-  --muted:#BECBBF;
-  --card:rgba(25,38,29,.96);
-  --border:#405746;
-  --soft:#263B2C;
-  --page-overlay:linear-gradient(rgba(8,15,10,.80),rgba(8,15,10,.80));
-  --board-overlay:rgba(17,28,20,.80);
+  --text: #E5EDE7;
+  --muted: #BECBBF;
+  --card: rgba(25,38,29,.96);
+  --border: #405746;
+  --soft: #263B2C;
+  --page-overlay: linear-gradient(rgba(8,15,10,.80),rgba(8,15,10,.80));
+  --home-overlay: rgba(12,20,14,.73);
+  --content-overlay: rgba(12,20,14,.60);
 }
 
 body.dark-mode .hero,
@@ -601,45 +714,98 @@ body.dark-mode .app-footer {
 }
 
 body.dark-mode[data-color-theme="classic"] {
-  --header-bg:#0F5132;
-  --footer-bg:#0F5132;
+  --header-bg: #0F5132;
+  --footer-bg: #0F5132;
 }
 
 body.dark-mode[data-color-theme="royal"] {
-  --header-bg:#142D49;
-  --footer-bg:#142D49;
+  --header-bg: #142D49;
+  --footer-bg: #142D49;
 }
 
 body.dark-mode[data-color-theme="rose"] {
-  --header-bg:#592F36;
-  --footer-bg:#592F36;
+  --header-bg: #592F36;
+  --footer-bg: #592F36;
 }
 
 body.dark-mode[data-color-theme="pista"] {
-  --header-bg:#244C28;
-  --footer-bg:#244C28;
+  --header-bg: #244C28;
+  --footer-bg: #244C28;
 }
 
-@media (max-width:380px) {
-  :root { --page-padding:5px; --page-gap:5px; }
-  .featured { padding:10px; }
-  .bismillah { font-size:28px; }
-  .quran-description { font-size:12px; }
-  .read-layout.search-open .surah-list { flex-basis:42%; }
-  .surah-item { padding:8px 5px; gap:5px; }
-  .surah-item-arabic { font-size:15px; }
-  .ayah-arabic { font-size:calc(var(--arabic-size) - 2px); }
+body.dark-mode .bismillah,
+body.dark-mode .featured h2,
+body.dark-mode .surah-heading h2,
+body.dark-mode .surah-bismillah {
+  color: var(--text);
 }
 
-@media (max-height:600px) {
-  :root { --header-height:44px; --footer-height:44px; }
-  .featured { padding:8px; }
-  .quran-art-wrap { height:90px; }
+@media (max-width: 380px) {
+  :root {
+    --page-padding: 5px;
+    --page-gap: 5px;
+  }
+
+  .featured {
+    padding: 8px 9px 10px;
+  }
+
+  .bismillah {
+    font-size: 28px;
+  }
+
+  .quran-description {
+    font-size: 12px;
+  }
+
+  .read-layout.search-open .surah-list {
+    flex-basis: 43%;
+  }
+
+  .surah-item {
+    padding: 8px 5px;
+    gap: 5px;
+  }
+
+  .surah-item-arabic {
+    font-size: 15px;
+  }
+
+  .option-button {
+    gap: 5px;
+    padding: 7px 5px;
+  }
 }
 
-@media (prefers-reduced-motion:reduce) {
-  *,*::before,*::after {
-    animation-duration:.01ms !important;
-    transition-duration:.01ms !important;
+@media (max-height: 600px) {
+  .featured {
+    padding: 6px 9px;
+  }
+
+  .bismillah {
+    font-size: 27px;
+    line-height: 1.35;
+  }
+
+  .quran-art-wrap {
+    height: 85px;
+  }
+
+  .bismillah-translation {
+    margin-bottom: 2px;
+  }
+
+  .quran-description {
+    line-height: 1.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quote-marquee {
+    animation-duration: 120s;
+  }
+
+  .app-message {
+    transition: none;
   }
 }
