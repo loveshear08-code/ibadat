@@ -1,28 +1,11 @@
 
-/* ========================================
+/* ==========================================
    IBADAT — ALLAH'S NAMES
    File: css/allah-names.css
-   ======================================== */
+   Global theme controlled by Settings/theme.js
+   ========================================== */
 
 :root {
-    --green-deep: #123d2c;
-    --green-main: #18563c;
-    --green-light: #26704e;
-    --gold: #d6b45c;
-    --gold-light: #ecd995;
-
-    --pista: #dce8c5;
-    --pista-border: #c5d6a8;
-    --pista-text: #214a35;
-
-    --page-overlay: rgba(255, 250, 240, 0.22);
-    --board-bg: rgba(255, 252, 242, 0.91);
-    --card-bg: rgba(239, 245, 222, 0.87);
-    --card-border: rgba(183, 202, 151, 0.78);
-
-    --text-main: #214a35;
-    --text-muted: #687568;
-
     --header-height: 48px;
     --footer-height: 48px;
     --page-gap: 4px;
@@ -32,6 +15,19 @@
 
     --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+    /*
+      Use the global theme variables supplied by the app.
+      These fallbacks are only for safe rendering when the
+      global theme has not initialized yet.
+    */
+    --names-accent: var(--primary, #18563c);
+    --names-text: var(--text-color, #214a35);
+    --names-muted: var(--muted-color, #687568);
+    --names-card: var(--card-bg, rgba(239, 245, 222, 0.90));
+    --names-border: var(--border-color, rgba(183, 202, 151, 0.8));
+    --names-gold: var(--gold, #d6b45c);
+    --names-overlay: var(--page-overlay, rgba(255, 250, 240, 0.24));
 }
 
 * {
@@ -54,7 +50,8 @@ body {
         var(--page-padding)
         max(5px, var(--safe-bottom));
 
-    color: var(--text-main);
+    color: var(--names-text);
+
     font-family:
         "Noto Sans Bengali",
         "Hind Siliguri",
@@ -63,25 +60,34 @@ body {
 
     background:
         linear-gradient(
-            var(--page-overlay),
-            var(--page-overlay)
+            var(--names-overlay),
+            var(--names-overlay)
         ),
-        url("../assets/main-bg.jpg") center center / cover fixed no-repeat;
+        url("../assets/main-bg.jpg")
+        center center / cover fixed no-repeat;
 }
 
-/* PAGE LAYOUT */
+/* ==========================================
+   PAGE SHELL
+   ========================================== */
 
 .names-page {
     width: 100%;
     height: 100%;
     min-height: 0;
+
     display: flex;
     flex-direction: column;
     gap: var(--page-gap);
+
     overflow: hidden;
 }
 
-/* TOPPER — SAME COMPACT HEIGHT AS HOME BARS */
+/* ==========================================
+   FIXED TOPPER
+   Matches the compact app header/footer style.
+   Only the page heading appears here.
+   ========================================== */
 
 .intro-board {
     flex: 0 0 var(--header-height);
@@ -95,25 +101,21 @@ body {
     padding: 4px 10px;
     overflow: hidden;
 
-    border: 2px solid var(--gold);
+    color: var(--header-text, var(--names-text));
+    background: var(--header-bg, var(--names-accent));
+
+    border: var(--header-border, 2px solid var(--names-gold));
     border-radius: 20px;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(16, 76, 50, 0.96),
-            rgba(9, 43, 32, 0.97)
-        );
-
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--header-shadow, 0 3px 10px rgba(0, 0, 0, 0.12));
 }
 
 #introTitle {
     width: 100%;
     margin: 0;
 
-    color: var(--gold-light);
-    font-size: clamp(16px, 4.2vw, 20px);
+    color: inherit;
+    font-size: var(--bar-font-size, clamp(15px, 4vw, 19px));
     font-weight: 800;
     line-height: 1.3;
     text-align: center;
@@ -123,7 +125,9 @@ body {
     text-overflow: ellipsis;
 }
 
-/* OUTER CONTENT BOARD */
+/* ==========================================
+   FIXED OUTER CONTENT BOARD
+   ========================================== */
 
 .names-board {
     flex: 1 1 auto;
@@ -134,14 +138,18 @@ body {
     flex-direction: column;
     overflow: hidden;
 
-    border: 1px solid var(--card-border);
+    background: var(--content-board-bg, rgba(255, 252, 242, 0.91));
+    border: 1px solid var(--names-border);
     border-radius: 22px;
 
-    background: var(--board-bg);
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--content-board-shadow, 0 3px 12px rgba(0, 0, 0, 0.10));
 }
 
-/* ONLY THIS AREA SCROLLS */
+/* ==========================================
+   SCROLLABLE INNER CONTENT
+   All cards, including Bismillah and the
+   special final card, are inside this area.
+   ========================================== */
 
 .names-container {
     width: 100%;
@@ -163,8 +171,9 @@ body {
 
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
+
     scrollbar-width: thin;
-    scrollbar-color: rgba(24, 86, 60, 0.45) transparent;
+    scrollbar-color: var(--scrollbar-thumb, rgba(24, 86, 60, 0.45)) transparent;
 }
 
 .names-container::-webkit-scrollbar {
@@ -172,7 +181,7 @@ body {
 }
 
 .names-container::-webkit-scrollbar-thumb {
-    background: rgba(24, 86, 60, 0.45);
+    background: var(--scrollbar-thumb, rgba(24, 86, 60, 0.45));
     border-radius: 10px;
 }
 
@@ -180,7 +189,9 @@ body {
     background: transparent;
 }
 
-/* ALL NAME CARDS */
+/* ==========================================
+   NAME CARDS
+   ========================================== */
 
 .name-card {
     position: relative;
@@ -195,40 +206,26 @@ body {
     gap: 5px;
     padding: 10px 7px;
 
-    border: 1px solid var(--card-border);
+    color: var(--names-text);
+    background: var(--names-card);
+
+    border: 1px solid var(--names-border);
     border-radius: var(--card-radius);
 
-    background: var(--card-bg);
-    box-shadow: 0 2px 7px rgba(33, 74, 53, 0.09);
+    box-shadow: var(--name-card-shadow, 0 2px 7px rgba(33, 74, 53, 0.08));
 
     text-align: center;
     overflow-wrap: anywhere;
 }
 
-/* BISMILLAH CARD — HERO MOSQUE BACKGROUND */
-
-.bismillah-card {
-    grid-column: 1 / -1;
-    min-height: 190px;
-    padding: 18px 12px;
-
-    border: 1px solid var(--gold);
-    border-radius: 20px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 250, 231, 0.84),
-            rgba(220, 232, 197, 0.82)
-        ),
-        url("../assets/hero-bg.jpg") center center / cover no-repeat;
-}
+/* Arabic name */
 
 .name-arabic {
     width: 100%;
     margin: 0;
 
-    color: var(--green-deep);
+    color: var(--arabic-text, var(--names-text));
+
     font-family:
         "Noto Naskh Arabic",
         "Amiri",
@@ -242,30 +239,31 @@ body {
     direction: rtl;
 }
 
-.bismillah-card .name-arabic {
-    font-size: clamp(29px, 7vw, 39px);
-    line-height: 1.9;
-}
+/* Transliteration */
 
 .name-pronunciation {
     width: 100%;
     margin: 0;
 
-    color: var(--pista-text);
+    color: var(--names-text);
     font-size: clamp(12px, 3vw, 16px);
     font-weight: 750;
     line-height: 1.5;
 }
 
+/* Meaning */
+
 .name-meaning {
     width: 100%;
     margin: 0;
 
-    color: var(--text-muted);
+    color: var(--names-muted);
     font-size: clamp(11px, 2.7vw, 14px);
     font-weight: 500;
     line-height: 1.55;
 }
+
+/* Number badge */
 
 .name-number {
     align-self: flex-start;
@@ -279,45 +277,93 @@ body {
 
     padding: 3px 7px;
 
-    border: 1px solid var(--card-border);
-    border-radius: 11px;
+    color: var(--number-text, var(--names-text));
+    background: var(--number-bg, rgba(255, 255, 255, 0.45));
 
-    background: rgba(255, 255, 255, 0.48);
-    color: var(--text-main);
+    border: 1px solid var(--names-border);
+    border-radius: 11px;
 
     font-size: 12px;
     font-weight: 800;
 }
 
-/* SPECIAL UNNUMBERED FINAL CARD */
+/* ==========================================
+   BISMILLAH CARD
+   Uses hero-bg.jpg with a theme-aware overlay.
+   ========================================== */
 
-.name-card.special-card {
-    min-height: 145px;
+.bismillah-card {
+    grid-column: 1 / -1;
+    min-height: 190px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    grid-column: auto;
 
-    border: 1px solid var(--gold);
+    gap: 7px;
+    padding: 18px 12px;
+
+    color: var(--names-text);
+
+    border: 1px solid var(--names-border);
+    border-radius: 20px;
+
     background:
         linear-gradient(
-            145deg,
-            rgba(255, 250, 232, 0.96),
-            rgba(220, 232, 197, 0.92)
-        );
+            var(--bismillah-overlay, rgba(255, 250, 231, 0.84)),
+            var(--bismillah-overlay, rgba(220, 232, 197, 0.82))
+        ),
+        url("../assets/hero-bg.jpg")
+        center center / cover no-repeat;
+
+    box-shadow: var(--name-card-shadow, 0 2px 7px rgba(33, 74, 53, 0.08));
+}
+
+.bismillah-card .name-arabic {
+    color: var(--bismillah-arabic, var(--names-text));
+    font-size: clamp(29px, 7vw, 39px);
+    line-height: 1.9;
+}
+
+.bismillah-card .name-pronunciation {
+    font-size: clamp(14px, 3.5vw, 18px);
+}
+
+.bismillah-card .name-meaning {
+    font-size: clamp(12px, 3vw, 15px);
+}
+
+/* ==========================================
+   SPECIAL UNNUMBERED FINAL CARD
+   JavaScript adds this after all 99 names.
+   ========================================== */
+
+.special-card {
+    min-height: 145px;
+    justify-content: center;
+
+    border: 1px solid var(--names-border);
+    background: var(--special-card-bg, var(--names-card));
 }
 
 .special-card .name-arabic {
+    color: var(--arabic-text, var(--names-text));
     font-size: clamp(24px, 5.5vw, 32px);
-    color: var(--green-deep);
 }
 
 .special-decoration {
-    color: var(--gold);
+    color: var(--decoration-color, var(--names-gold));
     font-size: 20px;
     line-height: 1.2;
     letter-spacing: 4px;
 }
 
-/* FOOTER */
+/* ==========================================
+   FIXED FOOTER
+   Uses the global app footer variables where
+   available instead of creating another theme.
+   ========================================== */
 
 .names-footer {
     flex: 0 0 var(--footer-height);
@@ -331,25 +377,21 @@ body {
     padding: 4px 10px;
     overflow: hidden;
 
-    border: 2px solid var(--gold);
+    color: var(--footer-text, var(--header-text, var(--names-text)));
+    background: var(--footer-bg, var(--header-bg, var(--names-accent)));
+
+    border: var(--footer-border, 2px solid var(--names-gold));
     border-radius: 20px;
 
-    background:
-        linear-gradient(
-            135deg,
-            var(--green-main),
-            var(--green-deep)
-        );
-
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--footer-shadow, 0 3px 10px rgba(0, 0, 0, 0.12));
 }
 
 #namesFooterText {
     width: 100%;
     margin: 0;
 
-    color: var(--gold-light);
-    font-size: clamp(11px, 3vw, 15px);
+    color: inherit;
+    font-size: var(--bar-font-size, clamp(11px, 3vw, 15px));
     font-weight: 700;
     line-height: 1.35;
     text-align: center;
@@ -359,143 +401,110 @@ body {
     text-overflow: ellipsis;
 }
 
-/* DARK MODE */
+/* ==========================================
+   GLOBAL THEME COMPATIBILITY
+   No independent page theme selector.
+   Settings/theme.js remains the source of truth.
+   ========================================== */
 
 body.dark-mode {
-    --page-overlay: rgba(0, 0, 0, 0.43);
-    --board-bg: rgba(17, 35, 26, 0.96);
-    --card-bg: rgba(31, 56, 40, 0.97);
-    --card-border: rgba(190, 207, 158, 0.35);
+    --names-overlay: rgba(0, 0, 0, 0.38);
+    --names-card: var(--dark-card-bg, rgba(31, 48, 38, 0.96));
+    --names-border: var(--dark-border-color, rgba(190, 207, 158, 0.35));
+    --names-text: var(--dark-text-color, #e6ecd9);
+    --names-muted: var(--dark-muted-color, #c4cfbd);
 
-    --text-main: #e6ecd9;
-    --text-muted: #c4cfbd;
+    --bismillah-overlay: rgba(15, 43, 31, 0.86);
+    --bismillah-arabic: #f0e4bd;
 
-    background:
-        linear-gradient(
-            var(--page-overlay),
-            var(--page-overlay)
-        ),
-        url("../assets/main-bg.jpg") center center / cover fixed no-repeat;
-}
-
-body.dark-mode .intro-board,
-body.dark-mode .names-footer {
-    background:
-        linear-gradient(
-            135deg,
-            #104c32,
-            #092b20
-        );
+    --number-bg: rgba(255, 255, 255, 0.06);
+    --number-text: var(--names-text);
 }
 
 body.dark-mode .names-board {
-    background: var(--board-bg);
-}
-
-body.dark-mode .name-card {
-    background: var(--card-bg);
-    border-color: var(--card-border);
+    background: var(--dark-content-board-bg, rgba(17, 35, 26, 0.96));
 }
 
 body.dark-mode .name-arabic {
-    color: #f0e4bd;
+    color: var(--arabic-dark-text, #f0e4bd);
 }
 
 body.dark-mode .name-pronunciation {
-    color: #dce8c5;
+    color: var(--pronunciation-dark-text, #dce8c5);
 }
 
 body.dark-mode .name-meaning {
-    color: #c4cfbd;
-}
-
-body.dark-mode .name-number {
-    color: #e6ecd9;
-    background: rgba(255, 255, 255, 0.06);
-    border-color: var(--card-border);
+    color: var(--names-muted);
 }
 
 body.dark-mode .bismillah-card {
     background:
         linear-gradient(
-            135deg,
-            rgba(15, 43, 31, 0.87),
-            rgba(22, 51, 36, 0.88)
+            var(--bismillah-overlay),
+            var(--bismillah-overlay)
         ),
-        url("../assets/hero-bg.jpg") center center / cover no-repeat;
+        url("../assets/hero-bg.jpg")
+        center center / cover no-repeat;
 }
 
-body.dark-mode .special-card {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(31, 56, 40, 0.98),
-            rgba(17, 35, 26, 0.98)
-        );
+/*
+  Theme attributes are observed for compatibility with both
+  existing app conventions. Their colors should be supplied
+  by the global Settings/theme stylesheet.
+*/
+
+body[data-color-theme] .intro-board,
+body[data-theme-color] .intro-board {
+    background: var(--header-bg, var(--names-accent));
+    color: var(--header-text, var(--names-text));
 }
 
-/* GLOBAL THEME COLORS */
-
-body[data-color-theme="classic"],
-body[data-theme-color="classic"] {
-    --theme-accent: #18563c;
-    --theme-soft: #dce8c5;
-    --theme-border: #c5d6a8;
-    --theme-text: #214a35;
+body[data-color-theme] .names-footer,
+body[data-theme-color] .names-footer {
+    background: var(--footer-bg, var(--header-bg, var(--names-accent)));
+    color: var(--footer-text, var(--header-text, var(--names-text)));
 }
 
-body[data-color-theme="royal"],
-body[data-theme-color="royal"] {
-    --theme-accent: #55417f;
-    --theme-soft: #e5ddf4;
-    --theme-border: #c8b7e8;
-    --theme-text: #41305f;
-}
-
-body[data-color-theme="rose"],
-body[data-theme-color="rose"] {
-    --theme-accent: #914f62;
-    --theme-soft: #f6e2e7;
-    --theme-border: #e5b8c3;
-    --theme-text: #71394a;
-}
-
-body[data-color-theme="pista"],
-body[data-theme-color="pista"] {
-    --theme-accent: #356445;
-    --theme-soft: #dce8c5;
-    --theme-border: #c5d6a8;
-    --theme-text: #214a35;
+body[data-color-theme] .names-board,
+body[data-theme-color] .names-board {
+    background: var(--content-board-bg, var(--names-card));
 }
 
 body[data-color-theme] .name-card,
 body[data-theme-color] .name-card {
-    border-color: var(--theme-border);
-    background-color: var(--theme-soft);
+    border-color: var(--names-border);
+    background-color: var(--names-card);
+    color: var(--names-text);
+}
+
+body[data-color-theme] .name-arabic,
+body[data-theme-color] .name-arabic {
+    color: var(--arabic-text, var(--names-text));
 }
 
 body[data-color-theme] .name-pronunciation,
 body[data-theme-color] .name-pronunciation {
-    color: var(--theme-text);
+    color: var(--pronunciation-text, var(--names-text));
 }
 
-body[data-color-theme] .name-number,
-body[data-theme-color] .name-number {
-    border-color: var(--theme-border);
-    color: var(--theme-text);
+body[data-color-theme] .name-meaning,
+body[data-theme-color] .name-meaning {
+    color: var(--meaning-text, var(--names-muted));
+}
+
+body[data-color-theme] .bismillah-card,
+body[data-theme-color] .bismillah-card {
+    border-color: var(--names-border);
 }
 
 body.dark-mode[data-color-theme] .name-card,
 body.dark-mode[data-theme-color] .name-card {
-    background-color: rgba(26, 47, 35, 0.97);
+    background: var(--dark-card-bg, var(--names-card));
 }
 
-body.dark-mode[data-color-theme] .name-pronunciation,
-body.dark-mode[data-theme-color] .name-pronunciation {
-    color: #dce8c5;
-}
-
-/* RESPONSIVE */
+/* ==========================================
+   RESPONSIVE LAYOUT
+   ========================================== */
 
 @media (max-width: 380px) {
     :root {
