@@ -1,8 +1,11 @@
 /* =====================================================
    IBADAT — NAMAZ LEARNING PAGE
-   Complete Responsive CSS
-   10 Cards | 3 Languages | 4 Themes | No Page Scrolling
+   FINAL COMPLETE CSS
+   Calendar-matched header/footer
+   Balanced intro board and 10 learning cards
 ===================================================== */
+
+/* 1. GLOBAL VARIABLES */
 
 :root {
   --primary: #1B7F4B;
@@ -19,11 +22,12 @@
   --gold: #E8C766;
   --gold-light: #F5E5A7;
 
-  /* Header and footer match calendar */
+  /* Keep header and footer at calendar height */
   --header-height: 64px;
   --footer-height: 64px;
+
   --page-gap: 8px;
-  --app-padding: 9px;
+  --app-padding: 10px;
   --content-gap: 7px;
   --card-gap: 6px;
 
@@ -31,9 +35,7 @@
   --card-radius: 17px;
 }
 
-/* =====================================================
-   FOUR COLOR THEMES — MATCH SETTINGS
-===================================================== */
+/* 2. SETTINGS COLOR THEMES */
 
 body[data-color-theme="classic"] {
   --primary: #1B7F4B;
@@ -87,9 +89,7 @@ body[data-color-theme="pista"] {
   --border: #CDE3C8;
 }
 
-/* =====================================================
-   RESET
-===================================================== */
+/* 3. RESET */
 
 * {
   box-sizing: border-box;
@@ -120,10 +120,10 @@ body {
 
   background:
     linear-gradient(
-      rgba(255, 253, 245, 0.48),
-      rgba(255, 253, 245, 0.48)
+      rgba(255, 252, 242, 0.50),
+      rgba(255, 252, 242, 0.50)
     ),
-    url("../assets/main-bg.jpg") center / cover no-repeat fixed;
+    url("../assets/main-bg.jpg") center / cover no-repeat;
 
   overscroll-behavior: none;
 }
@@ -133,9 +133,7 @@ a {
   font: inherit;
 }
 
-/* =====================================================
-   MAIN PAGE SHELL
-===================================================== */
+/* 4. FULL PAGE SHELL */
 
 .namaz-page {
   display: flex;
@@ -148,27 +146,23 @@ a {
   min-height: 0;
 
   padding:
-    max(var(--app-padding), env(safe-area-inset-top))
+    max(5px, env(safe-area-inset-top))
     var(--app-padding)
-    max(var(--app-padding), env(safe-area-inset-bottom));
+    max(5px, env(safe-area-inset-bottom));
 
   overflow: hidden;
 
   background:
     linear-gradient(
-      rgba(255, 252, 242, 0.30),
-      rgba(255, 252, 242, 0.30)
+      rgba(255, 252, 242, 0.26),
+      rgba(255, 252, 242, 0.26)
     ),
     url("../assets/main-bg.jpg") center / cover no-repeat;
 }
 
-/* =====================================================
-   HEADER AND FOOTER BOARDS
-   Keep the same 64px height as calendar
-===================================================== */
+/* 5. HEADER BOARD */
 
-.top-board,
-.bottom-board {
+.top-board {
   position: relative;
   z-index: 2;
 
@@ -180,19 +174,14 @@ a {
 
   width: 100%;
   height: var(--header-height);
+  min-width: 0;
   min-height: var(--header-height);
   max-height: var(--header-height);
-  min-width: 0;
 
   padding: 7px 12px;
 
   color: var(--gold-light);
-
-  background: linear-gradient(
-    140deg,
-    var(--deep),
-    var(--deep)
-  );
+  background: linear-gradient(140deg, var(--deep), #0C3926);
 
   border: 2px solid var(--gold);
   border-radius: var(--board-radius);
@@ -202,18 +191,13 @@ a {
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-/* Header title */
-
 .top-board h1 {
   width: 100%;
   min-width: 0;
 
-  margin: 0;
-  padding: 0;
-
   color: var(--gold-light);
 
-  font-size: clamp(20px, 4.8vw, 26px);
+  font-size: clamp(20px, 5vw, 26px);
   font-weight: 800;
   line-height: 1.3;
   text-align: center;
@@ -221,9 +205,7 @@ a {
   overflow-wrap: anywhere;
 }
 
-/* =====================================================
-   MAIN CONTENT
-===================================================== */
+/* 6. MAIN CONTENT AREA */
 
 .namaz-content {
   flex: 1 1 0;
@@ -239,20 +221,17 @@ a {
   overflow: hidden;
 }
 
-/* =====================================================
-   INTRODUCTION BOARD — WHAT AND WHY
-   Calendar-style mosque background
-===================================================== */
+/* 7. INTRODUCTION BOARD */
 
 .intro-board {
   position: relative;
   isolation: isolate;
 
   /*
-    The introduction board is deliberately larger.
-    The grid receives the remaining available height.
+    Larger than the previous version.
+    The option grid fills the remaining space.
   */
-  flex: 0 0 128px;
+  flex: 0 0 30%;
 
   display: flex;
   flex-direction: column;
@@ -263,7 +242,7 @@ a {
   min-width: 0;
   min-height: 0;
 
-  padding: 12px 10px;
+  padding: 12px 14px;
 
   overflow: hidden;
 
@@ -279,13 +258,12 @@ a {
   border: 1px solid var(--border);
   border-radius: var(--board-radius);
 
-  box-shadow:
-    0 3px 10px rgba(30, 49, 28, 0.10);
+  box-shadow: 0 3px 10px rgba(30, 49, 28, 0.10);
 }
 
-/* Introduction heading */
-
 .intro-board h2 {
+  flex: 0 0 auto;
+
   width: 100%;
   min-width: 0;
 
@@ -294,50 +272,38 @@ a {
 
   color: var(--deep);
 
-  font-family: inherit;
-  font-size: clamp(21px, 5vw, 26px);
+  font-size: clamp(20px, 4.7vw, 25px);
   font-weight: 800;
-  line-height: 1.3;
+  line-height: 1.35;
   text-align: center;
 
   overflow-wrap: anywhere;
 }
 
-/* Introduction paragraph */
-
 .intro-board p {
+  flex: 0 1 auto;
+
   width: 100%;
   min-width: 0;
 
-  margin: 0;
-  padding: 0;
+  color: var(--deep);
 
-  color: var(--text);
-
-  font-family: inherit;
-  font-size: clamp(13px, 3.5vw, 17px);
+  font-size: clamp(13px, 3.35vw, 16px);
   font-weight: 750;
   line-height: 1.45;
   text-align: center;
 
   overflow-wrap: anywhere;
-  word-break: normal;
 }
 
-/* =====================================================
-   TEN OPTION CARDS — TWO COLUMNS, FIVE ROWS
-===================================================== */
+/* 8. TEN-CARD GRID */
 
 .learning-grid {
   flex: 1 1 0;
 
   display: grid;
-
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
-  grid-template-rows:
-    repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(5, minmax(0, 1fr));
 
   gap: var(--card-gap);
 
@@ -348,9 +314,7 @@ a {
   overflow: hidden;
 }
 
-/* =====================================================
-   INDIVIDUAL OPTION CARD
-===================================================== */
+/* 9. LEARNING CARDS */
 
 .learning-card {
   display: flex;
@@ -358,14 +322,14 @@ a {
   align-items: center;
   justify-content: flex-start;
 
-  gap: 5px;
+  gap: 7px;
 
   width: 100%;
   height: 100%;
   min-width: 0;
   min-height: 0;
 
-  padding: 4px 6px;
+  padding: 4px 7px;
 
   overflow: hidden;
 
@@ -375,11 +339,10 @@ a {
   border: 1px solid var(--border);
   border-radius: var(--card-radius);
 
-  box-shadow:
-    0 2px 7px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.08);
 
   font-family: inherit;
-  font-size: clamp(12px, 3.1vw, 16px);
+  font-size: clamp(12px, 3vw, 15px);
   font-weight: 800;
   line-height: 1.3;
   text-align: center;
@@ -393,14 +356,13 @@ a {
     box-shadow 0.18s ease;
 }
 
-/* Card icon */
-
+/* Icons stay clearly visible */
 .topic-icon {
   display: block;
   flex: 0 0 auto;
 
-  width: clamp(27px, 7.5vw, 40px);
-  height: clamp(27px, 7.5vw, 40px);
+  width: clamp(29px, 7.5vw, 38px);
+  height: clamp(29px, 7.5vw, 38px);
 
   object-fit: contain;
   object-position: center;
@@ -410,7 +372,7 @@ a {
   background: transparent;
 }
 
-/* Card label */
+/* Card labels */
 
 .learning-card span {
   flex: 1 1 auto;
@@ -428,7 +390,7 @@ a {
   word-break: normal;
 }
 
-/* Card interactions */
+/* Interaction feedback */
 
 .learning-card:active {
   background: var(--row);
@@ -447,14 +409,11 @@ a {
 @media (hover: hover) {
   .learning-card:hover {
     background: var(--row);
-    box-shadow:
-      0 4px 10px rgba(0, 0, 0, 0.10);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.11);
   }
 }
 
-/* =====================================================
-   FOOTER MESSAGE
-===================================================== */
+/* 10. FOOTER BOARD */
 
 .namaz-footer {
   flex: 0 0 var(--footer-height);
@@ -465,32 +424,30 @@ a {
 
   width: 100%;
   height: var(--footer-height);
+  min-width: 0;
   min-height: var(--footer-height);
   max-height: var(--footer-height);
-  min-width: 0;
 
-  padding: 7px 12px;
+  padding: 6px 10px;
 
   color: var(--gold-light);
+  background: linear-gradient(140deg, var(--deep), #0C3926);
 
-  background: linear-gradient(
-    140deg,
-    var(--deep),
-    var(--deep)
-  );
+  border: 2px solid var(--gold);
+  border-radius: var(--board-radius);
+
+  box-shadow:
+    0 3px 9px rgba(30, 49, 28, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .namaz-footer p {
   width: 100%;
   min-width: 0;
 
-  margin: 0;
-  padding: 0;
-
   color: var(--gold-light);
 
-  font-family: inherit;
-  font-size: clamp(13px, 3.5vw, 17px);
+  font-size: clamp(13px, 3.4vw, 16px);
   font-weight: 800;
   line-height: 1.4;
   text-align: center;
@@ -498,9 +455,7 @@ a {
   overflow-wrap: anywhere;
 }
 
-/* =====================================================
-   DARK MODE
-===================================================== */
+/* 11. DARK MODE */
 
 body.dark-mode {
   --text: #E9EFE6;
@@ -517,7 +472,7 @@ body.dark-mode {
       rgba(13, 33, 22, 0.72),
       rgba(13, 33, 22, 0.72)
     ),
-    url("../assets/main-bg.jpg") center / cover no-repeat fixed;
+    url("../assets/main-bg.jpg") center / cover no-repeat;
 }
 
 body.dark-mode .namaz-page {
@@ -530,13 +485,8 @@ body.dark-mode .namaz-page {
 }
 
 body.dark-mode .top-board,
-body.dark-mode .bottom-board {
-  background: linear-gradient(
-    140deg,
-    var(--deep),
-    #092E1E
-  );
-
+body.dark-mode .namaz-footer {
+  background: linear-gradient(140deg, #103E29, #092E1E);
   border-color: var(--gold);
 }
 
@@ -548,8 +498,8 @@ body.dark-mode .namaz-footer p {
 body.dark-mode .intro-board {
   background:
     linear-gradient(
-      rgba(24, 35, 26, 0.36),
-      rgba(24, 35, 26, 0.42)
+      rgba(24, 35, 26, 0.48),
+      rgba(24, 35, 26, 0.48)
     ),
     url("../assets/hero-bg.jpg") center / cover no-repeat;
 
@@ -558,7 +508,7 @@ body.dark-mode .intro-board {
 
 body.dark-mode .intro-board h2,
 body.dark-mode .intro-board p {
-  color: #E9EFE6;
+  color: #F0F4E7;
 }
 
 body.dark-mode .learning-card {
@@ -576,9 +526,7 @@ body.dark-mode .learning-card:hover {
   background: #344A39;
 }
 
-/* =====================================================
-   COMPACT PHONES
-===================================================== */
+/* 12. COMPACT PHONES */
 
 @media (max-width: 380px) {
   :root {
@@ -586,134 +534,109 @@ body.dark-mode .learning-card:hover {
     --page-gap: 6px;
     --content-gap: 5px;
     --card-gap: 5px;
+
+    --board-radius: 18px;
     --card-radius: 14px;
   }
 
   .top-board,
-  .bottom-board {
+  .namaz-footer {
     padding-inline: 7px;
-    border-radius: 18px;
-  }
-
-  .top-board h1 {
-    font-size: clamp(19px, 5vw, 23px);
   }
 
   .intro-board {
-    flex-basis: 116px;
+    flex-basis: 30%;
     padding: 8px;
-    border-radius: 17px;
   }
 
   .intro-board h2 {
     margin-bottom: 4px;
-    font-size: clamp(19px, 4.8vw, 23px);
+    font-size: clamp(18px, 4.5vw, 22px);
+    line-height: 1.3;
   }
 
   .intro-board p {
-    font-size: clamp(12px, 3.3vw, 14px);
-    line-height: 1.38;
+    font-size: clamp(12px, 3.2vw, 14px);
+    line-height: 1.4;
   }
 
   .learning-card {
-    gap: 4px;
+    gap: 5px;
     padding: 3px 4px;
-    font-size: clamp(11px, 3vw, 13px);
+    font-size: clamp(11px, 2.9vw, 13px);
+  }
+
+  .learning-card span {
+    line-height: 1.25;
   }
 
   .topic-icon {
-    width: clamp(24px, 7vw, 32px);
-    height: clamp(24px, 7vw, 32px);
+    width: clamp(27px, 7vw, 33px);
+    height: clamp(27px, 7vw, 33px);
   }
 
   .namaz-footer p {
-    font-size: clamp(11px, 3.2vw, 14px);
+    font-size: clamp(12px, 3.2vw, 14px);
   }
 }
 
-/* =====================================================
-   SHORT SCREENS
-===================================================== */
+/* 13. SHORT SCREENS
+   Keep header/footer at 64px as requested.
+   Reduce only inner spacing and typography.
+*/
 
 @media (max-height: 760px) {
   :root {
-    --header-height: 52px;
-    --footer-height: 52px;
-    --page-gap: 6px;
-    --app-padding: 6px;
     --content-gap: 5px;
     --card-gap: 5px;
   }
 
-  .top-board,
-  .bottom-board {
-    padding-block: 4px;
-    border-radius: 17px;
-  }
-
-  .top-board h1 {
-    font-size: clamp(18px, 4.5vw, 23px);
-  }
-
   .intro-board {
-    flex-basis: 108px;
+    flex-basis: 27%;
     padding: 7px 8px;
   }
 
   .intro-board h2 {
     margin-bottom: 3px;
-    font-size: clamp(17px, 4.2vw, 21px);
+    font-size: clamp(17px, 4vw, 21px);
+    line-height: 1.3;
   }
 
   .intro-board p {
-    font-size: clamp(11px, 2.9vw, 14px);
-    line-height: 1.32;
+    font-size: clamp(11px, 2.8vw, 14px);
+    line-height: 1.35;
   }
 
   .learning-card {
     gap: 4px;
     padding: 3px 4px;
-    font-size: clamp(10px, 2.8vw, 13px);
+    font-size: clamp(10px, 2.7vw, 13px);
   }
 
   .topic-icon {
-    width: clamp(23px, 6.5vw, 31px);
-    height: clamp(23px, 6.5vw, 31px);
+    width: clamp(25px, 6.2vw, 31px);
+    height: clamp(25px, 6.2vw, 31px);
   }
 
   .namaz-footer p {
-    font-size: clamp(10px, 2.8vw, 13px);
+    font-size: clamp(11px, 2.8vw, 13px);
   }
 }
 
-/* =====================================================
-   VERY SHORT SCREENS
-===================================================== */
+/* 14. VERY SHORT SCREENS
+   Header and footer remain 64px.
+*/
 
 @media (max-height: 600px) {
   :root {
-    --header-height: 44px;
-    --footer-height: 44px;
-    --page-gap: 4px;
-    --app-padding: 4px;
     --content-gap: 4px;
     --card-gap: 3px;
-  }
-
-  .top-board,
-  .bottom-board {
-    padding: 3px 6px;
-    border-radius: 14px;
-  }
-
-  .top-board h1 {
-    font-size: 17px;
+    --app-padding: 5px;
   }
 
   .intro-board {
-    flex-basis: 82px;
-    padding: 5px 6px;
-    border-radius: 12px;
+    flex-basis: 25%;
+    padding: 4px 6px;
   }
 
   .intro-board h2 {
@@ -724,29 +647,33 @@ body.dark-mode .learning-card:hover {
 
   .intro-board p {
     font-size: 10px;
-    line-height: 1.2;
+    line-height: 1.25;
   }
 
   .learning-card {
     gap: 3px;
     padding: 2px 3px;
     font-size: 10px;
+    line-height: 1.2;
     border-radius: 9px;
   }
 
+  .learning-card span {
+    line-height: 1.2;
+  }
+
   .topic-icon {
-    width: 22px;
-    height: 22px;
+    width: 23px;
+    height: 23px;
   }
 
   .namaz-footer p {
     font-size: 10px;
+    line-height: 1.2;
   }
 }
 
-/* =====================================================
-   REDUCED MOTION
-===================================================== */
+/* 15. REDUCED MOTION */
 
 @media (prefers-reduced-motion: reduce) {
   .learning-card {
