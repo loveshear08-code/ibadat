@@ -1,778 +1,574 @@
-/* =========================================
+
+/* ========================================
    IBADAT — ALLAH'S NAMES
    File: css/allah-names.css
-   ========================================= */
+   ======================================== */
 
 :root {
-  --green-deep: #123d2c;
-  --green-main: #18563c;
-  --green-light: #26704e;
+    --green-deep: #123d2c;
+    --green-main: #18563c;
+    --green-light: #26704e;
+    --gold: #d6b45c;
+    --gold-light: #ecd995;
 
-  --gold: #d6b45c;
-  --gold-light: #ecd995;
+    --pista: #dce8c5;
+    --pista-border: #c5d6a8;
+    --pista-text: #214a35;
 
-  --cream: #fffaf0;
-  --text-main: #214a35;
-  --text-muted: #667568;
+    --page-overlay: rgba(255, 250, 240, 0.22);
+    --board-bg: rgba(255, 252, 242, 0.91);
+    --card-bg: rgba(239, 245, 222, 0.87);
+    --card-border: rgba(183, 202, 151, 0.78);
 
-  --pista: #dce8c5;
-  --pista-border: #c5d6a8;
-  --pista-text: #214a35;
+    --text-main: #214a35;
+    --text-muted: #687568;
 
-  --board-bg: rgba(255, 250, 240, 0.94);
-  --board-border: rgba(214, 180, 92, 0.9);
-  --board-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+    --header-height: 48px;
+    --footer-height: 48px;
+    --page-gap: 4px;
+    --page-padding: 7px;
+    --card-gap: 8px;
+    --card-radius: 20px;
 
-  --header-height: 112px;
-  --footer-height: 48px;
-  --page-gap: 8px;
-  --app-padding: 7px;
-
-  --card-gap: 8px;
-  --card-radius: 15px;
-
-  --safe-top: env(safe-area-inset-top, 0px);
-  --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
-
-/* ---------- Base ---------- */
 
 * {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
-html {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+html,
+body {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    margin: 0;
+    overflow: hidden;
 }
 
 body {
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  margin: 0;
-  padding:
-    max(5px, var(--safe-top))
-    var(--app-padding)
-    max(5px, var(--safe-bottom));
+    padding:
+        max(5px, var(--safe-top))
+        var(--page-padding)
+        max(5px, var(--safe-bottom));
 
-  overflow: hidden;
-  font-family:
-    "Noto Sans Bengali",
-    "Hind Siliguri",
-    Arial,
-    sans-serif;
+    color: var(--text-main);
+    font-family:
+        "Noto Sans Bengali",
+        "Hind Siliguri",
+        Arial,
+        sans-serif;
 
-  color: var(--text-main);
-
-  background:
-    linear-gradient(
-      rgba(11, 42, 29, 0.22),
-      rgba(11, 42, 29, 0.22)
-    ),
-    url("../assets/main-bg.jpg") center center / cover fixed no-repeat;
-
-  -webkit-font-smoothing: antialiased;
+    background:
+        linear-gradient(
+            var(--page-overlay),
+            var(--page-overlay)
+        ),
+        url("../assets/main-bg.jpg") center center / cover fixed no-repeat;
 }
 
-/* ---------- Main page layout ---------- */
+/* PAGE LAYOUT */
 
 .names-page {
-  width: 100%;
-  max-width: 100%;
-  height: 100%;
-  min-height: 0;
-  margin: 0 auto;
-
-  display: flex;
-  flex-direction: column;
-  gap: var(--page-gap);
-
-  overflow: hidden;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--page-gap);
+    overflow: hidden;
 }
 
-/* ---------- Header / Intro board ---------- */
+/* TOPPER — SAME COMPACT HEIGHT AS HOME BARS */
 
 .intro-board {
-  position: relative;
-  isolation: isolate;
+    flex: 0 0 var(--header-height);
+    height: var(--header-height);
+    min-height: 0;
 
-  flex: 0 0 var(--header-height);
-  width: 100%;
-  height: var(--header-height);
-  min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    padding: 4px 10px;
+    overflow: hidden;
 
-  padding: 8px 12px;
-  overflow: hidden;
+    border: 2px solid var(--gold);
+    border-radius: 20px;
 
-  text-align: center;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(16, 76, 50, 0.96),
+            rgba(9, 43, 32, 0.97)
+        );
 
-  border: 2px solid var(--gold);
-  border-radius: 20px;
-
-  background:
-    linear-gradient(
-      rgba(255, 250, 232, 0.78),
-      rgba(255, 250, 232, 0.84)
-    ),
-    url("../assets/hero-bg.jpg") center 45% / cover no-repeat;
-
-  box-shadow: var(--board-shadow);
-}
-
-.intro-board::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.16),
-      transparent 55%
-    );
-
-  pointer-events: none;
-}
-
-.intro-board .arabic-title {
-  margin: 0 0 2px;
-
-  color: var(--green-deep);
-
-  font-family:
-    "Noto Naskh Arabic",
-    "Amiri",
-    serif;
-
-  font-size: clamp(24px, 5vw, 34px);
-  font-weight: 700;
-  line-height: 1.35;
-  direction: rtl;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
 }
 
 #introTitle {
-  margin: 2px 0 0;
+    width: 100%;
+    margin: 0;
 
-  color: var(--gold);
-  font-size: clamp(19px, 4.5vw, 27px);
-  font-weight: 800;
-  line-height: 1.35;
+    color: var(--gold-light);
+    font-size: clamp(16px, 4.2vw, 20px);
+    font-weight: 800;
+    line-height: 1.3;
+    text-align: center;
 
-  text-shadow: 0 1px 2px rgba(28, 45, 30, 0.24);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.intro-divider {
-  width: min(150px, 45%);
-  height: 3px;
-  min-height: 3px;
-
-  margin-top: 7px;
-
-  border-radius: 999px;
-  background: var(--green-deep);
-}
-
-/* ---------- Names content board ---------- */
+/* OUTER CONTENT BOARD */
 
 .names-board {
-  position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
 
-  flex: 1 1 auto;
-  width: 100%;
-  min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 
-  display: flex;
-  flex-direction: column;
+    border: 1px solid var(--card-border);
+    border-radius: 22px;
 
-  overflow: hidden;
-
-  border: 1px solid var(--board-border);
-  border-radius: 20px;
-
-  background: var(--board-bg);
-  box-shadow: var(--board-shadow);
+    background: var(--board-bg);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
 }
 
-/* The names scroll inside this area only */
+/* ONLY THIS AREA SCROLLS */
 
 .names-container {
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  flex: 1 1 auto;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    flex: 1 1 auto;
 
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-content: start;
-  align-items: stretch;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: max-content;
+    align-content: start;
+    align-items: stretch;
 
-  gap: var(--card-gap);
-  padding: 9px;
+    gap: var(--card-gap);
+    padding: 9px;
 
-  overflow-x: hidden;
-  overflow-y: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(24, 86, 60, 0.55) transparent;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(24, 86, 60, 0.45) transparent;
 }
 
 .names-container::-webkit-scrollbar {
-  width: 4px;
-}
-
-.names-container::-webkit-scrollbar-track {
-  background: transparent;
+    width: 4px;
 }
 
 .names-container::-webkit-scrollbar-thumb {
-  background: rgba(24, 86, 60, 0.5);
-  border-radius: 999px;
+    background: rgba(24, 86, 60, 0.45);
+    border-radius: 10px;
 }
 
-/* ---------- Individual name cards ---------- */
+.names-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* ALL NAME CARDS */
 
 .name-card {
-  position: relative;
-  min-width: 0;
-  min-height: 145px;
+    position: relative;
+    min-width: 0;
+    min-height: 145px;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-  gap: 5px;
-  padding: 10px 7px;
+    gap: 5px;
+    padding: 10px 7px;
 
-  overflow: hidden;
-  text-align: center;
+    border: 1px solid var(--card-border);
+    border-radius: var(--card-radius);
 
-  border: 1px solid var(--pista-border);
-  border-radius: var(--card-radius);
+    background: var(--card-bg);
+    box-shadow: 0 2px 7px rgba(33, 74, 53, 0.09);
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.8),
-      rgba(220, 232, 197, 0.88)
-    );
-
-  box-shadow: 0 2px 7px rgba(22, 61, 42, 0.09);
-
-  overflow-wrap: anywhere;
-  word-break: normal;
+    text-align: center;
+    overflow-wrap: anywhere;
 }
 
-.name-number {
-  align-self: flex-start;
+/* BISMILLAH CARD — HERO MOSQUE BACKGROUND */
 
-  min-width: 25px;
-  min-height: 23px;
+.bismillah-card {
+    grid-column: 1 / -1;
+    min-height: 190px;
+    padding: 18px 12px;
 
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+    border: 1px solid var(--gold);
+    border-radius: 20px;
 
-  padding: 2px 6px;
-
-  border: 1px solid var(--pista-border);
-  border-radius: 8px;
-
-  background: rgba(255, 255, 255, 0.68);
-  color: var(--green-deep);
-
-  font-size: 12px;
-  font-weight: 800;
-  line-height: 1.3;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 250, 231, 0.84),
+            rgba(220, 232, 197, 0.82)
+        ),
+        url("../assets/hero-bg.jpg") center center / cover no-repeat;
 }
 
 .name-arabic {
-  width: 100%;
-  margin: 0;
+    width: 100%;
+    margin: 0;
 
-  color: var(--green-deep);
+    color: var(--green-deep);
+    font-family:
+        "Noto Naskh Arabic",
+        "Amiri",
+        serif;
 
-  font-family:
-    "Noto Naskh Arabic",
-    "Amiri",
-    serif;
+    font-size: clamp(25px, 6vw, 34px);
+    font-weight: 700;
+    line-height: 1.75;
 
-  font-size: clamp(25px, 5.5vw, 34px);
-  font-weight: 700;
-  line-height: 1.65;
-
-  direction: rtl;
-  text-align: center;
-}
-
-.name-pronunciation {
-  width: 100%;
-  margin: 0;
-
-  color: var(--pista-text);
-
-  font-size: clamp(12px, 2.8vw, 15px);
-  font-weight: 700;
-  line-height: 1.45;
-}
-
-.name-meaning {
-  width: 100%;
-  margin: 0;
-
-  color: var(--text-muted);
-
-  font-size: clamp(11px, 2.6vw, 14px);
-  font-weight: 500;
-  line-height: 1.5;
-}
-
-/* ---------- Bismillah / featured card ---------- */
-
-.bismillah-card {
-  grid-column: 1 / -1;
-  min-height: 155px;
-
-  padding: 13px 12px;
-
-  border: 1px solid var(--board-border);
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255, 250, 232, 0.97),
-      rgba(220, 232, 197, 0.94)
-    );
+    text-align: center;
+    direction: rtl;
 }
 
 .bismillah-card .name-arabic {
-  font-size: clamp(26px, 6vw, 38px);
-  line-height: 1.9;
+    font-size: clamp(29px, 7vw, 39px);
+    line-height: 1.9;
 }
 
-.bismillah-card .name-pronunciation {
-  font-size: clamp(12px, 2.9vw, 15px);
+.name-pronunciation {
+    width: 100%;
+    margin: 0;
+
+    color: var(--pista-text);
+    font-size: clamp(12px, 3vw, 16px);
+    font-weight: 750;
+    line-height: 1.5;
 }
 
-.bismillah-card .name-meaning {
-  font-size: clamp(11px, 2.7vw, 14px);
+.name-meaning {
+    width: 100%;
+    margin: 0;
+
+    color: var(--text-muted);
+    font-size: clamp(11px, 2.7vw, 14px);
+    font-weight: 500;
+    line-height: 1.55;
 }
 
-/* ---------- Footer board ---------- */
+.name-number {
+    align-self: flex-start;
+
+    min-width: 30px;
+    min-height: 28px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 3px 7px;
+
+    border: 1px solid var(--card-border);
+    border-radius: 11px;
+
+    background: rgba(255, 255, 255, 0.48);
+    color: var(--text-main);
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+/* SPECIAL UNNUMBERED FINAL CARD */
+
+.name-card.special-card {
+    min-height: 145px;
+    justify-content: center;
+    grid-column: auto;
+
+    border: 1px solid var(--gold);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 250, 232, 0.96),
+            rgba(220, 232, 197, 0.92)
+        );
+}
+
+.special-card .name-arabic {
+    font-size: clamp(24px, 5.5vw, 32px);
+    color: var(--green-deep);
+}
+
+.special-decoration {
+    color: var(--gold);
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: 4px;
+}
+
+/* FOOTER */
 
 .names-footer {
-  position: relative;
+    flex: 0 0 var(--footer-height);
+    height: var(--footer-height);
+    min-height: 0;
 
-  flex: 0 0 var(--footer-height);
-  width: 100%;
-  height: var(--footer-height);
-  min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    padding: 4px 10px;
+    overflow: hidden;
 
-  padding: 5px 12px;
-  overflow: hidden;
+    border: 2px solid var(--gold);
+    border-radius: 20px;
 
-  border: 2px solid var(--gold);
-  border-radius: 20px;
+    background:
+        linear-gradient(
+            135deg,
+            var(--green-main),
+            var(--green-deep)
+        );
 
-  background:
-    linear-gradient(
-      135deg,
-      var(--green-main),
-      var(--green-deep)
-    );
-
-  box-shadow: var(--board-shadow);
-
-  text-align: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
 }
 
 #namesFooterText {
-  width: 100%;
-  margin: 0;
+    width: 100%;
+    margin: 0;
 
-  color: var(--gold-light);
+    color: var(--gold-light);
+    font-size: clamp(11px, 3vw, 15px);
+    font-weight: 700;
+    line-height: 1.35;
+    text-align: center;
 
-  font-size: clamp(11px, 2.8vw, 14px);
-  font-weight: 600;
-  line-height: 1.4;
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* ---------- Dark mode ---------- */
+/* DARK MODE */
 
 body.dark-mode {
-  --text-main: #e7eddf;
-  --text-muted: #c3cebd;
+    --page-overlay: rgba(0, 0, 0, 0.43);
+    --board-bg: rgba(17, 35, 26, 0.96);
+    --card-bg: rgba(31, 56, 40, 0.97);
+    --card-border: rgba(190, 207, 158, 0.35);
 
-  --board-bg: rgba(20, 39, 30, 0.96);
-  --board-border: rgba(214, 180, 92, 0.78);
-  --board-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+    --text-main: #e6ecd9;
+    --text-muted: #c4cfbd;
 
-  background:
-    linear-gradient(
-      rgba(0, 0, 0, 0.48),
-      rgba(0, 0, 0, 0.48)
-    ),
-    url("../assets/main-bg.jpg") center center / cover fixed no-repeat;
+    background:
+        linear-gradient(
+            var(--page-overlay),
+            var(--page-overlay)
+        ),
+        url("../assets/main-bg.jpg") center center / cover fixed no-repeat;
 }
 
-body.dark-mode .intro-board {
-  background:
-    linear-gradient(
-      rgba(15, 43, 31, 0.88),
-      rgba(15, 43, 31, 0.92)
-    ),
-    url("../assets/hero-bg.jpg") center 45% / cover no-repeat;
-}
-
-body.dark-mode .intro-board .arabic-title {
-  color: #f1e5bc;
-}
-
-body.dark-mode #introTitle {
-  color: var(--gold-light);
-}
-
-body.dark-mode .intro-divider {
-  background: var(--gold);
+body.dark-mode .intro-board,
+body.dark-mode .names-footer {
+    background:
+        linear-gradient(
+            135deg,
+            #104c32,
+            #092b20
+        );
 }
 
 body.dark-mode .names-board {
-  background: var(--board-bg);
+    background: var(--board-bg);
 }
 
 body.dark-mode .name-card {
-  border-color: rgba(197, 214, 168, 0.38);
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(34, 62, 45, 0.98),
-      rgba(25, 49, 36, 0.98)
-    );
-
-  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
-}
-
-body.dark-mode .name-number {
-  color: #e5edcf;
-  border-color: rgba(197, 214, 168, 0.4);
-  background: rgba(255, 255, 255, 0.08);
+    background: var(--card-bg);
+    border-color: var(--card-border);
 }
 
 body.dark-mode .name-arabic {
-  color: #f0e2b1;
+    color: #f0e4bd;
 }
 
 body.dark-mode .name-pronunciation {
-  color: #dce8c5;
+    color: #dce8c5;
 }
 
 body.dark-mode .name-meaning {
-  color: #c3cebd;
+    color: #c4cfbd;
+}
+
+body.dark-mode .name-number {
+    color: #e6ecd9;
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--card-border);
 }
 
 body.dark-mode .bismillah-card {
-  border-color: rgba(214, 180, 92, 0.72);
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(39, 62, 43, 0.98),
-      rgba(27, 48, 34, 0.98)
-    );
+    background:
+        linear-gradient(
+            135deg,
+            rgba(15, 43, 31, 0.87),
+            rgba(22, 51, 36, 0.88)
+        ),
+        url("../assets/hero-bg.jpg") center center / cover no-repeat;
 }
 
-body.dark-mode .names-footer {
-  background:
-    linear-gradient(
-      135deg,
-      #123d2c,
-      #092b20
-    );
+body.dark-mode .special-card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(31, 56, 40, 0.98),
+            rgba(17, 35, 26, 0.98)
+        );
 }
 
-/* ---------- Global theme color compatibility ---------- */
+/* GLOBAL THEME COLORS */
 
-/* Classic theme */
-
-body[data-color-theme="classic"] .name-card,
-body[data-theme-color="classic"] .name-card {
-  border-color: var(--pista-border);
+body[data-color-theme="classic"],
+body[data-theme-color="classic"] {
+    --theme-accent: #18563c;
+    --theme-soft: #dce8c5;
+    --theme-border: #c5d6a8;
+    --theme-text: #214a35;
 }
 
-body[data-color-theme="classic"] .name-arabic,
-body[data-theme-color="classic"] .name-arabic {
-  color: var(--green-deep);
+body[data-color-theme="royal"],
+body[data-theme-color="royal"] {
+    --theme-accent: #55417f;
+    --theme-soft: #e5ddf4;
+    --theme-border: #c8b7e8;
+    --theme-text: #41305f;
 }
 
-body.dark-mode[data-color-theme="classic"] .name-arabic,
-body.dark-mode[data-theme-color="classic"] .name-arabic {
-  color: #f0e2b1;
+body[data-color-theme="rose"],
+body[data-theme-color="rose"] {
+    --theme-accent: #914f62;
+    --theme-soft: #f6e2e7;
+    --theme-border: #e5b8c3;
+    --theme-text: #71394a;
 }
 
-/* Royal theme */
-
-body[data-color-theme="royal"] .name-card,
-body[data-theme-color="royal"] .name-card {
-  border-color: #c8b7e8;
+body[data-color-theme="pista"],
+body[data-theme-color="pista"] {
+    --theme-accent: #356445;
+    --theme-soft: #dce8c5;
+    --theme-border: #c5d6a8;
+    --theme-text: #214a35;
 }
 
-body[data-color-theme="royal"] .name-number,
-body[data-theme-color="royal"] .name-number {
-  border-color: #c8b7e8;
+body[data-color-theme] .name-card,
+body[data-theme-color] .name-card {
+    border-color: var(--theme-border);
+    background-color: var(--theme-soft);
 }
 
-body[data-color-theme="royal"] .name-pronunciation,
-body[data-theme-color="royal"] .name-pronunciation {
-  color: #514078;
+body[data-color-theme] .name-pronunciation,
+body[data-theme-color] .name-pronunciation {
+    color: var(--theme-text);
 }
 
-body.dark-mode[data-color-theme="royal"] .name-pronunciation,
-body.dark-mode[data-theme-color="royal"] .name-pronunciation {
-  color: #d7c9f5;
+body[data-color-theme] .name-number,
+body[data-theme-color] .name-number {
+    border-color: var(--theme-border);
+    color: var(--theme-text);
 }
 
-/* Rose theme */
-
-body[data-color-theme="rose"] .name-card,
-body[data-theme-color="rose"] .name-card {
-  border-color: #e5b8c3;
+body.dark-mode[data-color-theme] .name-card,
+body.dark-mode[data-theme-color] .name-card {
+    background-color: rgba(26, 47, 35, 0.97);
 }
 
-body[data-color-theme="rose"] .name-number,
-body[data-theme-color="rose"] .name-number {
-  border-color: #e5b8c3;
+body.dark-mode[data-color-theme] .name-pronunciation,
+body.dark-mode[data-theme-color] .name-pronunciation {
+    color: #dce8c5;
 }
 
-body[data-color-theme="rose"] .name-pronunciation,
-body[data-theme-color="rose"] .name-pronunciation {
-  color: #874b5a;
-}
-
-body.dark-mode[data-color-theme="rose"] .name-pronunciation,
-body.dark-mode[data-theme-color="rose"] .name-pronunciation {
-  color: #f0c7d1;
-}
-
-/* Pista theme */
-
-body[data-color-theme="pista"] .name-card,
-body[data-theme-color="pista"] .name-card {
-  border-color: #c5d6a8;
-}
-
-body[data-color-theme="pista"] .name-number,
-body[data-theme-color="pista"] .name-number {
-  border-color: #c5d6a8;
-}
-
-body[data-color-theme="pista"] .name-pronunciation,
-body[data-theme-color="pista"] .name-pronunciation {
-  color: #214a35;
-}
-
-body.dark-mode[data-color-theme="pista"] .name-pronunciation,
-body.dark-mode[data-theme-color="pista"] .name-pronunciation {
-  color: #dce8c5;
-}
-
-/* ---------- Responsive: narrow phones ---------- */
+/* RESPONSIVE */
 
 @media (max-width: 380px) {
-  :root {
-    --app-padding: 5px;
-    --page-gap: 7px;
-    --card-gap: 6px;
-    --header-height: 100px;
-    --footer-height: 44px;
-  }
+    :root {
+        --page-padding: 5px;
+        --page-gap: 4px;
+        --card-gap: 6px;
+    }
 
-  .intro-board {
-    padding: 6px 8px;
-    border-radius: 18px;
-  }
+    .names-container {
+        padding: 7px;
+    }
 
-  .intro-board .arabic-title {
-    font-size: 25px;
-  }
+    .name-card {
+        min-height: 132px;
+        padding: 8px 5px;
+    }
 
-  #introTitle {
-    font-size: 19px;
-  }
+    .bismillah-card {
+        min-height: 165px;
+        padding: 12px 8px;
+    }
 
-  .names-container {
-    gap: 6px;
-    padding: 7px;
-  }
-
-  .name-card {
-    min-height: 132px;
-    padding: 8px 5px;
-    gap: 4px;
-  }
-
-  .name-arabic {
-    font-size: 25px;
-  }
-
-  .name-pronunciation {
-    font-size: 12px;
-  }
-
-  .name-meaning {
-    font-size: 11px;
-  }
-
-  .bismillah-card {
-    min-height: 140px;
-    padding: 10px 8px;
-  }
-
-  .names-footer {
-    padding: 4px 8px;
-    border-radius: 18px;
-  }
-
-  #namesFooterText {
-    font-size: 11px;
-  }
+    .name-arabic {
+        font-size: 25px;
+    }
 }
-
-/* ---------- Responsive: short screens ---------- */
 
 @media (max-height: 650px) {
-  :root {
-    --header-height: 88px;
-    --footer-height: 40px;
-    --page-gap: 5px;
-  }
+    :root {
+        --header-height: 44px;
+        --footer-height: 44px;
+        --page-gap: 3px;
+    }
 
-  body {
-    padding-top: max(3px, var(--safe-top));
-    padding-bottom: max(3px, var(--safe-bottom));
-  }
+    body {
+        padding-top: max(3px, var(--safe-top));
+        padding-bottom: max(3px, var(--safe-bottom));
+    }
 
-  .intro-board {
-    padding: 4px 8px;
-    border-radius: 17px;
-  }
+    .names-container {
+        padding: 6px;
+        gap: 6px;
+    }
 
-  .intro-board .arabic-title {
-    font-size: 23px;
-    line-height: 1.2;
-  }
+    .name-card {
+        min-height: 118px;
+        padding: 7px 5px;
+    }
 
-  #introTitle {
-    margin-top: 1px;
-    font-size: 18px;
-    line-height: 1.25;
-  }
-
-  .intro-divider {
-    margin-top: 4px;
-    height: 2px;
-    min-height: 2px;
-  }
-
-  .names-container {
-    gap: 6px;
-    padding: 6px;
-  }
-
-  .name-card {
-    min-height: 120px;
-    padding: 7px 5px;
-    gap: 3px;
-  }
-
-  .name-arabic {
-    font-size: 24px;
-    line-height: 1.45;
-  }
-
-  .name-pronunciation {
-    font-size: 12px;
-    line-height: 1.35;
-  }
-
-  .name-meaning {
-    font-size: 11px;
-    line-height: 1.35;
-  }
-
-  .bismillah-card {
-    min-height: 125px;
-    padding: 8px;
-  }
-
-  .names-footer {
-    padding: 3px 8px;
-  }
-
-  #namesFooterText {
-    font-size: 10px;
-  }
+    .bismillah-card {
+        min-height: 145px;
+    }
 }
-
-/* ---------- Very narrow screens ---------- */
 
 @media (max-width: 320px) {
-  :root {
-    --app-padding: 4px;
-    --card-gap: 5px;
-  }
+    :root {
+        --page-padding: 4px;
+        --card-gap: 5px;
+    }
 
-  .names-container {
-    padding: 5px;
-  }
+    .name-card {
+        padding: 6px 4px;
+    }
 
-  .name-card {
-    padding: 6px 4px;
-  }
+    .name-arabic {
+        font-size: 22px;
+    }
 
-  .name-arabic {
-    font-size: 22px;
-  }
+    .name-pronunciation {
+        font-size: 11px;
+    }
 
-  .name-pronunciation {
-    font-size: 11px;
-  }
-
-  .name-meaning {
-    font-size: 10px;
-  }
-}
-
-/* ---------- Reduced motion ---------- */
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+    .name-meaning {
+        font-size: 10px;
+    }
 }
