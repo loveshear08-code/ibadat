@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -10,23 +9,22 @@
   <link rel="stylesheet" href="../css/hadith.css">
 </head>
 <body>
+  <main class="hadith-page" data-screen="books">
 
-  <main class="hadith-page">
-
-    <header class="hadith-header board">
+    <header class="hadith-header">
       <div class="header-title">
         <h1 id="pageTitle">হাদিস সংকলন</h1>
         <p id="pageSubtitle">হাদিস পড়ুন, শিক্ষা গ্রহণ করুন</p>
       </div>
     </header>
 
-    <section class="hadith-content board">
+    <section class="hadith-content">
 
-      <!-- প্রথম পেজ: হাদিসের বই -->
-      <section class="screen active" id="booksScreen">
+      <!-- প্রথম পৃষ্ঠা: আলাদা কন্টেন্ট বোর্ড নেই -->
+      <section class="screen books-screen active" id="booksScreen">
         <div class="section-heading">
           <h2 id="booksHeading">হাদিসের বই</h2>
-          <span id="bookCount" class="book-count">০</span>
+          <span id="bookCount" class="book-count">৮</span>
         </div>
 
         <div id="loadingMessage" class="status-message" role="status">
@@ -43,9 +41,14 @@
         <div class="book-grid" id="bookGrid"></div>
       </section>
 
-      <!-- দ্বিতীয় পেজ: হাদিসের তালিকা -->
-      <section class="screen" id="listScreen" hidden>
+      <!-- দ্বিতীয় পৃষ্ঠা: হাদিসের তালিকা -->
+      <section class="screen list-screen" id="listScreen" hidden>
         <div class="list-toolbar">
+          <button type="button" id="backToBooksButton"
+                  class="back-button" aria-label="বইয়ের তালিকায় ফিরুন">
+            ← <span id="backToBooksText">বইসমূহ</span>
+          </button>
+
           <div class="search-container">
             <span class="search-icon" aria-hidden="true">⌕</span>
             <input
@@ -53,8 +56,7 @@
               id="hadithSearch"
               placeholder="হাদিস খুঁজুন..."
               aria-label="হাদিস খুঁজুন"
-              autocomplete="off"
-            >
+              autocomplete="off">
           </div>
         </div>
 
@@ -76,8 +78,14 @@
         </div>
       </section>
 
-      <!-- তৃতীয় স্ক্রিন: একটি হাদিসের বিস্তারিত -->
-      <section class="screen" id="detailScreen" hidden>
+      <!-- তৃতীয় পৃষ্ঠা: হাদিসের বিস্তারিত -->
+      <section class="screen detail-screen" id="detailScreen" hidden>
+        <div class="detail-topbar">
+          <button type="button" id="backToListButton" class="back-button">
+            ← <span id="backToListText">হাদিসের তালিকা</span>
+          </button>
+        </div>
+
         <div class="detail-header-card">
           <p id="detailBookName">হাদিসের বই</p>
           <h2 id="detailHeading">হাদিসের বিবরণ</h2>
@@ -108,30 +116,24 @@
         </article>
 
         <nav class="hadith-navigation" aria-label="হাদিস নেভিগেশন">
-          <button
-            type="button"
-            id="previousHadithButton"
-            class="navigation-button"
-          >← আগের</button>
-
-          <button
-            type="button"
-            id="nextHadithButton"
-            class="navigation-button"
-          >পরের →</button>
+          <button type="button" id="previousHadithButton" class="navigation-button">
+            ← <span id="previousText">আগের</span>
+          </button>
+          <button type="button" id="nextHadithButton" class="navigation-button">
+            <span id="nextText">পরের</span> →
+          </button>
         </nav>
       </section>
 
     </section>
 
-    <footer class="hadith-footer board">
-      <p id="footerBrand">IBADAT</p>
+    <footer class="hadith-footer">
       <span id="footerText">পড়ুন • চিন্তা করুন • আমল করুন</span>
     </footer>
 
   </main>
 
-  <script src="../js/hadith.js?v=3"></script>
+  <script src="../js/hadith.js?v=4"></script>
   <script src="../js/theme.js"></script>
 </body>
 </html>
