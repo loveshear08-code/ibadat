@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -7,7 +8,7 @@
   <meta name="description" content="IBADAT — কিবলা কম্পাস">
   <title>IBADAT | কিবলা কম্পাস</title>
 
-  <link rel="stylesheet" href="../css/qibla.css?v=5">
+  <link rel="stylesheet" href="../css/qibla.css?v=6">
 </head>
 
 <body>
@@ -19,18 +20,9 @@
 
     <section class="main-board board" aria-label="কিবলা কম্পাস">
 
-      <div class="location-panel">
-        <div class="info-block">
-          <span id="locationLabel" class="info-label">বর্তমান অবস্থান</span>
-          <strong id="locationName" class="info-value">অবস্থান খোঁজা হচ্ছে...</strong>
-        </div>
-
-        <div class="info-divider" aria-hidden="true"></div>
-
-        <div class="info-block">
-          <span id="distanceLabel" class="info-label">মক্কার দূরত্ব</span>
-          <strong id="distance" class="info-value">—</strong>
-        </div>
+      <div class="location-strip">
+        <span id="locationLabel">বর্তমান অবস্থান:</span>
+        <strong id="locationName">অবস্থান খোঁজা হচ্ছে...</strong>
       </div>
 
       <div class="compass-stage">
@@ -38,34 +30,27 @@
           <div class="compass" id="compass">
 
             <div class="compass-dial" id="compassDial">
-              <div class="direction n">N</div>
-              <div class="direction nne">NNE</div>
-              <div class="direction ne">NE</div>
-              <div class="direction ene">ENE</div>
-              <div class="direction e">E</div>
-              <div class="direction ese">ESE</div>
-              <div class="direction se">SE</div>
-              <div class="direction sse">SSE</div>
-              <div class="direction s">S</div>
-              <div class="direction ssw">SSW</div>
-              <div class="direction sw">SW</div>
-              <div class="direction wsw">WSW</div>
-              <div class="direction w">W</div>
-              <div class="direction wnw">WNW</div>
-              <div class="direction nw">NW</div>
-              <div class="direction nnw">NNW</div>
+              <div class="direction">উ</div>
+              <div class="direction">উ-উপূ</div>
+              <div class="direction">উপূ</div>
+              <div class="direction">পূ-উপূ</div>
+              <div class="direction">পূ</div>
+              <div class="direction">পূ-দপূ</div>
+              <div class="direction">দপূ</div>
+              <div class="direction">দ-দপূ</div>
+              <div class="direction">দ</div>
+              <div class="direction">দ-দপ</div>
+              <div class="direction">দপ</div>
+              <div class="direction">প-দপ</div>
+              <div class="direction">প</div>
+              <div class="direction">প-উপ</div>
+              <div class="direction">উপ</div>
+              <div class="direction">উ-উপ</div>
             </div>
 
-            <div class="compass-ticks" aria-hidden="true"></div>
-
-            <div class="major-tick tick-n" aria-hidden="true"></div>
-            <div class="major-tick tick-ne" aria-hidden="true"></div>
-            <div class="major-tick tick-e" aria-hidden="true"></div>
-            <div class="major-tick tick-se" aria-hidden="true"></div>
-            <div class="major-tick tick-s" aria-hidden="true"></div>
-            <div class="major-tick tick-sw" aria-hidden="true"></div>
-            <div class="major-tick tick-w" aria-hidden="true"></div>
-            <div class="major-tick tick-nw" aria-hidden="true"></div>
+            <div class="compass-ticks compass-ticks-outer" aria-hidden="true"></div>
+            <div class="compass-ticks compass-ticks-inner" aria-hidden="true"></div>
+            <div class="compass-major-ticks" id="compassMajorTicks" aria-hidden="true"></div>
 
             <div class="compass-ring" aria-hidden="true"></div>
 
@@ -88,21 +73,20 @@
         </section>
       </div>
 
-      <p class="compass-hint" id="compassHint">
-        কম্পাস সঠিকভাবে কাজ করতে ডিভাইসটি সমতল রাখুন
-      </p>
+      <div class="location-strip">
+        <span id="distanceLabel">মক্কার দূরত্ব:</span>
+        <strong id="distance">—</strong>
+      </div>
 
     </section>
 
     <footer class="footer-board board">
-      <div class="footer-window" aria-live="polite">
-        <p id="footerText">সঠিক দিক পেতে কম্পাস ব্যবহার করুন</p>
-      </div>
+      <p id="footerText">আল্লাহর স্মরণেই অন্তর প্রশান্তি লাভ করে।</p>
     </footer>
 
   </main>
 
   <script src="../js/theme.js"></script>
-  <script src="../js/qibla.js?v=5"></script>
+  <script src="../js/qibla.js?v=6"></script>
 </body>
 </html>
