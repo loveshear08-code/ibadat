@@ -94,7 +94,7 @@ img {
 
   background:
     linear-gradient(var(--page-overlay), var(--page-overlay)),
-    url("../assets/images/compass-bg.png") center / cover no-repeat;
+    url("../assets/main-bg.jpg") center / cover no-repeat;
 }
 
 .board {
@@ -156,7 +156,7 @@ img {
 
   background:
     linear-gradient(var(--content-overlay), var(--content-overlay)),
-    url("../assets/main-bg.jpg") center / cover no-repeat;
+    url("../assets/images/compass-bg.png") center / cover no-repeat;
 
   border: 1px solid var(--border);
   border-radius: var(--board-radius);
@@ -671,7 +671,7 @@ body.dark-mode {
 body.dark-mode .qibla-page {
   background:
     linear-gradient(var(--page-overlay), var(--page-overlay)),
-    url("../assets/main-bg.jpg") center / cover no-repeat;
+    url("../assets/images/compass-bg.png") center / cover no-repeat;
 }
 
 body.dark-mode .hero-board,
