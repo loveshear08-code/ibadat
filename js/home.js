@@ -487,50 +487,100 @@
       console.warn("IBADAT: weather unavailable.", error);
     }
   }
+ 
+async function loadCity(latitude, longitude) {
+  try {
+    const url = new URL(
+      "https://nominatim.openstreetmap.org/reverse"
+    );
 
-  async function loadCity(latitude, longitude) {
-    try {
-      const url = new URL("https://nominatim.openstreetmap.org/reverse");
-      url.searchParams.set("format", "jsonv2");
-      url.searchParams.set("lat", latitude);
-      url.searchParams.set("lon", longitude);
-      url.searchParams.set("accept-language", language);
+    url.searchParams.set("format", "jsonv2");
+    url.searchParams.set("lat", latitude);
+    url.searchParams.set("lon", longitude);
+    url.searchParams.set("accept-language", language);
 
-      const response = await fetch(url.toString(), {
-        headers: { Accept: "application/json" }
-      });
+    const response = await fetch(url.toString(), {
+      headers: { Accept: "application/json" }
+    });
 
-      if (!response.ok) throw new Error("Location name unavailable");
-
-      const data = await response.json();
-      const address = data.address || {};
-
-      locationName =
-        address.city ||
-        address.town ||
-        address.village ||
-        address.municipality ||
-        address.state_district ||
-        address.state ||
-        t().city;
-
-      $("#city").textContent = localizeCity(locationName);
-    } catch (error) {
-      console.warn("IBADAT: location name unavailable.", error);
-      locationName = null;
-      $("#city").textContent = t().city;
+    if (!response.ok) {
+      throw new Error("Location name unavailable");
     }
+
+    const data = await response.json();
+    const address = data.address || {};
+
+    locationName =
+      address.city ||
+      address.town ||
+      address.municipality ||
+      address.city_district ||
+      address.suburb ||
+      address.neighbourhood ||
+      address.village ||
+      address.county ||
+      address.state_district ||
+      address.state ||
+      address.country ||
+      t().city;
+
+    $("#city").textContent = localizeCity(locationName);
+
+    try {
+      localStorage.setItem(
+        "ibadatCityName",
+        locationName
+      );
+
+      localStorage.setItem(
+        "ibadatCityLanguage",
+        language
+      );
+    } catch (storageError) {
+      console.warn(
+        "IBADAT: unable to save city name.",
+        storageError
+      );
+    }
+  } catch (error) {
+    console.warn(
+      "IBADAT: location name unavailable.",
+      error
+    );
+
+    locationName = null;
+    $("#city").textContent = t().city;
   }
+} 
 
   async function loadAll(latitude, longitude) {
-    coordinates = { latitude, longitude };
+  coordinates = { latitude, longitude };
 
-    await Promise.all([
-      loadPrayerTimes(latitude, longitude),
-      loadWeather(latitude, longitude),
-      loadCity(latitude, longitude)
-    ]);
+  try {
+    localStorage.setItem(
+      "ibadatUserLocation",
+      JSON.stringify({
+        lat: latitude,
+        lon: longitude,
+        updatedAt: Date.now()
+      })
+    );
+
+    localStorage.removeItem("ibadatCityName");
+    localStorage.removeItem("ibadatCityLanguage");
+  } catch (error) {
+    console.warn(
+      "IBADAT: unable to save location.",
+      error
+    );
   }
+
+  await Promise.all([
+    loadPrayerTimes(latitude, longitude),
+    loadWeather(latitude, longitude),
+    loadCity(latitude, longitude)
+  ]);
+}
 
   function loadLocation() {
     if (!navigator.geolocation) {
