@@ -1,7 +1,9 @@
 /* =====================================================
-   IBADAT QIBLA — RESPONSIVE BOARD DESIGN
-   Shared layout reference: quran.css
-   Main background: ../assets/main-bg.jpg
+   IBADAT QIBLA COMPASS
+   Shared board design: Quran page
+   Header/Footer: 48px
+   Themes: classic, royal, rose, pista
+   Modes: light and dark
 ===================================================== */
 
 :root {
@@ -17,17 +19,17 @@
   --deep: #0F5132;
   --text: #17452F;
   --muted: #68796B;
-  --card: rgba(255, 255, 255, 0.94);
   --border: #D5E3D1;
 
-  --header-bg: var(--deep);
+  --header-bg: #0F5132;
   --header-text: #F5E5A7;
-  --footer-bg: var(--deep);
+  --footer-bg: #0F5132;
   --footer-text: #F5E5A7;
 
-  --page-overlay: rgba(255, 253, 245, 0.62);
-  --content-overlay: rgba(255, 253, 245, 0.54);
-  --info-overlay: rgba(255, 255, 255, 0.78);
+  --page-overlay: rgba(235, 245, 226, 0.56);
+  --content-overlay: rgba(255, 253, 245, 0.64);
+  --info-overlay: rgba(255, 253, 245, 0.86);
+  --hint-overlay: rgba(255, 253, 245, 0.68);
 
   --shadow: 0 3px 10px rgba(30, 49, 28, 0.12);
 
@@ -39,7 +41,7 @@
   --compass-needle: #124C32;
   --compass-tip: #C62828;
 
-  --compass-size: min(62vw, 290px);
+  --compass-size: min(65vw, 300px);
 }
 
 /* ---------- GLOBAL ---------- */
@@ -69,21 +71,14 @@ body {
     sans-serif;
 
   background:
-    linear-gradient(var(--page-overlay), var(--page-overlay)),
+    linear-gradient(135deg,
+      var(--page-overlay),
+      rgba(255, 253, 245, 0.62),
+      var(--page-overlay)
+    ),
     url("../assets/main-bg.jpg") center / cover no-repeat;
 
   -webkit-text-size-adjust: 100%;
-}
-
-button,
-input {
-  font: inherit;
-}
-
-button:focus-visible,
-input:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
 }
 
 img {
@@ -91,7 +86,17 @@ img {
   user-select: none;
 }
 
-/* ---------- MAIN LAYOUT ---------- */
+button,
+input {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ---------- APP LAYOUT ---------- */
 
 .qibla-page {
   display: flex;
@@ -111,7 +116,11 @@ img {
   overflow: hidden;
 
   background:
-    linear-gradient(var(--page-overlay), var(--page-overlay)),
+    linear-gradient(135deg,
+      var(--page-overlay),
+      rgba(255, 253, 245, 0.62),
+      var(--page-overlay)
+    ),
     url("../assets/main-bg.jpg") center / cover no-repeat;
 }
 
@@ -123,7 +132,7 @@ img {
   overflow: hidden;
 }
 
-/* ---------- HEADER BOARD ---------- */
+/* ---------- HEADER ---------- */
 
 .hero-board {
   flex: 0 0 var(--header-height);
@@ -157,7 +166,7 @@ img {
   white-space: nowrap;
 }
 
-/* ---------- MAIN CONTENT BOARD ---------- */
+/* ---------- MAIN BOARD ---------- */
 
 .main-board {
   position: relative;
@@ -187,21 +196,22 @@ img {
   overflow: hidden;
 }
 
-/* ---------- LOCATION AND DISTANCE ---------- */
+/* ---------- LOCATION + DISTANCE ---------- */
 
 .location-panel {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 
   flex: 0 0 auto;
   width: 100%;
   min-width: 0;
+  min-height: 66px;
 
   display: grid;
   grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
   align-items: stretch;
 
-  padding: 8px 5px;
+  padding: 7px 5px;
 
   background: var(--info-overlay);
   border: 1px solid var(--border);
@@ -210,6 +220,8 @@ img {
 
 .info-block {
   min-width: 0;
+  min-height: 48px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -221,12 +233,13 @@ img {
 }
 
 .info-label {
+  display: block;
   max-width: 100%;
-  color: var(--muted);
 
+  color: var(--muted);
   font-size: clamp(10px, 2.8vw, 12px);
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.35;
 
   overflow-wrap: anywhere;
 }
@@ -237,9 +250,9 @@ img {
   min-width: 0;
 
   color: var(--deep);
-  font-size: clamp(13px, 3.7vw, 17px);
+  font-size: clamp(12px, 3.7vw, 16px);
   font-weight: 800;
-  line-height: 1.4;
+  line-height: 1.35;
 
   overflow-wrap: anywhere;
 }
@@ -265,6 +278,8 @@ img {
 }
 
 .compass-wrapper {
+  position: relative;
+
   width: 100%;
   height: 100%;
   min-width: 0;
@@ -277,7 +292,7 @@ img {
   overflow: hidden;
 }
 
-/* ---------- COMPASS DIAL ---------- */
+/* ---------- COMPASS ---------- */
 
 .compass {
   position: relative;
@@ -296,10 +311,12 @@ img {
 
   background: var(--compass-face);
 
-  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.13);
+  box-shadow:
+    0 5px 18px rgba(0, 0, 0, 0.13),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.45);
 }
 
-/* Rotating compass labels */
+/* ---------- ROTATING DIRECTION DIAL ---------- */
 
 .compass-dial {
   position: absolute;
@@ -315,16 +332,19 @@ img {
 
 .direction {
   position: absolute;
+  top: 50%;
+  left: 50%;
 
-  transform: translate(-50%, -50%);
+  width: max-content;
 
-  color: var(--gold-dark, #9B7837);
-
+  color: var(--deep);
   font-size: clamp(8px, 2.6vw, 11px);
   font-weight: 800;
-
-  white-space: nowrap;
   line-height: 1;
+  white-space: nowrap;
+
+  transform: translate(-50%, -50%);
+  transform-origin: center;
 }
 
 .n,
@@ -332,24 +352,10 @@ img {
 .s,
 .w {
   font-size: clamp(12px, 3.8vw, 17px);
+  font-weight: 900;
 }
 
-.n   { top: 9%; left: 50%; }
-.nne { top: 19%; left: 69%; }
-.ne  { top: 30%; left: 80%; }
-.ene { top: 40%; left: 89%; }
-.e   { top: 50%; left: 92%; }
-.ese { top: 60%; left: 89%; }
-.se  { top: 70%; left: 80%; }
-.sse { top: 81%; left: 69%; }
-.s   { top: 91%; left: 50%; }
-.ssw { top: 81%; left: 31%; }
-.sw  { top: 70%; left: 20%; }
-.wsw { top: 60%; left: 11%; }
-.w   { top: 50%; left: 8%; }
-.wnw { top: 40%; left: 11%; }
-.nw  { top: 30%; left: 20%; }
-.nnw { top: 19%; left: 31%; }
+/* Direction coordinates are assigned mathematically in qibla.js. */
 
 /* ---------- INNER RING ---------- */
 
@@ -368,6 +374,7 @@ img {
 
   background: var(--compass-inner);
   z-index: 1;
+  pointer-events: none;
 }
 
 /* ---------- MINOR TICKS ---------- */
@@ -419,37 +426,14 @@ img {
   pointer-events: none;
 }
 
-.tick-n {
-  transform: translate(-50%, -50%) translateY(-390%);
-}
-
-.tick-ne {
-  transform: translate(-50%, -50%) rotate(45deg) translateY(-390%);
-}
-
-.tick-e {
-  transform: translate(-50%, -50%) rotate(90deg) translateY(-390%);
-}
-
-.tick-se {
-  transform: translate(-50%, -50%) rotate(135deg) translateY(-390%);
-}
-
-.tick-s {
-  transform: translate(-50%, -50%) rotate(180deg) translateY(-390%);
-}
-
-.tick-sw {
-  transform: translate(-50%, -50%) rotate(225deg) translateY(-390%);
-}
-
-.tick-w {
-  transform: translate(-50%, -50%) rotate(270deg) translateY(-390%);
-}
-
-.tick-nw {
-  transform: translate(-50%, -50%) rotate(315deg) translateY(-390%);
-}
+.tick-n  { transform: translate(-50%, -50%) translateY(-390%); }
+.tick-ne { transform: translate(-50%, -50%) rotate(45deg) translateY(-390%); }
+.tick-e  { transform: translate(-50%, -50%) rotate(90deg) translateY(-390%); }
+.tick-se { transform: translate(-50%, -50%) rotate(135deg) translateY(-390%); }
+.tick-s  { transform: translate(-50%, -50%) rotate(180deg) translateY(-390%); }
+.tick-sw { transform: translate(-50%, -50%) rotate(225deg) translateY(-390%); }
+.tick-w  { transform: translate(-50%, -50%) rotate(270deg) translateY(-390%); }
+.tick-nw { transform: translate(-50%, -50%) rotate(315deg) translateY(-390%); }
 
 /* ---------- QIBLA NEEDLE ---------- */
 
@@ -503,6 +487,7 @@ img {
   border-radius: 50%;
 
   z-index: 6;
+  pointer-events: none;
 }
 
 /* ---------- DEGREE DISPLAY ---------- */
@@ -516,7 +501,7 @@ img {
   transform: translate(-50%, -50%);
 
   color: var(--deep);
-  font-size: clamp(16px, 5.5vw, 25px);
+  font-size: clamp(15px, 5.5vw, 25px);
   font-weight: 900;
   line-height: 1.35;
 
@@ -536,10 +521,12 @@ img {
   top: 50%;
   left: 50%;
 
-  width: 18%;
-  height: 18%;
-  max-width: 56px;
-  max-height: 56px;
+  width: 17%;
+  height: 17%;
+  max-width: 52px;
+  max-height: 52px;
+  min-width: 24px;
+  min-height: 24px;
 
   object-fit: contain;
 
@@ -550,7 +537,7 @@ img {
   user-select: none;
   z-index: 7;
 
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.28));
 }
 
 /* ---------- COMPASS HINT ---------- */
@@ -558,24 +545,29 @@ img {
 .compass-hint {
   flex: 0 0 auto;
   width: 100%;
+  min-height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   margin: 0;
-  padding: 6px 8px;
+  padding: 5px 8px;
 
   color: var(--muted);
-  background: rgba(255, 255, 255, 0.55);
+  background: var(--hint-overlay);
 
   border: 1px solid var(--border);
   border-radius: 10px;
 
   font-size: clamp(10px, 2.8vw, 12px);
   font-weight: 600;
-  line-height: 1.5;
+  line-height: 1.4;
 
   text-align: center;
 }
 
-/* ---------- FOOTER BOARD ---------- */
+/* ---------- FOOTER ---------- */
 
 .footer-board {
   flex: 0 0 var(--footer-height);
@@ -595,26 +587,58 @@ img {
   text-align: center;
 }
 
-#footerText {
+.footer-window {
+  position: relative;
   width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+#footerText {
+  display: block;
+  width: max-content;
+  max-width: none;
+
   margin: 0;
+  padding-left: 100%;
 
   color: var(--footer-text);
-
   font-size: clamp(11px, 3vw, 13px);
   font-weight: 700;
   line-height: 1.35;
 
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
+  will-change: transform;
+  animation: qibla-footer-scroll 18s linear infinite;
 }
 
-/* ---------- COLOR THEMES ---------- */
+@keyframes qibla-footer-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
+/* ---------- CLASSIC THEME ---------- */
 
 body[data-color-theme="classic"] {
-  /* Default green theme */
+  --primary: #1B7F4B;
+  --soft: #E8F5E9;
+  --accent: #F2C94C;
+  --deep: #0F5132;
+  --text: #17452F;
+  --muted: #68796B;
+  --border: #D5E3D1;
+
+  --header-bg: #0F5132;
+  --footer-bg: #0F5132;
+
+  --compass-outer: #66BB6A;
+  --compass-face: #DCEBCF;
+  --compass-inner: #F7F5E9;
+  --compass-ticks: #75B77A;
+  --compass-needle: #124C32;
 }
+
+/* ---------- ROYAL THEME ---------- */
 
 body[data-color-theme="royal"] {
   --primary: #285A8E;
@@ -635,6 +659,8 @@ body[data-color-theme="royal"] {
   --compass-needle: #173A60;
 }
 
+/* ---------- ROSE THEME ---------- */
+
 body[data-color-theme="rose"] {
   --primary: #B96F79;
   --soft: #F8E9E7;
@@ -653,6 +679,8 @@ body[data-color-theme="rose"] {
   --compass-ticks: #C58B91;
   --compass-needle: #7D414B;
 }
+
+/* ---------- PISTA THEME ---------- */
 
 body[data-color-theme="pista"] {
   --primary: #4CAF50;
@@ -673,17 +701,17 @@ body[data-color-theme="pista"] {
   --compass-needle: #2F7135;
 }
 
-/* ---------- DARK MODE ---------- */
+/* ---------- DARK MODE BASE ---------- */
 
 body.dark-mode {
   --text: #E5EDE7;
   --muted: #BECBBF;
-  --card: rgba(25, 38, 29, 0.96);
   --border: #405746;
 
-  --page-overlay: rgba(8, 15, 10, 0.80);
-  --content-overlay: rgba(12, 20, 14, 0.78);
-  --info-overlay: rgba(25, 38, 29, 0.92);
+  --page-overlay: rgba(8, 15, 10, 0.82);
+  --content-overlay: rgba(12, 20, 14, 0.82);
+  --info-overlay: rgba(25, 38, 29, 0.94);
+  --hint-overlay: rgba(25, 38, 29, 0.88);
 
   --compass-face: #263B2B;
   --compass-inner: #192B20;
@@ -708,10 +736,6 @@ body.dark-mode .footer-board {
   background: var(--header-bg);
 }
 
-body.dark-mode #pageTitle {
-  color: var(--header-text);
-}
-
 body.dark-mode .location-panel,
 body.dark-mode .compass-hint {
   background: var(--info-overlay);
@@ -720,6 +744,10 @@ body.dark-mode .compass-hint {
 body.dark-mode .info-value,
 body.dark-mode .degree {
   color: var(--text);
+}
+
+body.dark-mode .direction {
+  color: var(--accent);
 }
 
 body.dark-mode .compass {
@@ -732,33 +760,34 @@ body.dark-mode .compass-ring {
   border-color: var(--compass-outer);
 }
 
-body.dark-mode .direction {
-  color: var(--accent);
-}
-
 body.dark-mode .center-point {
-  border-color: #f8f6f0;
+  border-color: #F8F6F0;
 }
 
-/* Theme-specific dark headers */
+/* Dark theme headers */
+
 body.dark-mode[data-color-theme="classic"] {
   --header-bg: #0F5132;
   --footer-bg: #0F5132;
+  --accent: #E4C76B;
 }
 
 body.dark-mode[data-color-theme="royal"] {
   --header-bg: #142D49;
   --footer-bg: #142D49;
+  --accent: #E8BD55;
 }
 
 body.dark-mode[data-color-theme="rose"] {
   --header-bg: #592F36;
   --footer-bg: #592F36;
+  --accent: #D9B875;
 }
 
 body.dark-mode[data-color-theme="pista"] {
   --header-bg: #244C28;
   --footer-bg: #244C28;
+  --accent: #B9D97C;
 }
 
 /* ---------- SMALL SCREENS ---------- */
@@ -767,7 +796,7 @@ body.dark-mode[data-color-theme="pista"] {
   :root {
     --app-padding: 5px;
     --page-gap: 5px;
-    --compass-size: min(61vw, 250px);
+    --compass-size: min(64vw, 260px);
   }
 
   .main-board {
@@ -776,10 +805,12 @@ body.dark-mode[data-color-theme="pista"] {
   }
 
   .location-panel {
-    padding: 6px 3px;
+    padding: 5px 3px;
+    min-height: 60px;
   }
 
   .info-block {
+    min-height: 46px;
     padding-inline: 3px;
   }
 
@@ -796,7 +827,7 @@ body.dark-mode[data-color-theme="pista"] {
   }
 
   .degree {
-    font-size: clamp(15px, 5vw, 20px);
+    font-size: clamp(14px, 5vw, 20px);
   }
 
   .compass-hint {
@@ -809,7 +840,7 @@ body.dark-mode[data-color-theme="pista"] {
 @media (max-height: 650px) {
   :root {
     --page-gap: 4px;
-    --compass-size: min(49vw, 220px);
+    --compass-size: min(48vw, 220px);
   }
 
   .qibla-page {
@@ -823,10 +854,16 @@ body.dark-mode[data-color-theme="pista"] {
   }
 
   .location-panel {
-    padding-block: 4px;
+    min-height: 52px;
+    padding-block: 3px;
+  }
+
+  .info-block {
+    min-height: 42px;
   }
 
   .compass-hint {
+    min-height: 25px;
     padding-block: 3px;
     font-size: 10px;
   }
@@ -834,13 +871,15 @@ body.dark-mode[data-color-theme="pista"] {
 
 @media (max-height: 500px) {
   :root {
-    --header-height: 42px;
-    --footer-height: 42px;
-    --compass-size: min(43vw, 185px);
+    --compass-size: min(41vw, 180px);
   }
 
   .location-panel {
-    padding-block: 3px;
+    min-height: 46px;
+  }
+
+  .info-block {
+    min-height: 38px;
   }
 
   .info-label {
@@ -871,17 +910,14 @@ body.dark-mode[data-color-theme="pista"] {
   }
 
   .location-panel {
-    padding: 10px;
+    padding: 9px;
   }
 }
 
 /* ---------- REDUCED MOTION ---------- */
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
+  #footerText {
+    animation-duration: 30s;
   }
 }
