@@ -94,7 +94,7 @@ img {
 
   background:
     linear-gradient(var(--page-overlay), var(--page-overlay)),
-    url("../assets/main-bg.jpg") center / cover no-repeat;
+    url("../assets/images/compass-bg.png") center / cover no-repeat;
 }
 
 .board {
