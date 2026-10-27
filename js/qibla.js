@@ -1,12 +1,7 @@
-/* =====================================================
-   IBADAT QIBLA COMPASS
-   Bengali + English + Hindi
-   Theme + Dark Mode + GPS + Sensors + Scrolling Quotes
-===================================================== */
+
+"use strict";
 
 (() => {
-  "use strict";
-
   const $ = (id) => document.getElementById(id);
 
   const app = $("qiblaApp");
@@ -18,12 +13,11 @@
 
   const pageTitle = $("pageTitle");
   const footerText = $("footerText");
-  const locationName = $("locationName");
+  const locationNameEl = $("locationName");
   const locationLabel = $("locationLabel");
   const distanceLabel = $("distanceLabel");
   const distanceEl = $("distance");
   const degreeEl = $("degreeValue");
-  const compassHint = $("compassHint");
   const needle = $("qiblaNeedle");
 
   const KAABA_LAT = 21.422487;
@@ -31,6 +25,42 @@
 
   const FALLBACK_LAT = 22.5726;
   const FALLBACK_LON = 88.3639;
+
+  const LANG = {
+    bn: {
+      title: "কিবলা কম্পাস",
+      location: "বর্তমান অবস্থান:",
+      distance: "মক্কার দূরত্ব:",
+      km: "কিমি",
+      locating: "অবস্থান খোঁজা হচ্ছে...",
+      locationError: "অবস্থান পাওয়া যায়নি",
+      footer: "আল্লাহর স্মরণেই অন্তর প্রশান্তি লাভ করে।",
+      unavailable: "কম্পাস সেন্সর পাওয়া যায়নি",
+      denied: "কম্পাসের অনুমতি প্রয়োজন"
+    },
+    en: {
+      title: "Qibla Compass",
+      location: "Current location:",
+      distance: "Distance to Makkah:",
+      km: "km",
+      locating: "Finding your location...",
+      locationError: "Location unavailable",
+      footer: "Indeed, in the remembrance of Allah hearts find peace.",
+      unavailable: "Compass sensor unavailable",
+      denied: "Compass permission required"
+    },
+    hi: {
+      title: "क़िबला कम्पास",
+      location: "वर्तमान स्थान:",
+      distance: "मक्का की दूरी:",
+      km: "किमी",
+      locating: "स्थान खोजा जा रहा है...",
+      locationError: "स्थान उपलब्ध नहीं",
+      footer: "अल्लाह के स्मरण से दिलों को सुकून मिलता है।",
+      unavailable: "कम्पास सेंसर उपलब्ध नहीं",
+      denied: "कम्पास की अनुमति आवश्यक है"
+    }
+  };
 
   const DIRECTIONS = {
     bn: [
@@ -53,87 +83,30 @@
     ]
   };
 
-  const LANG = {
-    bn: {
-      title: "কিবলা কম্পাস",
-      location: "বর্তমান অবস্থান",
-      distance: "মক্কার দূরত্ব",
-      km: "কিমি",
-      missing: "অবস্থান পাওয়া যায়নি",
-      locating: "অবস্থান খোঁজা হচ্ছে...",
-      waiting: "কম্পাস সেন্সরের অপেক্ষায়",
-      active: "কম্পাস সক্রিয়",
-      unavailable: "কম্পাস সেন্সর পাওয়া যায়নি",
-      denied: "কম্পাসের অনুমতি প্রয়োজন",
-      hint: "কম্পাস সঠিকভাবে কাজ করতে ডিভাইসটি সমতল রাখুন",
-      locationError: "অবস্থান পাওয়া যায়নি",
-      quotes: [
-        "আল্লাহর স্মরণেই অন্তর প্রশান্তি লাভ করে।",
-        "নিশ্চয়ই আল্লাহ ধৈর্যশীলদের সঙ্গে আছেন।",
-        "নামাজ মুমিনের জীবনের প্রশান্তি।",
-        "আল্লাহর ওপর ভরসা রাখুন।",
-        "সৎকাজের প্রতিদান কখনো নষ্ট হয় না।",
-        "আল্লাহর রহমত থেকে নিরাশ হয়ো না।",
-        "দোয়া মুমিনের শক্তি।",
-        "কৃতজ্ঞতা নিয়ামত বৃদ্ধি করে।",
-        "আল্লাহ সর্বোত্তম পরিকল্পনাকারী।",
-        "প্রতিটি ভালো কাজের শুরু হোক বিসমিল্লাহ দিয়ে।"
-      ]
+  const CITY_NAMES = {
+    "South Dum Dum": {
+      bn: "দক্ষিণ দমদম",
+      en: "South Dum Dum",
+      hi: "दक्षिण दमदम"
     },
-
-    en: {
-      title: "Qibla Compass",
-      location: "Current Location",
-      distance: "Distance to Makkah",
-      km: "km",
-      missing: "Location unavailable",
-      locating: "Finding your location...",
-      waiting: "Waiting for compass sensor",
-      active: "Compass active",
-      unavailable: "Compass sensor unavailable",
-      denied: "Compass permission required",
-      hint: "Keep your device flat for better compass readings",
-      locationError: "Location unavailable",
-      quotes: [
-        "Surely, in the remembrance of Allah hearts find peace.",
-        "Indeed, Allah is with those who are patient.",
-        "Prayer brings peace to a believer's life.",
-        "Place your trust in Allah.",
-        "The reward of good deeds is never lost.",
-        "Do not despair of the mercy of Allah.",
-        "Supplication is a believer's strength.",
-        "Gratitude increases blessings.",
-        "Allah is the best of planners.",
-        "Begin every good deed with Bismillah."
-      ]
+    "South Dumdum": {
+      bn: "দক্ষিণ দমদম",
+      en: "South Dum Dum",
+      hi: "दक्षिण दमदम"
     },
-
-    hi: {
-      title: "क़िबला कम्पास",
-      location: "वर्तमान स्थान",
-      distance: "मक्का की दूरी",
-      km: "किमी",
-      missing: "स्थान उपलब्ध नहीं",
-      locating: "स्थान खोजा जा रहा है...",
-      waiting: "कम्पास सेंसर की प्रतीक्षा",
-      active: "कम्पास सक्रिय",
-      unavailable: "कम्पास सेंसर उपलब्ध नहीं",
-      denied: "कम्पास की अनुमति आवश्यक है",
-      hint: "सही दिशा के लिए डिवाइस को समतल रखें",
-      locationError: "स्थान उपलब्ध नहीं",
-      quotes: [
-        "अल्लाह के ज़िक्र से दिलों को सुकून मिलता है।",
-        "निश्चय ही अल्लाह सब्र करने वालों के साथ है।",
-        "नमाज़ मोमिन की ज़िंदगी का सुकून है।",
-        "अल्लाह पर भरोसा रखें।",
-        "नेक कामों का सवाब कभी व्यर्थ नहीं जाता।",
-        "अल्लाह की रहमत से निराश न हों।",
-        "दुआ मोमिन की ताकत है।",
-        "शुक्र करने से नेमतें बढ़ती हैं।",
-        "अल्लाह सबसे बेहतर योजना बनाने वाला है।",
-        "हर अच्छे काम की शुरुआत बिस्मिल्लाह से करें।"
-      ]
-    }
+    "দক্ষিণ দমদম": {
+      bn: "দক্ষিণ দমদম",
+      en: "South Dum Dum",
+      hi: "दक्षिण दमदम"
+    },
+    Kolkata: { bn: "কলকাতা", en: "Kolkata", hi: "कोलकाता" },
+    "New Delhi": { bn: "নয়াদিল্লি", en: "New Delhi", hi: "नई दिल्ली" },
+    Delhi: { bn: "দিল্লি", en: "Delhi", hi: "दिल्ली" },
+    Mumbai: { bn: "মুম্বাই", en: "Mumbai", hi: "मुंबई" },
+    Chennai: { bn: "চেন্নাই", en: "Chennai", hi: "चेन्नई" },
+    Hyderabad: { bn: "হায়দরাবাদ", en: "Hyderabad", hi: "हैदराबाद" },
+    Dhaka: { bn: "ঢাকা", en: "Dhaka", hi: "ढाका" },
+    London: { bn: "লন্ডন", en: "London", hi: "लंदन" }
   };
 
   let language = "bn";
@@ -149,13 +122,10 @@
   let absoluteSensorAvailable = false;
   let fallbackTimer = null;
   let locationRequestStarted = false;
-  let quoteIndex = 0;
   let lastSettingsSignature = "";
 
   const rad = (value) => value * Math.PI / 180;
   const norm = (value) => ((value % 360) + 360) % 360;
-
-  /* ---------- SETTINGS ---------- */
 
   function safeRead(key) {
     try {
@@ -175,98 +145,95 @@
 
   function getLanguage() {
     const settings = readSettings();
-
     const selected =
-      settings.language ??
-      settings.lang ??
-      settings.locale ??
-      settings.selectedLanguage ??
-      settings.appLanguage ??
+      settings.lang ||
+      settings.language ||
+      settings.locale ||
+      settings.selectedLanguage ||
+      settings.appLanguage ||
       "bn";
 
     const normalized = String(selected).toLowerCase();
 
     if (normalized.startsWith("en")) return "en";
     if (normalized.startsWith("hi")) return "hi";
-
     return "bn";
+  }
+
+  function getTheme() {
+    const settings = readSettings();
+
+    const raw =
+      settings.themeColor ||
+      settings.colorTheme ||
+      settings.theme ||
+      "classic";
+
+    const aliases = {
+      green: "classic",
+      classic: "classic",
+      blue: "royal",
+      royal: "royal",
+      rose: "rose",
+      champagne: "rose",
+      pista: "pista",
+      fresh: "pista"
+    };
+
+    return aliases[String(raw).toLowerCase()] || "classic";
   }
 
   function applyTheme() {
     const settings = readSettings();
 
-    const selected =
-      settings.themeColor ??
-      settings.colorTheme ??
-      settings.theme ??
-      "classic";
-
-    const allowed = ["classic", "royal", "rose", "pista"];
-    const selectedTheme = String(selected).toLowerCase();
-
-    const theme = allowed.includes(selectedTheme)
-      ? selectedTheme
-      : "classic";
-
-    document.body.dataset.colorTheme = theme;
+    document.body.dataset.colorTheme = getTheme();
 
     const darkValue =
-      settings.darkMode ??
       settings.dark ??
+      settings.darkMode ??
       settings.isDarkMode ??
-      settings.isDark;
+      settings.isDark ??
+      false;
 
-    if (typeof darkValue === "boolean") {
-      document.body.classList.toggle("dark-mode", darkValue);
-    } else if (typeof darkValue === "string") {
-      document.body.classList.toggle(
-        "dark-mode",
-        darkValue.toLowerCase() === "true"
-      );
-    }
+    const dark = typeof darkValue === "string"
+      ? darkValue.toLowerCase() === "true"
+      : Boolean(darkValue);
 
-    const colors = {
-      classic: "#0F5132",
-      royal: "#173A60",
-      rose: "#7D414B",
-      pista: "#2F7135"
-    };
+    document.body.classList.toggle("dark-mode", dark);
 
     const meta = document.querySelector('meta[name="theme-color"]');
 
     if (meta) {
-      meta.content = document.body.classList.contains("dark-mode")
-        ? "#111C15"
-        : colors[theme];
+      const colors = {
+        classic: "#0F5132",
+        royal: "#173A60",
+        rose: "#7D414B",
+        pista: "#2F7135"
+      };
+
+      meta.content = dark ? "#111C15" : colors[getTheme()];
     }
   }
 
-  /* ---------- LOCALIZED NUMBERS ---------- */
-
   function number(value, decimals = 0) {
     const numeric = Number(value);
-
     if (!Number.isFinite(numeric)) return "—";
 
-    const formatted = numeric.toFixed(decimals);
-
-    const digits = {
-      bn: "০১২৩৪৫৬৭৮৯",
-      hi: "०१२३४५६७८९",
-      en: "0123456789"
-    };
-
-    return formatted.replace(/[0-9]/g, (digit) =>
-      digits[language][Number(digit)]
-    );
+    return new Intl.NumberFormat(
+      language === "bn" ? "bn-BD" :
+      language === "hi" ? "hi-IN-u-nu-deva" : "en-IN",
+      {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+        useGrouping: false
+      }
+    ).format(numeric);
   }
 
   function directionName(degrees) {
     const list = DIRECTIONS[language] || DIRECTIONS.bn;
     return list[Math.round(norm(degrees) / 22.5) % 16];
   }
-
-  /* ---------- DISTANCE AND BEARING ---------- */
 
   function distanceKm(lat1, lon1, lat2, lon2) {
     const earthRadius = 6371;
@@ -301,6 +268,18 @@
     return norm(Math.atan2(y, x) * 180 / Math.PI);
   }
 
+  function localizeCity(name) {
+    if (!name) return "";
+
+    const clean = String(name).trim();
+
+    if (CITY_NAMES[clean]) {
+      return CITY_NAMES[clean][language] || CITY_NAMES[clean].en;
+    }
+
+    return clean;
+  }
+
   function updateLocationValues() {
     if (userLat === null || userLon === null) return;
 
@@ -313,19 +292,57 @@
       KAABA_LON
     );
 
-    if (distanceEl) {
-      distanceEl.textContent = `${number(km)} ${T.km}`;
-    }
+    distanceEl.textContent = `${number(km)} ${T.km}`;
 
-    if (degreeEl) {
-      degreeEl.textContent =
-        `${number(qiblaBearing)}° ${directionName(qiblaBearing)}`;
-    }
+    degreeEl.textContent =
+      `${number(qiblaBearing)}° ${directionName(qiblaBearing)}`;
 
     updateCompass();
   }
 
-  /* ---------- SAVE LOCATION ---------- */
+  function readSavedLocation() {
+    try {
+      const saved = JSON.parse(
+        localStorage.getItem("ibadatUserLocation") || "null"
+      );
+
+      if (!saved) return null;
+
+      const lat = Number(saved.lat);
+      const lon = Number(saved.lon);
+
+      if (
+        !Number.isFinite(lat) ||
+        !Number.isFinite(lon) ||
+        Math.abs(lat) > 90 ||
+        Math.abs(lon) > 180
+      ) {
+        return null;
+      }
+
+      return { lat, lon };
+    } catch {
+      return null;
+    }
+  }
+
+  function getSavedCity() {
+    try {
+      return localStorage.getItem("ibadatCityName") || "";
+    } catch {
+      return "";
+    }
+  }
+
+  function showLocationName(name) {
+    if (!locationNameEl) return;
+
+    locationNameEl.textContent =
+      localizeCity(name) ||
+      (userLat !== null && userLon !== null
+        ? `${number(userLat, 2)}, ${number(userLon, 2)}`
+        : T.locating);
+  }
 
   function saveLocation(lat, lon, city) {
     try {
@@ -342,43 +359,7 @@
         localStorage.setItem("ibadatCityName", city);
       }
     } catch (error) {
-      console.warn("IBADAT: Could not save location.", error);
-    }
-  }
-
-  function readSavedLocation() {
-    let saved = null;
-
-    try {
-      saved = JSON.parse(
-        localStorage.getItem("ibadatUserLocation") || "null"
-      );
-    } catch {
-      saved = null;
-    }
-
-    if (!saved) return null;
-
-    const lat = Number(saved.lat);
-    const lon = Number(saved.lon);
-
-    if (
-      !Number.isFinite(lat) ||
-      !Number.isFinite(lon) ||
-      Math.abs(lat) > 90 ||
-      Math.abs(lon) > 180
-    ) {
-      return null;
-    }
-
-    return { lat, lon };
-  }
-
-  function getSavedCity() {
-    try {
-      return localStorage.getItem("ibadatCityName") || "";
-    } catch {
-      return "";
+      console.warn("IBADAT: unable to save location.", error);
     }
   }
 
@@ -386,36 +367,29 @@
     userLat = Number(lat);
     userLon = Number(lon);
 
-    if (locationName) {
-      locationName.textContent =
-        city || `${number(userLat, 2)}, ${number(userLon, 2)}`;
-    }
-
     saveLocation(userLat, userLon, city);
+    showLocationName(city);
     updateLocationValues();
   }
 
-  /* ---------- REVERSE GEOCODING ---------- */
-
   async function findCity(lat, lon) {
-    const cached = getSavedCity();
-
-    /*
-     * Use reverse geocoding to find a city name.
-     * If the request fails, coordinates are still usable.
-     */
     try {
-      const url =
-        "https://nominatim.openstreetmap.org/reverse" +
-        `?format=jsonv2&lat=${encodeURIComponent(lat)}` +
-        `&lon=${encodeURIComponent(lon)}` +
-        "&zoom=10&addressdetails=1";
+      const url = new URL("https://nominatim.openstreetmap.org/reverse");
+      url.searchParams.set("format", "jsonv2");
+      url.searchParams.set("lat", lat);
+      url.searchParams.set("lon", lon);
+      url.searchParams.set("zoom", 10);
+      url.searchParams.set("addressdetails", "1");
+      url.searchParams.set(
+        "accept-language",
+        language === "bn" ? "bn" : language
+      );
 
-      const response = await fetch(url, {
+      const response = await fetch(url.toString(), {
         headers: { Accept: "application/json" }
       });
 
-      if (!response.ok) throw new Error("Geocoding unavailable");
+      if (!response.ok) throw new Error("Reverse geocoding unavailable");
 
       const data = await response.json();
       const address = data.address || {};
@@ -423,44 +397,59 @@
       const city =
         address.city ||
         address.town ||
-        address.city_district ||
         address.municipality ||
-        address.county ||
-        address.village ||
+        address.city_district ||
         address.suburb ||
+        address.neighbourhood ||
+        address.village ||
+        address.county ||
+        address.state_district ||
+        address.state ||
+        address.country ||
         "";
 
-      const region = address.state || "";
-
-      const name = city && region && city !== region
-        ? `${city}, ${region}`
-        : city || region || data.name || "";
-
-      if (name) {
-        saveLocation(lat, lon, name);
-        return name;
+      if (city) {
+        saveLocation(lat, lon, city);
+        return city;
       }
     } catch (error) {
-      console.info("IBADAT Qibla: City lookup unavailable.", error);
+      console.info("IBADAT Qibla: city lookup unavailable.", error);
     }
 
-    return cached || "";
+    return getSavedCity();
   }
 
-  /* ---------- GPS ---------- */
+  function useFallbackLocation() {
+    const fallbackCity = {
+      bn: "কলকাতা",
+      en: "Kolkata",
+      hi: "कोलकाता"
+    }[language];
 
-  function requestCurrentLocation() {
-    if (locationRequestStarted) return;
+    setLocation(FALLBACK_LAT, FALLBACK_LON, fallbackCity);
+  }
 
-    locationRequestStarted = true;
+  function useSavedOrFallbackLocation() {
+    const saved = readSavedLocation();
 
-    if (!navigator.geolocation) {
-      useFallbackLocation();
+    if (saved) {
+      userLat = saved.lat;
+      userLon = saved.lon;
+      showLocationName(getSavedCity());
+      updateLocationValues();
       return;
     }
 
-    if (locationName) {
-      locationName.textContent = T.locating;
+    useFallbackLocation();
+  }
+
+  function requestCurrentLocation() {
+    if (locationRequestStarted) return;
+    locationRequestStarted = true;
+
+    if (!navigator.geolocation) {
+      useSavedOrFallbackLocation();
+      return;
     }
 
     navigator.geolocation.getCurrentPosition(
@@ -474,12 +463,8 @@
 
         const city = await findCity(lat, lon);
 
-        if (locationName) {
-          locationName.textContent =
-            city || `${number(lat, 2)}, ${number(lon, 2)}`;
-        }
-
         saveLocation(lat, lon, city);
+        showLocationName(city);
       },
       (error) => {
         console.info("IBADAT Qibla: GPS unavailable.", error);
@@ -493,76 +478,23 @@
     );
   }
 
-  function useFallbackLocation() {
-    const city = language === "hi"
-      ? "कोलकाता"
-      : language === "en"
-        ? "Kolkata"
-        : "কলকাতা";
-
-    setLocation(FALLBACK_LAT, FALLBACK_LON, city);
-  }
-
-  function useSavedOrFallbackLocation() {
-    const saved = readSavedLocation();
-
-    if (saved) {
-      const city = getSavedCity();
-
-      userLat = saved.lat;
-      userLon = saved.lon;
-
-      if (locationName) {
-        locationName.textContent =
-          city || `${number(userLat, 2)}, ${number(userLon, 2)}`;
-      }
-
-      updateLocationValues();
-      return;
-    }
-
-    if (locationName) {
-      locationName.textContent = T.locationError;
-    }
-
-    useFallbackLocation();
-  }
-
   function loadSavedLocation() {
     const saved = readSavedLocation();
 
-    if (!saved) {
-      if (locationName) {
-        locationName.textContent = T.locating;
-      }
-
-      if (distanceEl) distanceEl.textContent = "—";
-      if (degreeEl) degreeEl.textContent = "—";
-
-      requestCurrentLocation();
-      return;
+    if (saved) {
+      userLat = saved.lat;
+      userLon = saved.lon;
+      showLocationName(getSavedCity());
+      updateLocationValues();
+    } else {
+      locationNameEl.textContent = T.locating;
+      distanceEl.textContent = "—";
+      degreeEl.textContent = "—";
     }
 
-    userLat = saved.lat;
-    userLon = saved.lon;
-
-    const city = getSavedCity();
-
-    if (locationName) {
-      locationName.textContent =
-        city || `${number(userLat, 2)}, ${number(userLon, 2)}`;
-    }
-
-    updateLocationValues();
-
-    /*
-     * Refresh the saved location from GPS where possible.
-     * This helps the Qibla page stay current if the user moves.
-     */
+    // Refresh from GPS to support travel to a new location.
     requestCurrentLocation();
   }
-
-  /* ---------- COMPASS DIRECTION LABELS ---------- */
 
   function arrangeDirectionLabels() {
     const elements = Array.from(dial.querySelectorAll(".direction"));
@@ -578,11 +510,7 @@
     });
   }
 
-  /* ---------- COMPASS + KAABA MARKER ---------- */
-
   function setNeedleAngle(angle) {
-    if (!needle) return;
-
     needle.style.transform =
       `translateX(-50%) rotate(${angle}deg)`;
   }
@@ -591,10 +519,6 @@
     const currentHeading = heading === null ? 0 : heading;
     const relative = norm(qiblaBearing - currentHeading);
 
-    /*
-     * Rotate the dial against device heading.
-     * Counter-rotate text so each direction stays readable.
-     */
     dial.style.transform = `rotate(${-currentHeading}deg)`;
 
     dial.querySelectorAll(".direction").forEach((element) => {
@@ -604,51 +528,49 @@
 
     setNeedleAngle(relative);
 
-    /*
-     * Position the Kaaba in the Qibla direction near the
-     * outer ring. Keep the full marker inside the compass.
-     */
     const compassRect = compass.getBoundingClientRect();
+    const wrapper = compass.closest(".compass-wrapper");
 
-    if (!compassRect.width || !compassRect.height) return;
+    if (!compassRect.width || !wrapper) return;
 
+    const wrapperRect = wrapper.getBoundingClientRect();
     const markerRect = marker.getBoundingClientRect();
 
-    const markerWidth = markerRect.width || compassRect.width * 0.17;
-    const markerHeight = markerRect.height || compassRect.height * 0.17;
-    const markerRadius = Math.max(markerWidth, markerHeight) / 2;
+    const markerRadius = Math.max(
+      markerRect.width || compassRect.width * 0.17,
+      markerRect.height || compassRect.height * 0.17
+    ) / 2;
 
     const compassRadius = Math.min(
       compassRect.width,
       compassRect.height
     ) / 2;
 
-    const safeRadius = Math.max(
+    const availableRadius = Math.min(
+      wrapperRect.width / 2 - markerRadius - 1,
+      wrapperRect.height / 2 - markerRadius - 1
+    );
+
+    // Place the Kaaba just outside the outer ring where space permits.
+    const radius = Math.max(
       0,
-      compassRadius - markerRadius - 4
+      Math.min(compassRadius + markerRadius * 0.25, availableRadius)
     );
 
     const angle = rad(relative);
-    const x = Math.sin(angle) * safeRadius;
-    const y = -Math.cos(angle) * safeRadius;
+    const x = Math.sin(angle) * radius;
+    const y = -Math.cos(angle) * radius;
 
     marker.style.transform =
       `translate(-50%, -50%) translate(${x}px, ${y}px)`;
   }
 
-  /* ---------- DEVICE ORIENTATION ---------- */
-
   function showStatus(message) {
-    /*
-     * Keep the visual layout uncluttered, as in the
-     * original page. Status remains available in console.
-     */
     console.info("IBADAT Qibla:", message);
   }
 
   function applyHeading(raw) {
     if (!Number.isFinite(raw)) return;
-
     heading = norm(raw);
     updateCompass();
   }
@@ -664,7 +586,6 @@
     }
 
     applyHeading(360 - event.alpha);
-    showStatus(T.active);
   }
 
   function onFallbackOrientation(event) {
@@ -672,14 +593,12 @@
 
     if (Number.isFinite(event.webkitCompassHeading)) {
       applyHeading(event.webkitCompassHeading);
-      showStatus(T.active);
       return;
     }
 
-    if (!Number.isFinite(event.alpha)) return;
-
-    applyHeading(360 - event.alpha);
-    showStatus(T.waiting);
+    if (Number.isFinite(event.alpha)) {
+      applyHeading(360 - event.alpha);
+    }
   }
 
   function startSensors() {
@@ -727,7 +646,6 @@
 
     compass.addEventListener("click", async () => {
       if (permissionRequested) return;
-
       permissionRequested = true;
 
       try {
@@ -748,35 +666,6 @@
     });
   }
 
-  /* ---------- SCROLLING FOOTER QUOTES ---------- */
-
-  function showNextQuote() {
-    if (!footerText) return;
-
-    const quotes = T.quotes;
-    if (!quotes || !quotes.length) return;
-
-    footerText.style.animation = "none";
-    footerText.textContent = quotes[quoteIndex % quotes.length];
-    quoteIndex += 1;
-
-    /*
-     * Restart the CSS animation after changing the quote.
-     */
-    void footerText.offsetWidth;
-    footerText.style.animation = "";
-
-    const reducedMotion =
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    footerText.style.animationDuration = reducedMotion
-      ? "30s"
-      : "18s";
-  }
-
-  /* ---------- LANGUAGE ---------- */
-
   function applyLanguage() {
     language = getLanguage();
     T = LANG[language] || LANG.bn;
@@ -786,7 +675,7 @@
     if (pageTitle) pageTitle.textContent = T.title;
     if (locationLabel) locationLabel.textContent = T.location;
     if (distanceLabel) distanceLabel.textContent = T.distance;
-    if (compassHint) compassHint.textContent = T.hint;
+    if (footerText) footerText.textContent = T.footer;
 
     const directionElements = dial.querySelectorAll(".direction");
     const labels = DIRECTIONS[language] || DIRECTIONS.bn;
@@ -797,39 +686,33 @@
 
     arrangeDirectionLabels();
 
-    quoteIndex = 0;
-    showNextQuote();
-
     if (userLat !== null && userLon !== null) {
       updateLocationValues();
-    } else {
-      loadSavedLocation();
+      showLocationName(getSavedCity());
     }
   }
-
-  /* ---------- SETTINGS REFRESH ---------- */
 
   function settingsSignature() {
     const settings = readSettings();
 
     return JSON.stringify({
       language:
-        settings.language ??
-        settings.lang ??
-        settings.locale ??
-        settings.selectedLanguage ??
-        settings.appLanguage ??
+        settings.lang ||
+        settings.language ||
+        settings.locale ||
+        settings.selectedLanguage ||
+        settings.appLanguage ||
         "bn",
 
       theme:
-        settings.themeColor ??
-        settings.colorTheme ??
-        settings.theme ??
+        settings.themeColor ||
+        settings.colorTheme ||
+        settings.theme ||
         "classic",
 
       dark:
-        settings.darkMode ??
         settings.dark ??
+        settings.darkMode ??
         settings.isDarkMode ??
         settings.isDark ??
         false
@@ -839,28 +722,22 @@
   function refreshSettings() {
     applyTheme();
     applyLanguage();
-    updateCompass();
     lastSettingsSignature = settingsSignature();
   }
 
   function checkSettings() {
-    const signature = settingsSignature();
-
-    if (signature !== lastSettingsSignature) {
+    if (settingsSignature() !== lastSettingsSignature) {
       refreshSettings();
     }
   }
 
-  /* ---------- INITIALIZATION ---------- */
-
   function init() {
     refreshSettings();
+    arrangeDirectionLabels();
     loadSavedLocation();
     setupSensors();
-    arrangeDirectionLabels();
     updateCompass();
 
-    window.setInterval(showNextQuote, 7000);
     window.setInterval(checkSettings, 700);
   }
 
@@ -893,13 +770,7 @@
       if (saved) {
         userLat = saved.lat;
         userLon = saved.lon;
-
-        if (locationName) {
-          locationName.textContent =
-            getSavedCity() ||
-            `${number(userLat, 2)}, ${number(userLon, 2)}`;
-        }
-
+        showLocationName(getSavedCity());
         updateLocationValues();
       }
     }
