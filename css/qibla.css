@@ -1,4 +1,3 @@
-
 :root {
   --header-height: 48px;
   --footer-height: 48px;
@@ -19,7 +18,10 @@
 
   --page-overlay: rgba(235, 245, 226, 0.56);
   --content-overlay: rgba(255, 253, 245, 0.64);
-  --info-overlay: rgba(255, 253, 245, 0.86);
+
+  /* থিম-রঙের হালকা স্তর */
+  --info-overlay: rgba(220, 235, 207, 0.90);
+  --info-tint: rgba(102, 187, 106, 0.12);
 
   --compass-outer: #66BB6A;
   --compass-face: #DCEBCF;
@@ -161,10 +163,11 @@ img {
   overflow: hidden;
 }
 
-/* TOP AND BOTTOM INFORMATION STRIPS */
+/* LOCATION AND DISTANCE STRIPS */
 
 .location-strip {
   position: relative;
+  isolation: isolate;
   z-index: 8;
 
   flex: 0 0 34px;
@@ -179,7 +182,14 @@ img {
 
   padding: 0 8px;
 
-  background: var(--info-overlay);
+  /* থিমের রঙ + হালকা ব্যাকগ্রাউন্ড লেয়ার */
+  background:
+    linear-gradient(
+      var(--info-tint),
+      var(--info-tint)
+    ),
+    var(--info-overlay);
+
   border: 1px solid var(--border);
   border-radius: 11px;
 
@@ -314,7 +324,7 @@ img {
   pointer-events: none;
 }
 
-/* OUTER SMALL TICKS */
+/* TICK LAYERS */
 
 .compass-ticks {
   position: absolute;
@@ -323,6 +333,8 @@ img {
   pointer-events: none;
   z-index: 2;
 }
+
+/* OUTER TICKS: EXISTING SPACING RETAINED */
 
 .compass-ticks-outer {
   background: repeating-conic-gradient(
@@ -346,31 +358,36 @@ img {
   );
 }
 
-/* INNER RING TICKS: OUTWARD-FACING */
+/*
+  INNER TICKS:
+  8 major red marks are rendered separately.
+  These are the 8 shorter theme-coloured marks,
+  spaced halfway between the major marks.
+*/
 
 .compass-ticks-inner {
   background: repeating-conic-gradient(
     from 0deg,
-    var(--compass-ticks) 0deg 0.8deg,
-    transparent 0.8deg 5.625deg
+    var(--compass-ticks) 0deg 0.65deg,
+    transparent 0.65deg 45deg
   );
 
   -webkit-mask: radial-gradient(
     circle,
-    transparent 0 64%,
-    #000 65% 73%,
-    transparent 74%
+    transparent 0 46%,
+    #000 47% 57%,
+    transparent 58%
   );
 
   mask: radial-gradient(
     circle,
-    transparent 0 64%,
-    #000 65% 73%,
-    transparent 74%
+    transparent 0 46%,
+    #000 47% 57%,
+    transparent 58%
   );
 }
 
-/* RED MAJOR TICKS */
+/* 8 MAJOR RED TICKS */
 
 .compass-major-ticks {
   position: absolute;
@@ -387,15 +404,15 @@ img {
 
   -webkit-mask: radial-gradient(
     circle,
-    transparent 0 74%,
-    #000 75% 89%,
+    transparent 0 75%,
+    #000 76% 89%,
     transparent 90%
   );
 
   mask: radial-gradient(
     circle,
-    transparent 0 74%,
-    #000 75% 89%,
+    transparent 0 75%,
+    #000 76% 89%,
     transparent 90%
   );
 }
@@ -479,19 +496,19 @@ img {
   pointer-events: none;
 }
 
-/* KAABA MARKER */
+/* KAABA MARKER: SLIGHTLY LARGER */
 
 .kaaba-marker {
   position: absolute;
   top: 50%;
   left: 50%;
 
-  width: 17%;
-  height: 17%;
-  max-width: 52px;
-  max-height: 52px;
-  min-width: 24px;
-  min-height: 24px;
+  width: 20%;
+  height: 20%;
+  max-width: 58px;
+  max-height: 58px;
+  min-width: 28px;
+  min-height: 28px;
 
   object-fit: contain;
   transform: translate(-50%, -50%);
@@ -529,9 +546,9 @@ img {
   margin: 0;
 
   color: var(--footer-text);
-  font-size: clamp(11px, 3vw, 13px);
+  font-size: clamp(12px, 3.5vw, 15px);
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.3;
 
   text-align: center;
   white-space: nowrap;
@@ -549,6 +566,9 @@ body[data-color-theme="classic"] {
   --border: #D5E3D1;
   --header-bg: #0F5132;
   --footer-bg: #0F5132;
+
+  --info-overlay: rgba(220, 235, 207, 0.90);
+  --info-tint: rgba(102, 187, 106, 0.12);
 
   --compass-outer: #66BB6A;
   --compass-face: #DCEBCF;
@@ -569,6 +589,9 @@ body[data-color-theme="royal"] {
   --header-bg: #173A60;
   --footer-bg: #173A60;
 
+  --info-overlay: rgba(220, 234, 248, 0.92);
+  --info-tint: rgba(99, 153, 201, 0.14);
+
   --compass-outer: #6399C9;
   --compass-face: #DCEAF8;
   --compass-inner: #F3F7FC;
@@ -587,6 +610,9 @@ body[data-color-theme="rose"] {
   --border: #E8CBC8;
   --header-bg: #7D414B;
   --footer-bg: #7D414B;
+
+  --info-overlay: rgba(249, 226, 225, 0.92);
+  --info-tint: rgba(200, 134, 145, 0.14);
 
   --compass-outer: #C88691;
   --compass-face: #F5E1DF;
@@ -607,6 +633,9 @@ body[data-color-theme="pista"] {
   --header-bg: #2F7135;
   --footer-bg: #2F7135;
 
+  --info-overlay: rgba(225, 242, 218, 0.92);
+  --info-tint: rgba(115, 185, 119, 0.14);
+
   --compass-outer: #73B977;
   --compass-face: #DFF0D7;
   --compass-inner: #F7F9ED;
@@ -625,6 +654,7 @@ body.dark-mode {
   --page-overlay: rgba(8, 15, 10, 0.82);
   --content-overlay: rgba(12, 20, 14, 0.82);
   --info-overlay: rgba(25, 38, 29, 0.94);
+  --info-tint: rgba(121, 167, 124, 0.10);
 
   --compass-face: #263B2B;
   --compass-inner: #192B20;
@@ -650,7 +680,9 @@ body.dark-mode .footer-board {
 }
 
 body.dark-mode .location-strip {
-  background: var(--info-overlay);
+  background:
+    linear-gradient(var(--info-tint), var(--info-tint)),
+    var(--info-overlay);
 }
 
 body.dark-mode .location-strip strong,
@@ -680,24 +712,32 @@ body.dark-mode[data-color-theme="classic"] {
   --header-bg: #0F5132;
   --footer-bg: #0F5132;
   --accent: #E4C76B;
+  --info-overlay: rgba(25, 43, 31, 0.94);
+  --info-tint: rgba(102, 187, 106, 0.12);
 }
 
 body.dark-mode[data-color-theme="royal"] {
   --header-bg: #142D49;
   --footer-bg: #142D49;
   --accent: #E8BD55;
+  --info-overlay: rgba(25, 39, 56, 0.94);
+  --info-tint: rgba(99, 153, 201, 0.13);
 }
 
 body.dark-mode[data-color-theme="rose"] {
   --header-bg: #592F36;
   --footer-bg: #592F36;
   --accent: #D9B875;
+  --info-overlay: rgba(51, 31, 35, 0.95);
+  --info-tint: rgba(200, 134, 145, 0.13);
 }
 
 body.dark-mode[data-color-theme="pista"] {
   --header-bg: #244C28;
   --footer-bg: #244C28;
   --accent: #B9D97C;
+  --info-overlay: rgba(28, 43, 29, 0.95);
+  --info-tint: rgba(115, 185, 119, 0.13);
 }
 
 /* SMALL SCREENS */
@@ -724,6 +764,13 @@ body.dark-mode[data-color-theme="pista"] {
 
   .degree {
     font-size: clamp(14px, 5vw, 20px);
+  }
+
+  .kaaba-marker {
+    width: 20%;
+    height: 20%;
+    max-width: 52px;
+    max-height: 52px;
   }
 }
 
