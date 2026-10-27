@@ -1,4 +1,3 @@
-
 "use strict";
 
 (() => {
@@ -25,6 +24,9 @@
 
   const FALLBACK_LAT = 22.5726;
   const FALLBACK_LON = 88.3639;
+
+  // ছবির প্রান্ত ও কম্পাসের বাইরের রিংয়ের মধ্যে ন্যূনতম ফাঁক।
+  const MARKER_GAP = 8;
 
   const LANG = {
     bn: {
@@ -83,32 +85,6 @@
     ]
   };
 
-  const CITY_NAMES = {
-    "South Dum Dum": {
-      bn: "দক্ষিণ দমদম",
-      en: "South Dum Dum",
-      hi: "दक्षिण दमदम"
-    },
-    "South Dumdum": {
-      bn: "দক্ষিণ দমদম",
-      en: "South Dum Dum",
-      hi: "दक्षिण दमदम"
-    },
-    "দক্ষিণ দমদম": {
-      bn: "দক্ষিণ দমদম",
-      en: "South Dum Dum",
-      hi: "दक्षिण दमदम"
-    },
-    Kolkata: { bn: "কলকাতা", en: "Kolkata", hi: "कोलकाता" },
-    "New Delhi": { bn: "নয়াদিল্লি", en: "New Delhi", hi: "नई दिल्ली" },
-    Delhi: { bn: "দিল্লি", en: "Delhi", hi: "दिल्ली" },
-    Mumbai: { bn: "মুম্বাই", en: "Mumbai", hi: "मुंबई" },
-    Chennai: { bn: "চেন্নাই", en: "Chennai", hi: "चेन्नई" },
-    Hyderabad: { bn: "হায়দরাবাদ", en: "Hyderabad", hi: "हैदराबाद" },
-    Dhaka: { bn: "ঢাকা", en: "Dhaka", hi: "ढाका" },
-    London: { bn: "লন্ডন", en: "London", hi: "लंदन" }
-  };
-
   let language = "bn";
   let T = LANG.bn;
 
@@ -145,6 +121,7 @@
 
   function getLanguage() {
     const settings = readSettings();
+
     const selected =
       settings.lang ||
       settings.language ||
@@ -268,16 +245,12 @@
     return norm(Math.atan2(y, x) * 180 / Math.PI);
   }
 
+  /*
+   * Home পেজের শহরের নাম সরাসরি ব্যবহার করা হবে।
+   * নির্দিষ্ট শহরের জন্য আলাদা hardcoded mapping নেই।
+   */
   function localizeCity(name) {
-    if (!name) return "";
-
-    const clean = String(name).trim();
-
-    if (CITY_NAMES[clean]) {
-      return CITY_NAMES[clean][language] || CITY_NAMES[clean].en;
-    }
-
-    return clean;
+    return name ? String(name).trim() : "";
   }
 
   function updateLocationValues() {
@@ -320,7 +293,11 @@
         return null;
       }
 
-      return { lat, lon };
+      return {
+        lat,
+        lon,
+        updatedAt: Number(saved.updatedAt) || 0
+      };
     } catch {
       return null;
     }
@@ -372,9 +349,14 @@
     updateLocationValues();
   }
 
+  /*
+   * শুধু Home-এর সংরক্ষিত অবস্থান না থাকলেই
+   * reverse geocoding ব্যবহার করা হবে।
+   */
   async function findCity(lat, lon) {
     try {
       const url = new URL("https://nominatim.openstreetmap.org/reverse");
+
       url.searchParams.set("format", "jsonv2");
       url.searchParams.set("lat", lat);
       url.searchParams.set("lon", lon);
@@ -389,7 +371,9 @@
         headers: { Accept: "application/json" }
       });
 
-      if (!response.ok) throw new Error("Reverse geocoding unavailable");
+      if (!response.ok) {
+        throw new Error("Reverse geocoding unavailable");
+      }
 
       const data = await response.json();
       const address = data.address || {};
@@ -408,15 +392,11 @@
         address.country ||
         "";
 
-      if (city) {
-        saveLocation(lat, lon, city);
-        return city;
-      }
+      return city || "";
     } catch (error) {
       console.info("IBADAT Qibla: city lookup unavailable.", error);
+      return "";
     }
-
-    return getSavedCity();
   }
 
   function useFallbackLocation() {
@@ -429,26 +409,35 @@
     setLocation(FALLBACK_LAT, FALLBACK_LON, fallbackCity);
   }
 
-  function useSavedOrFallbackLocation() {
+  /*
+   * Home-এর saved location থাকলে সেটিই authoritative।
+   * Qibla পেজ সেটিকে নিজস্ব GPS ফলাফল দিয়ে overwrite করবে না।
+   */
+  function loadSavedLocation() {
     const saved = readSavedLocation();
 
     if (saved) {
       userLat = saved.lat;
       userLon = saved.lon;
+
       showLocationName(getSavedCity());
       updateLocationValues();
       return;
     }
 
-    useFallbackLocation();
+    requestCurrentLocation();
   }
 
+  /*
+   * কেবল Home-এর shared location না থাকলে GPS fallback।
+   * এতে Qibla পেজ স্বাভাবিক অবস্থায় Home-এর শহর বদলাবে না।
+   */
   function requestCurrentLocation() {
     if (locationRequestStarted) return;
     locationRequestStarted = true;
 
     if (!navigator.geolocation) {
-      useSavedOrFallbackLocation();
+      useFallbackLocation();
       return;
     }
 
@@ -463,12 +452,28 @@
 
         const city = await findCity(lat, lon);
 
-        saveLocation(lat, lon, city);
-        showLocationName(city);
+        saveLocation(
+          lat,
+          lon,
+          city || getSavedCity()
+        );
+
+        showLocationName(city || getSavedCity());
+        updateLocationValues();
       },
       (error) => {
         console.info("IBADAT Qibla: GPS unavailable.", error);
-        useSavedOrFallbackLocation();
+
+        const saved = readSavedLocation();
+
+        if (saved) {
+          userLat = saved.lat;
+          userLon = saved.lon;
+          showLocationName(getSavedCity());
+          updateLocationValues();
+        } else {
+          useFallbackLocation();
+        }
       },
       {
         enableHighAccuracy: true,
@@ -476,24 +481,6 @@
         maximumAge: 300000
       }
     );
-  }
-
-  function loadSavedLocation() {
-    const saved = readSavedLocation();
-
-    if (saved) {
-      userLat = saved.lat;
-      userLon = saved.lon;
-      showLocationName(getSavedCity());
-      updateLocationValues();
-    } else {
-      locationNameEl.textContent = T.locating;
-      distanceEl.textContent = "—";
-      degreeEl.textContent = "—";
-    }
-
-    // Refresh from GPS to support travel to a new location.
-    requestCurrentLocation();
   }
 
   function arrangeDirectionLabels() {
@@ -515,6 +502,12 @@
       `translateX(-50%) rotate(${angle}deg)`;
   }
 
+  /*
+   * কাবার ছবির অবস্থান:
+   * 1. কম্পাসের বাইরের রিং থেকে MARKER_GAP ফাঁক।
+   * 2. ছবির সম্পূর্ণ অংশ wrapper-এর ভেতরে।
+   * 3. ফোন ঘোরালে marker সঠিক relative bearing অনুসরণ করবে।
+   */
   function updateCompass() {
     const currentHeading = heading === null ? 0 : heading;
     const relative = norm(qiblaBearing - currentHeading);
@@ -531,35 +524,91 @@
     const compassRect = compass.getBoundingClientRect();
     const wrapper = compass.closest(".compass-wrapper");
 
-    if (!compassRect.width || !wrapper) return;
+    if (
+      !compassRect.width ||
+      !compassRect.height ||
+      !wrapper
+    ) {
+      return;
+    }
 
     const wrapperRect = wrapper.getBoundingClientRect();
     const markerRect = marker.getBoundingClientRect();
 
-    const markerRadius = Math.max(
-      markerRect.width || compassRect.width * 0.17,
-      markerRect.height || compassRect.height * 0.17
-    ) / 2;
+    const markerWidth =
+      markerRect.width || compassRect.width * 0.20;
+
+    const markerHeight =
+      markerRect.height || compassRect.height * 0.20;
+
+    const markerHalfWidth = markerWidth / 2;
+    const markerHalfHeight = markerHeight / 2;
 
     const compassRadius = Math.min(
       compassRect.width,
       compassRect.height
     ) / 2;
 
-    const availableRadius = Math.min(
-      wrapperRect.width / 2 - markerRadius - 1,
-      wrapperRect.height / 2 - markerRadius - 1
-    );
-
-    // Place the Kaaba just outside the outer ring where space permits.
-    const radius = Math.max(
-      0,
-      Math.min(compassRadius + markerRadius * 0.25, availableRadius)
-    );
+    /*
+     * ছবির কেন্দ্র এতটা দূরে থাকবে যাতে ছবির প্রান্ত
+     * রিংকে স্পর্শ না করে।
+     */
+    const desiredRadius =
+      compassRadius +
+      Math.max(markerHalfWidth, markerHalfHeight) +
+      MARKER_GAP;
 
     const angle = rad(relative);
-    const x = Math.sin(angle) * radius;
-    const y = -Math.cos(angle) * radius;
+    const dirX = Math.sin(angle);
+    const dirY = -Math.cos(angle);
+
+    /*
+     * কম্পাসের কেন্দ্র wrapper-এর কেন্দ্রের সঙ্গে
+     * পুরোপুরি না মিললেও সঠিক অবস্থান গণনা করা হবে।
+     */
+    const centerX =
+      compassRect.left +
+      compassRect.width / 2 -
+      wrapperRect.left;
+
+    const centerY =
+      compassRect.top +
+      compassRect.height / 2 -
+      wrapperRect.top;
+
+    /*
+     * ছবির অর্ধেক প্রস্থ/উচ্চতা এবং wrapper-এর সীমানা
+     * ব্যবহার করে সর্বোচ্চ নিরাপদ দূরত্ব বের করা।
+     */
+    const limitX = dirX > 0
+      ? (wrapperRect.width - markerHalfWidth - centerX) / dirX
+      : dirX < 0
+        ? (markerHalfWidth - centerX) / dirX
+        : Infinity;
+
+    const limitY = dirY > 0
+      ? (wrapperRect.height - markerHalfHeight - centerY) / dirY
+      : dirY < 0
+        ? (markerHalfHeight - centerY) / dirY
+        : Infinity;
+
+    const availableRadius = Math.max(
+      0,
+      Math.min(limitX, limitY)
+    );
+
+    /*
+     * জায়গা থাকলে পুরো gap বজায় থাকবে।
+     * জায়গা কম হলে marker-কে viewport-এর ভেতরে
+     * রাখাকে অগ্রাধিকার দেওয়া হবে।
+     */
+    const radius = Math.min(
+      desiredRadius,
+      availableRadius
+    );
+
+    const x = dirX * radius;
+    const y = dirY * radius;
 
     marker.style.transform =
       `translate(-50%, -50%) translate(${x}px, ${y}px)`;
@@ -731,6 +780,30 @@
     }
   }
 
+  function syncSharedLocation() {
+    const saved = readSavedLocation();
+
+    if (!saved) return;
+
+    const current = userLat !== null && userLon !== null;
+
+    const changed =
+      !current ||
+      saved.lat !== userLat ||
+      saved.lon !== userLon;
+
+    if (changed) {
+      userLat = saved.lat;
+      userLon = saved.lon;
+
+      showLocationName(getSavedCity());
+      updateLocationValues();
+    } else {
+      // Home শহরের নাম আপডেট করলে সেটি দেখাও।
+      showLocationName(getSavedCity());
+    }
+  }
+
   function init() {
     refreshSettings();
     arrangeDirectionLabels();
@@ -738,7 +811,14 @@
     setupSensors();
     updateCompass();
 
-    window.setInterval(checkSettings, 700);
+    /*
+     * একই origin-এ Home থেকে অবস্থান আপডেট হলে
+     * Qibla পেজও তা গ্রহণ করবে।
+     */
+    window.setInterval(() => {
+      checkSettings();
+      syncSharedLocation();
+    }, 1000);
   }
 
   window.addEventListener("resize", () => {
@@ -765,14 +845,7 @@
       event.key === "ibadatUserLocation" ||
       event.key === "ibadatCityName"
     ) {
-      const saved = readSavedLocation();
-
-      if (saved) {
-        userLat = saved.lat;
-        userLon = saved.lon;
-        showLocationName(getSavedCity());
-        updateLocationValues();
-      }
+      syncSharedLocation();
     }
   });
 
@@ -780,6 +853,7 @@
 
   window.addEventListener("pageshow", () => {
     refreshSettings();
+    syncSharedLocation();
     arrangeDirectionLabels();
     updateCompass();
   });
@@ -787,6 +861,7 @@
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden) {
       refreshSettings();
+      syncSharedLocation();
       arrangeDirectionLabels();
       updateCompass();
     }
