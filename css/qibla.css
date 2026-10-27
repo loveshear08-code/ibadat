@@ -1,815 +1,887 @@
-
 /* =====================================================
-   IBADAT QIBLA
-   Shared green-gold theme and cream-white background
+   IBADAT QIBLA — RESPONSIVE BOARD DESIGN
+   Shared layout reference: quran.css
+   Main background: ../assets/main-bg.jpg
 ===================================================== */
 
 :root {
-    --deep-green: #123d2c;
-    --dark-green: #0b2c20;
-    --green: #20583e;
+  --header-height: 48px;
+  --footer-height: 48px;
+  --page-gap: 6px;
+  --app-padding: 7px;
+  --board-radius: 20px;
 
-    --light-pista: #e6edce;
-    --option-pista: #e9efda;
+  --primary: #1B7F4B;
+  --soft: #E8F5E9;
+  --accent: #F2C94C;
+  --deep: #0F5132;
+  --text: #17452F;
+  --muted: #68796B;
+  --card: rgba(255, 255, 255, 0.94);
+  --border: #D5E3D1;
 
-    --cream: #fff9eb;
-    --cream-white: rgba(255, 252, 242, 0.94);
-    --cream-layer: rgba(255, 252, 242, 0.79);
+  --header-bg: var(--deep);
+  --header-text: #F5E5A7;
+  --footer-bg: var(--deep);
+  --footer-text: #F5E5A7;
 
-    --gold: #d6b56d;
-    --gold-dark: #9b7837;
+  --page-overlay: rgba(255, 253, 245, 0.62);
+  --content-overlay: rgba(255, 253, 245, 0.54);
+  --info-overlay: rgba(255, 255, 255, 0.78);
 
-    --text: #24382c;
-    --muted: #657367;
-    --border: rgba(214, 181, 109, 0.85);
+  --shadow: 0 3px 10px rgba(30, 49, 28, 0.12);
 
-    --shadow: 0 5px 18px rgba(0, 0, 0, 0.12);
+  --compass-outer: #66BB6A;
+  --compass-face: #DCEBCF;
+  --compass-inner: #F7F5E9;
+  --compass-ticks: #75B77A;
+  --compass-major-tick: #B78B24;
+  --compass-needle: #124C32;
+  --compass-tip: #C62828;
 
-    --header-height: 112px;
-    --footer-height: 48px;
-    --page-gap: 10px;
-    --app-padding: 12px;
-
-    --compass-outer: #66bb6a;
-    --compass-face: #dcebcf;
-    --compass-inner: #f7f5e9;
-    --compass-ticks: #75b77a;
-    --compass-major-tick: #b78b24;
-    --compass-needle: #124c32;
-    --compass-tip: #c62828;
+  --compass-size: min(62vw, 290px);
 }
 
-/* ================= BASE ================= */
+/* ---------- GLOBAL ---------- */
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html,
 body {
-    width: 100%;
-    height: 100%;
-    height: 100dvh;
-
-    margin: 0;
-    padding: 0;
-
-    overflow: hidden;
-
-    font-family:
-        "Noto Sans Bengali",
-        "Noto Sans Devanagari",
-        "Nirmala UI",
-        Arial,
-        sans-serif;
-
-    color: var(--text);
-
-    background:
-        linear-gradient(
-            var(--cream-layer),
-            var(--cream-layer)
-        ),
-        url("../assets/main-bg.jpg") center / cover no-repeat;
-
-    -webkit-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: transparent;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
-/* ================= PAGE LAYOUT ================= */
+body {
+  color: var(--text);
+  font-family:
+    "Noto Sans Bengali",
+    "Hind Siliguri",
+    "Noto Sans Devanagari",
+    Arial,
+    sans-serif;
+
+  background:
+    linear-gradient(var(--page-overlay), var(--page-overlay)),
+    url("../assets/main-bg.jpg") center / cover no-repeat;
+
+  -webkit-text-size-adjust: 100%;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* ---------- MAIN LAYOUT ---------- */
 
 .qibla-page {
-    display: flex;
-    flex-direction: column;
-    gap: var(--page-gap);
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-gap);
 
-    width: 100%;
-    height: 100%;
-    height: 100dvh;
-    min-height: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  min-height: 0;
 
-    padding: var(--app-padding);
+  padding:
+    max(5px, env(safe-area-inset-top, 0px))
+    var(--app-padding)
+    max(5px, env(safe-area-inset-bottom, 0px));
 
-    overflow: hidden;
+  overflow: hidden;
 
-    background:
-        linear-gradient(
-            var(--cream-layer),
-            var(--cream-layer)
-        ),
-        url("../assets/main-bg.jpg") center / cover no-repeat;
+  background:
+    linear-gradient(var(--page-overlay), var(--page-overlay)),
+    url("../assets/main-bg.jpg") center / cover no-repeat;
 }
 
-/* Shared board border style */
-
-.hero-board,
-.main-board,
-.footer-board {
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    box-shadow: var(--shadow);
+.board {
+  min-width: 0;
+  border: 2px solid var(--accent);
+  border-radius: var(--board-radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
 }
 
-/* ================= TOP HEADER ================= */
+/* ---------- HEADER BOARD ---------- */
 
 .hero-board {
-    position: relative;
-    isolation: isolate;
+  flex: 0 0 var(--header-height);
+  width: 100%;
+  height: var(--header-height);
+  min-height: var(--header-height);
+  max-height: var(--header-height);
 
-    display: flex;
-    flex: 0 0 var(--header-height);
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    width: 100%;
-    height: var(--header-height);
-    min-height: var(--header-height);
+  padding: 3px 10px;
 
-    padding: 8px 12px;
-
-    overflow: hidden;
-    text-align: center;
-
-    background:
-        linear-gradient(
-            rgba(255, 252, 242, 0.79),
-            rgba(255, 252, 242, 0.79)
-        ),
-        url("../assets/hero-bg.jpg") center / cover no-repeat;
-}
-
-.hero-content {
-    width: 100%;
-    min-width: 0;
+  background: var(--header-bg);
+  color: var(--header-text);
+  text-align: center;
 }
 
 #pageTitle {
-    margin: 0;
+  width: 100%;
+  margin: 0;
 
-    color: var(--deep-green);
+  color: var(--header-text);
+  font-size: clamp(15px, 4vw, 18px);
+  font-weight: 800;
+  line-height: 1.3;
 
-    font-size: clamp(1.2rem, 4.8vw, 1.65rem);
-    font-weight: 800;
-    line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-#heroSubtitle {
-    margin: 4px 0 0;
-
-    color: var(--text);
-
-    font-size: clamp(0.72rem, 2.8vw, 0.9rem);
-    font-weight: 500;
-    line-height: 1.5;
-
-    overflow-wrap: anywhere;
-}
-
-/* ================= MAIN BOARD ================= */
+/* ---------- MAIN CONTENT BOARD ---------- */
 
 .main-board {
-    display: flex;
-    flex: 1 1 auto;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: space-between;
+  position: relative;
+  isolation: isolate;
 
-    gap: var(--page-gap);
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
 
-    width: 100%;
-    min-width: 0;
-    min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 
-    padding: 10px;
+  gap: 7px;
+  padding: 8px;
 
-    overflow: hidden;
+  background:
+    linear-gradient(
+      var(--content-overlay),
+      var(--content-overlay)
+    ),
+    url("../assets/main-bg.jpg") center / cover no-repeat;
 
-    background:
-        linear-gradient(
-            var(--cream-layer),
-            var(--cream-layer)
-        ),
-        url("../assets/main-bg.jpg") center / cover no-repeat;
+  border: 1px solid var(--border);
+  border-radius: var(--board-radius);
+
+  overflow: hidden;
 }
 
-/* ================= LOCATION AND DISTANCE ================= */
+/* ---------- LOCATION AND DISTANCE ---------- */
 
-.location-card,
-.info-card {
-    position: relative;
+.location-panel {
+  position: relative;
+  z-index: 1;
 
-    display: flex;
-    flex: 0 0 68px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  flex: 0 0 auto;
+  width: 100%;
+  min-width: 0;
 
-    width: 100%;
-    min-width: 0;
-    min-height: 68px;
-    height: 68px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+  align-items: stretch;
 
-    margin: 0;
-    padding: 6px 10px;
+  padding: 8px 5px;
 
-    overflow: hidden;
-
-    text-align: center;
-
-    color: var(--gold);
-
-    background: linear-gradient(
-        140deg,
-        var(--deep-green),
-        var(--dark-green)
-    );
-
-    border: 2px solid var(--gold);
-    border-radius: 16px;
-
-    box-shadow:
-        0 3px 9px rgba(20, 60, 30, 0.13),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  background: var(--info-overlay);
+  border: 1px solid var(--border);
+  border-radius: 15px;
 }
 
-#locationLabel,
-#distanceLabel {
-    color: var(--gold);
+.info-block {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-    font-size: 0.85rem;
-    font-weight: 700;
-    line-height: 1.4;
+  gap: 3px;
+  padding: 0 5px;
+  text-align: center;
 }
 
-#locationName,
-#distance {
-    max-width: 100%;
+.info-label {
+  max-width: 100%;
+  color: var(--muted);
 
-    margin-top: 3px;
+  font-size: clamp(10px, 2.8vw, 12px);
+  font-weight: 700;
+  line-height: 1.4;
 
-    color: var(--cream);
-
-    font-size: clamp(1.05rem, 4.5vw, 1.35rem);
-    font-weight: 800;
-    line-height: 1.35;
-
-    overflow-wrap: anywhere;
+  overflow-wrap: anywhere;
 }
 
-#distance {
-    font-size: clamp(1.15rem, 4.8vw, 1.5rem);
+.info-value {
+  display: block;
+  max-width: 100%;
+  min-width: 0;
+
+  color: var(--deep);
+  font-size: clamp(13px, 3.7vw, 17px);
+  font-weight: 800;
+  line-height: 1.4;
+
+  overflow-wrap: anywhere;
 }
 
-/* ================= COMPASS AREA ================= */
+.info-divider {
+  align-self: stretch;
+  width: 1px;
+  background: var(--border);
+}
+
+/* ---------- COMPASS STAGE ---------- */
+
+.compass-stage {
+  flex: 1 1 0;
+  min-height: 0;
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
 
 .compass-wrapper {
-    position: relative;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
 
-    display: flex;
-    flex: 1 1 auto;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    width: 100%;
-    min-width: 0;
-    min-height: 0;
-
-    padding: 6px;
-
-    /*
-       Keep the compass marker visible.
-       The compass itself retains its original geometry.
-    */
-    overflow: visible;
+  overflow: hidden;
 }
 
-/* ================= COMPASS DIAL ================= */
-
-/* Original 240px compass size retained */
+/* ---------- COMPASS DIAL ---------- */
 
 .compass {
-    position: relative;
+  position: relative;
+  isolation: isolate;
 
-    width: 240px;
-    height: 240px;
+  width: var(--compass-size);
+  height: var(--compass-size);
+  max-width: 100%;
+  max-height: 100%;
 
-    flex: 0 0 auto;
+  flex: 0 0 auto;
+  aspect-ratio: 1 / 1;
 
-    border: 10px solid var(--compass-outer);
-    border-radius: 50%;
+  border: clamp(6px, 2vw, 10px) solid var(--compass-outer);
+  border-radius: 50%;
 
-    background: var(--compass-face);
+  background: var(--compass-face);
 
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.13);
 }
 
-/* ================= DIRECTIONS ================= */
+/* Rotating compass labels */
+
+.compass-dial {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+
+  border-radius: 50%;
+  pointer-events: none;
+
+  transform: rotate(0deg);
+  transform-origin: center;
+}
 
 .direction {
-    position: absolute;
+  position: absolute;
 
-    transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 
-    color: #a78219;
+  color: var(--gold-dark, #9B7837);
 
-    font-size: 11px;
-    font-weight: 700;
+  font-size: clamp(8px, 2.6vw, 11px);
+  font-weight: 800;
 
-    white-space: nowrap;
-    z-index: 2;
+  white-space: nowrap;
+  line-height: 1;
 }
 
 .n,
 .e,
 .s,
 .w {
-    font-size: 18px;
+  font-size: clamp(12px, 3.8vw, 17px);
 }
 
-.n   { top: 10px; left: 50%; }
-.nne { top: 28px; left: 68%; }
-.ne  { top: 48px; left: 82%; }
-.ene { top: 78px; left: 92%; }
+.n   { top: 9%; left: 50%; }
+.nne { top: 19%; left: 69%; }
+.ne  { top: 30%; left: 80%; }
+.ene { top: 40%; left: 89%; }
+.e   { top: 50%; left: 92%; }
+.ese { top: 60%; left: 89%; }
+.se  { top: 70%; left: 80%; }
+.sse { top: 81%; left: 69%; }
+.s   { top: 91%; left: 50%; }
+.ssw { top: 81%; left: 31%; }
+.sw  { top: 70%; left: 20%; }
+.wsw { top: 60%; left: 11%; }
+.w   { top: 50%; left: 8%; }
+.wnw { top: 40%; left: 11%; }
+.nw  { top: 30%; left: 20%; }
+.nnw { top: 19%; left: 31%; }
 
-.e   { top: 50%; left: 95%; }
-
-.ese { top: 162px; left: 92%; }
-.se  { top: 192px; left: 82%; }
-.sse { top: 212px; left: 68%; }
-
-.s   { top: 95%; left: 50%; }
-
-.ssw { top: 212px; left: 32%; }
-.sw  { top: 192px; left: 18%; }
-.wsw { top: 162px; left: 8%; }
-
-.w   { top: 50%; left: 5%; }
-
-.wnw { top: 78px; left: 8%; }
-.nw  { top: 48px; left: 18%; }
-.nnw { top: 28px; left: 32%; }
-
-.ene,
-.ese {
-    font-size: 9px;
-}
-
-/* ================= INNER RING ================= */
+/* ---------- INNER RING ---------- */
 
 .compass-ring {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
 
-    width: 165px;
-    height: 165px;
+  width: 66%;
+  height: 66%;
 
-    box-sizing: border-box;
+  transform: translate(-50%, -50%);
 
-    transform: translate(-50%, -50%);
+  border: 3px solid var(--compass-outer);
+  border-radius: 50%;
 
-    border: 3px solid var(--compass-outer);
-    border-radius: 50%;
-
-    background: var(--compass-inner);
-
-    z-index: 1;
+  background: var(--compass-inner);
+  z-index: 1;
 }
 
-/* ================= COMPASS TICKS ================= */
+/* ---------- MINOR TICKS ---------- */
 
 .compass-ticks {
-    position: absolute;
-    inset: 0;
+  position: absolute;
+  inset: 0;
 
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
 
-    background: repeating-conic-gradient(
-        from 0deg,
-        var(--compass-ticks) 0deg 0.8deg,
-        transparent 0.8deg 11.25deg
-    );
+  background: repeating-conic-gradient(
+    from 0deg,
+    var(--compass-ticks) 0deg 0.8deg,
+    transparent 0.8deg 5.625deg
+  );
 
-    -webkit-mask: radial-gradient(
-        circle,
-        transparent 0 84px,
-        #000 91px 96px,
-        transparent 97px
-    );
+  -webkit-mask: radial-gradient(
+    circle,
+    transparent 0 69%,
+    #000 70% 74%,
+    transparent 75%
+  );
 
-    mask: radial-gradient(
-        circle,
-        transparent 0 84px,
-        #000 91px 96px,
-        transparent 97px
-    );
+  mask: radial-gradient(
+    circle,
+    transparent 0 69%,
+    #000 70% 74%,
+    transparent 75%
+  );
 }
 
-/* ================= MAJOR TICKS ================= */
+/* ---------- MAJOR TICKS ---------- */
 
 .major-tick {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
 
-    width: 2px;
-    height: 26px;
+  width: 2px;
+  height: 11%;
 
-    background: var(--compass-major-tick);
-    border-radius: 1px;
+  background: var(--compass-major-tick);
+  border-radius: 2px;
 
-    z-index: 4;
-    pointer-events: none;
+  transform-origin: center;
+  z-index: 3;
+  pointer-events: none;
 }
 
 .tick-n {
-    transform: translate(-50%, -50%) translateY(-96px);
+  transform: translate(-50%, -50%) translateY(-390%);
 }
 
 .tick-ne {
-    transform: translate(-50%, -50%) rotate(45deg) translateY(-96px);
+  transform: translate(-50%, -50%) rotate(45deg) translateY(-390%);
 }
 
 .tick-e {
-    transform: translate(-50%, -50%) rotate(90deg) translateY(-96px);
+  transform: translate(-50%, -50%) rotate(90deg) translateY(-390%);
 }
 
 .tick-se {
-    transform: translate(-50%, -50%) rotate(135deg) translateY(-96px);
+  transform: translate(-50%, -50%) rotate(135deg) translateY(-390%);
 }
 
 .tick-s {
-    transform: translate(-50%, -50%) rotate(180deg) translateY(-96px);
+  transform: translate(-50%, -50%) rotate(180deg) translateY(-390%);
 }
 
 .tick-sw {
-    transform: translate(-50%, -50%) rotate(225deg) translateY(-96px);
+  transform: translate(-50%, -50%) rotate(225deg) translateY(-390%);
 }
 
 .tick-w {
-    transform: translate(-50%, -50%) rotate(270deg) translateY(-96px);
+  transform: translate(-50%, -50%) rotate(270deg) translateY(-390%);
 }
 
 .tick-nw {
-    transform: translate(-50%, -50%) rotate(315deg) translateY(-96px);
+  transform: translate(-50%, -50%) rotate(315deg) translateY(-390%);
 }
 
-/* ================= CENTER POINT ================= */
+/* ---------- QIBLA NEEDLE ---------- */
+
+.qibla-needle {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+
+  width: 4px;
+  height: 30%;
+
+  transform: translateX(-50%) rotate(0deg);
+  transform-origin: 50% 100%;
+
+  border-radius: 5px;
+  background: var(--compass-needle);
+
+  pointer-events: none;
+  z-index: 4;
+}
+
+.needle-tip {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 0;
+  height: 0;
+
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 13px solid var(--compass-tip);
+}
+
+/* ---------- CENTER POINT ---------- */
 
 .center-point {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
 
-    width: 20px;
-    height: 20px;
+  width: 18px;
+  height: 18px;
 
-    transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 
-    background: var(--gold);
-    border: 4px solid #fff;
-    border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid #fff;
+  border-radius: 50%;
 
-    z-index: 6;
+  z-index: 6;
 }
 
-/* ================= DEGREE LABEL ================= */
+/* ---------- DEGREE DISPLAY ---------- */
 
 .degree {
-    position: absolute;
-    top: 68%;
-    left: 50%;
+  position: absolute;
+  top: 69%;
+  left: 50%;
 
-    transform: translate(-50%, -50%);
+  width: 75%;
+  transform: translate(-50%, -50%);
 
-    color: var(--deep-green);
+  color: var(--deep);
+  font-size: clamp(16px, 5.5vw, 25px);
+  font-weight: 900;
+  line-height: 1.35;
 
-    font-size: 24px;
-    font-weight: 800;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
-    white-space: nowrap;
-    z-index: 2;
+  z-index: 5;
+  pointer-events: none;
 }
 
-/* ================= FOOTER BOARD ================= */
+/* ---------- KAABA MARKER ---------- */
+
+.kaaba-marker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 18%;
+  height: 18%;
+  max-width: 56px;
+  max-height: 56px;
+
+  object-fit: contain;
+
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+
+  pointer-events: none;
+  user-select: none;
+  z-index: 7;
+
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+}
+
+/* ---------- COMPASS HINT ---------- */
+
+.compass-hint {
+  flex: 0 0 auto;
+  width: 100%;
+
+  margin: 0;
+  padding: 6px 8px;
+
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.55);
+
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  font-size: clamp(10px, 2.8vw, 12px);
+  font-weight: 600;
+  line-height: 1.5;
+
+  text-align: center;
+}
+
+/* ---------- FOOTER BOARD ---------- */
 
 .footer-board {
-    display: flex;
-    flex: 0 0 var(--footer-height);
-    align-items: center;
-    justify-content: center;
+  flex: 0 0 var(--footer-height);
+  width: 100%;
+  height: var(--footer-height);
+  min-height: var(--footer-height);
+  max-height: var(--footer-height);
 
-    width: 100%;
-    height: var(--footer-height);
-    min-height: var(--footer-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    padding: 5px 10px;
+  padding: 3px 8px;
 
-    overflow: hidden;
-
-    color: var(--cream);
-    background: var(--deep-green);
-
-    text-align: center;
+  background: var(--footer-bg);
+  color: var(--footer-text);
+  text-align: center;
 }
 
 #footerText {
-    width: 100%;
-    margin: 0;
+  width: 100%;
+  margin: 0;
 
-    color: var(--cream);
+  color: var(--footer-text);
 
-    font-size: clamp(0.68rem, 2.8vw, 0.8rem);
-    font-weight: 600;
-    line-height: 1.45;
+  font-size: clamp(11px, 3vw, 13px);
+  font-weight: 700;
+  line-height: 1.35;
 
-    overflow-wrap: anywhere;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-/* ================= DARK MODE ================= */
+/* ---------- COLOR THEMES ---------- */
+
+body[data-color-theme="classic"] {
+  /* Default green theme */
+}
+
+body[data-color-theme="royal"] {
+  --primary: #285A8E;
+  --soft: #E5EFF9;
+  --accent: #E8BD55;
+  --deep: #173A60;
+  --text: #1B3652;
+  --muted: #65798E;
+  --border: #C8D9EB;
+
+  --header-bg: #173A60;
+  --footer-bg: #173A60;
+
+  --compass-outer: #6399C9;
+  --compass-face: #DCEAF8;
+  --compass-inner: #F3F7FC;
+  --compass-ticks: #83ACD4;
+  --compass-needle: #173A60;
+}
+
+body[data-color-theme="rose"] {
+  --primary: #B96F79;
+  --soft: #F8E9E7;
+  --accent: #D9B875;
+  --deep: #7D414B;
+  --text: #633B42;
+  --muted: #846D70;
+  --border: #E8CBC8;
+
+  --header-bg: #7D414B;
+  --footer-bg: #7D414B;
+
+  --compass-outer: #C88691;
+  --compass-face: #F5E1DF;
+  --compass-inner: #FFF8F2;
+  --compass-ticks: #C58B91;
+  --compass-needle: #7D414B;
+}
+
+body[data-color-theme="pista"] {
+  --primary: #4CAF50;
+  --soft: #DFF5E1;
+  --accent: #A7D129;
+  --deep: #2F7135;
+  --text: #254D2A;
+  --muted: #6D806D;
+  --border: #CDE3C8;
+
+  --header-bg: #2F7135;
+  --footer-bg: #2F7135;
+
+  --compass-outer: #73B977;
+  --compass-face: #DFF0D7;
+  --compass-inner: #F7F9ED;
+  --compass-ticks: #8DBF85;
+  --compass-needle: #2F7135;
+}
+
+/* ---------- DARK MODE ---------- */
 
 body.dark-mode {
-    --text: #e2ede2;
-    --muted: #c1d1c0;
+  --text: #E5EDE7;
+  --muted: #BECBBF;
+  --card: rgba(25, 38, 29, 0.96);
+  --border: #405746;
 
-    --cream-white: rgba(22, 38, 30, 0.97);
-    --cream-layer: rgba(5, 19, 13, 0.78);
+  --page-overlay: rgba(8, 15, 10, 0.80);
+  --content-overlay: rgba(12, 20, 14, 0.78);
+  --info-overlay: rgba(25, 38, 29, 0.92);
 
-    --deep-green: #103f2b;
-    --dark-green: #082d1d;
+  --compass-face: #263B2B;
+  --compass-inner: #192B20;
+  --compass-ticks: #79A77C;
+  --compass-major-tick: #E0BD58;
+  --compass-needle: #D8EAC8;
+  --compass-tip: #E45B55;
 
-    --light-pista: #263f30;
-    --option-pista: #344a39;
-
-    --cream: #f8f6f0;
-    --gold-light: #f5e5a7;
-
-    --compass-outer: #4f9660;
-    --compass-face: #263b2b;
-    --compass-inner: #192b20;
-    --compass-ticks: #79a77c;
-    --compass-major-tick: #e0bd58;
-    --compass-needle: #d8eac8;
-    --compass-tip: #e45b55;
-
-    color: var(--text);
-
-    background:
-        linear-gradient(
-            rgba(5, 19, 13, 0.78),
-            rgba(5, 19, 13, 0.78)
-        ),
-        url("../assets/main-bg.jpg") center / cover no-repeat;
+  background:
+    linear-gradient(var(--page-overlay), var(--page-overlay)),
+    url("../assets/main-bg.jpg") center / cover no-repeat;
 }
 
 body.dark-mode .qibla-page {
-    background:
-        linear-gradient(
-            rgba(5, 19, 13, 0.78),
-            rgba(5, 19, 13, 0.78)
-        ),
-        url("../assets/main-bg.jpg") center / cover no-repeat;
+  background:
+    linear-gradient(var(--page-overlay), var(--page-overlay)),
+    url("../assets/main-bg.jpg") center / cover no-repeat;
 }
 
-body.dark-mode .hero-board {
-    background:
-        linear-gradient(
-            rgba(22, 38, 30, 0.82),
-            rgba(22, 38, 30, 0.82)
-        ),
-        url("../assets/hero-bg.jpg") center / cover no-repeat;
+body.dark-mode .hero-board,
+body.dark-mode .footer-board {
+  background: var(--header-bg);
 }
 
-body.dark-mode #pageTitle,
-body.dark-mode #heroSubtitle {
-    color: var(--gold);
+body.dark-mode #pageTitle {
+  color: var(--header-text);
 }
 
-body.dark-mode .main-board {
-    background:
-        linear-gradient(
-            rgba(5, 19, 13, 0.78),
-            rgba(5, 19, 13, 0.78)
-        ),
-        url("../assets/main-bg.jpg") center / cover no-repeat;
+body.dark-mode .location-panel,
+body.dark-mode .compass-hint {
+  background: var(--info-overlay);
 }
 
-body.dark-mode .location-card,
-body.dark-mode .info-card {
-    background: linear-gradient(
-        140deg,
-        var(--deep-green),
-        var(--dark-green)
-    );
-
-    border-color: var(--gold);
-}
-
-body.dark-mode #locationLabel,
-body.dark-mode #distanceLabel {
-    color: var(--gold);
-}
-
-body.dark-mode #locationName,
-body.dark-mode #distance {
-    color: var(--cream);
+body.dark-mode .info-value,
+body.dark-mode .degree {
+  color: var(--text);
 }
 
 body.dark-mode .compass {
-    background: var(--compass-face);
-    border-color: var(--compass-outer);
+  background: var(--compass-face);
+  border-color: var(--compass-outer);
 }
 
 body.dark-mode .compass-ring {
-    background: var(--compass-inner);
-    border-color: var(--compass-outer);
+  background: var(--compass-inner);
+  border-color: var(--compass-outer);
 }
 
 body.dark-mode .direction {
-    color: #e6c968;
-}
-
-body.dark-mode .major-tick {
-    background: var(--compass-major-tick);
-}
-
-body.dark-mode .degree {
-    color: #d8eac8;
+  color: var(--accent);
 }
 
 body.dark-mode .center-point {
-    background: var(--gold);
-    border-color: #f8f6f0;
+  border-color: #f8f6f0;
 }
 
-body.dark-mode .footer-board {
-    color: var(--cream);
-    background: var(--deep-green);
+/* Theme-specific dark headers */
+body.dark-mode[data-color-theme="classic"] {
+  --header-bg: #0F5132;
+  --footer-bg: #0F5132;
 }
 
-/* ================= TABLET AND DESKTOP ================= */
-
-@media (min-width: 700px) {
-    :root {
-        --header-height: 122px;
-        --footer-height: 50px;
-        --page-gap: 14px;
-        --app-padding: 16px;
-    }
-
-    .qibla-page {
-        width: min(100%, 900px);
-        margin-inline: auto;
-    }
-
-    .main-board {
-        padding: 14px;
-    }
-
-    .location-card,
-    .info-card {
-        flex-basis: 72px;
-        height: 72px;
-        min-height: 72px;
-    }
-
-    .compass {
-        width: 260px;
-        height: 260px;
-    }
+body.dark-mode[data-color-theme="royal"] {
+  --header-bg: #142D49;
+  --footer-bg: #142D49;
 }
 
-/* ================= SMALL MOBILE ================= */
+body.dark-mode[data-color-theme="rose"] {
+  --header-bg: #592F36;
+  --footer-bg: #592F36;
+}
+
+body.dark-mode[data-color-theme="pista"] {
+  --header-bg: #244C28;
+  --footer-bg: #244C28;
+}
+
+/* ---------- SMALL SCREENS ---------- */
 
 @media (max-width: 380px) {
-    :root {
-        --header-height: 100px;
-        --footer-height: 44px;
-        --page-gap: 8px;
-        --app-padding: 8px;
-    }
+  :root {
+    --app-padding: 5px;
+    --page-gap: 5px;
+    --compass-size: min(61vw, 250px);
+  }
 
-    .hero-board {
-        padding-inline: 8px;
-    }
+  .main-board {
+    padding: 6px;
+    gap: 5px;
+  }
 
-    #pageTitle {
-        font-size: 1.2rem;
-    }
+  .location-panel {
+    padding: 6px 3px;
+  }
 
-    #heroSubtitle {
-        font-size: 0.69rem;
-    }
+  .info-block {
+    padding-inline: 3px;
+  }
 
-    .main-board {
-        gap: 8px;
-        padding: 7px;
-    }
+  .info-label {
+    font-size: 10px;
+  }
 
-    .location-card,
-    .info-card {
-        flex-basis: 62px;
-        height: 62px;
-        min-height: 62px;
-        padding: 5px;
-        border-radius: 14px;
-    }
+  .info-value {
+    font-size: 12px;
+  }
 
-    #locationLabel,
-    #distanceLabel {
-        font-size: 0.73rem;
-    }
+  .compass-ring {
+    border-width: 2px;
+  }
 
-    #locationName {
-        font-size: 1rem;
-    }
+  .degree {
+    font-size: clamp(15px, 5vw, 20px);
+  }
 
-    #distance {
-        font-size: 1.1rem;
-    }
-
-    .compass {
-        width: 230px;
-        height: 230px;
-        border-width: 9px;
-    }
-
-    .footer-board {
-        padding-inline: 6px;
-    }
-
-    #footerText {
-        font-size: 0.66rem;
-    }
+  .compass-hint {
+    padding: 4px 5px;
+  }
 }
 
-/* ================= SHORT SCREENS ================= */
+/* ---------- SHORT SCREENS ---------- */
 
 @media (max-height: 650px) {
-    :root {
-        --page-gap: 6px;
-    }
+  :root {
+    --page-gap: 4px;
+    --compass-size: min(49vw, 220px);
+  }
 
-    .main-board {
-        gap: 6px;
-        padding: 7px;
-    }
+  .qibla-page {
+    padding-top: max(3px, env(safe-area-inset-top, 0px));
+    padding-bottom: max(3px, env(safe-area-inset-bottom, 0px));
+  }
 
-    .location-card,
-    .info-card {
-        flex-basis: 54px;
-        height: 54px;
-        min-height: 54px;
-        padding-block: 3px;
-    }
+  .main-board {
+    gap: 4px;
+    padding: 5px;
+  }
 
-    #locationLabel,
-    #distanceLabel {
-        font-size: 0.72rem;
-    }
+  .location-panel {
+    padding-block: 4px;
+  }
 
-    #locationName {
-        margin-top: 1px;
-        font-size: 0.95rem;
-    }
-
-    #distance {
-        margin-top: 1px;
-        font-size: 1.05rem;
-    }
-
-    .compass-wrapper {
-        padding: 2px;
-    }
-
-    .compass {
-        width: 210px;
-        height: 210px;
-        border-width: 8px;
-    }
-
-    .footer-board {
-        padding-block: 3px;
-    }
+  .compass-hint {
+    padding-block: 3px;
+    font-size: 10px;
+  }
 }
 
-@media (max-height: 650px) and (max-width: 380px) {
-    .compass {
-        width: 190px;
-        height: 190px;
-    }
+@media (max-height: 500px) {
+  :root {
+    --header-height: 42px;
+    --footer-height: 42px;
+    --compass-size: min(43vw, 185px);
+  }
+
+  .location-panel {
+    padding-block: 3px;
+  }
+
+  .info-label {
+    font-size: 10px;
+  }
+
+  .info-value {
+    font-size: 12px;
+  }
 }
 
-/* ================= REDUCED MOTION ================= */
+/* ---------- LARGE SCREENS ---------- */
+
+@media (min-width: 700px) {
+  :root {
+    --app-padding: 12px;
+    --compass-size: min(35vw, 300px);
+  }
+
+  .qibla-page {
+    width: min(100%, 900px);
+    margin-inline: auto;
+  }
+
+  .main-board {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .location-panel {
+    padding: 10px;
+  }
+}
+
+/* ---------- REDUCED MOTION ---------- */
 
 @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-    }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
