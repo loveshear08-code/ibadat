@@ -2,12 +2,12 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0F5132">
   <meta name="description" content="IBADAT — কিবলা কম্পাস">
   <title>IBADAT | কিবলা কম্পাস</title>
 
-  <link rel="stylesheet" href="../css/qibla.css?v=4">
+  <link rel="stylesheet" href="../css/qibla.css?v=5">
 </head>
 
 <body>
@@ -25,7 +25,7 @@
           <strong id="locationName" class="info-value">অবস্থান খোঁজা হচ্ছে...</strong>
         </div>
 
-        <div class="info-divider"></div>
+        <div class="info-divider" aria-hidden="true"></div>
 
         <div class="info-block">
           <span id="distanceLabel" class="info-label">মক্কার দূরত্ব</span>
@@ -35,9 +35,9 @@
 
       <div class="compass-stage">
         <section class="compass-wrapper" aria-label="Qibla compass">
-          <div class="compass">
+          <div class="compass" id="compass">
 
-            <div class="compass-dial">
+            <div class="compass-dial" id="compassDial">
               <div class="direction n">N</div>
               <div class="direction nne">NNE</div>
               <div class="direction ne">NE</div>
@@ -56,24 +56,24 @@
               <div class="direction nnw">NNW</div>
             </div>
 
-            <div class="compass-ticks"></div>
+            <div class="compass-ticks" aria-hidden="true"></div>
 
-            <div class="major-tick tick-n"></div>
-            <div class="major-tick tick-ne"></div>
-            <div class="major-tick tick-e"></div>
-            <div class="major-tick tick-se"></div>
-            <div class="major-tick tick-s"></div>
-            <div class="major-tick tick-sw"></div>
-            <div class="major-tick tick-w"></div>
-            <div class="major-tick tick-nw"></div>
+            <div class="major-tick tick-n" aria-hidden="true"></div>
+            <div class="major-tick tick-ne" aria-hidden="true"></div>
+            <div class="major-tick tick-e" aria-hidden="true"></div>
+            <div class="major-tick tick-se" aria-hidden="true"></div>
+            <div class="major-tick tick-s" aria-hidden="true"></div>
+            <div class="major-tick tick-sw" aria-hidden="true"></div>
+            <div class="major-tick tick-w" aria-hidden="true"></div>
+            <div class="major-tick tick-nw" aria-hidden="true"></div>
 
-            <div class="compass-ring"></div>
+            <div class="compass-ring" aria-hidden="true"></div>
 
-            <div class="qibla-needle" aria-hidden="true">
+            <div class="qibla-needle" id="qiblaNeedle" aria-hidden="true">
               <div class="needle-tip"></div>
             </div>
 
-            <div class="center-point"></div>
+            <div class="center-point" aria-hidden="true"></div>
 
             <div class="degree" id="degreeValue">—</div>
 
@@ -82,7 +82,8 @@
               id="kaabaMarker"
               src="../assets/kaaba-3d.png"
               alt="Kaaba"
-              draggable="false">
+              draggable="false"
+            >
           </div>
         </section>
       </div>
@@ -94,12 +95,14 @@
     </section>
 
     <footer class="footer-board board">
-      <p id="footerText">সঠিক দিক পেতে কম্পাস ব্যবহার করুন</p>
+      <div class="footer-window" aria-live="polite">
+        <p id="footerText">সঠিক দিক পেতে কম্পাস ব্যবহার করুন</p>
+      </div>
     </footer>
 
   </main>
 
   <script src="../js/theme.js"></script>
-  <script src="../js/qibla.js?v=4"></script>
+  <script src="../js/qibla.js?v=5"></script>
 </body>
 </html>
