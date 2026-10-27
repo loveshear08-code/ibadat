@@ -1,87 +1,108 @@
+/* =========================================================
+   IBADAT — DUA.CSS
+   Matched with QURAN.CSS
+   Header/Footer: 48px
+   ========================================================= */
 
 :root {
-  --deep-green: #123d2c;
-  --dark-green: #0b2c20;
-  --green: #20583e;
-
-  --light-pista: #e6edce;
-  --option-pista: #e9efda;
-
-  --cream: #fff9eb;
-  --cream-white: rgba(255, 252, 242, 0.94);
-  --cream-layer: rgba(255, 252, 242, 0.79);
-
-  --gold: #d6b56d;
-  --gold-dark: #9b7837;
-
-  --text: #24382c;
-  --muted: #657367;
-  --border: rgba(214, 181, 109, 0.85);
-
-  --shadow: 0 5px 18px rgba(0, 0, 0, 0.12);
-
-  --header-height: 112px;
+  --header-height: 48px;
   --footer-height: 48px;
-  --page-gap: 12px;
-  --app-padding: 12px;
+  --page-padding: 7px;
+  --page-gap: 6px;
+  --board-radius: 20px;
 
-  --arabic-font-size: 1.8rem;
-  --translation-font-size: 1rem;
+  --primary: #1B7F4B;
+  --soft: #E8F5E9;
+  --accent: #F2C94C;
+  --deep: #0F5132;
+  --text: #17452F;
+  --muted: #68796B;
+  --card: rgba(255,255,255,.94);
+  --border: #D5E3D1;
+
+  --header-bg: var(--deep);
+  --header-text: #F5E5A7;
+  --footer-bg: var(--deep);
+  --footer-text: #F5E5A7;
+
+  --page-overlay: linear-gradient(
+    135deg,
+    rgba(235,245,226,.56),
+    rgba(255,253,245,.62),
+    rgba(232,244,222,.58)
+  );
+
+  --home-overlay: rgba(255,253,245,.70);
+  --content-overlay: rgba(255,253,245,.48);
+
+  --shadow: 0 3px 10px rgba(30,49,28,.12);
+
+  --arabic-font-size: 30px;
+  --translation-font-size: 16px;
 }
+
+/* ---------- GLOBAL ---------- */
 
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
 }
 
 html {
-  width: 100%;
-  height: 100%;
-  min-height: 100%;
-
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
 }
 
 body {
-  width: 100%;
-  height: 100%;
   min-width: 280px;
-  min-height: 100vh;
-  min-height: 100dvh;
-
-  margin: 0;
-  overflow: hidden;
+  min-height: 100%;
+  padding:
+    max(5px, env(safe-area-inset-top, 0px))
+    var(--page-padding)
+    max(5px, env(safe-area-inset-bottom, 0px));
 
   color: var(--text);
-
   font-family:
     "Noto Sans Bengali",
-    "Nirmala UI",
+    "Hind Siliguri",
+    "Noto Sans Devanagari",
     Arial,
     sans-serif;
 
-  background: var(--deep-green);
+  background:
+    var(--page-overlay),
+    url("../assets/main-bg.jpg") center / cover no-repeat;
 }
 
 button,
 input {
-  font: inherit;
   max-width: 100%;
+  font: inherit;
 }
 
 button {
-  -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
 }
 
 button:focus-visible,
 input:focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
 button:disabled {
-  opacity: 0.45;
+  opacity: .45;
   cursor: not-allowed;
 }
 
@@ -90,11 +111,7 @@ button:disabled {
   display: none !important;
 }
 
-/* =========================================
-   MAIN APP
-   Header and footer remain fixed.
-   Only inner page content scrolls.
-========================================= */
+/* ---------- APP LAYOUT ---------- */
 
 .dua-app {
   position: relative;
@@ -105,150 +122,119 @@ button:disabled {
   gap: var(--page-gap);
 
   width: 100%;
-  height: 100vh;
-  height: 100dvh;
+  height: 100%;
   min-height: 0;
 
-  padding: var(--app-padding);
   overflow: hidden;
-
-  background:
-    linear-gradient(
-      var(--cream-layer),
-      var(--cream-layer)
-    ),
-    url("../assets/main-bg.jpg") center / cover no-repeat;
 }
-
-/* Shared board appearance */
 
 .board {
-  border: 1px solid var(--border);
-  border-radius: 16px;
+  min-width: 0;
+  border: 2px solid var(--accent);
+  border-radius: var(--board-radius);
   box-shadow: var(--shadow);
+  overflow: hidden;
 }
 
-/* =========================================
-   HEADER
-   Same dimensions as the Quran page.
-========================================= */
+/* ---------- HEADER: 48px ---------- */
 
 .dua-hero {
   position: relative;
-  isolation: isolate;
 
   display: flex;
   flex: 0 0 var(--header-height);
-
   align-items: center;
   justify-content: center;
 
   width: 100%;
   height: var(--header-height);
   min-height: var(--header-height);
+  max-height: var(--header-height);
 
-  padding: 12px 16px;
-  overflow: hidden;
+  padding: 3px 10px;
 
+  color: var(--header-text);
+  background: var(--header-bg);
   text-align: center;
-  color: var(--deep-green);
-
-  background:
-    linear-gradient(
-      rgba(255, 252, 242, 0.79),
-      rgba(255, 252, 242, 0.79)
-    ),
-    url("../assets/hero-bg.jpg") center / cover no-repeat;
 }
 
 .dua-hero-content {
-  position: relative;
-  z-index: 1;
-
   width: 100%;
-  max-width: 100%;
   min-width: 0;
 }
 
 .hero-title {
+  width: 100%;
   margin: 0;
 
-  color: var(--deep-green);
-
-  font-family:
-    "Noto Naskh Arabic",
-    "Amiri",
-    "Noto Sans Bengali",
-    serif;
-
-  font-size: clamp(1.25rem, 4.7vw, 1.8rem);
+  color: var(--header-text);
+  font-size: clamp(16px, 4vw, 20px);
   font-weight: 800;
-  line-height: 1.55;
+  line-height: 1.3;
+  text-align: center;
 
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .hero-subtitle {
-  margin: 4px 0 0;
-
-  color: var(--text);
-  font-size: clamp(0.76rem, 2.8vw, 0.95rem);
-  line-height: 1.6;
-
-  overflow-wrap: anywhere;
+  display: none;
 }
 
-/* =========================================
-   MAIN CONTENT BOARD
-   The board itself does not scroll.
-   Active page content scrolls inside it.
-========================================= */
+/* ---------- MAIN CONTENT BOARD ---------- */
 
 .dua-main-board {
   position: relative;
 
   display: flex;
-  flex: 1 1 auto;
+  flex: 1 1 0;
   flex-direction: column;
 
   width: 100%;
   min-width: 0;
   min-height: 0;
 
-  padding: 10px;
+  padding: 8px;
   overflow: hidden;
 
-  background: var(--cream-white);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      var(--content-overlay),
+      var(--content-overlay)
+    ),
+    url("../assets/main-bg.jpg") center / cover no-repeat;
+
+  box-shadow: var(--shadow);
 }
 
-/* =========================================
-   PAGE VISIBILITY
-========================================= */
+/* ---------- PAGE VISIBILITY ---------- */
 
 .dua-page {
   display: none;
-
-  flex: 1 1 auto;
+  flex: 1 1 0;
   flex-direction: column;
 
   width: 100%;
+  height: 100%;
   min-width: 0;
   min-height: 0;
+  overflow: hidden;
 }
 
 .dua-page:not(.hidden) {
   display: flex;
 }
 
-/* =========================================
-   CHAPTER LIST — HOME PAGE
-========================================= */
+/* ---------- CHAPTER LIST ---------- */
 
 .chapter-list {
   display: flex;
-  flex: 1 1 auto;
+  flex: 1 1 0;
   flex-direction: column;
-
   gap: 9px;
 
   width: 100%;
@@ -262,9 +248,8 @@ button:disabled {
 
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-
   scrollbar-width: thin;
-  scrollbar-color: rgba(155, 120, 55, 0.45) transparent;
+  scrollbar-color: rgba(155,120,55,.45) transparent;
 }
 
 .chapter-list::-webkit-scrollbar,
@@ -277,11 +262,8 @@ button:disabled {
 .entry-list::-webkit-scrollbar-thumb,
 #duaContent::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background: rgba(155, 120, 55, 0.45);
+  background: rgba(155,120,55,.45);
 }
-
-/* Chapter cards.
-   Supports existing JS-generated buttons and cards. */
 
 .chapter-item,
 .chapter-card,
@@ -290,65 +272,62 @@ button:disabled {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 10px;
 
   width: 100%;
   min-width: 0;
   min-height: 58px;
 
+  margin: 0;
   padding: 12px 14px;
 
-  border: 1px solid rgba(214, 181, 109, 0.65);
-  border-radius: 11px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
 
   color: var(--text);
-  background: var(--option-pista);
+  background: var(--card);
 
-  font-size: 0.95rem;
+  font-size: 15px;
   font-weight: 700;
   line-height: 1.6;
   text-align: start;
 
-  cursor: pointer;
-
   transition:
-    transform 140ms ease,
     background-color 140ms ease,
     border-color 140ms ease,
-    box-shadow 140ms ease;
+    transform 140ms ease;
 }
 
 .chapter-item:hover,
 .chapter-card:hover,
 .chapter-button:hover,
 .chapter-list > button:hover {
-  border-color: var(--gold-dark);
-  background: #dfe9c9;
-  box-shadow: 0 3px 10px rgba(18, 61, 44, 0.09);
+  border-color: var(--primary);
+  background: var(--soft);
 }
 
 .chapter-item:active,
 .chapter-card:active,
 .chapter-button:active,
 .chapter-list > button:active {
-  transform: scale(0.99);
-  background: #d5e2bb;
+  transform: scale(.99);
 }
 
 .chapter-name,
 .chapter-title,
-.chapter-label {
+.chapter-label,
+.entry-name,
+.entry-title,
+.entry-label {
   flex: 1 1 auto;
   min-width: 0;
-
   overflow-wrap: anywhere;
 }
 
-.chapter-number {
+.chapter-number,
+.entry-number {
   display: inline-flex;
   flex: 0 0 30px;
-
   align-items: center;
   justify-content: center;
 
@@ -356,29 +335,28 @@ button:disabled {
   height: 30px;
 
   border-radius: 50%;
+  color: #fff;
+  background: var(--deep);
 
-  color: var(--cream);
-  background: var(--deep-green);
-
-  font-size: 0.8rem;
+  font-size: 13px;
+  font-weight: 800;
   line-height: 1;
 }
 
-.chapter-arrow {
+.chapter-arrow,
+.entry-arrow {
   flex: 0 0 auto;
-  color: var(--gold-dark);
-  font-size: 1.15rem;
+  color: var(--primary);
+  font-size: 23px;
+  font-weight: 900;
 }
 
-/* =========================================
-   ENTRY LIST — SECOND PAGE
-========================================= */
+/* ---------- ENTRY LIST ---------- */
 
 .entry-list {
   display: flex;
-  flex: 1 1 auto;
+  flex: 1 1 0;
   flex-direction: column;
-
   gap: 9px;
 
   width: 100%;
@@ -392,9 +370,8 @@ button:disabled {
 
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-
   scrollbar-width: thin;
-  scrollbar-color: rgba(155, 120, 55, 0.45) transparent;
+  scrollbar-color: rgba(155,120,55,.45) transparent;
 }
 
 .entry-item,
@@ -404,96 +381,57 @@ button:disabled {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 10px;
 
   width: 100%;
   min-width: 0;
-  min-height: 56px;
+  min-height: 58px;
 
+  margin: 0;
   padding: 11px 13px;
 
-  border: 1px solid rgba(214, 181, 109, 0.65);
-  border-radius: 11px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
 
   color: var(--text);
-  background: rgba(255, 255, 255, 0.82);
+  background: var(--card);
 
-  font-size: 0.92rem;
+  font-size: 15px;
   font-weight: 600;
   line-height: 1.7;
   text-align: start;
 
-  cursor: pointer;
-
   transition:
-    transform 140ms ease,
     background-color 140ms ease,
     border-color 140ms ease,
-    box-shadow 140ms ease;
+    transform 140ms ease;
 }
 
 .entry-item:hover,
 .entry-card:hover,
 .entry-button:hover,
 .entry-list > button:hover {
-  border-color: var(--gold-dark);
-  background: var(--light-pista);
-  box-shadow: 0 3px 10px rgba(18, 61, 44, 0.08);
+  border-color: var(--primary);
+  background: var(--soft);
 }
 
 .entry-item:active,
 .entry-card:active,
 .entry-button:active,
 .entry-list > button:active {
-  transform: scale(0.99);
-}
-
-.entry-name,
-.entry-title,
-.entry-label {
-  flex: 1 1 auto;
-  min-width: 0;
-
-  overflow-wrap: anywhere;
+  transform: scale(.99);
 }
 
 .entry-number {
-  display: inline-flex;
-  flex: 0 0 29px;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 29px;
-  height: 29px;
-
-  border-radius: 50%;
-
-  color: var(--cream);
-  background: var(--deep-green);
-
-  font-size: 0.78rem;
-  line-height: 1;
+  flex-basis: 30px;
 }
 
-.entry-arrow {
-  flex: 0 0 auto;
-  color: var(--gold-dark);
-  font-size: 1.1rem;
-}
-
-/* =========================================
-   SELECTED DUA PAGE
-   The page container remains fixed.
-   Dua content scrolls internally.
-========================================= */
+/* ---------- SELECTED DUA ---------- */
 
 #duaContent {
   display: flex;
-  flex: 1 1 auto;
+  flex: 1 1 0;
   flex-direction: column;
-
   gap: 12px;
 
   width: 100%;
@@ -507,12 +445,9 @@ button:disabled {
 
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-
   scrollbar-width: thin;
-  scrollbar-color: rgba(155, 120, 55, 0.45) transparent;
+  scrollbar-color: rgba(155,120,55,.45) transparent;
 }
-
-/* Dua card: supports existing JS output */
 
 .dua-card,
 .dua-item,
@@ -522,11 +457,11 @@ button:disabled {
 
   padding: 15px 13px;
 
-  border: 1px solid rgba(214, 181, 109, 0.68);
-  border-radius: 12px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
 
   color: var(--text);
-  background: rgba(255, 255, 255, 0.75);
+  background: var(--card);
 
   overflow-wrap: anywhere;
 }
@@ -537,77 +472,51 @@ button:disabled {
   margin-top: 2px;
 }
 
-/* Optional section headings */
-
 .dua-heading,
 .dua-section-title {
   margin: 0 0 8px;
-
-  color: var(--deep-green);
-
-  font-size: 1rem;
+  color: var(--deep);
+  font-size: 16px;
   font-weight: 800;
   line-height: 1.7;
-
   overflow-wrap: anywhere;
 }
-
-/* Arabic text */
 
 .dua-arabic,
 .arabic-text,
 .dua-text-arabic {
   margin: 0;
+  color: var(--deep);
 
-  color: var(--deep-green);
-
-  font-family:
-    "Noto Naskh Arabic",
-    "Amiri",
-    serif;
-
+  font-family: "Amiri", "Noto Naskh Arabic", serif;
   font-size: var(--arabic-font-size);
   font-weight: 500;
   line-height: 2.15;
   text-align: right;
+  direction: rtl;
 
   overflow-wrap: anywhere;
-  word-break: normal;
 }
-
-/* Transliteration */
 
 .dua-transliteration,
 .transliteration,
 .dua-pronunciation {
   margin: 12px 0 0;
-
-  color: var(--green);
-
-  font-size: 0.94rem;
+  color: var(--primary);
+  font-size: 15px;
   line-height: 1.9;
-  text-align: start;
-
   overflow-wrap: anywhere;
 }
-
-/* Translation / meaning */
 
 .dua-translation,
 .translation,
 .dua-meaning {
   margin: 10px 0 0;
-
   color: var(--text);
-
   font-size: var(--translation-font-size);
   line-height: 1.9;
-  text-align: start;
-
   overflow-wrap: anywhere;
 }
-
-/* Reference */
 
 .dua-reference,
 .reference,
@@ -615,17 +524,13 @@ button:disabled {
   margin: 10px 0 0;
   padding-top: 9px;
 
-  border-top: 1px solid rgba(155, 120, 55, 0.25);
-
+  border-top: 1px solid var(--border);
   color: var(--muted);
 
-  font-size: 0.82rem;
+  font-size: 13px;
   line-height: 1.7;
-
   overflow-wrap: anywhere;
 }
-
-/* Small labels */
 
 .dua-label,
 .arabic-label,
@@ -633,21 +538,15 @@ button:disabled {
 .pronunciation-label,
 .reference-label {
   display: block;
-
   margin: 0 0 5px;
 
-  color: var(--gold-dark);
-
-  font-size: 0.78rem;
+  color: var(--primary);
+  font-size: 13px;
   font-weight: 800;
   line-height: 1.6;
 }
 
-/* =========================================
-   AUDIO PLAYER
-   Kept inside the content flow so it does
-   not cover the fixed footer.
-========================================= */
+/* ---------- AUDIO PLAYER ---------- */
 
 .dua-audio-player,
 .audio-player,
@@ -657,7 +556,6 @@ button:disabled {
   display: flex;
   flex: 0 0 auto;
   align-items: center;
-
   gap: 9px;
 
   width: 100%;
@@ -666,13 +564,12 @@ button:disabled {
   margin-top: 8px;
   padding: 10px;
 
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  border: 1px solid var(--accent);
+  border-radius: 13px;
 
-  color: var(--cream);
-  background: var(--deep-green);
-
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  color: var(--footer-text);
+  background: var(--footer-bg);
+  box-shadow: var(--shadow);
 }
 
 .audio-control,
@@ -681,7 +578,6 @@ button:disabled {
 #duaAudioPlayer button {
   display: inline-flex;
   flex: 0 0 36px;
-
   align-items: center;
   justify-content: center;
 
@@ -691,46 +587,20 @@ button:disabled {
 
   padding: 0;
 
-  border: 1px solid var(--border);
+  border: 1px solid var(--accent);
   border-radius: 50%;
 
-  color: var(--cream);
-  background: var(--green);
+  color: var(--footer-text);
+  background: var(--primary);
 
-  font-size: 0.95rem;
-
-  cursor: pointer;
-
-  transition:
-    transform 140ms ease,
-    background-color 140ms ease;
-}
-
-.audio-control:hover,
-.audio-player button:hover,
-.dua-audio-player button:hover,
-#duaAudioPlayer button:hover {
-  background: #2b6848;
-}
-
-.audio-control:active,
-.audio-player button:active,
-.dua-audio-player button:active,
-#duaAudioPlayer button:active {
-  transform: scale(0.94);
+  font-size: 15px;
 }
 
 .audio-play-button,
 .audio-player .play-button,
 .dua-audio-player .play-button {
-  color: var(--deep-green);
-  background: var(--gold);
-}
-
-.audio-play-button:hover,
-.audio-player .play-button:hover,
-.dua-audio-player .play-button:hover {
-  background: #e6c982;
+  color: var(--deep);
+  background: var(--accent);
 }
 
 .audio-progress-wrap,
@@ -738,7 +608,6 @@ button:disabled {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-
   gap: 5px;
   min-width: 0;
 }
@@ -751,9 +620,8 @@ button:disabled {
   border: 0;
   border-radius: 99px;
 
-  background: rgba(255, 255, 255, 0.28);
-
-  accent-color: var(--gold);
+  background: rgba(255,255,255,.28);
+  accent-color: var(--accent);
   cursor: pointer;
 }
 
@@ -762,34 +630,29 @@ button:disabled {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 6px;
 
-  color: var(--cream);
-
-  font-size: 0.7rem;
+  color: var(--footer-text);
+  font-size: 11px;
   line-height: 1.4;
 }
 
-/* =========================================
-   STATUS BOXES
-========================================= */
+/* ---------- STATUS / LOADING ---------- */
 
 .status-box {
   flex: 0 0 auto;
-
   width: 100%;
   margin: auto 0;
   padding: 16px 10px;
 
   color: var(--muted);
-
-  font-size: 0.92rem;
+  font-size: 14px;
   line-height: 1.8;
   text-align: center;
 }
 
-.error-box {
+.error-box,
+.error-message {
   color: #a13d2e;
 }
 
@@ -803,62 +666,48 @@ button:disabled {
   margin-top: 12px;
   padding: 9px 16px;
 
-  border: 1px solid var(--gold-dark);
-  border-radius: 9px;
+  border: 1px solid var(--accent);
+  border-radius: 10px;
 
-  color: var(--cream);
-  background: var(--deep-green);
+  color: var(--header-text);
+  background: var(--header-bg);
 
-  font-size: 0.9rem;
+  font-size: 14px;
   font-weight: 700;
-
-  cursor: pointer;
 }
-
-.error-box button:hover,
-#retryButton:hover {
-  background: var(--green);
-}
-
-/* Empty / loading messages generated by JS */
 
 .loading-message,
 .empty-message,
 .error-message {
   padding: 16px 8px;
-
   color: var(--muted);
-
-  font-size: 0.9rem;
+  font-size: 13px;
   line-height: 1.8;
   text-align: center;
 }
 
-.error-message {
-  color: #a13d2e;
-}
-
-/* =========================================
-   FOOTER
-   Same height and color as the Quran page.
-========================================= */
+/* ---------- FOOTER: 48px ---------- */
 
 .dua-footer {
-  display: flex;
   flex: 0 0 var(--footer-height);
 
+  display: flex;
   align-items: center;
   justify-content: center;
 
   width: 100%;
   height: var(--footer-height);
   min-height: var(--footer-height);
+  max-height: var(--footer-height);
 
-  padding: 4px 8px;
+  padding: 3px 7px;
   overflow: hidden;
 
-  color: var(--cream);
-  background: var(--deep-green);
+  border: 2px solid var(--accent);
+  border-radius: 20px;
+
+  color: var(--footer-text);
+  background: var(--footer-bg);
 }
 
 .dua-footer-content {
@@ -867,19 +716,18 @@ button:disabled {
   justify-content: center;
 
   width: 100%;
+  height: 100%;
   min-width: 0;
-  min-height: 100%;
-
-  text-align: center;
+  overflow: hidden;
 }
 
 .dua-footer-message {
   width: 100%;
   margin: 0;
 
-  color: var(--cream);
-
-  font-size: 0.8rem;
+  color: var(--footer-text);
+  font-size: 12px;
+  font-weight: 700;
   line-height: 1.5;
   text-align: center;
 
@@ -888,79 +736,113 @@ button:disabled {
   white-space: nowrap;
 }
 
-/* =========================================
-   DARK MODE
-   Reads body.dark-mode from main settings.
-========================================= */
+/* ---------- COLOR THEMES ---------- */
+
+body[data-color-theme="classic"] {
+  /* Default green theme */
+}
+
+body[data-color-theme="royal"] {
+  --primary: #285A8E;
+  --soft: #E5EFF9;
+  --accent: #E8BD55;
+  --deep: #173A60;
+  --text: #1B3652;
+  --muted: #65798E;
+  --border: #C8D9EB;
+
+  --header-bg: #173A60;
+  --footer-bg: #173A60;
+}
+
+body[data-color-theme="rose"] {
+  --primary: #B96F79;
+  --soft: #F8E9E7;
+  --accent: #D9B875;
+  --deep: #7D414B;
+  --text: #633B42;
+  --muted: #846D70;
+  --border: #E8CBC8;
+
+  --header-bg: #7D414B;
+  --footer-bg: #7D414B;
+}
+
+body[data-color-theme="pista"] {
+  --primary: #4CAF50;
+  --soft: #DFF5E1;
+  --accent: #A7D129;
+  --deep: #2F7135;
+  --text: #254D2A;
+  --muted: #6D806D;
+  --border: #CDE3C8;
+
+  --header-bg: #2F7135;
+  --footer-bg: #2F7135;
+}
+
+/* ---------- DARK MODE ---------- */
 
 body.dark-mode {
-  --text: #f0eee5;
-  --muted: #c3c8bd;
+  --text: #E5EDE7;
+  --muted: #BECBBF;
+  --card: rgba(25,38,29,.96);
+  --border: #405746;
+  --soft: #263B2C;
 
-  --cream-white: rgba(22, 38, 30, 0.97);
-  --cream-layer: rgba(5, 19, 13, 0.78);
+  --page-overlay: linear-gradient(
+    rgba(8,15,10,.80),
+    rgba(8,15,10,.80)
+  );
 
-  --light-pista: #334638;
-  --option-pista: #344a39;
-
-  --border: rgba(214, 181, 109, 0.75);
-
-  background: #081b13;
+  --home-overlay: rgba(12,20,14,.73);
+  --content-overlay: rgba(12,20,14,.60);
 }
 
 body.dark-mode .dua-app {
   background:
-    linear-gradient(
-      rgba(5, 19, 13, 0.77),
-      rgba(5, 19, 13, 0.77)
-    ),
+    var(--page-overlay),
     url("../assets/main-bg.jpg") center / cover no-repeat;
 }
 
-body.dark-mode .dua-hero {
-  background:
-    linear-gradient(
-      rgba(22, 38, 30, 0.82),
-      rgba(22, 38, 30, 0.82)
-    ),
-    url("../assets/hero-bg.jpg") center / cover no-repeat;
+body.dark-mode .dua-hero,
+body.dark-mode .dua-footer {
+  background: var(--header-bg);
 }
 
-body.dark-mode .hero-title,
-body.dark-mode .hero-subtitle {
-  color: var(--gold);
+body.dark-mode[data-color-theme="classic"] {
+  --header-bg: #0F5132;
+  --footer-bg: #0F5132;
+}
+
+body.dark-mode[data-color-theme="royal"] {
+  --header-bg: #142D49;
+  --footer-bg: #142D49;
+}
+
+body.dark-mode[data-color-theme="rose"] {
+  --header-bg: #592F36;
+  --footer-bg: #592F36;
+}
+
+body.dark-mode[data-color-theme="pista"] {
+  --header-bg: #244C28;
+  --footer-bg: #244C28;
 }
 
 body.dark-mode .dua-main-board {
-  background: var(--cream-white);
+  background:
+    linear-gradient(
+      var(--content-overlay),
+      var(--content-overlay)
+    ),
+    url("../assets/main-bg.jpg") center / cover no-repeat;
 }
 
 body.dark-mode .chapter-item,
 body.dark-mode .chapter-card,
 body.dark-mode .chapter-button,
-body.dark-mode .chapter-list > button {
-  color: var(--text);
-  background: var(--option-pista);
-}
-
-body.dark-mode .chapter-item:hover,
-body.dark-mode .chapter-card:hover,
-body.dark-mode .chapter-button:hover,
-body.dark-mode .chapter-list > button:hover {
-  background: #405842;
-}
-
-body.dark-mode .chapter-number,
-body.dark-mode .entry-number {
-  color: var(--deep-green);
-  background: var(--gold);
-}
-
-body.dark-mode .chapter-arrow,
-body.dark-mode .entry-arrow {
-  color: var(--gold);
-}
-
+body.dark-mode .chapter-list > button,
 body.dark-mode .entry-item,
 body.dark-mode .entry-card,
 body.dark-mode .entry-button,
@@ -969,14 +851,13 @@ body.dark-mode .dua-card,
 body.dark-mode .dua-item,
 body.dark-mode .dhikr-card {
   color: var(--text);
-  background: #1b3025;
+  background: var(--card);
 }
 
-body.dark-mode .entry-item:hover,
-body.dark-mode .entry-card:hover,
-body.dark-mode .entry-button:hover,
-body.dark-mode .entry-list > button:hover {
-  background: #334638;
+body.dark-mode .chapter-number,
+body.dark-mode .entry-number {
+  color: var(--header-text);
+  background: var(--header-bg);
 }
 
 body.dark-mode .dua-heading,
@@ -984,138 +865,32 @@ body.dark-mode .dua-section-title,
 body.dark-mode .dua-arabic,
 body.dark-mode .arabic-text,
 body.dark-mode .dua-text-arabic {
-  color: var(--gold);
+  color: var(--header-text);
 }
 
 body.dark-mode .dua-transliteration,
 body.dark-mode .transliteration,
-body.dark-mode .dua-pronunciation {
-  color: #cbd9b7;
-}
-
-body.dark-mode .dua-reference,
-body.dark-mode .reference,
-body.dark-mode .dua-source {
-  color: var(--muted);
-  border-top-color: var(--border);
-}
-
+body.dark-mode .dua-pronunciation,
 body.dark-mode .dua-label,
 body.dark-mode .arabic-label,
 body.dark-mode .translation-label,
 body.dark-mode .pronunciation-label,
 body.dark-mode .reference-label {
-  color: var(--gold);
+  color: var(--accent);
 }
 
-body.dark-mode .status-box,
-body.dark-mode .loading-message,
-body.dark-mode .empty-message {
-  color: var(--muted);
-}
-
-body.dark-mode .error-box,
-body.dark-mode .error-message {
-  color: #ffb7a8;
-}
-
-body.dark-mode .dua-footer {
-  color: var(--cream);
-  background: var(--deep-green);
-}
-
-/* =========================================
-   TABLET AND DESKTOP
-========================================= */
-
-@media (min-width: 700px) {
-  :root {
-    --header-height: 122px;
-    --footer-height: 50px;
-    --page-gap: 14px;
-    --app-padding: 16px;
-  }
-
-  .dua-app {
-    width: min(100%, 900px);
-    margin-inline: auto;
-  }
-
-  .dua-hero {
-    padding: 14px 20px;
-  }
-
-  .dua-main-board {
-    padding: 14px;
-  }
-
-  .chapter-list,
-  .entry-list {
-    gap: 10px;
-    padding-inline: 4px;
-  }
-
-  .chapter-item,
-  .chapter-card,
-  .chapter-button,
-  .chapter-list > button {
-    min-height: 62px;
-    padding: 13px 16px;
-  }
-
-  .entry-item,
-  .entry-card,
-  .entry-button,
-  .entry-list > button {
-    min-height: 60px;
-    padding: 12px 15px;
-  }
-
-  #duaContent {
-    gap: 14px;
-    padding-inline: 5px;
-  }
-
-  .dua-card,
-  .dua-item,
-  .dhikr-card {
-    padding: 18px 17px;
-  }
-
-  .dua-footer-message {
-    font-size: 0.88rem;
-  }
-}
-
-/* =========================================
-   SMALL MOBILE SCREENS
-========================================= */
+/* ---------- SMALL MOBILE ---------- */
 
 @media (max-width: 380px) {
   :root {
-    --header-height: 100px;
-    --footer-height: 44px;
-    --page-gap: 9px;
-    --app-padding: 8px;
-
-    --arabic-font-size: 1.62rem;
-    --translation-font-size: 0.94rem;
-  }
-
-  .dua-hero {
-    padding-inline: 10px;
-  }
-
-  .hero-title {
-    font-size: 1.12rem;
-  }
-
-  .hero-subtitle {
-    font-size: 0.73rem;
+    --page-padding: 5px;
+    --page-gap: 5px;
+    --arabic-font-size: 26px;
+    --translation-font-size: 15px;
   }
 
   .dua-main-board {
-    padding: 8px;
+    padding: 6px;
   }
 
   .chapter-list,
@@ -1131,15 +906,15 @@ body.dark-mode .dua-footer {
     gap: 8px;
     min-height: 51px;
     padding: 9px 10px;
-
-    font-size: 0.84rem;
+    font-size: 13px;
   }
 
-  .chapter-number {
+  .chapter-number,
+  .entry-number {
     flex-basis: 27px;
     width: 27px;
     height: 27px;
-    font-size: 0.72rem;
+    font-size: 12px;
   }
 
   .entry-item,
@@ -1149,15 +924,7 @@ body.dark-mode .dua-footer {
     gap: 8px;
     min-height: 50px;
     padding: 9px 10px;
-
-    font-size: 0.82rem;
-  }
-
-  .entry-number {
-    flex-basis: 26px;
-    width: 26px;
-    height: 26px;
-    font-size: 0.7rem;
+    font-size: 13px;
   }
 
   #duaContent {
@@ -1180,21 +947,21 @@ body.dark-mode .dua-footer {
   .dua-transliteration,
   .transliteration,
   .dua-pronunciation {
-    font-size: 0.86rem;
+    font-size: 13px;
     line-height: 1.8;
   }
 
   .dua-translation,
   .translation,
   .dua-meaning {
-    font-size: 0.9rem;
+    font-size: 14px;
     line-height: 1.8;
   }
 
   .dua-reference,
   .reference,
   .dua-source {
-    font-size: 0.76rem;
+    font-size: 12px;
   }
 
   .dua-audio-player,
@@ -1219,21 +986,37 @@ body.dark-mode .dua-footer {
   }
 
   .dua-footer-message {
-    font-size: 0.7rem;
+    font-size: 11px;
   }
 }
 
-/* =========================================
-   REDUCED MOTION
-========================================= */
+/* ---------- SHORT SCREENS ---------- */
+
+@media (max-height: 600px) {
+  .dua-main-board {
+    padding: 6px;
+  }
+
+  #duaContent {
+    gap: 8px;
+  }
+
+  .dua-card,
+  .dua-item,
+  .dhikr-card {
+    padding: 10px;
+  }
+}
+
+/* ---------- REDUCED MOTION ---------- */
 
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;
   }
 }
