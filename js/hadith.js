@@ -62,7 +62,6 @@
   const TEXT = {
     bn: {
       pageTitle: "হাদিস সংকলন",
-      pageSubtitle: "হাদিস পড়ুন, শিক্ষা গ্রহণ করুন",
       booksHeading: "হাদিসের বই",
       loadingBooks: "হাদিসের বই লোড হচ্ছে...",
       booksError: "হাদিসের বই লোড করা যায়নি।",
@@ -72,7 +71,6 @@
       loadingHadith: "হাদিস লোড হচ্ছে...",
       hadithError: "হাদিস লোড করা যায়নি।",
       empty: "কোনো হাদিস পাওয়া যায়নি।",
-      backBooks: "বইসমূহ",
       backList: "হাদিসের তালিকা",
       detail: "হাদিসের বিবরণ",
       arabic: "আরবি",
@@ -89,7 +87,6 @@
     },
     en: {
       pageTitle: "Hadith Collection",
-      pageSubtitle: "Read Hadith, gain knowledge",
       booksHeading: "Hadith Books",
       loadingBooks: "Loading hadith books...",
       booksError: "Could not load the book list.",
@@ -99,7 +96,6 @@
       loadingHadith: "Loading hadith...",
       hadithError: "Could not load hadith.",
       empty: "No hadith found.",
-      backBooks: "Books",
       backList: "Hadith list",
       detail: "Hadith Details",
       arabic: "Arabic",
@@ -116,7 +112,6 @@
     },
     hi: {
       pageTitle: "हदीस संग्रह",
-      pageSubtitle: "हदीस पढ़ें, ज्ञान प्राप्त करें",
       booksHeading: "हदीस की किताबें",
       loadingBooks: "हदीस की किताबें लोड हो रही हैं...",
       booksError: "किताबों की सूची लोड नहीं हो सकी।",
@@ -126,7 +121,6 @@
       loadingHadith: "हदीस लोड हो रही हैं...",
       hadithError: "हदीस लोड नहीं हो सकीं।",
       empty: "कोई हदीस नहीं मिली।",
-      backBooks: "किताबें",
       backList: "हदीस सूची",
       detail: "हदीस विवरण",
       arabic: "अरबी",
