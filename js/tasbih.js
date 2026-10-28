@@ -48,70 +48,70 @@
     return;
   }
 
-  /* 1. Zikr steps */
+/* 1. Zikr steps */
 
-  const STEPS = [
-    {
-      id: "subhanallah",
-      target: 33,
-      arabic: "سُبْحَانَ اللّٰهِ",
-      names: {
-        bn: "সুবহানাল্লাহ",
-        en: "SubhanAllah",
-        hi: "सुब्हानअल्लाह"
-      },
-      completedMessages: {
-        bn: "সুবহানাল্লাহ সম্পন্ন হয়েছে",
-        en: "SubhanAllah completed",
-        hi: "सुब्हानअल्लाह पूरा हुआ"
-      }
+const STEPS = [
+  {
+    id: "subhanallah",
+    target: 33,
+    arabic: "سُبْحَانَ اللّٰهِ",
+    names: {
+      bn: "সুবহানাল্লাহ",
+      en: "SubhanAllah",
+      hi: "सुब्हानअल्लाह"
     },
-    {
-      id: "alhamdulillah",
-      target: 33,
-      arabic: "الْحَمْدُ لِلّٰهِ",
-      names: {
-        bn: "আলহামদুলিল্লাহ",
-        en: "Alhamdulillah",
-        hi: "अल्हम्दुलिल्लाह"
-      },
-      completedMessages: {
-        bn: "আলহামদুলিল্লাহ সম্পন্ন হয়েছে",
-        en: "Alhamdulillah completed",
-        hi: "अल्हम्दुलिल्लाह पूरा हुआ"
-      }
-    },
-    {
-      id: "allahuakbar",
-      target: 33,
-      arabic: "اللّٰهُ أَكْبَرُ",
-      names: {
-        bn: "আল্লাহু আকবার",
-        en: "Allahu Akbar",
-        hi: "अल्लाहु अकबर"
-      },
-      completedMessages: {
-        bn: "আল্লাহু আকবার সম্পন্ন হয়েছে",
-        en: "Allahu Akbar completed",
-        hi: "अल्लाहु अकबर पूरा हुआ"
-      }
-    },
-    {
-      id: "dua",
-      target: 1,
-      arabic: "لَا إِلٰهَ إِلَّا اللّٰهُ",
-      names: {
-        bn: "লা ইলাহা ইল্লাল্লাহ",
-        en: "La ilaha illallah",
-        hi: "ला इलाहा इल्लल्लाह"
-      },
-      completedMessages: {
-        bn: "মাশাআল্লাহ! সম্পূর্ণ তসবিহ শেষ হয়েছে",
-        en: "MashaAllah! Complete Tasbih finished",
-        hi: "माशाअल्लाह! पूरा तस्बीह चक्र समाप्त हुआ"
-      }
+    completedMessages: {
+      bn: "সুবহানাল্লাহ সম্পন্ন হয়েছে",
+      en: "SubhanAllah completed",
+      hi: "सुब्हানअल्लाह पूरा हुआ"
     }
-  ];
+  },
+  {
+    id: "alhamdulillah",
+    target: 33,
+    arabic: "الْحَمْدُ لِلّٰهِ",
+    names: {
+      bn: "আলহামদুলিল্লাহ",
+      en: "Alhamdulillah",
+      hi: "अल्हम्दुलिल्लाह"
+    },
+    completedMessages: {
+      bn: "আলহামদুলিল্লাহ সম্পন্ন হয়েছে",
+      en: "Alhamdulillah completed",
+      hi: "अल्हम्दुलिल्लाह पूरा हुआ"
+    }
+  },
+  {
+    id: "allahuakbar",
+    target: 33,
+    arabic: "اللّٰهُ أَكْبَرُ",
+    names: {
+      bn: "আল্লাহু আকবার",
+      en: "Allahu Akbar",
+      hi: "अल्लाहु अकबर"
+    },
+    completedMessages: {
+      bn: "আল্লাহু আকবার সম্পন্ন হয়েছে",
+      en: "Allahu Akbar completed",
+      hi: "अल्लाहु अकबर पूरा हुआ"
+    }
+  },
+  {
+    id: "dua",
+    target: 1,
+    arabic: "لَا إِلٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
+    names: {
+      bn: "লা ইলাহা ইল্লাল্লাহু ওয়াহদাহু লা শারীকা লাহু, লাহুল মুলকু ওয়া লাহুল হামদু, ওয়া হুয়া আলা কুল্লি শাইয়িন কাদীর",
+      en: "La ilaha illallahu wahdahu la sharika lahu, lahul mulku wa lahul hamdu wa huwa ala kulli shay'in qadir",
+      hi: "ला इलाहा इल्लल्लाहु वह्दहू ला शरीका लहू, लहुल मुल्कु व लहुल हम्दु व हुवा अला कुल्लि शय्इन कदीर"
+    },
+    completedMessages: {
+      bn: "মাশাআল্লাহ! সম্পূর্ণ তসবিহ শেষ হয়েছে",
+      en: "MashaAllah! Complete Tasbih finished",
+      hi: "माशाअल्लाह! पूरा तस्बीह चक्र समाप्त हुआ"
+    }
+  }
+];
 
   /* 2. Translations */
 
@@ -501,27 +501,27 @@
 
   /* 8. Vibration */
 
-  function vibrateAtMilestone(count) {
-    if (!state.vibrationEnabled) return false;
-    if (typeof navigator.vibrate !== "function") return false;
+function vibrateAtMilestone(count) {
+  if (!state.vibrationEnabled) return false;
+  if (typeof navigator.vibrate !== "function") return false;
 
-    const patterns = {
-      33: [100],
-      66: [100],
-      99: [100],
-      100: [70, 45, 100]
-    };
+  const patterns = {
+    33: [45],
+    66: [45],
+    99: [45],
+    100: [70, 45, 100]
+  };
 
-    const pattern = patterns[count];
-    if (!pattern) return false;
+  const pattern = patterns[count];
+  if (!pattern) return false;
 
-    try {
-      return navigator.vibrate(pattern);
-    } catch (error) {
-      console.warn("[IBADAT Tasbih] Vibration failed.", error);
-      return false;
-    }
+  try {
+    return navigator.vibrate(pattern);
+  } catch (error) {
+    console.warn("[IBADAT Tasbih] Vibration failed.", error);
+    return false;
   }
+}  
 
   /* 9. Completion message and full-board sparkles */
 
