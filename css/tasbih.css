@@ -39,7 +39,7 @@
   --tap-border: #c6a45b;
 
   --board-radius: 20px;
-  --bar-radius: 12px;
+  --bar-radius: 20px;
 
   --board-shadow: 0 3px 12px rgba(57, 46, 22, 0.07);
   --transition: 220ms ease;
@@ -78,20 +78,21 @@ body[data-color-theme="royal"],
 body[data-theme-color="royal"],
 html.theme-royal,
 body.theme-royal {
-  --primary: #38265f;
-  --primary-deep: #24163f;
-  --accent: #b597e0;
-  --accent-light: #e6d4f5;
-  --page-tint: rgba(245, 239, 255, 0.43);
-  --board-tint: rgba(245, 239, 255, 0.78);
-  --zikr-tint: rgba(245, 239, 255, 0.26);
-  --board-border: rgba(181, 151, 224, 0.92);
-  --board-text: #30234d;
-  --muted-text: #756786;
-  --progress-track: rgba(56, 38, 95, 0.14);
-  --progress-fill: #7254a0;
-  --tap-background: #e8def5;
-  --tap-border: #b597e0;
+  /* FIX: Royal theme is blue, not purple. */
+  --primary: #173a60;
+  --primary-deep: #102945;
+  --accent: #9dbde0;
+  --accent-light: #d7e8f8;
+  --page-tint: rgba(235, 244, 255, 0.43);
+  --board-tint: rgba(235, 244, 255, 0.78);
+  --zikr-tint: rgba(225, 239, 255, 0.26);
+  --board-border: rgba(125, 166, 211, 0.92);
+  --board-text: #193653;
+  --muted-text: #647b94;
+  --progress-track: rgba(23, 58, 96, 0.14);
+  --progress-fill: #3976b8;
+  --tap-background: #e0ecfa;
+  --tap-border: #9dbde0;
 }
 
 html[data-theme="rose"],
@@ -249,9 +250,7 @@ img {
   display: none !important;
 }
 
-/* 5. Main floral background + visible light cream overlay.
-   Positive stacking levels prevent the background disappearing
-   behind the page's root stacking context. */
+/* 5. Main floral background + visible light cream overlay. */
 
 body::before {
   content: "";
@@ -324,7 +323,8 @@ body::after {
     box-shadow var(--transition);
 }
 
-/* 8. Header: less rounded than the original design */
+/* 8. Header
+   FIX: keep exact 48px height, 2px border and 20px radius. */
 
 .header {
   flex: 0 0 var(--header-height);
@@ -339,8 +339,8 @@ body::after {
   padding: 0 12px;
   overflow: hidden;
 
-  border-radius: var(--bar-radius);
-  border-color: var(--accent);
+  border: 2px solid var(--accent);
+  border-radius: 20px;
 
   color: #fff8e7;
   background: linear-gradient(135deg, var(--primary), var(--primary-deep));
@@ -417,7 +417,7 @@ body::after {
   pointer-events: none;
 }
 
-/* Light theme-tinted overlay: mosque image remains visible */
+/* Light theme-tinted overlay */
 
 .zikr-cream-overlay {
   position: absolute;
@@ -516,7 +516,7 @@ body::after {
   overflow-wrap: anywhere;
 }
 
-/* 11. Completion message: stays above the zikr text without shifting it */
+/* 11. Completion message */
 
 .message-slot {
   position: absolute;
@@ -533,9 +533,6 @@ body::after {
   margin: 0;
   pointer-events: none;
 }
-
-/* CSS is also compatible with the existing HTML, where message-slot
-   is inside zikr-content. Lift the slot relative to the whole board. */
 
 .zikr-content > .message-slot {
   position: absolute;
@@ -573,7 +570,7 @@ body::after {
   animation: zikr-message-in 320ms ease both;
 }
 
-/* 12. Sparkles span the entire zikr board */
+/* 12. Sparkles */
 
 .spark-layer {
   position: absolute;
@@ -587,8 +584,6 @@ body::after {
   border-radius: inherit;
   pointer-events: none;
 }
-
-/* JS creates sparkle children in this layer */
 
 .spark-layer .spark,
 .spark-layer .sparkle {
@@ -785,7 +780,7 @@ body::after {
   font-variant-numeric: tabular-nums;
 }
 
-/* 14. Touch board: compact height, same button dimensions */
+/* 14. Touch board */
 
 .tap-board {
   flex: 0 0 auto;
@@ -905,7 +900,8 @@ body::after {
   transform: none;
 }
 
-/* 15. Footer: less rounded */
+/* 15. Footer
+   FIX: keep exact 48px height, 2px border and 20px radius. */
 
 .footer {
   flex: 0 0 var(--footer-height);
@@ -921,8 +917,8 @@ body::after {
   padding: 0 12px;
   overflow: hidden;
 
-  border-radius: var(--bar-radius);
-  border-color: var(--accent);
+  border: 2px solid var(--accent);
+  border-radius: 20px;
 
   color: #fff8e7;
   background: linear-gradient(135deg, var(--primary), var(--primary-deep));
@@ -1044,14 +1040,10 @@ body::after {
   }
 }
 
-/* 18. Very short screens */
+/* 18. Very short screens
+   FIX: header/footer remain 48px on short screens too. */
 
 @media (max-height: 560px) {
-  :root {
-    --header-height: 42px;
-    --footer-height: 42px;
-  }
-
   #tasbihApp {
     padding: 5px;
     gap: 5px;
