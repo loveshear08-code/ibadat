@@ -503,12 +503,12 @@ img {
   top: 50%;
   left: 50%;
 
-  width: 20%;
-  height: 20%;
-  max-width: 58px;
-  max-height: 58px;
-  min-width: 28px;
-  min-height: 28px;
+  width: 22%;
+  height: 22%;
+  max-width: 64px;
+  max-height: 64px;
+  min-width: 30px;
+  min-height: 30px;
 
   object-fit: contain;
   transform: translate(-50%, -50%);
