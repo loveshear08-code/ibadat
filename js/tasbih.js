@@ -506,10 +506,10 @@
     if (typeof navigator.vibrate !== "function") return false;
 
     const patterns = {
-      30: [35],
-      33: [45],
-      66: [45],
-      99: [45],
+      30: [100],
+      33: [100],
+      66: [100],
+      99: [100],
       100: [70, 45, 100]
     };
 
