@@ -1,78 +1,98 @@
-
 <!DOCTYPE html>
-<html lang="bn">
-
+<html lang="bn" data-theme="classic">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#123d2c">
+  <meta name="color-scheme" content="light dark">
+
   <title>IBADAT | তসবিহ</title>
+
   <link rel="stylesheet" href="../css/tasbih.css">
 </head>
 
 <body>
   <div class="app" id="tasbihApp">
 
-    <header class="hero board" id="tasbihHero">
-      <div class="hero-content">
-        <h1 class="hero-title" id="pageTitle">তসবিহ</h1>
-
-        <p class="hero-subtitle" id="heroSubtitle">
-          আল্লাহর জিকিরে প্রশান্ত হোক হৃদয়
-        </p>
-
-        <!-- Fixed message area: never changes the header height -->
-        <div class="message-slot" id="messageSlot">
-          <div
-            class="spark-layer"
-            id="sparkLayer"
-            aria-hidden="true"
-          ></div>
-
-          <div
-            class="complete-message"
-            id="completeMessage"
-            role="status"
-            aria-live="polite"
-            hidden
-          ></div>
-        </div>
-      </div>
+    <!-- Compact header board -->
+    <header class="header board" id="tasbihHeader">
+      <h1 class="page-title" id="pageTitle">তসবিহ</h1>
     </header>
 
+    <!-- Main content -->
     <main class="page-container">
 
-      <section class="zikr-board board" aria-label="জিকির">
-        <h2 class="zikr-heading" id="zikrLabel">জিকির</h2>
+      <!-- Zikr board with mosque background and cream overlay -->
+      <section
+        class="zikr-board board"
+        id="zikrBoard"
+        aria-label="জিকির"
+      >
+        <div class="zikr-background" aria-hidden="true"></div>
+        <div class="zikr-cream-overlay" aria-hidden="true"></div>
 
-        <div
-          id="zikrArabic"
-          class="zikr-arabic"
-          lang="ar"
-          dir="rtl"
-        >سُبْحَانَ اللّٰهِ</div>
+        <div class="zikr-content">
+          <h2 class="zikr-heading" id="zikrLabel">জিকির</h2>
 
-        <div id="zikrName" class="zikr-name">
-          সুবহানাল্লাহ
+          <div
+            id="zikrArabic"
+            class="zikr-arabic"
+            lang="ar"
+            dir="rtl"
+          >سُبْحَانَ اللّٰهِ</div>
+
+          <div id="zikrName" class="zikr-name">
+            সুবহানাল্লাহ
+          </div>
+
+          <div
+            class="message-slot"
+            id="messageSlot"
+            aria-live="polite"
+          >
+            <div
+              class="spark-layer"
+              id="sparkLayer"
+              aria-hidden="true"
+            ></div>
+
+            <div
+              class="complete-message"
+              id="completeMessage"
+              role="status"
+              hidden
+            ></div>
+          </div>
         </div>
       </section>
 
-      <section class="stats-board board" aria-label="তসবিহের হিসাব">
-
+      <!-- Counter and progress board -->
+      <section
+        class="stats-board board"
+        aria-label="তসবিহের হিসাব"
+      >
         <div class="count-info">
+
           <div class="count-card">
             <div class="count-label" id="stepCountLabel">
               বর্তমান ধাপ
             </div>
-            <div id="stepCount" class="step-count">০ / ৩৩</div>
+
+            <div id="stepCount" class="step-count">
+              ০ / ৩৩
+            </div>
           </div>
 
           <div class="count-card">
             <div class="count-label" id="totalCountLabel">
               মোট গণনা
             </div>
-            <div id="totalCount" class="total-count">০ / ১০০</div>
+
+            <div id="totalCount" class="total-count">
+              ০ / ১০০
+            </div>
           </div>
+
         </div>
 
         <div
@@ -84,19 +104,24 @@
           aria-valuemax="100"
           aria-valuenow="0"
         >
-          <div id="progressFill" class="progress-fill"></div>
+          <div
+            id="progressFill"
+            class="progress-fill"
+          ></div>
         </div>
 
         <div class="today-info">
-          <span id="todayLabel">মোট সম্পন্ন:</span>
+          <span id="todayLabel">আজ সম্পন্ন:</span>
           <strong id="todayComplete">০</strong>
           <span id="todayTimes">বার</span>
         </div>
-
       </section>
 
-      <!-- Same background image and cream-white overlay as the main page -->
-      <section class="tap-board board" aria-label="তসবিহ গণনা">
+      <!-- Tap board -->
+      <section
+        class="tap-board board"
+        aria-label="তসবিহ গণনা"
+      >
         <div class="tap-area">
           <button
             id="tapButton"
@@ -116,16 +141,17 @@
 
     </main>
 
-    <footer class="footer board">
+    <!-- Compact footer board -->
+    <footer class="footer board" id="tasbihFooter">
       <p class="footer-text" id="footerText">
-        সুবহানাল্লাহ, আলহামদুলিল্লাহ, আল্লাহু আকবার
+        আল্লাহর জিকিরে প্রশান্ত হোক হৃদয়
       </p>
     </footer>
 
   </div>
 
-  <script src="../js/tasbih.js?v=8"></script>
+  <!-- Shared settings first, page logic second -->
   <script src="../js/theme.js"></script>
+  <script src="../js/tasbih.js?v=9"></script>
 </body>
-
 </html>
