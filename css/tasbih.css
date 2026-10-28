@@ -1,532 +1,873 @@
+/* =========================================================
+   IBADAT — TASBIH PAGE
+   Complete responsive stylesheet
+   Header/Footer: 48px
+   Mosque background + cream overlay on Zikr board
+   Themes: Classic, Royal, Rose, Pista
+   Dark mode + shared settings support
+   ========================================================= */
+
+/* -------------------------
+   1. Base variables
+   ------------------------- */
 
 :root {
-  --deep-green: #123d2c;
-  --dark-green: #0b2c20;
-  --green: #20583e;
+  color-scheme: light;
 
-  --light-pista: #e6edce;
-  --option-pista: #e9efda;
-
-  --cream: #fff9eb;
-  --cream-white: rgba(255, 252, 242, 0.94);
-  --cream-layer: rgba(255, 252, 242, 0.79);
-
-  --gold: #d6b56d;
-  --gold-dark: #9b7837;
-
-  --text: #24382c;
-  --muted: #657367;
-  --border: rgba(214, 181, 109, 0.85);
-
-  --shadow: 0 5px 18px rgba(0, 0, 0, 0.12);
-
-  --header-height: 112px;
+  --header-height: 48px;
   --footer-height: 48px;
+
   --page-gap: 10px;
-  --app-padding: 12px;
+  --board-radius: 18px;
+  --board-border-width: 1px;
+
+  --page-bg: #f5f0e4;
+  --page-text: #173c2d;
+
+  --primary: #123d2c;
+  --primary-deep: #0b2c20;
+  --primary-soft: #e5eddf;
+
+  --gold: #c6a45b;
+  --gold-light: #e4cf91;
+
+  --cream: rgba(255, 250, 232, 0.88);
+  --cream-strong: rgba(255, 250, 232, 0.95);
+
+  --board-bg: rgba(255, 252, 242, 0.94);
+  --board-border: rgba(198, 164, 91, 0.9);
+
+  --muted-text: #647568;
+  --track-bg: rgba(18, 61, 44, 0.12);
+
+  --tap-board-bg: rgba(255, 252, 242, 0.92);
+  --tap-button-bg: #e8ddbd;
+  --tap-button-border: #c6a45b;
+
+  --shadow-soft: 0 4px 14px rgba(22, 43, 30, 0.08);
+  --shadow-board: 0 5px 16px rgba(22, 43, 30, 0.08);
+
+  --transition-fast: 180ms ease;
+  --transition-normal: 260ms ease;
 }
+
+/* -------------------------
+   2. Theme variants
+   ------------------------- */
+
+html[data-theme="classic"],
+body[data-theme="classic"],
+html.theme-classic,
+body.theme-classic {
+  --page-bg: #f5f0e4;
+  --page-text: #173c2d;
+
+  --primary: #123d2c;
+  --primary-deep: #0b2c20;
+  --primary-soft: #e5eddf;
+
+  --gold: #c6a45b;
+  --gold-light: #e4cf91;
+
+  --cream: rgba(255, 250, 232, 0.88);
+  --cream-strong: rgba(255, 250, 232, 0.95);
+
+  --board-bg: rgba(255, 252, 242, 0.94);
+  --board-border: rgba(198, 164, 91, 0.9);
+
+  --muted-text: #647568;
+  --track-bg: rgba(18, 61, 44, 0.12);
+
+  --tap-board-bg: rgba(255, 252, 242, 0.92);
+  --tap-button-bg: #e8ddbd;
+  --tap-button-border: #c6a45b;
+}
+
+html[data-theme="royal"],
+body[data-theme="royal"],
+html.theme-royal,
+body.theme-royal {
+  --page-bg: #eeeaf8;
+  --page-text: #30234d;
+
+  --primary: #38265f;
+  --primary-deep: #24163f;
+  --primary-soft: #e7def8;
+
+  --gold: #c6a45b;
+  --gold-light: #e4cf91;
+
+  --cream: rgba(250, 246, 255, 0.89);
+  --cream-strong: rgba(250, 246, 255, 0.96);
+
+  --board-bg: rgba(249, 246, 255, 0.95);
+  --board-border: rgba(181, 151, 224, 0.95);
+
+  --muted-text: #716583;
+  --track-bg: rgba(56, 38, 95, 0.13);
+
+  --tap-board-bg: rgba(249, 246, 255, 0.94);
+  --tap-button-bg: #e8ddf7;
+  --tap-button-border: #b597e0;
+}
+
+html[data-theme="rose"],
+body[data-theme="rose"],
+html.theme-rose,
+body.theme-rose {
+  --page-bg: #fbebed;
+  --page-text: #642f3c;
+
+  --primary: #77384a;
+  --primary-deep: #542433;
+  --primary-soft: #f5dfe5;
+
+  --gold: #c6a45b;
+  --gold-light: #e4cf91;
+
+  --cream: rgba(255, 246, 245, 0.9);
+  --cream-strong: rgba(255, 246, 245, 0.96);
+
+  --board-bg: rgba(255, 248, 247, 0.95);
+  --board-border: rgba(207, 151, 164, 0.95);
+
+  --muted-text: #896772;
+  --track-bg: rgba(119, 56, 74, 0.13);
+
+  --tap-board-bg: rgba(255, 248, 247, 0.94);
+  --tap-button-bg: #f5dfe5;
+  --tap-button-border: #cf97a4;
+}
+
+html[data-theme="pista"],
+body[data-theme="pista"],
+html.theme-pista,
+body.theme-pista {
+  --page-bg: #eaf2df;
+  --page-text: #30482c;
+
+  --primary: #345b37;
+  --primary-deep: #203f25;
+  --primary-soft: #dcebd1;
+
+  --gold: #b8a25a;
+  --gold-light: #d9cc8c;
+
+  --cream: rgba(250, 255, 235, 0.88);
+  --cream-strong: rgba(250, 255, 235, 0.96);
+
+  --board-bg: rgba(248, 253, 239, 0.95);
+  --board-border: rgba(184, 162, 90, 0.95);
+
+  --muted-text: #667a5b;
+  --track-bg: rgba(52, 91, 55, 0.13);
+
+  --tap-board-bg: rgba(248, 253, 239, 0.94);
+  --tap-button-bg: #e1edcf;
+  --tap-button-border: #b8a25a;
+}
+
+/* -------------------------
+   3. Dark mode
+   Supports common global
+   settings attributes/classes
+   ------------------------- */
+
+html[data-mode="dark"],
+body[data-mode="dark"],
+html[data-theme-mode="dark"],
+body[data-theme-mode="dark"],
+html.dark-mode,
+body.dark-mode,
+html.dark,
+body.dark,
+html[data-dark-mode="true"],
+body[data-dark-mode="true"] {
+  color-scheme: dark;
+
+  --page-bg: #101b16;
+  --page-text: #f0ead9;
+
+  --primary: #163d2d;
+  --primary-deep: #0b271c;
+  --primary-soft: #213b2c;
+
+  --gold: #c8aa63;
+  --gold-light: #e2cc8d;
+
+  --cream: rgba(29, 38, 29, 0.88);
+  --cream-strong: rgba(26, 36, 27, 0.96);
+
+  --board-bg: rgba(24, 37, 28, 0.96);
+  --board-border: rgba(200, 170, 99, 0.84);
+
+  --muted-text: #c0c9b8;
+  --track-bg: rgba(235, 233, 211, 0.17);
+
+  --tap-board-bg: rgba(23, 35, 27, 0.95);
+  --tap-button-bg: #294432;
+  --tap-button-border: #c8aa63;
+
+  --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.18);
+  --shadow-board: 0 5px 18px rgba(0, 0, 0, 0.2);
+}
+
+/* -------------------------
+   4. Reset and page layout
+   ------------------------- */
 
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
   width: 100%;
+  min-width: 0;
   height: 100%;
-  -webkit-text-size-adjust: 100%;
+  margin: 0;
+  background: var(--page-bg);
+  scroll-behavior: smooth;
 }
 
 body {
   width: 100%;
-  height: 100%;
-  min-width: 280px;
-  min-height: 100vh;
-  min-height: 100dvh;
+  min-width: 0;
+  min-height: 100%;
   margin: 0;
-  overflow: hidden;
+
+  overflow-x: hidden;
+
+  color: var(--page-text);
+  background: var(--page-bg);
 
   font-family:
     "Noto Sans Bengali",
+    "Hind Siliguri",
     "Nirmala UI",
-    Arial,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
     sans-serif;
 
-  color: var(--text);
-  background: var(--deep-green);
+  transition:
+    background-color var(--transition-normal),
+    color var(--transition-normal);
+}
 
-  -webkit-tap-highlight-color: transparent;
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
 
 button {
-  font: inherit;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
+  color: inherit;
 }
 
-button:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 3px;
+img {
+  display: block;
+  max-width: 100%;
 }
 
 [hidden] {
   display: none !important;
 }
 
-.app {
-  position: relative;
-  isolation: isolate;
+#tasbihApp {
+  width: 100%;
+  max-width: 760px;
+  height: 100vh;
+  height: 100dvh;
+
+  min-height: 0;
+  margin: 0 auto;
+  padding: 8px;
 
   display: flex;
   flex-direction: column;
   gap: var(--page-gap);
 
-  width: 100%;
-  height: 100vh;
-  height: 100dvh;
-  min-height: 0;
-
-  padding: var(--app-padding);
   overflow: hidden;
 
-  background:
-    linear-gradient(var(--cream-layer), var(--cream-layer)),
-    url("../assets/main-bg.jpg") center / cover no-repeat;
+  background: var(--page-bg);
+  color: var(--page-text);
+
+  transition:
+    background-color var(--transition-normal),
+    color var(--transition-normal);
 }
+
+/* -------------------------
+   5. Shared board style
+   ------------------------- */
 
 .board {
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
+  position: relative;
+  min-width: 0;
+
+  border: var(--board-border-width) solid var(--board-border);
+  border-radius: var(--board-radius);
+
+  box-shadow: var(--shadow-board);
+
+  transition:
+    background-color var(--transition-normal),
+    border-color var(--transition-normal),
+    box-shadow var(--transition-normal);
 }
 
-/* Header: fixed height */
-.hero {
-  position: relative;
-  isolation: isolate;
+/* -------------------------
+   6. Header — 48px
+   ------------------------- */
 
-  display: flex;
+.header {
   flex: 0 0 var(--header-height);
-  align-items: center;
-  justify-content: center;
-
   width: 100%;
   height: var(--header-height);
   min-height: var(--header-height);
 
-  padding: 7px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 12px;
+
   overflow: hidden;
 
-  text-align: center;
-  color: var(--deep-green);
+  border-radius: 14px;
+  border-color: var(--gold);
+
+  color: #fff8e7;
 
   background:
     linear-gradient(
-      rgba(255, 252, 242, 0.79),
-      rgba(255, 252, 242, 0.79)
-    ),
-    url("../assets/hero-bg.jpg") center / cover no-repeat;
+      135deg,
+      var(--primary),
+      var(--primary-deep)
+    );
+
+  box-shadow: var(--shadow-soft);
 }
 
-.hero-content {
+.page-title {
+  margin: 0;
+  padding: 0;
+
+  max-width: 100%;
+  overflow: hidden;
+
+  color: #fff8e7;
+
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* -------------------------
+   7. Main flexible area
+   ------------------------- */
+
+.page-container {
+  flex: 1 1 auto;
+
+  width: 100%;
+  min-height: 0;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  overflow: hidden;
+}
+
+/* -------------------------
+   8. Zikr board
+   Mosque image + cream layer
+   ------------------------- */
+
+.zikr-board {
+  flex: 1.25 1 0;
+
+  width: 100%;
+  min-height: 150px;
+  min-width: 0;
+
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  padding: 0;
+
+  border-color: var(--board-border);
+
+  background: var(--cream-strong);
+}
+
+/*
+  The mosque image sits behind the cream overlay.
+  Change the image path here if your mosque image
+  is stored in main-bg.jpg instead of hero-bg.jpg.
+*/
+
+.zikr-background {
+  position: absolute;
+  z-index: -3;
+  inset: 0;
+
+  background-image: url("../assets/hero-bg.jpg");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  transform: scale(1.015);
+}
+
+/* Cream layer over the mosque image */
+
+.zikr-cream-overlay {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+
+  background: var(--cream);
+
+  -webkit-backdrop-filter: blur(1.5px);
+  backdrop-filter: blur(1.5px);
+
+  transition: background-color var(--transition-normal);
+}
+
+/* Slightly stronger cream in the center for readability */
+
+.zikr-cream-overlay::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      var(--cream-strong) 0%,
+      var(--cream) 48%,
+      var(--cream-strong) 100%
+    );
+}
+
+/* Content inside the Zikr board */
+
+.zikr-content {
   position: relative;
+  z-index: 1;
+
   width: 100%;
   min-width: 0;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  padding: 12px 14px 10px;
+
+  text-align: center;
 }
 
-.hero-title {
+.zikr-heading {
   margin: 0;
-  color: var(--deep-green);
 
-  font-size: clamp(1.2rem, 4.8vw, 1.7rem);
-  font-weight: 800;
+  color: var(--primary);
+
+  font-size: 13px;
+  font-weight: 700;
   line-height: 1.35;
+  letter-spacing: 0.02em;
 }
 
-.hero-subtitle {
-  margin: 3px 0 0;
-  color: var(--text);
+.zikr-arabic {
+  width: 100%;
+  max-width: 100%;
 
-  font-size: clamp(0.72rem, 2.7vw, 0.9rem);
+  margin: 2px 0 0;
+  padding: 0;
+
+  color: var(--primary-deep);
+
+  font-family:
+    "Noto Naskh Arabic",
+    "Amiri",
+    "Traditional Arabic",
+    serif;
+
+  font-size: clamp(30px, 6.8vw, 47px);
+  font-weight: 700;
+  line-height: 1.65;
+
+  text-align: center;
+  overflow-wrap: anywhere;
+
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.zikr-name {
+  max-width: 100%;
+  margin: 0;
+
+  color: var(--primary);
+
+  font-size: clamp(17px, 4.2vw, 23px);
+  font-weight: 700;
   line-height: 1.4;
+
+  text-align: center;
   overflow-wrap: anywhere;
 }
 
-/* Reserved message slot.
-   It exists even when empty, so the header never resizes. */
+/* -------------------------
+   9. Completion message
+   ------------------------- */
+
 .message-slot {
   position: relative;
-  isolation: isolate;
+
+  width: 100%;
+  max-width: 100%;
+  min-height: 0;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: 100%;
-  height: 27px;
-  min-height: 27px;
-
-  margin-top: 2px;
-  overflow: hidden;
-  pointer-events: none;
+  margin-top: 0;
 }
 
 .complete-message {
   position: relative;
   z-index: 2;
 
-  width: 100%;
-  margin: 0;
-  padding: 0 3px;
+  max-width: 100%;
 
-  color: var(--deep-green);
-  background: transparent;
-  border: 0;
-  box-shadow: none;
+  padding: 6px 12px;
 
-  font-size: clamp(0.67rem, 2.7vw, 0.8rem);
-  font-weight: 800;
-  line-height: 1.35;
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+
+  color: var(--primary-deep);
+  background: var(--cream-strong);
+
+  box-shadow: var(--shadow-soft);
+
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
   text-align: center;
 
-  overflow-wrap: anywhere;
-  text-shadow: 0 1px 0 rgba(255, 252, 242, 0.8);
+  animation: tasbih-message-in 300ms ease both;
 }
 
-.complete-message.message-enter {
-  animation: messageIn 250ms ease-out both;
-}
-
-.complete-message.message-exit {
-  animation: messageOut 350ms ease-in both;
-}
-
-@keyframes messageIn {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes messageOut {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  to {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-}
-
-/* Spark particles stay inside the header only */
 .spark-layer {
   position: absolute;
-  z-index: 1;
-  inset: 0;
+  z-index: 3;
+  inset: -8px;
 
   overflow: hidden;
   pointer-events: none;
 }
 
-.spark {
+/* Compatible with JS-generated spark elements */
+
+.spark-layer .spark,
+.spark-layer .sparkle {
   position: absolute;
-  left: var(--start-x);
-  top: var(--start-y);
 
-  width: var(--spark-size);
-  height: var(--spark-size);
+  color: var(--gold-light);
 
-  border-radius: 50%;
-  background: var(--spark-color);
+  pointer-events: none;
 
-  box-shadow:
-    0 0 4px var(--spark-color),
-    0 0 8px rgba(214, 181, 109, 0.5);
-
-  opacity: 0;
-  animation: sparkBurst var(--spark-duration) ease-out forwards;
+  animation: tasbih-spark 900ms ease-out forwards;
 }
 
-.spark.star {
-  width: 3px;
-  height: 9px;
-  border-radius: 2px;
+@keyframes tasbih-message-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-@keyframes sparkBurst {
+@keyframes tasbih-spark {
   0% {
     opacity: 0;
-    transform: translate(0, 0) scale(0.3) rotate(0deg);
+    transform: translateY(5px) scale(0.5);
   }
 
-  12% {
+  25% {
     opacity: 1;
-  }
-
-  65% {
-    opacity: 0.95;
   }
 
   100% {
     opacity: 0;
-    transform:
-      translate(var(--move-x), var(--move-y))
-      scale(0.15)
-      rotate(var(--rotation));
+    transform: translateY(-28px) scale(1.2);
   }
 }
 
-/* Main content fills the space between header and footer */
-.page-container {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  gap: var(--page-gap);
+/* -------------------------
+   10. Counter board
+   Compact, readable layout
+   ------------------------- */
+
+.stats-board {
+  flex: 0 0 auto;
 
   width: 100%;
   min-width: 0;
-  min-height: 0;
 
-  overflow: hidden;
-}
-
-/* Zikr board: reserve enough height for the longest zikr */
-.zikr-board {
   display: flex;
-  flex: 0 0 160px;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
 
-  width: 100%;
-  min-width: 0;
-  min-height: 160px;
+  gap: 7px;
 
-  padding: 8px 10px;
-  overflow: hidden;
+  padding: 10px 12px;
 
-  text-align: center;
-  background: var(--light-pista);
-}
-
-.zikr-heading {
-  margin: 0;
-  color: var(--muted);
-
-  font-size: 0.85rem;
-  font-weight: 600;
-  line-height: 1.35;
-}
-
-.zikr-arabic {
-  width: 100%;
-  margin: 4px 0;
-
-  color: var(--gold-dark);
-
-  font-family:
-    "Noto Naskh Arabic",
-    "Amiri",
-    serif;
-
-  font-size: clamp(1.15rem, 5vw, 1.8rem);
-  font-weight: 800;
-  line-height: 1.65;
-
-  overflow-wrap: anywhere;
-}
-
-.zikr-name {
-  width: 100%;
-  color: var(--deep-green);
-
-  font-size: clamp(0.85rem, 3.4vw, 1rem);
-  font-weight: 800;
-  line-height: 1.5;
-
-  overflow-wrap: anywhere;
-}
-
-/* Compact counter board */
-.stats-board {
-  display: flex;
-  flex: 0 0 auto;
-  flex-direction: column;
-  gap: 6px;
-
-  width: 100%;
-  min-width: 0;
-
-  padding: 6px 8px;
-  overflow: hidden;
-
-  background: var(--cream-white);
+  border-color: var(--board-border);
+  background: var(--board-bg);
 }
 
 .count-info {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 6px;
-
   width: 100%;
   min-width: 0;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
 }
 
 .count-card {
+  min-width: 0;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1px;
 
-  min-width: 0;
-  padding: 3px 2px;
+  gap: 3px;
 
-  border: 1px solid var(--border);
-  border-radius: 9px;
+  padding: 2px 5px;
 
-  background: var(--option-pista);
   text-align: center;
 }
 
 .count-label {
-  color: var(--muted);
-  font-size: 0.72rem;
-  line-height: 1.35;
+  max-width: 100%;
+
+  color: var(--muted-text);
+
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+
+  overflow-wrap: anywhere;
 }
 
 .step-count,
 .total-count {
-  color: var(--deep-green);
-  font-size: clamp(0.98rem, 4vw, 1.2rem);
+  max-width: 100%;
+
+  color: var(--primary);
+
+  font-size: clamp(20px, 5vw, 26px);
   font-weight: 800;
-  line-height: 1.35;
+  line-height: 1.3;
+  font-variant-numeric: tabular-nums;
+
   overflow-wrap: anywhere;
 }
 
-/* Progress line only */
+/* -------------------------
+   11. Progress bar
+   ------------------------- */
+
 .progress-bar {
+  position: relative;
+
   width: 100%;
-  height: 6px;
+  height: 7px;
+  min-height: 7px;
 
   overflow: hidden;
-  border-radius: 20px;
-  background: #dce7d5;
+
+  border-radius: 999px;
+
+  background: var(--track-bg);
 }
 
 .progress-fill {
-  width: 0;
+  width: 0%;
   height: 100%;
 
   border-radius: inherit;
-  background: var(--green);
 
-  transition: width 220ms ease-out;
-  will-change: width;
+  background:
+    linear-gradient(
+      90deg,
+      var(--primary),
+      var(--gold)
+    );
+
+  transition: width 220ms ease;
 }
 
-.today-info {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 4px;
+/* -------------------------
+   12. Daily completion info
+   ------------------------- */
 
-  color: var(--muted);
-  font-size: 0.76rem;
-  line-height: 1.35;
+.today-info {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-wrap: wrap;
+  gap: 5px;
+
+  color: var(--muted-text);
+
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+
   text-align: center;
 }
 
 .today-info strong {
-  color: var(--deep-green);
-  font-size: 0.98rem;
+  color: var(--primary);
+
+  font-size: 15px;
   font-weight: 800;
+  font-variant-numeric: tabular-nums;
 }
 
-/* Touch board: same main image and cream-white overlay */
+/* -------------------------
+   13. Tap board
+   Reduced empty space
+   ------------------------- */
+
 .tap-board {
-  display: flex;
   flex: 1 1 0;
-  flex-direction: column;
 
   width: 100%;
   min-width: 0;
-  min-height: 0;
+  min-height: 105px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px;
 
   overflow: hidden;
 
-  background:
-    linear-gradient(
-      var(--cream-layer),
-      var(--cream-layer)
-    ),
-    url("../assets/main-bg.jpg") center / cover no-repeat;
+  border-color: var(--board-border);
+  background: var(--tap-board-bg);
 }
 
 .tap-area {
-  display: flex;
-  flex: 1 1 auto;
-  align-items: center;
-  justify-content: center;
-
   width: 100%;
-  min-width: 0;
+  height: 100%;
   min-height: 0;
 
-  padding: 8px;
-  overflow: hidden;
-}
-
-.tap-button {
   display: flex;
-  flex: 0 1 auto;
   align-items: center;
   justify-content: center;
 
-  width: min(48vw, 210px);
-  height: min(48vw, 210px);
+  padding: 0;
+  margin: 0;
+}
 
-  min-width: 96px;
-  min-height: 96px;
+/* Main counting button */
+
+.tap-button {
+  position: relative;
+
+  width: clamp(100px, 31vw, 178px);
+  height: clamp(100px, 31vw, 178px);
 
   max-width: 100%;
   max-height: 100%;
-  aspect-ratio: 1;
+  min-width: 0;
+  min-height: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   padding: 0;
+
   overflow: hidden;
 
-  border: 2px solid var(--gold);
+  border: 2px solid var(--tap-button-border);
   border-radius: 50%;
 
-  background: var(--deep-green);
+  background: var(--tap-button-bg);
 
   box-shadow:
-    0 7px 20px rgba(18, 61, 44, 0.2),
-    0 0 0 4px rgba(214, 181, 109, 0.14);
+    0 5px 14px rgba(0, 0, 0, 0.1),
+    inset 0 1px 2px rgba(255, 255, 255, 0.4);
 
   cursor: pointer;
   user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 
   transition:
-    transform 120ms ease,
-    box-shadow 160ms ease;
+    transform 100ms ease,
+    background-color var(--transition-normal),
+    border-color var(--transition-normal),
+    box-shadow var(--transition-normal);
+}
+
+.tap-button::after {
+  content: "";
+
+  position: absolute;
+  inset: 5px;
+
+  border: 1px solid rgba(198, 164, 91, 0.4);
+  border-radius: 50%;
+
+  pointer-events: none;
 }
 
 .tap-icon {
-  display: block;
-  width: 100%;
-  height: 100%;
+  position: relative;
+  z-index: 1;
 
-  object-fit: cover;
-  border-radius: 50%;
+  width: 76%;
+  height: 76%;
+
+  object-fit: contain;
+  object-position: center;
 
   pointer-events: none;
   user-select: none;
@@ -534,40 +875,71 @@ button:focus-visible {
 }
 
 .tap-button:active {
-  transform: scale(0.94);
-}
+  transform: scale(0.95);
 
-.tap-button.completed {
   box-shadow:
-    0 0 0 5px rgba(214, 181, 109, 0.35),
-    0 0 20px rgba(214, 181, 109, 0.5);
+    0 2px 6px rgba(0, 0, 0, 0.12),
+    inset 0 2px 5px rgba(0, 0, 0, 0.08);
 }
 
-/* Footer */
+.tap-button:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 4px;
+}
+
+.tap-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* -------------------------
+   14. Footer — 48px
+   ------------------------- */
+
 .footer {
-  display: flex;
   flex: 0 0 var(--footer-height);
-  align-items: center;
-  justify-content: center;
 
   width: 100%;
   height: var(--footer-height);
   min-height: var(--footer-height);
 
-  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 12px;
+
   overflow: hidden;
 
-  color: var(--cream);
-  background: var(--deep-green);
+  border-radius: 14px;
+  border-color: var(--gold);
+
+  color: #fff8e7;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary),
+      var(--primary-deep)
+    );
+
+  box-shadow: var(--shadow-soft);
 }
 
 .footer-text {
   width: 100%;
-  margin: 0;
+  max-width: 100%;
 
-  color: var(--cream);
-  font-size: 0.76rem;
-  line-height: 1.4;
+  margin: 0;
+  padding: 0;
+
+  color: #fff8e7;
+
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+
   text-align: center;
 
   overflow: hidden;
@@ -575,277 +947,335 @@ button:focus-visible {
   white-space: nowrap;
 }
 
-/* Dark mode */
-body.dark-mode {
-  --text: #f0eee5;
-  --muted: #c3c8bd;
+/* -------------------------
+   15. Dark-mode text refinements
+   ------------------------- */
 
-  --cream-white: rgba(22, 38, 30, 0.97);
-  --cream-layer: rgba(5, 19, 13, 0.78);
-
-  --light-pista: #263f30;
-  --option-pista: #344a39;
-
-  --border: rgba(214, 181, 109, 0.75);
-
-  color: var(--text);
-  background: #081b13;
+html[data-mode="dark"] .zikr-heading,
+body[data-mode="dark"] .zikr-heading,
+html[data-theme-mode="dark"] .zikr-heading,
+body[data-theme-mode="dark"] .zikr-heading,
+html.dark-mode .zikr-heading,
+body.dark-mode .zikr-heading,
+html.dark .zikr-heading,
+body.dark .zikr-heading,
+html[data-dark-mode="true"] .zikr-heading,
+body[data-dark-mode="true"] .zikr-heading {
+  color: #e8d7a5;
 }
 
-body.dark-mode .app {
-  background:
-    linear-gradient(
-      rgba(5, 19, 13, 0.77),
-      rgba(5, 19, 13, 0.77)
-    ),
-    url("../assets/main-bg.jpg") center / cover no-repeat;
-}
-
-body.dark-mode .hero {
-  background:
-    linear-gradient(
-      rgba(22, 38, 30, 0.82),
-      rgba(22, 38, 30, 0.82)
-    ),
-    url("../assets/hero-bg.jpg") center / cover no-repeat;
-}
-
-body.dark-mode .hero-title,
-body.dark-mode .hero-subtitle {
-  color: var(--gold);
-}
-
-body.dark-mode .complete-message {
-  color: var(--gold);
-  text-shadow: 0 0 7px rgba(214, 181, 109, 0.3);
-}
-
-body.dark-mode .zikr-board {
-  background: var(--light-pista);
-}
-
-body.dark-mode .zikr-heading {
-  color: var(--muted);
-}
-
+html[data-mode="dark"] .zikr-arabic,
+body[data-mode="dark"] .zikr-arabic,
+html[data-theme-mode="dark"] .zikr-arabic,
+body[data-theme-mode="dark"] .zikr-arabic,
+html.dark-mode .zikr-arabic,
 body.dark-mode .zikr-arabic,
+html.dark .zikr-arabic,
+body.dark .zikr-arabic,
+html[data-dark-mode="true"] .zikr-arabic,
+body[data-dark-mode="true"] .zikr-arabic {
+  color: #f4e8c6;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+html[data-mode="dark"] .zikr-name,
+body[data-mode="dark"] .zikr-name,
+html[data-theme-mode="dark"] .zikr-name,
+body[data-theme-mode="dark"] .zikr-name,
+html.dark-mode .zikr-name,
 body.dark-mode .zikr-name,
-body.dark-mode .step-count,
-body.dark-mode .total-count,
-body.dark-mode .today-info strong {
-  color: var(--gold);
+html.dark .zikr-name,
+body.dark .zikr-name,
+html[data-dark-mode="true"] .zikr-name,
+body[data-dark-mode="true"] .zikr-name {
+  color: #f0e4c3;
 }
 
-body.dark-mode .stats-board {
-  background: var(--cream-white);
-}
+/* -------------------------
+   16. Small phones
+   ------------------------- */
 
-body.dark-mode .count-card {
-  background: var(--option-pista);
-}
-
-body.dark-mode .progress-bar {
-  background: #3a4d3d;
-}
-
-body.dark-mode .progress-fill {
-  background: var(--gold);
-}
-
-body.dark-mode .tap-board {
-  background:
-    linear-gradient(
-      rgba(5, 19, 13, 0.78),
-      rgba(5, 19, 13, 0.78)
-    ),
-    url("../assets/main-bg.jpg") center / cover no-repeat;
-}
-
-/* Tablet and desktop */
-@media (min-width: 700px) {
-  :root {
-    --header-height: 122px;
-    --footer-height: 50px;
-    --page-gap: 14px;
-    --app-padding: 16px;
-  }
-
-  .app {
-    width: min(100%, 900px);
-    margin-inline: auto;
-  }
-
-  .zikr-board {
-    flex-basis: 175px;
-    min-height: 175px;
-  }
-
-  .tap-button {
-    width: min(30vw, 220px);
-    height: min(30vw, 220px);
-  }
-}
-
-/* Small mobile */
 @media (max-width: 380px) {
-  :root {
-    --header-height: 100px;
-    --footer-height: 44px;
-    --page-gap: 8px;
-    --app-padding: 8px;
+  #tasbihApp {
+    padding: 6px;
+    gap: 7px;
   }
 
-  .hero {
-    padding-inline: 8px;
-  }
-
-  .hero-title {
-    font-size: 1.2rem;
-  }
-
-  .hero-subtitle {
-    font-size: 0.69rem;
-  }
-
-  .message-slot {
-    height: 25px;
-    min-height: 25px;
-  }
-
-  .complete-message {
-    font-size: 0.64rem;
+  .page-container {
+    gap: 7px;
   }
 
   .zikr-board {
-    flex-basis: 150px;
-    min-height: 150px;
-    padding: 6px 7px;
+    min-height: 130px;
+  }
+
+  .zikr-content {
+    gap: 3px;
+    padding: 8px 9px;
+  }
+
+  .zikr-heading {
+    font-size: 12px;
   }
 
   .zikr-arabic {
-    font-size: clamp(1.05rem, 5.2vw, 1.4rem);
-    line-height: 1.6;
+    font-size: clamp(27px, 8vw, 35px);
+    line-height: 1.55;
   }
 
   .zikr-name {
-    font-size: 0.82rem;
+    font-size: 17px;
   }
 
   .stats-board {
     gap: 5px;
-    padding: 5px 6px;
+    padding: 8px 9px;
   }
 
   .count-info {
     gap: 5px;
   }
 
-  .count-card {
-    padding: 3px 2px;
-  }
-
   .count-label {
-    font-size: 0.67rem;
+    font-size: 11px;
   }
 
   .step-count,
   .total-count {
-    font-size: 0.94rem;
+    font-size: 21px;
   }
 
-  .progress-bar {
-    height: 5px;
-  }
-
-  .today-info {
-    font-size: 0.7rem;
-  }
-
-  .tap-button {
-    width: min(43vw, 175px);
-    height: min(43vw, 175px);
-  }
-
-  .footer {
-    padding-inline: 5px;
-  }
-
-  .footer-text {
-    font-size: 0.66rem;
-  }
-}
-
-/* Short screens */
-@media (max-height: 650px) {
-  :root {
-    --page-gap: 5px;
-  }
-
-  .hero {
-    padding-block: 4px;
-  }
-
-  .hero-title {
-    font-size: 1.1rem;
-  }
-
-  .hero-subtitle {
-    margin-top: 1px;
-    font-size: 0.65rem;
-  }
-
-  .message-slot {
-    height: 22px;
-    min-height: 22px;
-    margin-top: 1px;
-  }
-
-  .zikr-board {
-    flex-basis: 130px;
-    min-height: 130px;
-    padding-block: 4px;
-  }
-
-  .zikr-arabic {
-    font-size: clamp(1rem, 4.2vw, 1.35rem);
-    line-height: 1.4;
-  }
-
-  .zikr-name {
-    font-size: 0.78rem;
-  }
-
-  .stats-board {
-    gap: 4px;
-    padding: 4px 6px;
-  }
-
-  .count-card {
-    padding-block: 2px;
-  }
-
-  .progress-bar {
-    height: 5px;
-  }
-
-  .tap-area {
+  .tap-board {
+    min-height: 95px;
     padding: 4px;
   }
 
   .tap-button {
-    width: min(34vw, 135px);
-    height: min(34vw, 135px);
-    min-width: 86px;
-    min-height: 86px;
+    width: clamp(90px, 29vw, 125px);
+    height: clamp(90px, 29vw, 125px);
+  }
+
+  .footer-text {
+    font-size: 11px;
   }
 }
+
+/* -------------------------
+   17. Short screens
+   ------------------------- */
+
+@media (max-height: 700px) {
+  #tasbihApp {
+    padding: 6px;
+    gap: 6px;
+  }
+
+  .page-container {
+    gap: 6px;
+  }
+
+  .zikr-board {
+    flex: 1.05 1 0;
+    min-height: 115px;
+  }
+
+  .zikr-content {
+    gap: 2px;
+    padding: 6px 10px;
+  }
+
+  .zikr-arabic {
+    font-size: clamp(26px, 5.8vh, 38px);
+    line-height: 1.4;
+  }
+
+  .zikr-name {
+    font-size: 16px;
+  }
+
+  .stats-board {
+    gap: 5px;
+    padding: 6px 10px;
+  }
+
+  .count-label {
+    font-size: 11px;
+  }
+
+  .step-count,
+  .total-count {
+    font-size: 21px;
+  }
+
+  .tap-board {
+    flex: 0.9 1 0;
+    min-height: 85px;
+    padding: 3px;
+  }
+
+  .tap-button {
+    width: clamp(82px, 22vh, 140px);
+    height: clamp(82px, 22vh, 140px);
+  }
+}
+
+/* -------------------------
+   18. Very short screens
+   ------------------------- */
+
+@media (max-height: 560px) {
+  :root {
+    --header-height: 42px;
+    --footer-height: 42px;
+  }
+
+  #tasbihApp {
+    padding: 5px;
+    gap: 5px;
+  }
+
+  .page-container {
+    gap: 5px;
+  }
+
+  .header,
+  .footer {
+    border-radius: 12px;
+  }
+
+  .page-title {
+    font-size: 17px;
+  }
+
+  .zikr-board {
+    flex: 1 1 0;
+    min-height: 95px;
+  }
+
+  .zikr-content {
+    gap: 1px;
+    padding: 4px 8px;
+  }
+
+  .zikr-heading {
+    font-size: 11px;
+  }
+
+  .zikr-arabic {
+    font-size: clamp(23px, 5.3vh, 31px);
+    line-height: 1.35;
+  }
+
+  .zikr-name {
+    font-size: 14px;
+  }
+
+  .stats-board {
+    gap: 3px;
+    padding: 4px 8px;
+  }
+
+  .count-label {
+    font-size: 10px;
+  }
+
+  .step-count,
+  .total-count {
+    font-size: 18px;
+  }
+
+  .progress-bar {
+    height: 5px;
+    min-height: 5px;
+  }
+
+  .today-info {
+    font-size: 10px;
+  }
+
+  .today-info strong {
+    font-size: 12px;
+  }
+
+  .tap-board {
+    flex: 0.8 1 0;
+    min-height: 68px;
+    padding: 2px;
+  }
+
+  .tap-button {
+    width: clamp(62px, 16vh, 92px);
+    height: clamp(62px, 16vh, 92px);
+  }
+
+  .tap-icon {
+    width: 72%;
+    height: 72%;
+  }
+
+  .footer-text {
+    font-size: 10px;
+  }
+}
+
+/* -------------------------
+   19. Landscape phones
+   ------------------------- */
+
+@media (orientation: landscape) and (max-height: 520px) {
+  #tasbihApp {
+    max-width: 900px;
+  }
+
+  .page-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.9fr);
+    grid-template-rows: minmax(0, 1fr) minmax(0, 0.8fr);
+    gap: 6px;
+  }
+
+  .zikr-board {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+
+    min-height: 0;
+  }
+
+  .stats-board {
+    grid-column: 2;
+    grid-row: 1;
+
+    min-height: 0;
+  }
+
+  .tap-board {
+    grid-column: 2;
+    grid-row: 2;
+
+    min-height: 0;
+  }
+
+  .tap-button {
+    width: min(22vh, 105px);
+    height: min(22vh, 105px);
+  }
+
+  .zikr-arabic {
+    font-size: clamp(25px, 7vh, 36px);
+  }
+}
+
+/* -------------------------
+   20. Accessibility
+   ------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
-    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
