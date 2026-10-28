@@ -736,10 +736,30 @@
     arrangeDirectionLabels();
 
     if (userLat !== null && userLon !== null) {
-      updateLocationValues();
+  updateLocationValues();
+
+  const lat = userLat;
+  const lon = userLon;
+  const requestedLanguage = language;
+
+  showLocationName(getSavedCity());
+
+  findCity(lat, lon).then((city) => {
+    if (
+      requestedLanguage !== language ||
+      lat !== userLat ||
+      lon !== userLon
+    ) {
+      return;
+    }
+
+    if (city) {
+      showLocationName(city);
+    } else {
       showLocationName(getSavedCity());
     }
-  }
+  });
+}
 
   function settingsSignature() {
     const settings = readSettings();
@@ -798,10 +818,9 @@
 
       showLocationName(getSavedCity());
       updateLocationValues();
-    } else {
-      // Home শহরের নাম আপডেট করলে সেটি দেখাও।
-      showLocationName(getSavedCity());
-    }
+   } else {
+  // একই GPS অবস্থানে পুরোনো শহরের নাম আবার বসাবে না।
+} 
   }
 
   function init() {
