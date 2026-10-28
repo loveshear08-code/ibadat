@@ -9,20 +9,20 @@
 
   <title>হাদিস সংকলন | IBADAT</title>
 
-  <link rel="stylesheet" href="css/hadith.css">
+  <link rel="stylesheet" href="../css/hadith.css">
 
-  <script src="js/theme.js" defer></script>
-  <script src="js/hadith.js" defer></script>
+  <script src="../js/theme.js" defer></script>
+  <script src="../js/hadith.js" defer></script>
 </head>
 
 <body>
-  <div class="hadith-page" id="hadithPage" data-screen="books">
+  <div class="hadith-app" id="hadithApp" data-screen="books">
 
     <header class="hadith-header">
       <button
+        type="button"
         class="header-back icon-button"
         id="backBooks"
-        type="button"
         aria-label="বইয়ের তালিকায় ফিরে যান"
         hidden
       >
@@ -31,21 +31,16 @@
         </svg>
       </button>
 
-      <div class="header-title-wrap">
-        <h1 class="header-title" id="pageTitle">হাদিস সংকলন</h1>
-        <p class="header-subtitle" id="pageSubtitle">
-          নির্ভরযোগ্য হাদিস গ্রন্থসমূহ
-        </p>
-      </div>
+      <h1 class="header-title" id="pageTitle">হাদিস সংকলন</h1>
 
       <button
-        class="header-home icon-button"
-        id="refreshHadith"
         type="button"
-        aria-label="হাদিস পুনরায় লোড করুন"
+        class="header-action icon-button"
+        id="headerAction"
+        aria-label="পুনরায় লোড"
         title="পুনরায় লোড"
       >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
+        <svg viewBox="0 0 24 24" id="refreshIcon" aria-hidden="true">
           <path d="M20 7v5h-5"></path>
           <path d="M4.9 9a7.5 7.5 0 0 1 12.6-2L20 12"></path>
           <path d="M4 17v-5h5"></path>
@@ -56,234 +51,142 @@
 
     <main class="hadith-main">
 
-      <!-- Book selection screen -->
-      <section
-        class="books-screen"
-        id="booksScreen"
-        aria-labelledby="booksHeading"
-      >
-        <div class="books-intro">
-          <div class="intro-symbol" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21z"></path>
-              <path d="M4 5.5v13A2.5 2.5 0 0 1 6.5 16H20"></path>
-              <path d="M8 7h8"></path>
-              <path d="M8 10h8"></path>
-            </svg>
-          </div>
+      <!-- FIRST SCREEN: ONLY EIGHT BOOKS -->
+      <section class="books-screen" id="booksScreen" aria-label="হাদিসের বইসমূহ">
+        <div class="books-grid" id="booksGrid">
 
-          <div class="intro-copy">
-            <h2 id="booksHeading">হাদিসের গ্রন্থসমূহ</h2>
-            <p id="booksDescription">
-              পছন্দের গ্রন্থ নির্বাচন করে হাদিস পড়ুন
-            </p>
-          </div>
-
-          <span class="book-count" id="bookCount">০৮</span>
-        </div>
-
-        <div
-          class="books-grid"
-          id="booksGrid"
-          aria-label="হাদিসের বইসমূহ"
-        >
           <button class="book-card" type="button" data-book="bukhari">
-            <span class="book-card-icon" aria-hidden="true">
+            <span class="book-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
                 <path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H20v17H7.5A2.5 2.5 0 0 0 5 21.5z"></path>
                 <path d="M5 4.5v14A2.5 2.5 0 0 1 7.5 16H20"></path>
-                <path d="M9 6h7"></path>
-                <path d="M9 9h7"></path>
+                <path d="M9 6h7M9 9h7"></path>
               </svg>
             </span>
-            <span class="book-card-copy">
-              <strong class="book-name">সহিহ বুখারি</strong>
-              <span class="book-description">সহিহ হাদিসের সংকলন</span>
-            </span>
-            <svg class="book-arrow" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m9 18 6-6-6-6"></path>
-            </svg>
+            <span class="book-name" data-name="bukhari">সহিহ বুখারি</span>
           </button>
 
           <button class="book-card" type="button" data-book="muslim">
-            <span class="book-card-icon" aria-hidden="true">
+            <span class="book-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
                 <path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H20v17H7.5A2.5 2.5 0 0 0 5 21.5z"></path>
                 <path d="M5 4.5v14A2.5 2.5 0 0 1 7.5 16H20"></path>
-                <path d="M9 6h7"></path>
-                <path d="M9 9h7"></path>
+                <path d="M9 6h7M9 9h7"></path>
               </svg>
             </span>
-            <span class="book-card-copy">
-              <strong class="book-name">সহিহ মুসলিম</strong>
-              <span class="book-description">সহিহ হাদিসের সংকলন</span>
-            </span>
-            <svg class="book-arrow" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m9 18 6-6-6-6"></path>
-            </svg>
+            <span class="book-name" data-name="muslim">সহিহ মুসলিম</span>
           </button>
 
           <button class="book-card" type="button" data-book="abudawud">
-            <span class="book-card-icon" aria-hidden="true">
+            <span class="book-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
                 <path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H20v17H7.5A2.5 2.5 0 0 0 5 21.5z"></path>
                 <path d="M5 4.5v14A2.5 2.5 0 0 1 7.5 16H20"></path>
-                <path d="M9 6h7"></path>
-                <path d="M9 9h7"></path>
+                <path d="M9 6h7M9 9h7"></path>
               </svg>
             </span>
-            <span class="book-card-copy">
-              <strong class="book-name">সুনান আবু দাউদ</strong>
-              <span class="book-description">হাদিস ও ফিকহের সংকলন</span>
-            </span>
-            <svg class="book-arrow" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m9 18 6-6-6-6"></path>
-            </svg>
+            <span class="book-name" data-name="abudawud">সুনান আবু দাউদ</span>
           </button>
 
           <button class="book-card" type="button" data-book="tirmidhi">
-            <span class="book-card-icon" aria-hidden="true">
+            <span class="book-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
                 <path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H20v17H7.5A2.5 2.5 0 0 0 5 21.5z"></path>
                 <path d="M5 4.5v14A2.5 2.5 0 0 1 7.5 16H20"></path>
-                <path d="M9 6h7"></path>
-                <path d="M9 9h7"></path>
+                <path d="M9 6h7M9 9h7"></path>
               </svg>
             </span>
-            <span class="book-card-copy">
-              <strong class="book-name">জামে তিরমিজি</strong>
-              <span class="book-description">হাদিসের প্রসিদ্ধ সংকলন</span>
-            </span>
-            <svg class="book-arrow" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m9 18 6-6-6-6"></path>
-            </svg>
+            <span class="book-name" data-name="tirmidhi">জামে তিরমিজি</span>
           </button>
 
           <button class="book-card" type="button" data-book="nasai">
-            <span class="book-card-icon" aria-hidden="true">
+            <span class="book-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
                 <path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H20v17H7.5A2.5 2.5 0 0 0 5 21.5z"></path>
                 <path d="M5 4.5v14A2.5 2.5 0 0 1 7.5 16H20"></path>
-                <path d="M9 6h7"></path>
-                <path d="M9 9h7"></path>
+                <path d="M9 6h7M9 9h7"></path>
               </svg>
             </span>
-            <span class="book-card-copy">
-              <strong class="book-name">সুনান নাসাঈ</strong>
-              <span class="book-description">হাদিসের প্রসিদ্ধ সংকলন</span>
-            </span>
-            <svg class="book-arrow" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m9 18 6-6-6-6"></path>
-            </svg>
+            <span class="book-name" data-name="nasai">সুনান নাসাঈ</span>
           </button>
 
           <button class="book-card" type="button" data-book="ibnmajah">
-            <span class="book-card-icon" aria-hidden="true">
+            <span class="book-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
                 <path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H20v17H7.5A2.5 2.5 0 0 0 5 21.5z"></path>
                 <path d="M5 4.5v14A2.5 2.5 0 0 1 7.5 16H20"></path>
-                <path d="M9 6h7"></path>
-                <path d="M9 9h7"></path>
+                <path d="M9 6h7M9 9h7"></path>
               </svg>
             </span>
-            <span class="book-card-copy">
-              <strong class="book-name">সুনান ইবনে মাজাহ</strong>
-              <span class="book-description">হাদিসের প্রসিদ্ধ সংকলন</span>
-            </span>
-            <svg class="book-arrow" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m9 18 6-6-6-6"></path>
-            </svg>
+            <span class="book-name" data-name="ibnmajah">সুনান ইবনে মাজাহ</span>
           </button>
 
           <button class="book-card" type="button" data-book="malik">
-            <span class="book-card-icon" aria-hidden="true">
+            <span class="book-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
                 <path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H20v17H7.5A2.5 2.5 0 0 0 5 21.5z"></path>
                 <path d="M5 4.5v14A2.5 2.5 0 0 1 7.5 16H20"></path>
-                <path d="M9 6h7"></path>
-                <path d="M9 9h7"></path>
+                <path d="M9 6h7M9 9h7"></path>
               </svg>
             </span>
-            <span class="book-card-copy">
-              <strong class="book-name">মুআত্তা ইমাম মালিক</strong>
-              <span class="book-description">প্রাচীন হাদিস সংকলন</span>
-            </span>
-            <svg class="book-arrow" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m9 18 6-6-6-6"></path>
-            </svg>
+            <span class="book-name" data-name="malik">মুআত্তা ইমাম মালিক</span>
           </button>
 
           <button class="book-card" type="button" data-book="nawawi">
-            <span class="book-card-icon" aria-hidden="true">
+            <span class="book-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
                 <path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H20v17H7.5A2.5 2.5 0 0 0 5 21.5z"></path>
                 <path d="M5 4.5v14A2.5 2.5 0 0 1 7.5 16H20"></path>
-                <path d="M9 6h7"></path>
-                <path d="M9 9h7"></path>
+                <path d="M9 6h7M9 9h7"></path>
               </svg>
             </span>
-            <span class="book-card-copy">
-              <strong class="book-name">ইমাম নববীর ৪০ হাদিস</strong>
-              <span class="book-description">নির্বাচিত ৪০টি হাদিস</span>
-            </span>
-            <svg class="book-arrow" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m9 18 6-6-6-6"></path>
-            </svg>
+            <span class="book-name" data-name="nawawi">ইমাম নববীর ৪০ হাদিস</span>
           </button>
+
         </div>
       </section>
 
-      <!-- Selected book: all hadiths in one scrollable board -->
-      <section
-        class="list-screen"
-        id="listScreen"
-        aria-labelledby="listHeading"
-        hidden
-      >
-        <div class="list-board">
+      <!-- SECOND SCREEN: ONE SCROLLABLE HADITH BOARD -->
+      <section class="list-screen" id="listScreen" hidden>
+        <div class="content-board">
 
-          <div class="list-toolbar">
-            <div class="list-heading-wrap">
+          <div class="content-toolbar">
+            <div class="content-title-wrap">
               <h2 id="listHeading">হাদিসসমূহ</h2>
-              <p id="listSubtitle">হাদিসের তালিকা</p>
+              <p id="listSubtitle">আরবি পাঠ ও অনুবাদ</p>
             </div>
 
-            <div class="list-actions">
-              <button
-                class="icon-button search-toggle"
-                id="searchToggle"
-                type="button"
-                aria-label="হাদিস খুঁজুন"
-                aria-expanded="false"
-                aria-controls="searchPanel"
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <circle cx="10.8" cy="10.8" r="6.8"></circle>
-                  <path d="m16 16 4.5 4.5"></path>
-                </svg>
-              </button>
-            </div>
+            <button
+              class="search-toggle icon-button"
+              id="searchToggle"
+              type="button"
+              aria-label="হাদিস খুঁজুন"
+              aria-expanded="false"
+              aria-controls="searchPanel"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="10.8" cy="10.8" r="6.8"></circle>
+                <path d="m16 16 4.5 4.5"></path>
+              </svg>
+            </button>
           </div>
 
           <form class="search-panel" id="searchPanel" hidden>
-            <label class="visually-hidden" for="hadithSearch">
-              হাদিস খুঁজুন
-            </label>
             <input
               id="hadithSearch"
               type="search"
               autocomplete="off"
-              placeholder="আরবি বা অনুবাদ দিয়ে খুঁজুন…"
+              aria-label="হাদিস খুঁজুন"
+              placeholder="হাদিস খুঁজুন…"
             >
             <button
-              class="search-clear"
+              class="search-clear icon-button"
               id="clearSearch"
               type="button"
               aria-label="সার্চ মুছুন"
             >
               <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="m18 6-12 12"></path>
-                <path d="m6 6 12 12"></path>
+                <path d="m18 6-12 12M6 6l12 12"></path>
               </svg>
             </button>
           </form>
@@ -292,25 +195,11 @@
             হাদিস লোড হচ্ছে…
           </div>
 
-          <div
-            class="hadith-list"
-            id="hadithList"
-            aria-live="polite"
-          ></div>
+          <div class="hadith-list" id="hadithList"></div>
 
-          <div class="list-empty" id="listEmpty" hidden>
-            <span class="empty-symbol" aria-hidden="true">⌕</span>
-            <h3 id="emptyTitle">কোনো হাদিস পাওয়া যায়নি</h3>
-            <p id="emptyDescription">অন্য শব্দ দিয়ে আবার চেষ্টা করুন।</p>
-          </div>
-
-          <div class="list-error" id="listError" hidden>
-            <span class="error-symbol" aria-hidden="true">!</span>
-            <h3 id="errorTitle">হাদিস লোড করা যায়নি</h3>
-            <p id="errorDescription">
-              ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।
-            </p>
-            <button class="retry-button" id="retryHadith" type="button">
+          <div class="list-message" id="listMessage" hidden>
+            <p id="messageText"></p>
+            <button type="button" id="retryButton" class="retry-button">
               আবার চেষ্টা করুন
             </button>
           </div>
@@ -318,19 +207,16 @@
           <div class="list-bottom" id="listBottom" hidden>
             <span id="loadedCount"></span>
           </div>
+
         </div>
       </section>
 
     </main>
 
     <footer class="hadith-footer">
-      <span class="footer-mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 3 14.2 8.8 20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"></path>
-          <path d="m19 15 .9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9z"></path>
-        </svg>
+      <span class="footer-message" id="footerMessage">
+        জ্ঞান অর্জন করুন, আমল করুন
       </span>
-      <span id="footerText">জ্ঞান অর্জন করুন, আমল করুন</span>
     </footer>
 
   </div>
