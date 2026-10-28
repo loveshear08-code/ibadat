@@ -1,12 +1,13 @@
+
 /* ========================================================
-   IBADAT TASBIH — FRESH RESPONSIVE CSS
-   Page background : main-bg.jpg (floral)
-   Zikr background : hero-bg.jpg (mosque)
+   IBADAT TASBIH — RESPONSIVE THEME CSS
+   Page background : ../assets/main-bg.jpg
+   Zikr background : ../assets/hero-bg.jpg
    Themes          : Classic, Royal, Rose, Pista
-   Supports        : Light mode, dark mode, mobile screens
+   Modes           : Light and Dark
    ======================================================== */
 
-/* -------------------- 1. Theme variables -------------------- */
+/* -------------------- 1. Base theme -------------------- */
 
 :root {
   color-scheme: light;
@@ -15,34 +16,38 @@
   --footer-height: 48px;
 
   --page-padding: 8px;
-  --page-gap: 10px;
+  --page-gap: 8px;
   --content-gap: 8px;
 
   --primary: #123d2c;
   --primary-deep: #0b2c20;
-  --gold: #c6a45b;
-  --gold-light: #e6d29b;
+  --accent: #c6a45b;
+  --accent-light: #e6d29b;
 
-  --page-tint: rgba(255, 250, 235, 0.64);
-  --board-tint: rgba(255, 250, 235, 0.76);
-  --zikr-tint: rgba(255, 250, 235, 0.70);
+  --page-tint: rgba(255, 250, 235, 0.38);
+  --board-tint: rgba(255, 250, 235, 0.70);
 
-  --board-border: rgba(198, 164, 91, 0.90);
+  /* Keep the mosque image clearly visible. */
+  --zikr-tint: rgba(255, 249, 231, 0.38);
+
+  --board-border: rgba(198, 164, 91, 0.88);
   --board-text: #173c2d;
   --muted-text: #667568;
 
-  --progress-track: rgba(18, 61, 44, 0.13);
+  --progress-track: rgba(18, 61, 44, 0.14);
   --progress-fill: #426d4b;
 
   --tap-background: #eee4c7;
   --tap-border: #c6a45b;
 
   --board-radius: 20px;
-  --header-radius: 24px;
+  --bar-radius: 12px;
 
-  --board-shadow: 0 4px 14px rgba(57, 46, 22, 0.07);
+  --board-shadow: 0 3px 12px rgba(57, 46, 22, 0.07);
   --transition: 220ms ease;
 }
+
+/* -------------------- 2. Theme palettes -------------------- */
 
 /* Classic */
 
@@ -52,18 +57,18 @@ html.theme-classic,
 body.theme-classic {
   --primary: #123d2c;
   --primary-deep: #0b2c20;
-  --gold: #c6a45b;
-  --gold-light: #e6d29b;
+  --accent: #c6a45b;
+  --accent-light: #e6d29b;
 
-  --page-tint: rgba(255, 250, 235, 0.64);
-  --board-tint: rgba(255, 250, 235, 0.76);
-  --zikr-tint: rgba(255, 250, 235, 0.70);
+  --page-tint: rgba(255, 250, 235, 0.38);
+  --board-tint: rgba(255, 250, 235, 0.70);
+  --zikr-tint: rgba(255, 249, 231, 0.38);
 
-  --board-border: rgba(198, 164, 91, 0.90);
+  --board-border: rgba(198, 164, 91, 0.88);
   --board-text: #173c2d;
   --muted-text: #667568;
 
-  --progress-track: rgba(18, 61, 44, 0.13);
+  --progress-track: rgba(18, 61, 44, 0.14);
   --progress-fill: #426d4b;
 
   --tap-background: #eee4c7;
@@ -78,18 +83,18 @@ html.theme-royal,
 body.theme-royal {
   --primary: #38265f;
   --primary-deep: #24163f;
-  --gold: #c7a4e8;
-  --gold-light: #e6d4f5;
+  --accent: #b597e0;
+  --accent-light: #e6d4f5;
 
-  --page-tint: rgba(245, 239, 255, 0.64);
-  --board-tint: rgba(245, 239, 255, 0.77);
-  --zikr-tint: rgba(245, 239, 255, 0.70);
+  --page-tint: rgba(245, 239, 255, 0.38);
+  --board-tint: rgba(245, 239, 255, 0.72);
+  --zikr-tint: rgba(245, 239, 255, 0.39);
 
   --board-border: rgba(181, 151, 224, 0.92);
   --board-text: #30234d;
   --muted-text: #756786;
 
-  --progress-track: rgba(56, 38, 95, 0.13);
+  --progress-track: rgba(56, 38, 95, 0.14);
   --progress-fill: #7254a0;
 
   --tap-background: #e8def5;
@@ -104,18 +109,18 @@ html.theme-rose,
 body.theme-rose {
   --primary: #77384a;
   --primary-deep: #542433;
-  --gold: #d19ba9;
-  --gold-light: #f0d4dc;
+  --accent: #cf97a4;
+  --accent-light: #f0d4dc;
 
-  --page-tint: rgba(255, 240, 241, 0.65);
-  --board-tint: rgba(255, 240, 241, 0.78);
-  --zikr-tint: rgba(255, 240, 241, 0.72);
+  --page-tint: rgba(255, 240, 241, 0.40);
+  --board-tint: rgba(255, 240, 241, 0.73);
+  --zikr-tint: rgba(255, 240, 241, 0.40);
 
   --board-border: rgba(207, 151, 164, 0.94);
   --board-text: #642f3c;
   --muted-text: #896772;
 
-  --progress-track: rgba(119, 56, 74, 0.13);
+  --progress-track: rgba(119, 56, 74, 0.14);
   --progress-fill: #a65c72;
 
   --tap-background: #f5dfe5;
@@ -130,30 +135,27 @@ html.theme-pista,
 body.theme-pista {
   --primary: #345b37;
   --primary-deep: #203f25;
-  --gold: #b8a25a;
-  --gold-light: #d9cc8c;
+  --accent: #b8a25a;
+  --accent-light: #d9cc8c;
 
-  --page-tint: rgba(241, 249, 227, 0.64);
-  --board-tint: rgba(241, 249, 227, 0.77);
-  --zikr-tint: rgba(241, 249, 227, 0.70);
+  --page-tint: rgba(241, 249, 227, 0.38);
+  --board-tint: rgba(241, 249, 227, 0.72);
+  --zikr-tint: rgba(241, 249, 227, 0.39);
 
   --board-border: rgba(184, 162, 90, 0.94);
   --board-text: #30482c;
   --muted-text: #667a5b;
 
-  --progress-track: rgba(52, 91, 55, 0.13);
+  --progress-track: rgba(52, 91, 55, 0.14);
   --progress-fill: #57814d;
 
   --tap-background: #e1edcf;
   --tap-border: #b8a25a;
 }
 
-/* -------------------- 2. Dark mode -------------------- */
+/* -------------------- 3. Dark mode -------------------- */
 
-/*
-  Supports common global dark-mode attributes.
-  JS must synchronize these attributes with theme.js.
-*/
+/* Supports common global mode attributes. */
 
 html[data-mode="dark"],
 body[data-mode="dark"],
@@ -169,12 +171,12 @@ body[data-dark-mode="true"] {
 
   --primary: #d9e8d4;
   --primary-deep: #edf3df;
-  --gold: #c8aa63;
-  --gold-light: #f0d99a;
+  --accent: #c8aa63;
+  --accent-light: #f0d99a;
 
-  --page-tint: rgba(15, 26, 20, 0.70);
-  --board-tint: rgba(19, 32, 24, 0.79);
-  --zikr-tint: rgba(19, 32, 24, 0.76);
+  --page-tint: rgba(12, 23, 17, 0.68);
+  --board-tint: rgba(19, 32, 24, 0.80);
+  --zikr-tint: rgba(19, 32, 24, 0.62);
 
   --board-border: rgba(200, 170, 99, 0.83);
   --board-text: #f0ead9;
@@ -186,10 +188,10 @@ body[data-dark-mode="true"] {
   --tap-background: #294432;
   --tap-border: #c8aa63;
 
-  --board-shadow: 0 4px 16px rgba(0, 0, 0, 0.20);
+  --board-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
 }
 
-/* -------------------- 3. Reset -------------------- */
+/* -------------------- 4. Reset and page -------------------- */
 
 * {
   box-sizing: border-box;
@@ -200,12 +202,13 @@ html {
   width: 100%;
   min-width: 0;
   min-height: 100%;
-
   margin: 0;
   background: #f5f0e4;
 }
 
 body {
+  position: relative;
+
   width: 100%;
   min-width: 0;
   min-height: 100vh;
@@ -245,18 +248,13 @@ img {
   display: none !important;
 }
 
-/* -------------------- 4. Full-page floral background -------------------- */
-
-/*
-  Fixed background remains visible behind every board.
-  Cream tint is applied separately to keep the image visible.
-*/
+/* -------------------- 5. Floral page background -------------------- */
 
 body::before {
   content: "";
 
   position: fixed;
-  z-index: 0;
+  z-index: -2;
   inset: 0;
 
   background-image: url("../assets/main-bg.jpg");
@@ -271,22 +269,20 @@ body::after {
   content: "";
 
   position: fixed;
-  z-index: 0;
+  z-index: -1;
   inset: 0;
 
   background: var(--page-tint);
 
   pointer-events: none;
 
-  transition: background-color var(--transition);
+  transition: background var(--transition);
 }
 
-/* -------------------- 5. App shell -------------------- */
+/* -------------------- 6. App shell -------------------- */
 
 #tasbihApp {
   position: relative;
-  z-index: 1;
-
   isolation: isolate;
 
   width: 100%;
@@ -306,13 +302,12 @@ body::after {
   overflow: hidden;
 
   color: var(--board-text);
-
   background: transparent;
 
   transition: color var(--transition);
 }
 
-/* -------------------- 6. Common board base -------------------- */
+/* -------------------- 7. Shared board base -------------------- */
 
 .board {
   position: relative;
@@ -330,13 +325,9 @@ body::after {
     box-shadow var(--transition);
 }
 
-/*
-  All five boards get their own tinted overlay.
-  The effect applies to header, zikr, counter, touch and footer.
-*/
+/* Header, counter, touch and footer surfaces. */
 
 .header::before,
-.zikr-board::before,
 .stats-board::before,
 .tap-board::before,
 .footer::before {
@@ -347,15 +338,14 @@ body::after {
   inset: 0;
 
   border-radius: inherit;
-
   background: var(--board-tint);
 
   pointer-events: none;
 
-  transition: background-color var(--transition);
+  transition: background var(--transition);
 }
 
-/* -------------------- 7. Header -------------------- */
+/* -------------------- 8. Header -------------------- */
 
 .header {
   flex: 0 0 var(--header-height);
@@ -369,11 +359,10 @@ body::after {
   justify-content: center;
 
   padding: 0 12px;
-
   overflow: hidden;
 
-  border-radius: var(--header-radius);
-  border-color: var(--gold);
+  border-radius: var(--bar-radius);
+  border-color: var(--accent);
 
   color: #fff8e7;
 
@@ -398,7 +387,6 @@ body::after {
 
 .page-title {
   max-width: 100%;
-
   margin: 0;
   padding: 0;
 
@@ -415,7 +403,7 @@ body::after {
   white-space: nowrap;
 }
 
-/* -------------------- 8. Main layout -------------------- */
+/* -------------------- 9. Main layout -------------------- */
 
 .page-container {
   flex: 1 1 auto;
@@ -426,21 +414,20 @@ body::after {
 
   display: flex;
   flex-direction: column;
-
   gap: var(--content-gap);
 
   overflow: hidden;
 }
 
-/* -------------------- 9. Zikr board -------------------- */
+/* -------------------- 10. Zikr board -------------------- */
 
 .zikr-board {
   /*
-    Give the zikr board more room than the touch board.
-    min-height: 0 allows proper sizing on short screens.
+    Allocate the most available space to the zikr board.
+    Counter and touch board remain compact.
   */
 
-  flex: 1.8 1 0;
+  flex: 1 1 0;
 
   width: 100%;
   min-width: 0;
@@ -451,18 +438,19 @@ body::after {
   justify-content: center;
 
   padding: 0;
-
   overflow: hidden;
 
   background: transparent;
 }
 
-/* Mosque photo layer */
+/* Mosque image must sit behind the content and overlay. */
 
 .zikr-background {
   position: absolute;
-  z-index: -3;
+  z-index: -1;
   inset: 0;
+
+  border-radius: inherit;
 
   background-image: url("../assets/hero-bg.jpg");
   background-position: center center;
@@ -472,23 +460,24 @@ body::after {
   pointer-events: none;
 }
 
-/* Theme-tinted translucent layer over mosque photo */
+/* Light cream overlay: deliberately less opaque. */
 
 .zikr-cream-overlay {
   position: absolute;
-  z-index: -2;
+  z-index: 0;
   inset: 0;
 
   border-radius: inherit;
 
   background: var(--zikr-tint);
 
-  -webkit-backdrop-filter: blur(1px);
-  backdrop-filter: blur(1px);
+  /* Removed blur so the mosque image stays clear. */
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 
   pointer-events: none;
 
-  transition: background-color var(--transition);
+  transition: background var(--transition);
 }
 
 .zikr-cream-overlay::after {
@@ -502,13 +491,13 @@ body::after {
   background:
     linear-gradient(
       180deg,
-      var(--zikr-tint),
-      transparent 45%,
-      var(--zikr-tint)
+      rgba(255, 255, 255, 0.04),
+      transparent 35%,
+      rgba(255, 255, 255, 0.07)
     );
-}
 
-/* Zikr text content */
+  pointer-events: none;
+}
 
 .zikr-content {
   position: relative;
@@ -520,13 +509,11 @@ body::after {
 
   display: flex;
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
 
   gap: 5px;
-
-  padding: 12px;
+  padding: 14px 12px;
 
   text-align: center;
 }
@@ -560,13 +547,11 @@ body::after {
   line-height: 1.7;
 
   text-align: center;
-
   overflow-wrap: anywhere;
 }
 
 .zikr-name {
   max-width: 100%;
-
   margin: 0;
 
   color: var(--primary);
@@ -579,12 +564,7 @@ body::after {
   overflow-wrap: anywhere;
 }
 
-/* -------------------- 10. Completion message and stars -------------------- */
-
-/*
-  Message appears above the Arabic zikr.
-  It is an overlay and does not change board height.
-*/
+/* -------------------- 11. Completion message and sparkles -------------------- */
 
 .message-slot {
   position: absolute;
@@ -599,7 +579,6 @@ body::after {
   justify-content: center;
 
   min-height: 0;
-
   margin: 0;
 
   pointer-events: none;
@@ -610,13 +589,12 @@ body::after {
   z-index: 7;
 
   max-width: 94%;
-
   padding: 7px 12px;
 
-  border: 1px solid var(--gold);
+  border: 1px solid var(--accent);
   border-radius: 12px;
 
-  color: var(--primary-deep);
+  color: var(--board-text);
   background: var(--board-tint);
 
   box-shadow: 0 3px 14px rgba(0, 0, 0, 0.12);
@@ -629,22 +607,16 @@ body::after {
   animation: zikr-message-in 320ms ease both;
 }
 
-/* Full-board sparkle overlay */
-
 .spark-layer {
   position: absolute;
-  z-index: 6;
-
+  z-index: 4;
   inset: 0;
 
   overflow: hidden;
-
   border-radius: inherit;
 
   pointer-events: none;
 }
-
-/* Individual sparkle elements created by JS */
 
 .spark-layer .spark,
 .spark-layer .sparkle {
@@ -653,7 +625,7 @@ body::after {
 
   display: block;
 
-  color: var(--gold-light);
+  color: var(--accent-light);
 
   text-shadow:
     0 0 4px rgba(255, 230, 150, 0.95),
@@ -664,13 +636,11 @@ body::after {
   animation: zikr-star-flight 1300ms ease-out forwards;
 }
 
-/* Sparkle burst that covers the whole zikr board */
-
 .zikr-board.spark-active::after {
   content: "";
 
   position: absolute;
-  z-index: 4;
+  z-index: 3;
   inset: 0;
 
   border-radius: inherit;
@@ -678,8 +648,8 @@ body::after {
   background:
     radial-gradient(
       circle at 50% 50%,
-      rgba(255, 232, 160, 0.36),
-      transparent 62%
+      rgba(255, 232, 160, 0.30),
+      transparent 65%
     );
 
   pointer-events: none;
@@ -733,7 +703,7 @@ body::after {
   }
 }
 
-/* -------------------- 11. Counter board -------------------- */
+/* -------------------- 12. Counter board -------------------- */
 
 .stats-board {
   flex: 0 0 auto;
@@ -743,12 +713,10 @@ body::after {
 
   display: flex;
   flex-direction: column;
-
   justify-content: center;
 
-  gap: 7px;
-
-  padding: 10px 12px;
+  gap: 6px;
+  padding: 9px 12px;
 
   overflow: hidden;
 
@@ -766,7 +734,7 @@ body::after {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 
-  gap: 10px;
+  gap: 8px;
 }
 
 .count-card {
@@ -774,12 +742,10 @@ body::after {
 
   display: flex;
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
 
   gap: 3px;
-
   padding: 2px 4px;
 
   text-align: center;
@@ -808,11 +774,8 @@ body::after {
   line-height: 1.3;
 
   font-variant-numeric: tabular-nums;
-
   overflow-wrap: anywhere;
 }
-
-/* Progress bar */
 
 .progress-bar {
   position: relative;
@@ -822,7 +785,6 @@ body::after {
   min-height: 7px;
 
   overflow: hidden;
-
   border-radius: 999px;
 
   background: var(--progress-track);
@@ -838,13 +800,11 @@ body::after {
     linear-gradient(
       90deg,
       var(--progress-fill),
-      var(--gold)
+      var(--accent)
     );
 
   transition: width 220ms ease;
 }
-
-/* Daily completed cycles */
 
 .today-info {
   width: 100%;
@@ -853,8 +813,8 @@ body::after {
   display: flex;
   align-items: center;
   justify-content: center;
-
   flex-wrap: wrap;
+
   gap: 5px;
 
   color: var(--muted-text);
@@ -875,12 +835,11 @@ body::after {
   font-variant-numeric: tabular-nums;
 }
 
-/* -------------------- 12. Touch board -------------------- */
+/* -------------------- 13. Touch board -------------------- */
 
 .tap-board {
   /*
-    Keep the button size unchanged.
-    Reduce the board's allocated height instead.
+    Reduce board height without deliberately reducing the button.
   */
 
   flex: 0 0 auto;
@@ -889,14 +848,13 @@ body::after {
   min-width: 0;
   min-height: 0;
 
-  height: clamp(150px, 23vh, 210px);
+  height: clamp(120px, 18vh, 165px);
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  padding: 5px;
-
+  padding: 4px;
   overflow: hidden;
 
   background: transparent;
@@ -919,10 +877,7 @@ body::after {
   margin: 0;
 }
 
-/*
-  Button dimensions deliberately match the previous design.
-  Do not shrink this button to fit the board.
-*/
+/* Keep the button's original responsive dimensions. */
 
 .tap-button {
   position: relative;
@@ -942,7 +897,6 @@ body::after {
   justify-content: center;
 
   padding: 0;
-
   overflow: hidden;
 
   border: 2px solid var(--tap-border);
@@ -957,7 +911,6 @@ body::after {
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
-
   touch-action: manipulation;
 
   transition:
@@ -973,7 +926,7 @@ body::after {
   position: absolute;
   inset: 5px;
 
-  border: 1px solid rgba(198, 164, 91, 0.4);
+  border: 1px solid rgba(198, 164, 91, 0.40);
   border-radius: 50%;
 
   pointer-events: none;
@@ -990,7 +943,6 @@ body::after {
   object-position: center;
 
   pointer-events: none;
-
   user-select: none;
   -webkit-user-drag: none;
 }
@@ -1004,7 +956,7 @@ body::after {
 }
 
 .tap-button:focus-visible {
-  outline: 3px solid var(--gold);
+  outline: 3px solid var(--accent);
   outline-offset: 4px;
 }
 
@@ -1014,7 +966,7 @@ body::after {
   transform: none;
 }
 
-/* -------------------- 13. Footer -------------------- */
+/* -------------------- 14. Footer -------------------- */
 
 .footer {
   flex: 0 0 var(--footer-height);
@@ -1028,11 +980,10 @@ body::after {
   justify-content: center;
 
   padding: 0 12px;
-
   overflow: hidden;
 
-  border-radius: var(--header-radius);
-  border-color: var(--gold);
+  border-radius: var(--bar-radius);
+  border-color: var(--accent);
 
   color: #fff8e7;
 
@@ -1075,14 +1026,18 @@ body::after {
   white-space: nowrap;
 }
 
-/* -------------------- 14. Dark mode refinements -------------------- */
+/* -------------------- 15. Dark mode text refinements -------------------- */
 
 html.dark-mode .zikr-heading,
 body.dark-mode .zikr-heading,
 html.dark .zikr-heading,
 body.dark .zikr-heading,
 html[data-mode="dark"] .zikr-heading,
-body[data-mode="dark"] .zikr-heading {
+body[data-mode="dark"] .zikr-heading,
+html[data-theme-mode="dark"] .zikr-heading,
+body[data-theme-mode="dark"] .zikr-heading,
+html[data-dark-mode="true"] .zikr-heading,
+body[data-dark-mode="true"] .zikr-heading {
   color: var(--board-text);
 }
 
@@ -1091,7 +1046,11 @@ body.dark-mode .zikr-arabic,
 html.dark .zikr-arabic,
 body.dark .zikr-arabic,
 html[data-mode="dark"] .zikr-arabic,
-body[data-mode="dark"] .zikr-arabic {
+body[data-mode="dark"] .zikr-arabic,
+html[data-theme-mode="dark"] .zikr-arabic,
+body[data-theme-mode="dark"] .zikr-arabic,
+html[data-dark-mode="true"] .zikr-arabic,
+body[data-dark-mode="true"] .zikr-arabic {
   color: var(--board-text);
 }
 
@@ -1100,11 +1059,15 @@ body.dark-mode .zikr-name,
 html.dark .zikr-name,
 body.dark .zikr-name,
 html[data-mode="dark"] .zikr-name,
-body[data-mode="dark"] .zikr-name {
+body[data-mode="dark"] .zikr-name,
+html[data-theme-mode="dark"] .zikr-name,
+body[data-theme-mode="dark"] .zikr-name,
+html[data-dark-mode="true"] .zikr-name,
+body[data-dark-mode="true"] .zikr-name {
   color: var(--board-text);
 }
 
-/* -------------------- 15. Small phones -------------------- */
+/* -------------------- 16. Small phones -------------------- */
 
 @media (max-width: 380px) {
   #tasbihApp {
@@ -1149,7 +1112,7 @@ body[data-mode="dark"] .zikr-name {
   }
 
   .tap-board {
-    height: 150px;
+    height: 120px;
     padding: 4px;
   }
 
@@ -1158,7 +1121,7 @@ body[data-mode="dark"] .zikr-name {
   }
 }
 
-/* -------------------- 16. Short screens -------------------- */
+/* -------------------- 17. Short screens -------------------- */
 
 @media (max-height: 700px) {
   #tasbihApp {
@@ -1171,7 +1134,7 @@ body[data-mode="dark"] .zikr-name {
   }
 
   .zikr-board {
-    flex: 1.7 1 0;
+    flex: 1 1 0;
   }
 
   .zikr-content {
@@ -1195,11 +1158,11 @@ body[data-mode="dark"] .zikr-name {
   }
 
   .tap-board {
-    height: 125px;
+    height: 105px;
   }
 }
 
-/* -------------------- 17. Very short screens -------------------- */
+/* -------------------- 18. Very short screens -------------------- */
 
 @media (max-height: 560px) {
   :root {
@@ -1221,7 +1184,7 @@ body[data-mode="dark"] .zikr-name {
   }
 
   .zikr-board {
-    flex: 1.7 1 0;
+    flex: 1 1 0;
   }
 
   .zikr-content {
@@ -1270,7 +1233,7 @@ body[data-mode="dark"] .zikr-name {
   }
 
   .tap-board {
-    height: 95px;
+    height: 80px;
     padding: 2px;
   }
 
@@ -1284,7 +1247,7 @@ body[data-mode="dark"] .zikr-name {
   }
 }
 
-/* -------------------- 18. Landscape phones -------------------- */
+/* -------------------- 19. Landscape phones -------------------- */
 
 @media (orientation: landscape) and (max-height: 520px) {
   #tasbihApp {
@@ -1337,7 +1300,7 @@ body[data-mode="dark"] .zikr-name {
   }
 }
 
-/* -------------------- 19. Accessibility -------------------- */
+/* -------------------- 20. Reduced motion -------------------- */
 
 @media (prefers-reduced-motion: reduce) {
   *,
