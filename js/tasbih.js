@@ -48,70 +48,70 @@
     return;
   }
 
-/* 1. Zikr steps */
+  /* 1. Zikr steps */
 
-const STEPS = [
-  {
-    id: "subhanallah",
-    target: 33,
-    arabic: "سُبْحَانَ اللّٰهِ",
-    names: {
-      bn: "সুবহানাল্লাহ",
-      en: "SubhanAllah",
-      hi: "सुब्हानअल्लाह"
+  const STEPS = [
+    {
+      id: "subhanallah",
+      target: 33,
+      arabic: "سُبْحَانَ اللّٰهِ",
+      names: {
+        bn: "সুবহানাল্লাহ",
+        en: "SubhanAllah",
+        hi: "सुब्हानअल्लाह"
+      },
+      completedMessages: {
+        bn: "সুবহানাল্লাহ সম্পন্ন হয়েছে",
+        en: "SubhanAllah completed",
+        hi: "सुब्हানअल्लाह पूरा हुआ"
+      }
     },
-    completedMessages: {
-      bn: "সুবহানাল্লাহ সম্পন্ন হয়েছে",
-      en: "SubhanAllah completed",
-      hi: "सुब्हানअल्लाह पूरा हुआ"
-    }
-  },
-  {
-    id: "alhamdulillah",
-    target: 33,
-    arabic: "الْحَمْدُ لِلّٰهِ",
-    names: {
-      bn: "আলহামদুলিল্লাহ",
-      en: "Alhamdulillah",
-      hi: "अल्हम्दुलिल्लाह"
+    {
+      id: "alhamdulillah",
+      target: 33,
+      arabic: "الْحَمْدُ لِلّٰهِ",
+      names: {
+        bn: "আলহামদুলিল্লাহ",
+        en: "Alhamdulillah",
+        hi: "अल्हम्दुलिल्लाह"
+      },
+      completedMessages: {
+        bn: "আলহামদুলিল্লাহ সম্পন্ন হয়েছে",
+        en: "Alhamdulillah completed",
+        hi: "अल्हम्दुलिल्लाह पूरा हुआ"
+      }
     },
-    completedMessages: {
-      bn: "আলহামদুলিল্লাহ সম্পন্ন হয়েছে",
-      en: "Alhamdulillah completed",
-      hi: "अल्हम्दुलिल्लाह पूरा हुआ"
-    }
-  },
-  {
-    id: "allahuakbar",
-    target: 33,
-    arabic: "اللّٰهُ أَكْبَرُ",
-    names: {
-      bn: "আল্লাহু আকবার",
-      en: "Allahu Akbar",
-      hi: "अल्लाहु अकबर"
+    {
+      id: "allahuakbar",
+      target: 33,
+      arabic: "اللّٰهُ أَكْبَرُ",
+      names: {
+        bn: "আল্লাহু আকবার",
+        en: "Allahu Akbar",
+        hi: "अल्लाहु अकबर"
+      },
+      completedMessages: {
+        bn: "আল্লাহু আকবার সম্পন্ন হয়েছে",
+        en: "Allahu Akbar completed",
+        hi: "अल्लाहु अकबर पूरा हुआ"
+      }
     },
-    completedMessages: {
-      bn: "আল্লাহু আকবার সম্পন্ন হয়েছে",
-      en: "Allahu Akbar completed",
-      hi: "अल्लाहु अकबर पूरा हुआ"
+    {
+      id: "dua",
+      target: 1,
+      arabic: "لَا إِلٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
+      names: {
+        bn: "লা ইলাহা ইল্লাল্লাহু ওয়াহদাহু লা শারীকা লাহু, লাহুল মুলকু ওয়া লাহুল হামদু, ওয়া হুয়া আলা কুল্লি শাইয়িন কাদীর",
+        en: "La ilaha illallahu wahdahu la sharika lahu, lahul mulku wa lahul hamdu wa huwa ala kulli shay'in qadir",
+        hi: "ला इलाहा इल्लल्लाहु वह्दहू ला शरीका लहू, लहुल मुल्कु व लहुल हम्दु व हुवा अला कुल्लि शय्इन कदीर"
+      },
+      completedMessages: {
+        bn: "মাশাআল্লাহ! সম্পূর্ণ তসবিহ শেষ হয়েছে",
+        en: "MashaAllah! Complete Tasbih finished",
+        hi: "माशाअल्लाह! पूरा तस्बीह चक्र समाप्त हुआ"
+      }
     }
-  },
-  {
-    id: "dua",
-    target: 1,
-    arabic: "لَا إِلٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
-    names: {
-      bn: "লা ইলাহা ইল্লাল্লাহু ওয়াহদাহু লা শারীকা লাহু, লাহুল মুলকু ওয়া লাহুল হামদু, ওয়া হুয়া আলা কুল্লি শাইয়িন কাদীর",
-      en: "La ilaha illallahu wahdahu la sharika lahu, lahul mulku wa lahul hamdu wa huwa ala kulli shay'in qadir",
-      hi: "ला इलाहा इल्लल्लाहु वह्दहू ला शरीका लहू, लहुल मुल्कु व लहुल हम्दु व हुवा अला कुल्लि शय्इन कदीर"
-    },
-    completedMessages: {
-      bn: "মাশাআল্লাহ! সম্পূর্ণ তসবিহ শেষ হয়েছে",
-      en: "MashaAllah! Complete Tasbih finished",
-      hi: "माशाअल्लाह! पूरा तस्बीह चक्र समाप्त हुआ"
-    }
-  }
-];
+  ];
 
   /* 2. Translations */
 
@@ -234,9 +234,7 @@ const STEPS = [
     return fallback;
   }
 
-  /* 4. Shared settings
-     Settings page uses appSettings.lang, appSettings.dark,
-     and appSettings.themeColor. Legacy aliases are also supported. */
+  /* 4. Shared settings */
 
   function getSettings() {
     const saved = readJSON("appSettings");
@@ -458,9 +456,7 @@ const STEPS = [
     return true;
   }
 
-  /* 7. Sound
-     Ordinary counts all use the same tone, including 30, 33, 66 and 99.
-     Full-cycle completion keeps its existing distinct completion tone. */
+  /* 7. Sound */
 
   let audioContext = null;
 
@@ -501,27 +497,27 @@ const STEPS = [
 
   /* 8. Vibration */
 
-function vibrateAtMilestone(count) {
-  if (!state.vibrationEnabled) return false;
-  if (typeof navigator.vibrate !== "function") return false;
+  function vibrateAtMilestone(count) {
+    if (!state.vibrationEnabled) return false;
+    if (typeof navigator.vibrate !== "function") return false;
 
-  const patterns = {
-    33: [100],
-    66: [100],
-    99: [100],
-    100: [70, 45, 100]
-  };
+    const patterns = {
+      33: [100],
+      66: [100],
+      99: [100],
+      100: [70, 45, 100]
+    };
 
-  const pattern = patterns[count];
-  if (!pattern) return false;
+    const pattern = patterns[count];
+    if (!pattern) return false;
 
-  try {
-    return navigator.vibrate(pattern);
-  } catch (error) {
-    console.warn("[IBADAT Tasbih] Vibration failed.", error);
-    return false;
+    try {
+      return navigator.vibrate(pattern);
+    } catch (error) {
+      console.warn("[IBADAT Tasbih] Vibration failed.", error);
+      return false;
+    }
   }
-}  
 
   /* 9. Completion message and full-board sparkles */
 
@@ -653,7 +649,6 @@ function vibrateAtMilestone(count) {
 
     const newTotal = state.totalCount + 1;
 
-    /* Call vibration at the actual milestone count. */
     vibrateAtMilestone(newTotal);
 
     if (newTotal === CYCLE_TOTAL) {
@@ -681,7 +676,6 @@ function vibrateAtMilestone(count) {
     state.stepIndex = derived.stepIndex;
     state.stepCount = derived.stepCount;
 
-    /* Cumulative ends: 33, 66, 99. */
     const completedEnds = [33, 66, 99];
 
     if (completedEnds.includes(newTotal)) {
@@ -689,7 +683,6 @@ function vibrateAtMilestone(count) {
       showStepCompletion(STEPS[completedIndex]);
     }
 
-    /* Every ordinary count has the same sound rhythm. */
     playTone(620, 42, 0.025);
 
     saveState();
