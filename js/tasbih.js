@@ -1,159 +1,40 @@
-/* =========================================================
-   IBADAT — TASBIH
-   Complete fresh JavaScript
+/* ==========================================================
+   IBADAT TASBIH — COMPLETE JAVASCRIPT
    Languages: Bengali, English, Hindi
    Zikr cycle: 33 + 33 + 33 + 1 = 100
+
    Features:
    - Persistent count and daily completion
-   - Automatic daily date rollover
-   - Shared theme and language settings
-   - Sound and vibration feedback
-   - Progress bar and completion animation
-   - Safe localStorage handling
-   ========================================================= */
+   - Vibration at 30, 33, 66, 99 and 100
+   - Sound feedback
+   - Completion messages above Arabic zikr
+   - Full zikr-board sparkle animation
+   - Theme, dark mode and language synchronization
+   - Automatic daily counter reset
+   - Progress bar
+   ========================================================== */
 
 (() => {
   "use strict";
 
-  /* ---------------------------------------------
-     1. Configuration
-     --------------------------------------------- */
+  /* ==================== 1. CONFIGURATION ==================== */
 
-  const CONFIG = {
-    cycleTotal: 100,
-    storageKey: "ibadatTasbihState",
-    legacyStorageKey: "tasbihState",
-    settingsKeys: [
-      "ibadatSettings",
-      "appSettings",
-      "settings"
-    ],
-    soundEnabledByDefault: true,
-    vibrationEnabledByDefault: true,
-    milestoneInterval: 10,
-    midnightCheckInterval: 60_000
-  };
+  const STORAGE_KEY = "ibadatTasbihState";
 
-  const STEPS = [
-    {
-      id: "subhanallah",
-      target: 33,
-      arabic: "سُبْحَانَ اللّٰهِ",
-      names: {
-        bn: "সুবহানাল্লাহ",
-        en: "SubhanAllah",
-        hi: "सुब्हानअल्लाह"
-      }
-    },
-    {
-      id: "alhamdulillah",
-      target: 33,
-      arabic: "الْحَمْدُ لِلّٰهِ",
-      names: {
-        bn: "আলহামদুলিল্লাহ",
-        en: "Alhamdulillah",
-        hi: "अल्हम्दुलिल्लाह"
-      }
-    },
-    {
-      id: "allahuakbar",
-      target: 33,
-      arabic: "اللّٰهُ أَكْبَرُ",
-      names: {
-        bn: "আল্লাহু আকবার",
-        en: "Allahu Akbar",
-        hi: "अल्लाहु अकबर"
-      }
-    },
-    {
-      id: "dua",
-      target: 1,
-      arabic: "لَا إِلٰهَ إِلَّا اللّٰهُ",
-      names: {
-        bn: "লা ইলাহা ইল্লাল্লাহ",
-        en: "La ilaha illallah",
-        hi: "ला इलाहा इल्लल्लाह"
-      }
-    }
+  const SETTINGS_KEYS = [
+    "ibadatSettings",
+    "appSettings",
+    "settings"
   ];
 
-  const TEXT = {
-    bn: {
-      title: "তসবিহ",
-      zikrHeading: "জিকির",
-      stepLabel: "বর্তমান ধাপ",
-      totalLabel: "মোট গণনা",
-      todayLabel: "আজ সম্পন্ন:",
-      times: "বার",
-      subtitle: "আল্লাহর জিকিরে প্রশান্ত হোক হৃদয়",
-      tapLabel: "তসবিহ গণনা করুন",
-      stepProgress: (count, total) =>
-        `${toDigits(count, "bn")} / ${toDigits(total, "bn")}`,
-      totalProgress: (count, total) =>
-        `${toDigits(count, "bn")} / ${toDigits(total, "bn")}`,
-      complete: "মাশাআল্লাহ! একটি পূর্ণ তসবিহ সম্পন্ন হয়েছে।",
-      allComplete: "মাশাআল্লাহ! তসবিহ সম্পন্ন হয়েছে।",
-      reset: "গণনা আবার শুরু হয়েছে।",
-      milestone: "আলহামদুলিল্লাহ!",
-      soundLabel: "সাউন্ড",
-      vibrationLabel: "ভাইব্রেশন"
-    },
-
-    en: {
-      title: "Tasbih",
-      zikrHeading: "Dhikr",
-      stepLabel: "Current step",
-      totalLabel: "Total count",
-      todayLabel: "Completed today:",
-      times: "times",
-      subtitle: "May the remembrance of Allah bring peace to your heart",
-      tapLabel: "Count Tasbih",
-      stepProgress: (count, total) =>
-        `${toDigits(count, "en")} / ${toDigits(total, "en")}`,
-      totalProgress: (count, total) =>
-        `${toDigits(count, "en")} / ${toDigits(total, "en")}`,
-      complete: "MashaAllah! One complete Tasbih cycle finished.",
-      allComplete: "MashaAllah! Tasbih completed.",
-      reset: "Counting has restarted.",
-      milestone: "Alhamdulillah!",
-      soundLabel: "Sound",
-      vibrationLabel: "Vibration"
-    },
-
-    hi: {
-      title: "तस्बीह",
-      zikrHeading: "ज़िक्र",
-      stepLabel: "वर्तमान चरण",
-      totalLabel: "कुल गिनती",
-      todayLabel: "आज पूरे हुए:",
-      times: "बार",
-      subtitle: "अल्लाह के ज़िक्र से दिल को सुकून मिले",
-      tapLabel: "तस्बीह गिनें",
-      stepProgress: (count, total) =>
-        `${toDigits(count, "hi")} / ${toDigits(total, "hi")}`,
-      totalProgress: (count, total) =>
-        `${toDigits(count, "hi")} / ${toDigits(total, "hi")}`,
-      complete: "माशाअल्लाह! एक पूरा तस्बीह चक्र समाप्त हुआ।",
-      allComplete: "माशाअल्लाह! तस्बीह पूरी हुई।",
-      reset: "गिनती फिर से शुरू हुई।",
-      milestone: "अल्हम्दुलिल्लाह!",
-      soundLabel: "ध्वनि",
-      vibrationLabel: "कंपन"
-    }
-  };
-
-  /* ---------------------------------------------
-     2. DOM references
-     --------------------------------------------- */
+  const CYCLE_TOTAL = 100;
 
   const $ = (id) => document.getElementById(id);
 
   const DOM = {
     app: $("tasbihApp"),
-    header: $("tasbihHeader"),
-    footer: $("tasbihFooter"),
-
     pageTitle: $("pageTitle"),
+
     zikrBoard: $("zikrBoard"),
     zikrLabel: $("zikrLabel"),
     zikrArabic: $("zikrArabic"),
@@ -186,39 +67,144 @@
     return;
   }
 
-  /* ---------------------------------------------
-     3. Utilities
-     --------------------------------------------- */
+  /* ==================== 2. ZIKR STEPS ==================== */
 
-  function safeReadJSON(key) {
-    try {
-      const raw = localStorage.getItem(key);
-
-      if (!raw) {
-        return null;
+  const STEPS = [
+    {
+      id: "subhanallah",
+      target: 33,
+      arabic: "سُبْحَانَ اللّٰهِ",
+      names: {
+        bn: "সুবহানাল্লাহ",
+        en: "SubhanAllah",
+        hi: "सुब्हानअल्लाह"
+      },
+      completedMessages: {
+        bn: "সুবহানাল্লাহ সম্পন্ন হয়েছে",
+        en: "SubhanAllah completed",
+        hi: "सुब्हानअल्लाह पूरा हुआ"
       }
+    },
+    {
+      id: "alhamdulillah",
+      target: 33,
+      arabic: "الْحَمْدُ لِلّٰهِ",
+      names: {
+        bn: "আলহামদুলিল্লাহ",
+        en: "Alhamdulillah",
+        hi: "अल्हम्दुलिल्लाह"
+      },
+      completedMessages: {
+        bn: "আলহামদুলিল্লাহ সম্পন্ন হয়েছে",
+        en: "Alhamdulillah completed",
+        hi: "अल्हम्दुलिल्लाह पूरा हुआ"
+      }
+    },
+    {
+      id: "allahuakbar",
+      target: 33,
+      arabic: "اللّٰهُ أَكْبَرُ",
+      names: {
+        bn: "আল্লাহু আকবার",
+        en: "Allahu Akbar",
+        hi: "अल्लाहु अकबर"
+      },
+      completedMessages: {
+        bn: "আল্লাহু আকবার সম্পন্ন হয়েছে",
+        en: "Allahu Akbar completed",
+        hi: "अल्लाहु अकबर पूरा हुआ"
+      }
+    },
+    {
+      id: "dua",
+      target: 1,
+      arabic: "لَا إِلٰهَ إِلَّا اللّٰهُ",
+      names: {
+        bn: "লা ইলাহা ইল্লাল্লাহ",
+        en: "La ilaha illallah",
+        hi: "ला इलाहा इल्लल्लाह"
+      },
+      completedMessages: {
+        bn: "মাশাআল্লাহ! সম্পূর্ণ তসবিহ শেষ হয়েছে",
+        en: "MashaAllah! Complete Tasbih finished",
+        hi: "माशाअल्लाह! पूरा तस्बीह चक्र समाप्त हुआ"
+      }
+    }
+  ];
 
-      return JSON.parse(raw);
+  /* ==================== 3. TRANSLATIONS ==================== */
+
+  const TEXT = {
+    bn: {
+      title: "তসবিহ",
+      zikrHeading: "জিকির",
+      stepLabel: "বর্তমান ধাপ",
+      totalLabel: "মোট গণনা",
+      todayLabel: "আজ সম্পন্ন:",
+      times: "বার",
+      subtitle: "আল্লাহর জিকিরে প্রশান্ত হোক হৃদয়",
+      tapLabel: "তসবিহ গণনা করুন",
+      completeCycle: "মাশাআল্লাহ! একটি পূর্ণ তসবিহ সম্পন্ন হয়েছে।",
+      milestone: "আলহামদুলিল্লাহ!",
+      stepProgress: (n, total) =>
+        `${digits(n, "bn")} / ${digits(total, "bn")}`,
+      totalProgress: (n, total) =>
+        `${digits(n, "bn")} / ${digits(total, "bn")}`
+    },
+
+    en: {
+      title: "Tasbih",
+      zikrHeading: "Dhikr",
+      stepLabel: "Current step",
+      totalLabel: "Total count",
+      todayLabel: "Completed today:",
+      times: "times",
+      subtitle: "May the remembrance of Allah bring peace to your heart",
+      tapLabel: "Count Tasbih",
+      completeCycle: "MashaAllah! One complete Tasbih cycle finished.",
+      milestone: "Alhamdulillah!",
+      stepProgress: (n, total) =>
+        `${digits(n, "en")} / ${digits(total, "en")}`,
+      totalProgress: (n, total) =>
+        `${digits(n, "en")} / ${digits(total, "en")}`
+    },
+
+    hi: {
+      title: "तस्बीह",
+      zikrHeading: "ज़िक्र",
+      stepLabel: "वर्तमान चरण",
+      totalLabel: "कुल गिनती",
+      todayLabel: "आज पूरे हुए:",
+      times: "बार",
+      subtitle: "अल्लाह के ज़िक्र से दिल को सुकून मिले",
+      tapLabel: "तस्बीह गिनें",
+      completeCycle: "माशाअल्लाह! पूरा तस्बीह चक्र समाप्त हुआ।",
+      milestone: "अल्हम्दुलिल्लाह!",
+      stepProgress: (n, total) =>
+        `${digits(n, "hi")} / ${digits(total, "hi")}`,
+      totalProgress: (n, total) =>
+        `${digits(n, "hi")} / ${digits(total, "hi")}`
+    }
+  };
+
+  /* ==================== 4. UTILITIES ==================== */
+
+  function readJSON(key) {
+    try {
+      const value = localStorage.getItem(key);
+      return value ? JSON.parse(value) : null;
     } catch (error) {
-      console.warn(
-        `[IBADAT Tasbih] Could not read "${key}".`,
-        error
-      );
-
+      console.warn("[IBADAT Tasbih] Storage read failed.", error);
       return null;
     }
   }
 
-  function safeWriteJSON(key, value) {
+  function writeJSON(key, value) {
     try {
       localStorage.setItem(key, JSON.stringify(value));
       return true;
     } catch (error) {
-      console.warn(
-        `[IBADAT Tasbih] Could not save "${key}".`,
-        error
-      );
-
+      console.warn("[IBADAT Tasbih] Storage save failed.", error);
       return false;
     }
   }
@@ -233,21 +219,24 @@
     return Math.min(max, Math.max(min, Math.floor(number)));
   }
 
-  function toDigits(value, language) {
-    const number = String(value);
-
-    const digitMaps = {
+  function digits(value, lang) {
+    const maps = {
       bn: "০১২৩৪৫৬৭৮৯",
       hi: "०१२३४५६७८९",
       en: "0123456789"
     };
 
-    const digits = digitMaps[language] || digitMaps.en;
+    const map = maps[lang] || maps.en;
 
-    return number.replace(/\d/g, (digit) => digits[Number(digit)]);
+    return String(value).replace(
+      /\d/g,
+      (digit) => map[Number(digit)]
+    );
   }
 
-  function getLocalDateKey(date = new Date()) {
+  function todayKey() {
+    const date = new Date();
+
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
@@ -255,26 +244,13 @@
     return `${year}-${month}-${day}`;
   }
 
-  function getStoredSettings() {
-    for (const key of CONFIG.settingsKeys) {
-      const settings = safeReadJSON(key);
-
-      if (
-        settings &&
-        typeof settings === "object" &&
-        !Array.isArray(settings)
-      ) {
-        return settings;
-      }
+  function firstValue(object, keys) {
+    if (!object || typeof object !== "object") {
+      return undefined;
     }
 
-    return {};
-  }
-
-  function firstDefined(object, keys) {
     for (const key of keys) {
       if (
-        object &&
         Object.prototype.hasOwnProperty.call(object, key) &&
         object[key] !== undefined &&
         object[key] !== null
@@ -286,90 +262,7 @@
     return undefined;
   }
 
-  /* ---------------------------------------------
-     4. Language and shared settings
-     --------------------------------------------- */
-
-  function normalizeLanguage(value) {
-    if (typeof value !== "string") {
-      return "bn";
-    }
-
-    const normalized = value.trim().toLowerCase();
-
-    if (
-      normalized === "en" ||
-      normalized.startsWith("en-") ||
-      normalized === "english"
-    ) {
-      return "en";
-    }
-
-    if (
-      normalized === "hi" ||
-      normalized.startsWith("hi-") ||
-      normalized === "hindi"
-    ) {
-      return "hi";
-    }
-
-    if (
-      normalized === "bn" ||
-      normalized.startsWith("bn-") ||
-      normalized === "bangla" ||
-      normalized === "bengali"
-    ) {
-      return "bn";
-    }
-
-    return "bn";
-  }
-
-  function getLanguage() {
-    const settings = getStoredSettings();
-
-    const language = firstDefined(settings, [
-      "language",
-      "lang",
-      "appLanguage",
-      "selectedLanguage"
-    ]);
-
-    return normalizeLanguage(language);
-  }
-
-  function normalizeTheme(value) {
-    if (typeof value !== "string") {
-      return "classic";
-    }
-
-    const normalized = value.trim().toLowerCase();
-
-    if (
-      normalized.includes("royal") ||
-      normalized.includes("purple")
-    ) {
-      return "royal";
-    }
-
-    if (
-      normalized.includes("rose") ||
-      normalized.includes("pink")
-    ) {
-      return "rose";
-    }
-
-    if (
-      normalized.includes("pista") ||
-      normalized.includes("green")
-    ) {
-      return "pista";
-    }
-
-    return "classic";
-  }
-
-  function normalizeBoolean(value, fallback) {
+  function toBoolean(value, fallback) {
     if (typeof value === "boolean") {
       return value;
     }
@@ -393,81 +286,143 @@
     return fallback;
   }
 
-  function readSharedPreferences() {
-    const settings = getStoredSettings();
+  /* ==================== 5. SHARED SETTINGS ==================== */
 
-    const themeValue = firstDefined(settings, [
+  function getSettings() {
+    for (const key of SETTINGS_KEYS) {
+      const settings = readJSON(key);
+
+      if (
+        settings &&
+        typeof settings === "object" &&
+        !Array.isArray(settings)
+      ) {
+        return settings;
+      }
+    }
+
+    return {};
+  }
+
+  function normalizeLanguage(value) {
+    const language = String(value || "bn").toLowerCase();
+
+    if (
+      language === "en" ||
+      language.startsWith("en-") ||
+      language === "english"
+    ) {
+      return "en";
+    }
+
+    if (
+      language === "hi" ||
+      language.startsWith("hi-") ||
+      language === "hindi"
+    ) {
+      return "hi";
+    }
+
+    return "bn";
+  }
+
+  function normalizeTheme(value) {
+    const theme = String(value || "classic").toLowerCase();
+
+    if (theme.includes("royal") || theme.includes("purple")) {
+      return "royal";
+    }
+
+    if (theme.includes("rose") || theme.includes("pink")) {
+      return "rose";
+    }
+
+    if (theme.includes("pista") || theme.includes("green")) {
+      return "pista";
+    }
+
+    return "classic";
+  }
+
+  function readPreferences() {
+    const settings = getSettings();
+
+    const theme = firstValue(settings, [
       "theme",
       "colorTheme",
       "selectedTheme",
       "appTheme"
     ]);
 
-    const modeValue = firstDefined(settings, [
+    const language = firstValue(settings, [
+      "language",
+      "lang",
+      "appLanguage",
+      "selectedLanguage"
+    ]);
+
+    const mode = firstValue(settings, [
       "mode",
       "themeMode",
       "appearance",
       "colorMode"
     ]);
 
-    const darkValue = firstDefined(settings, [
+    const dark = firstValue(settings, [
       "darkMode",
       "isDarkMode",
       "dark",
       "isDark"
     ]);
 
-    const soundValue = firstDefined(settings, [
-      "sound",
+    const sound = firstValue(settings, [
       "soundEnabled",
+      "sound",
       "enableSound",
       "tasbihSound"
     ]);
 
-    const vibrationValue = firstDefined(settings, [
-      "vibration",
+    const vibration = firstValue(settings, [
       "vibrationEnabled",
+      "vibration",
       "enableVibration",
       "hapticFeedback"
     ]);
 
-    const modeIsDark =
-      typeof modeValue === "string" &&
-      modeValue.toLowerCase().includes("dark");
-
     return {
-      language: getLanguage(),
-      theme: normalizeTheme(themeValue),
+      theme: normalizeTheme(theme),
+      language: normalizeLanguage(language),
 
-      darkMode: normalizeBoolean(
-        darkValue,
-        modeIsDark
+      darkMode: toBoolean(
+        dark,
+        typeof mode === "string" &&
+          mode.toLowerCase().includes("dark")
       ),
 
-      soundEnabled: normalizeBoolean(
-        soundValue,
-        CONFIG.soundEnabledByDefault
-      ),
-
-      vibrationEnabled: normalizeBoolean(
-        vibrationValue,
-        CONFIG.vibrationEnabledByDefault
-      )
+      soundEnabled: toBoolean(sound, true),
+      vibrationEnabled: toBoolean(vibration, true)
     };
   }
 
-  let preferences = readSharedPreferences();
+  let preferences = readPreferences();
   let language = preferences.language;
   let words = TEXT[language];
 
   function applyTheme() {
-    const theme = preferences.theme;
-
     const root = document.documentElement;
     const body = document.body;
 
-    root.dataset.theme = theme;
-    body.dataset.theme = theme;
+    root.dataset.theme = preferences.theme;
+    body.dataset.theme = preferences.theme;
+
+    root.dataset.mode = preferences.darkMode ? "dark" : "light";
+    body.dataset.mode = preferences.darkMode ? "dark" : "light";
+
+    root.dataset.themeMode = root.dataset.mode;
+    body.dataset.themeMode = body.dataset.mode;
+
+    root.dataset.darkMode = String(preferences.darkMode);
+    body.dataset.darkMode = String(preferences.darkMode);
 
     root.classList.remove(
       "theme-classic",
@@ -483,8 +438,8 @@
       "theme-pista"
     );
 
-    root.classList.add(`theme-${theme}`);
-    body.classList.add(`theme-${theme}`);
+    root.classList.add(`theme-${preferences.theme}`);
+    body.classList.add(`theme-${preferences.theme}`);
 
     root.classList.toggle("dark-mode", preferences.darkMode);
     body.classList.toggle("dark-mode", preferences.darkMode);
@@ -492,156 +447,29 @@
     root.classList.toggle("dark", preferences.darkMode);
     body.classList.toggle("dark", preferences.darkMode);
 
-    root.dataset.mode = preferences.darkMode ? "dark" : "light";
-    body.dataset.mode = preferences.darkMode ? "dark" : "light";
+    const meta = document.querySelector('meta[name="theme-color"]');
 
-    root.dataset.themeMode = preferences.darkMode ? "dark" : "light";
-    body.dataset.themeMode = preferences.darkMode ? "dark" : "light";
-
-    root.dataset.darkMode = String(preferences.darkMode);
-    body.dataset.darkMode = String(preferences.darkMode);
-
-    const themeColor = preferences.darkMode
-      ? "#101b16"
-      : getComputedStyle(root).getPropertyValue("--primary").trim() ||
-        "#123d2c";
-
-    const themeMeta = document.querySelector('meta[name="theme-color"]');
-
-    if (themeMeta) {
-      themeMeta.setAttribute("content", themeColor);
+    if (meta) {
+      meta.content = preferences.darkMode
+        ? "#101b16"
+        : "#123d2c";
     }
   }
 
-  /* ---------------------------------------------
-     5. Persistent counting state
-     --------------------------------------------- */
+  /* ==================== 6. SAVED STATE ==================== */
 
-  function createInitialState() {
-    return {
-      version: 2,
-      stepIndex: 0,
-      stepCount: 0,
-      totalCount: 0,
-      dailyCompletions: 0,
-      dailyDate: getLocalDateKey(),
-      soundEnabled: preferences.soundEnabled,
-      vibrationEnabled: preferences.vibrationEnabled
-    };
-  }
-
-  function normalizeState(saved) {
-    const initial = createInitialState();
-
-    if (!saved || typeof saved !== "object") {
-      return initial;
-    }
-
-    const state = {
-      ...initial,
-      ...saved
-    };
-
-    state.totalCount = clamp(
-      state.totalCount,
-      0,
-      CONFIG.cycleTotal
-    );
-
-    state.stepIndex = clamp(
-      state.stepIndex,
-      0,
-      STEPS.length - 1
-    );
-
-    state.stepCount = clamp(
-      state.stepCount,
-      0,
-      STEPS[state.stepIndex].target
-    );
-
-    state.dailyCompletions = clamp(
-      state.dailyCompletions,
-      0,
-      1_000_000_000
-    );
-
-    if (typeof state.dailyDate !== "string") {
-      state.dailyDate = getLocalDateKey();
-    }
-
-    if (state.totalCount >= CONFIG.cycleTotal) {
-      state.totalCount = 0;
-      state.stepIndex = 0;
-      state.stepCount = 0;
-    }
-
-    /*
-     * Correct step state if a saved value is inconsistent.
-     * The current step is derived from totalCount.
-     */
-
-    const derived = deriveStepFromTotal(state.totalCount);
-
-    state.stepIndex = derived.stepIndex;
-    state.stepCount = derived.stepCount;
-
-    state.soundEnabled = normalizeBoolean(
-      state.soundEnabled,
-      preferences.soundEnabled
-    );
-
-    state.vibrationEnabled = normalizeBoolean(
-      state.vibrationEnabled,
-      preferences.vibrationEnabled
-    );
-
-    return state;
-  }
-
-  function loadState() {
-    let saved = safeReadJSON(CONFIG.storageKey);
-
-    if (!saved) {
-      saved = safeReadJSON(CONFIG.legacyStorageKey);
-    }
-
-    return normalizeState(saved);
-  }
-
-  let state = loadState();
-
-  function saveState() {
-    return safeWriteJSON(CONFIG.storageKey, {
-      version: 2,
-      stepIndex: state.stepIndex,
-      stepCount: state.stepCount,
-      totalCount: state.totalCount,
-      dailyCompletions: state.dailyCompletions,
-      dailyDate: state.dailyDate,
-      soundEnabled: state.soundEnabled,
-      vibrationEnabled: state.vibrationEnabled
-    });
-  }
-
-  /* ---------------------------------------------
-     6. Derive the current step
-     --------------------------------------------- */
-
-  function deriveStepFromTotal(total) {
-    let remaining = clamp(total, 0, CONFIG.cycleTotal);
+  function deriveStep(total) {
+    let remaining = clamp(total, 0, CYCLE_TOTAL);
 
     for (let index = 0; index < STEPS.length; index += 1) {
-      const target = STEPS[index].target;
-
-      if (remaining < target) {
+      if (remaining < STEPS[index].target) {
         return {
           stepIndex: index,
           stepCount: remaining
         };
       }
 
-      remaining -= target;
+      remaining -= STEPS[index].target;
     }
 
     return {
@@ -650,19 +478,82 @@
     };
   }
 
-  function syncStepFromTotal() {
-    const derived = deriveStepFromTotal(state.totalCount);
+  function initialState() {
+    return {
+      totalCount: 0,
+      stepIndex: 0,
+      stepCount: 0,
+      dailyCompletions: 0,
+      dailyDate: todayKey(),
+      soundEnabled: preferences.soundEnabled,
+      vibrationEnabled: preferences.vibrationEnabled
+    };
+  }
+
+  function loadState() {
+    const saved =
+      readJSON(STORAGE_KEY) ||
+      readJSON("tasbihState");
+
+    if (!saved || typeof saved !== "object") {
+      return initialState();
+    }
+
+    const state = {
+      ...initialState(),
+      ...saved
+    };
+
+    state.totalCount = clamp(state.totalCount, 0, 99);
+
+    state.dailyCompletions = clamp(
+      state.dailyCompletions,
+      0,
+      1_000_000_000
+    );
+
+    const derived = deriveStep(state.totalCount);
 
     state.stepIndex = derived.stepIndex;
     state.stepCount = derived.stepCount;
+
+    state.dailyDate =
+      typeof state.dailyDate === "string"
+        ? state.dailyDate
+        : todayKey();
+
+    state.soundEnabled = toBoolean(
+      state.soundEnabled,
+      preferences.soundEnabled
+    );
+
+    state.vibrationEnabled = toBoolean(
+      state.vibrationEnabled,
+      preferences.vibrationEnabled
+    );
+
+    return state;
   }
 
-  /* ---------------------------------------------
-     7. Date rollover
-     --------------------------------------------- */
+  let state = loadState();
+
+  function saveState() {
+    return writeJSON(STORAGE_KEY, {
+      version: 3,
+      totalCount: state.totalCount,
+      stepIndex: state.stepIndex,
+      stepCount: state.stepCount,
+      dailyCompletions: state.dailyCompletions,
+      dailyDate: state.dailyDate,
+      soundEnabled: state.soundEnabled,
+      vibrationEnabled: state.vibrationEnabled
+    });
+  }
+
+  /* ==================== 7. DAILY RESET ==================== */
 
   function checkDailyReset() {
-    const today = getLocalDateKey();
+    const today = todayKey();
 
     if (state.dailyDate === today) {
       return false;
@@ -672,18 +563,16 @@
     state.dailyCompletions = 0;
 
     saveState();
-    updateUI();
+    render();
 
     return true;
   }
 
-  /* ---------------------------------------------
-     8. Audio and vibration
-     --------------------------------------------- */
+  /* ==================== 8. SOUND ==================== */
 
   let audioContext = null;
 
-  function playTone(frequency = 660, duration = 55, volume = 0.035) {
+  function playTone(frequency = 620, duration = 50, volume = 0.03) {
     if (!state.soundEnabled) {
       return;
     }
@@ -729,11 +618,13 @@
         audioContext.currentTime + duration / 1000
       );
     } catch (error) {
-      console.warn("[IBADAT Tasbih] Audio unavailable.", error);
+      console.warn("[IBADAT Tasbih] Sound unavailable.", error);
     }
   }
 
-  function vibrate(pattern = 12) {
+  /* ==================== 9. VIBRATION ==================== */
+
+  function vibrateAtMilestone(count) {
     if (!state.vibrationEnabled) {
       return;
     }
@@ -742,120 +633,137 @@
       return;
     }
 
+    /*
+     * Explicit milestone patterns:
+     * 30: short
+     * 33: step completed
+     * 66: second step completed
+     * 99: third step completed
+     * 100: complete cycle
+     */
+
+    const patterns = {
+      30:  [45],
+      33:  [35, 35, 55],
+      66:  [45, 40, 65],
+      99:  [50, 40, 75],
+      100: [80, 50, 120]
+    };
+
+    const pattern = patterns[count];
+
+    if (!pattern) {
+      return;
+    }
+
     try {
       navigator.vibrate(pattern);
-    } catch {
-      // Vibration may be restricted by the browser or device.
+    } catch (error) {
+      console.warn("[IBADAT Tasbih] Vibration failed.", error);
     }
   }
 
-  /* ---------------------------------------------
-     9. Completion message and sparks
-     --------------------------------------------- */
+  /* ==================== 10. BOARD SPARKLES ==================== */
 
-  let messageTimeout = null;
-  let sparkTimeout = null;
+  let sparkleTimer = null;
+  let messageTimer = null;
 
-  function clearCompletionMessage() {
-    if (messageTimeout !== null) {
-      window.clearTimeout(messageTimeout);
-      messageTimeout = null;
-    }
-
-    if (sparkTimeout !== null) {
-      window.clearTimeout(sparkTimeout);
-      sparkTimeout = null;
-    }
-
-    if (DOM.completeMessage) {
-      DOM.completeMessage.hidden = true;
-      DOM.completeMessage.textContent = "";
+  function clearSparkles() {
+    if (sparkleTimer !== null) {
+      window.clearTimeout(sparkleTimer);
+      sparkleTimer = null;
     }
 
     if (DOM.sparkLayer) {
       DOM.sparkLayer.replaceChildren();
     }
+
+    if (DOM.zikrBoard) {
+      DOM.zikrBoard.classList.remove("spark-active");
+    }
   }
 
-  function showMessage(message, duration = 2600) {
+  function showSparkles() {
+    if (!DOM.sparkLayer || !DOM.zikrBoard) {
+      return;
+    }
+
+    clearSparkles();
+
+    DOM.zikrBoard.classList.add("spark-active");
+
+    const symbols = ["✦", "✧", "✶", "✷", "✦", "✧"];
+    const fragment = document.createDocumentFragment();
+
+    for (let index = 0; index < 42; index += 1) {
+      const star = document.createElement("span");
+
+      star.className = "spark";
+      star.textContent = symbols[index % symbols.length];
+
+      star.style.left = `${Math.random() * 96 + 2}%`;
+      star.style.top = `${Math.random() * 92 + 4}%`;
+
+      star.style.fontSize = `${9 + Math.random() * 13}px`;
+      star.style.animationDelay = `${Math.random() * 450}ms`;
+      star.style.animationDuration = `${850 + Math.random() * 650}ms`;
+
+      fragment.appendChild(star);
+    }
+
+    DOM.sparkLayer.appendChild(fragment);
+
+    sparkleTimer = window.setTimeout(() => {
+      DOM.sparkLayer.replaceChildren();
+      DOM.zikrBoard.classList.remove("spark-active");
+      sparkleTimer = null;
+    }, 1900);
+  }
+
+  /* ==================== 11. COMPLETION MESSAGE ==================== */
+
+  function showMessage(message, duration = 2400) {
     if (!DOM.completeMessage) {
       return;
     }
 
-    if (messageTimeout !== null) {
-      window.clearTimeout(messageTimeout);
+    if (messageTimer !== null) {
+      window.clearTimeout(messageTimer);
     }
 
     DOM.completeMessage.textContent = message;
     DOM.completeMessage.hidden = false;
 
-    messageTimeout = window.setTimeout(() => {
+    messageTimer = window.setTimeout(() => {
       DOM.completeMessage.hidden = true;
       DOM.completeMessage.textContent = "";
-      messageTimeout = null;
+      messageTimer = null;
     }, duration);
   }
 
-  function createSparks() {
-    if (!DOM.sparkLayer) {
-      return;
-    }
+  function showStepCompletion(step) {
+    const message =
+      step.completedMessages[language] ||
+      step.completedMessages.en;
 
-    DOM.sparkLayer.replaceChildren();
-
-    const symbols = ["✦", "✧", "•", "✦", "✧", "✺"];
-    const count = 14;
-
-    for (let index = 0; index < count; index += 1) {
-      const spark = document.createElement("span");
-
-      spark.className = "spark";
-      spark.textContent = symbols[index % symbols.length];
-
-      spark.style.left = `${5 + Math.random() * 90}%`;
-      spark.style.top = `${15 + Math.random() * 70}%`;
-      spark.style.fontSize = `${10 + Math.random() * 12}px`;
-      spark.style.animationDelay = `${Math.random() * 180}ms`;
-
-      DOM.sparkLayer.appendChild(spark);
-    }
-
-    if (sparkTimeout !== null) {
-      window.clearTimeout(sparkTimeout);
-    }
-
-    sparkTimeout = window.setTimeout(() => {
-      DOM.sparkLayer.replaceChildren();
-      sparkTimeout = null;
-    }, 1400);
+    showMessage(message, 2500);
+    showSparkles();
   }
 
-  /* ---------------------------------------------
-     10. Render the current state
-     --------------------------------------------- */
+  /* ==================== 12. RENDER UI ==================== */
 
-  function updateUI() {
+  function render() {
     const step = STEPS[state.stepIndex];
 
     if (!step) {
       return;
     }
 
-    if (DOM.pageTitle) {
-      DOM.pageTitle.textContent = words.title;
-    }
+    DOM.pageTitle.textContent = words.title;
+    DOM.zikrLabel.textContent = words.zikrHeading;
 
-    if (DOM.zikrLabel) {
-      DOM.zikrLabel.textContent = words.zikrHeading;
-    }
-
-    if (DOM.zikrArabic) {
-      DOM.zikrArabic.textContent = step.arabic;
-    }
-
-    if (DOM.zikrName) {
-      DOM.zikrName.textContent = step.names[language];
-    }
+    DOM.zikrArabic.textContent = step.arabic;
+    DOM.zikrName.textContent = step.names[language];
 
     if (DOM.stepCountLabel) {
       DOM.stepCountLabel.textContent = words.stepLabel;
@@ -865,46 +773,38 @@
       DOM.totalCountLabel.textContent = words.totalLabel;
     }
 
-    if (DOM.stepCount) {
-      DOM.stepCount.textContent = words.stepProgress(
-        state.stepCount,
-        step.target
-      );
-    }
-
-    if (DOM.totalCount) {
-      DOM.totalCount.textContent = words.totalProgress(
-        state.totalCount,
-        CONFIG.cycleTotal
-      );
-    }
-
-    const percentage = Math.round(
-      (state.totalCount / CONFIG.cycleTotal) * 100
+    DOM.stepCount.textContent = words.stepProgress(
+      state.stepCount,
+      step.target
     );
 
-    if (DOM.progressFill) {
-      DOM.progressFill.style.width = `${percentage}%`;
-    }
+    DOM.totalCount.textContent = words.totalProgress(
+      state.totalCount,
+      CYCLE_TOTAL
+    );
 
-    if (DOM.progressBar) {
-      DOM.progressBar.setAttribute(
-        "aria-valuenow",
-        String(percentage)
-      );
+    const percent = Math.round(
+      (state.totalCount / CYCLE_TOTAL) * 100
+    );
 
-      DOM.progressBar.setAttribute(
-        "aria-valuetext",
-        `${percentage}%`
-      );
-    }
+    DOM.progressFill.style.width = `${percent}%`;
+
+    DOM.progressBar.setAttribute(
+      "aria-valuenow",
+      String(percent)
+    );
+
+    DOM.progressBar.setAttribute(
+      "aria-valuetext",
+      `${percent}%`
+    );
 
     if (DOM.todayLabel) {
       DOM.todayLabel.textContent = words.todayLabel;
     }
 
     if (DOM.todayComplete) {
-      DOM.todayComplete.textContent = toDigits(
+      DOM.todayComplete.textContent = digits(
         state.dailyCompletions,
         language
       );
@@ -914,161 +814,200 @@
       DOM.todayTimes.textContent = words.times;
     }
 
-    if (DOM.tapButton) {
-      DOM.tapButton.setAttribute(
-        "aria-label",
-        words.tapLabel
-      );
-    }
+    DOM.tapButton.setAttribute(
+      "aria-label",
+      words.tapLabel
+    );
 
     if (DOM.footerText) {
       DOM.footerText.textContent = words.subtitle;
     }
 
-    if (DOM.app) {
-      DOM.app.dataset.language = language;
-    }
+    DOM.app.dataset.language = language;
   }
 
-  /* ---------------------------------------------
-     11. Language and preferences refresh
-     --------------------------------------------- */
+  /* ==================== 13. COUNTING ==================== */
 
-  function refreshPreferences() {
-    const previousLanguage = language;
-    const previousTheme = preferences.theme;
-    const previousDarkMode = preferences.darkMode;
+  function countTap() {
+    checkDailyReset();
 
-    preferences = readSharedPreferences();
+    const previousTotal = state.totalCount;
+
+    /*
+     * Count is based on the total, avoiding skipped or
+     * duplicated step transitions.
+     */
+
+    const newTotal = previousTotal + 1;
+
+    vibrateAtMilestone(newTotal);
+
+    if (newTotal === 100) {
+      /*
+       * Complete the cycle before resetting the visible
+       * counter for the next cycle.
+       */
+
+      state.dailyCompletions += 1;
+
+      playTone(880, 160, 0.055);
+
+      showMessage(
+        TEXT[language].completeCycle,
+        3600
+      );
+
+      showSparkles();
+
+      state.totalCount = 0;
+
+      const derived = deriveStep(0);
+
+      state.stepIndex = derived.stepIndex;
+      state.stepCount = derived.stepCount;
+
+      saveState();
+      render();
+
+      return;
+    }
+
+    state.totalCount = newTotal;
+
+    const derived = deriveStep(newTotal);
+
+    state.stepIndex = derived.stepIndex;
+    state.stepCount = derived.stepCount;
+
+    /*
+     * Every completed zikr step shows its own message.
+     * The message sits above the Arabic text.
+     */
+
+    const completedStep = STEPS.findIndex(
+      (item, index) => {
+        const stepEnd = STEPS
+          .slice(0, index + 1)
+          .reduce((sum, current) => sum + current.target, 0);
+
+        return stepEnd === newTotal;
+      }
+    );
+
+    if (completedStep >= 0) {
+      const step = STEPS[completedStep];
+
+      showStepCompletion(step);
+      playTone(760, 90, 0.045);
+    } else if ([30, 66, 99].includes(newTotal)) {
+      /*
+       * 30, 66 and 99 are explicit vibration milestones.
+       * 66 and 99 also coincide with completed zikr steps,
+       * so the completion message is displayed above.
+       */
+
+      playTone(700, 70, 0.04);
+    } else {
+      playTone(620, 42, 0.025);
+    }
+
+    saveState();
+    render();
+  }
+
+  /* ==================== 14. REFRESH SHARED SETTINGS ==================== */
+
+  function refreshSettings() {
+    preferences = readPreferences();
 
     language = preferences.language;
     words = TEXT[language];
 
     /*
-     * If sound/vibration preferences are saved globally,
-     * keep the saved counter state in sync with them.
+     * Global sound/vibration preferences override the
+     * local defaults when explicitly configured.
      */
 
-    const settings = getStoredSettings();
+    const settings = getSettings();
 
-    const soundPreference = firstDefined(settings, [
-      "sound",
+    const sound = firstValue(settings, [
       "soundEnabled",
+      "sound",
       "enableSound",
       "tasbihSound"
     ]);
 
-    const vibrationPreference = firstDefined(settings, [
-      "vibration",
+    const vibration = firstValue(settings, [
       "vibrationEnabled",
+      "vibration",
       "enableVibration",
       "hapticFeedback"
     ]);
 
-    if (soundPreference !== undefined) {
-      state.soundEnabled = normalizeBoolean(
-        soundPreference,
+    if (sound !== undefined) {
+      state.soundEnabled = toBoolean(
+        sound,
         state.soundEnabled
       );
     }
 
-    if (vibrationPreference !== undefined) {
-      state.vibrationEnabled = normalizeBoolean(
-        vibrationPreference,
+    if (vibration !== undefined) {
+      state.vibrationEnabled = toBoolean(
+        vibration,
         state.vibrationEnabled
       );
     }
 
     applyTheme();
-    updateUI();
-
-    if (
-      previousLanguage !== language ||
-      previousTheme !== preferences.theme ||
-      previousDarkMode !== preferences.darkMode
-    ) {
-      saveState();
-    }
-  }
-
-  /* ---------------------------------------------
-     12. Count interaction
-     --------------------------------------------- */
-
-  function countTap() {
-    checkDailyReset();
-
-    const stepBefore = state.stepIndex;
-    const totalBefore = state.totalCount;
-
-    if (state.totalCount >= CONFIG.cycleTotal) {
-      state.totalCount = 0;
-      state.stepIndex = 0;
-      state.stepCount = 0;
-    }
-
-    state.totalCount += 1;
-
-    syncStepFromTotal();
-
-    const stepChanged = state.stepIndex !== stepBefore;
-    const cycleCompleted =
-      totalBefore === CONFIG.cycleTotal - 1 &&
-      state.totalCount === CONFIG.cycleTotal;
-
-    if (cycleCompleted) {
-      state.dailyCompletions += 1;
-
-      /*
-       * Save the finished daily count, then prepare the
-       * next cycle so the counter never remains stuck at 100.
-       */
-
-      state.totalCount = 0;
-      state.stepIndex = 0;
-      state.stepCount = 0;
-
-      saveState();
-      updateUI();
-
-      playTone(880, 150, 0.055);
-      vibrate([35, 45, 70]);
-
-      createSparks();
-      showMessage(words.complete, 3600);
-
-      return;
-    }
-
-    if (stepChanged) {
-      playTone(740, 70, 0.04);
-      vibrate(20);
-
-      if (state.stepIndex === 3) {
-        showMessage(words.milestone, 1500);
-      }
-    } else {
-      playTone(620, 40, 0.025);
-
-      if (
-        state.totalCount % CONFIG.milestoneInterval === 0
-      ) {
-        vibrate(15);
-      } else {
-        vibrate(8);
-      }
-    }
-
+    render();
     saveState();
-    updateUI();
   }
 
-  /* ---------------------------------------------
-     13. Keyboard accessibility
-     --------------------------------------------- */
+  /* ==================== 15. EVENT LISTENERS ==================== */
 
-  function handleKeyboard(event) {
-    if (event.defaultPrevented || event.repeat) {
+  DOM.tapButton.addEventListener("click", countTap);
+
+  window.addEventListener("storage", (event) => {
+    if (
+      event.key === null ||
+      SETTINGS_KEYS.includes(event.key)
+    ) {
+      refreshSettings();
+    }
+
+    if (event.key === STORAGE_KEY) {
+      state = loadState();
+      checkDailyReset();
+      render();
+    }
+  });
+
+  [
+    "ibadatSettingsChanged",
+    "appSettingsChanged",
+    "settingsChanged",
+    "languageChanged",
+    "themeChanged"
+  ].forEach((eventName) => {
+    window.addEventListener(eventName, refreshSettings);
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) {
+      checkDailyReset();
+      refreshSettings();
+    }
+  });
+
+  window.addEventListener("focus", () => {
+    checkDailyReset();
+    refreshSettings();
+  });
+
+  /* ==================== 16. KEYBOARD ACCESSIBILITY ==================== */
+
+  document.addEventListener("keydown", (event) => {
+    if (event.repeat || event.defaultPrevented) {
       return;
     }
 
@@ -1082,110 +1021,37 @@
       return;
     }
 
-    if (event.code === "Space" && event.target === document.body) {
+    if (
+      event.code === "Space" &&
+      event.target === document.body
+    ) {
       event.preventDefault();
       countTap();
     }
-  }
-
-  /* ---------------------------------------------
-     14. Listen for settings changes
-     --------------------------------------------- */
-
-  window.addEventListener("storage", (event) => {
-    if (
-      event.key === null ||
-      CONFIG.settingsKeys.includes(event.key)
-    ) {
-      refreshPreferences();
-    }
-
-    if (
-      event.key === CONFIG.storageKey ||
-      event.key === CONFIG.legacyStorageKey
-    ) {
-      state = loadState();
-      checkDailyReset();
-      updateUI();
-    }
   });
 
-  /*
-   * The shared settings page may dispatch one of these
-   * events after the user changes theme or language.
-   */
+  /* ==================== 17. INITIALIZE ==================== */
 
-  [
-    "ibadatSettingsChanged",
-    "appSettingsChanged",
-    "settingsChanged",
-    "languageChanged",
-    "themeChanged"
-  ].forEach((eventName) => {
-    window.addEventListener(eventName, refreshPreferences);
-  });
+  applyTheme();
 
-  /* ---------------------------------------------
-     15. Initialize
-     --------------------------------------------- */
+  checkDailyReset();
 
-  function initialize() {
+  render();
+
+  saveState();
+
+  window.setInterval(() => {
     checkDailyReset();
+  }, 60_000);
 
-    DOM.tapButton.addEventListener("click", countTap);
-
-    document.addEventListener("keydown", handleKeyboard);
-
-    applyTheme();
-    updateUI();
-    saveState();
-
-    /*
-     * Check date rollover periodically, including when
-     * the page stays open across midnight.
-     */
-
-    window.setInterval(
-      checkDailyReset,
-      CONFIG.midnightCheckInterval
-    );
-
-    /*
-     * Refresh date and settings when the user returns
-     * to the page after switching apps or tabs.
-     */
-
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden) {
-        checkDailyReset();
-        refreshPreferences();
-      }
-    });
-
-    window.addEventListener("focus", () => {
-      checkDailyReset();
-      refreshPreferences();
-    });
-  }
-
-  initialize();
-
-  /* ---------------------------------------------
-     16. Optional public interface
-     --------------------------------------------- */
-
-  /*
-   * This interface is optional. It allows other IBADAT
-   * page scripts to read or adjust Tasbih preferences
-   * without directly modifying internal state.
-   */
+  /* ==================== 18. PUBLIC INTERFACE ==================== */
 
   window.IBADATTasbih = Object.freeze({
     getState() {
       return {
+        totalCount: state.totalCount,
         stepIndex: state.stepIndex,
         stepCount: state.stepCount,
-        totalCount: state.totalCount,
         dailyCompletions: state.dailyCompletions,
         dailyDate: state.dailyDate,
         soundEnabled: state.soundEnabled,
@@ -1193,9 +1059,7 @@
       };
     },
 
-    refreshSettings() {
-      refreshPreferences();
-    },
+    refreshSettings,
 
     setFeedback(options = {}) {
       if (typeof options.soundEnabled === "boolean") {
@@ -1210,13 +1074,21 @@
     },
 
     resetCurrentCycle() {
-      state.stepIndex = 0;
-      state.stepCount = 0;
       state.totalCount = 0;
 
-      clearCompletionMessage();
+      const derived = deriveStep(0);
+
+      state.stepIndex = derived.stepIndex;
+      state.stepCount = derived.stepCount;
+
+      if (DOM.completeMessage) {
+        DOM.completeMessage.hidden = true;
+        DOM.completeMessage.textContent = "";
+      }
+
+      clearSparkles();
       saveState();
-      updateUI();
+      render();
     }
   });
 })();
