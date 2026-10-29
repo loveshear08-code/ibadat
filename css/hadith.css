@@ -1,18 +1,15 @@
 
 /* =====================================================
    IBADAT — HADITH PAGE
-   File: css/hadith.css
-   Four coordinated themes + responsive layout
+   Four themes, floral background and responsive layout
 ===================================================== */
 
 :root {
   --h-header-height: 48px;
   --h-footer-height: 48px;
-
   --h-page-padding: 7px;
   --h-gap: 6px;
   --h-card-gap: 8px;
-
   --h-radius: 20px;
   --h-border-width: 2px;
 
@@ -25,92 +22,78 @@
   --h-arabic-font: "Noto Naskh Arabic", "Amiri",
     "Traditional Arabic", serif;
 
-  /* Default: Classic Green */
-  --h-primary: #1B7F4B;
-  --h-deep: #0F5132;
-  --h-accent: #0F5132;
-  --h-accent-rgb: 15, 81, 50;
+  --h-page: #F2F7E9;
+  --h-overlay: rgba(250, 253, 244, 0.83);
 
-  --h-gold: #B18B43;
-  --h-gold-light: #D7B76C;
-
-  --h-page: #F7F1E4;
-  --h-page-overlay: rgba(255, 252, 244, 0.30);
   --h-header-bg: #0F5132;
   --h-header-text: #F5E5A7;
-  --h-header-border: #F2C94C;
+  --h-header-border: #A7D129;
 
   --h-footer-bg: #0F5132;
   --h-footer-text: #F5E5A7;
-  --h-footer-border: #F2C94C;
+  --h-footer-border: #A7D129;
 
-  --h-board: rgba(255, 252, 244, 0.96);
-  --h-card: rgba(255, 255, 255, 0.68);
+  --h-primary: #1B7F4B;
+  --h-deep: #0F5132;
+  --h-accent: #0F5132;
+  --h-gold: #477A39;
+
+  --h-board: rgba(250, 253, 244, 0.94);
+  --h-card: rgba(224, 244, 224, 0.91);
   --h-icon-bg: rgba(15, 81, 50, 0.07);
 
-  --h-text: #17452F;
-  --h-muted: #777568;
-  --h-border: rgba(177, 139, 67, 0.38);
-  --h-strong-border: rgba(177, 139, 67, 0.65);
+  --h-text: #254D2A;
+  --h-muted: #6D806D;
+  --h-border: rgba(76, 175, 80, 0.25);
+  --h-strong-border: rgba(76, 175, 80, 0.52);
 
   --h-shadow: 0 3px 10px rgba(30, 49, 28, 0.10);
   --h-bar-shadow: 0 3px 9px rgba(30, 49, 28, 0.15);
 }
 
-/* =====================================================
-   1. FOUR GLOBAL COLOR THEMES
-   Support both attributes used by theme.js
-===================================================== */
+/* CLASSIC GREEN */
 
 body[data-color-theme="classic"],
 body[data-theme-color="classic"] {
+  --h-page: #F2F7E9;
+  --h-overlay: rgba(250, 253, 244, 0.83);
+  --h-header-bg: #0F5132;
+  --h-header-text: #F5E5A7;
+  --h-header-border: #A7D129;
+  --h-footer-bg: #0F5132;
+  --h-footer-text: #F5E5A7;
+  --h-footer-border: #A7D129;
   --h-primary: #1B7F4B;
   --h-deep: #0F5132;
   --h-accent: #0F5132;
-  --h-accent-rgb: 15, 81, 50;
-
-  --h-gold: #B18B43;
-  --h-gold-light: #D7B76C;
-
-  --h-page: #F7F1E4;
-  --h-page-overlay: rgba(255, 252, 244, 0.30);
-  --h-header-bg: #0F5132;
-  --h-header-text: #F5E5A7;
-  --h-header-border: #F2C94C;
-  --h-footer-bg: #0F5132;
-  --h-footer-text: #F5E5A7;
-  --h-footer-border: #F2C94C;
-
-  --h-board: rgba(255, 252, 244, 0.96);
-  --h-card: rgba(255, 255, 255, 0.72);
+  --h-gold: #477A39;
+  --h-board: rgba(250, 253, 244, 0.94);
+  --h-card: rgba(224, 244, 224, 0.91);
   --h-icon-bg: rgba(15, 81, 50, 0.07);
-  --h-text: #17452F;
-  --h-muted: #777568;
-  --h-border: rgba(177, 139, 67, 0.38);
-  --h-strong-border: rgba(177, 139, 67, 0.65);
+  --h-text: #254D2A;
+  --h-muted: #6D806D;
+  --h-border: rgba(76, 175, 80, 0.25);
+  --h-strong-border: rgba(76, 175, 80, 0.52);
 }
+
+/* ROYAL BLUE */
 
 body[data-color-theme="royal"],
 body[data-theme-color="royal"] {
-  --h-primary: #285A8E;
-  --h-deep: #173A60;
-  --h-accent: #173A60;
-  --h-accent-rgb: 23, 58, 96;
-
-  --h-gold: #A98236;
-  --h-gold-light: #D5B35F;
-
   --h-page: #EAF1F9;
-  --h-page-overlay: rgba(246, 250, 255, 0.30);
+  --h-overlay: rgba(246, 250, 255, 0.84);
   --h-header-bg: #173A60;
   --h-header-text: #FFF0C4;
   --h-header-border: #E8BD55;
   --h-footer-bg: #173A60;
   --h-footer-text: #FFF0C4;
   --h-footer-border: #E8BD55;
-
-  --h-board: rgba(248, 251, 255, 0.97);
-  --h-card: rgba(229, 239, 249, 0.75);
+  --h-primary: #285A8E;
+  --h-deep: #173A60;
+  --h-accent: #173A60;
+  --h-gold: #315E8A;
+  --h-board: rgba(248, 251, 255, 0.95);
+  --h-card: rgba(229, 239, 249, 0.91);
   --h-icon-bg: rgba(23, 58, 96, 0.07);
   --h-text: #1B3652;
   --h-muted: #65798E;
@@ -118,27 +101,24 @@ body[data-theme-color="royal"] {
   --h-strong-border: rgba(40, 90, 142, 0.48);
 }
 
+/* ROSE PINK */
+
 body[data-color-theme="rose"],
 body[data-theme-color="rose"] {
-  --h-primary: #B96F79;
-  --h-deep: #7D414B;
-  --h-accent: #7D414B;
-  --h-accent-rgb: 125, 65, 75;
-
-  --h-gold: #96616A;
-  --h-gold-light: #D9B875;
-
   --h-page: #FAEEEC;
-  --h-page-overlay: rgba(255, 247, 245, 0.30);
+  --h-overlay: rgba(255, 247, 245, 0.84);
   --h-header-bg: #7D414B;
   --h-header-text: #FFF0D5;
   --h-header-border: #D9B875;
   --h-footer-bg: #7D414B;
   --h-footer-text: #FFF0D5;
   --h-footer-border: #D9B875;
-
-  --h-board: rgba(255, 250, 249, 0.97);
-  --h-card: rgba(248, 233, 231, 0.78);
+  --h-primary: #B96F79;
+  --h-deep: #7D414B;
+  --h-accent: #7D414B;
+  --h-gold: #8C4C57;
+  --h-board: rgba(255, 250, 249, 0.95);
+  --h-card: rgba(248, 233, 231, 0.92);
   --h-icon-bg: rgba(125, 65, 75, 0.07);
   --h-text: #633B42;
   --h-muted: #846D70;
@@ -146,27 +126,24 @@ body[data-theme-color="rose"] {
   --h-strong-border: rgba(185, 111, 121, 0.55);
 }
 
+/* PISTA GREEN */
+
 body[data-color-theme="pista"],
 body[data-theme-color="pista"] {
-  --h-primary: #4CAF50;
-  --h-deep: #2F7135;
-  --h-accent: #2F7135;
-  --h-accent-rgb: 47, 113, 53;
-
-  --h-gold: #477A39;
-  --h-gold-light: #A7D129;
-
   --h-page: #EAF5E7;
-  --h-page-overlay: rgba(248, 253, 240, 0.30);
+  --h-overlay: rgba(248, 253, 240, 0.84);
   --h-header-bg: #2F7135;
   --h-header-text: #F5FFD9;
   --h-header-border: #A7D129;
   --h-footer-bg: #2F7135;
   --h-footer-text: #F5FFD9;
   --h-footer-border: #A7D129;
-
-  --h-board: rgba(248, 253, 240, 0.97);
-  --h-card: rgba(223, 245, 225, 0.78);
+  --h-primary: #4CAF50;
+  --h-deep: #2F7135;
+  --h-accent: #2F7135;
+  --h-gold: #376C36;
+  --h-board: rgba(248, 253, 240, 0.95);
+  --h-card: rgba(223, 245, 225, 0.92);
   --h-icon-bg: rgba(47, 113, 53, 0.07);
   --h-text: #254D2A;
   --h-muted: #6D806D;
@@ -174,56 +151,28 @@ body[data-theme-color="pista"] {
   --h-strong-border: rgba(76, 175, 80, 0.52);
 }
 
-/* =====================================================
-   2. DARK MODE
-===================================================== */
+/* DARK MODE */
 
 body.dark-mode {
   color-scheme: dark;
-
   --h-page: #151C17;
-  --h-page-overlay: rgba(10, 18, 13, 0.18);
-
+  --h-overlay: rgba(10, 18, 13, 0.84);
   --h-header-bg: var(--h-deep);
   --h-footer-bg: var(--h-deep);
-
   --h-header-text: #F4E8C7;
   --h-footer-text: #F4E8C7;
-
-  --h-board: rgba(27, 37, 30, 0.98);
-  --h-card: rgba(37, 48, 39, 0.98);
+  --h-board: rgba(27, 37, 30, 0.96);
+  --h-card: rgba(37, 48, 39, 0.94);
   --h-icon-bg: rgba(255, 255, 255, 0.06);
-
   --h-text: #E5EDE7;
   --h-muted: #C0CEC3;
   --h-border: rgba(255, 255, 255, 0.14);
   --h-strong-border: rgba(215, 183, 108, 0.48);
-
   --h-shadow: 0 3px 12px rgba(0, 0, 0, 0.20);
   --h-bar-shadow: 0 3px 10px rgba(0, 0, 0, 0.24);
 }
 
-body.dark-mode .hadith-header,
-body.dark-mode .hadith-footer {
-  border-color: var(--h-header-border);
-}
-
-body.dark-mode .book-card {
-  background: var(--h-card);
-  color: var(--h-text);
-}
-
-body.dark-mode .content-board {
-  background: var(--h-board);
-}
-
-body.dark-mode .hadith-item {
-  background: var(--h-card);
-}
-
-/* =====================================================
-   3. RESET AND BASE
-===================================================== */
+/* RESET */
 
 * {
   box-sizing: border-box;
@@ -245,17 +194,13 @@ body {
   height: 100dvh;
   min-width: 280px;
   min-height: 0;
-
   margin: 0;
   padding: 0;
   overflow: hidden;
-
   color: var(--h-text);
   background: var(--h-page);
   font-family: var(--h-font);
-
   overscroll-behavior: none;
-  transition: background-color 180ms ease, color 180ms ease;
 }
 
 button,
@@ -288,30 +233,24 @@ svg {
   stroke-linejoin: round;
 }
 
-/* =====================================================
-   4. APP LAYOUT
-===================================================== */
+/* APP BACKGROUND WITH FLORAL IMAGE */
 
 .hadith-app {
   position: relative;
   isolation: isolate;
-
   display: flex;
   flex-direction: column;
   gap: var(--h-gap);
-
   width: 100%;
   height: 100%;
   min-height: 0;
-
   padding:
     max(5px, var(--h-safe-top))
     var(--h-page-padding)
     max(5px, var(--h-safe-bottom));
-
   overflow: hidden;
-  background: var(--h-page);
   color: var(--h-text);
+  background: var(--h-page);
 }
 
 .hadith-app::before {
@@ -320,47 +259,38 @@ svg {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-
   background:
     linear-gradient(
-      145deg,
-      var(--h-page-overlay),
-      transparent 58%
+      var(--h-overlay),
+      var(--h-overlay)
     ),
-    var(--h-page);
+    url("../assets/images/main-bg.jpg") center / cover no-repeat;
+  background-color: var(--h-page);
 }
 
-/* =====================================================
-   5. HEADER AND FOOTER
-   Height matches Namaz Learning page: 48px
-===================================================== */
+/* HEADER AND FOOTER: NO ACTION BUTTONS */
 
 .hadith-header,
 .hadith-footer {
   position: relative;
   z-index: 2;
-
   display: flex;
   flex: 0 0 var(--h-header-height);
   align-items: center;
-
+  justify-content: center;
   width: 100%;
   height: var(--h-header-height);
   min-height: var(--h-header-height);
   max-height: var(--h-header-height);
-
   border: var(--h-border-width) solid var(--h-header-border);
   border-radius: var(--h-radius);
-
   background: var(--h-header-bg);
   box-shadow: var(--h-bar-shadow);
-
   overflow: hidden;
 }
 
 .hadith-header {
-  gap: 7px;
-  padding: 3px 7px;
+  padding: 3px 10px;
 }
 
 .header-title {
@@ -368,7 +298,6 @@ svg {
   min-width: 0;
   margin: 0;
   overflow: hidden;
-
   color: var(--h-header-text);
   font-size: clamp(15px, 4vw, 19px);
   font-weight: 800;
@@ -378,55 +307,11 @@ svg {
   white-space: nowrap;
 }
 
-.icon-button {
-  display: inline-flex;
-  flex: 0 0 32px;
-  align-items: center;
-  justify-content: center;
-
-  width: 32px;
-  height: 32px;
-  padding: 0;
-
-  border: 1px solid transparent;
-  border-radius: 11px;
-
-  background: transparent;
-  color: var(--h-header-text);
-
-  cursor: pointer;
-
-  transition:
-    background-color 160ms ease,
-    border-color 160ms ease,
-    transform 160ms ease;
-}
-
-.icon-button svg {
-  width: 20px;
-  height: 20px;
-}
-
-.icon-button:hover {
-  border-color: rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.icon-button:active {
-  transform: scale(0.94);
-}
-
-.header-back[hidden] {
-  display: none !important;
-}
-
 .hadith-footer {
   flex-basis: var(--h-footer-height);
   height: var(--h-footer-height);
   min-height: var(--h-footer-height);
   max-height: var(--h-footer-height);
-
-  justify-content: center;
   padding: 3px 10px;
 }
 
@@ -434,7 +319,6 @@ svg {
   width: 100%;
   min-width: 0;
   overflow: hidden;
-
   color: var(--h-footer-text);
   font-size: clamp(13px, 3.4vw, 16px);
   font-weight: 800;
@@ -444,51 +328,42 @@ svg {
   white-space: nowrap;
 }
 
-/* =====================================================
-   6. MAIN AREA AND BOOK GRID
-===================================================== */
+/* MAIN */
 
 .hadith-main {
   display: flex;
   flex: 1 1 0;
   flex-direction: column;
-
   width: 100%;
   min-width: 0;
   min-height: 0;
   overflow: hidden;
-}
-
-.books-screen,
-.list-screen {
-  width: 100%;
-  height: 100%;
-  min-height: 0;
 }
 
 .books-screen,
 .list-screen {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
   overflow: hidden;
 }
+
+/* BOOK GRID */
 
 .books-grid {
   display: grid;
   flex: 1 1 0;
-
   width: 100%;
   min-width: 0;
   min-height: 0;
-
   grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-template-rows: repeat(4, minmax(0, 1fr));
   gap: var(--h-card-gap);
-
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
-
   scrollbar-width: thin;
   scrollbar-color: var(--h-strong-border) transparent;
 }
@@ -499,34 +374,24 @@ svg {
   align-items: center;
   justify-content: center;
   gap: 8px;
-
   width: 100%;
   height: 100%;
   min-width: 0;
   min-height: 0;
   padding: 7px;
-
   border: 1px solid var(--h-strong-border);
   border-radius: 19px;
-
   background: var(--h-card);
   color: var(--h-text);
   box-shadow: var(--h-shadow);
-
   cursor: pointer;
   text-align: center;
-
-  transition:
-    border-color 160ms ease,
-    background-color 160ms ease,
-    transform 160ms ease,
-    box-shadow 160ms ease;
+  transition: border-color 160ms ease, background-color 160ms ease, transform 160ms ease;
 }
 
 .book-card:hover {
   border-color: var(--h-gold);
   background: var(--h-board);
-  box-shadow: var(--h-shadow);
 }
 
 .book-card:active {
@@ -538,13 +403,10 @@ svg {
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-
   width: 39px;
   height: 39px;
-
   border: 1px solid var(--h-border);
   border-radius: 13px;
-
   background: var(--h-icon-bg);
   color: var(--h-gold);
 }
@@ -559,34 +421,27 @@ svg {
   width: 100%;
   max-width: 100%;
   overflow: hidden;
-
   color: var(--h-gold);
   font-size: clamp(12px, 3.2vw, 16px);
   font-weight: 800;
   line-height: 1.5;
-
   overflow-wrap: anywhere;
   text-overflow: ellipsis;
 }
 
-/* =====================================================
-   7. HADITH CONTENT BOARD
-===================================================== */
+/* CONTENT BOARD */
 
 .content-board {
   display: flex;
   flex: 1 1 0;
   flex-direction: column;
-
   width: 100%;
   height: 100%;
   min-width: 0;
   min-height: 0;
   overflow: hidden;
-
   border: var(--h-border-width) solid var(--h-strong-border);
   border-radius: var(--h-radius);
-
   background: var(--h-board);
   color: var(--h-text);
   box-shadow: var(--h-shadow);
@@ -597,10 +452,8 @@ svg {
   flex: 0 0 auto;
   align-items: center;
   gap: 8px;
-
   min-height: 52px;
   padding: 7px 10px;
-
   border-bottom: 1px solid var(--h-border);
 }
 
@@ -612,7 +465,6 @@ svg {
 .content-title-wrap h2 {
   margin: 0;
   overflow: hidden;
-
   color: var(--h-gold);
   font-size: clamp(14px, 3.7vw, 18px);
   font-weight: 800;
@@ -624,7 +476,6 @@ svg {
 .content-title-wrap p {
   margin: 2px 0 0;
   overflow: hidden;
-
   color: var(--h-muted);
   font-size: clamp(10px, 2.8vw, 13px);
   line-height: 1.5;
@@ -632,24 +483,43 @@ svg {
   white-space: nowrap;
 }
 
+/* KEEP THE CONTENT-BOARD SEARCH BUTTON */
+
+.icon-button {
+  display: inline-flex;
+  flex: 0 0 32px;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  background: transparent;
+  color: var(--h-gold);
+  cursor: pointer;
+}
+
 .search-toggle {
   border-color: var(--h-border);
   background: var(--h-icon-bg);
-  color: var(--h-gold);
 }
+
+.icon-button:active {
+  transform: scale(0.94);
+}
+
+/* SEARCH INPUT */
 
 .search-panel {
   display: flex;
   flex: 0 0 auto;
   align-items: center;
   gap: 6px;
-
   margin: 8px 9px 0;
   padding: 3px 6px;
-
   border: 1px solid var(--h-strong-border);
   border-radius: 12px;
-
   background: var(--h-board);
 }
 
@@ -659,12 +529,10 @@ svg {
   min-width: 0;
   height: 34px;
   padding: 0 5px;
-
   border: 0;
   outline: none;
   background: transparent;
   color: var(--h-text);
-
   font-size: 13px;
 }
 
@@ -683,7 +551,6 @@ svg {
 .list-status {
   flex: 0 0 auto;
   padding: 9px 11px;
-
   color: var(--h-muted);
   font-size: 12px;
   line-height: 1.7;
@@ -693,26 +560,20 @@ svg {
   display: none;
 }
 
-/* =====================================================
-   8. SCROLLABLE HADITH LIST
-===================================================== */
+/* HADITH LIST */
 
 .hadith-list {
   display: flex;
   flex: 1 1 0;
   flex-direction: column;
   gap: 9px;
-
   min-width: 0;
   min-height: 0;
   padding: 9px;
-
   overflow-x: hidden;
   overflow-y: auto;
-
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-
   scrollbar-width: thin;
   scrollbar-color: var(--h-strong-border) transparent;
 }
@@ -733,13 +594,10 @@ svg {
   flex: 0 0 auto;
   flex-direction: column;
   gap: 10px;
-
   min-width: 0;
   padding: 12px;
-
   border: 1px solid var(--h-border);
   border-radius: 15px;
-
   background: var(--h-card);
 }
 
@@ -754,16 +612,12 @@ svg {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   min-height: 27px;
   padding: 3px 9px;
-
   border: 1px solid var(--h-strong-border);
   border-radius: 9px;
-
   background: var(--h-icon-bg);
   color: var(--h-gold);
-
   font-size: 11px;
   font-weight: 800;
 }
@@ -775,13 +629,11 @@ svg {
 
 .hadith-arabic {
   margin: 0;
-
   color: var(--h-text);
   font-family: var(--h-arabic-font);
   font-size: clamp(22px, 5.8vw, 28px);
   font-weight: 500;
   line-height: 2.05;
-
   direction: rtl;
   text-align: right;
   overflow-wrap: anywhere;
@@ -789,19 +641,15 @@ svg {
 
 .hadith-translation {
   margin: 0;
-
   color: var(--h-text);
   font-size: clamp(13px, 3.5vw, 16px);
   font-weight: 400;
   line-height: 1.9;
-
   overflow-wrap: anywhere;
   white-space: pre-line;
 }
 
-/* =====================================================
-   9. LOADING, ERROR AND COUNT
-===================================================== */
+/* ERROR AND RETRY */
 
 .list-message {
   flex: 0 0 auto;
@@ -820,20 +668,16 @@ svg {
   min-height: 40px;
   margin-top: 12px;
   padding: 8px 17px;
-
   border: 1px solid var(--h-strong-border);
   border-radius: 14px;
-
   background: var(--h-accent);
   color: #FFFFFF;
-
   font-size: 14px;
   font-weight: 800;
   cursor: pointer;
 }
 
-.retry-button:disabled,
-.icon-button:disabled {
+.retry-button:disabled {
   opacity: 0.6;
   cursor: wait;
 }
@@ -841,17 +685,13 @@ svg {
 .list-bottom {
   flex: 0 0 auto;
   padding: 8px 10px;
-
   border-top: 1px solid var(--h-border);
   color: var(--h-muted);
-
   font-size: 11px;
   text-align: center;
 }
 
-/* =====================================================
-   10. SMALL PHONES
-===================================================== */
+/* SMALL PHONES */
 
 @media (max-width: 380px) {
   :root {
@@ -882,9 +722,7 @@ svg {
   }
 }
 
-/* =====================================================
-   11. SHORT SCREENS
-===================================================== */
+/* SHORT SCREENS */
 
 @media (max-height: 620px) {
   :root {
@@ -930,13 +768,10 @@ svg {
   }
 }
 
-/* =====================================================
-   12. WIDE SCREENS
-===================================================== */
+/* WIDE SCREENS */
 
 @media (min-width: 600px) {
   .hadith-app {
-    width: 100%;
     max-width: 900px;
     margin-inline: auto;
     padding-inline: 16px;
@@ -967,9 +802,7 @@ svg {
   }
 }
 
-/* =====================================================
-   13. ACCESSIBILITY
-===================================================== */
+/* ACCESSIBILITY */
 
 @media (prefers-reduced-motion: reduce) {
   *,
