@@ -18,40 +18,14 @@
 <body>
   <div class="hadith-app" id="hadithApp" data-screen="books">
 
+    <!-- Header: title only, no back/refresh/search buttons -->
     <header class="hadith-header">
-      <button
-        type="button"
-        class="header-back icon-button"
-        id="backBooks"
-        aria-label="বইয়ের তালিকায় ফিরে যান"
-        hidden
-      >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="m15 18-6-6 6-6"></path>
-        </svg>
-      </button>
-
       <h1 class="header-title" id="pageTitle">হাদিস সংকলন</h1>
-
-      <button
-        type="button"
-        class="header-action icon-button"
-        id="headerAction"
-        aria-label="পুনরায় লোড"
-        title="পুনরায় লোড"
-      >
-        <svg viewBox="0 0 24 24" id="refreshIcon" aria-hidden="true">
-          <path d="M20 7v5h-5"></path>
-          <path d="M4.9 9a7.5 7.5 0 0 1 12.6-2L20 12"></path>
-          <path d="M4 17v-5h5"></path>
-          <path d="M19.1 15a7.5 7.5 0 0 1-12.6 2L4 12"></path>
-        </svg>
-      </button>
     </header>
 
     <main class="hadith-main">
 
-      <!-- FIRST SCREEN: ONLY EIGHT BOOKS -->
+      <!-- First screen: eight books -->
       <section class="books-screen" id="booksScreen" aria-label="হাদিসের বইসমূহ">
         <div class="books-grid" id="booksGrid">
 
@@ -146,16 +120,17 @@
         </div>
       </section>
 
-      <!-- SECOND SCREEN: ONE SCROLLABLE HADITH BOARD -->
+      <!-- Second screen: hadith content -->
       <section class="list-screen" id="listScreen" hidden>
         <div class="content-board">
 
           <div class="content-toolbar">
             <div class="content-title-wrap">
               <h2 id="listHeading">হাদিসসমূহ</h2>
-              <p id="listSubtitle">আরবি পাঠ ও অনুবাদ</p>
+              <p id="listSubtitle">আরবি পাঠ ও বাংলা অনুবাদ</p>
             </div>
 
+            <!-- Keep the search button inside the content board -->
             <button
               class="search-toggle icon-button"
               id="searchToggle"
