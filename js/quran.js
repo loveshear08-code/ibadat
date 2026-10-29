@@ -604,6 +604,8 @@
         playSurah(Number(button.dataset.surah));
       });
     });
+
+    updateListenPlayButtons();
   }
 
   /* ---------- Ayah play-button state ---------- */
@@ -649,6 +651,51 @@
     });
   }
 
+  /* ---------- Listen-page surah play-button state ---------- */
+
+  function updateListenPlayButtons() {
+    const buttons = els.listenList.querySelectorAll('.listen-item');
+
+    const isPlaying =
+      playbackMode === 'surah' &&
+      currentSurah !== null &&
+      Boolean(els.audio.src) &&
+      !els.audio.paused &&
+      !els.audio.ended;
+
+    buttons.forEach(button => {
+      const surahNo = Number(button.dataset.surah);
+      const isCurrentPlaying =
+        isPlaying && currentSurah.number === surahNo;
+
+      const icon = button.querySelector('.listen-play-icon');
+
+      if (!icon) return;
+
+      icon.textContent = isCurrentPlaying ? '🎙️' : '▶';
+
+      icon.classList.toggle(
+        'listen-audio-playing',
+        isCurrentPlaying
+      );
+
+      button.setAttribute(
+        'aria-label',
+        `${localizedName(
+          surahs.find(surah => surah.number === surahNo) || {
+            number: surahNo,
+            englishName: ''
+          }
+        )} — ${isCurrentPlaying ? t('pause') : t('play')}`
+      );
+
+      button.setAttribute(
+        'aria-pressed',
+        isCurrentPlaying ? 'true' : 'false'
+      );
+    });
+  }
+
   function updateFooterPlayButton() {
     const isPlaying =
       Boolean(playbackMode) &&
@@ -664,6 +711,7 @@
     );
 
     updateAyahPlayButtons();
+    updateListenPlayButtons();
   }
 
   /* ---------- Microphone animation ---------- */
@@ -675,7 +723,8 @@
     style.id = 'ayahMicAnimationStyle';
 
     style.textContent = `
-      .ayah-play.ayah-audio-playing {
+      .ayah-play.ayah-audio-playing,
+      .listen-play-icon.listen-audio-playing {
         animation: ayahMicGlow 1.2s ease-in-out infinite;
       }
 
@@ -692,7 +741,8 @@
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .ayah-play.ayah-audio-playing {
+        .ayah-play.ayah-audio-playing,
+        .listen-play-icon.listen-audio-playing {
           animation: none;
         }
       }
