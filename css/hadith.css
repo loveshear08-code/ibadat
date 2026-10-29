@@ -2,33 +2,20 @@
 /* =====================================================
    IBADAT — HADITH PAGE
    File: css/hadith.css
-   Cream background • Gold typography • Theme aware
+   Four coordinated themes + responsive layout
 ===================================================== */
 
 :root {
-  --h-accent: #0F5132;
-  --h-accent-rgb: 15, 81, 50;
-
-  --h-gold: #B18B43;
-  --h-gold-light: #D7B76C;
-  --h-gold-border: rgba(177, 139, 67, 0.58);
-
-  --h-cream: #F7F1E4;
-  --h-cream-layer: rgba(255, 252, 244, 0.86);
-  --h-board: rgba(255, 252, 244, 0.76);
-  --h-card: rgba(255, 255, 255, 0.68);
-
-  --h-text: #29372D;
-  --h-muted: #777568;
-  --h-border: rgba(177, 139, 67, 0.28);
-  --h-shadow: 0 4px 16px rgba(75, 61, 35, 0.07);
-
   --h-header-height: 48px;
   --h-footer-height: 48px;
+
+  --h-page-padding: 7px;
+  --h-gap: 6px;
+  --h-card-gap: 8px;
+
   --h-radius: 20px;
   --h-border-width: 2px;
 
-  --h-gap: 8px;
   --h-safe-top: env(safe-area-inset-top, 0px);
   --h-safe-bottom: env(safe-area-inset-bottom, 0px);
 
@@ -37,63 +24,210 @@
 
   --h-arabic-font: "Noto Naskh Arabic", "Amiri",
     "Traditional Arabic", serif;
+
+  /* Default: Classic Green */
+  --h-primary: #1B7F4B;
+  --h-deep: #0F5132;
+  --h-accent: #0F5132;
+  --h-accent-rgb: 15, 81, 50;
+
+  --h-gold: #B18B43;
+  --h-gold-light: #D7B76C;
+
+  --h-page: #F7F1E4;
+  --h-page-overlay: rgba(255, 252, 244, 0.30);
+  --h-header-bg: #0F5132;
+  --h-header-text: #F5E5A7;
+  --h-header-border: #F2C94C;
+
+  --h-footer-bg: #0F5132;
+  --h-footer-text: #F5E5A7;
+  --h-footer-border: #F2C94C;
+
+  --h-board: rgba(255, 252, 244, 0.96);
+  --h-card: rgba(255, 255, 255, 0.68);
+  --h-icon-bg: rgba(15, 81, 50, 0.07);
+
+  --h-text: #17452F;
+  --h-muted: #777568;
+  --h-border: rgba(177, 139, 67, 0.38);
+  --h-strong-border: rgba(177, 139, 67, 0.65);
+
+  --h-shadow: 0 3px 10px rgba(30, 49, 28, 0.10);
+  --h-bar-shadow: 0 3px 9px rgba(30, 49, 28, 0.15);
 }
 
-/* GLOBAL THEME PALETTE — matches js/theme.js */
+/* =====================================================
+   1. FOUR GLOBAL COLOR THEMES
+   Support both attributes used by theme.js
+===================================================== */
 
 body[data-color-theme="classic"],
 body[data-theme-color="classic"] {
+  --h-primary: #1B7F4B;
+  --h-deep: #0F5132;
   --h-accent: #0F5132;
   --h-accent-rgb: 15, 81, 50;
+
+  --h-gold: #B18B43;
+  --h-gold-light: #D7B76C;
+
+  --h-page: #F7F1E4;
+  --h-page-overlay: rgba(255, 252, 244, 0.30);
+  --h-header-bg: #0F5132;
+  --h-header-text: #F5E5A7;
+  --h-header-border: #F2C94C;
+  --h-footer-bg: #0F5132;
+  --h-footer-text: #F5E5A7;
+  --h-footer-border: #F2C94C;
+
+  --h-board: rgba(255, 252, 244, 0.96);
+  --h-card: rgba(255, 255, 255, 0.72);
+  --h-icon-bg: rgba(15, 81, 50, 0.07);
+  --h-text: #17452F;
+  --h-muted: #777568;
+  --h-border: rgba(177, 139, 67, 0.38);
+  --h-strong-border: rgba(177, 139, 67, 0.65);
 }
 
 body[data-color-theme="royal"],
 body[data-theme-color="royal"] {
+  --h-primary: #285A8E;
+  --h-deep: #173A60;
   --h-accent: #173A60;
   --h-accent-rgb: 23, 58, 96;
+
+  --h-gold: #A98236;
+  --h-gold-light: #D5B35F;
+
+  --h-page: #EAF1F9;
+  --h-page-overlay: rgba(246, 250, 255, 0.30);
+  --h-header-bg: #173A60;
+  --h-header-text: #FFF0C4;
+  --h-header-border: #E8BD55;
+  --h-footer-bg: #173A60;
+  --h-footer-text: #FFF0C4;
+  --h-footer-border: #E8BD55;
+
+  --h-board: rgba(248, 251, 255, 0.97);
+  --h-card: rgba(229, 239, 249, 0.75);
+  --h-icon-bg: rgba(23, 58, 96, 0.07);
+  --h-text: #1B3652;
+  --h-muted: #65798E;
+  --h-border: rgba(40, 90, 142, 0.22);
+  --h-strong-border: rgba(40, 90, 142, 0.48);
 }
 
 body[data-color-theme="rose"],
 body[data-theme-color="rose"] {
+  --h-primary: #B96F79;
+  --h-deep: #7D414B;
   --h-accent: #7D414B;
   --h-accent-rgb: 125, 65, 75;
+
+  --h-gold: #96616A;
+  --h-gold-light: #D9B875;
+
+  --h-page: #FAEEEC;
+  --h-page-overlay: rgba(255, 247, 245, 0.30);
+  --h-header-bg: #7D414B;
+  --h-header-text: #FFF0D5;
+  --h-header-border: #D9B875;
+  --h-footer-bg: #7D414B;
+  --h-footer-text: #FFF0D5;
+  --h-footer-border: #D9B875;
+
+  --h-board: rgba(255, 250, 249, 0.97);
+  --h-card: rgba(248, 233, 231, 0.78);
+  --h-icon-bg: rgba(125, 65, 75, 0.07);
+  --h-text: #633B42;
+  --h-muted: #846D70;
+  --h-border: rgba(185, 111, 121, 0.27);
+  --h-strong-border: rgba(185, 111, 121, 0.55);
 }
 
 body[data-color-theme="pista"],
 body[data-theme-color="pista"] {
+  --h-primary: #4CAF50;
+  --h-deep: #2F7135;
   --h-accent: #2F7135;
   --h-accent-rgb: 47, 113, 53;
+
+  --h-gold: #477A39;
+  --h-gold-light: #A7D129;
+
+  --h-page: #EAF5E7;
+  --h-page-overlay: rgba(248, 253, 240, 0.30);
+  --h-header-bg: #2F7135;
+  --h-header-text: #F5FFD9;
+  --h-header-border: #A7D129;
+  --h-footer-bg: #2F7135;
+  --h-footer-text: #F5FFD9;
+  --h-footer-border: #A7D129;
+
+  --h-board: rgba(248, 253, 240, 0.97);
+  --h-card: rgba(223, 245, 225, 0.78);
+  --h-icon-bg: rgba(47, 113, 53, 0.07);
+  --h-text: #254D2A;
+  --h-muted: #6D806D;
+  --h-border: rgba(76, 175, 80, 0.25);
+  --h-strong-border: rgba(76, 175, 80, 0.52);
 }
 
-/* LIGHT MODE */
-
-body:not(.dark-mode) {
-  color-scheme: light;
-}
-
-/* DARK MODE — retain a subtle cream/gold identity */
+/* =====================================================
+   2. DARK MODE
+===================================================== */
 
 body.dark-mode {
   color-scheme: dark;
 
-  --h-cream: #1C211D;
-  --h-cream-layer: rgba(29, 34, 29, 0.94);
-  --h-board: rgba(29, 34, 29, 0.96);
-  --h-card: rgba(38, 45, 38, 0.96);
+  --h-page: #151C17;
+  --h-page-overlay: rgba(10, 18, 13, 0.18);
 
-  --h-text: #F1EBDD;
-  --h-muted: #C0B9A8;
-  --h-border: rgba(215, 183, 108, 0.23);
-  --h-gold: #D7B76C;
-  --h-gold-light: #E4CB8E;
-  --h-gold-border: rgba(215, 183, 108, 0.58);
-  --h-shadow: 0 4px 18px rgba(0, 0, 0, 0.17);
+  --h-header-bg: var(--h-deep);
+  --h-footer-bg: var(--h-deep);
+
+  --h-header-text: #F4E8C7;
+  --h-footer-text: #F4E8C7;
+
+  --h-board: rgba(27, 37, 30, 0.98);
+  --h-card: rgba(37, 48, 39, 0.98);
+  --h-icon-bg: rgba(255, 255, 255, 0.06);
+
+  --h-text: #E5EDE7;
+  --h-muted: #C0CEC3;
+  --h-border: rgba(255, 255, 255, 0.14);
+  --h-strong-border: rgba(215, 183, 108, 0.48);
+
+  --h-shadow: 0 3px 12px rgba(0, 0, 0, 0.20);
+  --h-bar-shadow: 0 3px 10px rgba(0, 0, 0, 0.24);
 }
 
-/* RESET */
+body.dark-mode .hadith-header,
+body.dark-mode .hadith-footer {
+  border-color: var(--h-header-border);
+}
+
+body.dark-mode .book-card {
+  background: var(--h-card);
+  color: var(--h-text);
+}
+
+body.dark-mode .content-board {
+  background: var(--h-board);
+}
+
+body.dark-mode .hadith-item {
+  background: var(--h-card);
+}
+
+/* =====================================================
+   3. RESET AND BASE
+===================================================== */
 
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
@@ -108,20 +242,19 @@ html {
 body {
   width: 100%;
   height: 100%;
-  min-height: 100%;
+  height: 100dvh;
   min-width: 280px;
+  min-height: 0;
 
   margin: 0;
   padding: 0;
   overflow: hidden;
 
-  background: var(--h-cream);
   color: var(--h-text);
+  background: var(--h-page);
   font-family: var(--h-font);
 
-  -webkit-tap-highlight-color: transparent;
   overscroll-behavior: none;
-
   transition: background-color 180ms ease, color 180ms ease;
 }
 
@@ -155,7 +288,9 @@ svg {
   stroke-linejoin: round;
 }
 
-/* APP LAYOUT */
+/* =====================================================
+   4. APP LAYOUT
+===================================================== */
 
 .hadith-app {
   position: relative;
@@ -170,19 +305,14 @@ svg {
   min-height: 0;
 
   padding:
-    calc(var(--h-safe-top) + 8px)
-    10px
-    calc(var(--h-safe-bottom) + 8px);
+    max(5px, var(--h-safe-top))
+    var(--h-page-padding)
+    max(5px, var(--h-safe-bottom));
 
   overflow: hidden;
-  background: var(--h-cream);
+  background: var(--h-page);
   color: var(--h-text);
 }
-
-/*
- * Main background uses the same cream layer across both screens.
- * No compass image and no separate black background.
- */
 
 .hadith-app::before {
   content: "";
@@ -194,27 +324,16 @@ svg {
   background:
     linear-gradient(
       145deg,
-      rgba(255, 255, 255, 0.38),
-      transparent 48%,
-      rgba(177, 139, 67, 0.045)
+      var(--h-page-overlay),
+      transparent 58%
     ),
-    var(--h-cream);
-
-  opacity: 1;
+    var(--h-page);
 }
 
-body.dark-mode .hadith-app::before {
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.025),
-      transparent 50%,
-      rgba(215, 183, 108, 0.025)
-    ),
-    var(--h-cream);
-}
-
-/* HEADER AND FOOTER — IDENTICAL HEIGHTS */
+/* =====================================================
+   5. HEADER AND FOOTER
+   Height matches Namaz Learning page: 48px
+===================================================== */
 
 .hadith-header,
 .hadith-footer {
@@ -230,14 +349,13 @@ body.dark-mode .hadith-app::before {
   min-height: var(--h-header-height);
   max-height: var(--h-header-height);
 
-  border: var(--h-border-width) solid var(--h-gold-border);
+  border: var(--h-border-width) solid var(--h-header-border);
   border-radius: var(--h-radius);
 
-  background: var(--h-cream-layer);
-  box-shadow: var(--h-shadow);
+  background: var(--h-header-bg);
+  box-shadow: var(--h-bar-shadow);
 
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  overflow: hidden;
 }
 
 .hadith-header {
@@ -251,8 +369,8 @@ body.dark-mode .hadith-app::before {
   margin: 0;
   overflow: hidden;
 
-  color: var(--h-gold);
-  font-size: 15px;
+  color: var(--h-header-text);
+  font-size: clamp(15px, 4vw, 19px);
   font-weight: 800;
   line-height: 1.3;
   text-align: center;
@@ -274,7 +392,7 @@ body.dark-mode .hadith-app::before {
   border-radius: 11px;
 
   background: transparent;
-  color: var(--h-accent);
+  color: var(--h-header-text);
 
   cursor: pointer;
 
@@ -285,13 +403,13 @@ body.dark-mode .hadith-app::before {
 }
 
 .icon-button svg {
-  width: 19px;
-  height: 19px;
+  width: 20px;
+  height: 20px;
 }
 
 .icon-button:hover {
-  border-color: var(--h-border);
-  background: rgba(var(--h-accent-rgb), 0.07);
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .icon-button:active {
@@ -314,25 +432,29 @@ body.dark-mode .hadith-app::before {
 
 .footer-message {
   width: 100%;
+  min-width: 0;
   overflow: hidden;
 
-  color: var(--h-gold);
-  font-size: 15px;
+  color: var(--h-footer-text);
+  font-size: clamp(13px, 3.4vw, 16px);
   font-weight: 800;
-  line-height: 1.3;
+  line-height: 1.4;
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* MAIN AREA */
+/* =====================================================
+   6. MAIN AREA AND BOOK GRID
+===================================================== */
 
 .hadith-main {
   display: flex;
-  flex: 1 1 auto;
+  flex: 1 1 0;
   flex-direction: column;
 
   width: 100%;
+  min-width: 0;
   min-height: 0;
   overflow: hidden;
 }
@@ -344,35 +466,31 @@ body.dark-mode .hadith-app::before {
   min-height: 0;
 }
 
-.books-screen {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
+.books-screen,
 .list-screen {
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-/* FIRST SCREEN: NOTHING EXCEPT EIGHT BOOKS */
-
 .books-grid {
   display: grid;
-  flex: 1 1 auto;
+  flex: 1 1 0;
 
   width: 100%;
+  min-width: 0;
   min-height: 0;
 
   grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-template-rows: repeat(4, minmax(0, 1fr));
-  gap: 8px;
+  gap: var(--h-card-gap);
 
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   overscroll-behavior: contain;
+
   scrollbar-width: thin;
-  scrollbar-color: var(--h-gold-border) transparent;
+  scrollbar-color: var(--h-strong-border) transparent;
 }
 
 .book-card {
@@ -388,10 +506,10 @@ body.dark-mode .hadith-app::before {
   min-height: 0;
   padding: 7px;
 
-  border: 1px solid var(--h-gold-border);
-  border-radius: 18px;
+  border: 1px solid var(--h-strong-border);
+  border-radius: 19px;
 
-  background: var(--h-cream-layer);
+  background: var(--h-card);
   color: var(--h-text);
   box-shadow: var(--h-shadow);
 
@@ -407,12 +525,12 @@ body.dark-mode .hadith-app::before {
 
 .book-card:hover {
   border-color: var(--h-gold);
-  background: var(--h-card);
-  box-shadow: 0 5px 14px rgba(75, 61, 35, 0.09);
+  background: var(--h-board);
+  box-shadow: var(--h-shadow);
 }
 
 .book-card:active {
-  transform: scale(0.97);
+  transform: scale(0.985);
 }
 
 .book-icon {
@@ -427,7 +545,7 @@ body.dark-mode .hadith-app::before {
   border: 1px solid var(--h-border);
   border-radius: 13px;
 
-  background: rgba(var(--h-accent-rgb), 0.07);
+  background: var(--h-icon-bg);
   color: var(--h-gold);
 }
 
@@ -443,35 +561,35 @@ body.dark-mode .hadith-app::before {
   overflow: hidden;
 
   color: var(--h-gold);
-  font-size: 12px;
+  font-size: clamp(12px, 3.2vw, 16px);
   font-weight: 800;
-  line-height: 1.6;
+  line-height: 1.5;
 
   overflow-wrap: anywhere;
   text-overflow: ellipsis;
 }
 
-/* SECOND SCREEN: ONE CONTENT BOARD */
+/* =====================================================
+   7. HADITH CONTENT BOARD
+===================================================== */
 
 .content-board {
   display: flex;
-  flex: 1 1 auto;
+  flex: 1 1 0;
   flex-direction: column;
 
   width: 100%;
   height: 100%;
+  min-width: 0;
   min-height: 0;
   overflow: hidden;
 
-  border: var(--h-border-width) solid var(--h-gold-border);
+  border: var(--h-border-width) solid var(--h-strong-border);
   border-radius: var(--h-radius);
 
   background: var(--h-board);
   color: var(--h-text);
   box-shadow: var(--h-shadow);
-
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
 .content-toolbar {
@@ -496,7 +614,7 @@ body.dark-mode .hadith-app::before {
   overflow: hidden;
 
   color: var(--h-gold);
-  font-size: 14px;
+  font-size: clamp(14px, 3.7vw, 18px);
   font-weight: 800;
   line-height: 1.5;
   text-overflow: ellipsis;
@@ -508,7 +626,7 @@ body.dark-mode .hadith-app::before {
   overflow: hidden;
 
   color: var(--h-muted);
-  font-size: 10px;
+  font-size: clamp(10px, 2.8vw, 13px);
   line-height: 1.5;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -516,7 +634,7 @@ body.dark-mode .hadith-app::before {
 
 .search-toggle {
   border-color: var(--h-border);
-  background: rgba(var(--h-accent-rgb), 0.055);
+  background: var(--h-icon-bg);
   color: var(--h-gold);
 }
 
@@ -529,10 +647,10 @@ body.dark-mode .hadith-app::before {
   margin: 8px 9px 0;
   padding: 3px 6px;
 
-  border: 1px solid var(--h-gold-border);
+  border: 1px solid var(--h-strong-border);
   border-radius: 12px;
 
-  background: var(--h-cream-layer);
+  background: var(--h-board);
 }
 
 .search-panel input {
@@ -547,7 +665,7 @@ body.dark-mode .hadith-app::before {
   background: transparent;
   color: var(--h-text);
 
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .search-panel input::placeholder {
@@ -567,7 +685,7 @@ body.dark-mode .hadith-app::before {
   padding: 9px 11px;
 
   color: var(--h-muted);
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.7;
 }
 
@@ -575,14 +693,17 @@ body.dark-mode .hadith-app::before {
   display: none;
 }
 
-/* SCROLL INSIDE THE BOARD */
+/* =====================================================
+   8. SCROLLABLE HADITH LIST
+===================================================== */
 
 .hadith-list {
   display: flex;
-  flex: 1 1 auto;
+  flex: 1 1 0;
   flex-direction: column;
   gap: 9px;
 
+  min-width: 0;
   min-height: 0;
   padding: 9px;
 
@@ -593,7 +714,7 @@ body.dark-mode .hadith-app::before {
   -webkit-overflow-scrolling: touch;
 
   scrollbar-width: thin;
-  scrollbar-color: var(--h-gold-border) transparent;
+  scrollbar-color: var(--h-strong-border) transparent;
 }
 
 .hadith-list::-webkit-scrollbar,
@@ -604,7 +725,7 @@ body.dark-mode .hadith-app::before {
 .hadith-list::-webkit-scrollbar-thumb,
 .books-grid::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background: var(--h-gold-border);
+  background: var(--h-strong-border);
 }
 
 .hadith-item {
@@ -634,22 +755,22 @@ body.dark-mode .hadith-app::before {
   align-items: center;
   justify-content: center;
 
-  min-height: 25px;
+  min-height: 27px;
   padding: 3px 9px;
 
-  border: 1px solid var(--h-gold-border);
+  border: 1px solid var(--h-strong-border);
   border-radius: 9px;
 
-  background: rgba(177, 139, 67, 0.08);
+  background: var(--h-icon-bg);
   color: var(--h-gold);
 
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 800;
 }
 
 .hadith-language-label {
   color: var(--h-muted);
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .hadith-arabic {
@@ -657,7 +778,7 @@ body.dark-mode .hadith-app::before {
 
   color: var(--h-text);
   font-family: var(--h-arabic-font);
-  font-size: 23px;
+  font-size: clamp(22px, 5.8vw, 28px);
   font-weight: 500;
   line-height: 2.05;
 
@@ -670,13 +791,17 @@ body.dark-mode .hadith-app::before {
   margin: 0;
 
   color: var(--h-text);
-  font-size: 13px;
+  font-size: clamp(13px, 3.5vw, 16px);
   font-weight: 400;
-  line-height: 1.95;
+  line-height: 1.9;
 
   overflow-wrap: anywhere;
   white-space: pre-line;
 }
+
+/* =====================================================
+   9. LOADING, ERROR AND COUNT
+===================================================== */
 
 .list-message {
   flex: 0 0 auto;
@@ -687,24 +812,30 @@ body.dark-mode .hadith-app::before {
 .list-message p {
   margin: 0;
   color: var(--h-muted);
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.8;
 }
 
 .retry-button {
-  min-height: 36px;
+  min-height: 40px;
   margin-top: 12px;
-  padding: 7px 16px;
+  padding: 8px 17px;
 
-  border: 1px solid var(--h-gold-border);
-  border-radius: 12px;
+  border: 1px solid var(--h-strong-border);
+  border-radius: 14px;
 
   background: var(--h-accent);
   color: #FFFFFF;
 
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 800;
   cursor: pointer;
+}
+
+.retry-button:disabled,
+.icon-button:disabled {
+  opacity: 0.6;
+  cursor: wait;
 }
 
 .list-bottom {
@@ -714,26 +845,25 @@ body.dark-mode .hadith-app::before {
   border-top: 1px solid var(--h-border);
   color: var(--h-muted);
 
-  font-size: 10px;
+  font-size: 11px;
   text-align: center;
 }
 
-/* SMALL SCREEN */
+/* =====================================================
+   10. SMALL PHONES
+===================================================== */
 
-@media (max-width: 360px) {
-  .hadith-app {
-    padding-right: 7px;
-    padding-left: 7px;
-  }
-
-  .books-grid {
-    gap: 6px;
+@media (max-width: 380px) {
+  :root {
+    --h-page-padding: 5px;
+    --h-gap: 5px;
+    --h-card-gap: 5px;
   }
 
   .book-card {
     gap: 6px;
-    padding: 5px;
-    border-radius: 15px;
+    padding: 6px;
+    border-radius: 16px;
   }
 
   .book-icon {
@@ -747,35 +877,19 @@ body.dark-mode .hadith-app::before {
     height: 20px;
   }
 
-  .book-name {
-    font-size: 10px;
-  }
-
-  .header-title,
-  .footer-message {
-    font-size: 13px;
-  }
-
-  .hadith-arabic {
-    font-size: 20px;
-  }
-
-  .hadith-translation {
-    font-size: 12px;
+  .hadith-item {
+    padding: 10px;
   }
 }
 
-/* SHORT SCREEN */
+/* =====================================================
+   11. SHORT SCREENS
+===================================================== */
 
 @media (max-height: 620px) {
-  .hadith-app {
-    gap: 6px;
-    padding-top: calc(var(--h-safe-top) + 5px);
-    padding-bottom: calc(var(--h-safe-bottom) + 5px);
-  }
-
-  .books-grid {
-    gap: 5px;
+  :root {
+    --h-gap: 5px;
+    --h-card-gap: 5px;
   }
 
   .book-card {
@@ -796,7 +910,7 @@ body.dark-mode .hadith-app::before {
   }
 
   .book-name {
-    font-size: 10px;
+    font-size: 12px;
     line-height: 1.4;
   }
 
@@ -811,15 +925,18 @@ body.dark-mode .hadith-app::before {
   }
 
   .hadith-translation {
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.75;
   }
 }
 
-/* WIDE SCREENS */
+/* =====================================================
+   12. WIDE SCREENS
+===================================================== */
 
 @media (min-width: 600px) {
   .hadith-app {
+    width: 100%;
     max-width: 900px;
     margin-inline: auto;
     padding-inline: 16px;
@@ -834,7 +951,7 @@ body.dark-mode .hadith-app::before {
   }
 
   .book-name {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .hadith-item {
@@ -842,13 +959,17 @@ body.dark-mode .hadith-app::before {
   }
 
   .hadith-arabic {
-    font-size: 27px;
+    font-size: 28px;
   }
 
   .hadith-translation {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
+
+/* =====================================================
+   13. ACCESSIBILITY
+===================================================== */
 
 @media (prefers-reduced-motion: reduce) {
   *,
