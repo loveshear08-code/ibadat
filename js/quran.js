@@ -45,7 +45,7 @@
       bismillah: 'পরম করুণাময়, অসীম দয়ালু আল্লাহর নামে',
 
       description:
-        'আল-কুরআন মানবজাতির জন্য হিদায়াত, রহমত ও আলোর পথ। কুরআন তিলাওয়াত করুন, অর্থ অনুধাবন করুন এবং অনুসরণ করুন।',
+        'মহান আল্লাহর কালাম, মানবজাতির চিরন্তন হিদায়াত।\nএ সেই মহাগ্রন্থ, যাতে কোনো সন্দেহ নেই।\nএর প্রতিটি আয়াতে রয়েছে সত্য ও রহমতের বার্তা।\nকুরআনের নূরে আলোকিত হোক আমাদের জীবন।',
 
       readOption: 'কুরআন পড়ুন',
       listenOption: 'তিলাওয়াত শুনুন',
@@ -625,7 +625,12 @@
         !els.audio.paused &&
         !els.audio.ended;
 
-      button.textContent = isPlaying ? 'Ⅱ' : '▶';
+      button.textContent = isPlaying ? '🎙️' : '▶';
+
+      button.classList.toggle(
+        'ayah-audio-playing',
+        isPlaying
+      );
 
       button.setAttribute(
         'aria-label',
@@ -659,6 +664,41 @@
     );
 
     updateAyahPlayButtons();
+  }
+
+  /* ---------- Microphone animation ---------- */
+
+  function addAyahMicAnimation() {
+    if ($('ayahMicAnimationStyle')) return;
+
+    const style = document.createElement('style');
+    style.id = 'ayahMicAnimationStyle';
+
+    style.textContent = `
+      .ayah-play.ayah-audio-playing {
+        animation: ayahMicGlow 1.2s ease-in-out infinite;
+      }
+
+      @keyframes ayahMicGlow {
+        0%, 100% {
+          filter: drop-shadow(0 0 2px #22c55e);
+          opacity: 1;
+        }
+
+        50% {
+          filter: drop-shadow(0 0 7px #22c55e);
+          opacity: 0.78;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .ayah-play.ayah-audio-playing {
+          animation: none;
+        }
+      }
+    `;
+
+    document.head.appendChild(style);
   }
 
   /* ---------- Playback cleanup ---------- */
@@ -1223,6 +1263,8 @@
 
   function init() {
     readSettings();
+
+    addAyahMicAnimation();
 
     applyTheme();
     applyLabels();
