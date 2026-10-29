@@ -2,15 +2,13 @@
    IBADAT — NAMAZ LEARNING PAGE
    File: css/namaz.css
 
-   Layout references:
-   - Header and footer: Allah's Names page (48px)
-   - Introduction board and typography: Calendar page
-   - Ten compact learning options
-   - Shared settings: appSettings / theme.js
+   Theme color consistency fix:
+   - Classic Green
+   - Royal Blue
+   - Rose Pink
+   - Pista Green
 
-   Assets:
-   - ../assets/main-bg.jpg
-   - ../assets/hero-bg.jpg
+   Layout, images, card dimensions and behavior preserved.
 ========================================================= */
 
 
@@ -30,6 +28,7 @@
     --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
 
+    /* Default: Classic Green */
     --primary: #1B7F4B;
     --soft: #E8F5E9;
     --accent: #F2C94C;
@@ -55,17 +54,17 @@
             rgba(255, 252, 239, 0.52)
         );
 
-    --header-bg: var(--deep);
+    --header-bg: #0F5132;
     --header-text: #F5E5A7;
-    --header-border: var(--accent);
+    --header-border: #F2C94C;
 
-    --footer-bg: var(--deep);
+    --footer-bg: #0F5132;
     --footer-text: #F5E5A7;
-    --footer-border: var(--accent);
+    --footer-border: #F2C94C;
 
-    --option-bg: #F8E9E7;
-    --option-text: #7D414B;
-    --option-border: #E8CBC8;
+    --option-bg: #E8F5E9;
+    --option-text: #17452F;
+    --option-border: #D5E3D1;
 
     --content-shadow: 0 3px 10px rgba(30, 49, 28, 0.10);
     --bar-shadow: 0 3px 9px rgba(30, 49, 28, 0.15);
@@ -159,7 +158,6 @@ body {
 
 /* =========================================================
    3. HEADER BOARD
-   Matches Allah's Names page: 48px
 ========================================================= */
 
 .top-board {
@@ -214,7 +212,6 @@ body {
 
 /* =========================================================
    4. INTRODUCTION BOARD
-   Matches the calendar board's visual proportions
 ========================================================= */
 
 .intro-board {
@@ -291,7 +288,6 @@ body {
 
 /* =========================================================
    5. TEN LEARNING OPTIONS
-   Uses the remaining space above the footer
 ========================================================= */
 
 .learning-grid {
@@ -315,9 +311,6 @@ body {
     align-items: stretch;
 }
 
-/* Each option is created by namaz.js.
-   Keep existing links and card contents intact. */
-
 .learning-grid > * {
     position: relative;
 
@@ -336,7 +329,8 @@ body {
     gap: 8px;
 
     color: var(--option-text);
-    background: var(--option-bg);
+    background-color: var(--option-bg);
+    background-image: none;
 
     border: 1px solid var(--option-border);
     border-radius: 19px;
@@ -355,7 +349,7 @@ body {
         transform 0.18s ease;
 }
 
-/* Images and icons: visible without overpowering the text */
+/* Images and icons */
 
 .learning-grid > * img,
 .learning-grid > * .option-icon,
@@ -401,9 +395,6 @@ body {
     overflow-wrap: anywhere;
 }
 
-/* If the card contains an icon and a title,
-   let the title occupy the remaining width. */
-
 .learning-grid > * h2,
 .learning-grid > * h3,
 .learning-grid > * .option-title,
@@ -412,7 +403,7 @@ body {
     flex: 1 1 auto;
 }
 
-/* Keep all interactive card types usable */
+/* Interactive cards */
 
 .learning-grid > a,
 .learning-grid > button,
@@ -434,7 +425,6 @@ body {
 
 /* =========================================================
    6. FOOTER BOARD
-   Matches Allah's Names page: 48px
 ========================================================= */
 
 .namaz-footer,
@@ -493,13 +483,17 @@ body {
    7. SETTINGS COLOR THEMES
 ========================================================= */
 
+/* ---------- CLASSIC GREEN ---------- */
+
 body[data-color-theme="classic"] {
     --primary: #1B7F4B;
     --soft: #E8F5E9;
     --accent: #F2C94C;
     --deep: #0F5132;
+
     --text: #17452F;
     --muted: #68796B;
+
     --card: rgba(255, 255, 255, 0.96);
     --border: #D5E3D1;
 
@@ -525,18 +519,24 @@ body[data-color-theme="classic"] {
     --footer-text: #F5E5A7;
     --footer-border: #F2C94C;
 
-    --option-bg: #F8E9E7;
-    --option-text: #7D414B;
-    --option-border: #E8CBC8;
+    /* Fixed: Classic cards now use green shades */
+    --option-bg: #E8F5E9;
+    --option-text: #17452F;
+    --option-border: #D5E3D1;
 }
+
+
+/* ---------- ROYAL BLUE ---------- */
 
 body[data-color-theme="royal"] {
     --primary: #285A8E;
     --soft: #E5EFF9;
     --accent: #E8BD55;
     --deep: #173A60;
+
     --text: #1B3652;
     --muted: #65798E;
+
     --card: rgba(255, 255, 255, 0.96);
     --border: #C8D9EB;
 
@@ -567,13 +567,18 @@ body[data-color-theme="royal"] {
     --option-border: #C8D9EB;
 }
 
+
+/* ---------- ROSE PINK ---------- */
+
 body[data-color-theme="rose"] {
     --primary: #B96F79;
     --soft: #F8E9E7;
     --accent: #D9B875;
     --deep: #7D414B;
+
     --text: #633B42;
     --muted: #846D70;
+
     --card: rgba(255, 252, 251, 0.97);
     --border: #E8CBC8;
 
@@ -604,13 +609,18 @@ body[data-color-theme="rose"] {
     --option-border: #E8CBC8;
 }
 
+
+/* ---------- PISTA GREEN ---------- */
+
 body[data-color-theme="pista"] {
     --primary: #4CAF50;
     --soft: #DFF5E1;
     --accent: #A7D129;
     --deep: #2F7135;
+
     --text: #254D2A;
     --muted: #6D806D;
+
     --card: rgba(255, 255, 255, 0.96);
     --border: #CDE3C8;
 
@@ -711,6 +721,8 @@ body.dark-mode #intro-paragraph-1 {
 body.dark-mode .learning-grid > * {
     color: #F0DADB;
     background: rgba(45, 34, 37, 0.96);
+    background-image: none;
+
     border-color: rgba(255, 255, 255, 0.15);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.20);
 }
