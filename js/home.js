@@ -1,4 +1,3 @@
-
 "use strict";
 
 (() => {
@@ -10,6 +9,7 @@
       city: "কলকাতা",
       bismillah: "পরম করুণাময় অসীম দয়ালু আল্লাহর নামে",
       unit: "সে.",
+      settings: "সেটিংস",
       days: ["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"],
       prayers: {
         Fajr: "ফজর",
@@ -17,7 +17,7 @@
         Dhuhr: "যোহর",
         Asr: "আসর",
         Maghrib: "মাগরিব",
-        Isha: "ইশা"
+        Isha: "এশা"
       },
       features: {
         namaz: "নামাজ",
@@ -46,6 +46,7 @@
       city: "Kolkata",
       bismillah: "In the name of Allah, the Most Compassionate, the Most Merciful",
       unit: "°C",
+      settings: "Settings",
       days: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
       prayers: {
         Fajr: "Fajr",
@@ -82,6 +83,7 @@
       city: "कोलकाता",
       bismillah: "परम कृपालु, अत्यंत दयावान अल्लाह के नाम से",
       unit: "°से.",
+      settings: "सेटिंग्स",
       days: ["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"],
       prayers: {
         Fajr: "फ़ज्र",
@@ -114,9 +116,13 @@
     }
   };
 
+  /*
+   * Sunrise is deliberately not included here because
+   * its time is not displayed in the prayer timetable.
+   * It is still used by prayerState() for status/countdown.
+   */
   const PRAYER_IDS = {
     Fajr: "fajrTime",
-    Sunrise: "sunriseTime",
     Dhuhr: "dhuhrTime",
     Asr: "asrTime",
     Maghrib: "maghribTime",
@@ -192,12 +198,18 @@
 
   function localizeCity(name) {
     if (!name) return t().city;
+
     const mapped = CITY_NAMES[name];
-    return mapped ? (mapped[language] || mapped.en) : name;
+
+    return mapped
+      ? (mapped[language] || mapped.en)
+      : name;
   }
 
   function applySettings() {
     const settings = readSettings();
+    const previousLanguage = language;
+
     language = getLanguage(settings);
 
     const dark = Boolean(
@@ -218,15 +230,28 @@
     });
 
     if (snapshot !== settingsSnapshot) {
-      const languageChanged = settingsSnapshot !== "" &&
-        JSON.parse(settingsSnapshot).language !== language;
+      const languageChanged =
+        settingsSnapshot !== "" &&
+        previousLanguage !== language;
 
       settingsSnapshot = snapshot;
+
       updateLanguage();
 
       if (languageChanged) {
         quoteIndex = 0;
         showQuote();
+
+        /*
+         * Reverse geocode again so that the location
+         * name is returned in the newly selected language.
+         */
+        if (coordinates) {
+          loadCity(
+            coordinates.latitude,
+            coordinates.longitude
+          );
+        }
       }
     }
   }
@@ -236,6 +261,16 @@
 
     $("#bismillahMeaning").textContent = strings.bismillah;
     $("#temperatureUnit").textContent = strings.unit;
+
+    const settingsLabel = $("[data-setting-label]");
+    if (settingsLabel) {
+      settingsLabel.textContent = strings.settings;
+    }
+
+    const settingsButton = $("#sunriseSettings");
+    if (settingsButton) {
+      settingsButton.setAttribute("aria-label", strings.settings);
+    }
 
     document.querySelectorAll("[data-prayer-label]").forEach((element) => {
       const key = element.dataset.prayerLabel;
@@ -253,7 +288,9 @@
 
     updateClockAndDate();
 
-    if (weatherTemperature !== null) renderTemperature();
+    if (weatherTemperature !== null) {
+      renderTemperature();
+    }
 
     if (prayerTimes) {
       renderPrayerTimes();
@@ -332,17 +369,37 @@
 
     Object.entries(PRAYER_IDS).forEach(([key, id]) => {
       const element = document.getElementById(id);
-      if (element) element.textContent = formatPrayerTime(prayerTimes[key]);
+
+      if (element) {
+        element.textContent = formatPrayerTime(prayerTimes[key]);
+      }
     });
   }
 
+  /*
+   * Sunrise remains part of the chronological event sequence.
+   * This allows Sunrise to become the next upcoming event
+   * after Fajr, even though its time is hidden in the grid.
+   */
   function prayerState() {
     if (!prayerTimes) return null;
 
-    const order = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
+    const order = [
+      "Fajr",
+      "Sunrise",
+      "Dhuhr",
+      "Asr",
+      "Maghrib",
+      "Isha"
+    ];
+
     const entries = order
-      .map((key) => ({ key, minutes: parseTime(prayerTimes[key]) }))
-      .filter((item) => item.minutes !== null);
+      .map((key) => ({
+        key,
+        minutes: parseTime(prayerTimes[key])
+      }))
+      .filter((item) => item.minutes !== null)
+      .sort((a, b) => a.minutes - b.minutes);
 
     if (!entries.length) return null;
 
@@ -361,10 +418,16 @@
       }
     }
 
-    if (!current) current = entries[entries.length - 1];
-    if (!next) next = entries[0];
+    if (!current) {
+      current = entries[entries.length - 1];
+    }
+
+    if (!next) {
+      next = entries[0];
+    }
 
     const nextDate = new Date();
+
     nextDate.setHours(
       Math.floor(next.minutes / 60),
       next.minutes % 60,
@@ -376,7 +439,11 @@
       nextDate.setDate(nextDate.getDate() + 1);
     }
 
-    return { current, next, nextDate };
+    return {
+      current,
+      next,
+      nextDate
+    };
   }
 
   function updatePrayerStatus() {
@@ -400,8 +467,11 @@
       return;
     }
 
-    currentPrayer.textContent = t().prayers[state.current.key];
-    nextPrayer.textContent = t().prayers[state.next.key];
+    currentPrayer.textContent =
+      t().prayers[state.current.key] || state.current.key;
+
+    nextPrayer.textContent =
+      t().prayers[state.next.key] || state.next.key;
 
     const secondsLeft = Math.max(
       0,
@@ -430,16 +500,23 @@
       url.searchParams.set("method", "1");
 
       const response = await fetch(url.toString());
-      if (!response.ok) throw new Error("Prayer times unavailable");
+
+      if (!response.ok) {
+        throw new Error("Prayer times unavailable");
+      }
 
       const data = await response.json();
-      if (!data?.data?.timings) throw new Error("Missing prayer times");
+
+      if (!data?.data?.timings) {
+        throw new Error("Missing prayer times");
+      }
 
       prayerTimes = data.data.timings;
       lastDate = todayKey();
 
       renderPrayerTimes();
       updatePrayerStatus();
+
     } catch (error) {
       console.warn("IBADAT: prayer times unavailable.", error);
     }
@@ -469,118 +546,155 @@
   async function loadWeather(latitude, longitude) {
     try {
       const url = new URL("https://api.open-meteo.com/v1/forecast");
+
       url.searchParams.set("latitude", latitude);
       url.searchParams.set("longitude", longitude);
       url.searchParams.set("current", "temperature_2m,weather_code");
       url.searchParams.set("timezone", "auto");
 
       const response = await fetch(url.toString());
-      if (!response.ok) throw new Error("Weather unavailable");
+
+      if (!response.ok) {
+        throw new Error("Weather unavailable");
+      }
 
       const data = await response.json();
-      if (!data.current) throw new Error("Missing current weather");
+
+      if (!data.current) {
+        throw new Error("Missing current weather");
+      }
 
       weatherTemperature = Math.round(data.current.temperature_2m);
-      $("#weatherIcon").textContent = weatherSymbol(data.current.weather_code);
+
+      $("#weatherIcon").textContent =
+        weatherSymbol(data.current.weather_code);
+
       renderTemperature();
+
     } catch (error) {
       console.warn("IBADAT: weather unavailable.", error);
     }
   }
- 
-async function loadCity(latitude, longitude) {
-  try {
-    const url = new URL(
-      "https://nominatim.openstreetmap.org/reverse"
-    );
 
-    url.searchParams.set("format", "jsonv2");
-    url.searchParams.set("lat", latitude);
-    url.searchParams.set("lon", longitude);
-    url.searchParams.set("accept-language", language);
+  /*
+   * Reverse geocoding:
+   * Prefer the closest available village / neighbourhood /
+   * locality before falling back to town, city or district.
+   */
+  async function loadCity(latitude, longitude) {
+    try {
+      const url = new URL(
+        "https://nominatim.openstreetmap.org/reverse"
+      );
 
-    const response = await fetch(url.toString(), {
-      headers: { Accept: "application/json" }
-    });
+      url.searchParams.set("format", "jsonv2");
+      url.searchParams.set("lat", latitude);
+      url.searchParams.set("lon", longitude);
+      url.searchParams.set("zoom", "18");
+      url.searchParams.set("addressdetails", "1");
 
-    if (!response.ok) {
-      throw new Error("Location name unavailable");
+      const languageCode = {
+        bn: "bn",
+        en: "en",
+        hi: "hi"
+      }[language] || "bn";
+
+      url.searchParams.set("accept-language", languageCode);
+
+      const response = await fetch(url.toString(), {
+        headers: {
+          Accept: "application/json"
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error("Location name unavailable");
+      }
+
+      const data = await response.json();
+      const address = data.address || {};
+
+      locationName =
+        address.village ||
+        address.hamlet ||
+        address.neighbourhood ||
+        address.suburb ||
+        address.residential ||
+        address.quarter ||
+        address.city_district ||
+        address.town ||
+        address.municipality ||
+        address.city ||
+        address.block ||
+        address.county ||
+        address.state_district ||
+        address.state ||
+        address.country ||
+        t().city;
+
+      $("#city").textContent = localizeCity(locationName);
+
+      try {
+        localStorage.setItem(
+          "ibadatCityName",
+          locationName
+        );
+
+        localStorage.setItem(
+          "ibadatCityLanguage",
+          language
+        );
+
+      } catch (storageError) {
+        console.warn(
+          "IBADAT: unable to save city name.",
+          storageError
+        );
+      }
+
+    } catch (error) {
+      console.warn(
+        "IBADAT: location name unavailable.",
+        error
+      );
+
+      locationName = null;
+      $("#city").textContent = t().city;
     }
+  }
 
-    const data = await response.json();
-    const address = data.address || {};
-
-    locationName =
-      address.city ||
-      address.town ||
-      address.municipality ||
-      address.city_district ||
-      address.suburb ||
-      address.neighbourhood ||
-      address.village ||
-      address.county ||
-      address.state_district ||
-      address.state ||
-      address.country ||
-      t().city;
-
-    $("#city").textContent = localizeCity(locationName);
+  async function loadAll(latitude, longitude) {
+    coordinates = {
+      latitude,
+      longitude
+    };
 
     try {
       localStorage.setItem(
-        "ibadatCityName",
-        locationName
+        "ibadatUserLocation",
+        JSON.stringify({
+          lat: latitude,
+          lon: longitude,
+          updatedAt: Date.now()
+        })
       );
 
-      localStorage.setItem(
-        "ibadatCityLanguage",
-        language
-      );
-    } catch (storageError) {
+      localStorage.removeItem("ibadatCityName");
+      localStorage.removeItem("ibadatCityLanguage");
+
+    } catch (error) {
       console.warn(
-        "IBADAT: unable to save city name.",
-        storageError
+        "IBADAT: unable to save location.",
+        error
       );
     }
-  } catch (error) {
-    console.warn(
-      "IBADAT: location name unavailable.",
-      error
-    );
 
-    locationName = null;
-    $("#city").textContent = t().city;
+    await Promise.all([
+      loadPrayerTimes(latitude, longitude),
+      loadWeather(latitude, longitude),
+      loadCity(latitude, longitude)
+    ]);
   }
-} 
-
-  async function loadAll(latitude, longitude) {
-  coordinates = { latitude, longitude };
-
-  try {
-    localStorage.setItem(
-      "ibadatUserLocation",
-      JSON.stringify({
-        lat: latitude,
-        lon: longitude,
-        updatedAt: Date.now()
-      })
-    );
-
-    localStorage.removeItem("ibadatCityName");
-    localStorage.removeItem("ibadatCityLanguage");
-  } catch (error) {
-    console.warn(
-      "IBADAT: unable to save location.",
-      error
-    );
-  }
-
-  await Promise.all([
-    loadPrayerTimes(latitude, longitude),
-    loadWeather(latitude, longitude),
-    loadCity(latitude, longitude)
-  ]);
-}
 
   function loadLocation() {
     if (!navigator.geolocation) {
@@ -590,24 +704,35 @@ async function loadCity(latitude, longitude) {
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        loadAll(position.coords.latitude, position.coords.longitude);
+        loadAll(
+          position.coords.latitude,
+          position.coords.longitude
+        );
       },
+
       () => {
         loadAll(22.5726, 88.3639);
       },
+
       {
-        enableHighAccuracy: false,
-        timeout: 8000,
-        maximumAge: 600000
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 300000
       }
     );
   }
 
   function openSettings() {
     const settings = readSettings();
-    const configured = settings.settingsPage || settings.settingsUrl;
 
-    if (typeof configured === "string" && configured.trim()) {
+    const configured =
+      settings.settingsPage ||
+      settings.settingsUrl;
+
+    if (
+      typeof configured === "string" &&
+      configured.trim()
+    ) {
       window.location.href = configured;
       return;
     }
@@ -618,28 +743,47 @@ async function loadCity(latitude, longitude) {
   /* Show one localized quote and change it every 30 seconds */
   function showQuote() {
     const message = $("#footerMessage");
-    const windowElement = document.querySelector(".footer-message-window");
+    const windowElement = document.querySelector(
+      ".footer-message-window"
+    );
+
     if (!message || !windowElement) return;
 
     const quotes = t().quotes;
     const quote = quotes[quoteIndex % quotes.length];
 
-    if (quoteTimer) window.clearTimeout(quoteTimer);
-    if (quoteAnimationTimer) window.clearTimeout(quoteAnimationTimer);
+    if (quoteTimer) {
+      window.clearTimeout(quoteTimer);
+    }
+
+    if (quoteAnimationTimer) {
+      window.clearTimeout(quoteAnimationTimer);
+    }
 
     message.style.animation = "none";
     message.textContent = quote;
 
-    /* Allow the browser to measure the current text before animating */
-    requestAnimationFrame(() => {
+    /*
+     * Measure the available width and text width before
+     * starting the continuous footer scrolling animation.
+     */
+    quoteAnimationTimer = window.setTimeout(() => {
       const availableWidth = windowElement.clientWidth;
       const textWidth = message.scrollWidth;
       const distance = availableWidth + textWidth;
-      const duration = Math.max(14, distance / 24);
 
-      message.style.setProperty("--message-duration", `${duration}s`);
-      message.style.animation = "footer-message-scroll var(--message-duration) linear infinite";
-    });
+      /* Slightly faster than the previous 24 px/second. */
+      const duration = Math.max(12, distance / 30);
+
+      message.style.setProperty(
+        "--message-duration",
+        `${duration}s`
+      );
+
+      message.style.animation =
+        "footer-message-scroll var(--message-duration) linear infinite";
+
+    }, 50);
 
     quoteTimer = window.setTimeout(() => {
       quoteIndex = (quoteIndex + 1) % quotes.length;
@@ -651,7 +795,10 @@ async function loadCity(latitude, longitude) {
     hideMissingFeatureIcons();
     applySettings();
 
-    $("#sunriseSettings").addEventListener("click", openSettings);
+    $("#sunriseSettings").addEventListener(
+      "click",
+      openSettings
+    );
 
     updateClockAndDate();
     showQuote();
@@ -661,9 +808,17 @@ async function loadCity(latitude, longitude) {
       updateClockAndDate();
       updatePrayerStatus();
 
-      if (lastDate && lastDate !== todayKey() && coordinates) {
-        loadPrayerTimes(coordinates.latitude, coordinates.longitude);
+      if (
+        lastDate &&
+        lastDate !== todayKey() &&
+        coordinates
+      ) {
+        loadPrayerTimes(
+          coordinates.latitude,
+          coordinates.longitude
+        );
       }
+
     }, 1000);
 
     window.addEventListener("storage", (event) => {
@@ -684,6 +839,10 @@ async function loadCity(latitude, longitude) {
         updatePrayerStatus();
       }
     });
+
+    window.addEventListener("resize", () => {
+      showQuote();
+    });
   }
 
   if (document.readyState === "loading") {
@@ -691,4 +850,5 @@ async function loadCity(latitude, longitude) {
   } else {
     init();
   }
+
 })();
