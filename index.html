@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -13,7 +12,6 @@
 
     <header class="top-board">
       <div class="location-area">
-        <span class="location-symbol" aria-hidden="true">●</span>
         <span id="city">--</span>
       </div>
       <div id="date" class="date-area">--</div>
@@ -66,17 +64,15 @@
       <section class="home-board prayer-board">
         <div class="board-overlay"></div>
         <div class="prayer-grid">
+
           <div class="prayer-cell">
             <span data-prayer-label="Fajr">--</span>
             <strong id="fajrTime">--:--</strong>
           </div>
 
           <button class="prayer-cell sunrise-cell" id="sunriseSettings" type="button" aria-label="Settings">
-            <span class="sunrise-label">
-              <span data-prayer-label="Sunrise">--</span>
-              <span class="settings-symbol" aria-hidden="true">⚙</span>
-            </span>
-            <strong id="sunriseTime">--:--</strong>
+            <span class="settings-symbol" aria-hidden="true">⚙</span>
+            <span data-setting-label>সেটিংস</span>
           </button>
 
           <div class="prayer-cell">
@@ -98,6 +94,7 @@
             <span data-prayer-label="Isha">--</span>
             <strong id="ishaTime">--:--</strong>
           </div>
+
         </div>
       </section>
 
@@ -131,7 +128,6 @@
     </main>
 
     <footer class="footer-board">
-      <span class="footer-icon" aria-hidden="true">📖</span>
       <div class="footer-message-window">
         <p id="footerMessage" class="footer-message">--</p>
       </div>
