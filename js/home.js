@@ -1,3 +1,4 @@
+
 "use strict";
 
 (() => {
@@ -14,20 +15,12 @@
       settings: "সেটিংস",
       days: ["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"],
       prayers: {
-        Fajr: "ফজর",
-        Sunrise: "সূর্যোদয়",
-        Dhuhr: "যোহর",
-        Asr: "আসর",
-        Maghrib: "মাগরিব",
-        Isha: "এশা"
+        Fajr: "ফজর", Sunrise: "সূর্যোদয়", Dhuhr: "যোহর",
+        Asr: "আসর", Maghrib: "মাগরিব", Isha: "এশা"
       },
       features: {
-        namaz: "নামাজ",
-        quran: "কুরআন",
-        dua: "দোয়া",
-        hadith: "হাদিস",
-        qibla: "কিবলা",
-        tasbih: "তাসবিহ"
+        namaz: "নামাজ", quran: "কুরআন", dua: "দোয়া",
+        hadith: "হাদিস", qibla: "কিবলা", tasbih: "তাসবিহ"
       },
       quotes: [
         "আল্লাহর স্মরণেই অন্তর প্রশান্ত হয়।",
@@ -53,20 +46,12 @@
       settings: "Settings",
       days: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
       prayers: {
-        Fajr: "Fajr",
-        Sunrise: "Sunrise",
-        Dhuhr: "Dhuhr",
-        Asr: "Asr",
-        Maghrib: "Maghrib",
-        Isha: "Isha"
+        Fajr: "Fajr", Sunrise: "Sunrise", Dhuhr: "Dhuhr",
+        Asr: "Asr", Maghrib: "Maghrib", Isha: "Isha"
       },
       features: {
-        namaz: "Prayer",
-        quran: "Quran",
-        dua: "Dua",
-        hadith: "Hadith",
-        qibla: "Qibla",
-        tasbih: "Tasbih"
+        namaz: "Prayer", quran: "Quran", dua: "Dua",
+        hadith: "Hadith", qibla: "Qibla", tasbih: "Tasbih"
       },
       quotes: [
         "Indeed, in the remembrance of Allah hearts find peace.",
@@ -92,20 +77,12 @@
       settings: "सेटिंग्स",
       days: ["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"],
       prayers: {
-        Fajr: "फ़ज्र",
-        Sunrise: "सूर्योदय",
-        Dhuhr: "ज़ुहर",
-        Asr: "अस्र",
-        Maghrib: "मग़रिब",
-        Isha: "इशा"
+        Fajr: "फ़ज्र", Sunrise: "सूर्योदय", Dhuhr: "ज़ुहर",
+        Asr: "अस्र", Maghrib: "मग़रिब", Isha: "इशा"
       },
       features: {
-        namaz: "नमाज़",
-        quran: "क़ुरआन",
-        dua: "दुआ",
-        hadith: "हदीस",
-        qibla: "क़िबला",
-        tasbih: "तस्बीह"
+        namaz: "नमाज़", quran: "क़ुरआन", dua: "दुआ",
+        hadith: "हदीस", qibla: "क़िबला", tasbih: "तस्बीह"
       },
       quotes: [
         "अल्लाह के स्मरण से दिलों को सुकून मिलता है।",
@@ -123,8 +100,8 @@
   };
 
   /*
-   * Sunrise is not displayed in the prayer timetable.
-   * It remains included in prayerState() for countdown.
+   * Sunrise is hidden from the timetable,
+   * but remains included in prayerState().
    */
   const PRAYER_IDS = {
     Fajr: "fajrTime",
@@ -135,7 +112,8 @@
   };
 
   /*
-   * Known city translations.
+   * Known city/locality translations.
+   * Add more known locations here when needed.
    */
   const CITY_NAMES = {
     Kolkata: {
@@ -143,49 +121,41 @@
       en: "Kolkata",
       hi: "कोलकाता"
     },
-
     "New Delhi": {
       bn: "নয়াদিল্লি",
       en: "New Delhi",
       hi: "नई दिल्ली"
     },
-
     Delhi: {
       bn: "দিল্লি",
       en: "Delhi",
       hi: "दिल्ली"
     },
-
     Mumbai: {
       bn: "মুম্বাই",
       en: "Mumbai",
       hi: "मुंबई"
     },
-
     Chennai: {
       bn: "চেন্নাই",
       en: "Chennai",
       hi: "चेन्नई"
     },
-
     Hyderabad: {
       bn: "হায়দরাবাদ",
       en: "Hyderabad",
       hi: "हैदराबाद"
     },
-
     Dhaka: {
       bn: "ঢাকা",
       en: "Dhaka",
       hi: "ढाका"
     },
-
     London: {
       bn: "লন্ডন",
       en: "London",
       hi: "लंदन"
     },
-
     "Lake Town": {
       bn: "লেক টাউন",
       en: "Lake Town",
@@ -240,7 +210,6 @@
 
   function getLanguage(settings) {
     const value = settings.lang || settings.language || "bn";
-
     return LANG[value] ? value : "bn";
   }
 
@@ -269,25 +238,35 @@
     return String(name || "")
       .trim()
       .replace(/\s+/g, " ")
+      .replace(/[،,]+$/g, "")
       .toLowerCase();
   }
 
+  /*
+   * Match known names even if the geocoder returns
+   * a slightly longer locality label.
+   */
   function findKnownCity(name) {
     const normalized = normalizeCityName(name);
 
     if (!normalized) return null;
 
     for (const [city, translations] of Object.entries(CITY_NAMES)) {
-      if (normalizeCityName(city) === normalized) {
-        return translations;
-      }
+      const candidates = [
+        city,
+        ...Object.values(translations)
+      ];
 
-      if (
-        Object.values(translations).some(
-          (value) => normalizeCityName(value) === normalized
-        )
-      ) {
-        return translations;
+      for (const candidate of candidates) {
+        const key = normalizeCityName(candidate);
+
+        if (
+          normalized === key ||
+          normalized.startsWith(key + ",") ||
+          normalized.startsWith(key + " ")
+        ) {
+          return translations;
+        }
       }
     }
 
@@ -295,7 +274,7 @@
   }
 
   /*
-   * Return the location name in the selected language.
+   * Always choose the name for the selected language.
    */
   function localizeCity(name) {
     if (!name) return t().locationUnavailable;
@@ -314,8 +293,10 @@
   }
 
   /*
-   * Location display has three separate states:
-   * loading, available and unavailable.
+   * Location display states:
+   * loading -> searching message
+   * available -> localized place name
+   * unavailable -> localized unavailable message
    */
   function updateLocationDisplay() {
     const cityElement = $("#city");
@@ -327,10 +308,7 @@
       return;
     }
 
-    if (
-      locationStatus === "unavailable" ||
-      !locationName
-    ) {
+    if (locationStatus === "unavailable" || !locationName) {
       cityElement.textContent = t().locationUnavailable;
       return;
     }
@@ -373,7 +351,19 @@
       if (languageChanged) {
         quoteIndex = 0;
         showQuote();
-        updateLocationDisplay();
+
+        /*
+         * If coordinates are already available,
+         * request the locality again in the new language.
+         */
+        if (coordinates && locationStatus !== "unavailable") {
+          loadCity(
+            coordinates.latitude,
+            coordinates.longitude
+          );
+        } else {
+          updateLocationDisplay();
+        }
       }
     }
   }
@@ -393,10 +383,7 @@
     const settingsButton = $("#sunriseSettings");
 
     if (settingsButton) {
-      settingsButton.setAttribute(
-        "aria-label",
-        strings.settings
-      );
+      settingsButton.setAttribute("aria-label", strings.settings);
     }
 
     document.querySelectorAll("[data-prayer-label]").forEach((element) => {
@@ -702,16 +689,16 @@
   }
 
   /*
-   * Find the closest available locality.
+   * Get the closest available locality from the address.
    */
   function getLocationFromAddress(address) {
     return (
-      address.village ||
-      address.hamlet ||
       address.neighbourhood ||
       address.suburb ||
       address.residential ||
       address.quarter ||
+      address.village ||
+      address.hamlet ||
       address.city_district ||
       address.town ||
       address.municipality ||
@@ -726,7 +713,7 @@
   }
 
   /*
-   * Read language-specific names from OpenStreetMap.
+   * Get translated place names from OpenStreetMap namedetails.
    */
   function getLocationTranslations(namedetails, mainName) {
     const details = namedetails || {};
@@ -750,6 +737,7 @@
 
   /*
    * Reverse geocoding.
+   * The selected language is sent to Nominatim.
    */
   async function loadCity(latitude, longitude) {
     locationStatus = "loading";
@@ -766,11 +754,7 @@
       url.searchParams.set("zoom", "18");
       url.searchParams.set("addressdetails", "1");
       url.searchParams.set("namedetails", "1");
-
-      url.searchParams.set(
-        "accept-language",
-        language
-      );
+      url.searchParams.set("accept-language", language);
 
       const response = await fetch(url.toString(), {
         headers: {
@@ -789,42 +773,58 @@
 
       const addressName = getLocationFromAddress(address);
 
-      locationName =
+      const rawName =
         addressName ||
         namedetails.name ||
         data.name ||
         null;
 
-      if (!locationName) {
+      if (!rawName) {
         throw new Error("No usable location name found");
       }
 
+      locationName = rawName;
+
       locationNames = getLocationTranslations(
         namedetails,
-        locationName
+        rawName
       );
 
       /*
-       * Use the returned name for the current language
-       * when no specific translation is available.
+       * Also check the returned locality against the
+       * known translations. This handles cases where
+       * namedetails do not contain all language variants.
+       */
+      const knownCity =
+        findKnownCity(rawName) ||
+        findKnownCity(namedetails.name) ||
+        findKnownCity(data.name);
+
+      if (knownCity) {
+        locationNames = {
+          bn: knownCity.bn,
+          en: knownCity.en,
+          hi: knownCity.hi
+        };
+      }
+
+      /*
+       * Use the localized name returned by Nominatim
+       * for the currently selected language if available.
        */
       if (!locationNames[language]) {
         locationNames[language] =
-          addressName ||
+          namedetails[`name:${language}`] ||
           namedetails.name ||
           data.name ||
-          locationName;
+          rawName;
       }
 
       locationStatus = "available";
-
       updateLocationDisplay();
 
       try {
-        localStorage.setItem(
-          "ibadatCityName",
-          locationName
-        );
+        localStorage.setItem("ibadatCityName", locationName);
 
         localStorage.setItem(
           "ibadatCityLanguage",
@@ -858,7 +858,6 @@
       };
 
       locationStatus = "unavailable";
-
       updateLocationDisplay();
     }
   }
@@ -866,9 +865,9 @@
   /*
    * Load prayer times, weather and location.
    *
-   * Actual geolocation unavailable:
-   * Kolkata fallback is used for prayer times/weather.
-   * The location display shows the localized unavailable message.
+   * If geolocation is unavailable:
+   * Kolkata coordinates are used for prayer times/weather.
+   * The location label displays the localized unavailable message.
    */
   async function loadAll(
     latitude,
