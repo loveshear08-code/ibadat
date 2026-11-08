@@ -7,6 +7,7 @@
     bn: {
       locale: "bn-BD",
       city: "কলকাতা",
+      locationLoading: "লোকেশন খোঁজা হচ্ছে...",
       locationUnavailable: "লোকেশন পাওয়া যায়নি",
       bismillah: "পরম করুণাময় অসীম দয়ালু আল্লাহর নামে",
       unit: "সে.",
@@ -45,6 +46,7 @@
     en: {
       locale: "en-IN",
       city: "Kolkata",
+      locationLoading: "Finding location...",
       locationUnavailable: "Location unavailable",
       bismillah: "In the name of Allah, the Most Compassionate, the Most Merciful",
       unit: "°C",
@@ -83,6 +85,7 @@
     hi: {
       locale: "hi-IN-u-nu-deva",
       city: "कोलकाता",
+      locationLoading: "लोकेशन खोजी जा रही है...",
       locationUnavailable: "स्थान उपलब्ध नहीं",
       bismillah: "परम कृपालु, अत्यंत दयावान अल्लाह के नाम से",
       unit: "°से.",
@@ -120,8 +123,8 @@
   };
 
   /*
-   * Sunrise is deliberately not displayed in the prayer timetable.
-   * It remains included in prayerState() for status and countdown.
+   * Sunrise is not displayed in the prayer timetable.
+   * It remains included in prayerState() for countdown.
    */
   const PRAYER_IDS = {
     Fajr: "fajrTime",
@@ -133,7 +136,6 @@
 
   /*
    * Known city translations.
-   * Used when OpenStreetMap does not provide a translated name.
    */
   const CITY_NAMES = {
     Kolkata: {
@@ -141,40 +143,53 @@
       en: "Kolkata",
       hi: "कोलकाता"
     },
+
     "New Delhi": {
       bn: "নয়াদিল্লি",
       en: "New Delhi",
       hi: "नई दिल्ली"
     },
+
     Delhi: {
       bn: "দিল্লি",
       en: "Delhi",
       hi: "दिल्ली"
     },
+
     Mumbai: {
       bn: "মুম্বাই",
       en: "Mumbai",
       hi: "मुंबई"
     },
+
     Chennai: {
       bn: "চেন্নাই",
       en: "Chennai",
       hi: "चेन्नई"
     },
+
     Hyderabad: {
       bn: "হায়দরাবাদ",
       en: "Hyderabad",
       hi: "हैदराबाद"
     },
+
     Dhaka: {
       bn: "ঢাকা",
       en: "Dhaka",
       hi: "ढाका"
     },
+
     London: {
       bn: "লন্ডন",
       en: "London",
       hi: "लंदन"
+    },
+
+    "Lake Town": {
+      bn: "লেক টাউন",
+      en: "Lake Town",
+      hi: "लेक टाउन"
     }
   };
 
@@ -193,13 +208,9 @@
     hi: null
   };
 
-  /*
-   * True only when the browser actually provides
-   * the user's geolocation successfully.
-   */
-  let userLocationAvailable = false;
-
+  let locationStatus = "loading";
   let lastDate = "";
+
   let quoteIndex = 0;
   let quoteTimer = null;
   let quoteAnimationTimer = null;
@@ -284,17 +295,10 @@
   }
 
   /*
-   * Return the best available location name
-   * for the currently selected language.
+   * Return the location name in the selected language.
    */
   function localizeCity(name) {
-    if (!name || !userLocationAvailable) {
-      return t().locationUnavailable;
-    }
-
-    if (locationNames[language]) {
-      return locationNames[language];
-    }
+    if (!name) return t().locationUnavailable;
 
     const knownCity = findKnownCity(name);
 
@@ -302,18 +306,31 @@
       return knownCity[language];
     }
 
+    if (locationNames[language]) {
+      return locationNames[language];
+    }
+
     return name;
   }
 
   /*
-   * Update the location text without changing HTML or CSS.
+   * Location display has three separate states:
+   * loading, available and unavailable.
    */
   function updateLocationDisplay() {
     const cityElement = $("#city");
 
     if (!cityElement) return;
 
-    if (!userLocationAvailable || !locationName) {
+    if (locationStatus === "loading") {
+      cityElement.textContent = t().locationLoading;
+      return;
+    }
+
+    if (
+      locationStatus === "unavailable" ||
+      !locationName
+    ) {
       cityElement.textContent = t().locationUnavailable;
       return;
     }
@@ -356,11 +373,6 @@
       if (languageChanged) {
         quoteIndex = 0;
         showQuote();
-
-        /*
-         * Use already available translations.
-         * No unnecessary reverse-geocoding request.
-         */
         updateLocationDisplay();
       }
     }
@@ -389,13 +401,11 @@
 
     document.querySelectorAll("[data-prayer-label]").forEach((element) => {
       const key = element.dataset.prayerLabel;
-
       element.textContent = strings.prayers[key] || key;
     });
 
     document.querySelectorAll("[data-feature-label]").forEach((element) => {
       const key = element.dataset.featureLabel;
-
       element.textContent = strings.features[key] || key;
     });
 
@@ -493,8 +503,7 @@
   }
 
   /*
-   * Sunrise remains in the chronological event sequence,
-   * but is not displayed in the prayer timetable.
+   * Sunrise remains part of the chronological event sequence.
    */
   function prayerState() {
     if (!prayerTimes) return null;
@@ -693,7 +702,7 @@
   }
 
   /*
-   * Extract the closest available locality from the address.
+   * Find the closest available locality.
    */
   function getLocationFromAddress(address) {
     return (
@@ -717,7 +726,7 @@
   }
 
   /*
-   * Get the language-specific names available in OSM.
+   * Read language-specific names from OpenStreetMap.
    */
   function getLocationTranslations(namedetails, mainName) {
     const details = namedetails || {};
@@ -731,22 +740,21 @@
     const knownCity = findKnownCity(mainName);
 
     if (knownCity) {
-      translations.bn = translations.bn || knownCity.bn;
-      translations.en = translations.en || knownCity.en;
-      translations.hi = translations.hi || knownCity.hi;
+      translations.bn = knownCity.bn;
+      translations.en = knownCity.en;
+      translations.hi = knownCity.hi;
     }
 
     return translations;
   }
 
   /*
-   * Reverse geocoding:
-   * - Runs only when actual geolocation is available.
-   * - Requests address and language-specific name details.
-   * - Stores available Bengali, English and Hindi names.
-   * - Shows a localized unavailable message if no name is found.
+   * Reverse geocoding.
    */
   async function loadCity(latitude, longitude) {
+    locationStatus = "loading";
+    updateLocationDisplay();
+
     try {
       const url = new URL(
         "https://nominatim.openstreetmap.org/reverse"
@@ -759,13 +767,10 @@
       url.searchParams.set("addressdetails", "1");
       url.searchParams.set("namedetails", "1");
 
-      const languageCode = {
-        bn: "bn",
-        en: "en",
-        hi: "hi"
-      }[language] || "bn";
-
-      url.searchParams.set("accept-language", languageCode);
+      url.searchParams.set(
+        "accept-language",
+        language
+      );
 
       const response = await fetch(url.toString(), {
         headers: {
@@ -800,8 +805,8 @@
       );
 
       /*
-       * Use the localized address returned for the current language
-       * only as a fallback for that language.
+       * Use the returned name for the current language
+       * when no specific translation is available.
        */
       if (!locationNames[language]) {
         locationNames[language] =
@@ -810,6 +815,8 @@
           data.name ||
           locationName;
       }
+
+      locationStatus = "available";
 
       updateLocationDisplay();
 
@@ -850,17 +857,18 @@
         hi: null
       };
 
+      locationStatus = "unavailable";
+
       updateLocationDisplay();
     }
   }
 
   /*
-   * Load prayer times and weather for the supplied coordinates.
+   * Load prayer times, weather and location.
    *
-   * locationAvailable:
-   * true  = actual browser geolocation succeeded.
-   * false = browser geolocation failed; fallback coordinates
-   *         are used for prayer times and weather only.
+   * Actual geolocation unavailable:
+   * Kolkata fallback is used for prayer times/weather.
+   * The location display shows the localized unavailable message.
    */
   async function loadAll(
     latitude,
@@ -872,11 +880,6 @@
       longitude
     };
 
-    userLocationAvailable = locationAvailable;
-
-    /*
-     * Reset previous location data before loading new data.
-     */
     locationName = null;
 
     locationNames = {
@@ -884,6 +887,10 @@
       en: null,
       hi: null
     };
+
+    locationStatus = locationAvailable
+      ? "loading"
+      : "unavailable";
 
     updateLocationDisplay();
 
@@ -909,10 +916,6 @@
       loadWeather(latitude, longitude)
     ];
 
-    /*
-     * Reverse geocoding is only performed when the browser
-     * has successfully obtained the user's actual location.
-     */
     if (locationAvailable) {
       tasks.push(loadCity(latitude, longitude));
     }
@@ -921,13 +924,12 @@
   }
 
   /*
-   * Get the user's actual location.
-   *
-   * If permission is denied, unavailable or times out:
-   * - Show localized location-unavailable message.
-   * - Keep Kolkata fallback for prayer times and weather.
+   * Browser geolocation.
    */
   function loadLocation() {
+    locationStatus = "loading";
+    updateLocationDisplay();
+
     if (!navigator.geolocation) {
       loadAll(22.5726, 88.3639, false);
       return;
@@ -973,7 +975,7 @@
   }
 
   /*
-   * Show one localized quote and change it every 30 seconds.
+   * Footer quote animation.
    */
   function showQuote() {
     const message = $("#footerMessage");
@@ -998,10 +1000,6 @@
     message.style.animation = "none";
     message.textContent = quote;
 
-    /*
-     * Measure available width and text width before
-     * starting the footer scrolling animation.
-     */
     quoteAnimationTimer = window.setTimeout(() => {
       const availableWidth = windowElement.clientWidth;
       const textWidth = message.scrollWidth;
