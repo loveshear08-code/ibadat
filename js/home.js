@@ -4,6 +4,10 @@
 (() => {
   const $ = (selector) => document.querySelector(selector);
 
+  /* =========================================
+     LANGUAGE DATA
+     ========================================= */
+
   const LANG = {
     bn: {
       locale: "bn-BD",
@@ -13,7 +17,7 @@
       bismillah: "পরম করুণাময় অসীম দয়ালু আল্লাহর নামে",
       unit: "সে.",
       settings: "সেটিংস",
-      days: ["রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার"],
+      days: ["রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার", "শনিবার"],
       prayers: {
         Fajr: "ফজর", Sunrise: "সূর্যোদয়", Dhuhr: "যোহর",
         Asr: "আসর", Maghrib: "মাগরিব", Isha: "এশা"
@@ -44,7 +48,7 @@
       bismillah: "In the name of Allah, the Most Compassionate, the Most Merciful",
       unit: "°C",
       settings: "Settings",
-      days: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
       prayers: {
         Fajr: "Fajr", Sunrise: "Sunrise", Dhuhr: "Dhuhr",
         Asr: "Asr", Maghrib: "Maghrib", Isha: "Isha"
@@ -75,7 +79,7 @@
       bismillah: "परम कृपालु, अत्यंत दयावान अल्लाह के नाम से",
       unit: "°से.",
       settings: "सेटिंग्स",
-      days: ["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"],
+      days: ["रविवार", "सोमवार", "मंगलवार", "बुधवार", "गुरुवार", "शुक्रवार", "शनिवार"],
       prayers: {
         Fajr: "फ़ज्र", Sunrise: "सूर्योदय", Dhuhr: "ज़ुहर",
         Asr: "अस्र", Maghrib: "मग़रिब", Isha: "इशा"
@@ -99,10 +103,6 @@
     }
   };
 
-  /*
-   * Sunrise is hidden from the timetable,
-   * but remains included in prayerState().
-   */
   const PRAYER_IDS = {
     Fajr: "fajrTime",
     Dhuhr: "dhuhrTime",
@@ -111,55 +111,46 @@
     Isha: "ishaTime"
   };
 
-  /*
-   * Known city/locality translations.
-   * Add more known locations here when needed.
-   */
+  /* =========================================
+     KNOWN PLACE NAME TRANSLATIONS
+     ========================================= */
+
   const CITY_NAMES = {
-    Kolkata: {
-      bn: "কলকাতা",
-      en: "Kolkata",
-      hi: "कोलकाता"
+    "Kolkata": {
+      bn: "কলকাতা", en: "Kolkata", hi: "कोलकाता"
+    },
+    "Calcutta": {
+      bn: "কলকাতা", en: "Kolkata", hi: "कोलकाता"
     },
     "New Delhi": {
-      bn: "নয়াদিল্লি",
-      en: "New Delhi",
-      hi: "नई दिल्ली"
+      bn: "নয়াদিল্লি", en: "New Delhi", hi: "नई दिल्ली"
     },
-    Delhi: {
-      bn: "দিল্লি",
-      en: "Delhi",
-      hi: "दिल्ली"
+    "Delhi": {
+      bn: "দিল্লি", en: "Delhi", hi: "दिल्ली"
     },
-    Mumbai: {
-      bn: "মুম্বাই",
-      en: "Mumbai",
-      hi: "मुंबई"
+    "Mumbai": {
+      bn: "মুম্বাই", en: "Mumbai", hi: "मुंबई"
     },
-    Chennai: {
-      bn: "চেন্নাই",
-      en: "Chennai",
-      hi: "चेन्नई"
+    "Bombay": {
+      bn: "মুম্বাই", en: "Mumbai", hi: "मुंबई"
     },
-    Hyderabad: {
-      bn: "হায়দরাবাদ",
-      en: "Hyderabad",
-      hi: "हैदराबाद"
+    "Chennai": {
+      bn: "চেন্নাই", en: "Chennai", hi: "चेन्नई"
     },
-    Dhaka: {
-      bn: "ঢাকা",
-      en: "Dhaka",
-      hi: "ढाका"
+    "Madras": {
+      bn: "চেন্নাই", en: "Chennai", hi: "चेन्नई"
     },
-    London: {
-      bn: "লন্ডন",
-      en: "London",
-      hi: "लंदन"
+    "Hyderabad": {
+      bn: "হায়দরাবাদ", en: "Hyderabad", hi: "हैदराबाद"
+    },
+    "Dhaka": {
+      bn: "ঢাকা", en: "Dhaka", hi: "ढाका"
+    },
+    "London": {
+      bn: "লন্ডন", en: "London", hi: "लंदन"
     },
     "Lake Town": {
-      bn: "লেক টাউন",
-      en: "Lake Town",
-      hi: "लेक टाउन"
+      bn: "লেক টাউন", en: "Lake Town", hi: "लेक टाउन"
     }
   };
 
@@ -185,17 +176,11 @@
   let quoteTimer = null;
   let quoteAnimationTimer = null;
 
-  function hideMissingFeatureIcons() {
-    document.querySelectorAll(".feature-icon").forEach((image) => {
-      image.addEventListener("error", () => image.remove(), {
-        once: true
-      });
+  let locationRequestId = 0;
 
-      if (image.complete && image.naturalWidth === 0) {
-        image.remove();
-      }
-    });
-  }
+  /* =========================================
+     BASIC SETTINGS
+     ========================================= */
 
   function readSettings() {
     try {
@@ -203,7 +188,7 @@
         localStorage.getItem("appSettings") || "{}"
       );
     } catch (error) {
-      console.warn("Unable to read appSettings.", error);
+      console.warn("IBADAT: settings could not be read.", error);
       return {};
     }
   }
@@ -234,6 +219,10 @@
     return LANG[language] || LANG.bn;
   }
 
+  /* =========================================
+     LOCATION: NAME NORMALIZATION
+     ========================================= */
+
   function normalizeCityName(name) {
     return String(name || "")
       .trim()
@@ -242,10 +231,6 @@
       .toLowerCase();
   }
 
-  /*
-   * Match known names even if the geocoder returns
-   * a slightly longer locality label.
-   */
   function findKnownCity(name) {
     const normalized = normalizeCityName(name);
 
@@ -273,31 +258,43 @@
     return null;
   }
 
-  /*
-   * Always choose the name for the selected language.
-   */
-  function localizeCity(name) {
-    if (!name) return t().locationUnavailable;
+  function getSavedLocationNames() {
+    try {
+      const saved = JSON.parse(
+        localStorage.getItem("ibadatCityTranslations") || "{}"
+      );
 
-    const knownCity = findKnownCity(name);
-
-    if (knownCity && knownCity[language]) {
-      return knownCity[language];
+      return {
+        bn: saved.bn || null,
+        en: saved.en || null,
+        hi: saved.hi || null
+      };
+    } catch (error) {
+      return {
+        bn: null,
+        en: null,
+        hi: null
+      };
     }
-
-    if (locationNames[language]) {
-      return locationNames[language];
-    }
-
-    return name;
   }
 
-  /*
-   * Location display states:
-   * loading -> searching message
-   * available -> localized place name
-   * unavailable -> localized unavailable message
-   */
+  function localizeCity() {
+    if (!locationName) {
+      return t().locationUnavailable;
+    }
+
+    const known = findKnownCity(locationName);
+
+    if (known && known[language]) {
+      return known[language];
+    }
+
+    return (
+      locationNames[language] ||
+      locationName
+    );
+  }
+
   function updateLocationDisplay() {
     const cityElement = $("#city");
 
@@ -308,13 +305,286 @@
       return;
     }
 
-    if (locationStatus === "unavailable" || !locationName) {
+    if (locationStatus !== "available" || !locationName) {
       cityElement.textContent = t().locationUnavailable;
       return;
     }
 
-    cityElement.textContent = localizeCity(locationName);
+    cityElement.textContent = localizeCity();
   }
+
+  /* =========================================
+     LOCATION: LOCALITY SELECTION
+     Never use road/street as locality name.
+     ========================================= */
+
+  function getLocationFromAddress(address) {
+    if (!address || typeof address !== "object") {
+      return null;
+    }
+
+    /*
+     * Prefer a genuine locality.
+     * Do not use road, street, house number,
+     * shop or other nearby object names.
+     */
+
+    const localityFields = [
+      "neighbourhood",
+      "suburb",
+      "quarter",
+      "city_district",
+      "borough",
+      "town",
+      "city",
+      "municipality",
+      "village",
+      "hamlet",
+      "locality",
+      "county",
+      "state_district",
+      "state"
+    ];
+
+    for (const field of localityFields) {
+      const value = address[field];
+
+      if (
+        typeof value === "string" &&
+        value.trim()
+      ) {
+        return value.trim();
+      }
+    }
+
+    return null;
+  }
+
+  function getAddressTranslations(address, namedetails, mainName) {
+    const details = namedetails || {};
+    const translations = {
+      bn: details["name:bn"] || null,
+      en: details["name:en"] || null,
+      hi: details["name:hi"] || null
+    };
+
+    const known = findKnownCity(mainName);
+
+    if (known) {
+      return {
+        bn: known.bn,
+        en: known.en,
+        hi: known.hi
+      };
+    }
+
+    /*
+     * Some OSM records store localized names
+     * in the address object itself.
+     */
+    if (address) {
+      translations.bn =
+        translations.bn ||
+        address["name:bn"] ||
+        null;
+
+      translations.en =
+        translations.en ||
+        address["name:en"] ||
+        null;
+
+      translations.hi =
+        translations.hi ||
+        address["name:hi"] ||
+        null;
+    }
+
+    return translations;
+  }
+
+  /* =========================================
+     LOCATION: CACHE
+     ========================================= */
+
+  function saveLocationCache() {
+    try {
+      localStorage.setItem(
+        "ibadatCityName",
+        locationName || ""
+      );
+
+      localStorage.setItem(
+        "ibadatCityTranslations",
+        JSON.stringify(locationNames)
+      );
+
+      localStorage.setItem(
+        "ibadatCityLanguage",
+        language
+      );
+
+      localStorage.setItem(
+        "ibadatCityUpdatedAt",
+        String(Date.now())
+      );
+    } catch (error) {
+      console.warn("IBADAT: location cache could not be saved.", error);
+    }
+  }
+
+  function restoreLocationCache() {
+    try {
+      const savedName = localStorage.getItem("ibadatCityName");
+      const savedNames = getSavedLocationNames();
+
+      if (!savedName) return false;
+
+      locationName = savedName;
+      locationNames = savedNames;
+
+      const known = findKnownCity(savedName);
+
+      if (known) {
+        locationNames = {
+          bn: known.bn,
+          en: known.en,
+          hi: known.hi
+        };
+      }
+
+      locationStatus = "available";
+      updateLocationDisplay();
+
+      return true;
+
+    } catch (error) {
+      return false;
+    }
+  }
+
+  /* =========================================
+     LOCATION: REVERSE GEOCODING
+     ========================================= */
+
+  async function loadCity(latitude, longitude) {
+    const requestId = ++locationRequestId;
+
+    locationStatus = "loading";
+    updateLocationDisplay();
+
+    try {
+      const url = new URL(
+        "https://nominatim.openstreetmap.org/reverse"
+      );
+
+      url.searchParams.set("format", "jsonv2");
+      url.searchParams.set("lat", latitude);
+      url.searchParams.set("lon", longitude);
+
+      /*
+       * Zoom 14 generally favours locality-level
+       * information over individual street objects.
+       */
+      url.searchParams.set("zoom", "14");
+      url.searchParams.set("addressdetails", "1");
+      url.searchParams.set("namedetails", "1");
+      url.searchParams.set("accept-language", language);
+
+      const response = await fetch(url.toString(), {
+        headers: {
+          Accept: "application/json"
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error("Reverse geocoding failed.");
+      }
+
+      const data = await response.json();
+
+      /*
+       * Ignore an older response if another request
+       * has already started.
+       */
+      if (requestId !== locationRequestId) return;
+
+      const address = data.address || {};
+      const namedetails = data.namedetails || {};
+
+      const locality = getLocationFromAddress(address);
+
+      /*
+       * Do not fall back to data.name or road names.
+       * This prevents results such as Council House Street
+       * from being displayed as the user's locality.
+       */
+      if (!locality) {
+        throw new Error("No locality name was returned.");
+      }
+
+      locationName = locality;
+
+      locationNames = getAddressTranslations(
+        address,
+        namedetails,
+        locality
+      );
+
+      /*
+       * Use known translations if the place is in
+       * our verified local translation list.
+       */
+      const known = findKnownCity(locality);
+
+      if (known) {
+        locationNames = {
+          bn: known.bn,
+          en: known.en,
+          hi: known.hi
+        };
+      }
+
+      /*
+       * Nominatim may return the selected language
+       * in the address/locality value, but it cannot
+       * guarantee all three language variants.
+       */
+      if (!locationNames[language]) {
+        locationNames[language] = locality;
+      }
+
+      locationStatus = "available";
+
+      saveLocationCache();
+      updateLocationDisplay();
+
+    } catch (error) {
+      if (requestId !== locationRequestId) return;
+
+      console.warn(
+        "IBADAT: location name unavailable.",
+        error
+      );
+
+      /*
+       * Keep a previously saved location if available.
+       * Do not replace it with a road or guessed name.
+       */
+      if (!locationName) {
+        restoreLocationCache();
+      }
+
+      if (!locationName) {
+        locationStatus = "unavailable";
+      }
+
+      updateLocationDisplay();
+    }
+  }
+
+  /* =========================================
+     SETTINGS AND LANGUAGE
+     ========================================= */
 
   function applySettings() {
     const settings = readSettings();
@@ -330,8 +600,13 @@
     );
 
     document.documentElement.lang = language;
+
     document.body.dataset.themeColor = getTheme(settings);
-    document.body.classList.toggle("dark-mode", dark);
+
+    document.body.classList.toggle(
+      "dark-mode",
+      dark
+    );
 
     const snapshot = JSON.stringify({
       language,
@@ -339,32 +614,26 @@
       dark
     });
 
-    if (snapshot !== settingsSnapshot) {
-      const languageChanged =
-        settingsSnapshot !== "" &&
-        previousLanguage !== language;
+    if (snapshot === settingsSnapshot) return;
 
-      settingsSnapshot = snapshot;
+    const languageChanged =
+      settingsSnapshot !== "" &&
+      previousLanguage !== language;
 
-      updateLanguage();
+    settingsSnapshot = snapshot;
 
-      if (languageChanged) {
-        quoteIndex = 0;
-        showQuote();
+    updateLanguage();
 
-        /*
-         * If coordinates are already available,
-         * request the locality again in the new language.
-         */
-        if (coordinates && locationStatus !== "unavailable") {
-          loadCity(
-            coordinates.latitude,
-            coordinates.longitude
-          );
-        } else {
-          updateLocationDisplay();
-        }
-      }
+    /*
+     * Important:
+     * Changing the language only changes the displayed
+     * cached name. It does not request GPS or geocoding
+     * again, avoiding unnecessary API calls.
+     */
+    if (languageChanged) {
+      quoteIndex = 0;
+      showQuote();
+      updateLocationDisplay();
     }
   }
 
@@ -383,7 +652,10 @@
     const settingsButton = $("#sunriseSettings");
 
     if (settingsButton) {
-      settingsButton.setAttribute("aria-label", strings.settings);
+      settingsButton.setAttribute(
+        "aria-label",
+        strings.settings
+      );
     }
 
     document.querySelectorAll("[data-prayer-label]").forEach((element) => {
@@ -410,6 +682,10 @@
 
     showQuote();
   }
+
+  /* =========================================
+     NUMBER AND DATE FORMATTING
+     ========================================= */
 
   function formatNumber(value, minimumDigits = 2) {
     return new Intl.NumberFormat(t().locale, {
@@ -452,6 +728,10 @@
     ].join("-");
   }
 
+  /* =========================================
+     PRAYER TIME FUNCTIONS
+     ========================================= */
+
   function parseTime(value) {
     if (!value) return null;
 
@@ -489,9 +769,6 @@
     });
   }
 
-  /*
-   * Sunrise remains part of the chronological event sequence.
-   */
   function prayerState() {
     if (!prayerTimes) return null;
 
@@ -633,6 +910,10 @@
     }
   }
 
+  /* =========================================
+     WEATHER FUNCTIONS
+     ========================================= */
+
   function renderTemperature() {
     $("#temperature").textContent = new Intl.NumberFormat(t().locale, {
       maximumFractionDigits: 0,
@@ -688,187 +969,10 @@
     }
   }
 
-  /*
-   * Get the closest available locality from the address.
-   */
-  function getLocationFromAddress(address) {
-    return (
-      address.neighbourhood ||
-      address.suburb ||
-      address.residential ||
-      address.quarter ||
-      address.village ||
-      address.hamlet ||
-      address.city_district ||
-      address.town ||
-      address.municipality ||
-      address.city ||
-      address.block ||
-      address.county ||
-      address.state_district ||
-      address.state ||
-      address.country ||
-      null
-    );
-  }
+  /* =========================================
+     LOAD ALL LOCATION-BASED DATA
+     ========================================= */
 
-  /*
-   * Get translated place names from OpenStreetMap namedetails.
-   */
-  function getLocationTranslations(namedetails, mainName) {
-    const details = namedetails || {};
-
-    const translations = {
-      bn: details["name:bn"] || null,
-      en: details["name:en"] || null,
-      hi: details["name:hi"] || null
-    };
-
-    const knownCity = findKnownCity(mainName);
-
-    if (knownCity) {
-      translations.bn = knownCity.bn;
-      translations.en = knownCity.en;
-      translations.hi = knownCity.hi;
-    }
-
-    return translations;
-  }
-
-  /*
-   * Reverse geocoding.
-   * The selected language is sent to Nominatim.
-   */
-  async function loadCity(latitude, longitude) {
-    locationStatus = "loading";
-    updateLocationDisplay();
-
-    try {
-      const url = new URL(
-        "https://nominatim.openstreetmap.org/reverse"
-      );
-
-      url.searchParams.set("format", "jsonv2");
-      url.searchParams.set("lat", latitude);
-      url.searchParams.set("lon", longitude);
-      url.searchParams.set("zoom", "18");
-      url.searchParams.set("addressdetails", "1");
-      url.searchParams.set("namedetails", "1");
-      url.searchParams.set("accept-language", language);
-
-      const response = await fetch(url.toString(), {
-        headers: {
-          Accept: "application/json"
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error("Location name unavailable");
-      }
-
-      const data = await response.json();
-
-      const address = data.address || {};
-      const namedetails = data.namedetails || {};
-
-      const addressName = getLocationFromAddress(address);
-
-      const rawName =
-        addressName ||
-        namedetails.name ||
-        data.name ||
-        null;
-
-      if (!rawName) {
-        throw new Error("No usable location name found");
-      }
-
-      locationName = rawName;
-
-      locationNames = getLocationTranslations(
-        namedetails,
-        rawName
-      );
-
-      /*
-       * Also check the returned locality against the
-       * known translations. This handles cases where
-       * namedetails do not contain all language variants.
-       */
-      const knownCity =
-        findKnownCity(rawName) ||
-        findKnownCity(namedetails.name) ||
-        findKnownCity(data.name);
-
-      if (knownCity) {
-        locationNames = {
-          bn: knownCity.bn,
-          en: knownCity.en,
-          hi: knownCity.hi
-        };
-      }
-
-      /*
-       * Use the localized name returned by Nominatim
-       * for the currently selected language if available.
-       */
-      if (!locationNames[language]) {
-        locationNames[language] =
-          namedetails[`name:${language}`] ||
-          namedetails.name ||
-          data.name ||
-          rawName;
-      }
-
-      locationStatus = "available";
-      updateLocationDisplay();
-
-      try {
-        localStorage.setItem("ibadatCityName", locationName);
-
-        localStorage.setItem(
-          "ibadatCityLanguage",
-          language
-        );
-
-        localStorage.setItem(
-          "ibadatCityTranslations",
-          JSON.stringify(locationNames)
-        );
-
-      } catch (storageError) {
-        console.warn(
-          "IBADAT: unable to save city name.",
-          storageError
-        );
-      }
-
-    } catch (error) {
-      console.warn(
-        "IBADAT: location name unavailable.",
-        error
-      );
-
-      locationName = null;
-
-      locationNames = {
-        bn: null,
-        en: null,
-        hi: null
-      };
-
-      locationStatus = "unavailable";
-      updateLocationDisplay();
-    }
-  }
-
-  /*
-   * Load prayer times, weather and location.
-   *
-   * If geolocation is unavailable:
-   * Kolkata coordinates are used for prayer times/weather.
-   * The location label displays the localized unavailable message.
-   */
   async function loadAll(
     latitude,
     longitude,
@@ -879,20 +983,6 @@
       longitude
     };
 
-    locationName = null;
-
-    locationNames = {
-      bn: null,
-      en: null,
-      hi: null
-    };
-
-    locationStatus = locationAvailable
-      ? "loading"
-      : "unavailable";
-
-    updateLocationDisplay();
-
     try {
       localStorage.setItem(
         "ibadatUserLocation",
@@ -902,12 +992,16 @@
           updatedAt: Date.now()
         })
       );
-
     } catch (error) {
-      console.warn(
-        "IBADAT: unable to save location.",
-        error
-      );
+      console.warn("IBADAT: location could not be saved.", error);
+    }
+
+    if (locationAvailable) {
+      locationStatus = "loading";
+      updateLocationDisplay();
+    } else {
+      locationStatus = "unavailable";
+      updateLocationDisplay();
     }
 
     const tasks = [
@@ -922,9 +1016,10 @@
     await Promise.all(tasks);
   }
 
-  /*
-   * Browser geolocation.
-   */
+  /* =========================================
+     GPS LOCATION
+     ========================================= */
+
   function loadLocation() {
     locationStatus = "loading";
     updateLocationDisplay();
@@ -943,7 +1038,17 @@
         );
       },
 
-      () => {
+      (error) => {
+        console.warn(
+          "IBADAT: GPS location unavailable.",
+          error
+        );
+
+        /*
+         * Kolkata coordinates are only used for prayer
+         * times and weather fallback. They are not shown
+         * as the user's detected location.
+         */
         loadAll(22.5726, 88.3639, false);
       },
 
@@ -954,6 +1059,10 @@
       }
     );
   }
+
+  /* =========================================
+     SETTINGS PAGE
+     ========================================= */
 
   function openSettings() {
     const settings = readSettings();
@@ -973,9 +1082,26 @@
     window.location.href = "html/settings.html";
   }
 
-  /*
-   * Footer quote animation.
-   */
+  /* =========================================
+     FEATURE ICONS
+     ========================================= */
+
+  function hideMissingFeatureIcons() {
+    document.querySelectorAll(".feature-icon").forEach((image) => {
+      image.addEventListener("error", () => image.remove(), {
+        once: true
+      });
+
+      if (image.complete && image.naturalWidth === 0) {
+        image.remove();
+      }
+    });
+  }
+
+  /* =========================================
+     FOOTER QUOTE ANIMATION
+     ========================================= */
+
   function showQuote() {
     const message = $("#footerMessage");
 
@@ -1022,8 +1148,18 @@
     }, 30000);
   }
 
+  /* =========================================
+     INITIALIZATION
+     ========================================= */
+
   function init() {
     hideMissingFeatureIcons();
+
+    /*
+     * Load cached locality first so the header does not
+     * remain blank while GPS and geocoding are running.
+     */
+    restoreLocationCache();
 
     applySettings();
 
@@ -1034,6 +1170,10 @@
 
     updateClockAndDate();
     showQuote();
+
+    /*
+     * GPS is requested once when the Home page starts.
+     */
     loadLocation();
 
     window.setInterval(() => {
@@ -1053,6 +1193,10 @@
 
     }, 1000);
 
+    /*
+     * Update language/theme when another page changes
+     * the shared appSettings localStorage value.
+     */
     window.addEventListener("storage", (event) => {
       if (!event.key || event.key === "appSettings") {
         applySettings();
