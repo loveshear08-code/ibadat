@@ -76,7 +76,7 @@ body {
 
   background:
     var(--page-overlay),
-    url("../assets/main-bg.jpg") center/cover no-repeat;
+    url("../assets/images/content-bg.png") center/cover no-repeat;
 }
 
 button,
@@ -369,7 +369,7 @@ button:disabled {
 
   background:
     linear-gradient(var(--content-overlay), var(--content-overlay)),
-    url("../assets/main-bg.jpg") center/cover no-repeat;
+    url("../assets/images/content-bg.png") center/cover no-repeat;
 }
 
 /* ---------- Read toolbar ---------- */
