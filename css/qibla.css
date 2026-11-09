@@ -1,825 +1,847 @@
+/* =========================================
+   IBADAT - QIBLA PAGE
+   ========================================= */
+
 :root {
-  --header-height: 48px;
-  --footer-height: 48px;
-  --page-gap: 6px;
-  --app-padding: 7px;
-  --board-radius: 20px;
+    --qibla-primary: #1B7F4B;
+    --qibla-deep: #0F5132;
+    --qibla-soft: #E8F5E9;
+    --qibla-accent: #F2C94C;
+    --qibla-text: #17452F;
+    --qibla-muted: #68796B;
+    --qibla-border: #D5E3D1;
+    --qibla-card: rgba(255, 255, 255, 0.94);
 
-  --accent: #F2C94C;
-  --deep: #0F5132;
-  --text: #17452F;
-  --muted: #68796B;
-  --border: #D5E3D1;
+    --qibla-radius: 22px;
+    --qibla-shadow: 0 8px 28px rgba(15, 81, 50, 0.09);
 
-  --header-bg: #0F5132;
-  --header-text: #F5E5A7;
-  --footer-bg: #0F5132;
-  --footer-text: #F5E5A7;
-
-  --page-overlay: rgba(235, 245, 226, 0.56);
-  --content-overlay: rgba(255, 253, 245, 0.64);
-
-  /* থিম-রঙের হালকা স্তর */
-  --info-overlay: rgba(220, 235, 207, 0.90);
-  --info-tint: rgba(102, 187, 106, 0.12);
-
-  --compass-outer: #66BB6A;
-  --compass-face: #DCEBCF;
-  --compass-inner: #F7F5E9;
-  --compass-ticks: #75B77A;
-  --compass-major-tick: #D62828;
-  --compass-needle: #124C32;
-  --compass-tip: #C62828;
-
-  --compass-size: min(65vw, 300px);
+    --qibla-arabic-font: "Noto Naskh Arabic", serif;
+    --qibla-bengali-font: "Noto Sans Bengali", "Hind Siliguri", sans-serif;
+    --qibla-general-font: "Noto Sans Bengali", "Hind Siliguri", Arial, sans-serif;
 }
+
+
+/* =========================================
+   RESET
+   ========================================= */
 
 * {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-html,
-body {
-  width: 100%;
-  height: 100%;
-  height: 100dvh;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-  color: var(--text);
-  font-family:
-    "Noto Sans Bengali",
-    "Hind Siliguri",
-    "Noto Sans Devanagari",
-    Arial,
-    sans-serif;
-
-  background:
-    linear-gradient(var(--page-overlay), var(--page-overlay)),
-    url("../assets/images/content-bg.png") center / cover no-repeat;
-
-  -webkit-text-size-adjust: 100%;
+    min-height: 100vh;
+    font-family: var(--qibla-general-font);
+    color: var(--qibla-text);
+    background-color: #edf4eb;
+    overflow-x: hidden;
 }
 
-img {
-  -webkit-user-drag: none;
-  user-select: none;
+button {
+    font: inherit;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
+
+/* =========================================
+   APP
+   ========================================= */
+
+.qibla-app {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+
+    background-color: transparent;
+    background-image: var(--qibla-page-background, none);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
-.qibla-page {
-  display: flex;
-  flex-direction: column;
-  gap: var(--page-gap);
 
-  width: 100%;
-  height: 100%;
-  height: 100dvh;
-  min-height: 0;
+/* =========================================
+   HEADER
+   ========================================= */
 
-  padding:
-    max(5px, env(safe-area-inset-top, 0px))
-    var(--app-padding)
-    max(5px, env(safe-area-inset-bottom, 0px));
+.qibla-header {
+    min-height: 76px;
+    width: 100%;
 
-  overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-  background:
-    linear-gradient(var(--page-overlay), var(--page-overlay)),
-    url("../assets/images/content-bg") center / cover no-repeat;
+    padding: 12px 18px;
+
+    background: var(--deep, #0F5132);
+    color: #F5E5A7;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
 }
 
-.board {
-  min-width: 0;
-  border: 2px solid var(--accent);
-  border-radius: var(--board-radius);
-  box-shadow: 0 3px 10px rgba(30, 49, 28, 0.12);
-  overflow: hidden;
+.back-button,
+.language-button {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(245, 229, 167, 0.35);
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.08);
+    color: #F5E5A7;
+
+    font-size: 24px;
+
+    transition: 0.2s ease;
 }
 
-/* HEADER */
-
-.hero-board {
-  flex: 0 0 var(--header-height);
-  width: 100%;
-  height: var(--header-height);
-  min-height: var(--header-height);
-  max-height: var(--header-height);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 3px 10px;
-  background: var(--header-bg);
-  color: var(--header-text);
-  text-align: center;
+.back-button:active,
+.language-button:active {
+    transform: scale(0.94);
 }
 
-#pageTitle {
-  width: 100%;
-  margin: 0;
-  color: var(--header-text);
-  font-size: clamp(15px, 4vw, 18px);
-  font-weight: 800;
-  line-height: 1.3;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.header-title {
+    text-align: center;
+    flex: 1;
 }
 
-/* MAIN CONTENT BOARD */
-
-.main-board {
-  position: relative;
-  isolation: isolate;
-
-  flex: 1 1 0;
-  min-width: 0;
-  min-height: 0;
-
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: space-between;
-
-  gap: 6px;
-  padding: 7px;
-
-  background:
-    linear-gradient(var(--content-overlay), var(--content-overlay)),
-    url("../assets/images/content-bg2.png") center / cover no-repeat;
-
-  border: 1px solid var(--border);
-  border-radius: var(--board-radius);
-  overflow: hidden;
+.header-arabic {
+    display: block;
+    font-family: var(--qibla-arabic-font);
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--qibla-accent);
 }
 
-/* LOCATION AND DISTANCE STRIPS */
-
-.location-strip {
-  position: relative;
-  isolation: isolate;
-  z-index: 8;
-
-  flex: 0 0 34px;
-  width: 100%;
-  height: 34px;
-  min-height: 34px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-
-  padding: 0 8px;
-
-  /* থিমের রঙ + হালকা ব্যাকগ্রাউন্ড লেয়ার */
-  background:
-    linear-gradient(
-      var(--info-tint),
-      var(--info-tint)
-    ),
-    var(--info-overlay);
-
-  border: 1px solid var(--border);
-  border-radius: 11px;
-
-  white-space: nowrap;
-  overflow: hidden;
+.header-title h1 {
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.5;
 }
 
-.location-strip span {
-  flex: 0 0 auto;
-  color: var(--muted);
-  font-size: clamp(10px, 2.8vw, 12px);
-  font-weight: 700;
-  line-height: 1.2;
+
+/* =========================================
+   MAIN
+   ========================================= */
+
+.qibla-main {
+    width: min(100% - 28px, 620px);
+    margin: 22px auto;
+    padding-bottom: 18px;
 }
 
-.location-strip strong {
-  min-width: 0;
-  color: var(--deep);
-  font-size: clamp(11px, 3.2vw, 14px);
-  font-weight: 800;
-  line-height: 1.2;
 
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+/* =========================================
+   LOCATION BOARD
+   ========================================= */
+
+.location-board {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 16px;
+
+    border: 1px solid var(--qibla-border);
+    border-radius: var(--qibla-radius);
+
+    background: var(--qibla-card);
+    box-shadow: var(--qibla-shadow);
+
+    margin-bottom: 18px;
 }
 
-/* COMPASS STAGE */
+.location-icon {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
 
-.compass-stage {
-  flex: 1 1 0;
-  min-height: 0;
-  min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    border-radius: 15px;
 
-  overflow: hidden;
+    background: var(--qibla-soft);
+    color: var(--qibla-primary);
+
+    font-size: 29px;
 }
 
-.compass-wrapper {
-  position: relative;
-
-  width: 100%;
-  height: 100%;
-  min-width: 0;
-  min-height: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  overflow: hidden;
+.location-details {
+    min-width: 0;
+    flex: 1;
 }
 
-/* COMPASS BODY */
-
-.compass {
-  position: relative;
-  isolation: isolate;
-
-  width: var(--compass-size);
-  height: var(--compass-size);
-  max-width: 100%;
-  max-height: 100%;
-
-  flex: 0 0 auto;
-  aspect-ratio: 1 / 1;
-
-  border: clamp(6px, 2vw, 10px) solid var(--compass-outer);
-  border-radius: 50%;
-  background: var(--compass-face);
-
-  box-shadow:
-    0 5px 18px rgba(0, 0, 0, 0.13),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+.location-label {
+    display: block;
+    font-size: 12px;
+    color: var(--qibla-muted);
+    margin-bottom: 3px;
 }
 
-/* ROTATING DIRECTION LABELS */
-
-.compass-dial {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  border-radius: 50%;
-  pointer-events: none;
-  transform: rotate(0deg);
-  transform-origin: center;
+.location-details h2 {
+    font-size: 16px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
 }
 
-.direction {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: max-content;
-
-  color: var(--deep);
-  font-size: clamp(8px, 2.6vw, 11px);
-  font-weight: 800;
-  line-height: 1;
-  white-space: nowrap;
-
-  transform: translate(-50%, -50%);
-  transform-origin: center;
+.location-details p {
+    margin-top: 4px;
+    font-size: 11px;
+    color: var(--qibla-muted);
+    direction: ltr;
+    text-align: left;
 }
 
-.direction:nth-child(1),
-.direction:nth-child(5),
-.direction:nth-child(9),
-.direction:nth-child(13) {
-  font-size: clamp(12px, 3.8vw, 17px);
-  font-weight: 900;
+.location-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    white-space: nowrap;
+    font-size: 11px;
+    color: var(--qibla-primary);
 }
 
-/* INNER RING */
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #27AE60;
+}
+
+
+/* =========================================
+   QIBLA BOARD
+   ========================================= */
+
+.qibla-board {
+    padding: 22px 15px 20px;
+
+    border: 1px solid var(--qibla-border);
+    border-radius: 26px;
+
+    background: var(--qibla-card);
+    box-shadow: var(--qibla-shadow);
+
+    text-align: center;
+    overflow: hidden;
+}
+
+.board-heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.board-heading h2 {
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--qibla-deep);
+}
+
+.heading-ornament {
+    color: #C9A63D;
+    font-size: 20px;
+}
+
+.board-description {
+    max-width: 360px;
+    margin: 9px auto 18px;
+
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--qibla-muted);
+}
+
+
+/* =========================================
+   COMPASS
+   ========================================= */
+
+.compass-container {
+    position: relative;
+
+    width: min(76vw, 300px);
+    aspect-ratio: 1 / 1;
+
+    margin: 12px auto 24px;
+}
 
 .compass-ring {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+    position: absolute;
+    inset: 0;
 
-  width: 66%;
-  height: 66%;
+    border-radius: 50%;
 
-  transform: translate(-50%, -50%);
-  border: 3px solid var(--compass-outer);
-  border-radius: 50%;
-  background: var(--compass-inner);
+    border: 9px solid #D8E8D9;
 
-  z-index: 1;
-  pointer-events: none;
+    background:
+        radial-gradient(
+            circle,
+            #FFFFFF 0%,
+            #F4F9F2 66%,
+            #E4F0E4 100%
+        );
+
+    box-shadow:
+        0 0 0 3px rgba(27, 127, 75, 0.13),
+        inset 0 0 22px rgba(15, 81, 50, 0.08),
+        0 10px 25px rgba(15, 81, 50, 0.13);
 }
 
-/* TICK LAYERS */
+.compass-ring::before {
+    content: "";
+    position: absolute;
+    inset: 12px;
 
-.compass-ticks {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 2;
+    border: 1px dashed rgba(27, 127, 75, 0.35);
+    border-radius: 50%;
 }
 
-/* OUTER TICKS: EXISTING SPACING RETAINED */
+.compass-markings {
+    position: absolute;
+    inset: 0;
 
-.compass-ticks-outer {
-  background: repeating-conic-gradient(
-    from 0deg,
-    var(--compass-ticks) 0deg 0.65deg,
-    transparent 0.65deg 5.625deg
-  );
-
-  -webkit-mask: radial-gradient(
-    circle,
-    transparent 0 79%,
-    #000 80% 88%,
-    transparent 89%
-  );
-
-  mask: radial-gradient(
-    circle,
-    transparent 0 79%,
-    #000 80% 88%,
-    transparent 89%
-  );
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 800;
 }
 
-/*
-  INNER TICKS:
-  8 major red marks are rendered separately.
-  These are the 8 shorter theme-coloured marks,
-  spaced halfway between the major marks.
-*/
-
-.compass-ticks-inner {
-  background: repeating-conic-gradient(
-    from 0deg,
-    var(--compass-ticks) 0deg 0.65deg,
-    transparent 0.65deg 45deg
-  );
-
-  -webkit-mask: radial-gradient(
-    circle,
-    transparent 0 46%,
-    #000 47% 57%,
-    transparent 58%
-  );
-
-  mask: radial-gradient(
-    circle,
-    transparent 0 46%,
-    #000 47% 57%,
-    transparent 58%
-  );
+.compass-markings span {
+    position: absolute;
+    color: #355D45;
 }
 
-/* 8 MAJOR RED TICKS */
-
-.compass-major-ticks {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 4;
-
-  background: repeating-conic-gradient(
-    from 0deg,
-    var(--compass-major-tick) 0deg 1.5deg,
-    transparent 1.5deg 45deg
-  );
-
-  -webkit-mask: radial-gradient(
-    circle,
-    transparent 0 75%,
-    #000 76% 89%,
-    transparent 90%
-  );
-
-  mask: radial-gradient(
-    circle,
-    transparent 0 75%,
-    #000 76% 89%,
-    transparent 90%
-  );
+.compass-markings .north {
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #C43D32;
 }
 
-/* QIBLA NEEDLE */
-
-.qibla-needle {
-  position: absolute;
-  left: 50%;
-  bottom: 50%;
-
-  width: 4px;
-  height: 30%;
-
-  transform: translateX(-50%) rotate(0deg);
-  transform-origin: 50% 100%;
-
-  border-radius: 5px;
-  background: var(--compass-needle);
-
-  pointer-events: none;
-  z-index: 5;
+.compass-markings .east {
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
-.needle-tip {
-  position: absolute;
-  top: -8px;
-  left: 50%;
-
-  transform: translateX(-50%);
-
-  width: 0;
-  height: 0;
-
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 13px solid var(--compass-tip);
+.compass-markings .south {
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-/* CENTER */
-
-.center-point {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-
-  width: 18px;
-  height: 18px;
-
-  transform: translate(-50%, -50%);
-
-  background: var(--accent);
-  border: 3px solid #fff;
-  border-radius: 50%;
-
-  z-index: 7;
-  pointer-events: none;
+.compass-markings .west {
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
-/* DEGREE DISPLAY */
+.compass-degree {
+    position: absolute;
+    top: 35px;
+    left: 50%;
+    transform: translateX(-50%);
 
-.degree {
-  position: absolute;
-  top: 69%;
-  left: 50%;
-
-  width: 75%;
-  transform: translate(-50%, -50%);
-
-  color: var(--deep);
-  font-size: clamp(15px, 5.5vw, 25px);
-  font-weight: 900;
-  line-height: 1.35;
-
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  z-index: 6;
-  pointer-events: none;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--qibla-muted);
 }
 
-/* KAABA MARKER: SLIGHTLY LARGER */
 
-.kaaba-marker {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+/* Needle */
 
-  width: 22%;
-  height: 22%;
-  max-width: 64px;
-  max-height: 64px;
-  min-width: 30px;
-  min-height: 30px;
+.compass-needle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
 
-  object-fit: contain;
-  transform: translate(-50%, -50%);
-  transform-origin: center;
+    width: 34px;
+    height: 190px;
 
-  pointer-events: none;
-  user-select: none;
-  z-index: 8;
+    transform: translate(-50%, -50%) rotate(0deg);
+    transform-origin: center center;
 
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.28));
+    transition: transform 0.18s linear;
+
+    z-index: 3;
+    pointer-events: none;
 }
 
-/* FOOTER */
+.needle-north {
+    position: absolute;
+    top: 0;
+    left: 50%;
 
-.footer-board {
-  flex: 0 0 var(--footer-height);
-  width: 100%;
-  height: var(--footer-height);
-  min-height: var(--footer-height);
-  max-height: var(--footer-height);
+    transform: translateX(-50%);
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 0;
+    height: 0;
 
-  padding: 3px 8px;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 88px solid #C43D32;
 
-  background: var(--footer-bg);
-  color: var(--footer-text);
-  text-align: center;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.12));
 }
 
-#footerText {
-  width: 100%;
-  margin: 0;
+.needle-south {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
 
-  color: var(--footer-text);
-  font-size: clamp(12px, 3.5vw, 15px);
-  font-weight: 700;
-  line-height: 1.3;
+    transform: translateX(-50%);
 
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    width: 0;
+    height: 0;
+
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 88px solid #7D8E82;
 }
 
-/* CLASSIC THEME */
+.compass-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
 
-body[data-color-theme="classic"] {
-  --accent: #F2C94C;
-  --deep: #0F5132;
-  --text: #17452F;
-  --muted: #68796B;
-  --border: #D5E3D1;
-  --header-bg: #0F5132;
-  --footer-bg: #0F5132;
+    width: 52px;
+    height: 52px;
 
-  --info-overlay: rgba(220, 235, 207, 0.90);
-  --info-tint: rgba(102, 187, 106, 0.12);
+    transform: translate(-50%, -50%);
 
-  --compass-outer: #66BB6A;
-  --compass-face: #DCEBCF;
-  --compass-inner: #F7F5E9;
-  --compass-ticks: #75B77A;
-  --compass-major-tick: #D62828;
-  --compass-needle: #124C32;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #FFFFFF;
+    border: 3px solid #D4E6D4;
+    border-radius: 50%;
+
+    box-shadow: 0 3px 9px rgba(0,0,0,0.12);
+
+    font-size: 24px;
+    z-index: 5;
 }
 
-/* ROYAL THEME */
+.compass-pointer {
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%);
 
-body[data-color-theme="royal"] {
-  --accent: #E8BD55;
-  --deep: #173A60;
-  --text: #1B3652;
-  --muted: #65798E;
-  --border: #C8D9EB;
-  --header-bg: #173A60;
-  --footer-bg: #173A60;
-
-  --info-overlay: rgba(220, 234, 248, 0.92);
-  --info-tint: rgba(99, 153, 201, 0.14);
-
-  --compass-outer: #6399C9;
-  --compass-face: #DCEAF8;
-  --compass-inner: #F3F7FC;
-  --compass-ticks: #83ACD4;
-  --compass-major-tick: #D62828;
-  --compass-needle: #173A60;
+    color: #C9A63D;
+    font-size: 19px;
+    z-index: 6;
 }
 
-/* ROSE THEME */
 
-body[data-color-theme="rose"] {
-  --accent: #D9B875;
-  --deep: #7D414B;
-  --text: #633B42;
-  --muted: #846D70;
-  --border: #E8CBC8;
-  --header-bg: #7D414B;
-  --footer-bg: #7D414B;
+/* =========================================
+   BEARING INFORMATION
+   ========================================= */
 
-  --info-overlay: rgba(249, 226, 225, 0.92);
-  --info-tint: rgba(200, 134, 145, 0.14);
+.bearing-information {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  --compass-outer: #C88691;
-  --compass-face: #F5E1DF;
-  --compass-inner: #FFF8F2;
-  --compass-ticks: #C58B91;
-  --compass-major-tick: #D62828;
-  --compass-needle: #7D414B;
+    gap: 22px;
+
+    max-width: 390px;
+    margin: 0 auto;
+
+    padding: 15px 10px;
+
+    border-radius: 18px;
+    background: #EFF7EF;
 }
 
-/* PISTA THEME */
-
-body[data-color-theme="pista"] {
-  --accent: #A7D129;
-  --deep: #2F7135;
-  --text: #254D2A;
-  --muted: #6D806D;
-  --border: #CDE3C8;
-  --header-bg: #2F7135;
-  --footer-bg: #2F7135;
-
-  --info-overlay: rgba(225, 242, 218, 0.92);
-  --info-tint: rgba(115, 185, 119, 0.14);
-
-  --compass-outer: #73B977;
-  --compass-face: #DFF0D7;
-  --compass-inner: #F7F9ED;
-  --compass-ticks: #8DBF85;
-  --compass-major-tick: #D62828;
-  --compass-needle: #2F7135;
+.bearing-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
-/* DARK MODE */
-
-body.dark-mode {
-  --text: #E5EDE7;
-  --muted: #BECBBF;
-  --border: #405746;
-
-  --page-overlay: rgba(8, 15, 10, 0.82);
-  --content-overlay: rgba(12, 20, 14, 0.82);
-  --info-overlay: rgba(25, 38, 29, 0.94);
-  --info-tint: rgba(121, 167, 124, 0.10);
-
-  --compass-face: #263B2B;
-  --compass-inner: #192B20;
-  --compass-ticks: #79A77C;
-  --compass-major-tick: #FF5A52;
-  --compass-needle: #D8EAC8;
-  --compass-tip: #E45B55;
-
-  background:
-    linear-gradient(var(--page-overlay), var(--page-overlay)),
-    url("../assets/images/content-bg.png") center / cover no-repeat;
+.bearing-label {
+    font-size: 11px;
+    color: var(--qibla-muted);
 }
 
-body.dark-mode .qibla-page {
-  background:
-    linear-gradient(var(--page-overlay), var(--page-overlay)),
-    url("../assets/images/content-bg2.png") center / cover no-repeat;
+.bearing-item strong {
+    font-size: 23px;
+    font-weight: 800;
+    color: var(--qibla-deep);
+    direction: ltr;
 }
 
-body.dark-mode .hero-board,
-body.dark-mode .footer-board {
-  background: var(--header-bg);
+.bearing-divider {
+    width: 1px;
+    height: 38px;
+    background: #CFDFCF;
 }
 
-body.dark-mode .location-strip {
-  background:
-    linear-gradient(var(--info-tint), var(--info-tint)),
-    var(--info-overlay);
+
+/* =========================================
+   SENSOR BOARD
+   ========================================= */
+
+.sensor-board {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 15px;
+
+    margin-top: 18px;
+
+    background: var(--qibla-card);
+    border: 1px solid var(--qibla-border);
+    border-radius: var(--qibla-radius);
+
+    box-shadow: var(--qibla-shadow);
 }
 
-body.dark-mode .location-strip strong,
-body.dark-mode .degree {
-  color: var(--text);
+.sensor-icon {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--qibla-soft);
+    border-radius: 13px;
+
+    font-size: 22px;
 }
 
-body.dark-mode .direction {
-  color: var(--accent);
+.sensor-content {
+    flex: 1;
+    min-width: 0;
 }
 
-body.dark-mode .compass {
-  background: var(--compass-face);
-  border-color: var(--compass-outer);
+.sensor-content h3 {
+    font-size: 14px;
+    color: var(--qibla-deep);
 }
 
-body.dark-mode .compass-ring {
-  background: var(--compass-inner);
-  border-color: var(--compass-outer);
+.sensor-content p {
+    margin-top: 4px;
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--qibla-muted);
 }
 
-body.dark-mode .center-point {
-  border-color: #F8F6F0;
+.sensor-button {
+    flex-shrink: 0;
+
+    padding: 9px 12px;
+
+    border: none;
+    border-radius: 11px;
+
+    background: var(--qibla-primary);
+    color: white;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    transition: 0.2s ease;
 }
 
-body.dark-mode[data-color-theme="classic"] {
-  --header-bg: #0F5132;
-  --footer-bg: #0F5132;
-  --accent: #E4C76B;
-  --info-overlay: rgba(25, 43, 31, 0.94);
-  --info-tint: rgba(102, 187, 106, 0.12);
+.sensor-button:active {
+    transform: scale(0.96);
 }
 
-body.dark-mode[data-color-theme="royal"] {
-  --header-bg: #142D49;
-  --footer-bg: #142D49;
-  --accent: #E8BD55;
-  --info-overlay: rgba(25, 39, 56, 0.94);
-  --info-tint: rgba(99, 153, 201, 0.13);
+.sensor-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
-body.dark-mode[data-color-theme="rose"] {
-  --header-bg: #592F36;
-  --footer-bg: #592F36;
-  --accent: #D9B875;
-  --info-overlay: rgba(51, 31, 35, 0.95);
-  --info-tint: rgba(200, 134, 145, 0.13);
+
+/* =========================================
+   INSTRUCTIONS
+   ========================================= */
+
+.instruction-board {
+    margin-top: 18px;
+    padding: 18px;
+
+    border: 1px solid var(--qibla-border);
+    border-radius: var(--qibla-radius);
+
+    background: var(--qibla-card);
+    box-shadow: var(--qibla-shadow);
 }
 
-body.dark-mode[data-color-theme="pista"] {
-  --header-bg: #244C28;
-  --footer-bg: #244C28;
-  --accent: #B9D97C;
-  --info-overlay: rgba(28, 43, 29, 0.95);
-  --info-tint: rgba(115, 185, 119, 0.13);
+.instruction-board h3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    margin-bottom: 17px;
+
+    font-size: 15px;
+    color: var(--qibla-deep);
 }
 
-/* SMALL SCREENS */
+.instruction-board h3 span:first-child,
+.instruction-board h3 span:last-child {
+    color: #C9A63D;
+}
+
+.instruction-list {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.instruction-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+}
+
+.instruction-number {
+    width: 25px;
+    height: 25px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--qibla-soft);
+    color: var(--qibla-primary);
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.instruction-item p {
+    padding-top: 3px;
+
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--qibla-text);
+}
+
+
+/* =========================================
+   ACCURACY NOTE
+   ========================================= */
+
+.accuracy-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+
+    padding: 13px 5px;
+
+    color: var(--qibla-muted);
+}
+
+.accuracy-note > span {
+    flex-shrink: 0;
+    font-size: 16px;
+    color: var(--qibla-primary);
+}
+
+.accuracy-note p {
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+.qibla-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    padding: 17px;
+
+    background: var(--deep, #0F5132);
+    color: #F5E5A7;
+}
+
+.qibla-footer p {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.qibla-footer span {
+    color: var(--qibla-accent);
+}
+
+
+/* =========================================
+   DARK THEME
+   ========================================= */
+
+body.dark-theme,
+body[data-theme="dark"],
+body.theme-dark {
+    --qibla-card: rgba(30, 43, 35, 0.96);
+    --qibla-text: #E1EDE3;
+    --qibla-muted: #AAB9AD;
+    --qibla-border: #405848;
+    --qibla-soft: #294735;
+    --qibla-primary: #6CC58B;
+    --qibla-deep: #B5E6C2;
+
+    background-color: #14251A;
+}
+
+body.dark-theme .qibla-board,
+body[data-theme="dark"] .qibla-board,
+body.theme-dark .qibla-board {
+    background: var(--qibla-card);
+}
+
+body.dark-theme .compass-ring,
+body[data-theme="dark"] .compass-ring,
+body.theme-dark .compass-ring {
+    background: radial-gradient(circle, #304637, #1B2F22);
+    border-color: #526D58;
+}
+
+body.dark-theme .compass-markings span,
+body[data-theme="dark"] .compass-markings span,
+body.theme-dark .compass-markings span {
+    color: #D5E5D8;
+}
+
+body.dark-theme .compass-center,
+body[data-theme="dark"] .compass-center,
+body.theme-dark .compass-center {
+    background: #263D2D;
+    border-color: #526D58;
+}
+
+body.dark-theme .bearing-information,
+body[data-theme="dark"] .bearing-information,
+body.theme-dark .bearing-information {
+    background: #263D2D;
+}
+
+body.dark-theme .bearing-divider,
+body[data-theme="dark"] .bearing-divider,
+body.theme-dark .bearing-divider {
+    background: #526D58;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
 
 @media (max-width: 380px) {
-  :root {
-    --app-padding: 5px;
-    --page-gap: 5px;
-    --compass-size: min(64vw, 260px);
-  }
 
-  .main-board {
-    padding: 6px;
-    gap: 5px;
-  }
+    .qibla-main {
+        width: calc(100% - 20px);
+        margin-top: 14px;
+    }
 
-  .location-strip {
-    padding-inline: 5px;
-  }
+    .qibla-header {
+        padding: 10px 12px;
+    }
 
-  .compass-ring {
-    border-width: 2px;
-  }
+    .compass-container {
+        width: min(74vw, 260px);
+    }
 
-  .degree {
-    font-size: clamp(14px, 5vw, 20px);
-  }
+    .compass-needle {
+        height: 165px;
+    }
 
-  .kaaba-marker {
-    width: 20%;
-    height: 20%;
-    max-width: 52px;
-    max-height: 52px;
-  }
+    .needle-north {
+        border-bottom-width: 76px;
+    }
+
+    .needle-south {
+        border-top-width: 76px;
+    }
+
+    .bearing-information {
+        gap: 10px;
+    }
+
+    .sensor-board {
+        gap: 8px;
+        padding: 11px;
+    }
+
+    .sensor-button {
+        padding: 8px 9px;
+    }
 }
-
-/* SHORT SCREENS */
-
-@media (max-height: 650px) {
-  :root {
-    --page-gap: 4px;
-    --compass-size: min(48vw, 220px);
-  }
-
-  .qibla-page {
-    padding-top: max(3px, env(safe-area-inset-top, 0px));
-    padding-bottom: max(3px, env(safe-area-inset-bottom, 0px));
-  }
-
-  .main-board {
-    gap: 4px;
-    padding: 5px;
-  }
-
-  .location-strip {
-    flex-basis: 30px;
-    height: 30px;
-    min-height: 30px;
-  }
-}
-
-@media (max-height: 500px) {
-  :root {
-    --compass-size: min(41vw, 180px);
-  }
-}
-
-/* LARGE SCREENS */
 
 @media (min-width: 700px) {
-  :root {
-    --app-padding: 12px;
-    --compass-size: min(35vw, 300px);
-  }
 
-  .qibla-page {
-    width: min(100%, 900px);
-    margin-inline: auto;
-  }
+    .qibla-main {
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
 
-  .main-board {
-    padding: 12px;
-    gap: 10px;
-  }
+    .qibla-board {
+        padding: 28px;
+    }
+
+    .compass-container {
+        width: 300px;
+    }
+
+    .instruction-board {
+        padding: 23px;
+    }
+
+}
+
+
+/* =========================================
+   ACCESSIBILITY
+   ========================================= */
+
+button:focus-visible {
+    outline: 3px solid var(--qibla-accent);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+
 }
