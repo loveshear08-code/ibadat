@@ -20,91 +20,145 @@
     <!-- MAIN -->
     <main class="qibla-main">
 
-      <!-- LOCATION BOARD -->
-      <section class="info-board location-board board" aria-live="polite">
-        <span class="info-label" id="locationLabel">বর্তমান অবস্থান</span>
-        <strong id="locationName">লোকেশন খোঁজা হচ্ছে...</strong>
-      </section>
+      <!-- COMPLETE CONTENT BOARD -->
+      <section class="qibla-content-board board">
 
-      <!-- MAIN COMPASS CONTENT BOARD -->
-      <section class="compass-content-board board">
+        <!-- LOCATION BOARD -->
+        <section class="info-board location-board" aria-live="polite">
+          <span class="info-label" id="locationLabel">
+            বর্তমান অবস্থান
+          </span>
+          <strong id="locationName">
+            লোকেশন খোঁজা হচ্ছে...
+          </strong>
+        </section>
 
-        <div class="compass-wrap" id="compassWrap">
-          <div class="compass-outer">
+        <!-- COMPASS BOARD -->
+        <section class="compass-content-board">
 
-            <!-- ROTATING DIAL -->
-            <div class="compass-rose" id="compassRose">
+          <div class="compass-wrap" id="compassWrap">
 
-              <div class="compass-ticks" id="compassTicks" aria-hidden="true"></div>
+            <div class="compass-outer">
 
-              <div class="direction-ring" id="directionRing">
-                <span>উ</span>
-                <span>উ-উ-পূ</span>
-                <span>উ-পূ</span>
-                <span>পূ-উ-পূ</span>
-                <span>পূ</span>
-                <span>পূ-দ-পূ</span>
-                <span>দ-পূ</span>
-                <span>দ-দ-পূ</span>
-                <span>দ</span>
-                <span>দ-দ-প</span>
-                <span>দ-প</span>
-                <span>প-দ-প</span>
-                <span>প</span>
-                <span>প-উ-প</span>
-                <span>উ-প</span>
-                <span>উ-উ-প</span>
+              <!-- COMPASS BACKGROUND + ROTATING DIAL -->
+              <div class="compass-rose" id="compassRose">
+
+                <!-- TICK MARKS -->
+                <div class="compass-ticks" id="compassTicks"
+                     aria-hidden="true"></div>
+
+                <!-- 16 DIRECTIONS -->
+                <div class="direction-ring" id="directionRing">
+
+                  <span>উ</span>
+                  <span>উ-উ-পূ</span>
+                  <span>উ-পূ</span>
+                  <span>পূ-উ-পূ</span>
+                  <span>পূ</span>
+                  <span>পূ-দ-পূ</span>
+                  <span>দ-পূ</span>
+                  <span>দ-দ-পূ</span>
+                  <span>দ</span>
+                  <span>দ-দ-প</span>
+                  <span>দ-প</span>
+                  <span>প-দ-প</span>
+                  <span>প</span>
+                  <span>প-উ-প</span>
+                  <span>উ-প</span>
+                  <span>উ-উ-প</span>
+
+                </div>
+
+                <!-- DEGREE MARKS -->
+                <div class="degree-ring" id="degreeRing"
+                     aria-hidden="true">
+
+                  <span>0°</span>
+                  <span>45°</span>
+                  <span>90°</span>
+                  <span>135°</span>
+                  <span>180°</span>
+                  <span>225°</span>
+                  <span>270°</span>
+                  <span>315°</span>
+
+                </div>
+
               </div>
 
-              <!-- KAABA ORBIT MARKER -->
-              <div class="qibla-marker" id="qiblaMarker">
-                <img
-                  src="../assets/icons/kaaba-3d.png"
-                  alt="Kaaba"
-                  id="kaabaIcon"
-                >
+              <!-- KAABA OUTSIDE THE COMPASS -->
+              <div class="qibla-orbit" id="qiblaOrbit"
+                   aria-hidden="true">
+
+                <div class="qibla-marker" id="qiblaMarker">
+                  <img
+                    src="../assets/icons/kaaba-3d.png"
+                    alt=""
+                    id="kaabaIcon"
+                  >
+                </div>
+
+              </div>
+
+              <!-- FIXED NEEDLE -->
+              <div class="compass-needle" aria-hidden="true">
+
+                <div class="needle-north"></div>
+                <div class="needle-south"></div>
+
+                <div class="needle-center">
+                  <span></span>
+                </div>
+
               </div>
 
             </div>
+          </div>
 
-            <!-- FIXED DOUBLE-ENDED NEEDLE -->
-            <div class="compass-needle" aria-hidden="true">
-              <div class="needle-north"></div>
-              <div class="needle-south"></div>
-              <div class="needle-center">
-                <span></span>
-              </div>
-            </div>
+          <!-- SENSOR CONTROL -->
+          <div class="compass-action">
+
+            <button id="sensorButton" type="button">
+              কম্পাস চালু করুন
+            </button>
+
+            <p id="sensorMessage"
+               role="status"
+               aria-live="polite"></p>
 
           </div>
-        </div>
 
-        <!-- SENSOR CONTROL -->
-        <div class="compass-action">
-          <button id="sensorButton" type="button">
-            কম্পাস চালু করুন
-          </button>
-          <p id="sensorMessage" role="status" aria-live="polite"></p>
-        </div>
+        </section>
 
-      </section>
+        <!-- DISTANCE BOARD -->
+        <section class="info-board distance-board">
+          <span class="info-label" id="distanceLabel">
+            কাবা শরিফ পর্যন্ত দূরত্ব
+          </span>
 
-      <!-- DISTANCE BOARD -->
-      <section class="info-board distance-board board">
-        <span class="info-label" id="distanceLabel">কাবা শরিফ পর্যন্ত দূরত্ব</span>
-        <strong id="distanceValue">--</strong>
+          <strong id="distanceValue">--</strong>
+        </section>
+
       </section>
 
     </main>
 
     <!-- FOOTER -->
     <footer class="qibla-footer board">
+
       <div class="footer-message-window">
+
         <div id="footerTrack" class="footer-track">
+
           <span id="footerMessage"></span>
-          <span id="footerMessageClone" aria-hidden="true"></span>
+
+          <span id="footerMessageClone"
+                aria-hidden="true"></span>
+
         </div>
+
       </div>
+
     </footer>
 
   </div>
