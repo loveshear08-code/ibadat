@@ -2,66 +2,106 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover">
+
   <meta name="theme-color" content="#0F5132">
+
   <title>কিবলা কম্পাস | IBADAT</title>
+
   <link rel="stylesheet" href="../css/qibla.css">
+
   <script src="../js/qibla.js" defer></script>
 </head>
 
 <body data-color-theme="classic">
+
   <div class="qibla-app">
 
     <!-- HEADER -->
+
     <header class="qibla-header board">
+
       <h1 id="pageTitle">কিবলা কম্পাস</h1>
+
     </header>
 
+
     <!-- MAIN -->
+
     <main class="qibla-main">
 
-      <!-- COMPLETE CONTENT BOARD -->
       <section class="qibla-content-board board">
 
+
         <!-- LOCATION BOARD -->
-        <section class="info-board location-board" aria-live="polite">
-          <span class="info-label" id="locationLabel">
+
+        <section class="info-board location-board"
+                 aria-live="polite">
+
+          <span class="info-label"
+                id="locationLabel">
+
             বর্তমান অবস্থান
+
           </span>
+
           <strong id="locationName">
+
             লোকেশন খোঁজা হচ্ছে...
+
           </strong>
+
         </section>
 
+
         <!-- COMPASS BOARD -->
+
         <section class="compass-content-board">
 
-          <div class="compass-wrap" id="compassWrap">
+
+          <div class="compass-wrap"
+               id="compassWrap">
+
 
             <div class="compass-outer">
 
-              <!-- COMPASS BACKGROUND + ROTATING DIAL -->
-              <div class="compass-rose" id="compassRose">
 
-                <!-- TICK MARKS -->
-                <div class="compass-ticks" id="compassTicks"
-                     aria-hidden="true"></div>
+              <!-- ROTATING COMPASS DIAL -->
+
+              <div class="compass-rose"
+                   id="compassRose">
+
+
+                <!-- COMPASS TICK MARKS -->
+
+                <div class="compass-ticks"
+                     id="compassTicks"
+                     aria-hidden="true">
+                </div>
+
 
                 <!-- 16 DIRECTIONS -->
-                <div class="direction-ring" id="directionRing">
+
+                <div class="direction-ring"
+                     id="directionRing">
 
                   <span>উ</span>
                   <span>উ-উ-পূ</span>
                   <span>উ-পূ</span>
                   <span>পূ-উ-পূ</span>
+
                   <span>পূ</span>
                   <span>পূ-দ-পূ</span>
                   <span>দ-পূ</span>
                   <span>দ-দ-পূ</span>
+
                   <span>দ</span>
                   <span>দ-দ-প</span>
                   <span>দ-প</span>
                   <span>প-দ-প</span>
+
                   <span>প</span>
                   <span>প-উ-প</span>
                   <span>উ-প</span>
@@ -69,41 +109,56 @@
 
                 </div>
 
+
                 <!-- DEGREE MARKS -->
-                <div class="degree-ring" id="degreeRing"
+
+                <div class="degree-ring"
+                     id="degreeRing"
                      aria-hidden="true">
 
-                  <span>0°</span>
-                  <span>45°</span>
-                  <span>90°</span>
-                  <span>135°</span>
-                  <span>180°</span>
-                  <span>225°</span>
-                  <span>270°</span>
-                  <span>315°</span>
+                  <span>০°</span>
+                  <span>৪৫°</span>
+                  <span>৯০°</span>
+                  <span>১৩৫°</span>
+
+                  <span>১৮০°</span>
+                  <span>২২৫°</span>
+                  <span>২৭০°</span>
+                  <span>৩১৫°</span>
 
                 </div>
 
+
               </div>
 
-              <!-- KAABA OUTSIDE THE COMPASS -->
-              <div class="qibla-orbit" id="qiblaOrbit"
+
+              <!-- KAABA ORBIT -->
+
+              <div class="qibla-orbit"
+                   id="qiblaOrbit"
                    aria-hidden="true">
 
-                <div class="qibla-marker" id="qiblaMarker">
+                <div class="qibla-marker"
+                     id="qiblaMarker">
+
                   <img
                     src="../assets/icons/kaaba-3d.png"
                     alt=""
                     id="kaabaIcon"
                   >
+
                 </div>
 
               </div>
 
+
               <!-- FIXED NEEDLE -->
-              <div class="compass-needle" aria-hidden="true">
+
+              <div class="compass-needle"
+                   aria-hidden="true">
 
                 <div class="needle-north"></div>
+
                 <div class="needle-south"></div>
 
                 <div class="needle-center">
@@ -112,43 +167,67 @@
 
               </div>
 
+
             </div>
+
           </div>
 
+
           <!-- SENSOR CONTROL -->
+
           <div class="compass-action">
 
-            <button id="sensorButton" type="button">
+            <button id="sensorButton"
+                    type="button">
+
               কম্পাস চালু করুন
+
             </button>
 
             <p id="sensorMessage"
                role="status"
-               aria-live="polite"></p>
+               aria-live="polite">
+            </p>
 
           </div>
 
+
         </section>
+
 
         <!-- DISTANCE BOARD -->
+
         <section class="info-board distance-board">
-          <span class="info-label" id="distanceLabel">
+
+          <span class="info-label"
+                id="distanceLabel">
+
             কাবা শরিফ পর্যন্ত দূরত্ব
+
           </span>
 
-          <strong id="distanceValue">--</strong>
+          <strong id="distanceValue">
+
+            --
+
+          </strong>
+
         </section>
+
 
       </section>
 
     </main>
 
+
     <!-- FOOTER -->
+
     <footer class="qibla-footer board">
 
       <div class="footer-message-window">
 
-        <div id="footerTrack" class="footer-track">
+        <div id="footerTrack"
+             class="footer-track">
 
           <span id="footerMessage"></span>
 
@@ -161,6 +240,8 @@
 
     </footer>
 
+
   </div>
+
 </body>
 </html>
