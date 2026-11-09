@@ -42,7 +42,7 @@ body {
 
   background:
     linear-gradient(rgba(255,253,245,.48),rgba(255,253,245,.48)),
-    url("../assets/main-bg.jpg") center / cover no-repeat fixed;
+    url("../assets/images/content-bg.png") center / cover no-repeat fixed;
 }
 
 button,
@@ -671,7 +671,7 @@ body.dark-mode {
   --theme-card: rgba(25,35,29,.94);
   background-image:
     linear-gradient(rgba(12,22,16,.70),rgba(12,22,16,.70)),
-    url("../assets/main-bg.jpg");
+    url("../assets/images/content-bg.png");
 }
 
 body.dark-mode .home-board .board-overlay {
