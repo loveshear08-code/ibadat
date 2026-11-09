@@ -2,8 +2,8 @@
 /* =========================================================
    IBADAT — QURAN.CSS
    Complete responsive stylesheet
-   Main background: ../assets/main-bg.jpg
-   Home board background: ../assets/hero-bg.jpg
+   Main background: ../assets/images/content-bg.png
+   Home board background: ../assets/images/content-bg1.png
    ========================================================= */
 
 :root {
@@ -221,7 +221,7 @@ button:disabled {
 
   background:
     linear-gradient(var(--home-overlay), var(--home-overlay)),
-    url("../assets/hero-bg.jpg") center/cover no-repeat;
+    url("../assets/images/content-bg1.png") center/cover no-repeat;
 }
 
 .bismillah {
@@ -369,7 +369,7 @@ button:disabled {
 
   background:
     linear-gradient(var(--content-overlay), var(--content-overlay)),
-    url("../assets/images/content-bg.png") center/cover no-repeat;
+    url("../assets/images/content-bg2.png") center/cover no-repeat;
 }
 
 /* ---------- Read toolbar ---------- */
