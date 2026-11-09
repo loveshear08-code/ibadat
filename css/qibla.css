@@ -1,847 +1,488 @@
-/* =========================================
-   IBADAT - QIBLA PAGE
-   ========================================= */
 
 :root {
-    --qibla-primary: #1B7F4B;
-    --qibla-deep: #0F5132;
-    --qibla-soft: #E8F5E9;
-    --qibla-accent: #F2C94C;
-    --qibla-text: #17452F;
-    --qibla-muted: #68796B;
-    --qibla-border: #D5E3D1;
-    --qibla-card: rgba(255, 255, 255, 0.94);
-
-    --qibla-radius: 22px;
-    --qibla-shadow: 0 8px 28px rgba(15, 81, 50, 0.09);
-
-    --qibla-arabic-font: "Noto Naskh Arabic", serif;
-    --qibla-bengali-font: "Noto Sans Bengali", "Hind Siliguri", sans-serif;
-    --qibla-general-font: "Noto Sans Bengali", "Hind Siliguri", Arial, sans-serif;
+  --deep: #0F5132;
+  --primary: #1B7F4B;
+  --accent: #F2C94C;
+  --text: #17452F;
+  --muted: #68796B;
+  --border: #D5E3D1;
+  --header-height: 68px;
+  --footer-height: 48px;
+  --board-radius: 18px;
 }
-
-
-/* =========================================
-   RESET
-   ========================================= */
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
 }
 
 body {
-    min-height: 100vh;
-    font-family: var(--qibla-general-font);
-    color: var(--qibla-text);
-    background-color: #edf4eb;
-    overflow-x: hidden;
+  font-family:
+    "Noto Sans Bengali",
+    "Hind Siliguri",
+    "Noto Sans Devanagari",
+    Arial,
+    sans-serif;
+
+  color: var(--text);
+  background:
+    url("../assets/images/content-bg.png")
+    center center / cover fixed no-repeat;
 }
 
 button {
-    font: inherit;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
+  font: inherit;
 }
-
-
-/* =========================================
-   APP
-   ========================================= */
 
 .qibla-app {
-    width: 100%;
-    min-height: 100vh;
-    position: relative;
-    overflow: hidden;
-
-    background-color: transparent;
-    background-image: var(--qibla-page-background, none);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-
-/* =========================================
-   HEADER
-   ========================================= */
+/* HEADER */
 
 .qibla-header {
-    min-height: 76px;
-    width: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 12px 18px;
-
-    background: var(--deep, #0F5132);
-    color: #F5E5A7;
-
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+  min-height: var(--header-height);
+  background: var(--deep);
+  color: #F5E5A7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  box-shadow: 0 3px 12px #0002;
 }
 
-.back-button,
-.language-button {
-    width: 42px;
-    height: 42px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 1px solid rgba(245, 229, 167, 0.35);
-    border-radius: 50%;
-
-    background: rgba(255, 255, 255, 0.08);
-    color: #F5E5A7;
-
-    font-size: 24px;
-
-    transition: 0.2s ease;
+.header-inner {
+  width: min(100%, 900px);
+  text-align: center;
 }
 
-.back-button:active,
-.language-button:active {
-    transform: scale(0.94);
+.brand-name {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  opacity: .85;
 }
 
-.header-title {
-    text-align: center;
-    flex: 1;
+.qibla-header h1 {
+  font-size: 21px;
+  line-height: 1.4;
+  margin: 3px 0 0;
+  font-weight: 700;
 }
 
-.header-arabic {
-    display: block;
-    font-family: var(--qibla-arabic-font);
-    font-size: 20px;
-    line-height: 1.4;
-    color: var(--qibla-accent);
-}
-
-.header-title h1 {
-    font-size: 19px;
-    font-weight: 700;
-    line-height: 1.5;
-}
-
-
-/* =========================================
-   MAIN
-   ========================================= */
+/* MAIN LAYOUT */
 
 .qibla-main {
-    width: min(100% - 28px, 620px);
-    margin: 22px auto;
-    padding-bottom: 18px;
+  width: min(100% - 28px, 560px);
+  margin: 0 auto;
+  padding: 18px 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  flex: 1;
+  justify-content: center;
 }
 
+/* LIGHT INFORMATION BOARDS */
 
-/* =========================================
-   LOCATION BOARD
-   ========================================= */
+.info-board {
+  min-height: 76px;
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: var(--board-radius);
+  border: 1px solid #FFFFFFB8;
+  background: rgba(255, 255, 255, .72);
+  box-shadow: 0 5px 16px rgba(30, 50, 30, .10);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
 
-.location-board {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    padding: 16px;
-
-    border: 1px solid var(--qibla-border);
-    border-radius: var(--qibla-radius);
-
-    background: var(--qibla-card);
-    box-shadow: var(--qibla-shadow);
-
-    margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 4px;
 }
 
-.location-icon {
-    width: 46px;
-    height: 46px;
-    flex-shrink: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 15px;
-
-    background: var(--qibla-soft);
-    color: var(--qibla-primary);
-
-    font-size: 29px;
+.info-board span {
+  color: var(--muted);
+  font-size: 12px;
 }
 
-.location-details {
-    min-width: 0;
-    flex: 1;
+.info-board strong {
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
 }
 
-.location-label {
-    display: block;
-    font-size: 12px;
-    color: var(--qibla-muted);
-    margin-bottom: 3px;
+/* MAIN CONTENT BOARD */
+
+.compass-content-board {
+  width: 100%;
+  padding: 18px 12px;
+  border: 1px solid rgba(150, 120, 70, .45);
+  border-radius: 22px;
+
+  background:
+    url("../assets/images/content-bg2.png")
+    center center / cover no-repeat;
+
+  box-shadow:
+    0 9px 25px rgba(40, 30, 10, .16),
+    inset 0 0 25px rgba(255, 255, 255, .20);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.location-details h2 {
-    font-size: 16px;
-    font-weight: 700;
-    overflow-wrap: anywhere;
+/* COMPASS */
+
+.compass-wrap {
+  width: min(100%, 360px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  position: relative;
 }
 
-.location-details p {
-    margin-top: 4px;
-    font-size: 11px;
-    color: var(--qibla-muted);
-    direction: ltr;
-    text-align: left;
+.compass-outer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+
+  background:
+    radial-gradient(circle, #EDE3C7 0 48%, #D8C69C 49% 69%, #AD925B 70% 72%, #E5D4A8 73% 100%);
+
+  border: 5px solid #947849;
+
+  box-shadow:
+    0 0 0 3px #E7D6AB,
+    0 0 0 5px #947849,
+    0 9px 20px #34250F55,
+    inset 0 0 18px #634D282A;
 }
 
-.location-status {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-
-    white-space: nowrap;
-    font-size: 11px;
-    color: var(--qibla-primary);
+.compass-rose {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  transform: rotate(0deg);
+  will-change: transform;
 }
 
-.status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #27AE60;
+/* TICK MARKS */
+
+.compass-ticks {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
 }
 
-
-/* =========================================
-   QIBLA BOARD
-   ========================================= */
-
-.qibla-board {
-    padding: 22px 15px 20px;
-
-    border: 1px solid var(--qibla-border);
-    border-radius: 26px;
-
-    background: var(--qibla-card);
-    box-shadow: var(--qibla-shadow);
-
-    text-align: center;
-    overflow: hidden;
+.compass-ticks i {
+  position: absolute;
+  left: 50%;
+  top: 3%;
+  width: 1px;
+  height: 5%;
+  background: #725A34;
+  transform-origin: 50% 940%;
 }
 
-.board-heading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+.compass-ticks i.major {
+  width: 2px;
+  height: 7%;
+  background: #49391F;
 }
 
-.board-heading h2 {
-    font-size: 19px;
-    font-weight: 800;
-    color: var(--qibla-deep);
+/* 16 DIRECTION LABELS */
+
+.direction-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
 }
 
-.heading-ornament {
-    color: #C9A63D;
-    font-size: 20px;
+.direction-ring span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+
+  width: 60px;
+  margin-left: -30px;
+  margin-top: -10px;
+
+  text-align: center;
+  font-size: clamp(9px, 2.8vw, 12px);
+  line-height: 20px;
+  font-weight: 800;
+  color: #27432C;
+
+  transform:
+    rotate(calc(var(--angle) * 1deg))
+    translateY(-136px)
+    rotate(calc(var(--angle) * -1deg));
+
+  transform-origin: center;
+  white-space: nowrap;
 }
 
-.board-description {
-    max-width: 360px;
-    margin: 9px auto 18px;
+/* QIBLA MARKER */
 
-    font-size: 12px;
-    line-height: 1.8;
-    color: var(--qibla-muted);
+.qibla-marker {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 48px;
+  height: 48px;
+
+  margin-left: -24px;
+  margin-top: -24px;
+
+  transform:
+    rotate(var(--qibla-angle, 0deg))
+    translateY(-112px);
+
+  transform-origin: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
 }
 
-
-/* =========================================
-   COMPASS
-   ========================================= */
-
-.compass-container {
-    position: relative;
-
-    width: min(76vw, 300px);
-    aspect-ratio: 1 / 1;
-
-    margin: 12px auto 24px;
+.qibla-marker img {
+  display: block;
+  width: 43px;
+  height: 43px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 4px #0006);
 }
 
-.compass-ring {
-    position: absolute;
-    inset: 0;
-
-    border-radius: 50%;
-
-    border: 9px solid #D8E8D9;
-
-    background:
-        radial-gradient(
-            circle,
-            #FFFFFF 0%,
-            #F4F9F2 66%,
-            #E4F0E4 100%
-        );
-
-    box-shadow:
-        0 0 0 3px rgba(27, 127, 75, 0.13),
-        inset 0 0 22px rgba(15, 81, 50, 0.08),
-        0 10px 25px rgba(15, 81, 50, 0.13);
-}
-
-.compass-ring::before {
-    content: "";
-    position: absolute;
-    inset: 12px;
-
-    border: 1px dashed rgba(27, 127, 75, 0.35);
-    border-radius: 50%;
-}
-
-.compass-markings {
-    position: absolute;
-    inset: 0;
-
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    font-weight: 800;
-}
-
-.compass-markings span {
-    position: absolute;
-    color: #355D45;
-}
-
-.compass-markings .north {
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #C43D32;
-}
-
-.compass-markings .east {
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.compass-markings .south {
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.compass-markings .west {
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.compass-degree {
-    position: absolute;
-    top: 35px;
-    left: 50%;
-    transform: translateX(-50%);
-
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--qibla-muted);
-}
-
-
-/* Needle */
+/* FIXED COMPASS NEEDLE */
 
 .compass-needle {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  top: 50%;
+  width: 24px;
+  height: 185px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
 
-    width: 34px;
-    height: 190px;
-
-    transform: translate(-50%, -50%) rotate(0deg);
-    transform-origin: center center;
-
-    transition: transform 0.18s linear;
-
-    z-index: 3;
-    pointer-events: none;
+.needle-north,
+.needle-south {
+  position: absolute;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform: translateX(-50%);
 }
 
 .needle-north {
-    position: absolute;
-    top: 0;
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    width: 0;
-    height: 0;
-
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-bottom: 88px solid #C43D32;
-
-    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.12));
+  top: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 87px solid #B52D26;
+  filter: drop-shadow(0 1px 2px #5D1717);
 }
 
 .needle-south {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    width: 0;
-    height: 0;
-
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-top: 88px solid #7D8E82;
+  bottom: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 87px solid #F5E9D0;
+  filter: drop-shadow(0 1px 2px #69552F);
 }
 
-.compass-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-
-    width: 52px;
-    height: 52px;
-
-    transform: translate(-50%, -50%);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #FFFFFF;
-    border: 3px solid #D4E6D4;
-    border-radius: 50%;
-
-    box-shadow: 0 3px 9px rgba(0,0,0,0.12);
-
-    font-size: 24px;
-    z-index: 5;
+.needle-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, #FBE5A0, #97702F);
+  border: 2px solid #654D23;
 }
 
-.compass-pointer {
-    position: absolute;
-    top: -9px;
-    left: 50%;
-    transform: translateX(-50%);
+/* SENSOR ACTION */
 
-    color: #C9A63D;
-    font-size: 19px;
-    z-index: 6;
+.compass-action {
+  width: 100%;
+  text-align: center;
+  padding-top: 12px;
 }
 
-
-/* =========================================
-   BEARING INFORMATION
-   ========================================= */
-
-.bearing-information {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 22px;
-
-    max-width: 390px;
-    margin: 0 auto;
-
-    padding: 15px 10px;
-
-    border-radius: 18px;
-    background: #EFF7EF;
+#sensorButton {
+  min-height: 40px;
+  padding: 8px 22px;
+  border: 1px solid #806331;
+  border-radius: 30px;
+  background: var(--deep);
+  color: #F5E5A7;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
 }
 
-.bearing-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+#sensorButton:active {
+  transform: scale(.97);
 }
 
-.bearing-label {
-    font-size: 11px;
-    color: var(--qibla-muted);
+#sensorMessage {
+  min-height: 17px;
+  margin: 6px 0 0;
+  font-size: 11px;
+  color: #594A2E;
 }
 
-.bearing-item strong {
-    font-size: 23px;
-    font-weight: 800;
-    color: var(--qibla-deep);
-    direction: ltr;
-}
-
-.bearing-divider {
-    width: 1px;
-    height: 38px;
-    background: #CFDFCF;
-}
-
-
-/* =========================================
-   SENSOR BOARD
-   ========================================= */
-
-.sensor-board {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    padding: 15px;
-
-    margin-top: 18px;
-
-    background: var(--qibla-card);
-    border: 1px solid var(--qibla-border);
-    border-radius: var(--qibla-radius);
-
-    box-shadow: var(--qibla-shadow);
-}
-
-.sensor-icon {
-    width: 42px;
-    height: 42px;
-    flex-shrink: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: var(--qibla-soft);
-    border-radius: 13px;
-
-    font-size: 22px;
-}
-
-.sensor-content {
-    flex: 1;
-    min-width: 0;
-}
-
-.sensor-content h3 {
-    font-size: 14px;
-    color: var(--qibla-deep);
-}
-
-.sensor-content p {
-    margin-top: 4px;
-    font-size: 11px;
-    line-height: 1.6;
-    color: var(--qibla-muted);
-}
-
-.sensor-button {
-    flex-shrink: 0;
-
-    padding: 9px 12px;
-
-    border: none;
-    border-radius: 11px;
-
-    background: var(--qibla-primary);
-    color: white;
-
-    font-size: 11px;
-    font-weight: 700;
-
-    transition: 0.2s ease;
-}
-
-.sensor-button:active {
-    transform: scale(0.96);
-}
-
-.sensor-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-
-/* =========================================
-   INSTRUCTIONS
-   ========================================= */
-
-.instruction-board {
-    margin-top: 18px;
-    padding: 18px;
-
-    border: 1px solid var(--qibla-border);
-    border-radius: var(--qibla-radius);
-
-    background: var(--qibla-card);
-    box-shadow: var(--qibla-shadow);
-}
-
-.instruction-board h3 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 9px;
-
-    margin-bottom: 17px;
-
-    font-size: 15px;
-    color: var(--qibla-deep);
-}
-
-.instruction-board h3 span:first-child,
-.instruction-board h3 span:last-child {
-    color: #C9A63D;
-}
-
-.instruction-list {
-    display: flex;
-    flex-direction: column;
-    gap: 13px;
-}
-
-.instruction-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 11px;
-}
-
-.instruction-number {
-    width: 25px;
-    height: 25px;
-    flex-shrink: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: var(--qibla-soft);
-    color: var(--qibla-primary);
-
-    font-size: 12px;
-    font-weight: 800;
-}
-
-.instruction-item p {
-    padding-top: 3px;
-
-    font-size: 12px;
-    line-height: 1.7;
-    color: var(--qibla-text);
-}
-
-
-/* =========================================
-   ACCURACY NOTE
-   ========================================= */
-
-.accuracy-note {
-    display: flex;
-    align-items: flex-start;
-    gap: 9px;
-
-    padding: 13px 5px;
-
-    color: var(--qibla-muted);
-}
-
-.accuracy-note > span {
-    flex-shrink: 0;
-    font-size: 16px;
-    color: var(--qibla-primary);
-}
-
-.accuracy-note p {
-    font-size: 11px;
-    line-height: 1.8;
-}
-
-
-/* =========================================
-   FOOTER
-   ========================================= */
+/* FOOTER */
 
 .qibla-footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-
-    padding: 17px;
-
-    background: var(--deep, #0F5132);
-    color: #F5E5A7;
+  min-height: var(--footer-height);
+  background: var(--deep);
+  color: #F5E5A7;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 0 12px;
+  box-shadow: 0 -3px 12px #0002;
 }
 
-.qibla-footer p {
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 2px;
+.footer-message-window {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-.qibla-footer span {
-    color: var(--qibla-accent);
+.footer-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 70px;
+  animation: footer-message-scroll 32s linear infinite;
 }
 
-
-/* =========================================
-   DARK THEME
-   ========================================= */
-
-body.dark-theme,
-body[data-theme="dark"],
-body.theme-dark {
-    --qibla-card: rgba(30, 43, 35, 0.96);
-    --qibla-text: #E1EDE3;
-    --qibla-muted: #AAB9AD;
-    --qibla-border: #405848;
-    --qibla-soft: #294735;
-    --qibla-primary: #6CC58B;
-    --qibla-deep: #B5E6C2;
-
-    background-color: #14251A;
+.footer-track span {
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
-body.dark-theme .qibla-board,
-body[data-theme="dark"] .qibla-board,
-body.theme-dark .qibla-board {
-    background: var(--qibla-card);
+@keyframes footer-message-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
-body.dark-theme .compass-ring,
-body[data-theme="dark"] .compass-ring,
-body.theme-dark .compass-ring {
-    background: radial-gradient(circle, #304637, #1B2F22);
-    border-color: #526D58;
+/* THEMES */
+
+body[data-theme-color="royal"] {
+  --deep: #173D67;
+  --primary: #2865A0;
+  --text: #193B60;
 }
 
-body.dark-theme .compass-markings span,
-body[data-theme="dark"] .compass-markings span,
-body.theme-dark .compass-markings span {
-    color: #D5E5D8;
+body[data-theme-color="rose"] {
+  --deep: #754653;
+  --primary: #A75F70;
+  --text: #633D49;
 }
 
-body.dark-theme .compass-center,
-body[data-theme="dark"] .compass-center,
-body.theme-dark .compass-center {
-    background: #263D2D;
-    border-color: #526D58;
+body[data-theme-color="pista"] {
+  --deep: #426A43;
+  --primary: #6E9C63;
+  --text: #315333;
 }
 
-body.dark-theme .bearing-information,
-body[data-theme="dark"] .bearing-information,
-body.theme-dark .bearing-information {
-    background: #263D2D;
+/* DARK MODE */
+
+body.dark-mode {
+  --text: #E9E5D5;
+  --muted: #C2C2B4;
+  --border: #536454;
+  background-color: #101C16;
 }
 
-body.dark-theme .bearing-divider,
-body[data-theme="dark"] .bearing-divider,
-body.theme-dark .bearing-divider {
-    background: #526D58;
+body.dark-mode .info-board {
+  background: rgba(20, 38, 27, .88);
+  border-color: #526B55;
 }
 
+body.dark-mode .info-board strong {
+  color: #F0E7C6;
+}
 
-/* =========================================
-   RESPONSIVE
-   ========================================= */
+body.dark-mode .compass-content-board {
+  border-color: #806B45;
+}
+
+/* RESPONSIVE */
 
 @media (max-width: 380px) {
+  .qibla-main {
+    width: calc(100% - 20px);
+    padding: 12px 0;
+    gap: 10px;
+  }
 
-    .qibla-main {
-        width: calc(100% - 20px);
-        margin-top: 14px;
-    }
+  .compass-content-board {
+    padding: 13px 7px;
+  }
 
-    .qibla-header {
-        padding: 10px 12px;
-    }
+  .direction-ring span {
+    font-size: 9px;
+  }
 
-    .compass-container {
-        width: min(74vw, 260px);
-    }
+  .compass-needle {
+    height: 150px;
+  }
 
-    .compass-needle {
-        height: 165px;
-    }
+  .needle-north {
+    border-bottom-width: 70px;
+  }
 
-    .needle-north {
-        border-bottom-width: 76px;
-    }
+  .needle-south {
+    border-top-width: 70px;
+  }
 
-    .needle-south {
-        border-top-width: 76px;
-    }
-
-    .bearing-information {
-        gap: 10px;
-    }
-
-    .sensor-board {
-        gap: 8px;
-        padding: 11px;
-    }
-
-    .sensor-button {
-        padding: 8px 9px;
-    }
+  .qibla-marker {
+    transform:
+      rotate(var(--qibla-angle, 0deg))
+      translateY(-105px);
+  }
 }
 
 @media (min-width: 700px) {
+  .qibla-main {
+    padding: 25px 0;
+    gap: 16px;
+  }
 
-    .qibla-main {
-        margin-top: 30px;
-        margin-bottom: 30px;
-    }
-
-    .qibla-board {
-        padding: 28px;
-    }
-
-    .compass-container {
-        width: 300px;
-    }
-
-    .instruction-board {
-        padding: 23px;
-    }
-
-}
-
-
-/* =========================================
-   ACCESSIBILITY
-   ========================================= */
-
-button:focus-visible {
-    outline: 3px solid var(--qibla-accent);
-    outline-offset: 3px;
+  .compass-wrap {
+    max-width: 370px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
-    }
-
+  .footer-track {
+    animation-duration: 60s;
+  }
 }
