@@ -2,246 +2,152 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1, viewport-fit=cover">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0F5132">
-
+  <meta name="description" content="IBADAT — কিবলা কম্পাস">
   <title>কিবলা কম্পাস | IBADAT</title>
 
-  <link rel="stylesheet" href="../css/qibla.css">
-
-  <script src="../js/qibla.js" defer></script>
+  <link rel="stylesheet" href="../css/qibla.css?v=12">
 </head>
 
-<body data-color-theme="classic">
+<body>
+  <div class="app" id="qiblaApp">
 
-  <div class="qibla-app">
-
-    <!-- HEADER -->
-
-    <header class="qibla-header board">
-
-      <h1 id="pageTitle">কিবলা কম্পাস</h1>
-
+    <header class="hero board" id="qiblaHero">
+      <h1 class="hero-title" id="pageTitle">কিবলা কম্পাস</h1>
     </header>
 
+    <main class="page-container">
 
-    <!-- MAIN -->
+      <section class="qibla-content-board board" id="qiblaContentBoard">
 
-    <main class="qibla-main">
-
-      <section class="qibla-content-board board">
-
-
-        <!-- LOCATION BOARD -->
-
-        <section class="info-board location-board"
-                 aria-live="polite">
-
-          <span class="info-label"
-                id="locationLabel">
-
-            বর্তমান অবস্থান
-
-          </span>
-
-          <strong id="locationName">
-
-            লোকেশন খোঁজা হচ্ছে...
-
+        <div class="location-board">
+          <span class="location-label" id="locationLabel">আপনার অবস্থান</span>
+          <strong class="location-name" id="locationName" aria-live="polite">
+            অবস্থান নির্ণয় করা হচ্ছে...
           </strong>
+        </div>
 
-        </section>
+        <div class="compass-stage" id="compassStage">
 
+          <div class="compass-shell" id="compassShell">
 
-        <!-- COMPASS BOARD -->
-
-        <section class="compass-content-board">
-
-
-          <div class="compass-wrap"
-               id="compassWrap">
-
-
-            <div class="compass-outer">
-
-
-              <!-- ROTATING COMPASS DIAL -->
-
-              <div class="compass-rose"
-                   id="compassRose">
-
-
-                <!-- COMPASS TICK MARKS -->
-
-                <div class="compass-ticks"
-                     id="compassTicks"
-                     aria-hidden="true">
-                </div>
-
-
-                <!-- 16 DIRECTIONS -->
-
-                <div class="direction-ring"
-                     id="directionRing">
-
-                  <span>উ</span>
-                  <span>উ-উ-পূ</span>
-                  <span>উ-পূ</span>
-                  <span>পূ-উ-পূ</span>
-
-                  <span>পূ</span>
-                  <span>পূ-দ-পূ</span>
-                  <span>দ-পূ</span>
-                  <span>দ-দ-পূ</span>
-
-                  <span>দ</span>
-                  <span>দ-দ-প</span>
-                  <span>দ-প</span>
-                  <span>প-দ-প</span>
-
-                  <span>প</span>
-                  <span>প-উ-প</span>
-                  <span>উ-প</span>
-                  <span>উ-উ-প</span>
-
-                </div>
-
-
-                <!-- DEGREE MARKS -->
-
-                <div class="degree-ring"
-                     id="degreeRing"
-                     aria-hidden="true">
-
-                  <span>০°</span>
-                  <span>৪৫°</span>
-                  <span>৯০°</span>
-                  <span>১৩৫°</span>
-
-                  <span>১৮০°</span>
-                  <span>২২৫°</span>
-                  <span>২৭০°</span>
-                  <span>৩১৫°</span>
-
-                </div>
-
-
-              </div>
-
-
-              <!-- KAABA ORBIT -->
-
-              <div class="qibla-orbit"
-                   id="qiblaOrbit"
-                   aria-hidden="true">
-
-                <div class="qibla-marker"
-                     id="qiblaMarker">
-
-                  <img
-                    src="../assets/icons/kaaba-3d.png"
-                    alt=""
-                    id="kaabaIcon"
-                  >
-
-                </div>
-
-              </div>
-
-
-              <!-- FIXED NEEDLE -->
-
-              <div class="compass-needle"
-                   aria-hidden="true">
-
-                <div class="needle-north"></div>
-
-                <div class="needle-south"></div>
-
-                <div class="needle-center">
-                  <span></span>
-                </div>
-
-              </div>
-
-
+            <!-- Compass direction ring -->
+            <div class="direction-ring" id="directionRing" aria-hidden="true">
+              <span data-direction="0">উত্তর</span>
+              <span data-direction="1">উত্তর-পূর্ব</span>
+              <span data-direction="2">পূর্ব</span>
+              <span data-direction="3">দক্ষিণ-পূর্ব</span>
+              <span data-direction="4">দক্ষিণ</span>
+              <span data-direction="5">দক্ষিণ-পশ্চিম</span>
+              <span data-direction="6">পশ্চিম</span>
+              <span data-direction="7">উত্তর-পশ্চিম</span>
             </div>
 
+            <!-- Degree labels -->
+            <div class="degree-ring" id="degreeRing" aria-hidden="true">
+              <span data-degree="0">০°</span>
+              <span data-degree="45">৪৫°</span>
+              <span data-degree="90">৯০°</span>
+              <span data-degree="135">১৩৫°</span>
+              <span data-degree="180">১৮০°</span>
+              <span data-degree="225">২২৫°</span>
+              <span data-degree="270">২৭০°</span>
+              <span data-degree="315">৩১৫°</span>
+            </div>
+
+            <!-- Main compass dial -->
+            <div class="compass-face" id="compassFace">
+
+              <div class="compass-background" aria-hidden="true"></div>
+
+              <div class="compass-ticks" id="compassTicks" aria-hidden="true"></div>
+
+              <div class="compass-rose" id="compassRose" aria-hidden="true">
+                <div class="rose-point rose-n"></div>
+                <div class="rose-point rose-ne"></div>
+                <div class="rose-point rose-e"></div>
+                <div class="rose-point rose-se"></div>
+                <div class="rose-point rose-s"></div>
+                <div class="rose-point rose-sw"></div>
+                <div class="rose-point rose-w"></div>
+                <div class="rose-point rose-nw"></div>
+              </div>
+
+              <!-- Fixed compass needle -->
+              <div class="needle-wrap" id="needleWrap" aria-hidden="true">
+                <div class="needle needle-north"></div>
+                <div class="needle needle-south"></div>
+                <div class="needle-center"></div>
+              </div>
+
+              <div class="compass-center" aria-hidden="true">
+                <span></span>
+              </div>
+
+              <!-- Kaaba orbit: this is the only moving Qibla marker -->
+              <div class="qibla-orbit" id="qiblaOrbit">
+                <div class="qibla-marker" id="qiblaMarker">
+                  <img
+                    id="kaabaIcon"
+                    src="../assets/icons/kaaba-3d.png"
+                    alt="Kaaba"
+                    draggable="false"
+                  >
+                </div>
+              </div>
+
+              <div class="bearing-display" id="bearingDisplay" aria-live="polite">
+                <strong id="bearingValue">---°</strong>
+                <span id="bearingDirection">কিবলার দিক</span>
+              </div>
+
+            </div>
           </div>
+        </div>
 
-
-          <!-- SENSOR CONTROL -->
-
-          <div class="compass-action">
-
-            <button id="sensorButton"
-                    type="button">
-
-              কম্পাস চালু করুন
-
-            </button>
-
-            <p id="sensorMessage"
-               role="status"
-               aria-live="polite">
-            </p>
-
+        <div class="distance-board">
+          <div class="distance-icon" aria-hidden="true">⌖</div>
+          <div class="distance-info">
+            <span id="distanceLabel">মক্কার দূরত্ব</span>
+            <strong id="distanceValue">--</strong>
           </div>
+          <img
+            class="distance-kaaba"
+            src="../assets/icons/kaaba-3d.png"
+            alt=""
+            aria-hidden="true"
+          >
+        </div>
 
+        <div class="sensor-board">
+          <button type="button" class="sensor-button" id="sensorButton">
+            <span class="sensor-button-icon" aria-hidden="true">◉</span>
+            <span id="sensorButtonText">কম্পাস চালু করুন</span>
+          </button>
 
-        </section>
-
-
-        <!-- DISTANCE BOARD -->
-
-        <section class="info-board distance-board">
-
-          <span class="info-label"
-                id="distanceLabel">
-
-            কাবা শরিফ পর্যন্ত দূরত্ব
-
-          </span>
-
-          <strong id="distanceValue">
-
-            --
-
-          </strong>
-
-        </section>
-
+          <p class="sensor-message" id="sensorMessage" role="status" aria-live="polite">
+            ফোনটি সমতলভাবে ধরে ধীরে ঘোরান।
+          </p>
+        </div>
 
       </section>
 
     </main>
 
-
-    <!-- FOOTER -->
-
-    <footer class="qibla-footer board">
-
-      <div class="footer-message-window">
-
-        <div id="footerTrack"
-             class="footer-track">
-
-          <span id="footerMessage"></span>
-
-          <span id="footerMessageClone"
-                aria-hidden="true"></span>
-
+    <footer class="bottom-board" id="qiblaFooter">
+      <div class="footer-message-wrap">
+        <div class="footer-message" id="footerMessage">
+          সঠিক কিবলার দিক জানতে কম্পাস ব্যবহার করুন।
         </div>
-
+        <div class="footer-message-clone" id="footerMessageClone" aria-hidden="true">
+          সঠিক কিবলার দিক জানতে কম্পাস ব্যবহার করুন।
+        </div>
       </div>
-
     </footer>
-
 
   </div>
 
+  <script src="../js/qibla.js?v=12" defer></script>
 </body>
 </html>
