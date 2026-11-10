@@ -1,1030 +1,744 @@
-/* =====================================================
-   IBADAT QIBLA COMPASS
-   COMPLETE RESPONSIVE DESIGN
-===================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap');
 
 :root {
-  --header-height: 48px;
-  --footer-height: 48px;
-  --page-padding: 7px;
-  --page-gap: 6px;
-  --board-radius: 20px;
-
+  --deep: #0F5132;
   --primary: #1B7F4B;
   --soft: #E8F5E9;
   --accent: #F2C94C;
-  --deep: #0F5132;
   --text: #17452F;
   --muted: #68796B;
   --card: rgba(255,255,255,.94);
   --border: #D5E3D1;
 
+  --page-bg: #E8F2E8;
+  --board-bg: rgba(255,255,255,.88);
+  --compass-face: #F8F4E8;
+  --compass-ring: #145A38;
+  --compass-gold: #D6AD4D;
+
+  --header-bg: var(--deep);
   --header-text: #F5E5A7;
+  --footer-bg: var(--deep);
   --footer-text: #F5E5A7;
 
-  --compass-outer: #947849;
-  --compass-ring: #E7D6AB;
-  --compass-label: #27432C;
-  --compass-mark: #49391F;
-
-  --compass-degree: var(--primary);
-  --compass-special: #C62828;
-
-  --needle-red: #B52D26;
-  --needle-light: #F5E9D0;
-
-  --page-overlay: rgba(255,253,245,.72);
-  --content-overlay: rgba(255,255,255,.10);
-
-  --direction-radius: 119px;
-  --degree-radius: 94px;
+  --page-radius: 20px;
+  --arabic-size: 30px;
+  --shadow: 0 8px 24px rgba(15,81,50,.12);
 }
-
-/* RESET */
 
 * {
   box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-
-html,
-body {
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  margin: 0;
 }
 
 html {
+  min-height: 100%;
   -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
 }
 
 body {
-  height: 100dvh;
-  overflow: hidden;
-
+  margin: 0;
+  min-height: 100vh;
   color: var(--text);
-
-  font-family:
-    "Noto Sans Bengali",
-    "Hind Siliguri",
-    "Noto Sans Devanagari",
-    "Nirmala UI",
-    Arial,
-    sans-serif;
-
-  background:
-    linear-gradient(
-      var(--page-overlay),
-      var(--page-overlay)
-    ),
-    url("../assets/images/content-bg.png")
-    center center / cover no-repeat;
+  background-color: var(--page-bg);
+  background-image: url("../assets/images/content-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  font-family: "Noto Sans Bengali", "Hind Siliguri", Arial, sans-serif;
 }
 
 button {
   font: inherit;
-  cursor: pointer;
-  touch-action: manipulation;
 }
 
-/* APP LAYOUT */
-
-.qibla-app {
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-
-  padding:
-    max(5px, env(safe-area-inset-top, 0px))
-    var(--page-padding)
-    max(5px, env(safe-area-inset-bottom, 0px));
-
+.app {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: var(--page-gap);
 }
-
-/* COMMON BOARD */
 
 .board {
-  border: 2px solid var(--accent);
-  border-radius: var(--board-radius);
-  box-shadow: 0 3px 9px rgba(30,49,28,.12);
-  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--page-radius);
+  box-shadow: var(--shadow);
 }
 
-/* HEADER */
-
-.qibla-header {
-  flex: 0 0 var(--header-height);
-  width: 100%;
-  height: var(--header-height);
-  min-height: var(--header-height);
-  max-height: var(--header-height);
-
+.hero {
+  min-height: 66px;
+  margin: 12px 12px 0;
+  padding: 14px 16px;
   display: flex;
-  align-items: center;
   justify-content: center;
-
-  padding: 4px 10px;
-
+  align-items: center;
   color: var(--header-text);
-  background: var(--deep);
+  background: var(--header-bg);
+  border-color: rgba(242,201,76,.45);
+  background-image: url("../assets/images/hero-bg.jpg");
+  background-size: cover;
+  background-position: center;
 }
 
-.qibla-header h1 {
-  min-width: 0;
+.hero-title {
   margin: 0;
-  padding: 0;
-
-  color: var(--header-text);
-
-  font-size: clamp(17px, 4.5vw, 21px);
-  font-weight: 750;
-  line-height: 1.25;
   text-align: center;
-}
-
-/* MAIN */
-
-.qibla-main {
-  flex: 1 1 0;
-  min-width: 0;
-  min-height: 0;
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-
-  padding: 1px 0;
-  overflow: hidden;
-}
-
-/* COMPLETE CONTENT BOARD
-   LOCATION + COMPASS + DISTANCE
-*/
-
-.qibla-content-board {
-  flex: 1 1 auto;
-
-  min-width: 0;
-  min-height: 0;
-  width: 100%;
-
-  padding: 7px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  gap: 5px;
-
-  border: 1px solid var(--border);
-  border-radius: 22px;
-
-  background:
-    linear-gradient(
-      var(--content-overlay),
-      var(--content-overlay)
-    ),
-    url("../assets/images/content-bg2.png")
-    center center / cover no-repeat;
-
-  box-shadow:
-    0 5px 16px rgba(30,40,20,.12),
-    inset 0 0 18px rgba(255,255,255,.15);
-
-  overflow: hidden;
-}
-
-/* LOCATION AND DISTANCE */
-
-.info-board {
-  flex: 0 0 auto;
-
-  min-width: 0;
-  width: 100%;
-  min-height: 52px;
-
-  padding: 5px 10px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-
-  color: var(--text);
-  background: var(--card);
-
-  border: 1px solid var(--border);
-  border-radius: 15px;
-
-  box-shadow: 0 2px 7px rgba(20,60,30,.07);
-
-  text-align: center;
-}
-
-.info-label {
-  color: var(--muted);
-
-  font-size: 11px;
-  font-weight: 550;
-  line-height: 1.3;
-}
-
-.info-board strong {
-  max-width: 100%;
-
-  color: var(--text);
-
-  font-size: 14px;
-  font-weight: 750;
+  font-size: clamp(21px, 5vw, 27px);
   line-height: 1.35;
+  font-weight: 700;
+}
 
+.page-container {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 14px 12px 20px;
+  flex: 1;
+}
+
+/* Main content board.
+   No decorative random marks, dots or external tick elements are used here. */
+.qibla-content-board {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 18px 14px 20px;
+  background-color: var(--board-bg);
+  background-image: url("../assets/images/content-bg2.png");
+  background-size: cover;
+  background-position: center;
+  border-color: var(--border);
+}
+
+/* Location */
+.location-board {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  margin: 0 auto 12px;
+  text-align: center;
+}
+
+.location-label {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.location-name {
+  max-width: 100%;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 700;
   overflow-wrap: anywhere;
 }
 
-/* COMPASS CONTENT */
-
-.compass-content-board {
-  flex: 1 1 auto;
-
-  min-width: 0;
-  min-height: 0;
-  width: 100%;
-
-  padding: 3px 4px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  background: transparent;
-  border: none;
-  overflow: visible;
-}
-
-/* COMPASS SIZE */
-
-.compass-wrap {
+/* Compass layout */
+.compass-stage {
   position: relative;
-
-  width: min(76vw, 310px, 38vh);
-  max-width: 310px;
-
+  z-index: 1;
+  width: min(100%, 440px);
   aspect-ratio: 1;
-
+  margin: 0 auto;
   display: grid;
   place-items: center;
-
-  flex: 0 1 auto;
 }
 
-/* COMPASS OUTER CIRCLE */
-
-.compass-outer {
+.compass-shell {
   position: relative;
-
-  width: 100%;
-  height: 100%;
-
+  width: 94%;
+  height: 94%;
   border-radius: 50%;
-  border: 4px solid var(--compass-outer);
-
   background:
-    radial-gradient(
-      circle,
-      transparent 0 48%,
-      rgba(255,255,255,.04) 49% 100%
-    ),
-    url("../assets/images/content-bg1.png")
-    center center / cover no-repeat;
-
+    radial-gradient(circle at 35% 25%, rgba(255,255,255,.22), transparent 48%),
+    linear-gradient(145deg, #1b7148, #0b4229);
+  border: 5px solid #C9A34B;
   box-shadow:
-    0 0 0 3px var(--compass-ring),
-    0 0 0 5px var(--compass-outer),
-    0 7px 16px rgba(30,20,10,.28),
-    inset 0 0 16px rgba(70,50,20,.18);
+    0 8px 20px rgba(0,0,0,.2),
+    inset 0 0 0 3px rgba(255,255,255,.2),
+    inset 0 0 0 7px rgba(8,54,33,.45);
 }
-
-/* ROTATING COMPASS DIAL */
-
-.compass-rose {
-  position: absolute;
-  inset: 0;
-
-  border-radius: 50%;
-
-  transform: rotate(0deg);
-  transform-origin: center center;
-
-  will-change: transform;
-}
-
-/* TICK MARKS */
-
-.compass-ticks {
-  position: absolute;
-  inset: 0;
-
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.compass-ticks i {
-  position: absolute;
-
-  left: 50%;
-  top: 2.5%;
-
-  width: 1px;
-  height: 4.2%;
-
-  background: var(--compass-mark);
-  opacity: .78;
-
-  transform-origin: 50% 1140%;
-}
-
-/* MEDIUM TICKS */
-
-.compass-ticks i.major {
-  width: 2px;
-  height: 6.2%;
-  opacity: 1;
-}
-
-/* IMPORTANT RED TICKS */
-
-.compass-ticks i.cardinal {
-  width: 2.5px;
-  height: 8%;
-
-  background: var(--compass-special);
-  opacity: 1;
-  border-radius: 2px;
-}
-
-/* SECONDARY SPECIAL TICKS */
-
-.compass-ticks i.intercardinal {
-  width: 2px;
-  height: 6.8%;
-
-  background: var(--compass-special);
-  opacity: .9;
-}
-
-/* 16 DIRECTION LABELS */
 
 .direction-ring {
   position: absolute;
-  inset: 0;
-
+  inset: 3%;
   border-radius: 50%;
   pointer-events: none;
+  z-index: 5;
 }
 
 .direction-ring span {
   position: absolute;
-
   left: 50%;
   top: 50%;
-
-  width: 58px;
-
-  margin-left: -29px;
-  margin-top: -10px;
-
-  color: var(--compass-label);
-
-  font-size: clamp(8px, 2.5vw, 11px);
-  font-weight: 850;
-
-  line-height: 20px;
+  width: 28%;
   text-align: center;
+  color: #F8E9B8;
+  font-size: clamp(10px, 2.8vw, 13px);
+  font-weight: 700;
   white-space: nowrap;
-
   transform:
-    rotate(calc(var(--angle) * 1deg))
-    translateY(calc(-1 * var(--direction-radius)))
-    rotate(calc(var(--angle) * -1deg));
-
+    translate(-50%, -50%)
+    rotate(var(--angle))
+    translateY(-154px)
+    rotate(calc(var(--angle) * -1));
   transform-origin: center;
 }
 
-/* DEGREE RING */
+.direction-ring span:nth-child(1) { --angle: 0deg; }
+.direction-ring span:nth-child(2) { --angle: 45deg; }
+.direction-ring span:nth-child(3) { --angle: 90deg; }
+.direction-ring span:nth-child(4) { --angle: 135deg; }
+.direction-ring span:nth-child(5) { --angle: 180deg; }
+.direction-ring span:nth-child(6) { --angle: 225deg; }
+.direction-ring span:nth-child(7) { --angle: 270deg; }
+.direction-ring span:nth-child(8) { --angle: 315deg; }
+
+/* Responsive direction label radius */
+@media (max-width: 480px) {
+  .direction-ring span {
+    transform:
+      translate(-50%, -50%)
+      rotate(var(--angle))
+      translateY(-39vw)
+      rotate(calc(var(--angle) * -1));
+  }
+}
 
 .degree-ring {
   position: absolute;
-  inset: 0;
-
+  inset: 11%;
   border-radius: 50%;
+  z-index: 6;
   pointer-events: none;
 }
 
 .degree-ring span {
   position: absolute;
-
   left: 50%;
   top: 50%;
-
-  width: 34px;
-
-  margin-left: -17px;
+  width: 35px;
+  margin-left: -17.5px;
   margin-top: -9px;
-
-  color: var(--compass-degree);
-
+  color: #F8E9B8;
   font-size: 10px;
-  font-weight: 850;
-
-  line-height: 18px;
+  font-weight: 600;
   text-align: center;
-  white-space: nowrap;
-
   transform:
-    rotate(calc(var(--degree-angle) * 1deg))
-    translateY(calc(-1 * var(--degree-radius)))
-    rotate(calc(var(--degree-angle) * -1deg));
-
-  transform-origin: center;
+    rotate(var(--angle))
+    translateY(-135px)
+    rotate(calc(var(--angle) * -1));
 }
 
-/* KAABA ORBIT
-   OUTSIDE THE COMPASS CIRCLE
-*/
+.degree-ring span:nth-child(1) { --angle: 0deg; }
+.degree-ring span:nth-child(2) { --angle: 45deg; }
+.degree-ring span:nth-child(3) { --angle: 90deg; }
+.degree-ring span:nth-child(4) { --angle: 135deg; }
+.degree-ring span:nth-child(5) { --angle: 180deg; }
+.degree-ring span:nth-child(6) { --angle: 225deg; }
+.degree-ring span:nth-child(7) { --angle: 270deg; }
+.degree-ring span:nth-child(8) { --angle: 315deg; }
 
+.compass-face {
+  position: absolute;
+  inset: 16%;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 4px solid #D8B65D;
+  background-color: var(--compass-face);
+  background-image: url("../assets/images/content-bg1.png");
+  background-size: cover;
+  background-position: center;
+  box-shadow:
+    inset 0 0 0 2px rgba(112,81,24,.25),
+    inset 0 0 20px rgba(95,72,26,.15),
+    0 3px 9px rgba(0,0,0,.22);
+}
+
+/* Keep all actual compass graduations inside the dial only. */
+.compass-ticks {
+  position: absolute;
+  inset: 4%;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.compass-ticks i {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 1.5px;
+  height: 7px;
+  margin-left: -.75px;
+  transform-origin: 50% calc(var(--tick-radius, 50%) * 1);
+  background: rgba(25,75,48,.68);
+  border-radius: 2px;
+}
+
+.compass-ticks i.major {
+  width: 2.5px;
+  height: 13px;
+  margin-left: -1.25px;
+  background: #B18A35;
+}
+
+.compass-background {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.12), transparent 68%);
+  pointer-events: none;
+}
+
+.compass-rose {
+  position: absolute;
+  inset: 16%;
+  border-radius: 50%;
+  z-index: 1;
+  opacity: .78;
+  background:
+    conic-gradient(
+      from 0deg,
+      transparent 0deg 40deg,
+      rgba(184,145,62,.3) 45deg,
+      transparent 50deg 85deg,
+      rgba(184,145,62,.3) 90deg,
+      transparent 95deg 130deg,
+      rgba(184,145,62,.3) 135deg,
+      transparent 140deg 175deg,
+      rgba(184,145,62,.3) 180deg,
+      transparent 185deg 220deg,
+      rgba(184,145,62,.3) 225deg,
+      transparent 230deg 265deg,
+      rgba(184,145,62,.3) 270deg,
+      transparent 275deg 310deg,
+      rgba(184,145,62,.3) 315deg,
+      transparent 320deg 360deg
+    );
+}
+
+.rose-point {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 78px solid rgba(177,138,53,.32);
+  transform-origin: 50% 0;
+}
+
+.rose-n { transform: translate(-50%, -100%); }
+.rose-ne { transform: translate(-50%, -100%) rotate(45deg); }
+.rose-e { transform: translate(-50%, -100%) rotate(90deg); }
+.rose-se { transform: translate(-50%, -100%) rotate(135deg); }
+.rose-s { transform: translate(-50%, -100%) rotate(180deg); }
+.rose-sw { transform: translate(-50%, -100%) rotate(225deg); }
+.rose-w { transform: translate(-50%, -100%) rotate(270deg); }
+.rose-nw { transform: translate(-50%, -100%) rotate(315deg); }
+
+/* Needle */
+.needle-wrap {
+  position: absolute;
+  z-index: 7;
+  inset: 17%;
+  border-radius: 50%;
+  transform: rotate(0deg);
+  pointer-events: none;
+}
+
+.needle {
+  position: absolute;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform: translateX(-50%);
+}
+
+.needle-north {
+  top: 3%;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 48% solid #B8322B;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.3));
+}
+
+.needle-south {
+  bottom: 3%;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 45% solid #D5D5D5;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.2));
+}
+
+.needle-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 35% 30%, #FFF1B8, #B98B30 65%, #6B4B17);
+  border: 2px solid #F7D98B;
+  box-shadow: 0 2px 5px rgba(0,0,0,.35);
+  z-index: 2;
+}
+
+.compass-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  z-index: 8;
+  transform: translate(-50%, -50%);
+  background: #F5D88D;
+  border: 2px solid #946B24;
+  pointer-events: none;
+}
+
+.compass-center span {
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: #165B39;
+}
+
+/* Kaaba marker rotates around the dial. No additional orbit decoration. */
 .qibla-orbit {
   position: absolute;
-
-  inset: -22px;
-
+  inset: 0;
+  z-index: 9;
   border-radius: 50%;
-
-  transform: rotate(0deg);
-  transform-origin: center center;
-
   pointer-events: none;
-  z-index: 6;
-
-  will-change: transform;
+  transform: rotate(0deg);
 }
-
-/* KAABA MARKER */
 
 .qibla-marker {
   position: absolute;
-
-  top: 0;
   left: 50%;
-
-  width: 40px;
-  height: 40px;
-
-  margin-left: -20px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  transform: rotate(0deg);
-
-  transition: transform .12s linear;
+  top: -8%;
+  width: 42px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 3px 4px rgba(0,0,0,.32));
 }
 
 .qibla-marker img {
   display: block;
-
-  width: 36px;
-  height: 36px;
-
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-
-  filter:
-    drop-shadow(0 2px 4px rgba(0,0,0,.45));
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-/* NEEDLE */
-
-.compass-needle {
+/* Bearing text */
+.bearing-display {
   position: absolute;
-
-  z-index: 5;
-
   left: 50%;
-  top: 50%;
-
-  width: 28px;
-  height: 150px;
-
-  transform: translate(-50%, -50%);
-
-  pointer-events: none;
-}
-
-/* NORTH ARROW */
-
-.needle-north {
-  position: absolute;
-
-  left: 50%;
-  top: 0;
-
-  width: 0;
-  height: 0;
-
+  bottom: 9%;
+  z-index: 10;
+  min-width: 110px;
+  padding: 5px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
   transform: translateX(-50%);
-
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  border-bottom: 70px solid var(--needle-red);
-
-  filter:
-    drop-shadow(0 2px 2px rgba(60,10,10,.5));
+  border-radius: 12px;
+  background: rgba(255,255,255,.82);
+  border: 1px solid rgba(177,138,53,.5);
+  box-shadow: 0 2px 7px rgba(0,0,0,.1);
+  white-space: nowrap;
 }
 
-/* SOUTH ARROW */
-
-.needle-south {
-  position: absolute;
-
-  left: 50%;
-  bottom: 0;
-
-  width: 0;
-  height: 0;
-
-  transform: translateX(-50%);
-
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 70px solid var(--needle-light);
-
-  filter:
-    drop-shadow(0 2px 2px rgba(50,35,15,.4));
+.bearing-display strong {
+  color: #145A38;
+  font-size: clamp(18px, 5vw, 24px);
+  line-height: 1.2;
+  font-weight: 700;
 }
 
-/* CENTER CAP */
+.bearing-display span {
+  color: #536B59;
+  font-size: 10px;
+  font-weight: 600;
+}
 
-.needle-center {
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  width: 20px;
-  height: 20px;
-
-  transform: translate(-50%, -50%);
-
+/* Distance */
+.distance-board {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 390px);
+  min-height: 70px;
+  margin: 10px auto 14px;
+  padding: 10px 16px;
   display: flex;
   align-items: center;
-  justify-content: center;
-
-  border: 2px solid #654D23;
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      #FFF3C5,
-      #D4AD57 55%,
-      #876329
-    );
-
-  box-shadow: 0 1px 5px rgba(0,0,0,.4);
+  gap: 13px;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: rgba(255,255,255,.78);
+  box-shadow: 0 3px 10px rgba(15,81,50,.08);
 }
 
-.needle-center span {
-  width: 5px;
-  height: 5px;
-
+.distance-icon {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  display: grid;
+  place-items: center;
   border-radius: 50%;
-  background: #60471D;
+  color: #FFF2C4;
+  background: var(--primary);
+  font-size: 24px;
 }
 
-/* SENSOR CONTROL */
+.distance-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
 
-.compass-action {
-  flex: 0 0 auto;
+.distance-info span {
+  color: var(--muted);
+  font-size: 12px;
+}
 
-  width: 100%;
+.distance-info strong {
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 700;
+}
 
-  padding-top: 8px;
+.distance-kaaba {
+  width: 36px;
+  height: 36px;
+  margin-left: auto;
+  object-fit: contain;
+}
 
+/* Sensor */
+.sensor-board {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
   text-align: center;
 }
 
-#sensorButton {
-  min-width: 155px;
-  min-height: 36px;
-
-  padding: 6px 19px;
-
-  color: var(--header-text);
-  background: var(--primary);
-
-  border: 1px solid var(--accent);
+.sensor-button {
+  min-height: 44px;
+  padding: 9px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid rgba(242,201,76,.7);
   border-radius: 30px;
-
-  font-size: 12px;
-  font-weight: 750;
-  line-height: 1.3;
-
-  box-shadow: 0 2px 6px rgba(0,0,0,.14);
+  color: #FFF5D5;
+  background: var(--primary);
+  box-shadow: 0 4px 12px rgba(15,81,50,.2);
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .18s ease, filter .18s ease;
 }
 
-#sensorButton:disabled {
+.sensor-button:active {
+  transform: scale(.97);
+}
+
+.sensor-button:disabled {
   opacity: .65;
   cursor: wait;
 }
 
-#sensorButton:active {
-  transform: scale(.97);
+.sensor-button-icon {
+  font-size: 18px;
 }
 
-#sensorMessage {
-  min-height: 15px;
-
-  margin: 4px 0 0;
-  padding: 0 4px;
-
-  color: var(--text);
-
-  font-size: 10px;
-  font-weight: 550;
-  line-height: 1.35;
+.sensor-message {
+  max-width: 95%;
+  min-height: 20px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
 }
 
-/* FOOTER */
-
-.qibla-footer {
-  flex: 0 0 var(--footer-height);
-
-  width: 100%;
-  height: var(--footer-height);
-
-  min-height: var(--footer-height);
-  max-height: var(--footer-height);
-
+/* Footer */
+.bottom-board {
+  min-height: 48px;
+  margin: 0 12px 12px;
+  padding: 11px 14px;
   display: flex;
   align-items: center;
-  justify-content: center;
-
-  padding: 0 12px;
-
-  color: var(--footer-text);
-  background: var(--deep);
-}
-
-.footer-message-window {
-  width: 100%;
-
   overflow: hidden;
-  white-space: nowrap;
-}
-
-.footer-track {
-  display: flex;
-
-  width: max-content;
-
-  align-items: center;
-  gap: 55px;
-
-  animation: qibla-footer-scroll 55s linear infinite;
-}
-
-.footer-track span {
   color: var(--footer-text);
-
-  font-size: 13px;
-  font-weight: 600;
-
-  line-height: 1.3;
-  white-space: nowrap;
+  background: var(--footer-bg);
+  border: 1px solid rgba(242,201,76,.4);
+  border-radius: 14px;
 }
 
-@keyframes qibla-footer-scroll {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
+.footer-message-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
 }
 
-/* =====================================================
-   THEMES
-===================================================== */
+.footer-message,
+.footer-message-clone {
+  flex: 0 0 auto;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.5;
+}
 
-body[data-color-theme="classic"] {
+/* Themes */
+body.theme-classic {
+  --deep: #0F5132;
   --primary: #1B7F4B;
   --soft: #E8F5E9;
   --accent: #F2C94C;
-  --deep: #0F5132;
   --text: #17452F;
   --muted: #68796B;
-  --card: rgba(255,255,255,.94);
   --border: #D5E3D1;
+  --header-bg: #0F5132;
+  --footer-bg: #0F5132;
 }
 
-body[data-color-theme="royal"] {
-  --primary: #285A8E;
-  --soft: #E5EFF9;
-  --accent: #E8BD55;
-  --deep: #173A60;
-  --text: #1B3652;
-  --muted: #65798E;
-  --card: rgba(255,255,255,.94);
-  --border: #C8D9EB;
+body.theme-royal {
+  --deep: #173B70;
+  --primary: #285C9B;
+  --soft: #E8F0FB;
+  --accent: #E7C66B;
+  --text: #19385D;
+  --muted: #65758A;
+  --border: #C9D8EC;
+  --header-bg: #173B70;
+  --footer-bg: #173B70;
 }
 
-body[data-color-theme="rose"] {
-  --primary: #B96F79;
-  --soft: #F8E9E7;
-  --accent: #D9B875;
-  --deep: #7D414B;
-  --text: #633B42;
-  --muted: #846D70;
-  --card: rgba(255,252,251,.96);
-  --border: #E8CBC8;
+body.theme-rose {
+  --deep: #783E51;
+  --primary: #A85D72;
+  --soft: #F8E9ED;
+  --accent: #E7C18A;
+  --text: #633847;
+  --muted: #8B6D77;
+  --border: #E9CDD5;
+  --header-bg: #783E51;
+  --footer-bg: #783E51;
 }
 
-body[data-color-theme="pista"] {
-  --primary: #4CAF50;
-  --soft: #DFF5E1;
-  --accent: #A7D129;
-  --deep: #2F7135;
-  --text: #254D2A;
-  --muted: #6D806D;
-  --card: rgba(255,255,255,.94);
-  --border: #CDE3C8;
+body.theme-pista {
+  --deep: #526B37;
+  --primary: #718F4D;
+  --soft: #EFF5E5;
+  --accent: #E5C66A;
+  --text: #3F542D;
+  --muted: #75816A;
+  --border: #D5E0C5;
+  --header-bg: #526B37;
+  --footer-bg: #526B37;
 }
 
-/* DARK MODE */
-
+/* Dark mode */
 body.dark-mode {
-  --text: #E5EDE7;
-  --muted: #C0CEC3;
-  --card: rgba(25,35,29,.96);
-  --border: #405748;
-
-  --compass-label: #263C2D;
-  --compass-degree: var(--primary);
-
-  --page-overlay: rgba(12,22,16,.84);
-  --content-overlay: rgba(15,25,18,.12);
-
-  color: var(--text);
-
-  background:
-    linear-gradient(
-      var(--page-overlay),
-      var(--page-overlay)
-    ),
-    url("../assets/images/content-bg.png")
-    center center / cover no-repeat;
-}
-
-body.dark-mode .qibla-header,
-body.dark-mode .qibla-footer {
-  background: linear-gradient(
-    140deg,
-    var(--deep),
-    #101D16
-  );
-}
-
-body.dark-mode .info-board {
-  color: var(--text);
-  background: var(--card);
-  border-color: var(--border);
-}
-
-body.dark-mode .info-board strong {
+  --page-bg: #101B16;
+  --board-bg: rgba(28,42,34,.96);
+  --card: rgba(32,47,38,.96);
+  --text: #E2EEE5;
+  --muted: #A8B9AC;
+  --border: #405648;
+  --compass-face: #EAE3D1;
   color: var(--text);
 }
 
 body.dark-mode .qibla-content-board {
-  border-color: var(--border);
+  background-color: rgba(28,42,34,.94);
 }
 
-body.dark-mode #sensorMessage {
-  color: var(--text);
+body.dark-mode .location-name,
+body.dark-mode .distance-info strong {
+  color: #E2EEE5;
 }
 
-body.dark-mode #sensorButton {
-  color: #FFFFFF;
+body.dark-mode .distance-board {
+  background: rgba(26,43,33,.92);
 }
 
-/* =====================================================
-   RESPONSIVE
-===================================================== */
-
-/* SHORT SCREENS */
-
-@media (max-height: 700px) {
-
-  :root {
-    --header-height: 38px;
-    --footer-height: 38px;
-    --page-gap: 3px;
-
-    --direction-radius: 102px;
-    --degree-radius: 80px;
-  }
-
-  .qibla-app {
-    padding-left: 5px;
-    padding-right: 5px;
-  }
-
-  .info-board {
-    min-height: 43px;
-    padding: 3px 8px;
-    border-radius: 13px;
-  }
-
-  .info-label {
-    font-size: 10px;
-  }
-
-  .info-board strong {
-    font-size: 12px;
-  }
-
-  .qibla-content-board {
-    padding: 5px;
-    gap: 3px;
-  }
-
-  .compass-wrap {
-    width: min(70vw, 265px, 35vh);
-  }
-
-  .qibla-orbit {
-    inset: -19px;
-  }
-
-  .qibla-marker {
-    width: 36px;
-    height: 36px;
-    margin-left: -18px;
-  }
-
-  .qibla-marker img {
-    width: 31px;
-    height: 31px;
-  }
-
-  .compass-needle {
-    height: 126px;
-  }
-
-  .needle-north {
-    border-bottom-width: 58px;
-  }
-
-  .needle-south {
-    border-top-width: 58px;
-  }
-
-  .compass-action {
-    padding-top: 4px;
-  }
-
-  #sensorButton {
-    min-height: 31px;
-    padding: 4px 15px;
-    font-size: 11px;
-  }
-
-  #sensorMessage {
-    min-height: 12px;
-    margin-top: 2px;
-    font-size: 9px;
-  }
-
-  .footer-track span {
-    font-size: 12px;
-  }
+body.dark-mode .bearing-display {
+  background: rgba(246,241,226,.9);
 }
 
-/* NARROW PHONES */
-
-@media (max-width: 380px) {
-
-  .compass-wrap {
-    width: min(72vw, 280px, 35vh);
-  }
-
-  .direction-ring span {
-    font-size: 8px;
-  }
-
-  .degree-ring span {
-    font-size: 9px;
-  }
-
-  .info-board strong {
-    font-size: 12px;
-  }
-
-  .compass-needle {
-    height: 136px;
-  }
-
-  .needle-north {
-    border-bottom-width: 62px;
-  }
-
-  .needle-south {
-    border-top-width: 62px;
-  }
+body.dark-mode .sensor-message {
+  color: #C0CEC3;
 }
 
-/* VERY SHORT PHONES */
-
-@media (max-height: 570px) {
-
-  :root {
-    --direction-radius: 86px;
-    --degree-radius: 68px;
-  }
-
-  .compass-wrap {
-    width: min(65vw, 225px, 32vh);
-  }
-
-  .qibla-orbit {
-    inset: -17px;
-  }
-
-  .qibla-marker {
-    width: 32px;
-    height: 32px;
-    margin-left: -16px;
-  }
-
-  .qibla-marker img {
-    width: 28px;
-    height: 28px;
-  }
-
-  .compass-needle {
-    height: 108px;
-  }
-
-  .needle-north {
-    border-bottom-width: 49px;
-  }
-
-  .needle-south {
-    border-top-width: 49px;
-  }
-
-  .compass-action {
-    padding-top: 3px;
-  }
-}
-
-/* LARGE SCREENS */
-
-@media (min-width: 700px) {
-
-  .qibla-main {
-    width: min(100%, 560px);
-    margin: 0 auto;
-  }
-
-  .compass-wrap {
-    width: min(100%, 310px);
-  }
-}
-
-/* ACCESSIBILITY */
-
+/* Accessibility */
 button:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 3px solid var(--accent);
   outline-offset: 3px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-
-  .footer-track {
-    animation-duration: 90s;
+@media (min-width: 600px) {
+  .page-container {
+    padding-top: 20px;
   }
 
-  .compass-rose,
-  .qibla-orbit,
+  .qibla-content-board {
+    padding: 22px 24px 24px;
+  }
+
+  .compass-stage {
+    width: min(100%, 460px);
+  }
+}
+
+@media (max-width: 360px) {
+  .qibla-content-board {
+    padding: 14px 9px 16px;
+  }
+
+  .compass-shell {
+    width: 96%;
+    height: 96%;
+  }
+
   .qibla-marker {
-    transition: none;
+    width: 35px;
+    height: 40px;
+  }
+
+  .distance-board {
+    padding: 9px 11px;
+  }
+
+  .distance-info strong {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
