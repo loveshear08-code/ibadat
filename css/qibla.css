@@ -1,7 +1,6 @@
-
 /* =====================================================
    IBADAT — QIBLA COMPASS
-   Responsive + 3 Themes + Dark Mode
+   Responsive + 4 Themes + Dark Mode
    ===================================================== */
 
 :root {
@@ -25,8 +24,9 @@
 
   --board-bg: rgba(255,253,245,.48);
   --panel-bg: rgba(213,239,211,.88);
+
   --compass-bg: #F7FAF1;
-  --compass-inner: #F7FAF1;
+  --compass-inner: rgba(247,250,241,.94);
 
   --outer-ring: rgba(88,174,111,.83);
   --inner-ring: rgba(88,174,111,.83);
@@ -40,6 +40,16 @@
   --shadow: 0 3px 12px rgba(30,49,28,.12);
 
   --compass-size: min(66vw, 340px);
+
+  /*
+    COMPASS FACE BACKGROUND
+    Replace this variable later with your own image:
+    url("../assets/images/your-compass-face.png")
+
+    This temporary SVG pattern affects only the circular
+    compass face, not the page or main content board.
+  */
+  --compass-face-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%23F7FAF1'/%3E%3Cg fill='none' stroke='%231B7F4B' stroke-opacity='.13' stroke-width='1.2'%3E%3Cpath d='M90 8 108 36 140 40 144 72 172 90 144 108 140 140 108 144 90 172 72 144 40 140 36 108 8 90 36 72 40 40 72 36Z'/%3E%3Cpath d='M90 28 103 58 132 47 121 77 152 90 121 103 132 133 103 122 90 152 77 122 47 133 58 103 28 90 58 77 47 47 77 58Z'/%3E%3Ccircle cx='90' cy='90' r='55'/%3E%3Ccircle cx='90' cy='90' r='35'/%3E%3Cpath d='M0 0 180 180M180 0 0 180M90 0V180M0 90H180'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 /* RESET */
@@ -194,10 +204,7 @@ button:focus-visible {
   border-radius: 22px;
 
   background:
-    linear-gradient(
-      var(--board-bg),
-      var(--board-bg)
-    ),
+    linear-gradient(var(--board-bg), var(--board-bg)),
     url("../assets/images/content-bg2.png") center/cover no-repeat;
 
   box-shadow: var(--shadow);
@@ -205,7 +212,7 @@ button:focus-visible {
   isolation: isolate;
 }
 
-/* TOP AND BOTTOM THEME ORNAMENT LAYERS */
+/* CONTENT BOARD ORNAMENTS */
 
 .content-board::before,
 .content-board::after {
@@ -260,7 +267,7 @@ button:focus-visible {
   justify-content: center;
 
   gap: 7px;
-  padding: 7px 42px 7px 10px;
+  padding: 7px 10px;
 
   border: 1px solid var(--border);
   border-radius: 15px;
@@ -291,44 +298,6 @@ button:focus-visible {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.location-refresh {
-  position: absolute;
-  right: 7px;
-  top: 50%;
-
-  width: 30px;
-  height: 30px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 5px;
-
-  transform: translateY(-50%);
-
-  border: 0;
-  border-radius: 50%;
-
-  color: var(--deep);
-  background: transparent;
-}
-
-.location-refresh:active {
-  background: var(--soft);
-}
-
-.location-refresh svg {
-  width: 19px;
-  height: 19px;
-
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
 }
 
 /* COMPASS AREA */
@@ -367,7 +336,7 @@ button:focus-visible {
   isolation: isolate;
 }
 
-/* OUTER COMPASS */
+/* OUTER COMPASS FACE */
 
 .compass-outer {
   position: absolute;
@@ -376,7 +345,16 @@ button:focus-visible {
   border: clamp(8px, 2.5vw, 13px) solid var(--outer-ring);
   border-radius: 50%;
 
+  /*
+    The image is applied only to this circular compass face.
+    The content board and page backgrounds remain unchanged.
+  */
   background:
+    linear-gradient(
+      rgba(255,255,255,.48),
+      rgba(255,255,255,.48)
+    ),
+    var(--compass-face-image),
     radial-gradient(
       circle,
       var(--compass-bg) 0%,
@@ -384,13 +362,17 @@ button:focus-visible {
       var(--soft) 100%
     );
 
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
   box-shadow:
     0 3px 10px rgba(27,127,75,.10),
     inset 0 0 0 1px rgba(255,255,255,.6);
 
   transition:
     border-color .25s ease,
-    background .25s ease;
+    background-color .25s ease;
 }
 
 /* ROTATING DIAL */
@@ -476,7 +458,10 @@ button:focus-visible {
   background: var(--primary);
 }
 
-/* DIRECTION LABELS */
+/* DIRECTION LABELS
+   Position rotates with the dial.
+   Text itself is counter-rotated to remain upright.
+*/
 
 .direction-ring {
   position: absolute;
@@ -511,7 +496,10 @@ button:focus-visible {
     translate(-50%, -50%)
     rotate(var(--angle))
     translateY(calc(var(--compass-size) * -.405))
-    rotate(calc(var(--angle) * -1));
+    rotate(calc(var(--angle) * -1))
+    rotate(var(--heading-counter, 0deg));
+
+  transform-origin: center;
 
   transition: color .2s ease;
 }
@@ -536,17 +524,21 @@ button:focus-visible {
   top: 50%;
   left: 50%;
 
-  width: clamp(34px, 10vw, 48px);
-  height: clamp(34px, 10vw, 48px);
+  width: clamp(42px, 12vw, 58px);
+  height: clamp(42px, 12vw, 58px);
 
   display: flex;
   align-items: center;
   justify-content: center;
 
+  /*
+    Slightly larger orbit distance creates more separation
+    between the Kaaba icon and the compass outer ring.
+  */
   transform:
     translate(-50%, -50%)
     rotate(var(--qibla-angle, 0deg))
-    translateY(calc(var(--compass-size) * -.57))
+    translateY(calc(var(--compass-size) * -.615))
     rotate(calc(var(--qibla-angle, 0deg) * -1));
 
   will-change: transform;
@@ -563,7 +555,7 @@ button:focus-visible {
   filter: drop-shadow(0 3px 4px rgba(0,0,0,.25));
 }
 
-/* QIBLA NEEDLE: ONE LINE + RED TRIANGLE */
+/* QIBLA NEEDLE */
 
 .qibla-needle {
   position: absolute;
@@ -700,7 +692,7 @@ button:focus-visible {
 
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 
   gap: 10px;
 
@@ -846,7 +838,9 @@ button:focus-visible {
 
   gap: 55px;
 
-  animation: footer-scroll 36s linear infinite;
+  /* Faster than the previous 36-second cycle */
+  animation: footer-scroll 24s linear infinite;
+
   will-change: transform;
 }
 
@@ -867,7 +861,7 @@ button:focus-visible {
   to { transform: translateX(-50%); }
 }
 
-/* CLASSIC */
+/* CLASSIC THEME */
 
 body[data-color-theme="classic"] {
   --primary: #1B7F4B;
@@ -887,7 +881,7 @@ body[data-color-theme="classic"] {
   --needle-line: #1B7F4B;
 }
 
-/* ROYAL */
+/* ROYAL THEME */
 
 body[data-color-theme="royal"] {
   --primary: #285A8E;
@@ -910,7 +904,7 @@ body[data-color-theme="royal"] {
   --ornament-glow: rgba(232,189,85,.20);
 }
 
-/* ROSE */
+/* ROSE THEME */
 
 body[data-color-theme="rose"] {
   --primary: #B96F79;
@@ -933,7 +927,7 @@ body[data-color-theme="rose"] {
   --ornament-glow: rgba(217,184,117,.20);
 }
 
-/* PISTA */
+/* PISTA THEME */
 
 body[data-color-theme="pista"] {
   --primary: #4CAF50;
@@ -967,11 +961,13 @@ body.dark-mode {
   --panel-bg: rgba(32,55,39,.95);
 
   --compass-bg: #233428;
-  --compass-inner: #233428;
+  --compass-inner: rgba(35,52,40,.94);
 
-  --tick-color: rgba(190,210,194,.42);
+  --tick-color: rgba(190,210,194,.55);
   --ornament-color: rgba(190,210,194,.30);
   --ornament-glow: rgba(242,201,76,.10);
+
+  --compass-face-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%23233428'/%3E%3Cg fill='none' stroke='%23B8D0BC' stroke-opacity='.15' stroke-width='1.2'%3E%3Cpath d='M90 8 108 36 140 40 144 72 172 90 144 108 140 140 108 144 90 172 72 144 40 140 36 108 8 90 36 72 40 40 72 36Z'/%3E%3Cpath d='M90 28 103 58 132 47 121 77 152 90 121 103 132 133 103 122 90 152 77 122 47 133 58 103 28 90 58 77 47 47 77 58Z'/%3E%3Ccircle cx='90' cy='90' r='55'/%3E%3Ccircle cx='90' cy='90' r='35'/%3E%3Cpath d='M0 0 180 180M180 0 0 180M90 0V180M0 90H180'/%3E%3C/g%3E%3C/svg%3E");
 
   background:
     linear-gradient(rgba(8,15,10,.80), rgba(8,15,10,.80)),
@@ -1008,14 +1004,6 @@ body.dark-mode .content-board {
 }
 
 body.dark-mode .compass-outer {
-  background:
-    radial-gradient(
-      circle,
-      var(--compass-bg) 0%,
-      var(--compass-bg) 72%,
-      var(--soft) 100%
-    );
-
   box-shadow:
     0 3px 10px rgba(0,0,0,.30),
     inset 0 0 0 1px rgba(255,255,255,.10);
@@ -1055,7 +1043,7 @@ body.dark-mode .compass-toggle[aria-pressed="true"] {
 
   .location-board {
     min-height: 43px;
-    padding-left: 7px;
+    padding-inline: 7px;
   }
 
   .distance-board {
