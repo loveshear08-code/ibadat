@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -21,26 +22,23 @@
     <main class="qibla-main">
       <section class="content-board" aria-label="Qibla compass">
 
-        <!-- CURRENT LOCATION -->
         <div class="location-board">
           <span class="section-label" id="locationLabel">বর্তমান অবস্থান:</span>
           <strong id="locationName" aria-live="polite">অবস্থান খোঁজা হচ্ছে...</strong>
         </div>
 
-        <!-- COMPASS -->
         <div class="compass-area">
           <div class="compass-stage" id="compassStage">
 
             <div class="compass-outer">
 
-              <!-- ROTATING DIRECTION DIAL -->
               <div class="compass-dial" id="compassDial">
                 <div class="compass-inner-ring"></div>
                 <div class="compass-ticks" id="compassTicks"></div>
                 <div class="direction-ring" id="directionRing"></div>
               </div>
 
-              <!-- KAABA OUTSIDE THE COMPASS -->
+              <!-- KAABA ORBIT -->
               <div class="qibla-orbit">
                 <div class="qibla-marker" id="qiblaMarker">
                   <img
@@ -52,17 +50,13 @@
                 </div>
               </div>
 
-              <!-- QIBLA NEEDLE -->
-              <div class="qibla-needle" id="qiblaNeedle" aria-hidden="true">
-                <div class="needle-line"></div>
-                <div class="needle-tip"></div>
+              <!-- RED TRIANGLE: CIRCULAR PATH AROUND INNER CENTER -->
+              <div class="qibla-pointer-orbit" id="qiblaPointerOrbit">
+                <div class="qibla-pointer" id="qiblaPointer" aria-hidden="true"></div>
               </div>
 
-              <!-- FIXED CENTER DOT -->
-              <div class="compass-center" aria-hidden="true"></div>
             </div>
 
-            <!-- BEARING -->
             <div class="bearing-display">
               <strong id="bearingValue">---°</strong>
               <span id="bearingDirection">---</span>
@@ -71,7 +65,6 @@
           </div>
         </div>
 
-        <!-- DISTANCE + COMPASS CONTROL -->
         <div class="distance-board">
 
           <div class="distance-details">
