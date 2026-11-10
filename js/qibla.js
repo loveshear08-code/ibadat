@@ -1,10 +1,15 @@
-
 /* =====================================================
    IBADAT — QIBLA COMPASS
-   GPS + Qibla Bearing + Device Orientation
+   Shared Home Location + Qibla Bearing
+   Device Orientation + 4 Themes + Dark Mode
+   Languages: Bengali / English / Hindi
+
    Shared Settings: appSettings
    Shared Location: ibadatUserLocation
-   Languages: Bengali / English / Hindi
+
+   IMPORTANT:
+   This page reads the location saved by Home.
+   It does not request a separate GPS location.
    ===================================================== */
 
 (() => {
@@ -16,7 +21,6 @@
     pageTitle: $("pageTitle"),
     locationLabel: $("locationLabel"),
     locationName: $("locationName"),
-    refreshLocation: $("refreshLocation"),
 
     compassDial: $("compassDial"),
     compassTicks: $("compassTicks"),
@@ -51,11 +55,6 @@
     longitude: 39.826206
   };
 
-  const KOLKATA = {
-    latitude: 22.5726,
-    longitude: 88.3639
-  };
-
   const SETTINGS_KEY = "appSettings";
   const LOCATION_KEY = "ibadatUserLocation";
 
@@ -86,11 +85,9 @@
     bn: {
       title: "কিবলা কম্পাস",
       locationLabel: "বর্তমান অবস্থান:",
-      locating: "অবস্থান খোঁজা হচ্ছে...",
-      locationDenied: "অবস্থানের অনুমতি পাওয়া যায়নি",
-      locationUnavailable: "অবস্থান পাওয়া যাচ্ছে না",
-      locationError: "অবস্থান শনাক্ত করা যায়নি",
-      approximate: "কলকাতা (আনুমানিক)",
+      locating: "Home-এর লোকেশন নেওয়া হচ্ছে...",
+      locationUnavailable: "Home পেজের লোকেশন পাওয়া যায়নি",
+      locationError: "লোকেশনের তথ্য পড়া যায়নি",
 
       distanceLabel: "কাবা শরীফ থেকে দূরত্ব:",
       distanceUnit: "কিমি",
@@ -100,24 +97,19 @@
       starting: "চালু হচ্ছে...",
       stopped: "কম্পাস বন্ধ আছে",
       active: "কম্পাস চালু আছে",
-      waiting: "কম্পাসের দিক নির্ণয় করা হচ্ছে...",
-      secure: "কম্পাস চালাতে HTTPS সংযোগ প্রয়োজন।",
-      unsupported: "এই ডিভাইসে কম্পাস সেন্সর পাওয়া যায়নি।",
-      denied: "কম্পাস ব্যবহারের অনুমতি পাওয়া যায়নি।",
-      noHeading: "নির্ভরযোগ্য কম্পাস দিক পাওয়া যায়নি। সেন্সর ও Calibration পরীক্ষা করুন।",
-      calibration: "ফোনটি সমতল রাখুন এবং প্রয়োজনে আটের মতো করে নাড়িয়ে Calibration করুন।",
-
-      footer: "আল্লাহর স্মরণেই অন্তর প্রশান্তি লাভ করে।"
+      waiting: "কম্পাসের দিক নির্ণয় করা হচ্ছে...",
+      secure: "কম্পাস চালাতে HTTPS সংযোগ প্রয়োজন।",
+      unsupported: "এই ডিভাইসে কম্পাস সেন্সর পাওয়া যায়নি।",
+      denied: "কম্পাস ব্যবহারের অনুমতি পাওয়া যায়নি।",
+      noHeading: "নির্ভরযোগ্য কম্পাস দিক পাওয়া যায়নি। সেন্সর ও Calibration পরীক্ষা করুন।"
     },
 
     en: {
       title: "Qibla Compass",
       locationLabel: "Current Location:",
-      locating: "Finding your location...",
-      locationDenied: "Location permission denied",
-      locationUnavailable: "Location unavailable",
-      locationError: "Unable to detect location",
-      approximate: "Kolkata (Approximate)",
+      locating: "Reading Home location...",
+      locationUnavailable: "Home location is not available",
+      locationError: "Unable to read location information",
 
       distanceLabel: "Distance from the Holy Kaaba:",
       distanceUnit: "km",
@@ -131,20 +123,15 @@
       secure: "A secure HTTPS connection is required.",
       unsupported: "Compass sensor is not available on this device.",
       denied: "Compass permission was denied.",
-      noHeading: "No reliable compass heading received. Check sensor support and calibration.",
-      calibration: "Keep your phone flat. If needed, calibrate it with a figure-eight motion.",
-
-      footer: "Surely, in the remembrance of Allah hearts find peace."
+      noHeading: "No reliable compass heading received. Check sensor support and calibration."
     },
 
     hi: {
       title: "क़िबला कम्पास",
       locationLabel: "वर्तमान स्थान:",
-      locating: "आपका स्थान खोजा जा रहा है...",
-      locationDenied: "स्थान की अनुमति नहीं मिली",
-      locationUnavailable: "स्थान उपलब्ध नहीं है",
-      locationError: "स्थान पता नहीं चल सका",
-      approximate: "कोलकाता (अनुमानित)",
+      locating: "Home का स्थान पढ़ा जा रहा है...",
+      locationUnavailable: "Home का स्थान उपलब्ध नहीं है",
+      locationError: "स्थान की जानकारी पढ़ी नहीं जा सकी",
 
       distanceLabel: "पवित्र काबा से दूरी:",
       distanceUnit: "किमी",
@@ -158,10 +145,7 @@
       secure: "कम्पास के लिए सुरक्षित HTTPS कनेक्शन आवश्यक है।",
       unsupported: "इस डिवाइस में कम्पास सेंसर उपलब्ध नहीं है।",
       denied: "कम्पास की अनुमति नहीं मिली।",
-      noHeading: "विश्वसनीय कम्पास दिशा नहीं मिली। सेंसर और कैलिब्रेशन जाँचें।",
-      calibration: "फोन को समतल रखें। आवश्यकता हो तो आठ के आकार में घुमाकर कैलिब्रेट करें।",
-
-      footer: "अल्लाह के स्मरण से ही दिलों को सुकून मिलता है।"
+      noHeading: "विश्वसनीय कम्पास दिशा नहीं मिली। सेंसर और कैलिब्रेशन जाँचें।"
     }
   };
 
@@ -180,9 +164,10 @@
   let firstHeadingReceived = false;
 
   let animationFrame = null;
-  let locationRequestId = 0;
-  let geocodeRequestId = 0;
   let headingTimeout = null;
+  let geocodeRequestId = 0;
+
+  let orientationEventName = null;
 
   /* =====================================================
      2. HELPERS
@@ -211,7 +196,9 @@
   }
 
   function setText(element, value) {
-    if (element) element.textContent = value;
+    if (element) {
+      element.textContent = value;
+    }
   }
 
   function isValidCoordinates(latitude, longitude) {
@@ -306,14 +293,31 @@
     setText(el.distanceLabel, t.distanceLabel);
     setText(el.distanceUnit, t.distanceUnit);
 
-    setText(el.footerMessage, t.footer);
-    setText(el.footerMessageClone, t.footer);
+    setText(
+      el.footerMessage,
+      getFooterMessage()
+    );
+
+    setText(
+      el.footerMessageClone,
+      getFooterMessage()
+    );
 
     updateSensorButton();
     updateLocationText();
     updateDistance();
     updateBearingDisplay();
     restartFooterAnimation();
+  }
+
+  function getFooterMessage() {
+    const messages = {
+      bn: "আল্লাহর স্মরণেই অন্তর প্রশান্তি লাভ করে।",
+      en: "Surely, in the remembrance of Allah hearts find peace.",
+      hi: "अल्लाह के स्मरण से ही दिलों को सुकून मिलता है।"
+    };
+
+    return messages[language] || messages.bn;
   }
 
   /* =====================================================
@@ -377,12 +381,34 @@
       }
 
       label.textContent = name;
-      label.style.setProperty("--angle", `${index * 22.5}deg`);
+
+      label.style.setProperty(
+        "--angle",
+        `${index * 22.5}deg`
+      );
 
       fragment.appendChild(label);
     });
 
     el.directionRing.replaceChildren(fragment);
+
+    updateDirectionLabelRotation();
+  }
+
+  /*
+    The direction labels move with the rotating dial.
+    Their text is counter-rotated so the letters remain upright.
+  */
+
+  function updateDirectionLabelRotation() {
+    if (!el.directionRing) return;
+
+    const heading = deviceHeading ?? 0;
+
+    el.directionRing.style.setProperty(
+      "--heading-counter",
+      `${heading}deg`
+    );
   }
 
   /* =====================================================
@@ -392,7 +418,8 @@
   function getDirectionName(bearing) {
     if (!Number.isFinite(bearing)) return "---";
 
-    const index = Math.round(normalizeAngle(bearing) / 22.5) % 16;
+    const index =
+      Math.round(normalizeAngle(bearing) / 22.5) % 16;
 
     return DIRECTIONS[language][index];
   }
@@ -503,14 +530,14 @@
 
     /*
       Dial:
-      North-up at 0 degrees.
-      When phone rotates, the dial rotates in reverse.
+      Rotates opposite to the phone heading.
 
       Needle:
-      Points to Qibla relative to phone heading.
+      Points towards Qibla relative to phone heading.
 
       Kaaba:
-      Moves on the outside orbit at the same relative angle.
+      Moves around the outer orbit at the same
+      relative Qibla angle.
     */
 
     const relativeAngle =
@@ -532,10 +559,12 @@
         `${relativeAngle}deg`
       );
     }
+
+    updateDirectionLabelRotation();
   }
 
   /* =====================================================
-     13. LOCATION STORAGE
+     13. READ HOME PAGE LOCATION
      ===================================================== */
 
   function readSavedLocation() {
@@ -544,12 +573,20 @@
         localStorage.getItem(LOCATION_KEY) || "null"
       );
 
-      if (!saved || typeof saved !== "object") return null;
+      if (!saved || typeof saved !== "object") {
+        return null;
+      }
 
       /*
-        Support both common shared-location formats:
-        {latitude, longitude}
-        {lat, lon}
+        Home.js saves:
+        {
+          lat: latitude,
+          lon: longitude,
+          updatedAt: timestamp
+        }
+
+        Also supports:
+        { latitude, longitude }
       */
 
       const latitude = Number(
@@ -568,36 +605,13 @@
         latitude,
         longitude,
         accuracy: Number(saved.accuracy) || null,
+        name: saved.name || saved.locationName || null,
         approximate: Boolean(saved.approximate)
       };
 
     } catch (error) {
-      console.warn("Saved location read error:", error);
+      console.warn("Saved Home location read error:", error);
       return null;
-    }
-  }
-
-  function saveLocation(location) {
-    try {
-      /*
-        Save both naming formats for compatibility
-        with existing IBADAT pages.
-      */
-
-      localStorage.setItem(
-        LOCATION_KEY,
-        JSON.stringify({
-          latitude: location.latitude,
-          longitude: location.longitude,
-          lat: location.latitude,
-          lon: location.longitude,
-          accuracy: location.accuracy || null,
-          approximate: Boolean(location.approximate),
-          updatedAt: Date.now()
-        })
-      );
-    } catch (error) {
-      console.warn("Location save error:", error);
     }
   }
 
@@ -606,10 +620,11 @@
      ===================================================== */
 
   function updateLocationText() {
-    if (!userLocation) return;
-
-    if (userLocation.approximate) {
-      setText(el.locationName, currentText().approximate);
+    if (!userLocation) {
+      setText(
+        el.locationName,
+        currentText().locationUnavailable
+      );
       return;
     }
 
@@ -678,11 +693,12 @@
   }
 
   /* =====================================================
-     16. SET LOCATION
+     16. SET SHARED LOCATION
      ===================================================== */
 
-  function setCurrentLocation(location, options = {}) {
+  function setCurrentLocation(location) {
     if (
+      !location ||
       !isValidCoordinates(
         Number(location.latitude),
         Number(location.longitude)
@@ -695,13 +711,14 @@
       latitude: Number(location.latitude),
       longitude: Number(location.longitude),
       accuracy: Number(location.accuracy) || null,
-      approximate: Boolean(options.approximate ?? location.approximate),
-      name: options.name || location.name || null
+      name: location.name || null,
+      approximate: Boolean(location.approximate)
     };
 
-    if (!userLocation.approximate) {
-      saveLocation(userLocation);
-    }
+    /*
+      Do not write a new location here.
+      Home page remains the source of truth.
+    */
 
     qiblaBearing = calculateBearing(
       userLocation.latitude,
@@ -713,7 +730,7 @@
     updateBearingDisplay();
     updateCompassMovement();
 
-    if (!userLocation.approximate && !userLocation.name) {
+    if (!userLocation.name) {
       getLocationName(
         userLocation.latitude,
         userLocation.longitude
@@ -722,79 +739,40 @@
   }
 
   /* =====================================================
-     17. KOLKATA FALLBACK
+     17. LOAD THE SAME LOCATION AS HOME
      ===================================================== */
 
-  function useFallbackLocation() {
-    setCurrentLocation(KOLKATA, {
-      approximate: true
-    });
-  }
-
-  /* =====================================================
-     18. GPS REQUEST
-     ===================================================== */
-
-  function requestLocation() {
-    const requestId = ++locationRequestId;
-
+  function loadHomeLocation() {
     setText(el.locationName, currentText().locating);
 
-    if (!navigator.geolocation) {
-      const saved = readSavedLocation();
+    const saved = readSavedLocation();
 
-      if (saved) {
-        setCurrentLocation(saved);
-      } else {
-        useFallbackLocation();
-      }
-
+    if (saved) {
+      setCurrentLocation(saved);
       return;
     }
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        if (requestId !== locationRequestId) return;
+    /*
+      Do not request a separate GPS location.
+      Do not silently substitute Kolkata coordinates.
+      The Home page must first save a valid location.
+    */
 
-        setCurrentLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          accuracy: position.coords.accuracy
-        });
-      },
+    userLocation = null;
+    qiblaBearing = null;
 
-      (error) => {
-        if (requestId !== locationRequestId) return;
-
-        console.warn("GPS error:", error);
-
-        const saved = readSavedLocation();
-
-        if (saved) {
-          setCurrentLocation(saved);
-        } else {
-          useFallbackLocation();
-        }
-
-        if (error.code === error.PERMISSION_DENIED) {
-          console.warn(currentText().locationDenied);
-        } else if (error.code === error.POSITION_UNAVAILABLE) {
-          console.warn(currentText().locationUnavailable);
-        } else {
-          console.warn(currentText().locationError);
-        }
-      },
-
-      {
-        enableHighAccuracy: true,
-        timeout: 15000,
-        maximumAge: 60000
-      }
+    setText(
+      el.locationName,
+      currentText().locationUnavailable
     );
+
+    setText(el.distanceValue, "---");
+    setText(el.bearingValue, "---°");
+    setText(el.bearingDirection, "---");
   }
 
   /* =====================================================
-     19. SMOOTH ANGLE
+     18. SMOOTH ANGLE
      ===================================================== */
 
   function smoothAngle(current, target, factor) {
@@ -808,7 +786,7 @@
   }
 
   /* =====================================================
-     20. HEADING ANIMATION
+     19. HEADING ANIMATION
      ===================================================== */
 
   function animateHeading() {
@@ -844,11 +822,16 @@
       animationFrame = requestAnimationFrame(animateHeading);
     }
 
+    if (headingTimeout) {
+      clearTimeout(headingTimeout);
+      headingTimeout = null;
+    }
+
     setText(el.compassStatus, currentText().active);
   }
 
   /* =====================================================
-     21. DEVICE ORIENTATION
+     20. DEVICE ORIENTATION
      ===================================================== */
 
   function handleOrientation(event) {
@@ -856,11 +839,12 @@
 
     /*
       iOS:
-      webkitCompassHeading is a compass heading.
+      webkitCompassHeading provides compass heading.
 
       Android:
-      Use alpha only when the event is marked absolute.
-      Relative alpha alone is not a reliable north reference.
+      alpha is used only when the orientation event
+      is absolute. Relative alpha is not a reliable
+      reference to magnetic north.
     */
 
     if (Number.isFinite(event.webkitCompassHeading)) {
@@ -888,7 +872,7 @@
   }
 
   /* =====================================================
-     22. SENSOR PERMISSION
+     21. SENSOR PERMISSION
      ===================================================== */
 
   function permissionRequired() {
@@ -899,7 +883,7 @@
   }
 
   /* =====================================================
-     23. SENSOR BUTTON
+     22. SENSOR BUTTON
      ===================================================== */
 
   function updateSensorButton() {
@@ -927,7 +911,7 @@
   }
 
   /* =====================================================
-     24. START COMPASS
+     23. START COMPASS
      ===================================================== */
 
   async function startCompass() {
@@ -937,8 +921,8 @@
 
     const secure =
       window.isSecureContext ||
-      location.hostname === "localhost" ||
-      location.hostname === "127.0.0.1";
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1";
 
     if (!secure) {
       setText(el.compassStatus, t.secure);
@@ -978,24 +962,21 @@
       deviceHeading = null;
 
       /*
-        Attach one listener only.
-        Some browsers support deviceorientationabsolute;
-        standard deviceorientation is also registered.
+        Register one orientation event source.
+        Prefer deviceorientationabsolute when available.
+        This avoids duplicate sensor updates.
       */
 
+      orientationEventName =
+        ("ondeviceorientationabsolute" in window)
+          ? "deviceorientationabsolute"
+          : "deviceorientation";
+
       window.addEventListener(
-        "deviceorientation",
+        orientationEventName,
         handleOrientation,
         true
       );
-
-      if ("ondeviceorientationabsolute" in window) {
-        window.addEventListener(
-          "deviceorientationabsolute",
-          handleOrientation,
-          true
-        );
-      }
 
       updateSensorButton();
 
@@ -1023,10 +1004,23 @@
   }
 
   /* =====================================================
-     25. REMOVE SENSOR LISTENERS
+     24. REMOVE SENSOR LISTENERS
      ===================================================== */
 
   function removeOrientationListeners() {
+    if (orientationEventName) {
+      window.removeEventListener(
+        orientationEventName,
+        handleOrientation,
+        true
+      );
+    }
+
+    /*
+      Also remove both names defensively, so no old
+      listener remains if the browser changes support.
+    */
+
     window.removeEventListener(
       "deviceorientation",
       handleOrientation,
@@ -1039,6 +1033,8 @@
       true
     );
 
+    orientationEventName = null;
+
     if (headingTimeout) {
       clearTimeout(headingTimeout);
       headingTimeout = null;
@@ -1046,7 +1042,7 @@
   }
 
   /* =====================================================
-     26. STOP COMPASS
+     25. STOP COMPASS
      ===================================================== */
 
   function stopCompass() {
@@ -1064,12 +1060,19 @@
     deviceHeading = null;
 
     /*
-      Return to north-up orientation.
-      Qibla direction remains calculated from GPS.
+      Return the dial to north-up orientation.
+      Qibla bearing and distance remain unchanged.
     */
 
     if (el.compassDial) {
       el.compassDial.style.transform = "rotate(0deg)";
+    }
+
+    if (el.directionRing) {
+      el.directionRing.style.setProperty(
+        "--heading-counter",
+        "0deg"
+      );
     }
 
     updateCompassMovement();
@@ -1079,7 +1082,7 @@
   }
 
   /* =====================================================
-     27. BUTTON EVENTS
+     26. BUTTON EVENTS
      ===================================================== */
 
   if (el.sensorButton) {
@@ -1092,15 +1095,8 @@
     });
   }
 
-  if (el.refreshLocation) {
-    el.refreshLocation.addEventListener(
-      "click",
-      requestLocation
-    );
-  }
-
   /* =====================================================
-     28. SETTINGS CHANGE
+     27. SETTINGS AND LOCATION CHANGE EVENTS
      ===================================================== */
 
   window.addEventListener("storage", (event) => {
@@ -1109,17 +1105,13 @@
     }
 
     if (event.key === LOCATION_KEY) {
-      const saved = readSavedLocation();
-
-      if (saved) {
-        setCurrentLocation(saved);
-      }
+      loadHomeLocation();
     }
   });
 
   /*
-    Same-tab settings updates:
-    The Settings page may dispatch:
+    Same-tab settings update support.
+    Settings page may dispatch:
     window.dispatchEvent(new Event("ibadatSettingsChanged"));
   */
 
@@ -1127,18 +1119,23 @@
     readSettings();
   });
 
+  /*
+    Optional same-tab location update support.
+    Home page may dispatch:
+    window.dispatchEvent(new Event("ibadatLocationChanged"));
+  */
+
+  window.addEventListener("ibadatLocationChanged", () => {
+    loadHomeLocation();
+  });
+
   /* =====================================================
-     29. PAGE RETURN / VISIBILITY
+     28. PAGE RETURN / VISIBILITY
      ===================================================== */
 
   window.addEventListener("pageshow", () => {
     readSettings();
-
-    const saved = readSavedLocation();
-
-    if (saved) {
-      setCurrentLocation(saved);
-    }
+    loadHomeLocation();
   });
 
   document.addEventListener("visibilitychange", () => {
@@ -1146,17 +1143,12 @@
       stopCompass();
     } else if (!document.hidden) {
       readSettings();
-
-      const saved = readSavedLocation();
-
-      if (saved) {
-        setCurrentLocation(saved);
-      }
+      loadHomeLocation();
     }
   });
 
   /* =====================================================
-     30. INITIALIZE
+     29. INITIALIZE
      ===================================================== */
 
   function initialize() {
@@ -1165,13 +1157,7 @@
     createCompassTicks();
     createDirectionLabels();
 
-    const saved = readSavedLocation();
-
-    if (saved) {
-      setCurrentLocation(saved);
-    }
-
-    requestLocation();
+    loadHomeLocation();
 
     updateSensorButton();
     updateBearingDisplay();
@@ -1181,7 +1167,7 @@
   initialize();
 
   /* =====================================================
-     31. CLEANUP
+     30. CLEANUP
      ===================================================== */
 
   window.addEventListener("pagehide", () => {
