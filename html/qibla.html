@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0F5132">
   <meta name="description" content="IBADAT Qibla Compass">
   <title>কিবলা কম্পাস | IBADAT</title>
@@ -16,29 +17,17 @@
 
     <!-- HEADER -->
     <header class="qibla-header">
-      <a class="back-button" href="../index.html" aria-label="Back to home">
-        <span aria-hidden="true">‹</span>
-      </a>
-
       <h1 id="pageTitle">কিবলা কম্পাস</h1>
-
-      <span class="header-symbol" aria-hidden="true">۞</span>
     </header>
 
-    <!-- MAIN CONTENT BOARD -->
+    <!-- MAIN CONTENT -->
     <main class="qibla-main">
-
-      <section class="content-board">
+      <section class="content-board" aria-label="Qibla compass">
 
         <!-- CURRENT LOCATION -->
         <div class="location-board">
-          <span class="section-label" id="locationLabel">
-            বর্তমান অবস্থান:
-          </span>
-
-          <strong id="locationName" aria-live="polite">
-            অবস্থান খোঁজা হচ্ছে...
-          </strong>
+          <span class="section-label" id="locationLabel">বর্তমান অবস্থান:</span>
+          <strong id="locationName" aria-live="polite">অবস্থান খোঁজা হচ্ছে...</strong>
 
           <button
             class="location-refresh"
@@ -54,27 +43,21 @@
           </button>
         </div>
 
-        <!-- COMPASS AREA -->
+        <!-- COMPASS -->
         <div class="compass-area">
-
           <div class="compass-stage" id="compassStage">
 
-            <!-- OUTER COMPASS CIRCLE -->
             <div class="compass-outer">
 
               <!-- ROTATING DIRECTION DIAL -->
               <div class="compass-dial" id="compassDial">
-
                 <div class="compass-inner-ring"></div>
-
                 <div class="compass-ticks" id="compassTicks"></div>
-
                 <div class="direction-ring" id="directionRing"></div>
-
               </div>
 
               <!-- KAABA OUTSIDE THE COMPASS -->
-              <div class="qibla-orbit" id="qiblaOrbit">
+              <div class="qibla-orbit">
                 <div class="qibla-marker" id="qiblaMarker">
                   <img
                     id="kaabaIcon"
@@ -85,35 +68,56 @@
                 </div>
               </div>
 
-              <!-- ROTATING RED TRIANGLE NEEDLE -->
-              <div class="qibla-needle" id="qiblaNeedle">
+              <!-- SINGLE QIBLA NEEDLE: LINE + RED TRIANGLE -->
+              <div class="qibla-needle" id="qiblaNeedle" aria-hidden="true">
                 <div class="needle-line"></div>
                 <div class="needle-tip"></div>
               </div>
 
-              <!-- FIXED CENTER DOT -->
-              <div class="compass-center"></div>
-
+              <!-- FIXED THEME DOT -->
+              <div class="compass-center" aria-hidden="true"></div>
             </div>
 
-            <!-- CENTER BEARING -->
+            <!-- BEARING -->
             <div class="bearing-display">
               <strong id="bearingValue">---°</strong>
+              <span id="bearingDirection">---</span>
             </div>
-
           </div>
-
         </div>
 
-        <!-- DISTANCE -->
+        <!-- DISTANCE + COMPASS CONTROL -->
         <div class="distance-board">
-          <span class="section-label" id="distanceLabel">
-            মক্কা থেকে দূরত্ব:
+          <div class="distance-details">
+            <span class="section-label" id="distanceLabel">
+              কাবা শরীফ থেকে দূরত্ব:
+            </span>
+
+            <div class="distance-reading">
+              <strong id="distanceValue">---</strong>
+              <span id="distanceUnit">কিমি</span>
+            </div>
+          </div>
+
+          <button
+            class="compass-toggle"
+            id="sensorButton"
+            type="button"
+            aria-label="Start compass"
+            aria-pressed="false"
+            title="Start compass"
+          >
+            <svg class="sensor-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="m15.8 8.2-2.4 5.2-5.2 2.4 2.4-5.2 5.2-2.4Z"/>
+              <circle cx="12" cy="12" r="1"/>
+            </svg>
+            <span id="sensorButtonText">চালু</span>
+          </button>
+
+          <span id="compassStatus" class="visually-hidden" aria-live="polite">
+            কম্পাস বন্ধ আছে
           </span>
-
-          <strong id="distanceValue">---</strong>
-
-          <span id="distanceUnit">কিমি</span>
         </div>
 
       </section>
@@ -126,7 +130,6 @@
           <span id="footerMessage">
             আল্লাহর স্মরণেই অন্তর প্রশান্তি লাভ করে।
           </span>
-
           <span id="footerMessageClone" aria-hidden="true">
             আল্লাহর স্মরণেই অন্তর প্রশান্তি লাভ করে।
           </span>
