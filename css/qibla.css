@@ -1,6 +1,7 @@
+
 /* =====================================================
    IBADAT — QIBLA COMPASS
-   Responsive + 4 Themes + Dark Mode
+   Responsive + Four Themes + Dark Mode
    ===================================================== */
 
 :root {
@@ -9,7 +10,7 @@
   --page-padding: 7px;
   --page-gap: 6px;
 
-  /* CLASSIC THEME */
+  /* CLASSIC */
   --primary: #1B7F4B;
   --soft: #E8F5E9;
   --accent: #F2C94C;
@@ -26,7 +27,7 @@
   --panel-bg: rgba(213,239,211,.88);
 
   --compass-bg: #F7FAF1;
-  --compass-inner: rgba(247,250,241,.94);
+  --compass-inner: #F7FAF1;
 
   --outer-ring: rgba(88,174,111,.83);
   --inner-ring: rgba(88,174,111,.83);
@@ -41,15 +42,9 @@
 
   --compass-size: min(66vw, 340px);
 
-  /*
-    COMPASS FACE BACKGROUND
-    Replace this variable later with your own image:
-    url("../assets/images/your-compass-face.png")
-
-    This temporary SVG pattern affects only the circular
-    compass face, not the page or main content board.
-  */
-  --compass-face-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%23F7FAF1'/%3E%3Cg fill='none' stroke='%231B7F4B' stroke-opacity='.13' stroke-width='1.2'%3E%3Cpath d='M90 8 108 36 140 40 144 72 172 90 144 108 140 140 108 144 90 172 72 144 40 140 36 108 8 90 36 72 40 40 72 36Z'/%3E%3Cpath d='M90 28 103 58 132 47 121 77 152 90 121 103 132 133 103 122 90 152 77 122 47 133 58 103 28 90 58 77 47 47 77 58Z'/%3E%3Ccircle cx='90' cy='90' r='55'/%3E%3Ccircle cx='90' cy='90' r='35'/%3E%3Cpath d='M0 0 180 180M180 0 0 180M90 0V180M0 90H180'/%3E%3C/g%3E%3C/svg%3E");
+  /* Inner circle radius is approximately 30% of compass size.
+     Pointer orbit is placed close to the inner circle edge. */
+  --pointer-orbit-radius: calc(var(--compass-size) * .295);
 }
 
 /* RESET */
@@ -204,15 +199,16 @@ button:focus-visible {
   border-radius: 22px;
 
   background:
-    linear-gradient(var(--board-bg), var(--board-bg)),
+    linear-gradient(
+      var(--board-bg),
+      var(--board-bg)
+    ),
     url("../assets/images/content-bg2.png") center/cover no-repeat;
 
   box-shadow: var(--shadow);
   overflow: hidden;
   isolation: isolate;
 }
-
-/* CONTENT BOARD ORNAMENTS */
 
 .content-board::before,
 .content-board::after {
@@ -336,7 +332,7 @@ button:focus-visible {
   isolation: isolate;
 }
 
-/* OUTER COMPASS FACE */
+/* OUTER COMPASS */
 
 .compass-outer {
   position: absolute;
@@ -345,16 +341,7 @@ button:focus-visible {
   border: clamp(8px, 2.5vw, 13px) solid var(--outer-ring);
   border-radius: 50%;
 
-  /*
-    The image is applied only to this circular compass face.
-    The content board and page backgrounds remain unchanged.
-  */
   background:
-    linear-gradient(
-      rgba(255,255,255,.48),
-      rgba(255,255,255,.48)
-    ),
-    var(--compass-face-image),
     radial-gradient(
       circle,
       var(--compass-bg) 0%,
@@ -362,17 +349,13 @@ button:focus-visible {
       var(--soft) 100%
     );
 
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-
   box-shadow:
     0 3px 10px rgba(27,127,75,.10),
     inset 0 0 0 1px rgba(255,255,255,.6);
 
   transition:
     border-color .25s ease,
-    background-color .25s ease;
+    background .25s ease;
 }
 
 /* ROTATING DIAL */
@@ -389,7 +372,7 @@ button:focus-visible {
   will-change: transform;
 }
 
-/* INNER RING */
+/* INNER RING WITH CONTENT-BG2 IMAGE */
 
 .compass-inner-ring {
   position: absolute;
@@ -398,12 +381,21 @@ button:focus-visible {
   border: 4px solid var(--inner-ring);
   border-radius: 50%;
 
-  background: var(--compass-inner);
+  background:
+    linear-gradient(
+      rgba(255,255,255,.66),
+      rgba(255,255,255,.66)
+    ),
+    url("../assets/images/content-bg2.png") center/cover no-repeat;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.45),
+    0 1px 5px rgba(0,0,0,.06);
 
   pointer-events: none;
 }
 
-/* TICKS */
+/* TICKS — MOVED TOWARDS INNER RING */
 
 .compass-ticks {
   position: absolute;
@@ -429,7 +421,7 @@ button:focus-visible {
   content: "";
 
   position: absolute;
-  top: 4%;
+  top: 17%;
   left: 0;
 
   width: 1px;
@@ -439,8 +431,8 @@ button:focus-visible {
 }
 
 .compass-tick.major::before {
-  top: 3.5%;
-  height: 4%;
+  top: 16.5%;
+  height: 3.5%;
 
   width: 2px;
   margin-left: -.5px;
@@ -449,8 +441,8 @@ button:focus-visible {
 }
 
 .compass-tick.cardinal::before {
-  top: 2.5%;
-  height: 6%;
+  top: 16%;
+  height: 4%;
 
   width: 2px;
   margin-left: -.5px;
@@ -458,10 +450,7 @@ button:focus-visible {
   background: var(--primary);
 }
 
-/* DIRECTION LABELS
-   Position rotates with the dial.
-   Text itself is counter-rotated to remain upright.
-*/
+/* DIRECTION LABELS */
 
 .direction-ring {
   position: absolute;
@@ -499,8 +488,6 @@ button:focus-visible {
     rotate(calc(var(--angle) * -1))
     rotate(var(--heading-counter, 0deg));
 
-  transform-origin: center;
-
   transition: color .2s ease;
 }
 
@@ -531,14 +518,10 @@ button:focus-visible {
   align-items: center;
   justify-content: center;
 
-  /*
-    Slightly larger orbit distance creates more separation
-    between the Kaaba icon and the compass outer ring.
-  */
   transform:
     translate(-50%, -50%)
     rotate(var(--qibla-angle, 0deg))
-    translateY(calc(var(--compass-size) * -.615))
+    translateY(calc(var(--compass-size) * -.59))
     rotate(calc(var(--qibla-angle, 0deg) * -1));
 
   will-change: transform;
@@ -555,89 +538,46 @@ button:focus-visible {
   filter: drop-shadow(0 3px 4px rgba(0,0,0,.25));
 }
 
-/* QIBLA NEEDLE */
+/* RED TRIANGLE — ORBITS THE INNER CIRCLE */
 
-.qibla-needle {
+.qibla-pointer-orbit {
   position: absolute;
-
-  z-index: 5;
+  z-index: 6;
 
   top: 50%;
   left: 50%;
-
-  width: 3px;
-  height: 43%;
-
-  transform:
-    translate(-50%, -100%)
-    rotate(0deg);
-
-  transform-origin: 50% 100%;
-
-  transition: transform .12s linear;
-
-  pointer-events: none;
-  will-change: transform;
-}
-
-.needle-line {
-  position: absolute;
-
-  left: 50%;
-  bottom: 0;
-
-  width: 4px;
-  height: 100%;
-
-  transform: translateX(-50%);
-
-  border-radius: 4px;
-  background: var(--needle-line);
-}
-
-.needle-tip {
-  position: absolute;
-
-  left: 50%;
-  top: -1px;
 
   width: 0;
   height: 0;
 
-  transform: translate(-50%, -1px);
+  pointer-events: none;
 
-  border-left: clamp(8px, 2.5vw, 12px) solid transparent;
-  border-right: clamp(8px, 2.5vw, 12px) solid transparent;
-  border-bottom: clamp(18px, 5vw, 25px) solid #C62828;
+  transform:
+    rotate(var(--pointer-angle, 0deg))
+    translateY(calc(var(--pointer-orbit-radius) * -1));
 
-  filter: drop-shadow(0 1px 1px rgba(0,0,0,.12));
+  transform-origin: 0 0;
+
+  will-change: transform;
+  transition: transform .12s linear;
 }
 
-/* FIXED CENTER DOT */
-
-.compass-center {
+.qibla-pointer {
   position: absolute;
 
-  z-index: 8;
+  top: 0;
+  left: 0;
 
-  top: 50%;
-  left: 50%;
-
-  width: clamp(19px, 5.5vw, 27px);
-  height: clamp(19px, 5.5vw, 27px);
+  width: 0;
+  height: 0;
 
   transform: translate(-50%, -50%);
 
-  border-radius: 50%;
+  border-left: clamp(9px, 2.7vw, 13px) solid transparent;
+  border-right: clamp(9px, 2.7vw, 13px) solid transparent;
+  border-bottom: clamp(19px, 5.5vw, 27px) solid #C62828;
 
-  background: var(--dot-color);
-  border: 3px solid #fff;
-
-  box-shadow:
-    0 1px 5px rgba(0,0,0,.22),
-    0 0 0 1px var(--ornament-color);
-
-  pointer-events: none;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.20));
 }
 
 /* BEARING DISPLAY */
@@ -692,7 +632,7 @@ button:focus-visible {
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 
   gap: 10px;
 
@@ -838,9 +778,7 @@ button:focus-visible {
 
   gap: 55px;
 
-  /* Faster than the previous 36-second cycle */
   animation: footer-scroll 24s linear infinite;
-
   will-change: transform;
 }
 
@@ -861,7 +799,7 @@ button:focus-visible {
   to { transform: translateX(-50%); }
 }
 
-/* CLASSIC THEME */
+/* CLASSIC */
 
 body[data-color-theme="classic"] {
   --primary: #1B7F4B;
@@ -881,7 +819,7 @@ body[data-color-theme="classic"] {
   --needle-line: #1B7F4B;
 }
 
-/* ROYAL THEME */
+/* ROYAL */
 
 body[data-color-theme="royal"] {
   --primary: #285A8E;
@@ -904,7 +842,7 @@ body[data-color-theme="royal"] {
   --ornament-glow: rgba(232,189,85,.20);
 }
 
-/* ROSE THEME */
+/* ROSE */
 
 body[data-color-theme="rose"] {
   --primary: #B96F79;
@@ -927,7 +865,7 @@ body[data-color-theme="rose"] {
   --ornament-glow: rgba(217,184,117,.20);
 }
 
-/* PISTA THEME */
+/* PISTA */
 
 body[data-color-theme="pista"] {
   --primary: #4CAF50;
@@ -950,7 +888,7 @@ body[data-color-theme="pista"] {
   --ornament-glow: rgba(167,209,41,.20);
 }
 
-/* DARK MODE — ALL THEMES */
+/* DARK MODE */
 
 body.dark-mode {
   --text: #E5EDE7;
@@ -961,13 +899,11 @@ body.dark-mode {
   --panel-bg: rgba(32,55,39,.95);
 
   --compass-bg: #233428;
-  --compass-inner: rgba(35,52,40,.94);
+  --compass-inner: #233428;
 
-  --tick-color: rgba(190,210,194,.55);
+  --tick-color: rgba(190,210,194,.42);
   --ornament-color: rgba(190,210,194,.30);
   --ornament-glow: rgba(242,201,76,.10);
-
-  --compass-face-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%23233428'/%3E%3Cg fill='none' stroke='%23B8D0BC' stroke-opacity='.15' stroke-width='1.2'%3E%3Cpath d='M90 8 108 36 140 40 144 72 172 90 144 108 140 140 108 144 90 172 72 144 40 140 36 108 8 90 36 72 40 40 72 36Z'/%3E%3Cpath d='M90 28 103 58 132 47 121 77 152 90 121 103 132 133 103 122 90 152 77 122 47 133 58 103 28 90 58 77 47 47 77 58Z'/%3E%3Ccircle cx='90' cy='90' r='55'/%3E%3Ccircle cx='90' cy='90' r='35'/%3E%3Cpath d='M0 0 180 180M180 0 0 180M90 0V180M0 90H180'/%3E%3C/g%3E%3C/svg%3E");
 
   background:
     linear-gradient(rgba(8,15,10,.80), rgba(8,15,10,.80)),
@@ -1004,13 +940,26 @@ body.dark-mode .content-board {
 }
 
 body.dark-mode .compass-outer {
+  background:
+    radial-gradient(
+      circle,
+      var(--compass-bg) 0%,
+      var(--compass-bg) 72%,
+      var(--soft) 100%
+    );
+
   box-shadow:
     0 3px 10px rgba(0,0,0,.30),
     inset 0 0 0 1px rgba(255,255,255,.10);
 }
 
-body.dark-mode .compass-center {
-  border-color: #F5F5F5;
+body.dark-mode .compass-inner-ring {
+  background:
+    linear-gradient(
+      rgba(12,20,14,.55),
+      rgba(12,20,14,.55)
+    ),
+    url("../assets/images/content-bg2.png") center/cover no-repeat;
 }
 
 body.dark-mode #locationName,
@@ -1034,6 +983,7 @@ body.dark-mode .compass-toggle[aria-pressed="true"] {
     --page-padding: 5px;
     --page-gap: 5px;
     --compass-size: min(66vw, 285px);
+    --pointer-orbit-radius: calc(var(--compass-size) * .295);
   }
 
   .content-board {
@@ -1043,7 +993,7 @@ body.dark-mode .compass-toggle[aria-pressed="true"] {
 
   .location-board {
     min-height: 43px;
-    padding-inline: 7px;
+    padding-left: 7px;
   }
 
   .distance-board {
@@ -1071,13 +1021,14 @@ body.dark-mode .compass-toggle[aria-pressed="true"] {
   }
 }
 
-/* TABLETS AND LARGE SCREENS */
+/* TABLETS */
 
 @media (min-width: 600px) {
   :root {
     --page-padding: 12px;
     --page-gap: 8px;
     --compass-size: min(48vw, 390px);
+    --pointer-orbit-radius: calc(var(--compass-size) * .295);
   }
 
   .content-board {
@@ -1104,6 +1055,7 @@ body.dark-mode .compass-toggle[aria-pressed="true"] {
 @media (max-height: 700px) {
   :root {
     --compass-size: min(52vh, 285px);
+    --pointer-orbit-radius: calc(var(--compass-size) * .295);
   }
 
   .content-board {
@@ -1123,6 +1075,7 @@ body.dark-mode .compass-toggle[aria-pressed="true"] {
 @media (max-height: 560px) {
   :root {
     --compass-size: min(43vh, 220px);
+    --pointer-orbit-radius: calc(var(--compass-size) * .295);
   }
 
   .content-board {
@@ -1149,8 +1102,8 @@ body.dark-mode .compass-toggle[aria-pressed="true"] {
   }
 
   .compass-dial,
-  .qibla-needle,
-  .qibla-marker {
+  .qibla-marker,
+  .qibla-pointer-orbit {
     transition-duration: .01ms;
   }
 }
