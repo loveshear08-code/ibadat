@@ -1,7 +1,10 @@
+
 /* =====================================================
    IBADAT — QIBLA COMPASS
    GPS + Qibla Bearing + Device Orientation
    Shared Settings: appSettings
+   Shared Location: ibadatUserLocation
+   Languages: Bengali / English / Hindi
    ===================================================== */
 
 (() => {
@@ -11,28 +14,33 @@
 
   const el = {
     pageTitle: $("pageTitle"),
-
+    locationLabel: $("locationLabel"),
     locationName: $("locationName"),
     refreshLocation: $("refreshLocation"),
 
     compassDial: $("compassDial"),
     compassTicks: $("compassTicks"),
     directionRing: $("directionRing"),
-
-    qiblaOrbit: $("qiblaOrbit"),
     qiblaMarker: $("qiblaMarker"),
     qiblaNeedle: $("qiblaNeedle"),
 
     bearingValue: $("bearingValue"),
+    bearingDirection: $("bearingDirection"),
 
+    distanceLabel: $("distanceLabel"),
     distanceValue: $("distanceValue"),
     distanceUnit: $("distanceUnit"),
 
+    sensorButton: $("sensorButton"),
+    sensorButtonText: $("sensorButtonText"),
+    compassStatus: $("compassStatus"),
+
     footerMessage: $("footerMessage"),
-    footerMessageClone: $("footerMessageClone")
+    footerMessageClone: $("footerMessageClone"),
+    footerTrack: $("footerMessageTrack")
   };
 
-  if (!el.compassDial) return;
+  if (!el.compassDial || !el.qiblaNeedle) return;
 
   /* =====================================================
      1. CONSTANTS
@@ -51,93 +59,174 @@
   const SETTINGS_KEY = "appSettings";
   const LOCATION_KEY = "ibadatUserLocation";
 
-  let language = "bn";
-  let theme = "classic";
-  let darkMode = false;
+  const DIRECTIONS = {
+    bn: [
+      "উ", "উ-উ-পূ", "উ-পূ", "পূ-উ-পূ",
+      "পূ", "দ-পূ-পূ", "দ-পূ", "দ-দ-পূ",
+      "দ", "দ-দ-প", "দ-প", "প-দ-প",
+      "প", "উ-প", "উ-পূ-প", "উ-উ-প"
+    ],
 
-  let userLocation = null;
-  let qiblaBearing = null;
-  let deviceHeading = null;
+    en: [
+      "N", "NNE", "NE", "ENE",
+      "E", "ESE", "SE", "SSE",
+      "S", "SSW", "SW", "WSW",
+      "W", "WNW", "NW", "NNW"
+    ],
 
-  let sensorActive = false;
-  let locationRequestId = 0;
-  let firstHeadingReceived = false;
-
-  let lastHeading = null;
-  let smoothHeading = null;
-  let animationFrame = null;
-
-  /* =====================================================
-     2. TRANSLATIONS
-     ===================================================== */
+    hi: [
+      "उ", "उ-उ-पू", "उ-पू", "पू-उ-पू",
+      "पू", "द-पू-पू", "द-पू", "द-द-पू",
+      "द", "द-द-प", "द-प", "प-द-प",
+      "प", "उ-प", "उ-पू-प", "उ-उ-प"
+    ]
+  };
 
   const translations = {
     bn: {
       title: "কিবলা কম্পাস",
-
+      locationLabel: "বর্তমান অবস্থান:",
       locating: "অবস্থান খোঁজা হচ্ছে...",
       locationDenied: "অবস্থানের অনুমতি পাওয়া যায়নি",
       locationUnavailable: "অবস্থান পাওয়া যাচ্ছে না",
       locationError: "অবস্থান শনাক্ত করা যায়নি",
-      approximate: "কলকাতা (আনুমানিক অবস্থান)",
+      approximate: "কলকাতা (আনুমানিক)",
 
+      distanceLabel: "কাবা শরীফ থেকে দূরত্ব:",
       distanceUnit: "কিমি",
+
+      start: "চালু",
+      stop: "বন্ধ",
+      starting: "চালু হচ্ছে...",
+      stopped: "কম্পাস বন্ধ আছে",
+      active: "কম্পাস চালু আছে",
+      waiting: "কম্পাসের দিক নির্ণয় করা হচ্ছে...",
+      secure: "কম্পাস চালাতে HTTPS সংযোগ প্রয়োজন।",
+      unsupported: "এই ডিভাইসে কম্পাস সেন্সর পাওয়া যায়নি।",
+      denied: "কম্পাস ব্যবহারের অনুমতি পাওয়া যায়নি।",
+      noHeading: "নির্ভরযোগ্য কম্পাস দিক পাওয়া যায়নি। সেন্সর ও Calibration পরীক্ষা করুন।",
+      calibration: "ফোনটি সমতল রাখুন এবং প্রয়োজনে আটের মতো করে নাড়িয়ে Calibration করুন।",
 
       footer: "আল্লাহর স্মরণেই অন্তর প্রশান্তি লাভ করে।"
     },
 
     en: {
       title: "Qibla Compass",
-
+      locationLabel: "Current Location:",
       locating: "Finding your location...",
       locationDenied: "Location permission denied",
       locationUnavailable: "Location unavailable",
       locationError: "Unable to detect location",
-      approximate: "Kolkata (Approximate location)",
+      approximate: "Kolkata (Approximate)",
 
+      distanceLabel: "Distance from the Holy Kaaba:",
       distanceUnit: "km",
+
+      start: "Start",
+      stop: "Stop",
+      starting: "Starting...",
+      stopped: "Compass is off",
+      active: "Compass is active",
+      waiting: "Detecting compass direction...",
+      secure: "A secure HTTPS connection is required.",
+      unsupported: "Compass sensor is not available on this device.",
+      denied: "Compass permission was denied.",
+      noHeading: "No reliable compass heading received. Check sensor support and calibration.",
+      calibration: "Keep your phone flat. If needed, calibrate it with a figure-eight motion.",
 
       footer: "Surely, in the remembrance of Allah hearts find peace."
     },
 
     hi: {
       title: "क़िबला कम्पास",
-
+      locationLabel: "वर्तमान स्थान:",
       locating: "आपका स्थान खोजा जा रहा है...",
       locationDenied: "स्थान की अनुमति नहीं मिली",
       locationUnavailable: "स्थान उपलब्ध नहीं है",
       locationError: "स्थान पता नहीं चल सका",
-      approximate: "कोलकाता (अनुमानित स्थान)",
+      approximate: "कोलकाता (अनुमानित)",
 
+      distanceLabel: "पवित्र काबा से दूरी:",
       distanceUnit: "किमी",
+
+      start: "चालू",
+      stop: "बंद",
+      starting: "चालू हो रहा है...",
+      stopped: "कम्पास बंद है",
+      active: "कम्पास चालू है",
+      waiting: "कम्पास की दिशा पता की जा रही है...",
+      secure: "कम्पास के लिए सुरक्षित HTTPS कनेक्शन आवश्यक है।",
+      unsupported: "इस डिवाइस में कम्पास सेंसर उपलब्ध नहीं है।",
+      denied: "कम्पास की अनुमति नहीं मिली।",
+      noHeading: "विश्वसनीय कम्पास दिशा नहीं मिली। सेंसर और कैलिब्रेशन जाँचें।",
+      calibration: "फोन को समतल रखें। आवश्यकता हो तो आठ के आकार में घुमाकर कैलिब्रेट करें।",
 
       footer: "अल्लाह के स्मरण से ही दिलों को सुकून मिलता है।"
     }
   };
 
+  let language = "bn";
+  let theme = "classic";
+  let darkMode = false;
+
+  let userLocation = null;
+  let qiblaBearing = null;
+
+  let deviceHeading = null;
+  let targetHeading = null;
+  let smoothHeading = null;
+
+  let sensorActive = false;
+  let firstHeadingReceived = false;
+
+  let animationFrame = null;
+  let locationRequestId = 0;
+  let geocodeRequestId = 0;
+  let headingTimeout = null;
+
   /* =====================================================
-     3. NUMBER FORMAT
+     2. HELPERS
      ===================================================== */
-
-  function getLocale() {
-    if (language === "en") return "en-IN";
-    if (language === "hi") return "hi-IN-u-nu-deva";
-    return "bn-BD";
-  }
-
-  function formatNumber(value, decimals = 0) {
-    return new Intl.NumberFormat(getLocale(), {
-      maximumFractionDigits: decimals,
-      minimumFractionDigits: decimals
-    }).format(value);
-  }
 
   function normalizeAngle(value) {
     return ((value % 360) + 360) % 360;
   }
 
+  function formatNumber(value, decimals = 0) {
+    const locale =
+      language === "en"
+        ? "en-IN"
+        : language === "hi"
+          ? "hi-IN-u-nu-deva"
+          : "bn-BD";
+
+    return new Intl.NumberFormat(locale, {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals
+    }).format(value);
+  }
+
+  function currentText() {
+    return translations[language];
+  }
+
+  function setText(element, value) {
+    if (element) element.textContent = value;
+  }
+
+  function isValidCoordinates(latitude, longitude) {
+    return (
+      Number.isFinite(latitude) &&
+      Number.isFinite(longitude) &&
+      latitude >= -90 &&
+      latitude <= 90 &&
+      longitude >= -180 &&
+      longitude <= 180
+    );
+  }
+
   /* =====================================================
-     4. READ IBADAT SETTINGS
+     3. READ IBADAT SETTINGS
      ===================================================== */
 
   function readSettings() {
@@ -148,7 +237,7 @@
         localStorage.getItem(SETTINGS_KEY) || "{}"
       );
     } catch (error) {
-      console.warn("Settings read error:", error);
+      console.warn("IBADAT settings read error:", error);
     }
 
     const savedLanguage =
@@ -183,12 +272,16 @@
       themeAliases[String(savedTheme).toLowerCase()] ||
       "classic";
 
-    darkMode = Boolean(
+    const savedDark =
       settings.dark ??
       settings.darkMode ??
       settings.isDarkMode ??
-      false
-    );
+      false;
+
+    darkMode =
+      savedDark === true ||
+      savedDark === 1 ||
+      savedDark === "true";
 
     document.documentElement.lang = language;
 
@@ -196,59 +289,49 @@
     document.body.classList.toggle("dark-mode", darkMode);
 
     applyTranslations();
+    createDirectionLabels();
+    updateBearingDisplay();
+    updateSensorButton();
   }
 
   /* =====================================================
-     5. APPLY LANGUAGE
+     4. APPLY TRANSLATIONS
      ===================================================== */
 
   function applyTranslations() {
-    const t = translations[language];
+    const t = currentText();
 
-    if (el.pageTitle) {
-      el.pageTitle.textContent = t.title;
-    }
+    setText(el.pageTitle, t.title);
+    setText(el.locationLabel, t.locationLabel);
+    setText(el.distanceLabel, t.distanceLabel);
+    setText(el.distanceUnit, t.distanceUnit);
 
-    if (el.distanceUnit) {
-      el.distanceUnit.textContent = t.distanceUnit;
-    }
+    setText(el.footerMessage, t.footer);
+    setText(el.footerMessageClone, t.footer);
 
-    if (el.footerMessage) {
-      el.footerMessage.textContent = t.footer;
-    }
-
-    if (el.footerMessageClone) {
-      el.footerMessageClone.textContent = t.footer;
-    }
-
+    updateSensorButton();
+    updateLocationText();
     updateDistance();
-    updateBearingText();
-    updateFooterAnimation();
+    updateBearingDisplay();
+    restartFooterAnimation();
   }
 
   /* =====================================================
-     6. FOOTER ANIMATION
+     5. FOOTER SCROLL
      ===================================================== */
 
-  function updateFooterAnimation() {
-    const track = $("footerMessageTrack");
+  function restartFooterAnimation() {
+    if (!el.footerTrack) return;
 
-    if (!track) return;
+    el.footerTrack.style.animation = "none";
 
-    /*
-      Two identical messages make a continuous
-      scrolling footer.
-    */
+    void el.footerTrack.offsetWidth;
 
-    track.style.animation = "none";
-
-    void track.offsetWidth;
-
-    track.style.animation = "";
+    el.footerTrack.style.animation = "";
   }
 
   /* =====================================================
-     7. CREATE COMPASS TICKS
+     6. COMPASS TICKS
      ===================================================== */
 
   function createCompassTicks() {
@@ -275,36 +358,13 @@
   }
 
   /* =====================================================
-     8. CREATE DIRECTION LABELS
+     7. DIRECTION LABELS — 16 DIRECTIONS
      ===================================================== */
 
   function createDirectionLabels() {
     if (!el.directionRing) return;
 
-    const directionNames = {
-      bn: [
-        "উ", "উ-উ-পূ", "উ-পূ", "পূ-উ-পূ",
-        "পূ", "দ-পূ", "দ-দ-পূ", "দ-উ-পূ",
-        "দ", "দ-দ-প", "দ-প", "প-দ-প",
-        "প", "উ-প", "উ-উ-প", "উ-পূ-প"
-      ],
-
-      en: [
-        "N", "NNE", "NE", "ENE",
-        "E", "ESE", "SE", "SSE",
-        "S", "SSW", "SW", "WSW",
-        "W", "WNW", "NW", "NNW"
-      ],
-
-      hi: [
-        "उ", "उ-उ-पू", "उ-पू", "पू-उ-पू",
-        "पू", "द-पू", "द-द-पू", "द-उ-पू",
-        "द", "द-द-प", "द-प", "प-द-प",
-        "प", "उ-प", "उ-उ-प", "उ-पू-प"
-      ]
-    };
-
-    const names = directionNames[language];
+    const names = DIRECTIONS[language];
     const fragment = document.createDocumentFragment();
 
     names.forEach((name, index) => {
@@ -317,15 +377,24 @@
       }
 
       label.textContent = name;
-
-      const angle = index * 22.5;
-
-      label.style.setProperty("--angle", `${angle}deg`);
+      label.style.setProperty("--angle", `${index * 22.5}deg`);
 
       fragment.appendChild(label);
     });
 
     el.directionRing.replaceChildren(fragment);
+  }
+
+  /* =====================================================
+     8. DIRECTION NAME FOR BEARING
+     ===================================================== */
+
+  function getDirectionName(bearing) {
+    if (!Number.isFinite(bearing)) return "---";
+
+    const index = Math.round(normalizeAngle(bearing) / 22.5) % 16;
+
+    return DIRECTIONS[language][index];
   }
 
   /* =====================================================
@@ -348,10 +417,9 @@
       Math.cos(lat2) *
       Math.cos(deltaLongitude);
 
-    const bearing =
-      Math.atan2(y, x) * 180 / Math.PI;
-
-    return normalizeAngle(bearing);
+    return normalizeAngle(
+      Math.atan2(y, x) * 180 / Math.PI
+    );
   }
 
   /* =====================================================
@@ -386,30 +454,30 @@
   }
 
   /* =====================================================
-     11. UPDATE BEARING DISPLAY
+     11. UPDATE DISPLAY
      ===================================================== */
 
-  function updateBearingText() {
-    if (!el.bearingValue) return;
-
+  function updateBearingDisplay() {
     if (qiblaBearing === null) {
-      el.bearingValue.textContent = "---°";
+      setText(el.bearingValue, "---°");
+      setText(el.bearingDirection, "---");
       return;
     }
 
-    el.bearingValue.textContent =
-      `${formatNumber(Math.round(qiblaBearing))}°`;
+    setText(
+      el.bearingValue,
+      `${formatNumber(Math.round(qiblaBearing))}°`
+    );
+
+    setText(
+      el.bearingDirection,
+      getDirectionName(qiblaBearing)
+    );
   }
 
-  /* =====================================================
-     12. UPDATE DISTANCE DISPLAY
-     ===================================================== */
-
   function updateDistance() {
-    if (!el.distanceValue) return;
-
     if (!userLocation) {
-      el.distanceValue.textContent = "---";
+      setText(el.distanceValue, "---");
       return;
     }
 
@@ -418,12 +486,14 @@
       userLocation.longitude
     );
 
-    el.distanceValue.textContent =
-      formatNumber(distance, 1);
+    setText(
+      el.distanceValue,
+      formatNumber(distance, 1)
+    );
   }
 
   /* =====================================================
-     13. UPDATE COMPASS MOVEMENT
+     12. COMPASS MOVEMENT
      ===================================================== */
 
   function updateCompassMovement() {
@@ -432,30 +502,29 @@
     const heading = deviceHeading ?? 0;
 
     /*
-      Compass dial follows the phone's heading.
+      Dial:
+      North-up at 0 degrees.
+      When phone rotates, the dial rotates in reverse.
 
-      Qibla needle and Kaaba marker use the same
-      relative angle, so both indicate the same direction.
+      Needle:
+      Points to Qibla relative to phone heading.
+
+      Kaaba:
+      Moves on the outside orbit at the same relative angle.
     */
 
     const relativeAngle =
       normalizeAngle(qiblaBearing - heading);
-
-    /* Rotate compass direction labels */
 
     if (el.compassDial) {
       el.compassDial.style.transform =
         `rotate(${-heading}deg)`;
     }
 
-    /* Rotate single red-tip needle */
-
     if (el.qiblaNeedle) {
       el.qiblaNeedle.style.transform =
         `translate(-50%, -100%) rotate(${relativeAngle}deg)`;
     }
-
-    /* Move Kaaba outside the compass */
 
     if (el.qiblaMarker) {
       el.qiblaMarker.style.setProperty(
@@ -466,17 +535,64 @@
   }
 
   /* =====================================================
-     14. SAVE LOCATION
+     13. LOCATION STORAGE
      ===================================================== */
+
+  function readSavedLocation() {
+    try {
+      const saved = JSON.parse(
+        localStorage.getItem(LOCATION_KEY) || "null"
+      );
+
+      if (!saved || typeof saved !== "object") return null;
+
+      /*
+        Support both common shared-location formats:
+        {latitude, longitude}
+        {lat, lon}
+      */
+
+      const latitude = Number(
+        saved.latitude ?? saved.lat
+      );
+
+      const longitude = Number(
+        saved.longitude ?? saved.lon ?? saved.lng
+      );
+
+      if (!isValidCoordinates(latitude, longitude)) {
+        return null;
+      }
+
+      return {
+        latitude,
+        longitude,
+        accuracy: Number(saved.accuracy) || null,
+        approximate: Boolean(saved.approximate)
+      };
+
+    } catch (error) {
+      console.warn("Saved location read error:", error);
+      return null;
+    }
+  }
 
   function saveLocation(location) {
     try {
+      /*
+        Save both naming formats for compatibility
+        with existing IBADAT pages.
+      */
+
       localStorage.setItem(
         LOCATION_KEY,
         JSON.stringify({
           latitude: location.latitude,
           longitude: location.longitude,
+          lat: location.latitude,
+          lon: location.longitude,
           accuracy: location.accuracy || null,
+          approximate: Boolean(location.approximate),
           updatedAt: Date.now()
         })
       );
@@ -486,38 +602,35 @@
   }
 
   /* =====================================================
-     15. READ SAVED LOCATION
+     14. LOCATION TEXT
      ===================================================== */
 
-  function readSavedLocation() {
-    try {
-      const saved = JSON.parse(
-        localStorage.getItem(LOCATION_KEY) || "null"
-      );
+  function updateLocationText() {
+    if (!userLocation) return;
 
-      if (
-        saved &&
-        Number.isFinite(Number(saved.latitude)) &&
-        Number.isFinite(Number(saved.longitude))
-      ) {
-        return {
-          latitude: Number(saved.latitude),
-          longitude: Number(saved.longitude),
-          accuracy: saved.accuracy || null
-        };
-      }
-    } catch (error) {
-      console.warn("Saved location error:", error);
+    if (userLocation.approximate) {
+      setText(el.locationName, currentText().approximate);
+      return;
     }
 
-    return null;
+    if (userLocation.name) {
+      setText(el.locationName, userLocation.name);
+      return;
+    }
+
+    setText(
+      el.locationName,
+      `${formatNumber(userLocation.latitude, 4)}, ${formatNumber(userLocation.longitude, 4)}`
+    );
   }
 
   /* =====================================================
-     16. REVERSE GEOCODING
+     15. REVERSE GEOCODING
      ===================================================== */
 
   async function getLocationName(latitude, longitude) {
+    const requestId = ++geocodeRequestId;
+
     try {
       const url =
         "https://nominatim.openstreetmap.org/reverse" +
@@ -525,13 +638,20 @@
         `&lon=${encodeURIComponent(longitude)}` +
         "&zoom=10&addressdetails=1";
 
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        headers: {
+          "Accept": "application/json"
+        }
+      });
 
       if (!response.ok) {
         throw new Error("Location lookup failed");
       }
 
       const data = await response.json();
+
+      if (requestId !== geocodeRequestId) return;
+
       const address = data.address || {};
 
       const place =
@@ -541,84 +661,84 @@
         address.suburb ||
         address.county ||
         address.state_district ||
-        address.state;
+        address.state ||
+        data.name;
 
       if (place && userLocation) {
-        el.locationName.textContent = place;
-      } else if (userLocation) {
-        el.locationName.textContent =
-          `${formatNumber(latitude, 4)}, ${formatNumber(longitude, 4)}`;
+        userLocation.name = place;
+        setText(el.locationName, place);
+      } else {
+        updateLocationText();
       }
 
     } catch (error) {
       console.warn("Reverse geocoding error:", error);
-
-      if (userLocation) {
-        el.locationName.textContent =
-          `${formatNumber(latitude, 4)}, ${formatNumber(longitude, 4)}`;
-      }
+      updateLocationText();
     }
   }
 
   /* =====================================================
-     17. SET CURRENT LOCATION
+     16. SET LOCATION
      ===================================================== */
 
-  function setCurrentLocation(location, approximate = false) {
+  function setCurrentLocation(location, options = {}) {
+    if (
+      !isValidCoordinates(
+        Number(location.latitude),
+        Number(location.longitude)
+      )
+    ) {
+      return;
+    }
+
     userLocation = {
-      latitude: location.latitude,
-      longitude: location.longitude,
-      accuracy: location.accuracy || null,
-      approximate
+      latitude: Number(location.latitude),
+      longitude: Number(location.longitude),
+      accuracy: Number(location.accuracy) || null,
+      approximate: Boolean(options.approximate ?? location.approximate),
+      name: options.name || location.name || null
     };
 
-    saveLocation(userLocation);
+    if (!userLocation.approximate) {
+      saveLocation(userLocation);
+    }
 
     qiblaBearing = calculateBearing(
       userLocation.latitude,
       userLocation.longitude
     );
 
-    updateBearingText();
+    updateLocationText();
     updateDistance();
+    updateBearingDisplay();
     updateCompassMovement();
 
-    if (approximate) {
-      el.locationName.textContent =
-        translations[language].approximate;
-    } else {
-      el.locationName.textContent =
-        `${formatNumber(location.latitude, 4)}, ${formatNumber(location.longitude, 4)}`;
-
+    if (!userLocation.approximate && !userLocation.name) {
       getLocationName(
-        location.latitude,
-        location.longitude
+        userLocation.latitude,
+        userLocation.longitude
       );
     }
   }
 
   /* =====================================================
-     18. FALLBACK LOCATION
+     17. KOLKATA FALLBACK
      ===================================================== */
 
   function useFallbackLocation() {
-    /*
-      Kolkata is only an approximate fallback.
-      It is not presented as the user's GPS location.
-    */
-
-    setCurrentLocation(KOLKATA, true);
+    setCurrentLocation(KOLKATA, {
+      approximate: true
+    });
   }
 
   /* =====================================================
-     19. REQUEST GPS
+     18. GPS REQUEST
      ===================================================== */
 
   function requestLocation() {
     const requestId = ++locationRequestId;
 
-    el.locationName.textContent =
-      translations[language].locating;
+    setText(el.locationName, currentText().locating);
 
     if (!navigator.geolocation) {
       const saved = readSavedLocation();
@@ -656,10 +776,13 @@
           useFallbackLocation();
         }
 
-        /*
-          Do not overwrite the approximate location
-          with a misleading GPS success message.
-        */
+        if (error.code === error.PERMISSION_DENIED) {
+          console.warn(currentText().locationDenied);
+        } else if (error.code === error.POSITION_UNAVAILABLE) {
+          console.warn(currentText().locationUnavailable);
+        } else {
+          console.warn(currentText().locationError);
+        }
       },
 
       {
@@ -671,29 +794,36 @@
   }
 
   /* =====================================================
-     20. SMOOTH HEADING
+     19. SMOOTH ANGLE
      ===================================================== */
 
-  function smoothAngle(current, target) {
+  function smoothAngle(current, target, factor) {
     let difference = target - current;
 
     difference = ((difference + 540) % 360) - 180;
 
-    return normalizeAngle(current + difference * 0.22);
+    return normalizeAngle(
+      current + difference * factor
+    );
   }
 
+  /* =====================================================
+     20. HEADING ANIMATION
+     ===================================================== */
+
   function animateHeading() {
-    if (!sensorActive || lastHeading === null) {
+    if (!sensorActive || targetHeading === null) {
       animationFrame = null;
       return;
     }
 
     if (smoothHeading === null) {
-      smoothHeading = lastHeading;
+      smoothHeading = targetHeading;
     } else {
       smoothHeading = smoothAngle(
         smoothHeading,
-        lastHeading
+        targetHeading,
+        0.18
       );
     }
 
@@ -707,11 +837,14 @@
   function setHeading(value) {
     if (!Number.isFinite(value)) return;
 
-    lastHeading = normalizeAngle(value);
+    targetHeading = normalizeAngle(value);
+    firstHeadingReceived = true;
 
     if (animationFrame === null) {
       animationFrame = requestAnimationFrame(animateHeading);
     }
+
+    setText(el.compassStatus, currentText().active);
   }
 
   /* =====================================================
@@ -722,11 +855,12 @@
     let heading = null;
 
     /*
-      iOS Safari: webkitCompassHeading
-      Other browsers: alpha
+      iOS:
+      webkitCompassHeading is a compass heading.
 
-      Android alpha is an orientation value, not always
-      a calibrated magnetic compass heading.
+      Android:
+      Use alpha only when the event is marked absolute.
+      Relative alpha alone is not a reliable north reference.
     */
 
     if (Number.isFinite(event.webkitCompassHeading)) {
@@ -750,7 +884,6 @@
       return;
     }
 
-    firstHeadingReceived = true;
     setHeading(heading);
   }
 
@@ -766,44 +899,64 @@
   }
 
   /* =====================================================
-     23. START COMPASS
+     23. SENSOR BUTTON
+     ===================================================== */
+
+  function updateSensorButton() {
+    const t = currentText();
+
+    if (!el.sensorButton) return;
+
+    setText(
+      el.sensorButtonText,
+      sensorActive ? t.stop : t.start
+    );
+
+    el.sensorButton.setAttribute(
+      "aria-pressed",
+      String(sensorActive)
+    );
+
+    el.sensorButton.setAttribute(
+      "aria-label",
+      sensorActive ? t.stop : t.start
+    );
+
+    el.sensorButton.title =
+      sensorActive ? t.stop : t.start;
+  }
+
+  /* =====================================================
+     24. START COMPASS
      ===================================================== */
 
   async function startCompass() {
     if (sensorActive) return;
 
-    if (
-      !window.isSecureContext &&
-      location.hostname !== "localhost" &&
-      location.hostname !== "127.0.0.1"
-    ) {
-      alert(
-        language === "en"
-          ? "Compass requires a secure HTTPS connection."
-          : language === "hi"
-            ? "कम्पास के लिए सुरक्षित HTTPS कनेक्शन आवश्यक है।"
-            : "কম্পাস চালাতে নিরাপদ HTTPS সংযোগ প্রয়োজন।"
-      );
+    const t = currentText();
 
+    const secure =
+      window.isSecureContext ||
+      location.hostname === "localhost" ||
+      location.hostname === "127.0.0.1";
+
+    if (!secure) {
+      setText(el.compassStatus, t.secure);
       return;
     }
 
     if (!("DeviceOrientationEvent" in window)) {
-      alert(
-        language === "en"
-          ? "Compass sensor is not supported on this device."
-          : language === "hi"
-            ? "इस डिवाइस में कम्पास सेंसर उपलब्ध नहीं है।"
-            : "এই ডিভাইসে কম্পাস সেন্সর পাওয়া যায়নি।"
-      );
-
+      setText(el.compassStatus, t.unsupported);
       return;
     }
 
+    setText(el.compassStatus, t.starting);
+    setText(el.sensorButtonText, t.starting);
+
     try {
       /*
-        iOS permission must be requested directly
-        from the user's button click.
+        iOS permission request must be called
+        directly from the user's button interaction.
       */
 
       if (permissionRequired()) {
@@ -811,14 +964,8 @@
           await DeviceOrientationEvent.requestPermission();
 
         if (permission !== "granted") {
-          alert(
-            language === "en"
-              ? "Compass permission was denied."
-              : language === "hi"
-                ? "कम्पास की अनुमति नहीं मिली।"
-                : "কম্পাস ব্যবহারের অনুমতি পাওয়া যায়নি।"
-          );
-
+          setText(el.compassStatus, t.denied);
+          updateSensorButton();
           return;
         }
       }
@@ -826,8 +973,15 @@
       sensorActive = true;
       firstHeadingReceived = false;
 
-      lastHeading = null;
+      targetHeading = null;
       smoothHeading = null;
+      deviceHeading = null;
+
+      /*
+        Attach one listener only.
+        Some browsers support deviceorientationabsolute;
+        standard deviceorientation is also registered.
+      */
 
       window.addEventListener(
         "deviceorientation",
@@ -835,80 +989,108 @@
         true
       );
 
-      /*
-        If the device does not provide an absolute
-        compass heading, do not pretend that alpha alone
-        is a reliable magnetic bearing.
-      */
+      if ("ondeviceorientationabsolute" in window) {
+        window.addEventListener(
+          "deviceorientationabsolute",
+          handleOrientation,
+          true
+        );
+      }
 
-      window.setTimeout(() => {
+      updateSensorButton();
+
+      setText(el.compassStatus, t.waiting);
+
+      if (headingTimeout) {
+        clearTimeout(headingTimeout);
+      }
+
+      headingTimeout = window.setTimeout(() => {
         if (!sensorActive || firstHeadingReceived) return;
 
-        const message =
-          language === "en"
-            ? "No reliable compass heading received. Check device sensor support and calibration."
-            : language === "hi"
-              ? "विश्वसनीय कम्पास दिशा नहीं मिली। सेंसर और कैलिब्रेशन जाँचें।"
-              : "নির্ভরযোগ্য কম্পাস দিক পাওয়া যায়নি। সেন্সর ও ক্যালিব্রেশন পরীক্ষা করুন।";
-
-        console.warn(message);
-      }, 5000);
+        setText(el.compassStatus, t.noHeading);
+      }, 6000);
 
     } catch (error) {
-      console.error("Compass start error:", error);
+      console.error("Compass permission error:", error);
 
       sensorActive = false;
+      removeOrientationListeners();
+
+      setText(el.compassStatus, t.denied);
+      updateSensorButton();
     }
   }
 
   /* =====================================================
-     24. STOP COMPASS
+     25. REMOVE SENSOR LISTENERS
      ===================================================== */
 
-  function stopCompass() {
-    sensorActive = false;
-
+  function removeOrientationListeners() {
     window.removeEventListener(
       "deviceorientation",
       handleOrientation,
       true
     );
 
+    window.removeEventListener(
+      "deviceorientationabsolute",
+      handleOrientation,
+      true
+    );
+
+    if (headingTimeout) {
+      clearTimeout(headingTimeout);
+      headingTimeout = null;
+    }
+  }
+
+  /* =====================================================
+     26. STOP COMPASS
+     ===================================================== */
+
+  function stopCompass() {
+    sensorActive = false;
+
+    removeOrientationListeners();
+
     if (animationFrame !== null) {
       cancelAnimationFrame(animationFrame);
       animationFrame = null;
     }
 
-    lastHeading = null;
+    targetHeading = null;
     smoothHeading = null;
     deviceHeading = null;
 
     /*
-      Return to the north-up view when sensor stops.
+      Return to north-up orientation.
+      Qibla direction remains calculated from GPS.
     */
 
     if (el.compassDial) {
       el.compassDial.style.transform = "rotate(0deg)";
     }
 
-    if (el.qiblaNeedle) {
-      el.qiblaNeedle.style.transform =
-        "translate(-50%, -100%) rotate(0deg)";
-    }
-
-    if (el.qiblaMarker) {
-      el.qiblaMarker.style.setProperty(
-        "--qibla-angle",
-        `${qiblaBearing ?? 0}deg`
-      );
-    }
-
     updateCompassMovement();
+    updateSensorButton();
+
+    setText(el.compassStatus, currentText().stopped);
   }
 
   /* =====================================================
-     25. BUTTON EVENTS
+     27. BUTTON EVENTS
      ===================================================== */
+
+  if (el.sensorButton) {
+    el.sensorButton.addEventListener("click", () => {
+      if (sensorActive) {
+        stopCompass();
+      } else {
+        startCompass();
+      }
+    });
+  }
 
   if (el.refreshLocation) {
     el.refreshLocation.addEventListener(
@@ -918,13 +1100,12 @@
   }
 
   /* =====================================================
-     26. SETTINGS CHANGE
+     28. SETTINGS CHANGE
      ===================================================== */
 
   window.addEventListener("storage", (event) => {
     if (event.key === SETTINGS_KEY) {
       readSettings();
-      createDirectionLabels();
     }
 
     if (event.key === LOCATION_KEY) {
@@ -936,19 +1117,28 @@
     }
   });
 
+  /*
+    Same-tab settings updates:
+    The Settings page may dispatch:
+    window.dispatchEvent(new Event("ibadatSettingsChanged"));
+  */
+
   window.addEventListener("ibadatSettingsChanged", () => {
     readSettings();
-    createDirectionLabels();
   });
 
-  /*
-    When returning from the IBADAT Settings page,
-    reload the shared settings.
-  */
+  /* =====================================================
+     29. PAGE RETURN / VISIBILITY
+     ===================================================== */
 
   window.addEventListener("pageshow", () => {
     readSettings();
-    createDirectionLabels();
+
+    const saved = readSavedLocation();
+
+    if (saved) {
+      setCurrentLocation(saved);
+    }
   });
 
   document.addEventListener("visibilitychange", () => {
@@ -956,12 +1146,17 @@
       stopCompass();
     } else if (!document.hidden) {
       readSettings();
-      createDirectionLabels();
+
+      const saved = readSavedLocation();
+
+      if (saved) {
+        setCurrentLocation(saved);
+      }
     }
   });
 
   /* =====================================================
-     27. INITIALIZE
+     30. INITIALIZE
      ===================================================== */
 
   function initialize() {
@@ -978,11 +1173,21 @@
 
     requestLocation();
 
-    updateBearingText();
+    updateSensorButton();
+    updateBearingDisplay();
     updateDistance();
-    updateCompassMovement();
   }
 
   initialize();
+
+  /* =====================================================
+     31. CLEANUP
+     ===================================================== */
+
+  window.addEventListener("pagehide", () => {
+    if (sensorActive) {
+      stopCompass();
+    }
+  });
 
 })();
