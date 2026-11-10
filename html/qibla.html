@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -15,12 +14,10 @@
 <body>
   <div class="qibla-app" id="qiblaApp">
 
-    <!-- HEADER -->
     <header class="qibla-header">
       <h1 id="pageTitle">কিবলা কম্পাস</h1>
     </header>
 
-    <!-- MAIN CONTENT -->
     <main class="qibla-main">
       <section class="content-board" aria-label="Qibla compass">
 
@@ -28,19 +25,6 @@
         <div class="location-board">
           <span class="section-label" id="locationLabel">বর্তমান অবস্থান:</span>
           <strong id="locationName" aria-live="polite">অবস্থান খোঁজা হচ্ছে...</strong>
-
-          <button
-            class="location-refresh"
-            id="refreshLocation"
-            type="button"
-            aria-label="Refresh location"
-            title="Refresh location"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M20 7v5h-5M4 17v-5h5"/>
-              <path d="M5.6 9A7 7 0 0 1 18 6.5L20 12M4 12l2 5.5A7 7 0 0 0 18.4 15"/>
-            </svg>
-          </button>
         </div>
 
         <!-- COMPASS -->
@@ -68,13 +52,13 @@
                 </div>
               </div>
 
-              <!-- SINGLE QIBLA NEEDLE: LINE + RED TRIANGLE -->
+              <!-- QIBLA NEEDLE -->
               <div class="qibla-needle" id="qiblaNeedle" aria-hidden="true">
                 <div class="needle-line"></div>
                 <div class="needle-tip"></div>
               </div>
 
-              <!-- FIXED THEME DOT -->
+              <!-- FIXED CENTER DOT -->
               <div class="compass-center" aria-hidden="true"></div>
             </div>
 
@@ -83,11 +67,13 @@
               <strong id="bearingValue">---°</strong>
               <span id="bearingDirection">---</span>
             </div>
+
           </div>
         </div>
 
         <!-- DISTANCE + COMPASS CONTROL -->
         <div class="distance-board">
+
           <div class="distance-details">
             <span class="section-label" id="distanceLabel">
               কাবা শরীফ থেকে দূরত্ব:
@@ -118,12 +104,12 @@
           <span id="compassStatus" class="visually-hidden" aria-live="polite">
             কম্পাস বন্ধ আছে
           </span>
+
         </div>
 
       </section>
     </main>
 
-    <!-- FOOTER -->
     <footer class="qibla-footer">
       <div class="footer-window">
         <div class="footer-track" id="footerMessageTrack">
