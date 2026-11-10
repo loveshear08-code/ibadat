@@ -1,973 +1,1368 @@
+
 /* =========================================================
-   IBADAT - QIBLA COMPASS
-   Main stylesheet: css/qibla.css
+   IBADAT — QIBLA.CSS
+   Complete Responsive Stylesheet
+   Design Reference: Quran.css
+   Header/Footer: 48px fixed height
+   Main Background: ../assets/images/content-bg.png
+   Qibla Board: ../assets/images/content-bg2.png
+   Kaaba Icon: ../assets/icons/kaaba-3d.png
+   ========================================================= */
+
+
+/* =========================================================
+   01. ROOT VARIABLES
    ========================================================= */
 
 :root {
-  --q-header-height: 70px;
-  --q-footer-height: 70px;
-  --q-page-padding: 16px;
-  --q-board-radius: 22px;
+  --header-height: 48px;
+  --footer-height: 48px;
 
-  --q-primary: #1B7F4B;
-  --q-soft: #E8F5E9;
-  --q-accent: #F2C94C;
-  --q-deep: #0F5132;
-  --q-text: #17452F;
-  --q-muted: #68796B;
-  --q-card: rgba(255, 255, 255, 0.94);
-  --q-border: #D5E3D1;
+  --page-padding: 7px;
+  --page-gap: 6px;
 
-  --q-header-bg: var(--q-deep);
-  --q-header-text: #F5E5A7;
-  --q-footer-bg: var(--q-deep);
-  --q-footer-text: #F5E5A7;
+  --board-radius: 20px;
 
-  --q-board-bg:
-    linear-gradient(145deg, rgba(255,255,255,.96), rgba(237,247,237,.94));
-  --q-page-overlay: rgba(232, 245, 233, .18);
-  --q-shadow: 0 8px 24px rgba(15, 81, 50, .10);
+  --primary: #1B7F4B;
+  --soft: #E8F5E9;
+  --accent: #F2C94C;
+  --deep: #0F5132;
 
-  --q-dial-bg: #F8FCF7;
-  --q-dial-border: #B9D3BE;
-  --q-dial-text: #17452F;
-  --q-tick-color: #789681;
-  --q-needle-north: #D33F36;
-  --q-needle-south: #315C49;
+  --text: #17452F;
+  --muted: #68796B;
 
-  --q-arabic-size: 30px;
+  --card: rgba(255,255,255,.94);
+  --border: #D5E3D1;
+
+  --header-bg: var(--deep);
+  --header-text: #F5E5A7;
+
+  --footer-bg: var(--deep);
+  --footer-text: #F5E5A7;
+
+  --page-overlay:
+    linear-gradient(
+      135deg,
+      rgba(235,245,226,.56),
+      rgba(255,253,245,.62),
+      rgba(232,244,222,.58)
+    );
+
+  --content-overlay: rgba(255,253,245,.48);
+
+  --shadow: 0 3px 10px rgba(30,49,28,.12);
+
+  --compass-size: min(76vw, 310px);
+  --compass-line: rgba(27,127,75,.65);
 }
 
-/* ---------- THEME: CLASSIC ---------- */
-#qiblaApp[data-theme="classic"] {
-  --q-primary: #1B7F4B;
-  --q-soft: #E8F5E9;
-  --q-accent: #F2C94C;
-  --q-deep: #0F5132;
-  --q-text: #17452F;
-  --q-muted: #68796B;
-  --q-border: #D5E3D1;
-  --q-header-bg: #0F5132;
-  --q-footer-bg: #0F5132;
-  --q-header-text: #F5E5A7;
-  --q-footer-text: #F5E5A7;
-  --q-dial-bg: #F8FCF7;
-}
 
-/* ---------- THEME: ROYAL ---------- */
-#qiblaApp[data-theme="royal"] {
-  --q-primary: #3457A5;
-  --q-soft: #E9EEFC;
-  --q-accent: #E8C76A;
-  --q-deep: #172B5B;
-  --q-text: #1E315F;
-  --q-muted: #687594;
-  --q-border: #D2DAEF;
-  --q-header-bg: #172B5B;
-  --q-footer-bg: #172B5B;
-  --q-header-text: #F4E5B2;
-  --q-footer-text: #F4E5B2;
-  --q-dial-bg: #F8FAFF;
-  --q-dial-border: #C3CFEA;
-  --q-dial-text: #1E315F;
-  --q-tick-color: #7184B4;
-}
+/* =========================================================
+   02. GLOBAL
+   ========================================================= */
 
-/* ---------- THEME: ROSE ---------- */
-#qiblaApp[data-theme="rose"] {
-  --q-primary: #A94D70;
-  --q-soft: #F9EAF0;
-  --q-accent: #E9BD9B;
-  --q-deep: #71334F;
-  --q-text: #62354B;
-  --q-muted: #8B7180;
-  --q-border: #EBD3DE;
-  --q-header-bg: #71334F;
-  --q-footer-bg: #71334F;
-  --q-header-text: #FBE7D6;
-  --q-footer-text: #FBE7D6;
-  --q-dial-bg: #FFF9FC;
-  --q-dial-border: #E8C7D6;
-  --q-dial-text: #62354B;
-  --q-tick-color: #B9879D;
-}
-
-/* ---------- THEME: PISTA ---------- */
-#qiblaApp[data-theme="pista"] {
-  --q-primary: #668B45;
-  --q-soft: #EEF4E5;
-  --q-accent: #D7B75A;
-  --q-deep: #344F2A;
-  --q-text: #344F2A;
-  --q-muted: #75836B;
-  --q-border: #D6E2C8;
-  --q-header-bg: #344F2A;
-  --q-footer-bg: #344F2A;
-  --q-header-text: #F2E8C4;
-  --q-footer-text: #F2E8C4;
-  --q-dial-bg: #FBFDF6;
-  --q-dial-border: #C9D8B7;
-  --q-dial-text: #344F2A;
-  --q-tick-color: #8A9D74;
-}
-
-/* ---------- DARK MODE ---------- */
-#qiblaApp[data-mode="dark"] {
-  --q-soft: #1B3025;
-  --q-text: #E5F1E7;
-  --q-muted: #B0C0B3;
-  --q-card: rgba(25, 39, 31, .97);
-  --q-border: #3A5544;
-  --q-board-bg: linear-gradient(145deg, #1C3025, #17271F);
-  --q-page-overlay: rgba(0, 0, 0, .48);
-  --q-shadow: 0 8px 24px rgba(0, 0, 0, .25);
-  --q-dial-bg: #23372B;
-  --q-dial-border: #587361;
-  --q-dial-text: #F0F7EF;
-  --q-tick-color: #A4BBA9;
-  --q-needle-south: #B5CBB9;
-}
-
-#qiblaApp[data-mode="dark"][data-theme="classic"] {
-  --q-primary: #65BD88;
-  --q-deep: #102B1D;
-  --q-header-bg: #102B1D;
-  --q-footer-bg: #102B1D;
-}
-
-#qiblaApp[data-mode="dark"][data-theme="royal"] {
-  --q-primary: #91A9ED;
-  --q-deep: #111D3D;
-  --q-header-bg: #111D3D;
-  --q-footer-bg: #111D3D;
-}
-
-#qiblaApp[data-mode="dark"][data-theme="rose"] {
-  --q-primary: #E6A0BC;
-  --q-deep: #3E2031;
-  --q-header-bg: #3E2031;
-  --q-footer-bg: #3E2031;
-}
-
-#qiblaApp[data-mode="dark"][data-theme="pista"] {
-  --q-primary: #A9CA83;
-  --q-deep: #202F1B;
-  --q-header-bg: #202F1B;
-  --q-footer-bg: #202F1B;
-}
-
-/* ---------- RESET ---------- */
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
-html {
-  min-height: 100%;
-  scroll-behavior: smooth;
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
 }
 
 body {
-  min-width: 280px;
-  min-height: 100vh;
-  margin: 0;
-  color: var(--q-text);
+  padding:
+    max(5px, env(safe-area-inset-top, 0px))
+    var(--page-padding)
+    max(5px, env(safe-area-inset-bottom, 0px));
+
+  color: var(--text);
+
   font-family:
     "Noto Sans Bengali",
     "Hind Siliguri",
     "Noto Sans Devanagari",
     Arial,
     sans-serif;
-  background-color: var(--q-soft);
-  background-image:
-    linear-gradient(var(--q-page-overlay), var(--q-page-overlay)),
-    url("../assets/images/content-bg.png");
-  background-position: center;
-  background-size: cover;
-  background-attachment: fixed;
+
+  background:
+    var(--page-overlay),
+    url("../assets/images/content-bg.png") center/cover no-repeat;
 }
 
-button {
+button,
+input {
   font: inherit;
 }
 
-button:focus-visible,
-a:focus-visible {
-  outline: 3px solid var(--q-accent);
-  outline-offset: 4px;
+button {
+  touch-action: manipulation;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
 }
 
-.qibla-app {
-  min-height: 100vh;
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+button:disabled {
+  cursor: default;
+  opacity: .45;
+}
+
+
+/* =========================================================
+   03. APP LAYOUT
+   ========================================================= */
+
+#qiblaApp,
+.app#qiblaApp {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+
   display: flex;
   flex-direction: column;
+
+  gap: var(--page-gap);
+
   overflow: hidden;
 }
 
-/* ---------- HEADER ---------- */
-.qibla-header {
-  position: relative;
-  z-index: 5;
-  min-height: var(--q-header-height);
-  color: var(--q-header-text);
-  background: var(--q-header-bg);
-  box-shadow: 0 3px 12px rgba(0, 0, 0, .16);
-}
-
-.header-inner {
-  width: min(100%, 1000px);
-  min-height: var(--q-header-height);
-  margin: auto;
-  padding: 9px 17px;
-  display: grid;
-  grid-template-columns: 42px 1fr 42px;
-  align-items: center;
-  gap: 12px;
-}
-
-.back-button {
-  width: 40px;
-  height: 40px;
-  display: grid;
-  place-items: center;
-  color: var(--q-header-text);
-  text-decoration: none;
-  font-size: 36px;
-  line-height: 1;
-  border: 1px solid rgba(255,255,255,.22);
-  border-radius: 50%;
-  background: rgba(255,255,255,.07);
-}
-
-.header-title-wrap {
+.board {
   min-width: 0;
-  text-align: center;
-}
 
-.header-eyebrow {
-  display: block;
-  margin-bottom: 1px;
-  color: var(--q-accent);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 3px;
-}
+  border: 1px solid var(--border);
+  border-radius: var(--board-radius);
 
-.header-title-wrap h1 {
-  margin: 0;
-  color: var(--q-header-text);
-  font-size: 20px;
-  font-weight: 800;
-}
+  background: var(--card);
 
-.header-symbol {
-  display: grid;
-  place-items: center;
-  color: var(--q-accent);
-  font-size: 29px;
-}
+  box-shadow: var(--shadow);
 
-/* ---------- MAIN ---------- */
-.qibla-main {
-  width: min(100% - 24px, 680px);
-  margin: 18px auto 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  flex: 1;
-}
-
-.content-board {
-  position: relative;
   overflow: hidden;
-  border: 1px solid var(--q-border);
-  border-radius: var(--q-board-radius);
-  background: var(--q-board-bg);
-  box-shadow: var(--q-shadow);
 }
 
-/* ---------- LOCATION BOARD ---------- */
-.location-board {
-  min-height: 76px;
-  padding: 13px 15px;
+
+/* =========================================================
+   04. HEADER — FIXED 48PX
+   ========================================================= */
+
+.hero,
+#qiblaHero {
+  flex: 0 0 var(--header-height);
+
+  width: 100%;
+  height: var(--header-height);
+
+  min-height: var(--header-height);
+  max-height: var(--header-height);
+
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+
+  padding: 3px 10px;
+
+  background: var(--header-bg);
+  color: var(--header-text);
+
+  border: 2px solid var(--accent);
+  border-radius: 20px;
+
+  overflow: hidden;
+}
+
+#qiblaHero h1,
+#qiblaHero h2,
+#qiblaHero .page-title {
+  width: 100%;
+
+  margin: 0;
+
+  color: var(--header-text);
+
+  font-size: clamp(16px, 4vw, 20px);
+  font-weight: 800;
+
+  line-height: 1.3;
+
+  text-align: center;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   05. MAIN PAGE CONTAINER
+   ========================================================= */
+
+.page-container,
+.qibla-main {
+  position: relative;
+
+  flex: 1 1 0;
+  min-height: 0;
+
+  width: 100%;
+
+  overflow: hidden;
+}
+
+#qiblaContentBoard {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+
+  padding: 8px;
+
+  border: 1px solid var(--border);
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      var(--content-overlay),
+      var(--content-overlay)
+    ),
+    url("../assets/images/content-bg2.png") center/cover no-repeat;
+
+  box-shadow: var(--shadow);
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+/* =========================================================
+   06. LOCATION BOARD
+   ========================================================= */
+
+.location-board {
+  position: relative;
+
+  flex: 0 0 auto;
+
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 9px 11px;
+
+  border: 1px solid var(--border);
+  border-radius: 15px;
+
+  background: var(--card);
+
+  box-shadow: var(--shadow);
+
+  text-align: center;
 }
 
 .location-icon {
-  width: 43px;
-  height: 43px;
-  flex: 0 0 43px;
-  display: grid;
-  place-items: center;
-  color: var(--q-primary);
-  border-radius: 14px;
-  background: var(--q-soft);
-}
+  flex: 0 0 auto;
 
-.location-icon svg,
-.location-refresh svg,
-.sensor-icon svg {
-  width: 23px;
-  height: 23px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.7;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.location-details {
-  min-width: 0;
-  flex: 1;
   display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
+  align-items: center;
+  justify-content: center;
 
-.section-label {
-  color: var(--q-muted);
-  font-size: 12px;
-}
-
-.location-details strong {
-  overflow-wrap: anywhere;
-  color: var(--q-text);
-  font-size: 15px;
-}
-
-.location-coordinates {
-  color: var(--q-muted);
-  font-size: 10px;
-  direction: ltr;
-  text-align: inherit;
-}
-
-.location-refresh {
-  width: 39px;
-  height: 39px;
-  flex: 0 0 39px;
-  display: grid;
-  place-items: center;
-  color: var(--q-primary);
-  border: 1px solid var(--q-border);
-  border-radius: 50%;
-  background: var(--q-soft);
-  cursor: pointer;
-}
-
-.location-refresh:active {
-  transform: rotate(35deg);
-}
-
-/* ---------- COMPASS BOARD ---------- */
-.compass-board {
-  padding: 21px 13px 17px;
-  text-align: center;
-}
-
-.compass-heading {
-  margin-bottom: 9px;
-}
-
-.section-kicker {
-  display: block;
-  color: var(--q-primary);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 2px;
-}
-
-.compass-heading h2 {
-  margin: 5px 0 4px;
-  color: var(--q-text);
-  font-size: 19px;
-  font-weight: 800;
-}
-
-.compass-heading p {
-  margin: 0;
-  color: var(--q-muted);
-  font-size: 12px;
-  line-height: 1.6;
-}
-
-/* ---------- COMPASS STAGE ---------- */
-.compass-stage {
-  position: relative;
-  width: min(100%, 360px);
-  aspect-ratio: 1;
-  margin: 13px auto 8px;
-  display: grid;
-  place-items: center;
-}
-
-.compass-outer-ring {
-  position: absolute;
-  inset: 1.5%;
-  border: 1px solid var(--q-border);
-  border-radius: 50%;
-  box-shadow:
-    inset 0 0 0 5px rgba(255,255,255,.12),
-    0 5px 16px rgba(0,0,0,.08);
-  pointer-events: none;
-}
-
-.compass-dial {
-  position: absolute;
-  inset: 5%;
-  overflow: hidden;
-  border: 2px solid var(--q-dial-border);
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at center, transparent 0 35%, rgba(120,150,120,.035) 36% 100%),
-    var(--q-dial-bg);
-  box-shadow:
-    inset 0 0 0 5px rgba(255,255,255,.08),
-    inset 0 0 22px rgba(0,0,0,.06),
-    0 5px 16px rgba(0,0,0,.09);
-}
-
-/* ---------- DEGREE RING ---------- */
-.degree-ring,
-.compass-ticks,
-.direction-ring,
-.compass-rose,
-.qibla-orbit {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.degree-label {
-  position: absolute;
-  left: 50%;
-  top: 50%;
   width: 34px;
-  margin-left: -17px;
-  color: var(--q-muted);
-  font-size: 9px;
-  font-weight: 700;
-  text-align: center;
-  transform:
-    rotate(var(--angle))
-    translateY(calc(-1 * var(--radius)))
-    rotate(calc(-1 * var(--angle)));
+  height: 34px;
+
+  border-radius: 10px;
+
+  background: var(--soft);
+
+  color: var(--deep);
+
+  font-size: 19px;
 }
 
-.compass-tick {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 1px;
-  height: 7px;
-  margin-left: -.5px;
-  margin-top: -50%;
-  background: var(--q-tick-color);
-  transform-origin: 50% 100%;
-  transform: rotate(var(--angle)) translateY(0);
-}
-
-.compass-tick.major {
-  width: 2px;
-  height: 13px;
-  margin-left: -1px;
-  background: var(--q-primary);
-}
-
-.compass-tick.cardinal {
-  height: 17px;
-  background: var(--q-accent);
-}
-
-/* ---------- DIRECTION LABELS ---------- */
-.direction-label {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 35px;
-  margin-left: -17.5px;
-  margin-top: -10px;
-  color: var(--q-dial-text);
-  font-size: 10px;
-  font-weight: 800;
-  text-align: center;
-  transform:
-    rotate(var(--angle))
-    translateY(calc(-1 * var(--radius)))
-    rotate(calc(-1 * var(--angle)));
-}
-
-.direction-label.cardinal {
-  color: var(--q-primary);
-  font-size: 12px;
-}
-
-/* ---------- COMPASS ROSE ---------- */
-.compass-rose {
-  inset: 27%;
-  color: var(--q-primary);
-  font-size: 10px;
-  font-weight: 900;
-}
-
-.compass-rose span {
-  position: absolute;
-  display: block;
-}
-
-.rose-north {
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.rose-east {
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-}
-
-.rose-south {
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.rose-west {
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-}
-
-/* ---------- QIBLA MARKER ORBIT ---------- */
-.qibla-orbit {
-  z-index: 3;
-  transform: rotate(var(--qibla-angle, 0deg));
-  transition: transform .25s ease-out;
-}
-
-.qibla-marker {
-  position: absolute;
-  top: 7%;
-  left: 50%;
-  width: clamp(29px, 10%, 39px);
-  height: clamp(29px, 10%, 39px);
-  display: grid;
-  place-items: center;
-  margin-left: -5%;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  transform: rotate(calc(-1 * var(--qibla-angle, 0deg)));
-}
-
-.qibla-marker img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 2px 3px rgba(0,0,0,.28));
-}
-
-/* ---------- FIXED NEEDLE ---------- */
-.fixed-needle {
-  position: absolute;
-  z-index: 4;
-  left: 50%;
-  top: 50%;
-  width: 15px;
-  height: 43%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-
-.needle-north,
-.needle-south {
-  position: absolute;
-  left: 50%;
-  width: 0;
-  height: 0;
-  transform: translateX(-50%);
-}
-
-.needle-north {
-  top: 0;
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  border-bottom: 45px solid var(--q-needle-north);
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,.2));
-}
-
-.needle-south {
-  bottom: 0;
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  border-top: 45px solid var(--q-needle-south);
-}
-
-.needle-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 13px;
-  height: 13px;
-  border: 2px solid var(--q-dial-bg);
-  border-radius: 50%;
-  background: var(--q-accent);
-  box-shadow: 0 1px 5px rgba(0,0,0,.25);
-  transform: translate(-50%, -50%);
-}
-
-/* ---------- BEARING INFORMATION ---------- */
-.bearing-information {
-  width: min(100%, 390px);
-  margin: 7px auto 10px;
-  padding: 12px 9px;
-  display: grid;
-  grid-template-columns: 1fr 1px 1fr;
-  align-items: center;
-  border: 1px solid var(--q-border);
-  border-radius: 15px;
-  background: var(--q-soft);
-}
-
-.bearing-item {
+.location-info {
+  flex: 1;
   min-width: 0;
+
   display: flex;
   flex-direction: column;
+
   gap: 3px;
+
+  text-align: left;
 }
 
-.bearing-label {
-  color: var(--q-muted);
-  font-size: 11px;
-}
+.location-title {
+  color: var(--deep);
 
-.bearing-value {
-  color: var(--q-primary);
-  font-size: 23px;
-  font-weight: 900;
-  direction: ltr;
-  unicode-bidi: isolate;
-}
-
-.bearing-divider {
-  width: 1px;
-  height: 35px;
-  background: var(--q-border);
-}
-
-.compass-status {
-  min-height: 24px;
-  color: var(--q-muted);
-  font-size: 11px;
-  line-height: 1.6;
-}
-
-/* ---------- SENSOR BOARD ---------- */
-.sensor-board {
-  padding: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.sensor-info {
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.sensor-icon {
-  width: 42px;
-  height: 42px;
-  flex: 0 0 42px;
-  display: grid;
-  place-items: center;
-  color: var(--q-primary);
-  border-radius: 13px;
-  background: var(--q-soft);
-}
-
-.sensor-info strong {
-  display: block;
-  color: var(--q-text);
   font-size: 13px;
-}
+  font-weight: 800;
 
-.sensor-info p {
-  margin: 3px 0 0;
-  color: var(--q-muted);
-  font-size: 10px;
   line-height: 1.5;
 }
 
-.sensor-button {
-  min-height: 41px;
-  padding: 9px 14px;
+.location-text,
+#locationText,
+#locationName {
+  color: var(--muted);
+
+  font-size: 11px;
+  font-weight: 600;
+
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+.location-status {
   flex: 0 0 auto;
-  color: #fff;
-  border: 0;
-  border-radius: 12px;
-  background: var(--q-primary);
+
+  color: var(--primary);
+
   font-size: 11px;
   font-weight: 800;
-  cursor: pointer;
-  transition: opacity .2s ease, transform .2s ease;
 }
 
-.sensor-button:active {
-  transform: scale(.97);
-}
 
-.sensor-button:disabled {
-  opacity: .55;
-  cursor: not-allowed;
-}
+/* =========================================================
+   07. COMPASS AREA
+   ========================================================= */
 
-/* ---------- DISTANCE BOARD ---------- */
-.distance-board {
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.distance-kaaba {
-  width: 55px;
-  height: 55px;
-  flex: 0 0 55px;
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--q-border);
-  border-radius: 16px;
-  background: var(--q-soft);
-}
-
-.distance-kaaba img {
-  width: 37px;
-  height: 37px;
-  object-fit: contain;
-}
-
-.distance-details {
-  min-width: 0;
-  flex: 1;
-}
-
-.distance-number-wrap {
-  margin: 2px 0;
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-}
-
-.distance-number-wrap strong {
-  color: var(--q-primary);
-  font-size: 27px;
-  font-weight: 900;
-  direction: ltr;
-  unicode-bidi: isolate;
-}
-
-.distance-number-wrap span {
-  color: var(--q-muted);
-  font-size: 12px;
-}
-
-.distance-destination {
-  color: var(--q-muted);
-  font-size: 10px;
-}
-
-/* ---------- INSTRUCTION BOARD ---------- */
-.instruction-board {
-  padding: 16px 17px;
-}
-
-.instruction-heading {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.instruction-symbol {
-  color: var(--q-primary);
-  font-size: 19px;
-}
-
-.instruction-heading h2 {
-  margin: 0;
-  color: var(--q-text);
-  font-size: 14px;
-}
-
-.instruction-list {
-  margin: 12px 0 0;
-  padding-inline-start: 21px;
-  color: var(--q-muted);
-  font-size: 11px;
-  line-height: 1.9;
-}
-
-.instruction-list li {
-  padding-inline-start: 3px;
-  margin-bottom: 3px;
-}
-
-.instruction-list li::marker {
-  color: var(--q-primary);
-}
-
-/* ---------- FOOTER ---------- */
-.qibla-footer {
+.compass-content-board,
+.compass-board {
   position: relative;
-  min-height: var(--q-footer-height);
-  padding: 15px 14px 13px;
-  color: var(--q-footer-text);
-  text-align: center;
-  background: var(--q-footer-bg);
-  overflow: hidden;
-}
 
-.footer-ornament {
-  margin-bottom: 5px;
-  color: var(--q-accent);
-  font-size: 19px;
-}
+  flex: 1 0 auto;
 
-.footer-quote-window {
   width: 100%;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 10px 5px;
+
+  border: 1px solid var(--border);
+  border-radius: 17px;
+
+  background: var(--card);
+
+  box-shadow: var(--shadow);
+
   overflow: hidden;
-  direction: ltr;
 }
 
-.footer-quote-track {
-  width: max-content;
+.compass-title {
+  margin: 0;
+
+  color: var(--deep);
+
+  font-size: 14px;
+  font-weight: 800;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   08. COMPASS STAGE
+   ========================================================= */
+
+#compassStage {
+  position: relative;
+
+  width: var(--compass-size);
+  height: var(--compass-size);
+
+  max-width: 100%;
+
+  flex: 0 0 auto;
+
   display: flex;
   align-items: center;
-  gap: 55px;
-  animation: qibla-footer-marquee 22s linear infinite;
+  justify-content: center;
+
+  margin: 0 auto;
+
+  isolation: isolate;
 }
 
-.footer-quote-track span {
-  white-space: nowrap;
-  color: var(--q-footer-text);
-  font-family: "Noto Naskh Arabic", serif;
-  font-size: 17px;
-  direction: rtl;
+#compassShell {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,.96) 0%,
+      rgba(245,250,243,.95) 62%,
+      rgba(226,239,224,.95) 100%
+    );
+
+  border: 2px solid var(--primary);
+
+  box-shadow:
+    0 5px 16px rgba(15,81,50,.14),
+    inset 0 0 0 5px rgba(242,201,76,.24);
+
+  overflow: hidden;
 }
 
-.footer-translation {
-  margin: 8px 0 4px;
-  color: var(--q-footer-text);
-  font-size: 10px;
-  opacity: .88;
+
+/* =========================================================
+   09. COMPASS RINGS
+   ========================================================= */
+
+.direction-ring,
+#directionRing {
+  position: absolute;
+
+  inset: 5%;
+
+  border: 1px solid rgba(27,127,75,.35);
+
+  border-radius: 50%;
+
+  pointer-events: none;
 }
 
-.footer-brand {
-  color: var(--q-accent);
-  font-size: 9px;
+.degree-ring,
+#degreeRing {
+  position: absolute;
+
+  inset: 10%;
+
+  border: 1px dashed rgba(27,127,75,.35);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+.compass-face {
+  position: absolute;
+
+  inset: 16%;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(27,127,75,.22);
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,.97),
+      rgba(238,248,237,.92)
+    );
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   10. COMPASS MARKINGS
+   Keep actual compass graduations
+   ========================================================= */
+
+#compassTicks,
+.compass-ticks {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+#compassRose {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+.compass-label,
+.direction-label {
+  position: absolute;
+
+  z-index: 2;
+
+  color: var(--deep);
+
+  font-size: clamp(10px, 3vw, 14px);
   font-weight: 900;
-  letter-spacing: 3px;
+
+  line-height: 1;
+
+  pointer-events: none;
 }
 
-@keyframes qibla-footer-marquee {
+.compass-label.north,
+.direction-n {
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  color: #C0392B;
+}
+
+.compass-label.south,
+.direction-s {
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.compass-label.east,
+.direction-e {
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.compass-label.west,
+.direction-w {
+  left: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+
+/* =========================================================
+   11. COMPASS NEEDLE
+   ========================================================= */
+
+.needle-wrap {
+  position: absolute;
+
+  z-index: 4;
+
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+}
+
+.needle,
+.compass-needle {
+  position: absolute;
+
+  width: 7px;
+  height: 58%;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #C0392B 0%,
+      #C0392B 48%,
+      #E8BD55 50%,
+      #1B7F4B 52%,
+      #1B7F4B 100%
+    );
+
+  clip-path: polygon(
+    50% 0,
+    100% 50%,
+    50% 100%,
+    0 50%
+  );
+
+  transform-origin: center center;
+}
+
+.needle-center,
+.compass-center {
+  position: absolute;
+
+  z-index: 5;
+
+  width: 15px;
+  height: 15px;
+
+  border-radius: 50%;
+
+  background: var(--accent);
+
+  border: 3px solid var(--deep);
+
+  box-shadow: 0 1px 5px rgba(0,0,0,.2);
+}
+
+
+/* =========================================================
+   12. KAABA ORBIT
+   ========================================================= */
+
+#qiblaOrbit {
+  position: absolute;
+
+  z-index: 6;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+#qiblaMarker {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform: translate(-50%, -50%);
+
+  pointer-events: none;
+}
+
+#kaabaIcon {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  filter: drop-shadow(0 3px 4px rgba(0,0,0,.25));
+}
+
+
+/* =========================================================
+   13. BEARING DISPLAY
+   ========================================================= */
+
+.bearing-board,
+#bearingDisplay {
+  width: min(100%, 240px);
+
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 7px 12px;
+
+  border: 1px solid var(--border);
+  border-radius: 13px;
+
+  background: var(--soft);
+
+  text-align: center;
+}
+
+.bearing-label {
+  color: var(--muted);
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+#bearingValue {
+  color: var(--deep);
+
+  font-size: 20px;
+  font-weight: 900;
+
+  font-variant-numeric: tabular-nums;
+}
+
+#bearingDirection {
+  color: var(--primary);
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   14. DISTANCE BOARD
+   ========================================================= */
+
+.distance-board {
+  flex: 0 0 auto;
+
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 8px;
+
+  padding: 10px 12px;
+
+  border: 1px solid var(--border);
+  border-radius: 15px;
+
+  background: var(--card);
+
+  box-shadow: var(--shadow);
+}
+
+.distance-info {
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.distance-title {
+  color: var(--muted);
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.distance-value,
+#distanceValue {
+  color: var(--deep);
+
+  font-size: clamp(17px, 4.5vw, 22px);
+  font-weight: 900;
+
+  line-height: 1.35;
+
+  font-variant-numeric: tabular-nums;
+}
+
+.distance-unit {
+  color: var(--muted);
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.distance-icon {
+  flex: 0 0 auto;
+
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: var(--soft);
+
+  color: var(--deep);
+
+  font-size: 20px;
+}
+
+
+/* =========================================================
+   15. SENSOR BOARD
+   ========================================================= */
+
+.sensor-board {
+  flex: 0 0 auto;
+
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 10px;
+
+  border: 1px solid var(--border);
+  border-radius: 15px;
+
+  background: var(--card);
+
+  box-shadow: var(--shadow);
+
+  text-align: center;
+}
+
+#sensorButton {
+  width: 100%;
+  min-height: 43px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 8px 14px;
+
+  border: 1px solid var(--primary);
+  border-radius: 12px;
+
+  background: var(--primary);
+  color: #fff;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  transition:
+    background-color .2s ease,
+    transform .2s ease,
+    filter .2s ease;
+}
+
+#sensorButton:active {
+  transform: scale(.98);
+}
+
+#sensorButton:disabled {
+  opacity: .55;
+}
+
+#sensorButtonText {
+  display: inline-block;
+
+  line-height: 1.5;
+}
+
+#sensorMessage {
+  width: 100%;
+
+  color: var(--muted);
+
+  font-size: 11px;
+  line-height: 1.6;
+
+  text-align: center;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   16. FOOTER — FIXED 48PX
+   ========================================================= */
+
+.app-footer,
+.bottom-board,
+#qiblaFooter {
+  flex: 0 0 var(--footer-height);
+
+  width: 100%;
+  height: var(--footer-height);
+
+  min-height: var(--footer-height);
+  max-height: var(--footer-height);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 3px 7px;
+
+  border: 2px solid var(--accent);
+  border-radius: 20px;
+
+  background: var(--footer-bg);
+  color: var(--footer-text);
+
+  overflow: hidden;
+}
+
+#qiblaFooter {
+  position: relative;
+}
+
+#footerMessage,
+#footerMessageClone {
+  flex: 0 0 auto;
+
+  display: inline-block;
+
+  max-width: none;
+
+  color: var(--footer-text);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  line-height: 1.5;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   17. FOOTER MESSAGE SCROLL
+   ========================================================= */
+
+.footer-message-track,
+#qiblaFooter .footer-track {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 40px;
+
+  overflow: hidden;
+
+  white-space: nowrap;
+}
+
+.footer-message-inner {
+  width: max-content;
+
+  display: flex;
+  align-items: center;
+
+  gap: 40px;
+
+  animation: qibla-footer-scroll 55s linear infinite;
+
+  will-change: transform;
+}
+
+@keyframes qibla-footer-scroll {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-50%);
   }
 }
 
-/* ---------- ANIMATION / ACCESSIBILITY ---------- */
+
+/* =========================================================
+   18. STATUS / LOADING / MESSAGE
+   ========================================================= */
+
+.qibla-message,
+.app-message {
+  position: fixed;
+
+  z-index: 20;
+
+  left: 50%;
+  bottom: calc(var(--footer-height) + 15px);
+
+  transform: translateX(-50%);
+
+  width: max-content;
+  max-width: 90%;
+
+  padding: 9px 13px;
+
+  border: 1px solid rgba(242,201,76,.5);
+  border-radius: 11px;
+
+  background: var(--deep);
+  color: #fff;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-align: center;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity .2s ease;
+}
+
+.qibla-message.show,
+.app-message.show {
+  opacity: 1;
+}
+
+.loading,
+.empty-state {
+  padding: 16px 8px;
+
+  color: var(--muted);
+
+  font-size: 13px;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   19. COLOR THEMES
+   ========================================================= */
+
+body[data-color-theme="classic"] {
+}
+
+body[data-color-theme="royal"] {
+  --primary: #285A8E;
+  --soft: #E5EFF9;
+  --accent: #E8BD55;
+  --deep: #173A60;
+
+  --text: #1B3652;
+  --muted: #65798E;
+
+  --border: #C8D9EB;
+
+  --header-bg: #173A60;
+  --footer-bg: #173A60;
+
+  --compass-line: rgba(40,90,142,.65);
+}
+
+body[data-color-theme="rose"] {
+  --primary: #B96F79;
+  --soft: #F8E9E7;
+  --accent: #D9B875;
+  --deep: #7D414B;
+
+  --text: #633B42;
+  --muted: #846D70;
+
+  --border: #E8CBC8;
+
+  --header-bg: #7D414B;
+  --footer-bg: #7D414B;
+
+  --compass-line: rgba(185,111,121,.65);
+}
+
+body[data-color-theme="pista"] {
+  --primary: #4CAF50;
+  --soft: #DFF5E1;
+  --accent: #A7D129;
+  --deep: #2F7135;
+
+  --text: #254D2A;
+  --muted: #6D806D;
+
+  --border: #CDE3C8;
+
+  --header-bg: #2F7135;
+  --footer-bg: #2F7135;
+
+  --compass-line: rgba(76,175,80,.65);
+}
+
+
+/* =========================================================
+   20. DARK MODE
+   ========================================================= */
+
+body.dark-mode {
+  --text: #E5EDE7;
+  --muted: #BECBBF;
+
+  --card: rgba(25,38,29,.96);
+  --border: #405746;
+
+  --soft: #263B2C;
+
+  --page-overlay:
+    linear-gradient(
+      rgba(8,15,10,.80),
+      rgba(8,15,10,.80)
+    );
+
+  --content-overlay: rgba(12,20,14,.60);
+}
+
+body.dark-mode .hero,
+body.dark-mode #qiblaHero,
+body.dark-mode .app-footer,
+body.dark-mode .bottom-board,
+body.dark-mode #qiblaFooter {
+  background: var(--header-bg);
+}
+
+body.dark-mode[data-color-theme="classic"] {
+  --header-bg: #0F5132;
+  --footer-bg: #0F5132;
+}
+
+body.dark-mode[data-color-theme="royal"] {
+  --header-bg: #142D49;
+  --footer-bg: #142D49;
+}
+
+body.dark-mode[data-color-theme="rose"] {
+  --header-bg: #592F36;
+  --footer-bg: #592F36;
+}
+
+body.dark-mode[data-color-theme="pista"] {
+  --header-bg: #244C28;
+  --footer-bg: #244C28;
+}
+
+body.dark-mode #compassShell {
+  background:
+    radial-gradient(
+      circle,
+      rgba(35,52,40,.98),
+      rgba(23,39,28,.98)
+    );
+
+  border-color: var(--primary);
+
+  box-shadow:
+    0 5px 16px rgba(0,0,0,.3),
+    inset 0 0 0 5px rgba(242,201,76,.12);
+}
+
+body.dark-mode .compass-face {
+  background:
+    radial-gradient(
+      circle,
+      rgba(35,52,40,.98),
+      rgba(23,39,28,.95)
+    );
+}
+
+body.dark-mode .compass-label,
+body.dark-mode .direction-label,
+body.dark-mode .location-title,
+body.dark-mode .distance-value,
+body.dark-mode #bearingValue {
+  color: var(--text);
+}
+
+body.dark-mode #bearingDisplay {
+  background: rgba(38,59,44,.95);
+}
+
+body.dark-mode .location-icon,
+body.dark-mode .distance-icon {
+  background: var(--soft);
+  color: var(--text);
+}
+
+
+/* =========================================================
+   21. SMALL SCREEN RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 380px) {
+  :root {
+    --page-padding: 5px;
+    --page-gap: 5px;
+
+    --compass-size: min(72vw, 265px);
+  }
+
+  #qiblaContentBoard {
+    padding: 6px;
+    gap: 6px;
+  }
+
+  .location-board {
+    padding: 7px 8px;
+    gap: 6px;
+  }
+
+  .location-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 17px;
+  }
+
+  .location-title {
+    font-size: 12px;
+  }
+
+  .location-text,
+  #locationText,
+  #locationName {
+    font-size: 10px;
+  }
+
+  .compass-content-board,
+  .compass-board {
+    padding: 7px 4px;
+    gap: 6px;
+  }
+
+  #qiblaMarker {
+    width: 36px;
+    height: 36px;
+  }
+
+  .distance-board {
+    padding: 8px 9px;
+  }
+
+  .sensor-board {
+    padding: 8px;
+  }
+
+  #sensorButton {
+    min-height: 40px;
+    font-size: 12px;
+  }
+}
+
+
+/* =========================================================
+   22. SHORT SCREEN RESPONSIVE
+   ========================================================= */
+
+@media (max-height: 650px) {
+  :root {
+    --compass-size: min(58vh, 245px);
+  }
+
+  #qiblaContentBoard {
+    gap: 5px;
+    padding: 6px;
+  }
+
+  .location-board {
+    padding: 6px 9px;
+  }
+
+  .compass-content-board,
+  .compass-board {
+    gap: 4px;
+    padding: 5px;
+  }
+
+  .compass-title {
+    font-size: 12px;
+  }
+
+  .distance-board {
+    padding: 7px 9px;
+  }
+
+  .sensor-board {
+    gap: 5px;
+    padding: 7px;
+  }
+
+  #sensorButton {
+    min-height: 36px;
+  }
+}
+
+
+/* =========================================================
+   23. VERY SHORT SCREEN
+   ========================================================= */
+
+@media (max-height: 520px) {
+  :root {
+    --compass-size: min(48vh, 205px);
+  }
+
+  .location-board {
+    padding: 5px 8px;
+  }
+
+  .compass-content-board,
+  .compass-board {
+    padding: 4px;
+  }
+
+  .distance-board {
+    padding: 5px 8px;
+  }
+
+  .sensor-board {
+    padding: 5px;
+  }
+
+  #sensorButton {
+    min-height: 32px;
+    padding: 5px 10px;
+  }
+
+  #sensorMessage {
+    font-size: 10px;
+  }
+}
+
+
+/* =========================================================
+   24. ACCESSIBILITY
+   ========================================================= */
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     scroll-behavior: auto !important;
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
-}
 
-/* ---------- TABLET ---------- */
-@media (min-width: 600px) {
-  .qibla-main {
-    width: min(100% - 36px, 650px);
-    margin-top: 25px;
-    gap: 18px;
-  }
-
-  .compass-board {
-    padding: 25px 22px 20px;
-  }
-
-  .compass-stage {
-    width: min(100%, 390px);
-  }
-
-  .location-board,
-  .sensor-board,
-  .distance-board,
-  .instruction-board {
-    padding: 18px 20px;
+  .footer-message-inner {
+    animation-duration: 120s;
   }
 }
 
-/* ---------- DESKTOP ---------- */
-@media (min-width: 900px) {
-  .qibla-main {
-    width: min(100% - 48px, 680px);
-    margin-top: 28px;
-    margin-bottom: 35px;
-  }
 
-  .compass-stage {
-    width: 390px;
-  }
-
-  .qibla-header .header-inner {
-    max-width: 1000px;
-  }
-}
-
-/* ---------- SMALL MOBILE ---------- */
-@media (max-width: 360px) {
-  .qibla-main {
-    width: calc(100% - 16px);
-    gap: 11px;
-  }
-
-  .compass-board {
-    padding: 16px 8px 13px;
-  }
-
-  .compass-stage {
-    width: min(100%, 315px);
-  }
-
-  .compass-heading h2 {
-    font-size: 17px;
-  }
-
-  .sensor-board {
-    padding: 12px 10px;
-  }
-
-  .sensor-button {
-    padding: 8px 10px;
-    font-size: 10px;
-  }
-
-  .bearing-value {
-    font-size: 20px;
-  }
-}
+/* =========================================================
+   25. END OF QIBLA.CSS
+   ========================================================= */
