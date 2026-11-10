@@ -1,180 +1,358 @@
-"use strict";
-
 (() => {
+  "use strict";
+
   const $ = (id) => document.getElementById(id);
 
-  /* =====================================================
-     LANGUAGE DATA
-  ===================================================== */
+  const elements = {
+    pageTitle: $("pageTitle"),
+    locationLabel: $("locationLabel"),
+    locationName: $("locationName"),
+    compassShell: $("compassShell"),
+    compassTicks: $("compassTicks"),
+    directionRing: $("directionRing"),
+    degreeRing: $("degreeRing"),
+    qiblaOrbit: $("qiblaOrbit"),
+    qiblaMarker: $("qiblaMarker"),
+    bearingValue: $("bearingValue"),
+    bearingDirection: $("bearingDirection"),
+    distanceLabel: $("distanceLabel"),
+    distanceValue: $("distanceValue"),
+    sensorButton: $("sensorButton"),
+    sensorButtonText: $("sensorButtonText"),
+    sensorMessage: $("sensorMessage"),
+    footerMessage: $("footerMessage"),
+    footerMessageClone: $("footerMessageClone")
+  };
 
-  const LANG = {
+  const translations = {
     bn: {
-      locale: "bn-BD",
       title: "কিবলা কম্পাস",
-      location: "বর্তমান অবস্থান",
-      loading: "লোকেশন খোঁজা হচ্ছে...",
-      unavailable: "লোকেশন পাওয়া যায়নি",
-      approximate: "কলকাতা (আনুমানিক অবস্থান)",
-      distance: "কাবা শরিফ পর্যন্ত দূরত্ব",
-      sensorStart: "কম্পাস চালু করুন",
-      sensorReady: "কম্পাস চালু হয়েছে",
-      sensorPermission: "কম্পাস ব্যবহারের অনুমতি দিন",
-      sensorUnavailable: "এই ডিভাইসে কম্পাস সেন্সর পাওয়া যায়নি",
-      sensorError: "কম্পাস সেন্সর চালু করা যায়নি",
-      calibration: "ফোনটি আটের মতো করে কয়েকবার ঘোরান, নির্ভুলতার জন্য ধাতব বস্তু থেকে দূরে থাকুন।",
-      quotes: [
-        "নামাজ আদায়ের আগে সঠিক কিবলার দিক জেনে নিন।",
-        "পবিত্র কাবা শরিফের দিকে মুখ করে নামাজ আদায় করুন।",
-        "আপনার বর্তমান অবস্থান অনুযায়ী কিবলার দিক নির্ণয় করুন।",
-        "সঠিক অবস্থান ও কম্পাস সেন্সর ব্যবহার করে কিবলার দিক খুঁজে নিন।",
-        "নামাজের প্রস্তুতিতে কিবলার সঠিক দিক জানা অত্যন্ত গুরুত্বপূর্ণ।",
-        "আল্লাহর স্মরণেই অন্তর প্রশান্তি লাভ করে।"
-      ],
-      directions: [
-        "উ", "উ-উ-পূ", "উ-পূ", "পূ-উ-পূ",
-        "পূ", "পূ-দ-পূ", "দ-পূ", "দ-দ-পূ",
-        "দ", "দ-দ-প", "দ-প", "প-দ-প",
-        "প", "প-উ-প", "উ-প", "উ-উ-প"
-      ],
-      degrees: [
-        "০°", "৪৫°", "৯০°", "১৩৫°",
-        "১৮০°", "২২৫°", "২৭০°", "৩১৫°"
-      ],
-      km: "কিমি"
+      location: "আপনার অবস্থান",
+      locating: "অবস্থান নির্ণয় করা হচ্ছে...",
+      locationError: "অবস্থান পাওয়া যায়নি",
+      fallbackLocation: "কলকাতা, পশ্চিমবঙ্গ (আনুমানিক)",
+      distance: "মক্কার দূরত্ব",
+      qibla: "কিবলার দিক",
+      enable: "কম্পাস চালু করুন",
+      enabled: "কম্পাস চালু আছে",
+      unsupported: "আপনার ডিভাইসে কম্পাস সেন্সর সমর্থিত নয়।",
+      permission: "কম্পাস ব্যবহারের অনুমতি দিন।",
+      permissionDenied: "কম্পাস ব্যবহারের অনুমতি পাওয়া যায়নি।",
+      sensorReady: "ফোনটি সমতলভাবে ধরে ধীরে ঘোরান।",
+      sensorWaiting: "কম্পাস সেন্সরের তথ্যের অপেক্ষায়...",
+      sensorActive: "কম্পাস সক্রিয়। কিবলার দিক অনুসরণ করুন।",
+      sensorError: "কম্পাস চালু করা যায়নি।",
+      footer: "সঠিক কিবলার দিক জানতে কম্পাস ব্যবহার করুন।",
+      north: "উত্তর",
+      northEast: "উত্তর-পূর্ব",
+      east: "পূর্ব",
+      southEast: "দক্ষিণ-পূর্ব",
+      south: "দক্ষিণ",
+      southWest: "দক্ষিণ-পশ্চিম",
+      west: "পশ্চিম",
+      northWest: "উত্তর-পশ্চিম",
+      km: "কিমি",
+      thousand: "হাজার",
+      degrees: "°"
     },
 
     en: {
-      locale: "en-IN",
       title: "Qibla Compass",
-      location: "Current Location",
-      loading: "Finding location...",
-      unavailable: "Location unavailable",
-      approximate: "Kolkata (approximate location)",
-      distance: "Distance to Kaaba",
-      sensorStart: "Start Compass",
-      sensorReady: "Compass activated",
-      sensorPermission: "Allow compass access",
-      sensorUnavailable: "Compass sensor unavailable on this device",
-      sensorError: "Could not start compass sensor",
-      calibration: "Move your phone in a figure-eight motion. Keep it away from magnetic objects.",
-      quotes: [
-        "Find the correct Qibla direction before prayer.",
-        "Face the Holy Kaaba when offering your prayer.",
-        "Find the Qibla direction based on your current location.",
-        "Use your location and compass sensor to find the Qibla.",
-        "Knowing the correct Qibla direction is important before prayer.",
-        "In the remembrance of Allah, hearts find peace."
-      ],
-      directions: [
-        "N", "NNE", "NE", "ENE",
-        "E", "ESE", "SE", "SSE",
-        "S", "SSW", "SW", "WSW",
-        "W", "WNW", "NW", "NNW"
-      ],
-      degrees: [
-        "0°", "45°", "90°", "135°",
-        "180°", "225°", "270°", "315°"
-      ],
-      km: "km"
+      location: "Your Location",
+      locating: "Finding your location...",
+      locationError: "Location unavailable",
+      fallbackLocation: "Kolkata, West Bengal (approx.)",
+      distance: "Distance to Makkah",
+      qibla: "Qibla Direction",
+      enable: "Enable Compass",
+      enabled: "Compass is active",
+      unsupported: "Your device does not support compass sensors.",
+      permission: "Please allow compass access.",
+      permissionDenied: "Compass permission was denied.",
+      sensorReady: "Keep your phone flat and rotate it slowly.",
+      sensorWaiting: "Waiting for compass sensor...",
+      sensorActive: "Compass active. Follow the Qibla direction.",
+      sensorError: "Unable to start the compass.",
+      footer: "Use the compass to find the correct Qibla direction.",
+      north: "North",
+      northEast: "NE",
+      east: "East",
+      southEast: "SE",
+      south: "South",
+      southWest: "SW",
+      west: "West",
+      northWest: "NW",
+      km: "km",
+      thousand: "thousand",
+      degrees: "°"
     },
 
     hi: {
-      locale: "hi-IN-u-nu-deva",
-      title: "क़िबला कम्पास",
-      location: "वर्तमान स्थान",
-      loading: "लोकेशन खोजी जा रही है...",
-      unavailable: "स्थान उपलब्ध नहीं",
-      approximate: "कोलकाता (अनुमानित स्थान)",
-      distance: "काबा तक की दूरी",
-      sensorStart: "कम्पास चालू करें",
-      sensorReady: "कम्पास चालू हो गया",
-      sensorPermission: "कम्पास की अनुमति दें",
-      sensorUnavailable: "इस डिवाइस में कम्पास सेंसर उपलब्ध नहीं है",
-      sensorError: "कम्पास सेंसर चालू नहीं हो सका",
-      calibration: "फ़ोन को आठ के आकार में कुछ बार घुमाएँ। चुंबकीय वस्तुओं से दूर रहें।",
-      quotes: [
-        "नमाज़ से पहले सही क़िबला दिशा जान लें।",
-        "नमाज़ अदा करते समय पवित्र काबा की ओर रुख करें।",
-        "अपने वर्तमान स्थान के अनुसार क़िबला दिशा जानें।",
-        "लोकेशन और कम्पास सेंसर से क़िबला दिशा पता करें।",
-        "नमाज़ से पहले सही क़िबला दिशा जानना ज़रूरी है।",
-        "अल्लाह के स्मरण से दिलों को सुकून मिलता है।"
-      ],
-      directions: [
-        "उ", "उ-उ-पू", "उ-पू", "पू-उ-पू",
-        "पू", "पू-द-पू", "द-पू", "द-द-पू",
-        "द", "द-द-प", "द-प", "प-द-प",
-        "प", "प-उ-प", "उ-प", "उ-उ-प"
-      ],
-      degrees: [
-        "०°", "४५°", "९०°", "१३५°",
-        "१८०°", "२२५°", "२७०°", "३१५°"
-      ],
-      km: "किमी"
+      title: "क़िबला कंपास",
+      location: "आपका स्थान",
+      locating: "स्थान खोजा जा रहा है...",
+      locationError: "स्थान उपलब्ध नहीं है",
+      fallbackLocation: "कोलकाता, पश्चिम बंगाल (अनुमानित)",
+      distance: "मक्का की दूरी",
+      qibla: "क़िबला दिशा",
+      enable: "कंपास चालू करें",
+      enabled: "कंपास चालू है",
+      unsupported: "आपका डिवाइस कंपास सेंसर का समर्थन नहीं करता।",
+      permission: "कृपया कंपास की अनुमति दें।",
+      permissionDenied: "कंपास की अनुमति नहीं मिली।",
+      sensorReady: "फोन को समतल रखकर धीरे-धीरे घुमाएँ।",
+      sensorWaiting: "कंपास सेंसर की प्रतीक्षा हो रही है...",
+      sensorActive: "कंपास सक्रिय है। क़िबला दिशा का पालन करें।",
+      sensorError: "कंपास चालू नहीं हो सका।",
+      footer: "सही क़िबला दिशा जानने के लिए कंपास का उपयोग करें।",
+      north: "उत्तर",
+      northEast: "उत्तर-पूर्व",
+      east: "पूर्व",
+      southEast: "दक्षिण-पूर्व",
+      south: "दक्षिण",
+      southWest: "दक्षिण-पश्चिम",
+      west: "पश्चिम",
+      northWest: "उत्तर-पश्चिम",
+      km: "किमी",
+      thousand: "हज़ार",
+      degrees: "°"
     }
   };
 
-  /* =====================================================
-     FIXED COORDINATES
-  ===================================================== */
+  const directionKeys = [
+    "north",
+    "northEast",
+    "east",
+    "southEast",
+    "south",
+    "southWest",
+    "west",
+    "northWest"
+  ];
 
-  const KAABA = {
-    latitude: 21.422487,
-    longitude: 39.826206
+  const degreeValues = [0, 45, 90, 135, 180, 225, 270, 315];
+
+  const MAKKAH = {
+    latitude: 21.4225,
+    longitude: 39.8262
   };
 
-  const KOLKATA_FALLBACK = {
+  const KOLKATA = {
     latitude: 22.5726,
     longitude: 88.3639
   };
 
-  const VALID_THEMES = [
-    "classic",
-    "royal",
-    "rose",
-    "pista"
-  ];
+  let currentLanguage = "bn";
+  let userLatitude = KOLKATA.latitude;
+  let userLongitude = KOLKATA.longitude;
+  let currentBearing = 0;
+  let currentHeading = 0;
+  let sensorStarted = false;
+  let locationIsApproximate = true;
 
-  const VALID_LANGUAGES = [
-    "bn",
-    "en",
-    "hi"
-  ];
+  let sensorEventName = null;
 
-  /* =====================================================
-     STATE
-  ===================================================== */
+  /* ------------------------------
+     Shared app settings
+  ------------------------------ */
 
-  let language = "bn";
-
-  let coordinates = null;
-  let qiblaBearing = null;
-
-  let heading = null;
-  let lastHeading = null;
-
-  let sensorActive = false;
-  let locationStatus = "loading";
-
-  let locationTimer = null;
-  let locationRequestId = 0;
-
-  let calibrationTimer = null;
-
-  let orientationListening = false;
-  let lastOrientationTime = 0;
-
-  /* =====================================================
-     HELPERS
-  ===================================================== */
-
-  function t() {
-    return LANG[language] || LANG.bn;
+  function readSettings() {
+    try {
+      const raw = localStorage.getItem("appSettings");
+      return raw ? JSON.parse(raw) : {};
+    } catch (error) {
+      console.warn("IBADAT settings could not be read:", error);
+      return {};
+    }
   }
 
-  function normalize(degrees) {
-    return (degrees % 360 + 360) % 360;
+  function getLanguage(settings) {
+    const raw = String(
+      settings.lang ||
+      settings.language ||
+      "bn"
+    ).toLowerCase();
+
+    if (raw.startsWith("en")) return "en";
+    if (raw.startsWith("hi")) return "hi";
+    return "bn";
   }
+
+  function getTheme(settings) {
+    const raw = String(
+      settings.themeColor ||
+      settings.theme ||
+      "classic"
+    ).toLowerCase();
+
+    const aliases = {
+      green: "classic",
+      classic: "classic",
+      blue: "royal",
+      royal: "royal",
+      champagne: "rose",
+      rose: "rose",
+      fresh: "pista",
+      pista: "pista"
+    };
+
+    return aliases[raw] || "classic";
+  }
+
+  function getDarkMode(settings) {
+    return (
+      settings.dark === true ||
+      settings.darkMode === true ||
+      settings.isDarkMode === true ||
+      settings.appearance === "dark"
+    );
+  }
+
+  function applySettings() {
+    const settings = readSettings();
+
+    currentLanguage = getLanguage(settings);
+
+    document.documentElement.lang = currentLanguage;
+    document.body.classList.remove(
+      "theme-classic",
+      "theme-royal",
+      "theme-rose",
+      "theme-pista",
+      "dark-mode"
+    );
+
+    document.body.classList.add(
+      "theme-" + getTheme(settings)
+    );
+
+    if (getDarkMode(settings)) {
+      document.body.classList.add("dark-mode");
+    }
+
+    updateLanguage();
+  }
+
+  function t(key) {
+    return translations[currentLanguage][key] ||
+      translations.bn[key] ||
+      key;
+  }
+
+  /* ------------------------------
+     Number formatting
+  ------------------------------ */
+
+  function formatNumber(value, maximumFractionDigits = 0) {
+    const locales = {
+      bn: "bn-BD",
+      en: "en-IN",
+      hi: "hi-IN-u-nu-deva"
+    };
+
+    return new Intl.NumberFormat(
+      locales[currentLanguage],
+      {
+        maximumFractionDigits
+      }
+    ).format(value);
+  }
+
+  /* ------------------------------
+     Language update
+  ------------------------------ */
+
+  function updateLanguage() {
+    if (elements.pageTitle) {
+      elements.pageTitle.textContent = t("title");
+    }
+
+    if (elements.locationLabel) {
+      elements.locationLabel.textContent = t("location");
+    }
+
+    if (elements.distanceLabel) {
+      elements.distanceLabel.textContent = t("distance");
+    }
+
+    if (elements.bearingDirection) {
+      elements.bearingDirection.textContent = t("qibla");
+    }
+
+    if (elements.sensorButtonText) {
+      elements.sensorButtonText.textContent =
+        sensorStarted ? t("enabled") : t("enable");
+    }
+
+    if (elements.sensorMessage) {
+      elements.sensorMessage.textContent =
+        sensorStarted ? t("sensorActive") : t("sensorReady");
+    }
+
+    if (elements.footerMessage) {
+      elements.footerMessage.textContent = t("footer");
+    }
+
+    if (elements.footerMessageClone) {
+      elements.footerMessageClone.textContent = t("footer");
+    }
+
+    updateDirectionLabels();
+    updateDegreeLabels();
+    updateBearingDisplay();
+    updateDistanceDisplay();
+  }
+
+  function updateDirectionLabels() {
+    if (!elements.directionRing) return;
+
+    const labels = elements.directionRing.querySelectorAll("span");
+
+    labels.forEach((label, index) => {
+      label.textContent = t(directionKeys[index]);
+    });
+  }
+
+  function updateDegreeLabels() {
+    if (!elements.degreeRing) return;
+
+    const labels = elements.degreeRing.querySelectorAll("span");
+
+    labels.forEach((label, index) => {
+      label.textContent =
+        formatNumber(degreeValues[index]) + t("degrees");
+    });
+  }
+
+  /* ------------------------------
+     Compass tick marks
+     All ticks stay inside the compass face.
+  ------------------------------ */
+
+  function createCompassTicks() {
+    if (!elements.compassTicks) return;
+
+    elements.compassTicks.replaceChildren();
+
+    const fragment = document.createDocumentFragment();
+
+    for (let degree = 0; degree < 360; degree += 5) {
+      const tick = document.createElement("i");
+
+      if (degree % 45 === 0) {
+        tick.classList.add("major");
+      }
+
+      tick.style.transform = `rotate(${degree}deg)`;
+      fragment.appendChild(tick);
+    }
+
+    elements.compassTicks.appendChild(fragment);
+  }
+
+  /* ------------------------------
+     Qibla calculation
+  ------------------------------ */
 
   function toRadians(degrees) {
     return degrees * Math.PI / 180;
@@ -184,1201 +362,432 @@
     return radians * 180 / Math.PI;
   }
 
-  function number(value, digits = 0) {
-    return new Intl.NumberFormat(t().locale, {
-      maximumFractionDigits: digits,
-      minimumFractionDigits: digits
-    }).format(value);
+  function normalizeAngle(angle) {
+    return ((angle % 360) + 360) % 360;
   }
 
-  function readSettings() {
-    try {
-      const saved = JSON.parse(
-        localStorage.getItem("appSettings") || "{}"
-      );
-
-      if (
-        !saved ||
-        typeof saved !== "object" ||
-        Array.isArray(saved)
-      ) {
-        return {};
-      }
-
-      return saved;
-
-    } catch (error) {
-      console.warn(
-        "IBADAT: settings read failed.",
-        error
-      );
-
-      return {};
-    }
-  }
-
-  /* =====================================================
-     SETTINGS INTEGRATION
-  ===================================================== */
-
-  function getLanguage(settings) {
-    const selected =
-      settings.lang ||
-      settings.language ||
-      "bn";
-
-    return VALID_LANGUAGES.includes(selected)
-      ? selected
-      : "bn";
-  }
-
-  function getTheme(settings) {
-    const selected =
-      settings.themeColor ||
-      settings.theme ||
-      "classic";
-
-    const aliases = {
-      green: "classic",
-      classic: "classic",
-      blue: "royal",
-      royal: "royal",
-      rose: "rose",
-      champagne: "rose",
-      pista: "pista",
-      fresh: "pista"
-    };
-
-    const theme = aliases[selected] || "classic";
-
-    return VALID_THEMES.includes(theme)
-      ? theme
-      : "classic";
-  }
-
-  function applySettings() {
-    const settings = readSettings();
-
-    language = getLanguage(settings);
-
-    const dark =
-      settings.dark === true ||
-      settings.darkMode === true ||
-      settings.isDarkMode === true;
-
-    document.documentElement.lang = language;
-
-    document.body.dataset.colorTheme =
-      getTheme(settings);
-
-    document.body.classList.toggle(
-      "dark-mode",
-      dark
+  function calculateQiblaBearing(latitude, longitude) {
+    const lat1 = toRadians(latitude);
+    const lat2 = toRadians(MAKKAH.latitude);
+    const deltaLongitude = toRadians(
+      MAKKAH.longitude - longitude
     );
 
-    updateLanguage();
+    const y = Math.sin(deltaLongitude) * Math.cos(lat2);
+
+    const x =
+      Math.cos(lat1) * Math.sin(lat2) -
+      Math.sin(lat1) * Math.cos(lat2) *
+      Math.cos(deltaLongitude);
+
+    return normalizeAngle(toDegrees(Math.atan2(y, x)));
   }
 
-  /* =====================================================
-     LANGUAGE UPDATE
-  ===================================================== */
-
-  function updateLanguage() {
-    const strings = t();
-
-    $("pageTitle").textContent = strings.title;
-
-    $("locationLabel").textContent =
-      strings.location;
-
-    $("distanceLabel").textContent =
-      strings.distance;
-
-    $("sensorButton").textContent =
-      sensorActive
-        ? strings.sensorReady
-        : strings.sensorStart;
-
-    document.title =
-      strings.title + " | IBADAT";
-
-    /* DIRECTION NAMES */
-
-    document.querySelectorAll(
-      ".direction-ring span"
-    ).forEach((element, index) => {
-
-      element.textContent =
-        strings.directions[index] || "";
-
-    });
-
-    /* DEGREE LABELS */
-
-    document.querySelectorAll(
-      ".degree-ring span"
-    ).forEach((element, index) => {
-
-      element.textContent =
-        strings.degrees[index] || "";
-
-    });
-
-    updateLocationDisplay();
-    updateDistanceDisplay();
-    updateFooter();
-  }
-
-  /* =====================================================
-     DISTANCE AND BEARING CALCULATIONS
-  ===================================================== */
-
-  function calculateDistance(lat1, lon1, lat2, lon2) {
+  function calculateDistance(latitude, longitude) {
     const earthRadius = 6371;
 
-    const dLat = toRadians(lat2 - lat1);
-    const dLon = toRadians(lon2 - lon1);
+    const lat1 = toRadians(latitude);
+    const lat2 = toRadians(MAKKAH.latitude);
+
+    const deltaLat = toRadians(
+      MAKKAH.latitude - latitude
+    );
+
+    const deltaLon = toRadians(
+      MAKKAH.longitude - longitude
+    );
 
     const a =
-      Math.sin(dLat / 2) ** 2 +
-      Math.cos(toRadians(lat1)) *
-      Math.cos(toRadians(lat2)) *
-      Math.sin(dLon / 2) ** 2;
+      Math.sin(deltaLat / 2) ** 2 +
+      Math.cos(lat1) *
+      Math.cos(lat2) *
+      Math.sin(deltaLon / 2) ** 2;
 
-    const c =
-      2 * Math.atan2(
-        Math.sqrt(a),
-        Math.sqrt(1 - a)
-      );
+    const c = 2 * Math.atan2(
+      Math.sqrt(a),
+      Math.sqrt(1 - a)
+    );
 
     return earthRadius * c;
   }
 
-  function calculateBearing(lat1, lon1, lat2, lon2) {
-    const phi1 = toRadians(lat1);
-    const phi2 = toRadians(lat2);
+  function updateBearingDisplay() {
+    if (!elements.bearingValue) return;
 
-    const deltaLambda =
-      toRadians(lon2 - lon1);
-
-    const y =
-      Math.sin(deltaLambda) * Math.cos(phi2);
-
-    const x =
-      Math.cos(phi1) * Math.sin(phi2) -
-      Math.sin(phi1) *
-      Math.cos(phi2) *
-      Math.cos(deltaLambda);
-
-    return normalize(
-      toDegrees(Math.atan2(y, x))
-    );
+    elements.bearingValue.textContent =
+      formatNumber(Math.round(currentBearing)) + t("degrees");
   }
-
-  function calculateQibla() {
-    if (!coordinates) return;
-
-    qiblaBearing = calculateBearing(
-      coordinates.latitude,
-      coordinates.longitude,
-      KAABA.latitude,
-      KAABA.longitude
-    );
-
-    updateDistanceDisplay();
-    updateQiblaMarker();
-  }
-
-  /* =====================================================
-     DISTANCE DISPLAY
-  ===================================================== */
 
   function updateDistanceDisplay() {
-    const element = $("distanceValue");
-
-    if (!coordinates) {
-      element.textContent = "--";
-      return;
-    }
+    if (!elements.distanceValue) return;
 
     const distance = calculateDistance(
-      coordinates.latitude,
-      coordinates.longitude,
-      KAABA.latitude,
-      KAABA.longitude
+      userLatitude,
+      userLongitude
     );
 
-    element.textContent =
-      number(distance, 1) + " " + t().km;
+    elements.distanceValue.textContent =
+      formatNumber(distance, 1) + " " + t("km");
   }
 
-  /* =====================================================
-     LOCATION DISPLAY
-  ===================================================== */
+  function updateQibla() {
+    currentBearing = calculateQiblaBearing(
+      userLatitude,
+      userLongitude
+    );
 
-  function updateLocationDisplay() {
-    const element = $("locationName");
-
-    if (locationStatus === "loading") {
-      element.textContent = t().loading;
-      return;
-    }
-
-    if (locationStatus === "approximate") {
-      element.textContent = t().approximate;
-      return;
-    }
-
-    if (locationStatus !== "available") {
-      element.textContent = t().unavailable;
-      return;
-    }
-
-    const names =
-      window.ibadatLocationNames || {};
-
-    element.textContent =
-      names[language] ||
-      names.en ||
-      names.bn ||
-      names.hi ||
-      t().unavailable;
+    updateBearingDisplay();
+    updateDistanceDisplay();
+    updateCompassRotation();
   }
 
-  /* =====================================================
-     SHARED LOCATION
-  ===================================================== */
+  /* ------------------------------
+     Compass movement
+  ------------------------------ */
 
-  function readSharedLocation() {
+  function updateCompassRotation() {
+    const heading = normalizeAngle(currentHeading);
+
+    /*
+      The compass dial follows the device heading.
+      The Qibla marker rotates to the calculated bearing.
+      The marker itself is counter-rotated so the Kaaba
+      image remains upright.
+    */
+
+    if (elements.compassShell) {
+      elements.compassShell.style.transform =
+        `rotate(${-heading}deg)`;
+    }
+
+    if (elements.qiblaOrbit) {
+      elements.qiblaOrbit.style.transform =
+        `rotate(${currentBearing}deg)`;
+    }
+
+    if (elements.qiblaMarker) {
+      elements.qiblaMarker.style.transform =
+        `translateX(-50%) rotate(${-currentBearing}deg)`;
+    }
+  }
+
+  /* ------------------------------
+     Location
+  ------------------------------ */
+
+  function updateLocationText(text) {
+    if (!elements.locationName) return;
+    elements.locationName.textContent = text;
+  }
+
+  function useFallbackLocation() {
+    userLatitude = KOLKATA.latitude;
+    userLongitude = KOLKATA.longitude;
+    locationIsApproximate = true;
+
+    updateLocationText(t("fallbackLocation"));
+    updateQibla();
+  }
+
+  function loadSavedLocation() {
     try {
-      const saved = JSON.parse(
-        localStorage.getItem(
-          "ibadatUserLocation"
-        ) || "null"
+      const saved = localStorage.getItem("ibadatUserLocation");
+
+      if (!saved) return false;
+
+      const location = JSON.parse(saved);
+
+      const latitude = Number(
+        location.latitude ?? location.lat
+      );
+
+      const longitude = Number(
+        location.longitude ?? location.lng ?? location.lon
       );
 
       if (
-        saved &&
-        Number.isFinite(Number(saved.lat)) &&
-        Number.isFinite(Number(saved.lon)) &&
-        Math.abs(Number(saved.lat)) <= 90 &&
-        Math.abs(Number(saved.lon)) <= 180
+        Number.isFinite(latitude) &&
+        Number.isFinite(longitude) &&
+        Math.abs(latitude) <= 90 &&
+        Math.abs(longitude) <= 180
       ) {
-        return {
-          latitude: Number(saved.lat),
-          longitude: Number(saved.lon),
-          updatedAt: Number(saved.updatedAt) || 0
-        };
-      }
+        userLatitude = latitude;
+        userLongitude = longitude;
+        locationIsApproximate = false;
 
+        updateLocationText(
+          location.name ||
+          location.city ||
+          t("location")
+        );
+
+        updateQibla();
+        return true;
+      }
     } catch (error) {
-      console.warn(
-        "IBADAT: shared location read failed.",
-        error
-      );
+      console.warn("Saved location could not be read:", error);
     }
 
-    return null;
+    return false;
   }
 
-  /* =====================================================
-     REVERSE GEOCODING
-  ===================================================== */
-
-  async function loadLocationName(lat, lon) {
-    const requestId = ++locationRequestId;
-
-    locationStatus = "loading";
-    updateLocationDisplay();
+  async function reverseGeocode(latitude, longitude) {
+    const url =
+      "https://nominatim.openstreetmap.org/reverse" +
+      `?format=jsonv2&lat=${latitude}&lon=${longitude}` +
+      "&zoom=10&addressdetails=1";
 
     try {
-      const url = new URL(
-        "https://nominatim.openstreetmap.org/reverse"
-      );
-
-      url.searchParams.set("format", "jsonv2");
-      url.searchParams.set("lat", lat);
-      url.searchParams.set("lon", lon);
-      url.searchParams.set("zoom", "14");
-      url.searchParams.set("addressdetails", "1");
-      url.searchParams.set("accept-language", "en");
-
-      const response = await fetch(
-        url.toString(),
-        {
-          headers: {
-            "Accept": "application/json"
-          }
+      const response = await fetch(url, {
+        headers: {
+          "Accept": "application/json"
         }
-      );
+      });
 
       if (!response.ok) {
-        throw new Error(
-          "Location name unavailable."
-        );
+        throw new Error("Geocoding request failed");
       }
 
       const data = await response.json();
-
-      if (requestId !== locationRequestId) {
-        return;
-      }
-
       const address = data.address || {};
 
-      const localityFields = [
-        "neighbourhood",
-        "suburb",
-        "quarter",
-        "city_district",
-        "borough",
-        "town",
-        "city",
-        "municipality",
-        "village",
-        "hamlet",
-        "county",
-        "state"
-      ];
+      const place =
+        address.city ||
+        address.town ||
+        address.village ||
+        address.suburb ||
+        address.county ||
+        address.state ||
+        t("location");
 
-      let locality = null;
+      updateLocationText(place);
 
-      for (const field of localityFields) {
-        if (
-          typeof address[field] === "string" &&
-          address[field].trim()
-        ) {
-          locality = address[field].trim();
-          break;
-        }
-      }
-
-      if (!locality) {
-        throw new Error("Locality not found.");
-      }
-
-      const country = address.country || "";
-
-      const names = {
-        en:
-          country && country !== locality
-            ? locality + ", " + country
-            : locality,
-
-        bn: address["name:bn"] || null,
-        hi: address["name:hi"] || null
-      };
-
-      /*
-       * Transliteration fallback
-       */
-
-      if (!names.bn || !names.hi) {
-        try {
-          const missingLanguages = [
-            "bn",
-            "hi"
-          ].filter(lang => !names[lang]);
-
-          const translated = await Promise.all(
-            missingLanguages.map(async lang => {
-
-              const inputUrl = new URL(
-                "https://inputtools.google.com/request"
-              );
-
-              inputUrl.searchParams.set(
-                "text",
-                locality
-              );
-
-              inputUrl.searchParams.set(
-                "itc",
-                lang === "bn"
-                  ? "bn-t-i0-und"
-                  : "hi-t-i0-und"
-              );
-
-              inputUrl.searchParams.set(
-                "num",
-                "1"
-              );
-
-              const resultResponse = await fetch(
-                inputUrl.toString()
-              );
-
-              if (!resultResponse.ok) {
-                throw new Error(
-                  "Transliteration unavailable."
-                );
-              }
-
-              const result =
-                await resultResponse.json();
-
-              return (
-                result?.[1]?.[0]?.[1]?.[0] ||
-                locality
-              );
-            })
-          );
-
-          missingLanguages.forEach(
-            (lang, index) => {
-              names[lang] = translated[index];
-            }
-          );
-
-        } catch {
-          names.bn = names.bn || locality;
-          names.hi = names.hi || locality;
-        }
-      }
-
-      if (requestId !== locationRequestId) {
-        return;
-      }
-
-      window.ibadatLocationNames = names;
-
-      locationStatus = "available";
-      updateLocationDisplay();
-
+      return place;
     } catch (error) {
-
-      if (requestId !== locationRequestId) {
-        return;
-      }
-
-      console.warn(
-        "IBADAT: reverse geocoding failed.",
-        error
-      );
-
-      locationStatus = "unavailable";
-      updateLocationDisplay();
+      console.warn("Reverse geocoding failed:", error);
+      updateLocationText(t("location"));
+      return null;
     }
   }
 
-  /* =====================================================
-     APPLY COORDINATES
-  ===================================================== */
-
-  function applyCoordinates(
-    lat,
-    lon,
-    source = "gps"
-  ) {
-    if (
-      !Number.isFinite(lat) ||
-      !Number.isFinite(lon) ||
-      Math.abs(lat) > 90 ||
-      Math.abs(lon) > 180
-    ) {
-      return;
-    }
-
-    coordinates = {
-      latitude: lat,
-      longitude: lon
-    };
-
-    calculateQibla();
-
-    if (
-      source === "gps" ||
-      source === "cached"
-    ) {
-      loadLocationName(lat, lon);
-
-    } else {
-
-      locationRequestId++;
-
-      locationStatus = "approximate";
-      updateLocationDisplay();
-    }
-  }
-
-  /* =====================================================
-     GPS
-  ===================================================== */
-
-  function useFallbackLocation() {
-    applyCoordinates(
-      KOLKATA_FALLBACK.latitude,
-      KOLKATA_FALLBACK.longitude,
-      "fallback"
-    );
-  }
-
-  function loadGPS() {
+  function requestLocation() {
     if (!navigator.geolocation) {
       useFallbackLocation();
       return;
     }
 
-    locationStatus = "loading";
-    updateLocationDisplay();
-
     navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        userLatitude = position.coords.latitude;
+        userLongitude = position.coords.longitude;
+        locationIsApproximate = false;
 
-      position => {
+        updateLocationText(t("location"));
+        updateQibla();
 
-        const lat =
-          position.coords.latitude;
-
-        const lon =
-          position.coords.longitude;
-
-        applyCoordinates(
-          lat,
-          lon,
-          "gps"
+        await reverseGeocode(
+          userLatitude,
+          userLongitude
         );
 
         try {
           localStorage.setItem(
             "ibadatUserLocation",
             JSON.stringify({
-              lat,
-              lon,
-              updatedAt: Date.now(),
-              source: "gps"
+              latitude: userLatitude,
+              longitude: userLongitude
             })
           );
-
         } catch (error) {
-          console.warn(
-            "IBADAT: location save failed.",
-            error
-          );
+          console.warn("Location could not be saved:", error);
         }
       },
 
-      error => {
-
-        console.warn(
-          "IBADAT: GPS error.",
-          error
-        );
-
-        const shared = readSharedLocation();
-
-        if (
-          shared &&
-          shared.updatedAt > 0 &&
-          Date.now() - shared.updatedAt <
-            24 * 60 * 60 * 1000
-        ) {
-          applyCoordinates(
-            shared.latitude,
-            shared.longitude,
-            "cached"
-          );
-
-          return;
-        }
-
+      (error) => {
+        console.warn("Location error:", error);
         useFallbackLocation();
       },
 
       {
         enableHighAccuracy: true,
-        timeout: 15000,
+        timeout: 12000,
         maximumAge: 300000
       }
     );
   }
 
-  /* =====================================================
-     COMPASS TICKS
-  ===================================================== */
+  /* ------------------------------
+     Device orientation sensor
+  ------------------------------ */
 
-  function createCompassTicks() {
-    const container = $("compassTicks");
-
-    if (!container) return;
-
-    container.replaceChildren();
-
-    for (let i = 0; i < 64; i++) {
-
-      const tick = document.createElement("i");
-
-      tick.style.transform =
-        `rotate(${i * 5.625}deg)`;
-
-      /*
-       * Four levels of tick marks:
-       *
-       * Every 5.625°  = small
-       * Every 22.5°   = medium
-       * Every 45°     = red secondary
-       * Every 90°     = red cardinal
-       */
-
-      if (i % 16 === 0) {
-
-        tick.classList.add("cardinal");
-
-      } else if (i % 8 === 0) {
-
-        tick.classList.add("intercardinal");
-
-      } else if (i % 4 === 0) {
-
-        tick.classList.add("major");
-
-      }
-
-      container.appendChild(tick);
-    }
-  }
-
-  /* =====================================================
-     DIRECTION LABEL POSITIONS
-  ===================================================== */
-
-  function positionDirections() {
-
-    const labels = document.querySelectorAll(
-      ".direction-ring span"
-    );
-
-    labels.forEach((element, index) => {
-
-      element.style.setProperty(
-        "--angle",
-        index * 22.5
-      );
-
-    });
-  }
-
-  /* =====================================================
-     DEGREE LABEL POSITIONS
-  ===================================================== */
-
-  function positionDegrees() {
-
-    const labels = document.querySelectorAll(
-      ".degree-ring span"
-    );
-
-    labels.forEach((element, index) => {
-
-      element.style.setProperty(
-        "--degree-angle",
-        index * 45
-      );
-
-    });
-  }
-
-  /* =====================================================
-     KAABA MARKER
-     OUTSIDE THE COMPASS
-  ===================================================== */
-
-  function updateQiblaMarker() {
-
-    if (qiblaBearing === null) {
-      return;
-    }
-
-    /*
-     * The marker is outside the rotating rose.
-     * Therefore its angle must include the
-     * phone heading.
-     */
-
-    const relativeBearing =
-      heading === null
-        ? qiblaBearing
-        : normalize(qiblaBearing - heading);
-
-    const orbit = $("qiblaOrbit");
-    const marker = $("qiblaMarker");
-
-    if (!orbit || !marker) return;
-
-    orbit.style.transform =
-      `rotate(${relativeBearing}deg)`;
-
-    /*
-     * Counter-rotate the icon so that the
-     * Kaaba image stays upright.
-     */
-
-    marker.style.transform =
-      `rotate(${-relativeBearing}deg)`;
-  }
-
-  /* =====================================================
-     COMPASS ROTATION
-  ===================================================== */
-
-  function updateCompass() {
-
-    if (heading === null) {
-      updateQiblaMarker();
-      return;
-    }
-
-    /*
-     * Dial, direction names and degree labels
-     * rotate together against phone movement.
-     */
-
-    $("compassRose").style.transform =
-      `rotate(${-heading}deg)`;
-
-    updateQiblaMarker();
-  }
-
-  /* =====================================================
-     SMOOTH HEADING
-  ===================================================== */
-
-  function smoothHeading(newHeading) {
-
-    newHeading = normalize(newHeading);
-
-    if (lastHeading === null) {
-
-      lastHeading = newHeading;
-      heading = newHeading;
-
-      updateCompass();
-
-      return;
-    }
-
-    /*
-     * Shortest angular distance avoids
-     * sudden jumps around 0° / 360°.
-     */
-
-    const difference =
-      ((newHeading - lastHeading + 540) % 360) - 180;
-
-    const smoothed =
-      normalize(
-        lastHeading + difference * 0.20
-      );
-
-    lastHeading = smoothed;
-    heading = smoothed;
-
-    updateCompass();
-  }
-
-  /* =====================================================
-     SCREEN ORIENTATION
-  ===================================================== */
-
-  function getScreenAngle() {
-
+  function getHeadingFromEvent(event) {
     if (
-      screen.orientation &&
-      Number.isFinite(screen.orientation.angle)
-    ) {
-      return screen.orientation.angle;
-    }
-
-    if (
-      Number.isFinite(window.orientation)
-    ) {
-      return window.orientation;
-    }
-
-    return 0;
-  }
-
-  /* =====================================================
-     DEVICE ORIENTATION
-  ===================================================== */
-
-  function handleOrientation(event) {
-
-    let compassHeading = null;
-
-    /*
-     * iOS Safari
-     */
-
-    if (
+      typeof event.webkitCompassHeading === "number" &&
       Number.isFinite(event.webkitCompassHeading)
     ) {
-
-      compassHeading =
-        event.webkitCompassHeading;
-
+      return normalizeAngle(event.webkitCompassHeading);
     }
-
-    /*
-     * Android absolute orientation
-     */
-
-    else if (
-      event.absolute === true &&
-      Number.isFinite(event.alpha)
-    ) {
-
-      compassHeading =
-        360 - event.alpha + getScreenAngle();
-
-    }
-
-    /*
-     * Browser fallback
-     */
-
-    else if (
-      Number.isFinite(event.alpha)
-    ) {
-
-      compassHeading =
-        360 - event.alpha + getScreenAngle();
-
-    }
-
-    if (!Number.isFinite(compassHeading)) {
-      return;
-    }
-
-    const now = performance.now();
-
-    /*
-     * Ignore duplicate sensor events.
-     */
 
     if (
-      now - lastOrientationTime < 8
+      typeof event.alpha === "number" &&
+      Number.isFinite(event.alpha)
     ) {
+      return normalizeAngle(360 - event.alpha);
+    }
+
+    return null;
+  }
+
+  function handleOrientation(event) {
+    const heading = getHeadingFromEvent(event);
+
+    if (heading === null) return;
+
+    currentHeading = heading;
+    updateCompassRotation();
+
+    if (elements.sensorMessage && sensorStarted) {
+      elements.sensorMessage.textContent = t("sensorActive");
+    }
+  }
+
+  function handleOrientationError(error) {
+    console.warn("Orientation sensor error:", error);
+
+    if (elements.sensorMessage) {
+      elements.sensorMessage.textContent = t("sensorError");
+    }
+  }
+
+  async function startCompass() {
+    if (sensorStarted) return;
+
+    if (!("DeviceOrientationEvent" in window)) {
+      elements.sensorMessage.textContent = t("unsupported");
       return;
     }
 
-    lastOrientationTime = now;
-
-    smoothHeading(compassHeading);
-  }
-
-  /* =====================================================
-     SENSOR LISTENER CONTROL
-  ===================================================== */
-
-  function addOrientationListeners() {
-
-    if (orientationListening) return;
-
-    window.addEventListener(
-      "deviceorientation",
-      handleOrientation,
-      true
-    );
-
-    window.addEventListener(
-      "deviceorientationabsolute",
-      handleOrientation,
-      true
-    );
-
-    orientationListening = true;
-  }
-
-  function removeOrientationListeners() {
-
-    if (!orientationListening) return;
-
-    window.removeEventListener(
-      "deviceorientation",
-      handleOrientation,
-      true
-    );
-
-    window.removeEventListener(
-      "deviceorientationabsolute",
-      handleOrientation,
-      true
-    );
-
-    orientationListening = false;
-  }
-
-  /* =====================================================
-     SENSOR START
-  ===================================================== */
-
-  async function startCompass() {
-
-    const button = $("sensorButton");
-    const message = $("sensorMessage");
-
-    button.disabled = true;
-    message.textContent = "";
-
     try {
-
       if (
-        !("DeviceOrientationEvent" in window)
+        typeof DeviceOrientationEvent.requestPermission === "function"
       ) {
-        throw new Error("unsupported");
-      }
-
-      /*
-       * iOS sensor permission
-       */
-
-      if (
-        typeof DeviceOrientationEvent.requestPermission ===
-        "function"
-      ) {
-
         const permission =
           await DeviceOrientationEvent.requestPermission();
 
         if (permission !== "granted") {
-          throw new Error("permission");
+          elements.sensorMessage.textContent =
+            t("permissionDenied");
+          return;
         }
       }
 
-      lastHeading = null;
-      heading = null;
+      sensorEventName = "deviceorientationabsolute";
 
-      lastOrientationTime = 0;
-
-      addOrientationListeners();
-
-      sensorActive = true;
-
-      button.textContent =
-        t().sensorReady;
-
-      message.textContent =
-        t().calibration;
-
-      if (calibrationTimer) {
-        clearTimeout(calibrationTimer);
-      }
-
-      calibrationTimer = window.setTimeout(
-        () => {
-
-          if (sensorActive) {
-            message.textContent = "";
-          }
-
-        },
-        7000
+      window.addEventListener(
+        sensorEventName,
+        handleOrientation,
+        true
       );
+
+      window.addEventListener(
+        "deviceorientation",
+        handleOrientation,
+        true
+      );
+
+      sensorStarted = true;
+
+      elements.sensorButtonText.textContent = t("enabled");
+      elements.sensorButton.disabled = false;
+      elements.sensorMessage.textContent = t("sensorWaiting");
 
     } catch (error) {
-
-      console.warn(
-        "IBADAT: compass sensor error.",
-        error
-      );
-
-      removeOrientationListeners();
-
-      sensorActive = false;
-
-      if (error.message === "unsupported") {
-
-        message.textContent =
-          t().sensorUnavailable;
-
-      } else if (
-        error.message === "permission"
-      ) {
-
-        message.textContent =
-          t().sensorPermission;
-
-      } else {
-
-        message.textContent =
-          t().sensorError;
-
-      }
-
-      button.textContent =
-        t().sensorStart;
-
-    } finally {
-
-      button.disabled = false;
-
+      handleOrientationError(error);
+      elements.sensorMessage.textContent = t("sensorError");
     }
   }
 
-  /* =====================================================
-     FOOTER MARQUEE
-  ===================================================== */
+  function stopCompass() {
+    if (!sensorStarted) return;
 
-  function updateFooter() {
+    if (sensorEventName) {
+      window.removeEventListener(
+        sensorEventName,
+        handleOrientation,
+        true
+      );
+    }
 
-    const first = $("footerMessage");
-    const second = $("footerMessageClone");
-
-    const text = t().quotes.join(
-      "   •   "
+    window.removeEventListener(
+      "deviceorientation",
+      handleOrientation,
+      true
     );
 
-    first.textContent = text;
-    second.textContent = text;
+    sensorStarted = false;
+    currentHeading = 0;
+
+    updateCompassRotation();
+
+    elements.sensorButtonText.textContent = t("enable");
+    elements.sensorMessage.textContent = t("sensorReady");
   }
 
-  /* =====================================================
-     SETTINGS CHANGE LISTENERS
-  ===================================================== */
+  /* ------------------------------
+     Settings change detection
+  ------------------------------ */
 
-  window.addEventListener(
-    "storage",
-    event => {
-
-      if (
-        !event.key ||
-        event.key === "appSettings"
-      ) {
-        applySettings();
-      }
-
-      if (
-        !event.key ||
-        event.key === "ibadatUserLocation"
-      ) {
-
-        const shared = readSharedLocation();
-
-        if (
-          shared &&
-          shared.updatedAt > 0 &&
-          Date.now() - shared.updatedAt <
-            24 * 60 * 60 * 1000
-        ) {
-
-          applyCoordinates(
-            shared.latitude,
-            shared.longitude,
-            "cached"
-          );
-
-        }
-      }
-    }
-  );
-
-  window.addEventListener(
-    "pageshow",
-    () => {
+  window.addEventListener("storage", (event) => {
+    if (event.key === "appSettings") {
       applySettings();
     }
-  );
 
-  document.addEventListener(
-    "visibilitychange",
-    () => {
-
-      if (!document.hidden) {
-        applySettings();
+    if (event.key === "ibadatUserLocation") {
+      if (loadSavedLocation()) {
+        updateQibla();
       }
-
     }
-  );
+  });
 
-  /* =====================================================
-     INITIALIZATION
-  ===================================================== */
+  window.addEventListener("pageshow", () => {
+    applySettings();
+  });
 
-  function init() {
+  /* ------------------------------
+     Initialize
+  ------------------------------ */
 
+  function initialize() {
     applySettings();
 
     createCompassTicks();
 
-    positionDirections();
+    updateLocationText(t("locating"));
 
-    positionDegrees();
-
-    $("sensorButton").addEventListener(
-      "click",
-      startCompass
-    );
-
-    /*
-     * Prefer recent shared location.
-     */
-
-    const shared = readSharedLocation();
-
-    if (
-      shared &&
-      shared.updatedAt > 0 &&
-      Date.now() - shared.updatedAt <
-        24 * 60 * 60 * 1000
-    ) {
-
-      applyCoordinates(
-        shared.latitude,
-        shared.longitude,
-        "cached"
-      );
-
-    } else {
-
-      loadGPS();
-
+    if (!loadSavedLocation()) {
+      useFallbackLocation();
+      requestLocation();
     }
 
-    /*
-     * Refresh location periodically.
-     */
+    updateQibla();
 
-    locationTimer = window.setInterval(
-      () => {
-
-        if (!document.hidden) {
-          loadGPS();
+    if (elements.sensorButton) {
+      elements.sensorButton.addEventListener("click", () => {
+        if (sensorStarted) {
+          stopCompass();
+        } else {
+          startCompass();
         }
-
-      },
-      10 * 60 * 1000
-    );
-
-    window.addEventListener(
-      "beforeunload",
-      () => {
-
-        window.clearInterval(locationTimer);
-
-        if (calibrationTimer) {
-          clearTimeout(calibrationTimer);
-        }
-
-        removeOrientationListeners();
-
-      }
-    );
+      });
+    }
   }
 
-  if (
-    document.readyState === "loading"
-  ) {
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      init,
-      { once: true }
-    );
-
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initialize, {
+      once: true
+    });
   } else {
-
-    init();
-
+    initialize();
   }
 
 })();
