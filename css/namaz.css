@@ -1,14 +1,17 @@
+
 /* =========================================================
    IBADAT — NAMAZ LEARNING PAGE
    File: css/namaz.css
 
-   Theme color consistency fix:
-   - Classic Green
-   - Royal Blue
-   - Rose Pink
-   - Pista Green
+   Themes: Classic, Royal, Rose, Pista
+   Modes: Light and Dark
 
-   Layout, images, card dimensions and behavior preserved.
+   Background:
+   Main Page : content-bg.png
+   Intro Board: content-bg1.png
+
+   Only colors and background image paths updated.
+   Layout and behavior preserved.
 ========================================================= */
 
 
@@ -28,7 +31,7 @@
     --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
 
-    /* Default: Classic Green */
+    /* Classic theme */
     --primary: #1B7F4B;
     --soft: #E8F5E9;
     --accent: #F2C94C;
@@ -65,6 +68,12 @@
     --option-bg: #E8F5E9;
     --option-text: #17452F;
     --option-border: #D5E3D1;
+
+    --dark-page-overlay: rgba(8, 15, 10, 0.80);
+    --dark-intro-bg: rgba(32, 55, 39, 0.95);
+    --dark-card-bg: rgba(32, 55, 39, 0.95);
+    --dark-card-text: #E5EDE7;
+    --dark-card-border: #405746;
 
     --content-shadow: 0 3px 10px rgba(30, 49, 28, 0.10);
     --bar-shadow: 0 3px 9px rgba(30, 49, 28, 0.15);
@@ -117,7 +126,7 @@ body {
 
     background:
         var(--page-overlay),
-        url("../assets/main-bg.jpg")
+        url("../assets/images/content-bg.png")
         center center / cover no-repeat;
 
     -webkit-font-smoothing: antialiased;
@@ -237,7 +246,7 @@ body {
 
     background:
         var(--intro-overlay),
-        url("../assets/hero-bg.jpg")
+        url("../assets/images/content-bg1.png")
         center center / cover no-repeat;
 
     border: 1px solid var(--border);
@@ -480,12 +489,11 @@ body {
 
 
 /* =========================================================
-   7. SETTINGS COLOR THEMES
+   7. LIGHT MODE — CLASSIC
 ========================================================= */
 
-/* ---------- CLASSIC GREEN ---------- */
-
-body[data-color-theme="classic"] {
+body[data-color-theme="classic"],
+body[data-theme="classic"] {
     --primary: #1B7F4B;
     --soft: #E8F5E9;
     --accent: #F2C94C;
@@ -494,7 +502,6 @@ body[data-color-theme="classic"] {
     --text: #17452F;
     --muted: #68796B;
 
-    --card: rgba(255, 255, 255, 0.96);
     --border: #D5E3D1;
 
     --page-overlay:
@@ -519,16 +526,20 @@ body[data-color-theme="classic"] {
     --footer-text: #F5E5A7;
     --footer-border: #F2C94C;
 
-    /* Fixed: Classic cards now use green shades */
     --option-bg: #E8F5E9;
     --option-text: #17452F;
     --option-border: #D5E3D1;
+
+    --dark-card-bg: rgba(32, 55, 39, 0.95);
 }
 
 
-/* ---------- ROYAL BLUE ---------- */
+/* =========================================================
+   8. LIGHT MODE — ROYAL
+========================================================= */
 
-body[data-color-theme="royal"] {
+body[data-color-theme="royal"],
+body[data-theme="royal"] {
     --primary: #285A8E;
     --soft: #E5EFF9;
     --accent: #E8BD55;
@@ -537,7 +548,6 @@ body[data-color-theme="royal"] {
     --text: #1B3652;
     --muted: #65798E;
 
-    --card: rgba(255, 255, 255, 0.96);
     --border: #C8D9EB;
 
     --page-overlay:
@@ -555,22 +565,27 @@ body[data-color-theme="royal"] {
         );
 
     --header-bg: #173A60;
-    --header-text: #FFF0C4;
+    --header-text: #F5E5A7;
     --header-border: #E8BD55;
 
     --footer-bg: #173A60;
-    --footer-text: #FFF0C4;
+    --footer-text: #F5E5A7;
     --footer-border: #E8BD55;
 
     --option-bg: #E5EFF9;
     --option-text: #1B3652;
     --option-border: #C8D9EB;
+
+    --dark-card-bg: rgba(27, 48, 70, 0.96);
 }
 
 
-/* ---------- ROSE PINK ---------- */
+/* =========================================================
+   9. LIGHT MODE — ROSE
+========================================================= */
 
-body[data-color-theme="rose"] {
+body[data-color-theme="rose"],
+body[data-theme="rose"] {
     --primary: #B96F79;
     --soft: #F8E9E7;
     --accent: #D9B875;
@@ -579,7 +594,6 @@ body[data-color-theme="rose"] {
     --text: #633B42;
     --muted: #846D70;
 
-    --card: rgba(255, 252, 251, 0.97);
     --border: #E8CBC8;
 
     --page-overlay:
@@ -597,22 +611,27 @@ body[data-color-theme="rose"] {
         );
 
     --header-bg: #7D414B;
-    --header-text: #FFF0D5;
+    --header-text: #F5E5A7;
     --header-border: #D9B875;
 
     --footer-bg: #7D414B;
-    --footer-text: #FFF0D5;
+    --footer-text: #F5E5A7;
     --footer-border: #D9B875;
 
     --option-bg: #F8E9E7;
-    --option-text: #7D414B;
+    --option-text: #633B42;
     --option-border: #E8CBC8;
+
+    --dark-card-bg: rgba(66, 39, 44, 0.96);
 }
 
 
-/* ---------- PISTA GREEN ---------- */
+/* =========================================================
+   10. LIGHT MODE — PISTA
+========================================================= */
 
-body[data-color-theme="pista"] {
+body[data-color-theme="pista"],
+body[data-theme="pista"] {
     --primary: #4CAF50;
     --soft: #DFF5E1;
     --accent: #A7D129;
@@ -621,7 +640,6 @@ body[data-color-theme="pista"] {
     --text: #254D2A;
     --muted: #6D806D;
 
-    --card: rgba(255, 255, 255, 0.96);
     --border: #CDE3C8;
 
     --page-overlay:
@@ -639,92 +657,75 @@ body[data-color-theme="pista"] {
         );
 
     --header-bg: #2F7135;
-    --header-text: #F5FFD9;
+    --header-text: #F5E5A7;
     --header-border: #A7D129;
 
     --footer-bg: #2F7135;
-    --footer-text: #F5FFD9;
+    --footer-text: #F5E5A7;
     --footer-border: #A7D129;
 
     --option-bg: #DFF5E1;
     --option-text: #254D2A;
     --option-border: #CDE3C8;
+
+    --dark-card-bg: rgba(34, 58, 36, 0.96);
 }
 
 
 /* =========================================================
-   8. DARK MODE
+   11. DARK MODE — COMMON
 ========================================================= */
 
 body.dark-mode {
     --text: #E5EDE7;
-    --muted: #C0CEC3;
-    --card: rgba(27, 41, 32, 0.97);
-    --border: rgba(255, 255, 255, 0.15);
+    --muted: #BECBBF;
+
+    --border: #405746;
 
     --page-overlay:
         linear-gradient(
-            rgba(9, 18, 13, 0.78),
-            rgba(9, 18, 13, 0.78)
+            rgba(8, 15, 10, 0.80),
+            rgba(8, 15, 10, 0.80)
         );
 
     --intro-overlay:
         linear-gradient(
-            rgba(13, 25, 18, 0.78),
-            rgba(13, 25, 18, 0.82)
+            rgba(12, 20, 14, 0.70),
+            rgba(12, 20, 14, 0.70)
         );
+
+    --dark-card-text: #E5EDE7;
 
     color: var(--text);
 
     background:
         var(--page-overlay),
-        url("../assets/main-bg.jpg")
+        url("../assets/images/content-bg.png")
         center center / cover no-repeat;
 }
+
+
+/* Dark header/footer retain each theme's own colors */
 
 body.dark-mode .top-board,
 body.dark-mode .namaz-footer,
 body.dark-mode .bottom-board {
-    background:
-        linear-gradient(
-            145deg,
-            var(--deep),
-            #101D16
-        );
-
+    background: var(--header-bg);
     border-color: var(--accent);
+}
+
+body.dark-mode .top-board {
+    color: var(--header-text);
 }
 
 body.dark-mode #page-title {
     color: var(--header-text);
 }
 
-body.dark-mode .intro-board {
-    color: var(--text);
-
-    background:
-        var(--intro-overlay),
-        url("../assets/hero-bg.jpg")
-        center center / cover no-repeat;
-
-    border-color: var(--border);
-}
-
-body.dark-mode #intro-title {
-    color: #F0E4BD;
-}
-
-body.dark-mode #intro-paragraph-1 {
-    color: var(--text);
-}
-
-body.dark-mode .learning-grid > * {
-    color: #F0DADB;
-    background: rgba(45, 34, 37, 0.96);
-    background-image: none;
-
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.20);
+body.dark-mode .namaz-footer,
+body.dark-mode .bottom-board {
+    color: var(--footer-text);
+    border-color: var(--accent);
 }
 
 body.dark-mode #footer-message {
@@ -732,8 +733,109 @@ body.dark-mode #footer-message {
 }
 
 
+/* Dark intro board background */
+
+body.dark-mode .intro-board {
+    color: var(--text);
+
+    background:
+        var(--intro-overlay),
+        url("../assets/images/content-bg1.png")
+        center center / cover no-repeat;
+
+    border-color: var(--border);
+}
+
+body.dark-mode #intro-title {
+    color: var(--text);
+}
+
+body.dark-mode #intro-paragraph-1 {
+    color: var(--text);
+}
+
+
+/* Dark learning cards */
+
+body.dark-mode .learning-grid > * {
+    color: var(--dark-card-text);
+    background: var(--dark-card-bg);
+    background-image: none;
+
+    border-color: var(--border);
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.20);
+}
+
+
 /* =========================================================
-   9. RESPONSIVE — SMALL PHONES
+   12. DARK MODE — THEME-SPECIFIC HEADER COLORS
+========================================================= */
+
+body.dark-mode[data-color-theme="classic"],
+body.dark-mode[data-theme="classic"] {
+    --header-bg: #0F5132;
+    --footer-bg: #0F5132;
+    --dark-card-bg: rgba(32, 55, 39, 0.95);
+}
+
+body.dark-mode[data-color-theme="royal"],
+body.dark-mode[data-theme="royal"] {
+    --header-bg: #142D49;
+    --footer-bg: #142D49;
+    --dark-card-bg: rgba(27, 48, 70, 0.96);
+}
+
+body.dark-mode[data-color-theme="rose"],
+body.dark-mode[data-theme="rose"] {
+    --header-bg: #592F36;
+    --footer-bg: #592F36;
+    --dark-card-bg: rgba(66, 39, 44, 0.96);
+}
+
+body.dark-mode[data-color-theme="pista"],
+body.dark-mode[data-theme="pista"] {
+    --header-bg: #244C28;
+    --footer-bg: #244C28;
+    --dark-card-bg: rgba(34, 58, 36, 0.96);
+}
+
+
+/* =========================================================
+   13. SUPPORT FOR HTML THEME CLASSES
+========================================================= */
+
+html.theme-classic body {
+    --primary: #1B7F4B;
+    --soft: #E8F5E9;
+    --accent: #F2C94C;
+    --deep: #0F5132;
+}
+
+html.theme-royal body {
+    --primary: #285A8E;
+    --soft: #E5EFF9;
+    --accent: #E8BD55;
+    --deep: #173A60;
+}
+
+html.theme-rose body {
+    --primary: #B96F79;
+    --soft: #F8E9E7;
+    --accent: #D9B875;
+    --deep: #7D414B;
+}
+
+html.theme-pista body {
+    --primary: #4CAF50;
+    --soft: #DFF5E1;
+    --accent: #A7D129;
+    --deep: #2F7135;
+}
+
+
+/* =========================================================
+   14. RESPONSIVE — SMALL PHONES
 ========================================================= */
 
 @media (max-width: 380px) {
@@ -770,7 +872,7 @@ body.dark-mode #footer-message {
 
 
 /* =========================================================
-   10. RESPONSIVE — SHORT SCREENS
+   15. RESPONSIVE — SHORT SCREENS
 ========================================================= */
 
 @media (max-height: 760px) {
@@ -796,7 +898,7 @@ body.dark-mode #footer-message {
 
 
 /* =========================================================
-   11. RESPONSIVE — VERY SHORT SCREENS
+   16. RESPONSIVE — VERY SHORT SCREENS
 ========================================================= */
 
 @media (max-height: 600px) {
@@ -834,7 +936,7 @@ body.dark-mode #footer-message {
 
 
 /* =========================================================
-   12. VERY NARROW PHONES
+   17. VERY NARROW PHONES
 ========================================================= */
 
 @media (max-width: 320px) {
@@ -861,7 +963,7 @@ body.dark-mode #footer-message {
 
 
 /* =========================================================
-   13. ACCESSIBILITY AND REDUCED MOTION
+   18. ACCESSIBILITY AND REDUCED MOTION
 ========================================================= */
 
 #page-title,
