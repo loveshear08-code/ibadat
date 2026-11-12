@@ -44,7 +44,7 @@
 
   /* Inner circle radius is approximately 30% of compass size.
      Pointer orbit is placed close to the inner circle edge. */
-  --pointer-orbit-radius: calc(var(--compass-size) * .295);
+  --pointer-orbit-radius: calc(var(--compass-size) * .27);
 }
 
 /* RESET */
@@ -507,12 +507,11 @@ button:focus-visible {
 
 .qibla-marker {
   position: absolute;
-
   top: 50%;
   left: 50%;
 
-  width: clamp(42px, 12vw, 58px);
-  height: clamp(42px, 12vw, 58px);
+  width: clamp(58px, 14vw, 72px);
+  height: clamp(58px, 14vw, 72px);
 
   display: flex;
   align-items: center;
@@ -521,7 +520,7 @@ button:focus-visible {
   transform:
     translate(-50%, -50%)
     rotate(var(--qibla-angle, 0deg))
-    translateY(calc(var(--compass-size) * -.59))
+    translateY(calc(var(--compass-size) * -.68))
     rotate(calc(var(--qibla-angle, 0deg) * -1));
 
   will-change: transform;
@@ -529,13 +528,12 @@ button:focus-visible {
 
 #kaabaIcon {
   display: block;
-
   width: 100%;
   height: 100%;
 
   object-fit: contain;
 
-  filter: drop-shadow(0 3px 4px rgba(0,0,0,.25));
+  filter: drop-shadow(0 3px 5px rgba(0,0,0,.25));
 }
 
 /* RED TRIANGLE — ORBITS THE INNER CIRCLE */
