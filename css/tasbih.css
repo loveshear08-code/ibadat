@@ -1,8 +1,8 @@
 
 /* ========================================================
    IBADAT TASBIH — RESPONSIVE THEME CSS
-   Page background : ../assets/content-bg.png
-   Zikr background : ../assets/content-bg1.png
+   Page background : ../assets/images/content-bg.png
+   Zikr background : ../assets/images/content-bg1.png
    Themes          : Classic, Royal, Rose, Pista
    Modes           : Light and Dark
    ======================================================== */
@@ -29,6 +29,8 @@
   --zikr-tint: rgba(255, 249, 231, 0.24);
 
   --board-border: rgba(198, 164, 91, 0.88);
+  --bar-border: var(--accent);
+
   --board-text: #173c2d;
   --muted-text: #667568;
 
@@ -59,14 +61,20 @@ body.theme-classic {
   --primary-deep: #0b2c20;
   --accent: #c6a45b;
   --accent-light: #e6d29b;
+
   --page-tint: rgba(255, 250, 235, 0.42);
   --board-tint: rgba(255, 250, 235, 0.76);
   --zikr-tint: rgba(255, 249, 231, 0.24);
+
   --board-border: rgba(198, 164, 91, 0.88);
+  --bar-border: #c6a45b;
+
   --board-text: #173c2d;
   --muted-text: #667568;
+
   --progress-track: rgba(18, 61, 44, 0.14);
   --progress-fill: #426d4b;
+
   --tap-background: #eee4c7;
   --tap-border: #c6a45b;
 }
@@ -78,19 +86,24 @@ body[data-color-theme="royal"],
 body[data-theme-color="royal"],
 html.theme-royal,
 body.theme-royal {
-  /* FIX: Royal theme is blue, not purple. */
   --primary: #173a60;
   --primary-deep: #102945;
   --accent: #9dbde0;
   --accent-light: #d7e8f8;
+
   --page-tint: rgba(235, 244, 255, 0.43);
   --board-tint: rgba(235, 244, 255, 0.78);
   --zikr-tint: rgba(225, 239, 255, 0.26);
+
   --board-border: rgba(125, 166, 211, 0.92);
+  --bar-border: #9dbde0;
+
   --board-text: #193653;
   --muted-text: #647b94;
+
   --progress-track: rgba(23, 58, 96, 0.14);
   --progress-fill: #3976b8;
+
   --tap-background: #e0ecfa;
   --tap-border: #9dbde0;
 }
@@ -106,14 +119,20 @@ body.theme-rose {
   --primary-deep: #542433;
   --accent: #cf97a4;
   --accent-light: #f0d4dc;
+
   --page-tint: rgba(255, 240, 241, 0.44);
   --board-tint: rgba(255, 240, 241, 0.79);
   --zikr-tint: rgba(255, 240, 241, 0.27);
+
   --board-border: rgba(207, 151, 164, 0.94);
+  --bar-border: #cf97a4;
+
   --board-text: #642f3c;
   --muted-text: #896772;
+
   --progress-track: rgba(119, 56, 74, 0.14);
   --progress-fill: #a65c72;
+
   --tap-background: #f5dfe5;
   --tap-border: #cf97a4;
 }
@@ -129,19 +148,25 @@ body.theme-pista {
   --primary-deep: #203f25;
   --accent: #b8a25a;
   --accent-light: #d9cc8c;
+
   --page-tint: rgba(241, 249, 227, 0.43);
   --board-tint: rgba(241, 249, 227, 0.78);
   --zikr-tint: rgba(241, 249, 227, 0.26);
+
   --board-border: rgba(184, 162, 90, 0.94);
+  --bar-border: #b8a25a;
+
   --board-text: #30482c;
   --muted-text: #667a5b;
+
   --progress-track: rgba(52, 91, 55, 0.14);
   --progress-fill: #57814d;
+
   --tap-background: #e1edcf;
   --tap-border: #b8a25a;
 }
 
-/* 3. Dark mode: supports global theme.js classes/data attributes */
+/* 3. Dark mode */
 
 html.dark-mode,
 body.dark-mode,
@@ -157,14 +182,11 @@ body[data-dark-mode="true"] {
 
   --primary: #d9e8d4;
   --primary-deep: #edf3df;
-  --accent: #c8aa63;
-  --accent-light: #f0d99a;
 
   --page-tint: rgba(12, 23, 17, 0.68);
   --board-tint: rgba(19, 32, 24, 0.82);
   --zikr-tint: rgba(12, 23, 17, 0.34);
 
-  --board-border: rgba(200, 170, 99, 0.83);
   --board-text: #f0ead9;
   --muted-text: #c0c9b8;
 
@@ -172,12 +194,26 @@ body[data-dark-mode="true"] {
   --progress-fill: #b5c99b;
 
   --tap-background: #294432;
-  --tap-border: #c8aa63;
 
   --board-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
 }
 
-/* Dark-mode header/footer text stays readable. */
+/* Dark-mode theme-specific borders */
+
+html.dark-mode,
+body.dark-mode,
+html.dark,
+body.dark,
+html[data-mode="dark"],
+body[data-mode="dark"],
+html[data-theme-mode="dark"],
+body[data-theme-mode="dark"],
+html[data-dark-mode="true"],
+body[data-dark-mode="true"] {
+  --bar-border: var(--accent);
+}
+
+/* Dark-mode header/footer text */
 
 html.dark-mode .page-title,
 body.dark-mode .page-title,
@@ -250,7 +286,7 @@ img {
   display: none !important;
 }
 
-/* 5. Main floral background + visible light cream overlay. */
+/* 5. Main page background */
 
 body::before {
   content: "";
@@ -258,7 +294,7 @@ body::before {
   z-index: -2;
   inset: 0;
 
-  background-image: url("../assets/images/content-bg");
+  background-image: url("../assets/images/content-bg.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -323,8 +359,7 @@ body::after {
     box-shadow var(--transition);
 }
 
-/* 8. Header
-   FIX: keep exact 48px height, 2px border and 20px radius. */
+/* 8. Header */
 
 .header {
   flex: 0 0 var(--header-height);
@@ -339,7 +374,7 @@ body::after {
   padding: 0 12px;
   overflow: hidden;
 
-  border: 2px solid var(--accent);
+  border: 2px solid var(--bar-border);
   border-radius: 20px;
 
   color: #fff8e7;
@@ -400,7 +435,7 @@ body::after {
   background: transparent;
 }
 
-/* Mosque image */
+/* Zikr background image */
 
 .zikr-background {
   position: absolute;
@@ -409,7 +444,7 @@ body::after {
 
   border-radius: inherit;
 
-  background-image: url("../assets/images/content-bg1");
+  background-image: url("../assets/images/content-bg1.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -417,7 +452,7 @@ body::after {
   pointer-events: none;
 }
 
-/* Light theme-tinted overlay */
+/* Theme-tinted overlay */
 
 .zikr-cream-overlay {
   position: absolute;
@@ -900,8 +935,7 @@ body::after {
   transform: none;
 }
 
-/* 15. Footer
-   FIX: keep exact 48px height, 2px border and 20px radius. */
+/* 15. Footer */
 
 .footer {
   flex: 0 0 var(--footer-height);
@@ -917,7 +951,7 @@ body::after {
   padding: 0 12px;
   overflow: hidden;
 
-  border: 2px solid var(--accent);
+  border: 2px solid var(--bar-border);
   border-radius: 20px;
 
   color: #fff8e7;
@@ -1040,8 +1074,7 @@ body::after {
   }
 }
 
-/* 18. Very short screens
-   FIX: header/footer remain 48px on short screens too. */
+/* 18. Very short screens */
 
 @media (max-height: 560px) {
   #tasbihApp {
