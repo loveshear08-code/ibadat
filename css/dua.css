@@ -1,8 +1,16 @@
+
 /* =========================================================
    IBADAT — DUA.CSS
-   Matched with QURAN.CSS
-   Header/Footer: 48px
-   ========================================================= */
+   QIBLA THEME + BACKGROUND MATCH
+   Themes: Classic / Royal / Rose / Pista
+   Light Mode + Dark Mode
+   Layout and existing design preserved
+========================================================= */
+
+
+/* =========================================================
+   1. ROOT VARIABLES
+========================================================= */
 
 :root {
   --header-height: 48px;
@@ -11,28 +19,30 @@
   --page-gap: 6px;
   --board-radius: 20px;
 
+  /* Classic Green — Qibla palette */
   --primary: #1B7F4B;
   --soft: #E8F5E9;
   --accent: #F2C94C;
   --deep: #0F5132;
+
   --text: #17452F;
   --muted: #68796B;
-  --card: rgba(255,255,255,.94);
+  --card: rgba(213,239,211,.88);
   --border: #D5E3D1;
 
-  --header-bg: var(--deep);
+  --header-bg: #0F5132;
   --header-text: #F5E5A7;
-  --footer-bg: var(--deep);
+  --footer-bg: #0F5132;
   --footer-text: #F5E5A7;
 
-  --page-overlay: linear-gradient(
-    135deg,
-    rgba(235,245,226,.56),
-    rgba(255,253,245,.62),
-    rgba(232,244,222,.58)
-  );
+  --page-overlay:
+    linear-gradient(
+      135deg,
+      rgba(235,245,226,.56),
+      rgba(255,253,245,.62),
+      rgba(232,244,222,.58)
+    );
 
-  --home-overlay: rgba(255,253,245,.70);
   --content-overlay: rgba(255,253,245,.48);
 
   --shadow: 0 3px 10px rgba(30,49,28,.12);
@@ -41,7 +51,10 @@
   --translation-font-size: 16px;
 }
 
-/* ---------- GLOBAL ---------- */
+
+/* =========================================================
+   2. GLOBAL
+========================================================= */
 
 * {
   box-sizing: border-box;
@@ -64,12 +77,14 @@ html {
 body {
   min-width: 280px;
   min-height: 100%;
+
   padding:
     max(5px, env(safe-area-inset-top, 0px))
     var(--page-padding)
     max(5px, env(safe-area-inset-bottom, 0px));
 
   color: var(--text);
+
   font-family:
     "Noto Sans Bengali",
     "Hind Siliguri",
@@ -77,9 +92,11 @@ body {
     Arial,
     sans-serif;
 
+  /* Same main background as Qibla page */
   background:
     var(--page-overlay),
-    url("../assets/main-bg.jpg") center / cover no-repeat;
+    url("../assets/images/content-bg.png")
+    center center / cover no-repeat;
 }
 
 button,
@@ -111,7 +128,10 @@ button:disabled {
   display: none !important;
 }
 
-/* ---------- APP LAYOUT ---------- */
+
+/* =========================================================
+   3. APP LAYOUT
+========================================================= */
 
 .dua-app {
   position: relative;
@@ -136,7 +156,10 @@ button:disabled {
   overflow: hidden;
 }
 
-/* ---------- HEADER: 48px ---------- */
+
+/* =========================================================
+   4. HEADER
+========================================================= */
 
 .dua-hero {
   position: relative;
@@ -182,7 +205,11 @@ button:disabled {
   display: none;
 }
 
-/* ---------- MAIN CONTENT BOARD ---------- */
+
+/* =========================================================
+   5. MAIN CONTENT BOARD
+   Uses Qibla content-bg2.png
+========================================================= */
 
 .dua-main-board {
   position: relative;
@@ -206,12 +233,16 @@ button:disabled {
       var(--content-overlay),
       var(--content-overlay)
     ),
-    url("../assets/main-bg.jpg") center / cover no-repeat;
+    url("../assets/images/content-bg2.png")
+    center center / cover no-repeat;
 
   box-shadow: var(--shadow);
 }
 
-/* ---------- PAGE VISIBILITY ---------- */
+
+/* =========================================================
+   6. PAGE VISIBILITY
+========================================================= */
 
 .dua-page {
   display: none;
@@ -222,6 +253,7 @@ button:disabled {
   height: 100%;
   min-width: 0;
   min-height: 0;
+
   overflow: hidden;
 }
 
@@ -229,7 +261,10 @@ button:disabled {
   display: flex;
 }
 
-/* ---------- CHAPTER LIST ---------- */
+
+/* =========================================================
+   7. CHAPTER LIST
+========================================================= */
 
 .chapter-list {
   display: flex;
@@ -248,6 +283,7 @@ button:disabled {
 
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
+
   scrollbar-width: thin;
   scrollbar-color: rgba(155,120,55,.45) transparent;
 }
@@ -335,6 +371,7 @@ button:disabled {
   height: 30px;
 
   border-radius: 50%;
+
   color: #fff;
   background: var(--deep);
 
@@ -346,12 +383,16 @@ button:disabled {
 .chapter-arrow,
 .entry-arrow {
   flex: 0 0 auto;
+
   color: var(--primary);
   font-size: 23px;
   font-weight: 900;
 }
 
-/* ---------- ENTRY LIST ---------- */
+
+/* =========================================================
+   8. ENTRY LIST
+========================================================= */
 
 .entry-list {
   display: flex;
@@ -370,6 +411,7 @@ button:disabled {
 
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
+
   scrollbar-width: thin;
   scrollbar-color: rgba(155,120,55,.45) transparent;
 }
@@ -426,7 +468,10 @@ button:disabled {
   flex-basis: 30px;
 }
 
-/* ---------- SELECTED DUA ---------- */
+
+/* =========================================================
+   9. SELECTED DUA
+========================================================= */
 
 #duaContent {
   display: flex;
@@ -445,6 +490,7 @@ button:disabled {
 
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
+
   scrollbar-width: thin;
   scrollbar-color: rgba(155,120,55,.45) transparent;
 }
@@ -475,10 +521,12 @@ button:disabled {
 .dua-heading,
 .dua-section-title {
   margin: 0 0 8px;
+
   color: var(--deep);
   font-size: 16px;
   font-weight: 800;
   line-height: 1.7;
+
   overflow-wrap: anywhere;
 }
 
@@ -486,12 +534,14 @@ button:disabled {
 .arabic-text,
 .dua-text-arabic {
   margin: 0;
+
   color: var(--deep);
 
   font-family: "Amiri", "Noto Naskh Arabic", serif;
   font-size: var(--arabic-font-size);
   font-weight: 500;
   line-height: 2.15;
+
   text-align: right;
   direction: rtl;
 
@@ -502,9 +552,11 @@ button:disabled {
 .transliteration,
 .dua-pronunciation {
   margin: 12px 0 0;
+
   color: var(--primary);
   font-size: 15px;
   line-height: 1.9;
+
   overflow-wrap: anywhere;
 }
 
@@ -512,9 +564,11 @@ button:disabled {
 .translation,
 .dua-meaning {
   margin: 10px 0 0;
+
   color: var(--text);
   font-size: var(--translation-font-size);
   line-height: 1.9;
+
   overflow-wrap: anywhere;
 }
 
@@ -525,10 +579,11 @@ button:disabled {
   padding-top: 9px;
 
   border-top: 1px solid var(--border);
-  color: var(--muted);
 
+  color: var(--muted);
   font-size: 13px;
   line-height: 1.7;
+
   overflow-wrap: anywhere;
 }
 
@@ -546,7 +601,10 @@ button:disabled {
   line-height: 1.6;
 }
 
-/* ---------- AUDIO PLAYER ---------- */
+
+/* =========================================================
+   10. AUDIO PLAYER
+========================================================= */
 
 .dua-audio-player,
 .audio-player,
@@ -569,6 +627,7 @@ button:disabled {
 
   color: var(--footer-text);
   background: var(--footer-bg);
+
   box-shadow: var(--shadow);
 }
 
@@ -609,6 +668,7 @@ button:disabled {
   flex: 1 1 auto;
   flex-direction: column;
   gap: 5px;
+
   min-width: 0;
 }
 
@@ -622,6 +682,7 @@ button:disabled {
 
   background: rgba(255,255,255,.28);
   accent-color: var(--accent);
+
   cursor: pointer;
 }
 
@@ -637,10 +698,14 @@ button:disabled {
   line-height: 1.4;
 }
 
-/* ---------- STATUS / LOADING ---------- */
+
+/* =========================================================
+   11. STATUS / LOADING
+========================================================= */
 
 .status-box {
   flex: 0 0 auto;
+
   width: 100%;
   margin: auto 0;
   padding: 16px 10px;
@@ -680,13 +745,17 @@ button:disabled {
 .empty-message,
 .error-message {
   padding: 16px 8px;
+
   color: var(--muted);
   font-size: 13px;
   line-height: 1.8;
   text-align: center;
 }
 
-/* ---------- FOOTER: 48px ---------- */
+
+/* =========================================================
+   12. FOOTER
+========================================================= */
 
 .dua-footer {
   flex: 0 0 var(--footer-height);
@@ -718,6 +787,7 @@ button:disabled {
   width: 100%;
   height: 100%;
   min-width: 0;
+
   overflow: hidden;
 }
 
@@ -736,98 +806,163 @@ button:disabled {
   white-space: nowrap;
 }
 
-/* ---------- COLOR THEMES ---------- */
+
+/* =========================================================
+   13. LIGHT MODE — CLASSIC GREEN
+========================================================= */
 
 body[data-color-theme="classic"] {
-  /* Default green theme */
+  --primary: #1B7F4B;
+  --soft: #E8F5E9;
+  --accent: #F2C94C;
+  --deep: #0F5132;
+
+  --text: #17452F;
+  --muted: #68796B;
+
+  --card: rgba(213,239,211,.88);
+  --border: #D5E3D1;
+
+  --header-bg: #0F5132;
+  --header-text: #F5E5A7;
+  --footer-bg: #0F5132;
+  --footer-text: #F5E5A7;
+
+  --page-overlay:
+    linear-gradient(
+      135deg,
+      rgba(235,245,226,.56),
+      rgba(255,253,245,.62),
+      rgba(232,244,222,.58)
+    );
+
+  --content-overlay: rgba(255,253,245,.48);
 }
+
+
+/* =========================================================
+   14. LIGHT MODE — ROYAL BLUE
+========================================================= */
 
 body[data-color-theme="royal"] {
   --primary: #285A8E;
   --soft: #E5EFF9;
   --accent: #E8BD55;
   --deep: #173A60;
+
   --text: #1B3652;
   --muted: #65798E;
+
+  --card: rgba(220,235,249,.90);
   --border: #C8D9EB;
 
   --header-bg: #173A60;
+  --header-text: #F5E5A7;
   --footer-bg: #173A60;
+  --footer-text: #F5E5A7;
+
+  --page-overlay:
+    linear-gradient(
+      135deg,
+      rgba(229,239,249,.60),
+      rgba(246,250,255,.66),
+      rgba(220,233,247,.58)
+    );
+
+  --content-overlay: rgba(244,249,255,.48);
 }
+
+
+/* =========================================================
+   15. LIGHT MODE — ROSE PINK
+========================================================= */
 
 body[data-color-theme="rose"] {
   --primary: #B96F79;
   --soft: #F8E9E7;
   --accent: #D9B875;
   --deep: #7D414B;
+
   --text: #633B42;
   --muted: #846D70;
+
+  --card: rgba(248,225,222,.91);
   --border: #E8CBC8;
 
   --header-bg: #7D414B;
+  --header-text: #F5E5A7;
   --footer-bg: #7D414B;
+  --footer-text: #F5E5A7;
+
+  --page-overlay:
+    linear-gradient(
+      135deg,
+      rgba(255,238,234,.60),
+      rgba(255,247,245,.66),
+      rgba(248,233,231,.60)
+    );
+
+  --content-overlay: rgba(255,248,244,.48);
 }
+
+
+/* =========================================================
+   16. LIGHT MODE — PISTA GREEN
+========================================================= */
 
 body[data-color-theme="pista"] {
   --primary: #4CAF50;
   --soft: #DFF5E1;
   --accent: #A7D129;
   --deep: #2F7135;
+
   --text: #254D2A;
   --muted: #6D806D;
+
+  --card: rgba(218,242,216,.91);
   --border: #CDE3C8;
 
   --header-bg: #2F7135;
+  --header-text: #F5E5A7;
   --footer-bg: #2F7135;
+  --footer-text: #F5E5A7;
+
+  --page-overlay:
+    linear-gradient(
+      135deg,
+      rgba(223,245,225,.58),
+      rgba(248,253,240,.64),
+      rgba(223,240,217,.58)
+    );
+
+  --content-overlay: rgba(248,253,240,.48);
 }
 
-/* ---------- DARK MODE ---------- */
+
+/* =========================================================
+   17. DARK MODE — COMMON
+========================================================= */
 
 body.dark-mode {
   --text: #E5EDE7;
   --muted: #BECBBF;
-  --card: rgba(25,38,29,.96);
   --border: #405746;
-  --soft: #263B2C;
 
-  --page-overlay: linear-gradient(
-    rgba(8,15,10,.80),
-    rgba(8,15,10,.80)
-  );
+  --page-overlay:
+    linear-gradient(
+      rgba(8,15,10,.80),
+      rgba(8,15,10,.80)
+    );
 
-  --home-overlay: rgba(12,20,14,.73);
-  --content-overlay: rgba(12,20,14,.60);
-}
+  --content-overlay: rgba(12,20,14,.70);
 
-body.dark-mode .dua-app {
+  color: var(--text);
+
+  /* Same Qibla main background in dark mode */
   background:
     var(--page-overlay),
-    url("../assets/main-bg.jpg") center / cover no-repeat;
-}
-
-body.dark-mode .dua-hero,
-body.dark-mode .dua-footer {
-  background: var(--header-bg);
-}
-
-body.dark-mode[data-color-theme="classic"] {
-  --header-bg: #0F5132;
-  --footer-bg: #0F5132;
-}
-
-body.dark-mode[data-color-theme="royal"] {
-  --header-bg: #142D49;
-  --footer-bg: #142D49;
-}
-
-body.dark-mode[data-color-theme="rose"] {
-  --header-bg: #592F36;
-  --footer-bg: #592F36;
-}
-
-body.dark-mode[data-color-theme="pista"] {
-  --header-bg: #244C28;
-  --footer-bg: #244C28;
+    url("../assets/images/content-bg.png")
+    center center / cover no-repeat;
 }
 
 body.dark-mode .dua-main-board {
@@ -836,7 +971,19 @@ body.dark-mode .dua-main-board {
       var(--content-overlay),
       var(--content-overlay)
     ),
-    url("../assets/main-bg.jpg") center / cover no-repeat;
+    url("../assets/images/content-bg2.png")
+    center center / cover no-repeat;
+}
+
+body.dark-mode .dua-hero,
+body.dark-mode .dua-footer {
+  background: var(--header-bg);
+  border-color: var(--accent);
+}
+
+body.dark-mode .hero-title,
+body.dark-mode .dua-footer-message {
+  color: var(--header-text);
 }
 
 body.dark-mode .chapter-item,
@@ -852,6 +999,7 @@ body.dark-mode .dua-item,
 body.dark-mode .dhikr-card {
   color: var(--text);
   background: var(--card);
+  border-color: var(--border);
 }
 
 body.dark-mode .chapter-number,
@@ -859,6 +1007,92 @@ body.dark-mode .entry-number {
   color: var(--header-text);
   background: var(--header-bg);
 }
+
+body.dark-mode .dua-translation,
+body.dark-mode .translation,
+body.dark-mode .dua-meaning {
+  color: var(--text);
+}
+
+body.dark-mode .dua-reference,
+body.dark-mode .reference,
+body.dark-mode .dua-source {
+  color: var(--muted);
+  border-top-color: var(--border);
+}
+
+
+/* =========================================================
+   18. DARK MODE — CLASSIC GREEN
+========================================================= */
+
+body.dark-mode[data-color-theme="classic"] {
+  --primary: #1B7F4B;
+  --soft: #263B2C;
+  --accent: #F2C94C;
+  --deep: #0F5132;
+
+  --header-bg: #0F5132;
+  --footer-bg: #0F5132;
+
+  --card: rgba(32,55,39,.95);
+}
+
+
+/* =========================================================
+   19. DARK MODE — ROYAL BLUE
+========================================================= */
+
+body.dark-mode[data-color-theme="royal"] {
+  --primary: #285A8E;
+  --soft: #26394D;
+  --accent: #E8BD55;
+  --deep: #173A60;
+
+  --header-bg: #142D49;
+  --footer-bg: #142D49;
+
+  --card: rgba(27,48,70,.96);
+}
+
+
+/* =========================================================
+   20. DARK MODE — ROSE PINK
+========================================================= */
+
+body.dark-mode[data-color-theme="rose"] {
+  --primary: #B96F79;
+  --soft: #432D32;
+  --accent: #D9B875;
+  --deep: #7D414B;
+
+  --header-bg: #592F36;
+  --footer-bg: #592F36;
+
+  --card: rgba(66,39,44,.96);
+}
+
+
+/* =========================================================
+   21. DARK MODE — PISTA GREEN
+========================================================= */
+
+body.dark-mode[data-color-theme="pista"] {
+  --primary: #4CAF50;
+  --soft: #2B402D;
+  --accent: #A7D129;
+  --deep: #2F7135;
+
+  --header-bg: #244C28;
+  --footer-bg: #244C28;
+
+  --card: rgba(34,58,36,.96);
+}
+
+
+/* =========================================================
+   22. DARK MODE — CONTENT TEXT
+========================================================= */
 
 body.dark-mode .dua-heading,
 body.dark-mode .dua-section-title,
@@ -879,7 +1113,56 @@ body.dark-mode .reference-label {
   color: var(--accent);
 }
 
-/* ---------- SMALL MOBILE ---------- */
+body.dark-mode .chapter-arrow,
+body.dark-mode .entry-arrow {
+  color: var(--accent);
+}
+
+body.dark-mode .chapter-item:hover,
+body.dark-mode .chapter-card:hover,
+body.dark-mode .chapter-button:hover,
+body.dark-mode .chapter-list > button:hover,
+body.dark-mode .entry-item:hover,
+body.dark-mode .entry-card:hover,
+body.dark-mode .entry-button:hover,
+body.dark-mode .entry-list > button:hover {
+  background: var(--soft);
+  border-color: var(--accent);
+}
+
+body.dark-mode .dua-audio-player,
+body.dark-mode .audio-player,
+body.dark-mode #duaAudioPlayer {
+  color: var(--header-text);
+  background: var(--header-bg);
+  border-color: var(--accent);
+}
+
+body.dark-mode .audio-control,
+body.dark-mode .audio-player button,
+body.dark-mode .dua-audio-player button,
+body.dark-mode #duaAudioPlayer button {
+  color: var(--header-text);
+  background: var(--primary);
+  border-color: var(--accent);
+}
+
+body.dark-mode .audio-play-button,
+body.dark-mode .audio-player .play-button,
+body.dark-mode .dua-audio-player .play-button {
+  color: var(--deep);
+  background: var(--accent);
+}
+
+body.dark-mode .audio-time,
+body.dark-mode .audio-duration {
+  color: var(--header-text);
+}
+
+
+/* =========================================================
+   23. SMALL MOBILE
+========================================================= */
 
 @media (max-width: 380px) {
   :root {
@@ -990,7 +1273,10 @@ body.dark-mode .reference-label {
   }
 }
 
-/* ---------- SHORT SCREENS ---------- */
+
+/* =========================================================
+   24. SHORT SCREENS
+========================================================= */
 
 @media (max-height: 600px) {
   .dua-main-board {
@@ -1008,7 +1294,10 @@ body.dark-mode .reference-label {
   }
 }
 
-/* ---------- REDUCED MOTION ---------- */
+
+/* =========================================================
+   25. REDUCED MOTION
+========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
   *,
