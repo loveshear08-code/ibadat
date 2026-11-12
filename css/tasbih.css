@@ -1,8 +1,8 @@
 
 /* ========================================================
    IBADAT TASBIH — RESPONSIVE THEME CSS
-   Page background : ../assets/main-bg.jpg
-   Zikr background : ../assets/hero-bg.jpg
+   Page background : ../assets/content-bg.png
+   Zikr background : ../assets/content-bg1.png
    Themes          : Classic, Royal, Rose, Pista
    Modes           : Light and Dark
    ======================================================== */
@@ -258,7 +258,7 @@ body::before {
   z-index: -2;
   inset: 0;
 
-  background-image: url("../assets/main-bg.jpg");
+  background-image: url("../assets/images/content-bg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -409,7 +409,7 @@ body::after {
 
   border-radius: inherit;
 
-  background-image: url("../assets/hero-bg.jpg");
+  background-image: url("../assets/images/content-bg1");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
