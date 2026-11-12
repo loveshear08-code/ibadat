@@ -386,7 +386,7 @@ button:focus-visible {
       rgba(255,255,255,.66),
       rgba(255,255,255,.66)
     ),
-    url("../assets/images/content-bg2.png") center/cover no-repeat;
+    url("../assets/images/content-bg3.png") center/cover no-repeat;
 
   box-shadow:
     inset 0 0 0 1px rgba(255,255,255,.45),
@@ -520,7 +520,7 @@ button:focus-visible {
   transform:
     translate(-50%, -50%)
     rotate(var(--qibla-angle, 0deg))
-    translateY(calc(var(--compass-size) * -.61))
+    translateY(calc(var(--compass-size) * -.62))
     rotate(calc(var(--qibla-angle, 0deg) * -1));
 
   will-change: transform;
