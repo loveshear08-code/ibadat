@@ -520,7 +520,7 @@ button:focus-visible {
   transform:
     translate(-50%, -50%)
     rotate(var(--qibla-angle, 0deg))
-    translateY(calc(var(--compass-size) * -.62))
+    translateY(calc(var(--compass-size) * -.65))
     rotate(calc(var(--qibla-angle, 0deg) * -1));
 
   will-change: transform;
