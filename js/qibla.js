@@ -82,7 +82,7 @@
       title: "কিবলা কম্পাস",
       locationLabel: "বর্তমান অবস্থান:",
       locating: "Home-এর লোকেশন নেওয়া হচ্ছে...",
-      locationUnavailable: "Home পেজের লোকেশন পাওয়া যায়নি",
+      locationUnavailable: "লোকেশনের নাম পাওয়া যায়নি",
 
       distanceLabel: "কাবা শরীফ থেকে দূরত্ব:",
       distanceUnit: "কিমি",
@@ -103,7 +103,7 @@
       title: "Qibla Compass",
       locationLabel: "Current Location:",
       locating: "Reading Home location...",
-      locationUnavailable: "Home location is not available",
+      locationUnavailable: "Location name is unavailable",
 
       distanceLabel: "Distance from the Holy Kaaba:",
       distanceUnit: "km",
@@ -124,7 +124,7 @@
       title: "क़िबला कम्पास",
       locationLabel: "वर्तमान स्थान:",
       locating: "Home का स्थान पढ़ा जा रहा है...",
-      locationUnavailable: "Home का स्थान उपलब्ध नहीं है",
+      locationUnavailable: "स्थान का नाम उपलब्ध नहीं है",
 
       distanceLabel: "पवित्र काबा से दूरी:",
       distanceUnit: "किमी",
@@ -208,169 +208,106 @@
     );
   }
 
- /* =====================================================
-   3. SETTINGS
-   ===================================================== */
+  /* =====================================================
+     3. SETTINGS
+     ===================================================== */
 
-function readSettings() {
-  let settings = {};
+  function readSettings() {
+    let settings = {};
 
-  try {
-    settings = JSON.parse(
-      localStorage.getItem(SETTINGS_KEY) || "{}"
-    );
-  } catch (error) {
-    console.warn("IBADAT settings read error:", error);
-  }
+    try {
+      settings = JSON.parse(
+        localStorage.getItem(SETTINGS_KEY) || "{}"
+      );
+    } catch (error) {
+      console.warn("IBADAT settings read error:", error);
+    }
 
-  // Keep the previous language for comparison
-  const previousLanguage = language;
+    const previousLanguage = language;
 
-  // LANGUAGE
-  const savedLanguage =
-    settings.lang ||
-    settings.language ||
-    settings.appLanguage ||
-    "bn";
+    // LANGUAGE
+    const savedLanguage =
+      settings.lang ||
+      settings.language ||
+      settings.appLanguage ||
+      "bn";
 
-  language = ["bn", "en", "hi"].includes(
-    String(savedLanguage).toLowerCase()
-  )
-    ? String(savedLanguage).toLowerCase()
-    : "bn";
+    language = ["bn", "en", "hi"].includes(
+      String(savedLanguage).toLowerCase()
+    )
+      ? String(savedLanguage).toLowerCase()
+      : "bn";
 
-  // THEME
-  const savedTheme =
-    settings.themeColor ||
-    settings.theme ||
-    "classic";
+    // THEME
+    const savedTheme =
+      settings.themeColor ||
+      settings.theme ||
+      "classic";
 
-  const themeAliases = {
-    green: "classic",
-    classic: "classic",
-    blue: "royal",
-    royal: "royal",
-    champagne: "rose",
-    rose: "rose",
-    fresh: "pista",
-    pista: "pista"
-  };
+    const themeAliases = {
+      green: "classic",
+      classic: "classic",
+      blue: "royal",
+      royal: "royal",
+      champagne: "rose",
+      rose: "rose",
+      fresh: "pista",
+      pista: "pista"
+    };
 
-  theme =
-    themeAliases[String(savedTheme).toLowerCase()] ||
-    "classic";
+    theme =
+      themeAliases[String(savedTheme).toLowerCase()] ||
+      "classic";
 
-  // DARK MODE
-  const savedDark =
-    settings.dark ??
-    settings.darkMode ??
-    settings.isDarkMode ??
-    false;
+    // DARK MODE
+    const savedDark =
+      settings.dark ??
+      settings.darkMode ??
+      settings.isDarkMode ??
+      false;
 
-  darkMode =
-    savedDark === true ||
-    savedDark === 1 ||
-    savedDark === "true";
+    darkMode =
+      savedDark === true ||
+      savedDark === 1 ||
+      savedDark === "true";
 
-  // APPLY DOCUMENT SETTINGS
-  document.documentElement.lang = language;
+    document.documentElement.lang = language;
 
-  document.body.dataset.colorTheme = theme;
+    document.body.dataset.colorTheme = theme;
 
-  document.body.classList.toggle(
-    "dark-mode",
-    darkMode
-  );
-
-  // Refresh location name if language has changed
-  const languageChanged =
-    previousLanguage !== language;
-
-  if (languageChanged && userLocation) {
-    userLocation.name = null;
-  }
-
-  // APPLY LANGUAGE AND UI
-  applyTranslations();
-
-  createDirectionLabels();
-
-  updateBearingDisplay();
-
-  updateSensorButton();
-
-  // FETCH LOCATION NAME IN SELECTED LANGUAGE
-  if (languageChanged && userLocation) {
-    const latitude = userLocation.latitude;
-    const longitude = userLocation.longitude;
-
-    const requestId = ++geocodeRequestId;
-
-    setText(
-      el.locationName,
-      currentText().locating
+    document.body.classList.toggle(
+      "dark-mode",
+      darkMode
     );
 
-    const languageCode = {
-      bn: "bn",
-      en: "en",
-      hi: "hi"
-    }[language];
+    const languageChanged =
+      previousLanguage !== language;
 
-    const url =
-      "https://nominatim.openstreetmap.org/reverse" +
-      `?format=jsonv2&lat=${encodeURIComponent(latitude)}` +
-      `&lon=${encodeURIComponent(longitude)}` +
-      "&zoom=10&addressdetails=1" +
-      `&accept-language=${languageCode}`;
+    if (languageChanged && userLocation) {
+      userLocation.name = null;
 
-    fetch(url, {
-      headers: {
-        "Accept": "application/json"
-      }
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Location lookup failed");
-        }
+      // Invalidate an older location request.
+      geocodeRequestId++;
+    }
 
-        return response.json();
-      })
-      .then(data => {
-        if (requestId !== geocodeRequestId) return;
-        if (!userLocation) return;
+    applyTranslations();
 
-        const address = data.address || {};
+    createDirectionLabels();
 
-        const place =
-          address.city ||
-          address.town ||
-          address.village ||
-          address.suburb ||
-          address.county ||
-          address.state_district ||
-          address.state ||
-          data.name;
+    updateBearingDisplay();
 
-        if (place) {
-          userLocation.name = place;
-          setText(el.locationName, place);
-        } else {
-          updateLocationText();
-        }
-      })
-      .catch(error => {
-        console.warn(
-          "Localized location lookup error:",
-          error
-        );
+    updateSensorButton();
 
-        if (requestId === geocodeRequestId) {
-          updateLocationText();
-        }
-      });
+    // Load location name again in the selected language.
+    if (languageChanged && userLocation) {
+      updateLocationText();
+
+      getLocationName(
+        userLocation.latitude,
+        userLocation.longitude
+      );
+    }
   }
-} 
 
   /* =====================================================
      4. TRANSLATIONS
@@ -384,8 +321,15 @@ function readSettings() {
     setText(el.distanceLabel, t.distanceLabel);
     setText(el.distanceUnit, t.distanceUnit);
 
-    setText(el.footerMessage, FOOTER_MESSAGES[language]);
-    setText(el.footerMessageClone, FOOTER_MESSAGES[language]);
+    setText(
+      el.footerMessage,
+      FOOTER_MESSAGES[language]
+    );
+
+    setText(
+      el.footerMessageClone,
+      FOOTER_MESSAGES[language]
+    );
 
     updateSensorButton();
     updateLocationText();
@@ -598,17 +542,17 @@ function readSettings() {
     const relativeAngle =
       normalizeAngle(qiblaBearing - heading);
 
-    /* Dial rotates with phone orientation. */
+    // Dial rotates with phone orientation.
     el.compassDial.style.transform =
       `rotate(${-heading}deg)`;
 
-    /* Red triangle rotates around inner circle centre. */
+    // Red triangle rotates around inner circle centre.
     el.qiblaPointerOrbit.style.setProperty(
       "--pointer-angle",
       `${relativeAngle}deg`
     );
 
-    /* Kaaba icon keeps its own orbit outside the compass. */
+    // Kaaba icon keeps its own orbit outside the compass.
     if (el.qiblaMarker) {
       el.qiblaMarker.style.setProperty(
         "--qibla-angle",
@@ -681,20 +625,14 @@ function readSettings() {
         let cache;
 
         try {
-          cache = JSON.parse(localStorage.getItem(key) || "null");
+          cache = JSON.parse(
+            localStorage.getItem(key) || "null"
+          );
         } catch {
           continue;
         }
 
         if (!cache || typeof cache !== "object") continue;
-
-        /*
-          Home cache key format:
-          ibadatLocationV2_lat_lon
-
-          Compare coordinates in the key to avoid using
-          a different saved location's localized name.
-        */
 
         const suffix = key.slice(LOCATION_CACHE_PREFIX.length);
         const parts = suffix.split("_");
@@ -719,15 +657,14 @@ function readSettings() {
 
         const names = cache.names || {};
 
+        // Use only the selected language.
+        // Do not show English/Bengali as a Hindi name.
         const localizedName =
-          names[language] ||
-          names[language === "bn" ? "bengali" : language] ||
-          names.en ||
-          names.bn ||
-          names.hi ||
-          cache.name ||
-          cache.city ||
-          null;
+          language === "hi"
+            ? (names.hi || names.hindi)
+            : language === "bn"
+              ? (names.bn || names.bengali)
+              : (names.en || names.english);
 
         if (localizedName) {
           return String(localizedName);
@@ -764,35 +701,80 @@ function readSettings() {
       return;
     }
 
-    if (userLocation.name) {
+    // Do not reuse a name from a different language.
+    if (userLocation.nameLanguage === language && userLocation.name) {
       setText(el.locationName, userLocation.name);
       return;
     }
 
     setText(
       el.locationName,
-      `${formatNumber(userLocation.latitude, 4)}, ${formatNumber(userLocation.longitude, 4)}`
+      currentText().locating
     );
   }
 
   /* =====================================================
-     16. REVERSE GEOCODING
+     16. REVERSE GEOCODING — SELECTED LANGUAGE
      ===================================================== */
+
+  function extractLocalizedPlace(data) {
+    const address = data.address || {};
+    const names = data.namedetails || {};
+
+    if (language === "hi") {
+      return (
+        names["name:hi"] ||
+        names["official_name:hi"] ||
+        address.city ||
+        address.town ||
+        address.village ||
+        address.suburb ||
+        address.county ||
+        address.state_district ||
+        address.state ||
+        null
+      );
+    }
+
+    if (language === "bn") {
+      return (
+        names["name:bn"] ||
+        names["official_name:bn"] ||
+        address.city ||
+        address.town ||
+        address.village ||
+        address.suburb ||
+        address.county ||
+        address.state_district ||
+        address.state ||
+        null
+      );
+    }
+
+    return (
+      names["name:en"] ||
+      address.city ||
+      address.town ||
+      address.village ||
+      address.suburb ||
+      address.county ||
+      address.state_district ||
+      address.state ||
+      null
+    );
+  }
 
   async function getLocationName(latitude, longitude) {
     const requestId = ++geocodeRequestId;
+    const requestedLanguage = language;
 
     try {
-      const languageCode =
-        language === "bn" ? "bn" :
-        language === "hi" ? "hi" : "en";
-
       const url =
         "https://nominatim.openstreetmap.org/reverse" +
         `?format=jsonv2&lat=${encodeURIComponent(latitude)}` +
         `&lon=${encodeURIComponent(longitude)}` +
-        "&zoom=10&addressdetails=1" +
-        `&accept-language=${languageCode}`;
+        "&zoom=10&addressdetails=1&namedetails=1" +
+        `&accept-language=${requestedLanguage}`;
 
       const response = await fetch(url, {
         headers: {
@@ -806,30 +788,34 @@ function readSettings() {
 
       const data = await response.json();
 
+      // Ignore old requests after another language/location change.
       if (requestId !== geocodeRequestId) return;
+      if (requestedLanguage !== language) return;
+      if (!userLocation) return;
 
-      const address = data.address || {};
+      const place = extractLocalizedPlace(data);
 
-      const place =
-        address.city ||
-        address.town ||
-        address.village ||
-        address.suburb ||
-        address.county ||
-        address.state_district ||
-        address.state ||
-        data.name;
+      if (place) {
+        userLocation.name = String(place);
+        userLocation.nameLanguage = requestedLanguage;
 
-      if (place && userLocation) {
-        userLocation.name = place;
-        setText(el.locationName, place);
+        setText(el.locationName, userLocation.name);
       } else {
-        updateLocationText();
+        userLocation.name = null;
+        userLocation.nameLanguage = null;
+
+        setText(
+          el.locationName,
+          currentText().locationUnavailable
+        );
       }
 
     } catch (error) {
       console.warn("Reverse geocoding error:", error);
-      updateLocationText();
+
+      if (requestId === geocodeRequestId) {
+        updateLocationText();
+      }
     }
   }
 
@@ -852,13 +838,12 @@ function readSettings() {
       latitude: Number(location.latitude),
       longitude: Number(location.longitude),
       accuracy: Number(location.accuracy) || null,
-      name: location.name || null
+      name: location.name || null,
+      nameLanguage: null
     };
 
-    /*
-      Home is the source of truth.
-      Qibla does not overwrite Home location.
-    */
+    // Home is the source of truth.
+    // Qibla does not overwrite Home location.
 
     qiblaBearing = calculateBearing(
       userLocation.latitude,
@@ -870,10 +855,16 @@ function readSettings() {
     updateBearingDisplay();
     updateCompassMovement();
 
-    if (!findLocalizedHomeLocation(
+    const cachedName = findLocalizedHomeLocation(
       userLocation.latitude,
       userLocation.longitude
-    )) {
+    );
+
+    if (cachedName) {
+      userLocation.name = cachedName;
+      userLocation.nameLanguage = language;
+      setText(el.locationName, cachedName);
+    } else {
       getLocationName(
         userLocation.latitude,
         userLocation.longitude
