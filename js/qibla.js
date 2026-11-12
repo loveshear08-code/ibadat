@@ -208,74 +208,169 @@
     );
   }
 
-  /* =====================================================
-     3. SETTINGS
-     ===================================================== */
+ /* =====================================================
+   3. SETTINGS
+   ===================================================== */
 
-  function readSettings() {
-    let settings = {};
+function readSettings() {
+  let settings = {};
 
-    try {
-      settings = JSON.parse(
-        localStorage.getItem(SETTINGS_KEY) || "{}"
-      );
-    } catch (error) {
-      console.warn("IBADAT settings read error:", error);
-    }
-
-    const savedLanguage =
-      settings.lang ||
-      settings.language ||
-      settings.appLanguage ||
-      "bn";
-
-    language = ["bn", "en", "hi"].includes(
-      String(savedLanguage).toLowerCase()
-    )
-      ? String(savedLanguage).toLowerCase()
-      : "bn";
-
-    const savedTheme =
-      settings.themeColor ||
-      settings.theme ||
-      "classic";
-
-    const themeAliases = {
-      green: "classic",
-      classic: "classic",
-      blue: "royal",
-      royal: "royal",
-      champagne: "rose",
-      rose: "rose",
-      fresh: "pista",
-      pista: "pista"
-    };
-
-    theme =
-      themeAliases[String(savedTheme).toLowerCase()] ||
-      "classic";
-
-    const savedDark =
-      settings.dark ??
-      settings.darkMode ??
-      settings.isDarkMode ??
-      false;
-
-    darkMode =
-      savedDark === true ||
-      savedDark === 1 ||
-      savedDark === "true";
-
-    document.documentElement.lang = language;
-
-    document.body.dataset.colorTheme = theme;
-    document.body.classList.toggle("dark-mode", darkMode);
-
-    applyTranslations();
-    createDirectionLabels();
-    updateBearingDisplay();
-    updateSensorButton();
+  try {
+    settings = JSON.parse(
+      localStorage.getItem(SETTINGS_KEY) || "{}"
+    );
+  } catch (error) {
+    console.warn("IBADAT settings read error:", error);
   }
+
+  // Keep the previous language for comparison
+  const previousLanguage = language;
+
+  // LANGUAGE
+  const savedLanguage =
+    settings.lang ||
+    settings.language ||
+    settings.appLanguage ||
+    "bn";
+
+  language = ["bn", "en", "hi"].includes(
+    String(savedLanguage).toLowerCase()
+  )
+    ? String(savedLanguage).toLowerCase()
+    : "bn";
+
+  // THEME
+  const savedTheme =
+    settings.themeColor ||
+    settings.theme ||
+    "classic";
+
+  const themeAliases = {
+    green: "classic",
+    classic: "classic",
+    blue: "royal",
+    royal: "royal",
+    champagne: "rose",
+    rose: "rose",
+    fresh: "pista",
+    pista: "pista"
+  };
+
+  theme =
+    themeAliases[String(savedTheme).toLowerCase()] ||
+    "classic";
+
+  // DARK MODE
+  const savedDark =
+    settings.dark ??
+    settings.darkMode ??
+    settings.isDarkMode ??
+    false;
+
+  darkMode =
+    savedDark === true ||
+    savedDark === 1 ||
+    savedDark === "true";
+
+  // APPLY DOCUMENT SETTINGS
+  document.documentElement.lang = language;
+
+  document.body.dataset.colorTheme = theme;
+
+  document.body.classList.toggle(
+    "dark-mode",
+    darkMode
+  );
+
+  // Refresh location name if language has changed
+  const languageChanged =
+    previousLanguage !== language;
+
+  if (languageChanged && userLocation) {
+    userLocation.name = null;
+  }
+
+  // APPLY LANGUAGE AND UI
+  applyTranslations();
+
+  createDirectionLabels();
+
+  updateBearingDisplay();
+
+  updateSensorButton();
+
+  // FETCH LOCATION NAME IN SELECTED LANGUAGE
+  if (languageChanged && userLocation) {
+    const latitude = userLocation.latitude;
+    const longitude = userLocation.longitude;
+
+    const requestId = ++geocodeRequestId;
+
+    setText(
+      el.locationName,
+      currentText().locating
+    );
+
+    const languageCode = {
+      bn: "bn",
+      en: "en",
+      hi: "hi"
+    }[language];
+
+    const url =
+      "https://nominatim.openstreetmap.org/reverse" +
+      `?format=jsonv2&lat=${encodeURIComponent(latitude)}` +
+      `&lon=${encodeURIComponent(longitude)}` +
+      "&zoom=10&addressdetails=1" +
+      `&accept-language=${languageCode}`;
+
+    fetch(url, {
+      headers: {
+        "Accept": "application/json"
+      }
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Location lookup failed");
+        }
+
+        return response.json();
+      })
+      .then(data => {
+        if (requestId !== geocodeRequestId) return;
+        if (!userLocation) return;
+
+        const address = data.address || {};
+
+        const place =
+          address.city ||
+          address.town ||
+          address.village ||
+          address.suburb ||
+          address.county ||
+          address.state_district ||
+          address.state ||
+          data.name;
+
+        if (place) {
+          userLocation.name = place;
+          setText(el.locationName, place);
+        } else {
+          updateLocationText();
+        }
+      })
+      .catch(error => {
+        console.warn(
+          "Localized location lookup error:",
+          error
+        );
+
+        if (requestId === geocodeRequestId) {
+          updateLocationText();
+        }
+      });
+  }
+} 
 
   /* =====================================================
      4. TRANSLATIONS
