@@ -1,23 +1,15 @@
 
 /* =========================================================
    IBADAT — ALLAH'S NAMES
-   File: css/allah-names.css
-
-   Global settings:
-   - Language: appSettings
-   - Dark mode: body.dark-mode
-   - Theme: body[data-color-theme]
-   - Supported themes: classic, royal, rose, pista
-
-   Assets:
-   - ../assets/main-bg.jpg
-   - ../assets/hero-bg.jpg
-========================================================= */
+   COMPLETE THEME-MATCHED DESIGN
+   Classic | Royal | Rose | Pista
+   Bengali | English | Hindi
+   ========================================================= */
 
 
 /* =========================================================
-   1. ROOT VARIABLES AND RESET
-========================================================= */
+   1. ROOT VARIABLES — CLASSIC DEFAULT
+   ========================================================= */
 
 :root {
     --header-height: 48px;
@@ -31,8 +23,6 @@
     --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
 
-    /* Classic Green — default fallback palette */
-
     --theme-primary: #1B7F4B;
     --theme-soft: #E8F5E9;
     --theme-accent: #F2C94C;
@@ -41,42 +31,35 @@
     --theme-text: #17452F;
     --theme-muted: #68796B;
 
-    --theme-card: rgba(255, 255, 255, 0.96);
-    --theme-input: #F4F8F0;
-    --theme-row: #DDEED8;
+    --theme-card: rgba(255,255,255,0.96);
+    --theme-input: #F7FAF1;
+    --theme-row: rgba(213,239,211,0.88);
     --theme-border: #D5E3D1;
 
-    /* Page background */
+    --page-overlay: rgba(235,245,226,0.42);
 
-    --page-overlay: rgba(255, 253, 245, 0.76);
-
-    /* Main content board */
-
-    --content-board-bg: rgba(255, 252, 242, 0.91);
+    --content-board-bg: rgba(255,253,245,0.48);
     --content-board-border: var(--theme-border);
-    --content-board-shadow: 0 3px 12px rgba(0, 0, 0, 0.10);
+    --content-board-shadow: 0 3px 12px rgba(30,49,28,0.12);
 
-    /* Header and footer */
-
-    --header-bg: var(--theme-deep);
+    --header-bg: #0F5132;
     --header-text: #F5E5A7;
     --header-border-color: var(--theme-accent);
-    --header-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+    --header-shadow: 0 3px 10px rgba(0,0,0,0.12);
 
-    --footer-bg: var(--theme-deep);
+    --footer-bg: #0F5132;
     --footer-text: #F5E5A7;
     --footer-border-color: var(--theme-accent);
-    --footer-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+    --footer-shadow: 0 3px 10px rgba(0,0,0,0.12);
 
-    --bar-font-size: clamp(15px, 4vw, 19px);
+    --bar-font-size: clamp(15px,4vw,19px);
 
-    /* Name cards */
-
-    --name-card-bg: var(--theme-card);
+    --name-card-bg: rgba(255,255,255,0.96);
+    --name-card-overlay: rgba(255,255,255,0.78);
     --name-card-text: var(--theme-text);
     --name-card-muted: var(--theme-muted);
     --name-card-border: var(--theme-border);
-    --name-card-shadow: 0 2px 7px rgba(20, 60, 30, 0.08);
+    --name-card-shadow: 0 2px 7px rgba(20,60,30,0.08);
 
     --arabic-text: var(--theme-deep);
     --pronunciation-text: var(--theme-text);
@@ -86,29 +69,269 @@
     --number-text: var(--theme-deep);
     --number-border: var(--theme-border);
 
-    /* Bismillah card */
-
     --bismillah-overlay:
         linear-gradient(
-            rgba(255, 253, 241, 0.86),
-            rgba(255, 253, 241, 0.86)
+            rgba(232,245,233,0.78),
+            rgba(232,245,233,0.78)
         );
 
     --bismillah-text: var(--theme-text);
     --bismillah-arabic: var(--theme-deep);
 
-    /* Final decorative card */
-
     --special-card-bg: var(--theme-card);
     --special-decoration: var(--theme-deep);
-
-    /* Scrollbar */
 
     --scrollbar-thumb: var(--theme-primary);
 }
 
 
-/* Universal reset */
+/* =========================================================
+   2. CLASSIC THEME
+   ========================================================= */
+
+body[data-color-theme="classic"] {
+    --theme-primary: #1B7F4B;
+    --theme-soft: #E8F5E9;
+    --theme-accent: #F2C94C;
+    --theme-deep: #0F5132;
+
+    --theme-text: #17452F;
+    --theme-muted: #68796B;
+
+    --theme-card: rgba(255,255,255,0.96);
+    --theme-input: #F7FAF1;
+    --theme-row: rgba(213,239,211,0.88);
+    --theme-border: #D5E3D1;
+
+    --page-overlay: rgba(235,245,226,0.42);
+
+    --content-board-bg: rgba(255,253,245,0.48);
+    --content-board-border: #D5E3D1;
+
+    --header-bg: #0F5132;
+    --header-text: #F5E5A7;
+    --header-border-color: #F2C94C;
+
+    --footer-bg: #0F5132;
+    --footer-text: #F5E5A7;
+    --footer-border-color: #F2C94C;
+
+    --name-card-bg: rgba(255,255,255,0.96);
+    --name-card-overlay: rgba(255,255,255,0.78);
+    --name-card-text: #17452F;
+    --name-card-muted: #68796B;
+    --name-card-border: #D5E3D1;
+
+    --arabic-text: #0F5132;
+    --pronunciation-text: #17452F;
+    --meaning-text: #68796B;
+
+    --number-bg: #E8F5E9;
+    --number-text: #0F5132;
+    --number-border: #D5E3D1;
+
+    --bismillah-overlay:
+        linear-gradient(
+            rgba(232,245,233,0.78),
+            rgba(232,245,233,0.78)
+        );
+
+    --bismillah-text: #17452F;
+    --bismillah-arabic: #0F5132;
+
+    --special-card-bg: rgba(255,255,255,0.96);
+    --special-decoration: #0F5132;
+
+    --scrollbar-thumb: #1B7F4B;
+}
+
+
+/* =========================================================
+   3. ROYAL THEME
+   ========================================================= */
+
+body[data-color-theme="royal"] {
+    --theme-primary: #285A8E;
+    --theme-soft: #E5EFF9;
+    --theme-accent: #E8BD55;
+    --theme-deep: #173A60;
+
+    --theme-text: #1B3652;
+    --theme-muted: #65798E;
+
+    --theme-card: rgba(255,255,255,0.96);
+    --theme-input: #F7FAFD;
+    --theme-row: rgba(220,235,249,0.90);
+    --theme-border: #C8D9EB;
+
+    --page-overlay: rgba(229,239,249,0.43);
+
+    --content-board-bg: rgba(255,253,245,0.48);
+    --content-board-border: #C8D9EB;
+
+    --header-bg: #173A60;
+    --header-text: #FFF0C4;
+    --header-border-color: #E8BD55;
+
+    --footer-bg: #173A60;
+    --footer-text: #FFF0C4;
+    --footer-border-color: #E8BD55;
+
+    --name-card-bg: rgba(255,255,255,0.96);
+    --name-card-overlay: rgba(229,239,249,0.78);
+    --name-card-text: #1B3652;
+    --name-card-muted: #65798E;
+    --name-card-border: #C8D9EB;
+
+    --arabic-text: #173A60;
+    --pronunciation-text: #1B3652;
+    --meaning-text: #65798E;
+
+    --number-bg: #E5EFF9;
+    --number-text: #173A60;
+    --number-border: #C8D9EB;
+
+    --bismillah-overlay:
+        linear-gradient(
+            rgba(229,239,249,0.80),
+            rgba(229,239,249,0.80)
+        );
+
+    --bismillah-text: #1B3652;
+    --bismillah-arabic: #173A60;
+
+    --special-card-bg: rgba(255,255,255,0.96);
+    --special-decoration: #285A8E;
+
+    --scrollbar-thumb: #285A8E;
+}
+
+
+/* =========================================================
+   4. ROSE THEME
+   ========================================================= */
+
+body[data-color-theme="rose"] {
+    --theme-primary: #B96F79;
+    --theme-soft: #F8E9E7;
+    --theme-accent: #D9B875;
+    --theme-deep: #7D414B;
+
+    --theme-text: #633B42;
+    --theme-muted: #846D70;
+
+    --theme-card: rgba(255,252,251,0.97);
+    --theme-input: #FBF5F2;
+    --theme-row: rgba(248,225,222,0.91);
+    --theme-border: #E8CBC8;
+
+    --page-overlay: rgba(248,233,231,0.44);
+
+    --content-board-bg: rgba(255,253,245,0.48);
+    --content-board-border: #E8CBC8;
+
+    --header-bg: #7D414B;
+    --header-text: #FFF0D5;
+    --header-border-color: #D9B875;
+
+    --footer-bg: #7D414B;
+    --footer-text: #FFF0D5;
+    --footer-border-color: #D9B875;
+
+    --name-card-bg: rgba(255,252,251,0.97);
+    --name-card-overlay: rgba(248,233,231,0.78);
+    --name-card-text: #633B42;
+    --name-card-muted: #846D70;
+    --name-card-border: #E8CBC8;
+
+    --arabic-text: #7D414B;
+    --pronunciation-text: #633B42;
+    --meaning-text: #846D70;
+
+    --number-bg: #F8E9E7;
+    --number-text: #7D414B;
+    --number-border: #E8CBC8;
+
+    --bismillah-overlay:
+        linear-gradient(
+            rgba(248,233,231,0.82),
+            rgba(248,233,231,0.82)
+        );
+
+    --bismillah-text: #633B42;
+    --bismillah-arabic: #7D414B;
+
+    --special-card-bg: rgba(255,252,251,0.97);
+    --special-decoration: #7D414B;
+
+    --scrollbar-thumb: #B96F79;
+}
+
+
+/* =========================================================
+   5. PISTA THEME
+   ========================================================= */
+
+body[data-color-theme="pista"] {
+    --theme-primary: #4CAF50;
+    --theme-soft: #DFF5E1;
+    --theme-accent: #A7D129;
+    --theme-deep: #2F7135;
+
+    --theme-text: #254D2A;
+    --theme-muted: #6D806D;
+
+    --theme-card: rgba(255,255,255,0.96);
+    --theme-input: #F7FAF1;
+    --theme-row: rgba(218,242,216,0.91);
+    --theme-border: #CDE3C8;
+
+    --page-overlay: rgba(223,245,225,0.43);
+
+    --content-board-bg: rgba(255,253,245,0.48);
+    --content-board-border: #CDE3C8;
+
+    --header-bg: #2F7135;
+    --header-text: #F5FFD9;
+    --header-border-color: #A7D129;
+
+    --footer-bg: #2F7135;
+    --footer-text: #F5FFD9;
+    --footer-border-color: #A7D129;
+
+    --name-card-bg: rgba(255,255,255,0.96);
+    --name-card-overlay: rgba(223,245,225,0.78);
+    --name-card-text: #254D2A;
+    --name-card-muted: #6D806D;
+    --name-card-border: #CDE3C8;
+
+    --arabic-text: #2F7135;
+    --pronunciation-text: #254D2A;
+    --meaning-text: #6D806D;
+
+    --number-bg: #DFF5E1;
+    --number-text: #2F7135;
+    --number-border: #CDE3C8;
+
+    --bismillah-overlay:
+        linear-gradient(
+            rgba(223,245,225,0.80),
+            rgba(223,245,225,0.80)
+        );
+
+    --bismillah-text: #254D2A;
+    --bismillah-arabic: #2F7135;
+
+    --special-card-bg: rgba(255,255,255,0.96);
+    --special-decoration: #2F7135;
+
+    --scrollbar-thumb: #4CAF50;
+}
+
+
+/* =========================================================
+   6. RESET
+   ========================================================= */
 
 * {
     box-sizing: border-box;
@@ -131,14 +354,14 @@ html {
 
 
 /* =========================================================
-   2. PAGE BACKGROUND
-========================================================= */
+   7. MAIN PAGE BACKGROUND
+   ========================================================= */
 
 body {
     padding:
-        max(5px, var(--safe-top))
+        max(5px,var(--safe-top))
         var(--page-padding)
-        max(5px, var(--safe-bottom));
+        max(5px,var(--safe-bottom));
 
     color: var(--theme-text);
 
@@ -155,7 +378,7 @@ body {
             var(--page-overlay),
             var(--page-overlay)
         ),
-        url("../assets/main-bg.jpg")
+        url("../assets/images/content-bg.png")
         center center / cover fixed no-repeat;
 
     -webkit-font-smoothing: antialiased;
@@ -163,8 +386,8 @@ body {
 
 
 /* =========================================================
-   3. COMPLETE PAGE SHELL
-========================================================= */
+   8. COMPLETE PAGE SHELL
+   ========================================================= */
 
 .names-page {
     width: 100%;
@@ -180,8 +403,8 @@ body {
 
 
 /* =========================================================
-   4. FIXED TOP BOARD
-========================================================= */
+   9. HEADER BOARD
+   ========================================================= */
 
 .intro-board {
     flex: 0 0 var(--header-height);
@@ -190,8 +413,8 @@ body {
     height: var(--header-height);
     min-height: var(--header-height);
     max-height: var(--header-height);
-
     min-width: 0;
+
     margin: 0;
     padding: 4px 10px;
 
@@ -213,6 +436,7 @@ body {
 #introTitle {
     width: 100%;
     min-width: 0;
+
     margin: 0;
     padding: 0;
 
@@ -230,8 +454,8 @@ body {
 
 
 /* =========================================================
-   5. FIXED OUTER CONTENT BOARD
-========================================================= */
+   10. OUTER CONTENT BOARD
+   ========================================================= */
 
 .names-board {
     flex: 1 1 0;
@@ -255,8 +479,8 @@ body {
 
 
 /* =========================================================
-   6. SCROLLABLE INNER CONTENT
-========================================================= */
+   11. SCROLLABLE NAME CONTAINER
+   ========================================================= */
 
 .names-container {
     flex: 1 1 0;
@@ -267,7 +491,7 @@ body {
 
     display: grid;
 
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2,minmax(0,1fr));
     grid-auto-rows: max-content;
 
     align-content: start;
@@ -301,14 +525,16 @@ body {
 
 
 /* =========================================================
-   7. STANDARD NAME CARDS
-========================================================= */
+   12. STANDARD NAME CARDS
+   Every name card uses content-bg2.png
+   ========================================================= */
 
 .name-card {
     position: relative;
 
     min-width: 0;
     min-height: 145px;
+
     margin: 0;
 
     display: flex;
@@ -320,7 +546,14 @@ body {
     padding: 10px 7px;
 
     color: var(--name-card-text);
-    background: var(--name-card-bg);
+
+    background:
+        linear-gradient(
+            var(--name-card-overlay),
+            var(--name-card-overlay)
+        ),
+        url("../assets/images/content-bg2.png")
+        center center / cover no-repeat;
 
     border: 1px solid var(--name-card-border);
     border-radius: var(--card-radius);
@@ -337,11 +570,14 @@ body {
 }
 
 
-/* Arabic name */
+/* =========================================================
+   13. ARABIC NAME
+   ========================================================= */
 
 .name-arabic {
     width: 100%;
     min-width: 0;
+
     margin: 0;
 
     color: var(--arabic-text);
@@ -352,7 +588,7 @@ body {
         "Traditional Arabic",
         serif;
 
-    font-size: clamp(25px, 6vw, 34px);
+    font-size: clamp(25px,6vw,34px);
     font-weight: 700;
     line-height: 1.75;
 
@@ -364,16 +600,19 @@ body {
 }
 
 
-/* Transliteration */
+/* =========================================================
+   14. PRONUNCIATION
+   ========================================================= */
 
 .name-pronunciation {
     width: 100%;
     min-width: 0;
+
     margin: 0;
 
     color: var(--pronunciation-text);
 
-    font-size: clamp(12px, 3vw, 16px);
+    font-size: clamp(12px,3vw,16px);
     font-weight: 750;
     line-height: 1.5;
 
@@ -381,16 +620,19 @@ body {
 }
 
 
-/* Meaning */
+/* =========================================================
+   15. MEANING
+   ========================================================= */
 
 .name-meaning {
     width: 100%;
     min-width: 0;
+
     margin: 0;
 
     color: var(--meaning-text);
 
-    font-size: clamp(11px, 2.7vw, 14px);
+    font-size: clamp(11px,2.7vw,14px);
     font-weight: 500;
     line-height: 1.55;
 
@@ -398,7 +640,9 @@ body {
 }
 
 
-/* Number badge */
+/* =========================================================
+   16. NUMBER BADGE
+   ========================================================= */
 
 .name-number {
     align-self: flex-start;
@@ -426,8 +670,9 @@ body {
 
 
 /* =========================================================
-   8. BISMILLAH OPENING CARD
-========================================================= */
+   17. BISMILLAH OPENING BOARD
+   Uses content-bg1.png
+   ========================================================= */
 
 .bismillah-card {
     grid-column: 1 / -1;
@@ -450,7 +695,7 @@ body {
 
     background:
         var(--bismillah-overlay),
-        url("../assets/hero-bg.jpg")
+        url("../assets/images/content-bg1.png")
         center center / cover no-repeat;
 
     box-shadow: var(--name-card-shadow);
@@ -461,24 +706,25 @@ body {
 .bismillah-card .name-arabic {
     color: var(--bismillah-arabic);
 
-    font-size: clamp(29px, 7vw, 39px);
+    font-size: clamp(29px,7vw,39px);
     line-height: 1.9;
 }
 
 .bismillah-card .name-pronunciation {
     color: var(--bismillah-text);
-    font-size: clamp(14px, 3.5vw, 18px);
+    font-size: clamp(14px,3.5vw,18px);
 }
 
 .bismillah-card .name-meaning {
     color: var(--bismillah-text);
-    font-size: clamp(12px, 3vw, 15px);
+    font-size: clamp(12px,3vw,15px);
 }
 
 
 /* =========================================================
-   9. FINAL UNNUMBERED DECORATIVE CARD
-========================================================= */
+   18. FINAL DECORATIVE CARD
+   Uses content-bg2.png
+   ========================================================= */
 
 .special-card {
     min-width: 0;
@@ -487,7 +733,14 @@ body {
     justify-content: center;
 
     color: var(--name-card-text);
-    background: var(--special-card-bg);
+
+    background:
+        linear-gradient(
+            var(--name-card-overlay),
+            var(--name-card-overlay)
+        ),
+        url("../assets/images/content-bg2.png")
+        center center / cover no-repeat;
 
     border: 1px solid var(--name-card-border);
     border-radius: var(--card-radius);
@@ -495,7 +748,7 @@ body {
 
 .special-card .name-arabic {
     color: var(--arabic-text);
-    font-size: clamp(24px, 5.5vw, 32px);
+    font-size: clamp(24px,5.5vw,32px);
 }
 
 .special-card .name-pronunciation {
@@ -521,8 +774,8 @@ body {
 
 
 /* =========================================================
-   10. FIXED FOOTER
-========================================================= */
+   19. FOOTER BOARD
+   ========================================================= */
 
 .names-footer {
     flex: 0 0 var(--footer-height);
@@ -533,6 +786,7 @@ body {
     max-height: var(--footer-height);
 
     min-width: 0;
+
     margin: 0;
     padding: 4px 10px;
 
@@ -554,12 +808,13 @@ body {
 #namesFooterText {
     width: 100%;
     min-width: 0;
+
     margin: 0;
     padding: 0;
 
     color: var(--footer-text);
 
-    font-size: clamp(11px, 3vw, 15px);
+    font-size: clamp(11px,3vw,15px);
     font-weight: 700;
     line-height: 1.35;
     text-align: center;
@@ -571,293 +826,48 @@ body {
 
 
 /* =========================================================
-   11. CLASSIC GREEN THEME
-   Matches Settings: data-color-theme="classic"
-========================================================= */
-
-body[data-color-theme="classic"] {
-    --theme-primary: #1B7F4B;
-    --theme-soft: #E8F5E9;
-    --theme-accent: #F2C94C;
-    --theme-deep: #0F5132;
-
-    --theme-text: #17452F;
-    --theme-muted: #68796B;
-
-    --theme-card: rgba(255, 255, 255, 0.96);
-    --theme-input: #F4F8F0;
-    --theme-row: #DDEED8;
-    --theme-border: #D5E3D1;
-
-    --page-overlay: rgba(255, 253, 245, 0.76);
-
-    --content-board-bg: rgba(255, 252, 242, 0.91);
-    --content-board-border: #D5E3D1;
-
-    --header-bg: #0F5132;
-    --header-text: #F5E5A7;
-    --header-border-color: #F2C94C;
-
-    --footer-bg: #0F5132;
-    --footer-text: #F5E5A7;
-    --footer-border-color: #F2C94C;
-
-    --name-card-bg: rgba(255, 255, 255, 0.96);
-    --name-card-text: #17452F;
-    --name-card-muted: #68796B;
-    --name-card-border: #D5E3D1;
-
-    --arabic-text: #0F5132;
-    --pronunciation-text: #17452F;
-    --meaning-text: #68796B;
-
-    --number-bg: #E8F5E9;
-    --number-text: #0F5132;
-    --number-border: #D5E3D1;
-
-    --bismillah-overlay:
-        linear-gradient(
-            rgba(255, 253, 241, 0.86),
-            rgba(232, 245, 233, 0.84)
-        );
-
-    --bismillah-text: #17452F;
-    --bismillah-arabic: #0F5132;
-
-    --special-card-bg: rgba(255, 255, 255, 0.96);
-    --special-decoration: #0F5132;
-
-    --scrollbar-thumb: #1B7F4B;
-}
-
-
-/* =========================================================
-   12. ROYAL BLUE THEME
-   Matches Settings: data-color-theme="royal"
-========================================================= */
-
-body[data-color-theme="royal"] {
-    --theme-primary: #285A8E;
-    --theme-soft: #E5EFF9;
-    --theme-accent: #E8BD55;
-    --theme-deep: #173A60;
-
-    --theme-text: #1B3652;
-    --theme-muted: #65798E;
-
-    --theme-card: rgba(255, 255, 255, 0.96);
-    --theme-input: #F0F5FC;
-    --theme-row: #DCE9F7;
-    --theme-border: #C8D9EB;
-
-    --page-overlay: rgba(246, 250, 255, 0.77);
-
-    --content-board-bg: rgba(244, 249, 255, 0.93);
-    --content-board-border: #C8D9EB;
-
-    --header-bg: #173A60;
-    --header-text: #FFF0C4;
-    --header-border-color: #E8BD55;
-
-    --footer-bg: #173A60;
-    --footer-text: #FFF0C4;
-    --footer-border-color: #E8BD55;
-
-    --name-card-bg: rgba(255, 255, 255, 0.96);
-    --name-card-text: #1B3652;
-    --name-card-muted: #65798E;
-    --name-card-border: #C8D9EB;
-
-    --arabic-text: #173A60;
-    --pronunciation-text: #1B3652;
-    --meaning-text: #65798E;
-
-    --number-bg: #E5EFF9;
-    --number-text: #173A60;
-    --number-border: #C8D9EB;
-
-    --bismillah-overlay:
-        linear-gradient(
-            rgba(244, 249, 255, 0.88),
-            rgba(229, 239, 249, 0.86)
-        );
-
-    --bismillah-text: #1B3652;
-    --bismillah-arabic: #173A60;
-
-    --special-card-bg: rgba(255, 255, 255, 0.96);
-    --special-decoration: #285A8E;
-
-    --scrollbar-thumb: #285A8E;
-}
-
-
-/* =========================================================
-   13. ROSE CHAMPAGNE THEME
-   Matches Settings: data-color-theme="rose"
-========================================================= */
-
-body[data-color-theme="rose"] {
-    --theme-primary: #B96F79;
-    --theme-soft: #F8E9E7;
-    --theme-accent: #D9B875;
-    --theme-deep: #7D414B;
-
-    --theme-text: #633B42;
-    --theme-muted: #846D70;
-
-    --theme-card: rgba(255, 252, 251, 0.97);
-    --theme-input: #FBF1EF;
-    --theme-row: #F2DCD8;
-    --theme-border: #E8CBC8;
-
-    --page-overlay: rgba(255, 247, 245, 0.78);
-
-    --content-board-bg: rgba(255, 249, 247, 0.94);
-    --content-board-border: #E8CBC8;
-
-    --header-bg: #7D414B;
-    --header-text: #FFF0D5;
-    --header-border-color: #D9B875;
-
-    --footer-bg: #7D414B;
-    --footer-text: #FFF0D5;
-    --footer-border-color: #D9B875;
-
-    --name-card-bg: rgba(255, 252, 251, 0.97);
-    --name-card-text: #633B42;
-    --name-card-muted: #846D70;
-    --name-card-border: #E8CBC8;
-
-    --arabic-text: #7D414B;
-    --pronunciation-text: #633B42;
-    --meaning-text: #846D70;
-
-    --number-bg: #F8E9E7;
-    --number-text: #7D414B;
-    --number-border: #E8CBC8;
-
-    --bismillah-overlay:
-        linear-gradient(
-            rgba(255, 248, 244, 0.89),
-            rgba(248, 233, 231, 0.87)
-        );
-
-    --bismillah-text: #633B42;
-    --bismillah-arabic: #7D414B;
-
-    --special-card-bg: rgba(255, 252, 251, 0.97);
-    --special-decoration: #7D414B;
-
-    --scrollbar-thumb: #B96F79;
-}
-
-
-/* =========================================================
-   14. FRESH PISTA THEME
-   Matches Settings: data-color-theme="pista"
-========================================================= */
-
-body[data-color-theme="pista"] {
-    --theme-primary: #4CAF50;
-    --theme-soft: #DFF5E1;
-    --theme-accent: #A7D129;
-    --theme-deep: #2F7135;
-
-    --theme-text: #254D2A;
-    --theme-muted: #6D806D;
-
-    --theme-card: rgba(255, 255, 255, 0.96);
-    --theme-input: #F3FAF0;
-    --theme-row: #DFF0D9;
-    --theme-border: #CDE3C8;
-
-    --page-overlay: rgba(248, 253, 240, 0.78);
-
-    --content-board-bg: rgba(247, 252, 240, 0.93);
-    --content-board-border: #CDE3C8;
-
-    --header-bg: #2F7135;
-    --header-text: #F5FFD9;
-    --header-border-color: #A7D129;
-
-    --footer-bg: #2F7135;
-    --footer-text: #F5FFD9;
-    --footer-border-color: #A7D129;
-
-    --name-card-bg: rgba(255, 255, 255, 0.96);
-    --name-card-text: #254D2A;
-    --name-card-muted: #6D806D;
-    --name-card-border: #CDE3C8;
-
-    --arabic-text: #2F7135;
-    --pronunciation-text: #254D2A;
-    --meaning-text: #6D806D;
-
-    --number-bg: #DFF5E1;
-    --number-text: #2F7135;
-    --number-border: #CDE3C8;
-
-    --bismillah-overlay:
-        linear-gradient(
-            rgba(248, 253, 240, 0.88),
-            rgba(223, 245, 225, 0.86)
-        );
-
-    --bismillah-text: #254D2A;
-    --bismillah-arabic: #2F7135;
-
-    --special-card-bg: rgba(255, 255, 255, 0.96);
-    --special-decoration: #2F7135;
-
-    --scrollbar-thumb: #4CAF50;
-}
-
-
-/* =========================================================
-   15. DARK MODE
-   Preserves the selected palette while darkening the page.
-========================================================= */
+   20. DARK MODE — COMMON COLORS
+   ========================================================= */
 
 body.dark-mode {
-    --page-overlay: rgba(9, 18, 13, 0.84);
+    --page-overlay: rgba(8,15,10,0.80);
 
-    --content-board-bg: rgba(17, 29, 22, 0.97);
-    --content-board-border: rgba(255, 255, 255, 0.12);
-    --content-board-shadow: 0 3px 12px rgba(0, 0, 0, 0.30);
-
-    --name-card-bg: rgba(27, 41, 32, 0.97);
-    --name-card-text: #E5EDE7;
-    --name-card-muted: #C0CEC3;
-    --name-card-border: rgba(255, 255, 255, 0.15);
-    --name-card-shadow: 0 2px 8px rgba(0, 0, 0, 0.20);
+    --content-board-bg: rgba(12,20,14,0.70);
+    --content-board-border: #405746;
+    --content-board-shadow: 0 3px 12px rgba(0,0,0,0.30);
 
     --theme-text: #E5EDE7;
-    --theme-muted: #C0CEC3;
-    --theme-card: rgba(27, 41, 32, 0.97);
-    --theme-border: rgba(255, 255, 255, 0.15);
+    --theme-muted: #BECBBF;
+    --theme-border: #405746;
 
-    --arabic-text: #F0E4BD;
+    --name-card-bg: rgba(32,55,39,0.95);
+    --name-card-overlay: rgba(12,20,14,0.76);
+    --name-card-text: #E5EDE7;
+    --name-card-muted: #BECBBF;
+    --name-card-border: rgba(190,210,194,0.20);
+    --name-card-shadow: 0 2px 8px rgba(0,0,0,0.20);
+
+    --arabic-text: #E5EDE7;
     --pronunciation-text: #E5EDE7;
-    --meaning-text: #C0CEC3;
+    --meaning-text: #BECBBF;
 
-    --number-bg: rgba(255, 255, 255, 0.07);
-    --number-text: #F0E4BD;
-    --number-border: rgba(255, 255, 255, 0.18);
+    --number-bg: rgba(32,55,39,0.95);
+    --number-text: #E5EDE7;
+    --number-border: #405746;
 
     --bismillah-overlay:
         linear-gradient(
-            rgba(13, 25, 18, 0.88),
-            rgba(13, 25, 18, 0.88)
+            rgba(12,20,14,0.72),
+            rgba(12,20,14,0.72)
         );
 
     --bismillah-text: #E5EDE7;
-    --bismillah-arabic: #F0E4BD;
+    --bismillah-arabic: #E5EDE7;
 
-    --special-card-bg: rgba(27, 41, 32, 0.97);
+    --special-card-bg: rgba(32,55,39,0.95);
     --special-decoration: var(--theme-accent);
 
-    --scrollbar-thumb: var(--theme-primary);
+    --scrollbar-thumb: rgba(190,210,194,0.45);
 
     color: var(--theme-text);
 
@@ -866,22 +876,18 @@ body.dark-mode {
             var(--page-overlay),
             var(--page-overlay)
         ),
-        url("../assets/main-bg.jpg")
+        url("../assets/images/content-bg.png")
         center center / cover fixed no-repeat;
 }
 
 
-/* Dark mode: keep the selected theme visible on top and footer */
+/* =========================================================
+   21. DARK MODE — HEADER AND FOOTER
+   ========================================================= */
 
-body.dark-mode .intro-board {
-    background:
-        linear-gradient(
-            145deg,
-            var(--theme-deep),
-            #101D16
-        );
-
-    color: var(--header-text);
+body.dark-mode .intro-board,
+body.dark-mode .names-footer {
+    background: var(--header-bg);
     border-color: var(--theme-accent);
 }
 
@@ -889,24 +895,14 @@ body.dark-mode #introTitle {
     color: var(--header-text);
 }
 
-body.dark-mode .names-footer {
-    background:
-        linear-gradient(
-            145deg,
-            var(--theme-deep),
-            #101D16
-        );
-
-    color: var(--footer-text);
-    border-color: var(--theme-accent);
-}
-
 body.dark-mode #namesFooterText {
     color: var(--footer-text);
 }
 
 
-/* Dark mode: content board */
+/* =========================================================
+   22. DARK MODE — OUTER CONTENT BOARD
+   ========================================================= */
 
 body.dark-mode .names-board {
     background: var(--content-board-bg);
@@ -914,11 +910,21 @@ body.dark-mode .names-board {
 }
 
 
-/* Dark mode: standard and special cards */
+/* =========================================================
+   23. DARK MODE — NAME CARDS
+   ========================================================= */
 
 body.dark-mode .name-card {
     color: var(--name-card-text);
-    background: var(--name-card-bg);
+
+    background:
+        linear-gradient(
+            var(--name-card-overlay),
+            var(--name-card-overlay)
+        ),
+        url("../assets/images/content-bg2.png")
+        center center / cover no-repeat;
+
     border-color: var(--name-card-border);
     box-shadow: var(--name-card-shadow);
 }
@@ -942,7 +948,13 @@ body.dark-mode .name-number {
 }
 
 body.dark-mode .special-card {
-    background: var(--special-card-bg);
+    background:
+        linear-gradient(
+            var(--name-card-overlay),
+            var(--name-card-overlay)
+        ),
+        url("../assets/images/content-bg2.png")
+        center center / cover no-repeat;
 }
 
 body.dark-mode .special-decoration {
@@ -950,14 +962,16 @@ body.dark-mode .special-decoration {
 }
 
 
-/* Dark mode: Bismillah */
+/* =========================================================
+   24. DARK MODE — BISMILLAH
+   ========================================================= */
 
 body.dark-mode .bismillah-card {
     color: var(--bismillah-text);
 
     background:
         var(--bismillah-overlay),
-        url("../assets/hero-bg.jpg")
+        url("../assets/images/content-bg1.png")
         center center / cover no-repeat;
 
     border-color: var(--name-card-border);
@@ -974,8 +988,76 @@ body.dark-mode .bismillah-card .name-meaning {
 
 
 /* =========================================================
-   16. ACCESSIBILITY AND MOTION
-========================================================= */
+   25. DARK MODE — THEME-SPECIFIC HEADER COLORS
+   ========================================================= */
+
+body.dark-mode[data-color-theme="classic"] {
+    --header-bg: #0F5132;
+    --footer-bg: #0F5132;
+}
+
+body.dark-mode[data-color-theme="royal"] {
+    --header-bg: #142D49;
+    --footer-bg: #142D49;
+
+    --name-card-overlay: rgba(20,45,73,0.78);
+}
+
+body.dark-mode[data-color-theme="rose"] {
+    --header-bg: #592F36;
+    --footer-bg: #592F36;
+
+    --name-card-overlay: rgba(66,39,44,0.80);
+}
+
+body.dark-mode[data-color-theme="pista"] {
+    --header-bg: #244C28;
+    --footer-bg: #244C28;
+
+    --name-card-overlay: rgba(34,58,36,0.80);
+}
+
+
+/* =========================================================
+   26. DARK MODE — THEME-SPECIFIC BISMILLAH OVERLAYS
+   ========================================================= */
+
+body.dark-mode[data-color-theme="classic"] {
+    --bismillah-overlay:
+        linear-gradient(
+            rgba(12,20,14,0.72),
+            rgba(12,20,14,0.72)
+        );
+}
+
+body.dark-mode[data-color-theme="royal"] {
+    --bismillah-overlay:
+        linear-gradient(
+            rgba(20,45,73,0.76),
+            rgba(20,45,73,0.76)
+        );
+}
+
+body.dark-mode[data-color-theme="rose"] {
+    --bismillah-overlay:
+        linear-gradient(
+            rgba(66,39,44,0.78),
+            rgba(66,39,44,0.78)
+        );
+}
+
+body.dark-mode[data-color-theme="pista"] {
+    --bismillah-overlay:
+        linear-gradient(
+            rgba(34,58,36,0.76),
+            rgba(34,58,36,0.76)
+        );
+}
+
+
+/* =========================================================
+   27. ACCESSIBILITY AND MOTION
+   ========================================================= */
 
 #introTitle,
 #namesFooterText,
@@ -997,8 +1079,8 @@ body.dark-mode .bismillah-card .name-meaning {
 
 
 /* =========================================================
-   17. RESPONSIVE — SMALL PHONES
-========================================================= */
+   28. RESPONSIVE — SMALL PHONES
+   ========================================================= */
 
 @media (max-width: 380px) {
     :root {
@@ -1028,8 +1110,8 @@ body.dark-mode .bismillah-card .name-meaning {
 
 
 /* =========================================================
-   18. RESPONSIVE — SHORT SCREENS
-========================================================= */
+   29. RESPONSIVE — SHORT SCREENS
+   ========================================================= */
 
 @media (max-height: 650px) {
     :root {
@@ -1039,8 +1121,8 @@ body.dark-mode .bismillah-card .name-meaning {
     }
 
     body {
-        padding-top: max(3px, var(--safe-top));
-        padding-bottom: max(3px, var(--safe-bottom));
+        padding-top: max(3px,var(--safe-top));
+        padding-bottom: max(3px,var(--safe-bottom));
     }
 
     .names-container {
@@ -1060,8 +1142,8 @@ body.dark-mode .bismillah-card .name-meaning {
 
 
 /* =========================================================
-   19. RESPONSIVE — VERY NARROW PHONES
-========================================================= */
+   30. RESPONSIVE — VERY NARROW PHONES
+   ========================================================= */
 
 @media (max-width: 320px) {
     :root {
