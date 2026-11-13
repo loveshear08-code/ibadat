@@ -970,17 +970,16 @@ body.dark-mode .special-decoration {
 
 /* =========================================================
    24. DARK MODE — BISMILLAH
-   Always uses the same cream overlay and dark text.
-   No theme-colored overlay is applied here.
+   Dark overlay with mosque background preserved.
    ========================================================= */
 
 body.dark-mode .bismillah-card {
-    color: #17452F;
+    color: #E5EDE7;
 
     background:
         linear-gradient(
-            rgba(255,250,232,0.58),
-            rgba(255,250,232,0.58)
+            rgba(8,15,10,0.68),
+            rgba(8,15,10,0.68)
         ),
         url("../assets/images/content-bg1.png")
         center center / cover no-repeat;
@@ -989,12 +988,12 @@ body.dark-mode .bismillah-card {
 }
 
 body.dark-mode .bismillah-card .name-arabic {
-    color: #0F5132;
+    color: #E5EDE7;
 }
 
 body.dark-mode .bismillah-card .name-pronunciation,
 body.dark-mode .bismillah-card .name-meaning {
-    color: #17452F;
+    color: #E5EDE7;
 }
 
 
