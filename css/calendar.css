@@ -344,7 +344,7 @@ body {
             rgba(255, 253, 245, 0.64),
             rgba(255, 253, 245, 0.72)
         ),
-        url("../assets/hero-bg.jpg")
+        url("../assets/images/content-bg1.png")
         center / cover no-repeat;
 
     border: 1px solid var(--border);
@@ -768,7 +768,7 @@ body.dark-mode .calendar-board {
             rgba(12, 20, 14, 0.58),
             rgba(12, 20, 14, 0.66)
         ),
-        url("../assets/hero-bg.jpg")
+        url("../assets/images/content-bg1.png")
         center / cover no-repeat;
 
     border-color: var(--border);
