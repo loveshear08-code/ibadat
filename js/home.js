@@ -36,7 +36,7 @@
         dua: "দোয়া",
         hadith: "হাদিস",
         qibla: "কিবলা",
-        tasbih: "তাসবিহ"
+        tasbih: "তসবিহ",
       },
 
       quotes: [
