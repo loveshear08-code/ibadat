@@ -69,10 +69,11 @@
     --number-text: var(--theme-deep);
     --number-border: var(--theme-border);
 
+    /* Bismillah: fixed cream overlay for every theme */
     --bismillah-overlay:
         linear-gradient(
-            rgba(232,245,233,0.78),
-            rgba(232,245,233,0.78)
+            rgba(255,250,232,0.58),
+            rgba(255,250,232,0.58)
         );
 
     --bismillah-text: var(--theme-text);
@@ -132,8 +133,8 @@ body[data-color-theme="classic"] {
 
     --bismillah-overlay:
         linear-gradient(
-            rgba(232,245,233,0.78),
-            rgba(232,245,233,0.78)
+            rgba(255,250,232,0.58),
+            rgba(255,250,232,0.58)
         );
 
     --bismillah-text: #17452F;
@@ -193,8 +194,8 @@ body[data-color-theme="royal"] {
 
     --bismillah-overlay:
         linear-gradient(
-            rgba(229,239,249,0.80),
-            rgba(229,239,249,0.80)
+            rgba(255,250,232,0.58),
+            rgba(255,250,232,0.58)
         );
 
     --bismillah-text: #1B3652;
@@ -254,8 +255,8 @@ body[data-color-theme="rose"] {
 
     --bismillah-overlay:
         linear-gradient(
-            rgba(248,233,231,0.82),
-            rgba(248,233,231,0.82)
+            rgba(255,250,232,0.58),
+            rgba(255,250,232,0.58)
         );
 
     --bismillah-text: #633B42;
@@ -315,8 +316,8 @@ body[data-color-theme="pista"] {
 
     --bismillah-overlay:
         linear-gradient(
-            rgba(223,245,225,0.80),
-            rgba(223,245,225,0.80)
+            rgba(255,250,232,0.58),
+            rgba(255,250,232,0.58)
         );
 
     --bismillah-text: #254D2A;
@@ -671,6 +672,7 @@ body {
 
 /* =========================================================
    17. BISMILLAH OPENING BOARD
+   Fixed cream overlay in all themes and dark mode.
    Uses content-bg1.png
    ========================================================= */
 
@@ -694,7 +696,10 @@ body {
     border-radius: 20px;
 
     background:
-        var(--bismillah-overlay),
+        linear-gradient(
+            rgba(255,250,232,0.58),
+            rgba(255,250,232,0.58)
+        ),
         url("../assets/images/content-bg1.png")
         center center / cover no-repeat;
 
@@ -855,14 +860,15 @@ body.dark-mode {
     --number-text: #E5EDE7;
     --number-border: #405746;
 
+    /* Bismillah remains cream in dark mode too */
     --bismillah-overlay:
         linear-gradient(
-            rgba(12,20,14,0.72),
-            rgba(12,20,14,0.72)
+            rgba(255,250,232,0.58),
+            rgba(255,250,232,0.58)
         );
 
-    --bismillah-text: #E5EDE7;
-    --bismillah-arabic: #E5EDE7;
+    --bismillah-text: #17452F;
+    --bismillah-arabic: #0F5132;
 
     --special-card-bg: rgba(32,55,39,0.95);
     --special-decoration: var(--theme-accent);
@@ -964,13 +970,18 @@ body.dark-mode .special-decoration {
 
 /* =========================================================
    24. DARK MODE — BISMILLAH
+   Always uses the same cream overlay and dark text.
+   No theme-colored overlay is applied here.
    ========================================================= */
 
 body.dark-mode .bismillah-card {
-    color: var(--bismillah-text);
+    color: #17452F;
 
     background:
-        var(--bismillah-overlay),
+        linear-gradient(
+            rgba(255,250,232,0.58),
+            rgba(255,250,232,0.58)
+        ),
         url("../assets/images/content-bg1.png")
         center center / cover no-repeat;
 
@@ -978,12 +989,12 @@ body.dark-mode .bismillah-card {
 }
 
 body.dark-mode .bismillah-card .name-arabic {
-    color: var(--bismillah-arabic);
+    color: #0F5132;
 }
 
 body.dark-mode .bismillah-card .name-pronunciation,
 body.dark-mode .bismillah-card .name-meaning {
-    color: var(--bismillah-text);
+    color: #17452F;
 }
 
 
@@ -1020,37 +1031,17 @@ body.dark-mode[data-color-theme="pista"] {
 
 /* =========================================================
    26. DARK MODE — THEME-SPECIFIC BISMILLAH OVERLAYS
+   Kept theme-independent: same cream overlay in every theme.
    ========================================================= */
 
-body.dark-mode[data-color-theme="classic"] {
-    --bismillah-overlay:
-        linear-gradient(
-            rgba(12,20,14,0.72),
-            rgba(12,20,14,0.72)
-        );
-}
-
-body.dark-mode[data-color-theme="royal"] {
-    --bismillah-overlay:
-        linear-gradient(
-            rgba(20,45,73,0.76),
-            rgba(20,45,73,0.76)
-        );
-}
-
-body.dark-mode[data-color-theme="rose"] {
-    --bismillah-overlay:
-        linear-gradient(
-            rgba(66,39,44,0.78),
-            rgba(66,39,44,0.78)
-        );
-}
-
+body.dark-mode[data-color-theme="classic"],
+body.dark-mode[data-color-theme="royal"],
+body.dark-mode[data-color-theme="rose"],
 body.dark-mode[data-color-theme="pista"] {
     --bismillah-overlay:
         linear-gradient(
-            rgba(34,58,36,0.76),
-            rgba(34,58,36,0.76)
+            rgba(255,250,232,0.58),
+            rgba(255,250,232,0.58)
         );
 }
 
