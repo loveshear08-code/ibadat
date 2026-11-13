@@ -1,6 +1,12 @@
+
 /* =====================================================
    IBADAT — ISLAMIC CALENDAR
-   Shared Settings Theme Integration
+   QIBLA MATCHED THEME SYSTEM
+   Layout and functionality preserved
+   ===================================================== */
+
+/* =====================================================
+   ROOT VARIABLES — CLASSIC THEME
    ===================================================== */
 
 :root {
@@ -10,17 +16,32 @@
     --deep: #0F5132;
     --text: #17452F;
     --muted: #68796B;
+
     --card: rgba(255, 255, 255, 0.96);
-    --input: #F4F8F0;
-    --row: #DDEED8;
+    --input: #F7FAF1;
+    --row: rgba(213, 239, 211, 0.88);
     --border: #D5E3D1;
 
-    --gold: #E8C766;
+    --gold: var(--accent);
     --gold-light: #F5E5A7;
 
-    --page-gap: 9px;
-    --bar-height: 64px;
-    --radius: 22px;
+    --page-tint: rgba(235, 245, 226, 0.42);
+    --board-tint: rgba(255, 253, 245, 0.48);
+    --day-bg: rgba(247, 250, 241, 0.88);
+    --day-border: rgba(88, 174, 111, 0.28);
+
+    --bar-bg: #0F5132;
+    --bar-text: #F5E5A7;
+    --bar-border: var(--accent);
+
+    --progress-track: rgba(27, 127, 75, 0.14);
+    --progress-fill: var(--primary);
+
+    --shadow: 0 3px 12px rgba(30, 49, 28, 0.12);
+
+    --page-gap: 7px;
+    --bar-height: 48px;
+    --radius: 20px;
 }
 
 /* =====================================================
@@ -34,10 +55,19 @@ body[data-color-theme="classic"] {
     --deep: #0F5132;
     --text: #17452F;
     --muted: #68796B;
+
     --card: rgba(255, 255, 255, 0.96);
-    --input: #F4F8F0;
-    --row: #DDEED8;
+    --input: #F7FAF1;
+    --row: rgba(213, 239, 211, 0.88);
     --border: #D5E3D1;
+
+    --bar-bg: #0F5132;
+    --bar-border: #F2C94C;
+
+    --page-tint: rgba(235, 245, 226, 0.42);
+    --board-tint: rgba(255, 253, 245, 0.48);
+    --day-bg: rgba(247, 250, 241, 0.88);
+    --day-border: rgba(88, 174, 111, 0.28);
 }
 
 body[data-color-theme="royal"] {
@@ -47,10 +77,19 @@ body[data-color-theme="royal"] {
     --deep: #173A60;
     --text: #1B3652;
     --muted: #65798E;
+
     --card: rgba(255, 255, 255, 0.96);
-    --input: #F0F5FC;
-    --row: #DCE9F7;
+    --input: #F7FAFD;
+    --row: rgba(220, 235, 249, 0.90);
     --border: #C8D9EB;
+
+    --bar-bg: #173A60;
+    --bar-border: #E8BD55;
+
+    --page-tint: rgba(229, 239, 249, 0.43);
+    --board-tint: rgba(255, 253, 245, 0.48);
+    --day-bg: rgba(229, 239, 249, 0.76);
+    --day-border: rgba(75, 139, 190, 0.30);
 }
 
 body[data-color-theme="rose"] {
@@ -60,10 +99,19 @@ body[data-color-theme="rose"] {
     --deep: #7D414B;
     --text: #633B42;
     --muted: #846D70;
+
     --card: rgba(255, 252, 251, 0.97);
-    --input: #FBF1EF;
-    --row: #F2DCD8;
+    --input: #FBF5F2;
+    --row: rgba(248, 225, 222, 0.91);
     --border: #E8CBC8;
+
+    --bar-bg: #7D414B;
+    --bar-border: #D9B875;
+
+    --page-tint: rgba(248, 233, 231, 0.44);
+    --board-tint: rgba(255, 253, 245, 0.48);
+    --day-bg: rgba(248, 233, 231, 0.78);
+    --day-border: rgba(196, 126, 135, 0.32);
 }
 
 body[data-color-theme="pista"] {
@@ -73,14 +121,23 @@ body[data-color-theme="pista"] {
     --deep: #2F7135;
     --text: #254D2A;
     --muted: #6D806D;
+
     --card: rgba(255, 255, 255, 0.96);
-    --input: #F3FAF0;
-    --row: #DFF0D9;
+    --input: #F7FAF1;
+    --row: rgba(218, 242, 216, 0.91);
     --border: #CDE3C8;
+
+    --bar-bg: #2F7135;
+    --bar-border: #A7D129;
+
+    --page-tint: rgba(223, 245, 225, 0.43);
+    --board-tint: rgba(255, 253, 245, 0.48);
+    --day-bg: rgba(223, 245, 225, 0.76);
+    --day-border: rgba(108, 190, 105, 0.32);
 }
 
 /* =====================================================
-   RESET AND PAGE BACKGROUND
+   RESET
    ===================================================== */
 
 * {
@@ -101,7 +158,7 @@ body {
     min-height: 0;
 
     margin: 0;
-    padding: 9px 10px;
+    padding: 8px 10px;
 
     display: flex;
     flex-direction: column;
@@ -120,12 +177,11 @@ body {
 
     background:
         linear-gradient(
-            135deg,
-            rgba(235, 245, 226, 0.56),
-            rgba(255, 253, 245, 0.62),
-            rgba(232, 244, 222, 0.58)
+            var(--page-tint),
+            var(--page-tint)
         ),
-        url("../assets/main-bg.jpg") center / cover no-repeat;
+        url("../assets/images/content-bg.png")
+        center / cover no-repeat;
 
     -webkit-tap-highlight-color: transparent;
 }
@@ -151,22 +207,15 @@ body {
     align-items: center;
     justify-content: center;
 
-    padding: 7px 12px;
+    padding: 4px 10px;
 
-    color: var(--gold-light);
+    color: var(--bar-text);
+    background: var(--bar-bg);
 
-    background: linear-gradient(
-        140deg,
-        var(--deep),
-        var(--deep)
-    );
-
-    border: 2px solid var(--gold);
+    border: 2px solid var(--bar-border);
     border-radius: var(--radius);
 
-    box-shadow:
-        0 3px 9px rgba(30, 49, 28, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    box-shadow: var(--shadow);
 }
 
 /* =====================================================
@@ -175,8 +224,8 @@ body {
 
 .top-board {
     display: grid;
-    grid-template-columns: 42px minmax(0, 1fr) 42px;
-    gap: 8px;
+    grid-template-columns: 36px minmax(0, 1fr) 36px;
+    gap: 6px;
 }
 
 #calendarHeading {
@@ -185,9 +234,9 @@ body {
     margin: 0;
     padding: 0;
 
-    color: var(--gold-light);
+    color: var(--bar-text);
 
-    font-size: clamp(19px, 4.6vw, 25px);
+    font-size: clamp(17px, 4.4vw, 22px);
     font-weight: 700;
     line-height: 1.3;
     text-align: center;
@@ -200,10 +249,10 @@ body {
    ===================================================== */
 
 .month-button {
-    width: 40px;
-    height: 44px;
-    min-width: 40px;
-    min-height: 44px;
+    width: 34px;
+    height: 38px;
+    min-width: 34px;
+    min-height: 38px;
 
     display: inline-flex;
     align-items: center;
@@ -212,7 +261,7 @@ body {
     margin: 0;
     padding: 0;
 
-    color: var(--gold);
+    color: var(--accent);
     background: transparent;
 
     border: 0;
@@ -220,7 +269,7 @@ body {
     box-shadow: none;
 
     font-family: inherit;
-    font-size: 29px;
+    font-size: 25px;
     font-weight: 800;
     line-height: 1;
 
@@ -238,7 +287,7 @@ body {
 }
 
 .month-button:hover {
-    color: #FFF0B0;
+    color: var(--bar-text);
     background: transparent;
     box-shadow: none;
 }
@@ -248,7 +297,7 @@ body {
 }
 
 .month-button:focus-visible {
-    outline: 2px solid var(--gold-light);
+    outline: 2px solid var(--bar-text);
     outline-offset: 1px;
 }
 
@@ -272,6 +321,7 @@ body {
 
 /* =====================================================
    CALENDAR BOARD
+   Mosque background with light overlay
    ===================================================== */
 
 .calendar-board {
@@ -285,22 +335,22 @@ body {
     display: flex;
     flex-direction: column;
 
-    padding: 10px;
+    padding: 9px;
 
     overflow: hidden;
 
     background:
         linear-gradient(
-            rgba(255, 253, 244, 0.48),
-            rgba(255, 252, 239, 0.52)
+            rgba(255, 253, 245, 0.64),
+            rgba(255, 253, 245, 0.72)
         ),
-        url("../assets/hero-bg.jpg") center / cover no-repeat;
+        url("../assets/hero-bg.jpg")
+        center / cover no-repeat;
 
     border: 1px solid var(--border);
     border-radius: var(--radius);
 
-    box-shadow:
-        0 3px 10px rgba(30, 49, 28, 0.10);
+    box-shadow: var(--shadow);
 }
 
 /* =====================================================
@@ -313,19 +363,19 @@ body {
     width: 100%;
     min-width: 0;
 
-    margin: 0 0 8px;
-    padding: 2px 0 8px;
+    margin: 0 0 7px;
+    padding: 2px 0 7px;
 
     color: var(--deep);
 
-    font-size: clamp(18px, 4.2vw, 23px);
+    font-size: clamp(17px, 4.2vw, 22px);
     font-weight: 750;
     line-height: 1.35;
     text-align: center;
 
     overflow-wrap: anywhere;
 
-    border-bottom: 1px solid rgba(18, 76, 50, 0.20);
+    border-bottom: 1px solid var(--border);
 }
 
 /* =====================================================
@@ -348,7 +398,7 @@ body {
 .day-name {
     min-width: 0;
 
-    padding: 5px 0;
+    padding: 4px 0;
 
     color: var(--deep);
 
@@ -362,6 +412,7 @@ body {
 
 /* =====================================================
    DATE GRID
+   Light compass-inspired date cells
    ===================================================== */
 
 .grid {
@@ -390,9 +441,9 @@ body {
     padding: 3px 1px;
 
     color: var(--text);
-    background: rgba(255, 254, 247, 0.88);
+    background: var(--day-bg);
 
-    border: 1px solid rgba(182, 155, 83, 0.30);
+    border: 1px solid var(--day-border);
     border-radius: 9px;
 
     font-size: clamp(13px, 3.3vw, 17px);
@@ -410,16 +461,16 @@ body {
     background: var(--soft);
 }
 
-/* আজকের তারিখ */
+/* Today's date */
 
 .day.today {
     color: #FFFFFF;
     background: var(--deep);
 
-    border: 2px solid var(--gold);
+    border: 2px solid var(--accent);
 
     box-shadow:
-        0 0 0 1px rgba(18, 76, 50, 0.12),
+        0 0 0 1px rgba(27, 127, 75, 0.12),
         inset 0 1px 0 rgba(255, 255, 255, 0.12);
 
     font-weight: 800;
@@ -439,7 +490,7 @@ body {
     display: flex;
     flex-direction: column;
 
-    padding: 10px;
+    padding: 9px;
 
     color: var(--text);
     background: var(--card);
@@ -447,21 +498,20 @@ body {
     border: 1px solid var(--border);
     border-radius: var(--radius);
 
-    box-shadow:
-        0 3px 9px rgba(30, 49, 28, 0.07);
+    box-shadow: var(--shadow);
 
     overflow: hidden;
 }
 
-/* বিশেষ দিনের শিরোনাম */
+/* Special days heading */
 
 .events-title {
     flex: 0 0 auto;
 
     min-width: 0;
 
-    margin: 0 0 8px;
-    padding: 1px 0 8px;
+    margin: 0 0 7px;
+    padding: 1px 0 7px;
 
     color: var(--deep);
 
@@ -472,7 +522,7 @@ body {
 
     overflow-wrap: anywhere;
 
-    border-bottom: 1px solid rgba(18, 76, 50, 0.18);
+    border-bottom: 1px solid var(--border);
 }
 
 /* =====================================================
@@ -498,7 +548,7 @@ body {
     -webkit-overflow-scrolling: touch;
 
     scrollbar-width: thin;
-    scrollbar-color: rgba(18, 76, 50, 0.35) transparent;
+    scrollbar-color: var(--primary) transparent;
 }
 
 .events-timeline::-webkit-scrollbar {
@@ -510,7 +560,7 @@ body {
 }
 
 .events-timeline::-webkit-scrollbar-thumb {
-    background: rgba(18, 76, 50, 0.35);
+    background: var(--primary);
     border-radius: 10px;
 }
 
@@ -530,7 +580,7 @@ body {
     padding: 8px 10px;
 
     color: var(--text);
-    background: var(--soft);
+    background: var(--row);
 
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -640,7 +690,7 @@ body {
     margin: 0;
     padding: 0;
 
-    color: var(--gold-light);
+    color: var(--bar-text);
 
     font-size: clamp(13px, 3.4vw, 16px);
     font-weight: 700;
@@ -651,80 +701,96 @@ body {
 }
 
 /* =====================================================
-   DARK MODE
+   DARK MODE — SHARED QIBLA PALETTE
    ===================================================== */
 
 body.dark-mode {
-    --text: #E9EFE6;
-    --muted: #C0CBBD;
-    --card: rgba(32, 45, 35, 0.97);
-    --input: #26352A;
-    --row: #29382C;
-    --border: rgba(218, 190, 105, 0.48);
+    --text: #E5EDE7;
+    --muted: #BECBBF;
+    --border: #405746;
+
+    --card: rgba(12, 20, 14, 0.70);
+    --row: rgba(32, 55, 39, 0.95);
+    --input: #233428;
+
+    --page-tint: rgba(8, 15, 10, 0.80);
+    --board-tint: rgba(12, 20, 14, 0.70);
+
+    --day-bg: rgba(32, 55, 39, 0.78);
+    --day-border: rgba(190, 210, 194, 0.25);
+
+    --bar-text: #F5E5A7;
+
+    --progress-track: rgba(190, 210, 194, 0.18);
+    --progress-fill: var(--primary);
 
     color: var(--text);
 
     background:
         linear-gradient(
-            135deg,
-            rgba(13, 33, 22, 0.65),
-            rgba(19, 37, 26, 0.65)
+            rgba(8, 15, 10, 0.80),
+            rgba(8, 15, 10, 0.80)
         ),
-        url("../assets/main-bg.jpg") center / cover no-repeat;
+        url("../assets/images/content-bg.png")
+        center / cover no-repeat;
 }
+
+/* Dark header/footer */
 
 body.dark-mode .top-board,
 body.dark-mode .bottom-board {
-    background: linear-gradient(
-        140deg,
-        var(--deep),
-        #092E1E
-    );
-
-    border-color: var(--gold);
+    background: var(--bar-bg);
+    border-color: var(--accent);
 }
 
 body.dark-mode #calendarHeading,
 body.dark-mode #calendarFooter {
-    color: var(--gold-light);
+    color: var(--bar-text);
 }
 
 body.dark-mode .month-button {
-    color: var(--gold);
+    color: var(--accent);
     background: transparent;
     border: 0;
     box-shadow: none;
 }
 
 body.dark-mode .month-button:hover {
-    color: #FFF0B0;
+    color: var(--bar-text);
     background: transparent;
 }
+
+/* Dark calendar board */
 
 body.dark-mode .calendar-board {
     background:
         linear-gradient(
-            rgba(24, 35, 26, 0.36),
-            rgba(24, 35, 26, 0.42)
+            rgba(12, 20, 14, 0.58),
+            rgba(12, 20, 14, 0.66)
         ),
-        url("../assets/hero-bg.jpg") center / cover no-repeat;
+        url("../assets/hero-bg.jpg")
+        center / cover no-repeat;
 
     border-color: var(--border);
 }
 
+/* Dark month title and weekdays */
+
 body.dark-mode #monthTitle,
 body.dark-mode .day-name {
-    color: var(--soft);
+    color: var(--text);
 }
 
 body.dark-mode #monthTitle {
-    border-bottom-color: rgba(226, 238, 219, 0.20);
+    border-bottom-color: var(--border);
 }
+
+/* Dark date cells */
 
 body.dark-mode .day {
     color: var(--text);
-    background: rgba(30, 46, 33, 0.90);
-    border-color: rgba(225, 236, 217, 0.16);
+    background: var(--day-bg);
+    border-color: var(--day-border);
 }
 
 body.dark-mode .day:active {
@@ -733,9 +799,11 @@ body.dark-mode .day:active {
 
 body.dark-mode .day.today {
     color: #FFFFFF;
-    background: var(--deep);
-    border-color: var(--gold);
+    background: var(--bar-bg);
+    border-color: var(--accent);
 }
+
+/* Dark special days board */
 
 body.dark-mode .events-section {
     color: var(--text);
@@ -744,14 +812,14 @@ body.dark-mode .events-section {
 }
 
 body.dark-mode .events-title {
-    color: var(--soft);
-    border-bottom-color: rgba(226, 238, 219, 0.18);
+    color: var(--text);
+    border-bottom-color: var(--border);
 }
 
 body.dark-mode .event-item {
     color: var(--text);
     background: var(--row);
-    border-color: rgba(225, 236, 217, 0.14);
+    border-color: var(--border);
 }
 
 body.dark-mode .event-dot {
@@ -759,7 +827,7 @@ body.dark-mode .event-dot {
 }
 
 body.dark-mode .event-date {
-    color: var(--soft);
+    color: var(--text);
 }
 
 body.dark-mode .event-name {
@@ -776,11 +844,37 @@ body.dark-mode .event-error {
 }
 
 body.dark-mode .events-timeline {
-    scrollbar-color: rgba(205, 222, 195, 0.35) transparent;
+    scrollbar-color: rgba(190, 210, 194, 0.35) transparent;
 }
 
 body.dark-mode .events-timeline::-webkit-scrollbar-thumb {
-    background: rgba(205, 222, 195, 0.35);
+    background: rgba(190, 210, 194, 0.35);
+}
+
+/* =====================================================
+   DARK MODE — THEME-SPECIFIC HEADER COLORS
+   ===================================================== */
+
+body.dark-mode[data-color-theme="classic"] {
+    --bar-bg: #0F5132;
+}
+
+body.dark-mode[data-color-theme="royal"] {
+    --bar-bg: #142D49;
+    --row: rgba(27, 48, 70, 0.96);
+    --card: rgba(27, 48, 70, 0.72);
+}
+
+body.dark-mode[data-color-theme="rose"] {
+    --bar-bg: #592F36;
+    --row: rgba(66, 39, 44, 0.96);
+    --card: rgba(66, 39, 44, 0.72);
+}
+
+body.dark-mode[data-color-theme="pista"] {
+    --bar-bg: #244C28;
+    --row: rgba(34, 58, 36, 0.96);
+    --card: rgba(34, 58, 36, 0.72);
 }
 
 /* =====================================================
@@ -790,7 +884,7 @@ body.dark-mode .events-timeline::-webkit-scrollbar-thumb {
 @media (max-height: 760px) {
     :root {
         --page-gap: 6px;
-        --bar-height: 52px;
+        --bar-height: 48px;
     }
 
     body {
@@ -798,17 +892,17 @@ body.dark-mode .events-timeline::-webkit-scrollbar-thumb {
     }
 
     .top-board {
-        grid-template-columns: 36px minmax(0, 1fr) 36px;
+        grid-template-columns: 34px minmax(0, 1fr) 34px;
         gap: 5px;
-        padding: 4px 8px;
+        padding: 3px 7px;
     }
 
     .month-button {
-        width: 35px;
-        height: 38px;
-        min-width: 35px;
-        min-height: 38px;
-        font-size: 26px;
+        width: 33px;
+        height: 36px;
+        min-width: 33px;
+        min-height: 36px;
+        font-size: 24px;
     }
 
     .calendar-board {
@@ -861,17 +955,17 @@ body.dark-mode .events-timeline::-webkit-scrollbar-thumb {
     }
 
     .top-board {
-        grid-template-columns: 31px minmax(0, 1fr) 31px;
+        grid-template-columns: 30px minmax(0, 1fr) 30px;
         gap: 4px;
-        padding: 4px 6px;
+        padding: 3px 6px;
     }
 
     .month-button {
-        width: 30px;
-        height: 36px;
-        min-width: 30px;
-        min-height: 36px;
-        font-size: 23px;
+        width: 29px;
+        height: 35px;
+        min-width: 29px;
+        min-height: 35px;
+        font-size: 22px;
     }
 
     .calendar-board {
@@ -918,17 +1012,17 @@ body.dark-mode .events-timeline::-webkit-scrollbar-thumb {
     }
 
     .top-board {
-        grid-template-columns: 30px minmax(0, 1fr) 30px;
+        grid-template-columns: 29px minmax(0, 1fr) 29px;
         gap: 3px;
-        padding: 3px 6px;
+        padding: 2px 5px;
     }
 
     .month-button {
-        width: 29px;
-        height: 32px;
-        min-width: 29px;
-        min-height: 32px;
-        font-size: 21px;
+        width: 28px;
+        height: 31px;
+        min-width: 28px;
+        min-height: 31px;
+        font-size: 20px;
     }
 
     .calendar-board {
