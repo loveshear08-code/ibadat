@@ -2,8 +2,8 @@
 /* =====================================================
    IBADAT — HADITH PAGE
    Qibla-matched themes
-   Background: content-bg.png + cream overlay
-   Content board: content-bg2.png
+   Main Background: content-bg.png
+   Only 8 Hadith Book Boxes: content-bg2.png
    Layout and existing design preserved
 ===================================================== */
 
@@ -370,7 +370,7 @@ svg {
 
 /* =====================================================
    8. APP BACKGROUND
-   Same main background treatment on both screens
+   Main page background remains unchanged
 ===================================================== */
 
 .hadith-app {
@@ -526,6 +526,11 @@ body.dark-mode .hadith-app::before {
   scrollbar-color: var(--h-strong-border) transparent;
 }
 
+/* =====================================================
+   12. EIGHT HADITH BOOK BOXES
+   content-bg2.png is applied ONLY here
+===================================================== */
+
 .book-card {
   display: flex;
   flex-direction: column;
@@ -539,7 +544,15 @@ body.dark-mode .hadith-app::before {
   padding: 7px;
   border: 1px solid var(--h-strong-border);
   border-radius: 19px;
-  background: var(--h-card);
+
+  background:
+    linear-gradient(
+      var(--h-card-overlay),
+      var(--h-card-overlay)
+    ),
+    url("../assets/images/content-bg2.png") center / cover no-repeat;
+
+  background-color: var(--h-card);
   color: var(--h-text);
   box-shadow: var(--h-shadow);
   cursor: pointer;
@@ -552,7 +565,15 @@ body.dark-mode .hadith-app::before {
 
 .book-card:hover {
   border-color: var(--h-accent);
-  background: var(--h-board);
+
+  background:
+    linear-gradient(
+      var(--h-board-overlay),
+      var(--h-board-overlay)
+    ),
+    url("../assets/images/content-bg2.png") center / cover no-repeat;
+
+  background-color: var(--h-board);
 }
 
 .book-card:active {
@@ -591,8 +612,8 @@ body.dark-mode .hadith-app::before {
 }
 
 /* =====================================================
-   12. CONTENT BOARD
-   Qibla page content-bg2.png background
+   13. CONTENT BOARD
+   No content-bg2 image on this board
 ===================================================== */
 
 .content-board {
@@ -613,7 +634,7 @@ body.dark-mode .hadith-app::before {
   box-shadow: var(--h-shadow);
 }
 
-/* Content board background image and theme overlay */
+/* Keep content above the board background */
 
 .content-board::before {
   content: "";
@@ -621,12 +642,7 @@ body.dark-mode .hadith-app::before {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background:
-    linear-gradient(
-      var(--h-board-overlay),
-      var(--h-board-overlay)
-    ),
-    url("../assets/images/content-bg2.png") center / cover no-repeat;
+  background: var(--h-board-overlay);
   background-color: var(--h-board);
 }
 
@@ -643,7 +659,7 @@ body.dark-mode .hadith-app::before {
 }
 
 /* =====================================================
-   13. CONTENT TOOLBAR
+   14. CONTENT TOOLBAR
 ===================================================== */
 
 .content-toolbar {
@@ -683,7 +699,7 @@ body.dark-mode .hadith-app::before {
 }
 
 /* =====================================================
-   14. SEARCH BUTTON
+   15. SEARCH BUTTON
 ===================================================== */
 
 .icon-button {
@@ -711,7 +727,7 @@ body.dark-mode .hadith-app::before {
 }
 
 /* =====================================================
-   15. SEARCH INPUT
+   16. SEARCH INPUT
 ===================================================== */
 
 .search-panel {
@@ -752,7 +768,7 @@ body.dark-mode .hadith-app::before {
 }
 
 /* =====================================================
-   16. LIST STATUS
+   17. LIST STATUS
 ===================================================== */
 
 .list-status {
@@ -768,7 +784,7 @@ body.dark-mode .hadith-app::before {
 }
 
 /* =====================================================
-   17. HADITH LIST
+   18. HADITH LIST
 ===================================================== */
 
 .hadith-list {
@@ -811,7 +827,7 @@ body.dark-mode .hadith-app::before {
 }
 
 /* =====================================================
-   18. HADITH CARD CONTENT
+   19. HADITH CARD CONTENT
 ===================================================== */
 
 .hadith-item-top {
@@ -863,7 +879,7 @@ body.dark-mode .hadith-app::before {
 }
 
 /* =====================================================
-   19. ERROR AND RETRY
+   20. ERROR AND RETRY
 ===================================================== */
 
 .list-message {
@@ -898,7 +914,7 @@ body.dark-mode .hadith-app::before {
 }
 
 /* =====================================================
-   20. LIST BOTTOM
+   21. LIST BOTTOM
 ===================================================== */
 
 .list-bottom {
@@ -911,7 +927,7 @@ body.dark-mode .hadith-app::before {
 }
 
 /* =====================================================
-   21. SMALL PHONES
+   22. SMALL PHONES
 ===================================================== */
 
 @media (max-width: 380px) {
@@ -944,7 +960,7 @@ body.dark-mode .hadith-app::before {
 }
 
 /* =====================================================
-   22. SHORT SCREENS
+   23. SHORT SCREENS
 ===================================================== */
 
 @media (max-height: 620px) {
@@ -992,7 +1008,7 @@ body.dark-mode .hadith-app::before {
 }
 
 /* =====================================================
-   23. WIDE SCREENS
+   24. WIDE SCREENS
 ===================================================== */
 
 @media (min-width: 600px) {
@@ -1028,7 +1044,7 @@ body.dark-mode .hadith-app::before {
 }
 
 /* =====================================================
-   24. ACCESSIBILITY
+   25. ACCESSIBILITY
 ===================================================== */
 
 @media (prefers-reduced-motion: reduce) {
