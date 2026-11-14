@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#124C32">
+    <meta name="theme-color" content="#0F5132">
     <title>Settings | IBADAT</title>
-    <link rel="stylesheet" href="../css/settings.css?v=25">
+    <link rel="stylesheet" href="../css/settings.css?v=26">
 </head>
-<body>
+<body data-color-theme="classic">
 
     <header class="top-board">
         <h1 id="settingsTitle">সেটিংস</h1>
@@ -16,17 +16,18 @@
     <main class="container">
         <div class="content">
 
-            <!-- 1. LANGUAGE -->
+            <!-- LANGUAGE -->
             <section class="card language-card">
                 <h2 id="langTitle">ভাষা</h2>
+
                 <select id="langSelect" aria-label="Language">
-                    <option value="bn">বাংলা</option>
                     <option value="en">English</option>
+                    <option value="bn">বাংলা</option>
                     <option value="hi">हिन्दी</option>
                 </select>
             </section>
 
-            <!-- 2. SINGLE THEME BOARD -->
+            <!-- THEME -->
             <section class="card theme-card">
 
                 <div class="theme-heading-row">
@@ -40,10 +41,12 @@
                 </div>
 
                 <div class="theme-color-section">
-                    <p id="themeColorDesc">আপনার পছন্দের রঙ নির্বাচন করুন</p>
+                    <p id="themeColorDesc">থিম নির্বাচন করুন</p>
 
-                    <div class="theme-options" id="themeOptions"
-                         role="radiogroup" aria-label="Theme color">
+                    <div class="theme-options"
+                         id="themeOptions"
+                         role="radiogroup"
+                         aria-label="Theme color">
 
                         <button type="button"
                                 class="theme-option"
@@ -97,10 +100,20 @@
                 </div>
             </section>
 
-            <!-- 3. AZAN -->
+            <!-- AZAN -->
             <section class="card azan-card">
-                <h2 id="azanTitle">আযান</h2>
-                <p id="azanDesc">কোন ওয়াক্তে কোন আজান বাজবে</p>
+
+                <div class="azan-heading-row">
+                    <h2 id="azanTitle">আযান</h2>
+
+                    <label for="azanSound" class="azan-sound-control">
+                        <span id="azanSoundLabel">আজান সাউন্ড</span>
+                        <input type="checkbox" id="azanSound">
+                        <span class="dark-check" aria-hidden="true">✓</span>
+                    </label>
+                </div>
+
+                <p id="azanDesc">আজান নির্বাচন করুন</p>
 
                 <div class="azan-list">
 
@@ -108,35 +121,40 @@
                         <span id="prayer_fajr">ফজর</span>
                         <select id="azan_fajr" aria-label="Fajr Azan"></select>
                         <button type="button" class="play-button"
-                                data-prayer="fajr" aria-label="Play Fajr Azan">▶</button>
+                                data-prayer="fajr"
+                                aria-label="Play Fajr Azan">▶</button>
                     </div>
 
                     <div class="azan-row">
                         <span id="prayer_dhuhr">জোহর</span>
                         <select id="azan_dhuhr" aria-label="Dhuhr Azan"></select>
                         <button type="button" class="play-button"
-                                data-prayer="dhuhr" aria-label="Play Dhuhr Azan">▶</button>
+                                data-prayer="dhuhr"
+                                aria-label="Play Dhuhr Azan">▶</button>
                     </div>
 
                     <div class="azan-row">
                         <span id="prayer_asr">আসর</span>
                         <select id="azan_asr" aria-label="Asr Azan"></select>
                         <button type="button" class="play-button"
-                                data-prayer="asr" aria-label="Play Asr Azan">▶</button>
+                                data-prayer="asr"
+                                aria-label="Play Asr Azan">▶</button>
                     </div>
 
                     <div class="azan-row">
                         <span id="prayer_maghrib">মাগরিব</span>
                         <select id="azan_maghrib" aria-label="Maghrib Azan"></select>
                         <button type="button" class="play-button"
-                                data-prayer="maghrib" aria-label="Play Maghrib Azan">▶</button>
+                                data-prayer="maghrib"
+                                aria-label="Play Maghrib Azan">▶</button>
                     </div>
 
                     <div class="azan-row">
                         <span id="prayer_isha">এশা</span>
                         <select id="azan_isha" aria-label="Isha Azan"></select>
                         <button type="button" class="play-button"
-                                data-prayer="isha" aria-label="Play Isha Azan">▶</button>
+                                data-prayer="isha"
+                                aria-label="Play Isha Azan">▶</button>
                     </div>
 
                 </div>
@@ -144,7 +162,7 @@
 
         </div>
 
-        <!-- FULL-WIDTH SAVE BOARD -->
+        <!-- SAVE -->
         <div class="btn-box">
             <button type="button" id="saveBtn">সংরক্ষণ</button>
         </div>
@@ -152,9 +170,9 @@
     </main>
 
     <footer class="bottom-board">
-        <p id="settingsFooter">আল্লাহকে স্মরণ করুন</p>
+        <p id="settingsFooter">আপনার ইবাদত, আপনার নিয়ন্ত্রণে।</p>
     </footer>
 
-    <script src="../js/settings.js?v=25"></script>
+    <script src="../js/settings.js?v=26"></script>
 </body>
 </html>
