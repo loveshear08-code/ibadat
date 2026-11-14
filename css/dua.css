@@ -1,10 +1,9 @@
-
 /* =========================================================
    IBADAT — DUA.CSS
-   IslamicAPI edition
+   30 Categories
    Bengali / English / Hindi
    Classic / Royal / Rose / Pista
-   Light + Dark mode
+   Light + Dark Mode
 ========================================================= */
 
 :root {
@@ -140,8 +139,6 @@ button:disabled {
 /* HEADER */
 
 .dua-hero {
-  position: relative;
-
   display: flex;
   flex: 0 0 var(--header-height);
   align-items: center;
@@ -163,7 +160,6 @@ button:disabled {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
 
   width: 100%;
   min-width: 0;
@@ -478,8 +474,6 @@ button:disabled {
   line-height: 1.7;
   overflow-wrap: anywhere;
 }
-
-/* TRANSLATION LANGUAGE MARKERS */
 
 .translation-language {
   display: inline-flex;
