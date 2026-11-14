@@ -1,15 +1,10 @@
 
 /* =========================================================
    IBADAT — DUA.CSS
-   QIBLA THEME + BACKGROUND MATCH
-   Themes: Classic / Royal / Rose / Pista
-   Light Mode + Dark Mode
-   Layout and existing design preserved
-========================================================= */
-
-
-/* =========================================================
-   1. ROOT VARIABLES
+   IslamicAPI edition
+   Bengali / English / Hindi
+   Classic / Royal / Rose / Pista
+   Light + Dark mode
 ========================================================= */
 
 :root {
@@ -19,7 +14,6 @@
   --page-gap: 6px;
   --board-radius: 20px;
 
-  /* Classic Green — Qibla palette */
   --primary: #1B7F4B;
   --soft: #E8F5E9;
   --accent: #F2C94C;
@@ -44,17 +38,13 @@
     );
 
   --content-overlay: rgba(255,253,245,.48);
-
   --shadow: 0 3px 10px rgba(30,49,28,.12);
 
   --arabic-font-size: 30px;
   --translation-font-size: 16px;
 }
 
-
-/* =========================================================
-   2. GLOBAL
-========================================================= */
+/* GLOBAL */
 
 * {
   box-sizing: border-box;
@@ -92,28 +82,22 @@ body {
     Arial,
     sans-serif;
 
-  /* Same main background as Qibla page */
   background:
     var(--page-overlay),
     url("../assets/images/content-bg.png")
     center center / cover no-repeat;
 }
 
-button,
-input {
+button {
   max-width: 100%;
   font: inherit;
-}
-
-button {
   touch-action: manipulation;
   -webkit-appearance: none;
   appearance: none;
   cursor: pointer;
 }
 
-button:focus-visible,
-input:focus-visible {
+button:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
@@ -128,10 +112,7 @@ button:disabled {
   display: none !important;
 }
 
-
-/* =========================================================
-   3. APP LAYOUT
-========================================================= */
+/* APP LAYOUT */
 
 .dua-app {
   position: relative;
@@ -156,10 +137,7 @@ button:disabled {
   overflow: hidden;
 }
 
-
-/* =========================================================
-   4. HEADER
-========================================================= */
+/* HEADER */
 
 .dua-hero {
   position: relative;
@@ -182,7 +160,17 @@ button:disabled {
 }
 
 .dua-hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
   width: 100%;
+  min-width: 0;
+}
+
+.hero-text {
+  flex: 1 1 auto;
   min-width: 0;
 }
 
@@ -205,11 +193,29 @@ button:disabled {
   display: none;
 }
 
+.back-button {
+  flex: 0 0 32px;
 
-/* =========================================================
-   5. MAIN CONTENT BOARD
-   Uses Qibla content-bg2.png
-========================================================= */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+  padding: 0;
+
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+
+  color: var(--header-text);
+  background: rgba(255,255,255,.10);
+
+  font-size: 27px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* MAIN BOARD */
 
 .dua-main-board {
   position: relative;
@@ -239,10 +245,7 @@ button:disabled {
   box-shadow: var(--shadow);
 }
 
-
-/* =========================================================
-   6. PAGE VISIBILITY
-========================================================= */
+/* PAGE VISIBILITY */
 
 .dua-page {
   display: none;
@@ -261,12 +264,10 @@ button:disabled {
   display: flex;
 }
 
+/* LISTS */
 
-/* =========================================================
-   7. CHAPTER LIST
-========================================================= */
-
-.chapter-list {
+.chapter-list,
+.entry-list {
   display: flex;
   flex: 1 1 0;
   flex-direction: column;
@@ -302,9 +303,7 @@ button:disabled {
 }
 
 .chapter-item,
-.chapter-card,
-.chapter-button,
-.chapter-list > button {
+.entry-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -335,26 +334,18 @@ button:disabled {
 }
 
 .chapter-item:hover,
-.chapter-card:hover,
-.chapter-button:hover,
-.chapter-list > button:hover {
+.entry-item:hover {
   border-color: var(--primary);
   background: var(--soft);
 }
 
 .chapter-item:active,
-.chapter-card:active,
-.chapter-button:active,
-.chapter-list > button:active {
+.entry-item:active {
   transform: scale(.99);
 }
 
 .chapter-name,
-.chapter-title,
-.chapter-label,
-.entry-name,
-.entry-title,
-.entry-label {
+.entry-name {
   flex: 1 1 auto;
   min-width: 0;
   overflow-wrap: anywhere;
@@ -383,95 +374,12 @@ button:disabled {
 .chapter-arrow,
 .entry-arrow {
   flex: 0 0 auto;
-
   color: var(--primary);
   font-size: 23px;
   font-weight: 900;
 }
 
-
-/* =========================================================
-   8. ENTRY LIST
-========================================================= */
-
-.entry-list {
-  display: flex;
-  flex: 1 1 0;
-  flex-direction: column;
-  gap: 9px;
-
-  width: 100%;
-  min-width: 0;
-  min-height: 0;
-
-  padding: 1px 2px 8px;
-
-  overflow-x: hidden;
-  overflow-y: auto;
-
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
-
-  scrollbar-width: thin;
-  scrollbar-color: rgba(155,120,55,.45) transparent;
-}
-
-.entry-item,
-.entry-card,
-.entry-button,
-.entry-list > button {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-
-  width: 100%;
-  min-width: 0;
-  min-height: 58px;
-
-  margin: 0;
-  padding: 11px 13px;
-
-  border: 1px solid var(--border);
-  border-radius: 13px;
-
-  color: var(--text);
-  background: var(--card);
-
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.7;
-  text-align: start;
-
-  transition:
-    background-color 140ms ease,
-    border-color 140ms ease,
-    transform 140ms ease;
-}
-
-.entry-item:hover,
-.entry-card:hover,
-.entry-button:hover,
-.entry-list > button:hover {
-  border-color: var(--primary);
-  background: var(--soft);
-}
-
-.entry-item:active,
-.entry-card:active,
-.entry-button:active,
-.entry-list > button:active {
-  transform: scale(.99);
-}
-
-.entry-number {
-  flex-basis: 30px;
-}
-
-
-/* =========================================================
-   9. SELECTED DUA
-========================================================= */
+/* DUA CONTENT */
 
 #duaContent {
   display: flex;
@@ -495,9 +403,7 @@ button:disabled {
   scrollbar-color: rgba(155,120,55,.45) transparent;
 }
 
-.dua-card,
-.dua-item,
-.dhikr-card {
+.dua-card {
   width: 100%;
   min-width: 0;
 
@@ -512,15 +418,12 @@ button:disabled {
   overflow-wrap: anywhere;
 }
 
-.dua-card + .dua-card,
-.dua-item + .dua-item,
-.dhikr-card + .dhikr-card {
+.dua-card + .dua-card {
   margin-top: 2px;
 }
 
-.dua-heading,
-.dua-section-title {
-  margin: 0 0 8px;
+.dua-heading {
+  margin: 0 0 12px;
 
   color: var(--deep);
   font-size: 16px;
@@ -530,68 +433,15 @@ button:disabled {
   overflow-wrap: anywhere;
 }
 
-.dua-arabic,
-.arabic-text,
-.dua-text-arabic {
-  margin: 0;
-
-  color: var(--deep);
-
-  font-family: "Amiri", "Noto Naskh Arabic", serif;
-  font-size: var(--arabic-font-size);
-  font-weight: 500;
-  line-height: 2.15;
-
-  text-align: right;
-  direction: rtl;
-
-  overflow-wrap: anywhere;
+.dua-section {
+  margin-top: 12px;
 }
 
-.dua-transliteration,
-.transliteration,
-.dua-pronunciation {
-  margin: 12px 0 0;
-
-  color: var(--primary);
-  font-size: 15px;
-  line-height: 1.9;
-
-  overflow-wrap: anywhere;
+.dua-section:first-child {
+  margin-top: 0;
 }
 
-.dua-translation,
-.translation,
-.dua-meaning {
-  margin: 10px 0 0;
-
-  color: var(--text);
-  font-size: var(--translation-font-size);
-  line-height: 1.9;
-
-  overflow-wrap: anywhere;
-}
-
-.dua-reference,
-.reference,
-.dua-source {
-  margin: 10px 0 0;
-  padding-top: 9px;
-
-  border-top: 1px solid var(--border);
-
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.7;
-
-  overflow-wrap: anywhere;
-}
-
-.dua-label,
-.arabic-label,
-.translation-label,
-.pronunciation-label,
-.reference-label {
+.dua-label {
   display: block;
   margin: 0 0 5px;
 
@@ -601,107 +451,71 @@ button:disabled {
   line-height: 1.6;
 }
 
+.dua-arabic {
+  margin: 0;
 
-/* =========================================================
-   10. AUDIO PLAYER
-========================================================= */
-
-.dua-audio-player,
-.audio-player,
-#duaAudioPlayer {
-  position: relative;
-
-  display: flex;
-  flex: 0 0 auto;
-  align-items: center;
-  gap: 9px;
-
-  width: 100%;
-  min-width: 0;
-
-  margin-top: 8px;
-  padding: 10px;
-
-  border: 1px solid var(--accent);
-  border-radius: 13px;
-
-  color: var(--footer-text);
-  background: var(--footer-bg);
-
-  box-shadow: var(--shadow);
-}
-
-.audio-control,
-.audio-player button,
-.dua-audio-player button,
-#duaAudioPlayer button {
-  display: inline-flex;
-  flex: 0 0 36px;
-  align-items: center;
-  justify-content: center;
-
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
-
-  padding: 0;
-
-  border: 1px solid var(--accent);
-  border-radius: 50%;
-
-  color: var(--footer-text);
-  background: var(--primary);
-
-  font-size: 15px;
-}
-
-.audio-play-button,
-.audio-player .play-button,
-.dua-audio-player .play-button {
   color: var(--deep);
-  background: var(--accent);
+
+  font-family:
+    "Amiri",
+    "Noto Naskh Arabic",
+    "Traditional Arabic",
+    serif;
+
+  font-size: var(--arabic-font-size);
+  font-weight: 500;
+  line-height: 2.15;
+
+  text-align: right;
+  direction: rtl;
+  overflow-wrap: anywhere;
 }
 
-.audio-progress-wrap,
-.audio-progress-container {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  gap: 5px;
+.dua-pronunciation {
+  margin: 0;
 
-  min-width: 0;
+  color: var(--primary);
+  font-size: 15px;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
 }
 
-.audio-track,
-.audio-progress {
-  width: 100%;
-  height: 5px;
+.dua-translation {
+  margin: 0;
 
-  border: 0;
-  border-radius: 99px;
-
-  background: rgba(255,255,255,.28);
-  accent-color: var(--accent);
-
-  cursor: pointer;
+  color: var(--text);
+  font-size: var(--translation-font-size);
+  line-height: 1.9;
+  overflow-wrap: anywhere;
 }
 
-.audio-time,
-.audio-duration {
-  display: flex;
+.dua-reference {
+  margin: 0;
+  padding-top: 9px;
+
+  border-top: 1px solid var(--border);
+
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+/* TRANSLATION LANGUAGE MARKERS */
+
+.translation-language {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
   gap: 6px;
 
-  color: var(--footer-text);
-  font-size: 11px;
-  line-height: 1.4;
+  margin-bottom: 6px;
+
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 800;
 }
 
-
-/* =========================================================
-   11. STATUS / LOADING
-========================================================= */
+/* STATUS */
 
 .status-box {
   flex: 0 0 auto;
@@ -716,8 +530,7 @@ button:disabled {
   text-align: center;
 }
 
-.error-box,
-.error-message {
+.error-box {
   color: #a13d2e;
 }
 
@@ -741,9 +554,7 @@ button:disabled {
   font-weight: 700;
 }
 
-.loading-message,
-.empty-message,
-.error-message {
+.empty-message {
   padding: 16px 8px;
 
   color: var(--muted);
@@ -752,10 +563,7 @@ button:disabled {
   text-align: center;
 }
 
-
-/* =========================================================
-   12. FOOTER
-========================================================= */
+/* FOOTER */
 
 .dua-footer {
   flex: 0 0 var(--footer-height);
@@ -787,7 +595,6 @@ button:disabled {
   width: 100%;
   height: 100%;
   min-width: 0;
-
   overflow: hidden;
 }
 
@@ -806,23 +613,17 @@ button:disabled {
   white-space: nowrap;
 }
 
-
-/* =========================================================
-   13. LIGHT MODE — CLASSIC GREEN
-========================================================= */
+/* CLASSIC */
 
 body[data-color-theme="classic"] {
   --primary: #1B7F4B;
   --soft: #E8F5E9;
   --accent: #F2C94C;
   --deep: #0F5132;
-
   --text: #17452F;
   --muted: #68796B;
-
   --card: rgba(213,239,211,.88);
   --border: #D5E3D1;
-
   --header-bg: #0F5132;
   --header-text: #F5E5A7;
   --footer-bg: #0F5132;
@@ -839,23 +640,17 @@ body[data-color-theme="classic"] {
   --content-overlay: rgba(255,253,245,.48);
 }
 
-
-/* =========================================================
-   14. LIGHT MODE — ROYAL BLUE
-========================================================= */
+/* ROYAL */
 
 body[data-color-theme="royal"] {
   --primary: #285A8E;
   --soft: #E5EFF9;
   --accent: #E8BD55;
   --deep: #173A60;
-
   --text: #1B3652;
   --muted: #65798E;
-
   --card: rgba(220,235,249,.90);
   --border: #C8D9EB;
-
   --header-bg: #173A60;
   --header-text: #F5E5A7;
   --footer-bg: #173A60;
@@ -872,23 +667,17 @@ body[data-color-theme="royal"] {
   --content-overlay: rgba(244,249,255,.48);
 }
 
-
-/* =========================================================
-   15. LIGHT MODE — ROSE PINK
-========================================================= */
+/* ROSE */
 
 body[data-color-theme="rose"] {
   --primary: #B96F79;
   --soft: #F8E9E7;
   --accent: #D9B875;
   --deep: #7D414B;
-
   --text: #633B42;
   --muted: #846D70;
-
   --card: rgba(248,225,222,.91);
   --border: #E8CBC8;
-
   --header-bg: #7D414B;
   --header-text: #F5E5A7;
   --footer-bg: #7D414B;
@@ -905,23 +694,17 @@ body[data-color-theme="rose"] {
   --content-overlay: rgba(255,248,244,.48);
 }
 
-
-/* =========================================================
-   16. LIGHT MODE — PISTA GREEN
-========================================================= */
+/* PISTA */
 
 body[data-color-theme="pista"] {
   --primary: #4CAF50;
   --soft: #DFF5E1;
   --accent: #A7D129;
   --deep: #2F7135;
-
   --text: #254D2A;
   --muted: #6D806D;
-
   --card: rgba(218,242,216,.91);
   --border: #CDE3C8;
-
   --header-bg: #2F7135;
   --header-text: #F5E5A7;
   --footer-bg: #2F7135;
@@ -938,10 +721,7 @@ body[data-color-theme="pista"] {
   --content-overlay: rgba(248,253,240,.48);
 }
 
-
-/* =========================================================
-   17. DARK MODE — COMMON
-========================================================= */
+/* DARK MODE */
 
 body.dark-mode {
   --text: #E5EDE7;
@@ -958,7 +738,6 @@ body.dark-mode {
 
   color: var(--text);
 
-  /* Same Qibla main background in dark mode */
   background:
     var(--page-overlay),
     url("../assets/images/content-bg.png")
@@ -987,16 +766,8 @@ body.dark-mode .dua-footer-message {
 }
 
 body.dark-mode .chapter-item,
-body.dark-mode .chapter-card,
-body.dark-mode .chapter-button,
-body.dark-mode .chapter-list > button,
 body.dark-mode .entry-item,
-body.dark-mode .entry-card,
-body.dark-mode .entry-button,
-body.dark-mode .entry-list > button,
-body.dark-mode .dua-card,
-body.dark-mode .dua-item,
-body.dark-mode .dhikr-card {
+body.dark-mode .dua-card {
   color: var(--text);
   background: var(--card);
   border-color: var(--border);
@@ -1008,109 +779,30 @@ body.dark-mode .entry-number {
   background: var(--header-bg);
 }
 
-body.dark-mode .dua-translation,
-body.dark-mode .translation,
-body.dark-mode .dua-meaning {
+body.dark-mode .dua-heading,
+body.dark-mode .dua-arabic {
+  color: var(--header-text);
+}
+
+body.dark-mode .dua-pronunciation,
+body.dark-mode .dua-label,
+body.dark-mode .translation-language {
+  color: var(--accent);
+}
+
+body.dark-mode .dua-translation {
   color: var(--text);
 }
 
-body.dark-mode .dua-reference,
-body.dark-mode .reference,
-body.dark-mode .dua-source {
+body.dark-mode .dua-reference {
   color: var(--muted);
   border-top-color: var(--border);
 }
 
-
-/* =========================================================
-   18. DARK MODE — CLASSIC GREEN
-========================================================= */
-
-body.dark-mode[data-color-theme="classic"] {
-  --primary: #1B7F4B;
-  --soft: #263B2C;
-  --accent: #F2C94C;
-  --deep: #0F5132;
-
-  --header-bg: #0F5132;
-  --footer-bg: #0F5132;
-
-  --card: rgba(32,55,39,.95);
-}
-
-
-/* =========================================================
-   19. DARK MODE — ROYAL BLUE
-========================================================= */
-
-body.dark-mode[data-color-theme="royal"] {
-  --primary: #285A8E;
-  --soft: #26394D;
-  --accent: #E8BD55;
-  --deep: #173A60;
-
-  --header-bg: #142D49;
-  --footer-bg: #142D49;
-
-  --card: rgba(27,48,70,.96);
-}
-
-
-/* =========================================================
-   20. DARK MODE — ROSE PINK
-========================================================= */
-
-body.dark-mode[data-color-theme="rose"] {
-  --primary: #B96F79;
-  --soft: #432D32;
-  --accent: #D9B875;
-  --deep: #7D414B;
-
-  --header-bg: #592F36;
-  --footer-bg: #592F36;
-
-  --card: rgba(66,39,44,.96);
-}
-
-
-/* =========================================================
-   21. DARK MODE — PISTA GREEN
-========================================================= */
-
-body.dark-mode[data-color-theme="pista"] {
-  --primary: #4CAF50;
-  --soft: #2B402D;
-  --accent: #A7D129;
-  --deep: #2F7135;
-
-  --header-bg: #244C28;
-  --footer-bg: #244C28;
-
-  --card: rgba(34,58,36,.96);
-}
-
-
-/* =========================================================
-   22. DARK MODE — CONTENT TEXT
-========================================================= */
-
-body.dark-mode .dua-heading,
-body.dark-mode .dua-section-title,
-body.dark-mode .dua-arabic,
-body.dark-mode .arabic-text,
-body.dark-mode .dua-text-arabic {
-  color: var(--header-text);
-}
-
-body.dark-mode .dua-transliteration,
-body.dark-mode .transliteration,
-body.dark-mode .dua-pronunciation,
-body.dark-mode .dua-label,
-body.dark-mode .arabic-label,
-body.dark-mode .translation-label,
-body.dark-mode .pronunciation-label,
-body.dark-mode .reference-label {
-  color: var(--accent);
+body.dark-mode .chapter-item:hover,
+body.dark-mode .entry-item:hover {
+  background: var(--soft);
+  border-color: var(--accent);
 }
 
 body.dark-mode .chapter-arrow,
@@ -1118,51 +810,49 @@ body.dark-mode .entry-arrow {
   color: var(--accent);
 }
 
-body.dark-mode .chapter-item:hover,
-body.dark-mode .chapter-card:hover,
-body.dark-mode .chapter-button:hover,
-body.dark-mode .chapter-list > button:hover,
-body.dark-mode .entry-item:hover,
-body.dark-mode .entry-card:hover,
-body.dark-mode .entry-button:hover,
-body.dark-mode .entry-list > button:hover {
-  background: var(--soft);
-  border-color: var(--accent);
+/* DARK THEME VARIANTS */
+
+body.dark-mode[data-color-theme="classic"] {
+  --primary: #1B7F4B;
+  --soft: #263B2C;
+  --accent: #F2C94C;
+  --deep: #0F5132;
+  --header-bg: #0F5132;
+  --footer-bg: #0F5132;
+  --card: rgba(32,55,39,.95);
 }
 
-body.dark-mode .dua-audio-player,
-body.dark-mode .audio-player,
-body.dark-mode #duaAudioPlayer {
-  color: var(--header-text);
-  background: var(--header-bg);
-  border-color: var(--accent);
+body.dark-mode[data-color-theme="royal"] {
+  --primary: #285A8E;
+  --soft: #26394D;
+  --accent: #E8BD55;
+  --deep: #173A60;
+  --header-bg: #142D49;
+  --footer-bg: #142D49;
+  --card: rgba(27,48,70,.96);
 }
 
-body.dark-mode .audio-control,
-body.dark-mode .audio-player button,
-body.dark-mode .dua-audio-player button,
-body.dark-mode #duaAudioPlayer button {
-  color: var(--header-text);
-  background: var(--primary);
-  border-color: var(--accent);
+body.dark-mode[data-color-theme="rose"] {
+  --primary: #B96F79;
+  --soft: #432D32;
+  --accent: #D9B875;
+  --deep: #7D414B;
+  --header-bg: #592F36;
+  --footer-bg: #592F36;
+  --card: rgba(66,39,44,.96);
 }
 
-body.dark-mode .audio-play-button,
-body.dark-mode .audio-player .play-button,
-body.dark-mode .dua-audio-player .play-button {
-  color: var(--deep);
-  background: var(--accent);
+body.dark-mode[data-color-theme="pista"] {
+  --primary: #4CAF50;
+  --soft: #2B402D;
+  --accent: #A7D129;
+  --deep: #2F7135;
+  --header-bg: #244C28;
+  --footer-bg: #244C28;
+  --card: rgba(34,58,36,.96);
 }
 
-body.dark-mode .audio-time,
-body.dark-mode .audio-duration {
-  color: var(--header-text);
-}
-
-
-/* =========================================================
-   23. SMALL MOBILE
-========================================================= */
+/* MOBILE */
 
 @media (max-width: 380px) {
   :root {
@@ -1183,9 +873,7 @@ body.dark-mode .audio-duration {
   }
 
   .chapter-item,
-  .chapter-card,
-  .chapter-button,
-  .chapter-list > button {
+  .entry-item {
     gap: 8px;
     min-height: 51px;
     padding: 9px 10px;
@@ -1200,68 +888,27 @@ body.dark-mode .audio-duration {
     font-size: 12px;
   }
 
-  .entry-item,
-  .entry-card,
-  .entry-button,
-  .entry-list > button {
-    gap: 8px;
-    min-height: 50px;
-    padding: 9px 10px;
-    font-size: 13px;
-  }
-
   #duaContent {
     gap: 9px;
     padding-inline: 1px;
   }
 
-  .dua-card,
-  .dua-item,
-  .dhikr-card {
+  .dua-card {
     padding: 12px 10px;
   }
 
-  .dua-arabic,
-  .arabic-text,
-  .dua-text-arabic {
+  .dua-arabic {
     line-height: 2;
   }
 
-  .dua-transliteration,
-  .transliteration,
-  .dua-pronunciation {
-    font-size: 13px;
-    line-height: 1.8;
-  }
-
-  .dua-translation,
-  .translation,
-  .dua-meaning {
+  .dua-pronunciation,
+  .dua-translation {
     font-size: 14px;
     line-height: 1.8;
   }
 
-  .dua-reference,
-  .reference,
-  .dua-source {
+  .dua-reference {
     font-size: 12px;
-  }
-
-  .dua-audio-player,
-  .audio-player,
-  #duaAudioPlayer {
-    gap: 6px;
-    padding: 8px;
-  }
-
-  .audio-control,
-  .audio-player button,
-  .dua-audio-player button,
-  #duaAudioPlayer button {
-    flex-basis: 31px;
-    width: 31px;
-    height: 31px;
-    min-width: 31px;
   }
 
   .dua-footer {
@@ -1273,10 +920,7 @@ body.dark-mode .audio-duration {
   }
 }
 
-
-/* =========================================================
-   24. SHORT SCREENS
-========================================================= */
+/* SHORT SCREENS */
 
 @media (max-height: 600px) {
   .dua-main-board {
@@ -1287,17 +931,12 @@ body.dark-mode .audio-duration {
     gap: 8px;
   }
 
-  .dua-card,
-  .dua-item,
-  .dhikr-card {
+  .dua-card {
     padding: 10px;
   }
 }
 
-
-/* =========================================================
-   25. REDUCED MOTION
-========================================================= */
+/* REDUCED MOTION */
 
 @media (prefers-reduced-motion: reduce) {
   *,
