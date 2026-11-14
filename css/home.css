@@ -1,3 +1,4 @@
+
 :root {
   --deep-green: #124C32;
   --deep-green-dark: #0C3926;
@@ -9,6 +10,7 @@
   --theme-accent: #F2C94C;
   --theme-deep: #0F5132;
   --theme-text: #17452F;
+  --theme-muted: #68796B;
   --theme-card: rgba(255,255,255,.90);
   --theme-border: #D5E3D1;
 
@@ -80,7 +82,7 @@ a {
   gap: 8px;
   overflow: hidden;
   color: var(--gold-light);
-  background: linear-gradient(140deg,var(--theme-deep),var(--deep-green-dark));
+  background: linear-gradient(140deg,var(--theme-deep),#0C3926);
   border: 2px solid var(--theme-accent);
   border-radius: 20px;
   box-shadow:
@@ -116,7 +118,8 @@ a {
   text-overflow: ellipsis;
 }
 
-/* Main layout: header and footer stay fixed; middle fits remaining space */
+/* MAIN LAYOUT */
+
 .home-content {
   min-width: 0;
   min-height: 0;
@@ -136,7 +139,7 @@ a {
   min-height: 0;
   overflow: hidden;
   isolation: isolate;
-  border: 1px solid rgba(211,188,128,.65);
+  border: 1px solid var(--theme-border);
   border-radius: 22px;
   box-shadow: 0 2px 6px rgba(48,54,30,.10);
   background-position: center;
@@ -163,7 +166,8 @@ a.home-board:active {
   pointer-events: none;
 }
 
-/* Image paths intentionally preserved */
+/* ORIGINAL IMAGE PATHS PRESERVED */
+
 .bismillah-board {
   background-image: url("../assets/images/home-bg1.png");
   border: 1px solid #C6A34B;
@@ -172,7 +176,7 @@ a.home-board:active {
 
 .daily-board {
   background-image: url("../assets/images/home-bg2.png");
-  border: 1px solid #C6A34B;
+  border: 1px solid var(--theme-accent);
   border-radius: 22px;
 }
 
@@ -181,7 +185,8 @@ a.home-board:active {
   padding: 7px;
 }
 
-/* Bismillah board */
+/* BISMILLAH BOARD — GOLDEN DESIGN FIXED */
+
 .bismillah-content {
   width: 100%;
   height: 100%;
@@ -239,21 +244,18 @@ a.home-board:active {
   line-height: 1.35;
 }
 
-/* =========================================
-   STATUS BOARD — SIX BALANCED ITEMS
-   ========================================= */
+/* DAILY STATUS BOARD */
 
 .daily-board {
   position: relative;
   isolation: isolate;
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0,1fr);
+  grid-template-rows: repeat(3,minmax(0,1fr));
   padding: 8px 12px;
-  color: #10452F;
+  color: var(--theme-text);
 }
 
-/* Background overlay */
 .daily-board > .board-overlay {
   position: absolute;
   inset: 0;
@@ -263,13 +265,12 @@ a.home-board:active {
   pointer-events: none;
 }
 
-/* Three equal-height rows */
 .daily-top,
 .daily-middle,
 .daily-bottom {
   grid-column: 1;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2,minmax(0,1fr));
   align-items: center;
   justify-items: stretch;
   width: 100%;
@@ -291,7 +292,6 @@ a.home-board:active {
   grid-row: 3;
 }
 
-/* Shared text alignment */
 .daily-day,
 .weather-info,
 .clock-time,
@@ -306,13 +306,12 @@ a.home-board:active {
   max-width: 100%;
   margin: 0;
   padding: 0;
-  font-size: clamp(18px, 4.8vw, 26px);
+  font-size: clamp(18px,4.8vw,26px);
   font-weight: 900;
   line-height: 1.2;
   text-align: center;
 }
 
-/* Left and right columns */
 .daily-day,
 .clock-time,
 .current-prayer {
@@ -325,7 +324,6 @@ a.home-board:active {
   grid-column: 2;
 }
 
-/* Weather row */
 .weather-info {
   display: flex;
   align-items: center;
@@ -335,7 +333,6 @@ a.home-board:active {
   overflow: hidden;
 }
 
-/* Clock and countdown row */
 .clock-time,
 .countdown-time {
   font-variant-numeric: tabular-nums;
@@ -347,14 +344,12 @@ a.home-board:active {
   color: #B52D25;
 }
 
-/* Weather icon */
 .weather-icon {
   flex: 0 1 auto;
   min-width: 0;
   font-size: 1em;
 }
 
-/* Current and next prayer row */
 .current-prayer,
 .next-prayer {
   display: flex;
@@ -367,7 +362,7 @@ a.home-board:active {
   border: 0;
   border-radius: 0;
   text-shadow: none;
-  color: #10452F;
+  color: var(--theme-deep);
 }
 
 .prayer-dot {
@@ -380,59 +375,12 @@ a.home-board:active {
 
 .next-arrow {
   flex: 0 0 auto;
-  color: #B68A31;
+  color: var(--theme-accent);
   font-size: .82em;
 }
 
-/* Dark mode */
-body.dark-mode .daily-board {
-  color: #F0F4E7;
-}
+/* PRAYER TIMES GRID */
 
-body.dark-mode .current-prayer,
-body.dark-mode .next-prayer {
-  color: #F0F4E7;
-}
-
-/* Narrow screens */
-@media (max-width: 360px) {
-  .daily-board {
-    padding: 4px 3px;
-  }
-
-  .daily-day,
-  .weather-info,
-  .clock-time,
-  .countdown-time,
-  .current-prayer,
-  .next-prayer {
-    font-size: clamp(16px, 4.7vw, 21px);
-  }
-
-  .weather-info,
-  .current-prayer,
-  .next-prayer {
-    gap: 3px;
-  }
-}
-
-/* Short screens */
-@media (max-height: 650px) {
-  .daily-board {
-    padding: 3px 4px;
-  }
-
-  .daily-day,
-  .weather-info,
-  .clock-time,
-  .countdown-time,
-  .current-prayer,
-  .next-prayer {
-    font-size: clamp(16px, 4.8vw, 23px);
-  }
-}
-
-/* Prayer times grid */
 .prayer-grid {
   width: 100%;
   height: 100%;
@@ -454,7 +402,7 @@ body.dark-mode .next-prayer {
   gap: 3px;
   color: var(--theme-deep);
   background: var(--theme-soft);
-  border: 1px solid rgba(255,255,255,.8);
+  border: 1px solid var(--theme-border);
   border-radius: 20px;
   text-align: center;
 }
@@ -486,14 +434,11 @@ body.dark-mode .next-prayer {
 .settings-symbol {
   font-size: 18px;
   line-height: 1;
-  color: #8D7228;
+  color: var(--theme-deep);
 }
 
-body.dark-mode .settings-symbol {
-  color: var(--theme-accent);
-}
+/* FEATURE CARDS */
 
-/* Six feature cards */
 .feature-grid {
   min-width: 0;
   min-height: 0;
@@ -514,7 +459,7 @@ body.dark-mode .settings-symbol {
   gap: .45em;
   color: var(--theme-deep);
   background: var(--theme-soft);
-  border: 1.5px solid #C7DBA1;
+  border: 1.5px solid var(--theme-border);
   border-radius: 22px;
   box-shadow: 0 2px 7px rgba(33,75,35,.10);
   text-decoration: none;
@@ -556,7 +501,8 @@ body.dark-mode .settings-symbol {
   line-height: 1.2;
 }
 
-/* Smooth, continuous footer message */
+/* FOOTER MESSAGE */
+
 .footer-board {
   justify-content: center;
   gap: 0;
@@ -588,7 +534,7 @@ body.dark-mode .settings-symbol {
   font-size: clamp(13px,3.3vw,16px);
   font-weight: 800;
   line-height: 1.25;
-  animation: footer-message-scroll var(--message-duration, 22s) linear infinite;
+  animation: footer-message-scroll var(--message-duration,22s) linear infinite;
   will-change: transform;
 }
 
@@ -601,100 +547,173 @@ body.dark-mode .settings-symbol {
   }
 }
 
-/* Theme colors from Settings */
-body[data-theme-color="classic"] {
+/* =========================================
+   FOUR THEMES — SAME AS SETTINGS
+   ========================================= */
+
+/* CLASSIC */
+body[data-color-theme="classic"] {
   --theme-primary: #1B7F4B;
   --theme-soft: #E8F5E9;
   --theme-accent: #F2C94C;
   --theme-deep: #0F5132;
+  --theme-text: #17452F;
+  --theme-muted: #68796B;
+  --theme-border: #D5E3D1;
 }
 
-body[data-theme-color="royal"] {
+body[data-color-theme="classic"] .top-board,
+body[data-color-theme="classic"] .footer-board {
+  background: linear-gradient(140deg,#0F5132,#0C3926);
+}
+
+/* ROYAL */
+body[data-color-theme="royal"] {
   --theme-primary: #285A8E;
   --theme-soft: #E5EFF9;
   --theme-accent: #E8BD55;
   --theme-deep: #173A60;
+  --theme-text: #1B3652;
+  --theme-muted: #65798E;
+  --theme-border: #C8D9EB;
 }
 
-body[data-theme-color="rose"] {
+body[data-color-theme="royal"] .top-board,
+body[data-color-theme="royal"] .footer-board {
+  background: linear-gradient(140deg,#173A60,#102B48);
+}
+
+/* ROSE */
+body[data-color-theme="rose"] {
   --theme-primary: #B96F79;
   --theme-soft: #F8E9E7;
   --theme-accent: #D9B875;
   --theme-deep: #7D414B;
+  --theme-text: #633B42;
+  --theme-muted: #846D70;
+  --theme-border: #E8CBC8;
 }
 
-body[data-theme-color="pista"] {
+body[data-color-theme="rose"] .top-board,
+body[data-color-theme="rose"] .footer-board {
+  background: linear-gradient(140deg,#7D414B,#592F36);
+}
+
+/* PISTA */
+body[data-color-theme="pista"] {
   --theme-primary: #4CAF50;
   --theme-soft: #DFF5E1;
   --theme-accent: #A7D129;
-  --theme-deep: #214A35;
+  --theme-deep: #2F7135;
+  --theme-text: #254D2A;
+  --theme-muted: #6D806D;
+  --theme-border: #CDE3C8;
 }
 
-body[data-theme-color="classic"] .top-board,
-body[data-theme-color="classic"] .footer-board {
-  background: linear-gradient(140deg,#0F5132,#0C3926);
+body[data-color-theme="pista"] .top-board,
+body[data-color-theme="pista"] .footer-board {
+  background: linear-gradient(140deg,#2F7135,#244C28);
 }
 
-body[data-theme-color="royal"] .top-board,
-body[data-theme-color="royal"] .footer-board {
-  background: linear-gradient(140deg,#173A60,#102B48);
+/* THEME-BASED BOARD DETAILS */
+
+body[data-color-theme] .daily-board {
+  color: var(--theme-text);
+  border-color: var(--theme-accent);
 }
 
-body[data-theme-color="rose"] .top-board,
-body[data-theme-color="rose"] .footer-board {
-  background: linear-gradient(140deg,#7D414B,#A65F6A);
+body[data-color-theme] .prayer-cell,
+body[data-color-theme] .feature-card {
+  color: var(--theme-deep);
+  background: var(--theme-soft);
+  border-color: var(--theme-border);
 }
 
-body[data-theme-color="pista"] .top-board,
-body[data-theme-color="pista"] .footer-board {
-  background: linear-gradient(140deg,#2F7135,#214A35);
+body[data-color-theme] .sunrise-cell {
+  border-color: var(--theme-accent);
 }
 
-body[data-theme-color="royal"] .feature-card,
-body[data-theme-color="royal"] .prayer-cell {
-  color: #173A60;
+body[data-color-theme] .settings-symbol {
+  color: var(--theme-deep);
 }
 
-body[data-theme-color="rose"] .feature-card,
-body[data-theme-color="rose"] .prayer-cell {
-  color: #7D414B;
+body[data-color-theme] .current-prayer,
+body[data-color-theme] .next-prayer {
+  color: var(--theme-deep);
 }
 
-body[data-theme-color="pista"] .feature-card,
-body[data-theme-color="pista"] .prayer-cell {
-  color: #214A35;
-}
+/* =========================================
+   DARK MODE
+   ========================================= */
 
-/* Dark mode */
 body.dark-mode {
   --theme-text: #E5EDE7;
+  --theme-muted: #BECBBF;
+  --theme-border: #405746;
   --theme-card: rgba(25,35,29,.94);
+
   background-image:
     linear-gradient(rgba(12,22,16,.70),rgba(12,22,16,.70)),
     url("../assets/images/content-bg.png");
+}
+
+/* Dark theme header/footer */
+
+body.dark-mode[data-color-theme="classic"] .top-board,
+body.dark-mode[data-color-theme="classic"] .footer-board {
+  background: linear-gradient(140deg,#0F5132,#092D1E);
+}
+
+body.dark-mode[data-color-theme="royal"] .top-board,
+body.dark-mode[data-color-theme="royal"] .footer-board {
+  background: linear-gradient(140deg,#142D49,#0C2036);
+}
+
+body.dark-mode[data-color-theme="rose"] .top-board,
+body.dark-mode[data-color-theme="rose"] .footer-board {
+  background: linear-gradient(140deg,#592F36,#3D2027);
+}
+
+body.dark-mode[data-color-theme="pista"] .top-board,
+body.dark-mode[data-color-theme="pista"] .footer-board {
+  background: linear-gradient(140deg,#244C28,#18351C);
 }
 
 body.dark-mode .home-board .board-overlay {
   background: rgba(12,22,16,.44);
 }
 
-body.dark-mode .bismillah-board #bismillahMeaning {
-  color: #FFF3CC;
-}
-
-body.dark-mode .arabic-bismillah {
-  color: #F1D28A;
-}
-
 body.dark-mode .prayer-cell,
 body.dark-mode .feature-card {
   color: #F0F4E7;
   background: #1C3528;
-  border-color: #526A51;
+  border-color: var(--theme-border);
+}
+
+body.dark-mode[data-color-theme="royal"] .prayer-cell,
+body.dark-mode[data-color-theme="royal"] .feature-card {
+  background: #1B3048;
+  border-color: #405B78;
+}
+
+body.dark-mode[data-color-theme="rose"] .prayer-cell,
+body.dark-mode[data-color-theme="rose"] .feature-card {
+  background: #462C32;
+  border-color: #76515A;
+}
+
+body.dark-mode[data-color-theme="pista"] .prayer-cell,
+body.dark-mode[data-color-theme="pista"] .feature-card {
+  background: #244C28;
+  border-color: #527A4D;
 }
 
 body.dark-mode .sunrise-cell {
   border-color: var(--theme-accent);
+}
+
+body.dark-mode .settings-symbol {
+  color: var(--theme-accent);
 }
 
 body.dark-mode .daily-board {
@@ -706,7 +725,22 @@ body.dark-mode .next-prayer {
   color: #F0F4E7;
 }
 
-/* Small screens */
+/* BISMILLAH BOARD GOLDEN DETAILS REMAIN FIXED */
+
+body.dark-mode .bismillah-board .board-overlay {
+  background: rgba(12,22,16,.44);
+}
+
+body.dark-mode .bismillah-board #bismillahMeaning {
+  color: #FFF3CC;
+}
+
+body.dark-mode .arabic-bismillah {
+  color: #F1D28A;
+}
+
+/* SMALL SCREENS */
+
 @media (max-width: 360px) {
   .app-shell {
     padding-left: 5px;
@@ -765,7 +799,8 @@ body.dark-mode .next-prayer {
   }
 }
 
-/* Short screens: fit all content without page scrolling */
+/* SHORT SCREENS */
+
 @media (max-height: 650px) {
   .app-shell {
     grid-template-rows: 44px minmax(0,1fr) 44px;
@@ -829,6 +864,8 @@ body.dark-mode .next-prayer {
     font-size: inherit;
   }
 }
+
+/* REDUCED MOTION */
 
 @media (prefers-reduced-motion: reduce) {
   *,
