@@ -76,7 +76,8 @@
   };
 
   /* ==================================================
-     TEN TOPICS — SAME ORDER AND ICONS
+     TEN TOPICS — UPDATED CARD ORDER
+     ALL ORIGINAL IDS, ROUTES AND ICONS PRESERVED
   ================================================== */
 
   const topics = [
@@ -143,15 +144,8 @@
         hi: "मस्जिद और जमात"
       }
     },
-    {
-      id: "arabic-learning",
-      icon: "arabic-learning.png",
-      title: {
-        bn: "আরবি শিক্ষা",
-        en: "Arabic Learning",
-        hi: "अरबी शिक्षा"
-      }
-    },
+
+    /* ISLAMIC RULINGS — MOVED BEFORE LANGUAGE INTRODUCTION */
     {
       id: "islamic-rulings",
       icon: "islamic-rulings.png",
@@ -161,6 +155,18 @@
         hi: "इस्लामी नियम"
       }
     },
+
+    /* ARABIC LEARNING — RENAMED IN ALL THREE LANGUAGES */
+    {
+      id: "arabic-learning",
+      icon: "arabic-learning.png",
+      title: {
+        bn: "ভাষা পরিচিতি",
+        en: "Language Introduction",
+        hi: "भाषा परिचय"
+      }
+    },
+
     {
       id: "daily-amal",
       icon: "daily-amal.png",
@@ -197,6 +203,22 @@
         "नमाज़ इस्लाम की प्रमुख इबादतों में से एक है। यह अल्लाह की याद, दिल का सुकून और जीवन में अनुशासन लाती है।",
       ariaLabel: "नमाज़ का परिचय"
     }
+  };
+
+  /* ==================================================
+     PAGE HEADER AND DOCUMENT TITLE
+  ================================================== */
+
+  const pageTitles = {
+    bn: "নামাজ শিক্ষা",
+    en: "Learn Salah",
+    hi: "नमाज़ शिक्षा"
+  };
+
+  const documentTitles = {
+    bn: "নামাজ শিক্ষা | IBADAT",
+    en: "Learn Salah | IBADAT",
+    hi: "नमाज़ शिक्षा | IBADAT"
   };
 
   /* ==================================================
@@ -271,15 +293,22 @@
         footerMessages.bn;
     }
 
+    /* UPDATE VISIBLE PAGE HEADER */
+    const pageHeader = document.getElementById("page-title");
+
+    if (pageHeader) {
+      pageHeader.textContent =
+        pageTitles[currentLanguage] ||
+        pageTitles.bn;
+    }
+
+    /* UPDATE DOCUMENT LANGUAGE */
     document.documentElement.lang = currentLanguage;
 
-    const pageTitles = {
-      bn: "নামাজ শিক্ষা | IBADAT",
-      en: "Learn Salah | IBADAT",
-      hi: "नमाज़ शिक्षा | IBADAT"
-    };
-
-    document.title = pageTitles[currentLanguage];
+    /* UPDATE BROWSER TITLE */
+    document.title =
+      documentTitles[currentLanguage] ||
+      documentTitles.bn;
   }
 
   /* ==================================================
