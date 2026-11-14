@@ -193,28 +193,6 @@ button:disabled {
   display: none;
 }
 
-.back-button {
-  flex: 0 0 32px;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 32px;
-  height: 32px;
-  padding: 0;
-
-  border: 1px solid var(--accent);
-  border-radius: 50%;
-
-  color: var(--header-text);
-  background: rgba(255,255,255,.10);
-
-  font-size: 27px;
-  font-weight: 700;
-  line-height: 1;
-}
-
 /* MAIN BOARD */
 
 .dua-main-board {
