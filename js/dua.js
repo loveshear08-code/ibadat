@@ -1,4 +1,3 @@
-
 "use strict";
 
 /* =========================================================
@@ -539,20 +538,50 @@
     return "";
   }
 
-  function getPronunciation(records) {
+  /*
+   * Prefer a pronunciation explicitly belonging to the
+   * currently selected language. If the source only provides
+   * one common transliteration, use that as a fallback.
+   */
+  function getPronunciation(records, lang = language) {
+    const languageKeys = {
+      bn: [
+        "transliteration_bn",
+        "pronunciation_bn",
+        "pronunciation_bn_bd"
+      ],
+      en: [
+        "transliteration_en",
+        "pronunciation_en"
+      ],
+      hi: [
+        "transliteration_hi",
+        "pronunciation_hi"
+      ]
+    };
+
     for (const item of records) {
       if (!isObject(item)) continue;
 
-      const value = firstText(item, [
+      const specific = firstText(
+        item,
+        languageKeys[lang] || []
+      );
+
+      if (specific) return specific;
+    }
+
+    for (const item of records) {
+      if (!isObject(item)) continue;
+
+      const common = firstText(item, [
         "transliteration",
         "pronunciation",
-        "transliteration_bn",
-        "pronunciation_bn",
         "latin",
         "phonetic"
       ]);
 
-      if (value) return value;
+      if (common) return common;
     }
 
     return "";
@@ -709,10 +738,6 @@
       const fileName = parts[parts.length - 1];
       const baseName = fileName.replace(/\.json$/i, "");
 
-      /*
-       * Only select a file explicitly belonging to the
-       * requested language. Never use files[0] as fallback.
-       */
       return (
         baseName === normalizedLang ||
         parts.slice(1, -1).includes(normalizedLang)
@@ -872,11 +897,6 @@
 
     const result = new Map();
 
-    /*
-     * Multiple matching files are supported. This also
-     * handles repositories that split translations into
-     * language subfolders.
-     */
     const batchSize = 8;
 
     for (let i = 0; i < paths.length; i += batchSize) {
@@ -1045,10 +1065,6 @@
 
     if (map.has(key)) return map.get(key);
 
-    /*
-     * Numeric IDs can sometimes be stored with different
-     * string representations.
-     */
     const numeric = Number(key);
 
     if (Number.isFinite(numeric)) {
@@ -1115,7 +1131,7 @@
       hi: hindiText,
       reference:
         records.map(getReference).find(Boolean) || "",
-      pronunciation: getPronunciation(records)
+      pronunciation: getPronunciation(records, language)
     };
   }
 
@@ -1145,10 +1161,6 @@
   }
 
   function getVisibleDuas(category) {
-    /*
-     * Do not remove a Dua merely because one translation
-     * is missing. The available verified fields are shown.
-     */
     return getDuasForCategory(category).filter(dua =>
       dua.arabic ||
       dua.bn ||
@@ -1212,10 +1224,6 @@
 
     historyReady = true;
 
-    /*
-     * Create an entry for the Dua page so that Android's
-     * Back button can return to the app's previous page.
-     */
     history.replaceState(
       makeHistoryState("home"),
       "",
@@ -1260,10 +1268,6 @@
     const state = event.state;
 
     if (!state || state.ibadatDua !== true) {
-      /*
-       * The user has left the Dua section. The app's
-       * previous page can now be displayed normally.
-       */
       return;
     }
 
@@ -1462,6 +1466,22 @@
     card.appendChild(section);
   }
 
+  /*
+   * IMPORTANT:
+   * Only the currently selected language is rendered.
+   *
+   * Bengali selected:
+   * Arabic + Bengali pronunciation + Bengali meaning.
+   *
+   * English selected:
+   * Arabic + English pronunciation + English meaning.
+   *
+   * Hindi selected:
+   * Arabic + Hindi pronunciation + Hindi meaning.
+   *
+   * Other language sections are not added to the page.
+   */
+
   function renderDua(dua) {
     const box = el.duaContent;
 
@@ -1486,6 +1506,7 @@
       card.appendChild(heading);
     }
 
+    /* Arabic is always visible in every language. */
     addDuaField(
       card,
       t("arabic"),
@@ -1494,6 +1515,7 @@
       "rtl"
     );
 
+    /* Pronunciation for the selected language only. */
     addDuaField(
       card,
       t("pronunciation"),
@@ -1501,27 +1523,23 @@
       "dua-pronunciation"
     );
 
-    addTranslation(
-      card,
-      "bn",
-      t("bengali"),
-      dua.bn
-    );
+    /*
+     * Select exactly one translation.
+     * No English or Hindi section is created when Bengali
+     * is selected, and vice versa.
+     */
+    const selectedMeaning = dua[language] || "";
 
-    addTranslation(
-      card,
-      "en",
-      t("english"),
-      dua.en
-    );
+    if (selectedMeaning) {
+      addTranslation(
+        card,
+        language,
+        t("meaning"),
+        selectedMeaning
+      );
+    }
 
-    addTranslation(
-      card,
-      "hi",
-      t("hindi"),
-      dua.hi
-    );
-
+    /* Reference remains visible in every language. */
     addDuaField(
       card,
       t("reference"),
@@ -1630,6 +1648,21 @@
       renderDuasForCategory(selectedCategory);
 
     } else if (currentPage === "dua" && selectedDua) {
+      /*
+       * Re-rendering uses the new selected language.
+       * Therefore only that language's meaning appears.
+       */
+      selectedDua.pronunciation =
+        getPronunciation(
+          [
+            getRecordFromMap(allTranslations.ar, selectedDua.id),
+            getRecordFromMap(allTranslations.bn, selectedDua.id),
+            getRecordFromMap(allTranslations.en, selectedDua.id),
+            getRecordFromMap(allTranslations.hi, selectedDua.id)
+          ].filter(Boolean),
+          language
+        );
+
       renderDua(selectedDua);
     }
   }
