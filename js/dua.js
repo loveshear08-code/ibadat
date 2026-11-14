@@ -4,9 +4,10 @@
 /* =========================================================
    IBADAT — DUA.JS
    Source: IslamicAPI / masnun-dua
-   Languages: Bengali, English, Hindi
+   Languages: Bengali / English / Hindi
    Theme: appSettings / ibadatSettings
-   ========================================================= */
+   Navigation: Browser / Android Back
+========================================================= */
 
 (() => {
   const REPO_API =
@@ -16,8 +17,8 @@
     "https://raw.githubusercontent.com/islamicapi/masnun-dua/main/";
 
   const LANGUAGES = ["bn", "en", "hi"];
-
   const SETTINGS_KEYS = ["appSettings", "ibadatSettings"];
+  const VALID_THEMES = ["classic", "royal", "rose", "pista"];
 
   const $ = id => document.getElementById(id);
 
@@ -25,7 +26,6 @@
     heroTitle: $("heroTitle"),
     heroSubtitle: $("heroSubtitle"),
     footerText: $("footerText"),
-    backButton: $("backButton"),
 
     loadingBox: $("loadingBox"),
     errorBox: $("errorBox"),
@@ -52,20 +52,22 @@
       loadingEntries: "দোয়ার তালিকা লোড হচ্ছে...",
       loadingDetails: "দোয়ার বিস্তারিত লোড হচ্ছে...",
       retry: "আবার চেষ্টা করুন",
-      back: "পেছনে যান",
       category: "বিভাগ",
       dua: "দোয়া",
       arabic: "আরবি",
       pronunciation: "উচ্চারণ",
       meaning: "অর্থ",
       reference: "সূত্র",
+      bengali: "বাংলা",
+      english: "English",
+      hindi: "हिन्दी",
       noCategories: "কোনো বিভাগ পাওয়া যায়নি।",
       noEntries: "এই বিভাগে কোনো দোয়া পাওয়া যায়নি।",
       noDetails: "এই দোয়ার তথ্য পাওয়া যায়নি।",
-      missingLanguage: "এই দোয়ার নির্ভরযোগ্য বাংলা, English ও हिन्दी তথ্য একসঙ্গে পাওয়া যায়নি।",
+      missingTranslation: "এই ভাষার অনুবাদ পাওয়া যায়নি।",
       sourceError: "দোয়ার ডেটাসোর্স থেকে তথ্য আনা যায়নি।",
       networkError: "ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।",
-      dataError: "ডেটার কাঠামো প্রত্যাশিত ফরম্যাটের সঙ্গে মেলেনি।",
+      dataError: "ডেটার কাঠামো সঠিকভাবে পড়া যায়নি।",
       number: "দোয়া"
     },
 
@@ -78,20 +80,22 @@
       loadingEntries: "Loading Du'as...",
       loadingDetails: "Loading Du'a details...",
       retry: "Try again",
-      back: "Go back",
       category: "Category",
       dua: "Du'a",
       arabic: "Arabic",
       pronunciation: "Pronunciation",
       meaning: "Meaning",
       reference: "Reference",
+      bengali: "বাংলা",
+      english: "English",
+      hindi: "हिन्दी",
       noCategories: "No categories were found.",
       noEntries: "No Du'as were found in this category.",
       noDetails: "No details were found for this Du'a.",
-      missingLanguage: "Verified Bengali, English and Hindi content was not available together for this Du'a.",
+      missingTranslation: "Translation is not available in this language.",
       sourceError: "Could not retrieve data from the Du'a source.",
       networkError: "Check your internet connection and try again.",
-      dataError: "The dataset structure did not match the expected format.",
+      dataError: "The dataset could not be read correctly.",
       number: "Du'a"
     },
 
@@ -104,20 +108,22 @@
       loadingEntries: "दुआओं की सूची लोड हो रही है...",
       loadingDetails: "दुआ की जानकारी लोड हो रही है...",
       retry: "फिर कोशिश करें",
-      back: "वापस जाएँ",
       category: "श्रेणी",
       dua: "दुआ",
       arabic: "अरबी",
       pronunciation: "उच्चारण",
       meaning: "अर्थ",
       reference: "संदर्भ",
+      bengali: "বাংলা",
+      english: "English",
+      hindi: "हिन्दी",
       noCategories: "कोई श्रेणी नहीं मिली।",
       noEntries: "इस श्रेणी में कोई दुआ नहीं मिली।",
       noDetails: "इस दुआ की जानकारी नहीं मिली।",
-      missingLanguage: "इस दुआ के लिए বাংলা, English और हिन्दी की पूरी जानकारी एक साथ उपलब्ध नहीं है।",
+      missingTranslation: "इस भाषा में अनुवाद उपलब्ध नहीं है।",
       sourceError: "दुआ स्रोत से जानकारी प्राप्त नहीं हो सकी।",
       networkError: "इंटरनेट कनेक्शन जाँचकर फिर कोशिश करें।",
-      dataError: "डेटासेट का प्रारूप अपेक्षित संरचना से मेल नहीं खाता।",
+      dataError: "डेटासेट को सही ढंग से पढ़ा नहीं जा सका।",
       number: "दुआ"
     }
   };
@@ -130,24 +136,62 @@
 
   let categories = [];
   let subcategories = [];
+
   let allTranslations = {
-    ar: [],
-    bn: [],
-    en: [],
-    hi: []
+    ar: new Map(),
+    bn: new Map(),
+    en: new Map(),
+    hi: new Map()
   };
 
   let selectedCategory = null;
   let selectedDua = null;
 
-  let duaIndex = new Map();
   let fileTree = [];
-
-  let lastAction = "init";
   let requestVersion = 0;
+
+  let sourceReady = false;
+  let historyReady = false;
+  let settingsReloading = false;
 
   const t = key =>
     TEXT[language]?.[key] ?? TEXT.bn[key] ?? key;
+
+  /* =======================================================
+     LANGUAGE / NUMBER HELPERS
+  ======================================================= */
+
+  function normalizeLanguage(value) {
+    const v = String(value || "bn").toLowerCase().trim();
+
+    if (["en", "eng", "english"].includes(v)) return "en";
+    if (["hi", "hin", "hindi"].includes(v)) return "hi";
+
+    return "bn";
+  }
+
+  function formatNumber(value) {
+    const locale = {
+      bn: "bn-BD",
+      en: "en-IN",
+      hi: "hi-IN"
+    }[language] || "bn-BD";
+
+    return new Intl.NumberFormat(locale).format(value);
+  }
+
+  function normalizeId(value) {
+    if (value === undefined || value === null) return "";
+
+    return String(value).trim();
+  }
+
+  function normalizeSlug(value) {
+    return String(value || "")
+      .trim()
+      .toLowerCase()
+      .replace(/\/+$/, "");
+  }
 
   /* =======================================================
      SETTINGS
@@ -159,24 +203,25 @@
     for (const key of SETTINGS_KEYS) {
       try {
         const raw = localStorage.getItem(key);
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          if (parsed && typeof parsed === "object") {
-            settings = { ...settings, ...parsed };
-          }
+
+        if (!raw) continue;
+
+        const parsed = JSON.parse(raw);
+
+        if (parsed && typeof parsed === "object") {
+          settings = { ...settings, ...parsed };
         }
       } catch (error) {
-        console.warn("Settings read error:", error);
+        console.warn("IBADAT settings read error:", error);
       }
     }
 
-    const requestedLanguage =
+    language = normalizeLanguage(
       settings.lang ||
       settings.language ||
       settings.locale ||
-      "bn";
-
-    language = normalizeLanguage(requestedLanguage);
+      "bn"
+    );
 
     const darkValue =
       settings.dark ??
@@ -191,23 +236,12 @@
       darkValue === "true" ||
       darkValue === "dark";
 
-    const validThemes = ["classic", "royal", "rose", "pista"];
-
-    colorTheme = validThemes.includes(settings.themeColor)
+    colorTheme = VALID_THEMES.includes(settings.themeColor)
       ? settings.themeColor
       : "classic";
 
     applyTheme();
     applyLabels();
-  }
-
-  function normalizeLanguage(value) {
-    const v = String(value || "bn").toLowerCase().trim();
-
-    if (["en", "eng", "english"].includes(v)) return "en";
-    if (["hi", "hin", "hindi"].includes(v)) return "hi";
-
-    return "bn";
   }
 
   function applyTheme() {
@@ -217,7 +251,9 @@
     document.documentElement.style.colorScheme =
       darkMode ? "dark" : "light";
 
-    const meta = document.querySelector('meta[name="theme-color"]');
+    const meta = document.querySelector(
+      'meta[name="theme-color"]'
+    );
 
     if (meta) {
       const colors = {
@@ -227,7 +263,9 @@
         pista: "#2F7135"
       };
 
-      meta.content = darkMode ? "#081b13" : colors[colorTheme];
+      meta.content = darkMode
+        ? "#081b13"
+        : colors[colorTheme];
     }
   }
 
@@ -242,10 +280,6 @@
       el.retryButton.textContent = t("retry");
     }
 
-    if (el.backButton) {
-      el.backButton.setAttribute("aria-label", t("back"));
-    }
-
     updateHeader();
     updateFooter();
   }
@@ -256,9 +290,11 @@
     if (currentPage === "entries" && selectedCategory) {
       el.heroTitle.textContent =
         getLocalizedCategoryName(selectedCategory) || t("title");
+
     } else if (currentPage === "dua" && selectedDua) {
       el.heroTitle.textContent =
         getLocalizedDuaName(selectedDua) || t("title");
+
     } else {
       el.heroTitle.textContent = t("title");
     }
@@ -292,7 +328,7 @@
     return "";
   }
 
-  function getNestedText(object, keys) {
+  function firstText(object, keys) {
     if (!isObject(object)) return "";
 
     for (const key of keys) {
@@ -302,12 +338,77 @@
         return value.trim();
       }
 
+      if (typeof value === "number") {
+        return String(value);
+      }
+
       if (isObject(value)) {
         const nested =
           value[language] ||
           value[`${language}-IN`] ||
           value[`${language}-BD`] ||
           value.text ||
+          value.value ||
+          value.translation ||
+          value.meaning;
+
+        if (typeof nested === "string" && nested.trim()) {
+          return nested.trim();
+        }
+      }
+    }
+
+    return "";
+  }
+
+  function makeElement(tag, className, text) {
+    const node = document.createElement(tag);
+
+    if (className) node.className = className;
+
+    if (text !== undefined && text !== null) {
+      node.textContent = String(text);
+    }
+
+    return node;
+  }
+
+  function clear(node) {
+    if (node) node.replaceChildren();
+  }
+
+  function showEmpty(container, message) {
+    clear(container);
+
+    if (!container) return;
+
+    container.appendChild(
+      makeElement("div", "empty-message", message)
+    );
+  }
+
+  /* =======================================================
+     LOCALIZED RECORD FIELDS
+  ======================================================= */
+
+  function getLocalizedValue(item, lang, keys) {
+    if (!isObject(item)) return "";
+
+    for (const key of keys) {
+      const value = item[key];
+
+      if (typeof value === "string" && value.trim()) {
+        return value.trim();
+      }
+
+      if (isObject(value)) {
+        const nested =
+          value[lang] ||
+          value[`${lang}-IN`] ||
+          value[`${lang}-BD`] ||
+          value.text ||
+          value.title ||
+          value.name ||
           value.value;
 
         if (typeof nested === "string" && nested.trim()) {
@@ -319,96 +420,83 @@
     return "";
   }
 
-  function getId(item) {
-    if (!isObject(item)) return null;
-
-    return item.id ??
-      item.dua_id ??
-      item.duaId ??
-      item.subcategory_id ??
-      item.uuid ??
-      null;
-  }
-
   function getLocalizedCategoryName(item) {
     if (!isObject(item)) return "";
 
-    return getNestedText(item, [
+    return getLocalizedValue(item, language, [
       "name",
       "title",
       "category_name",
       "translation"
-    ]) || cleanText(item.name || item.title);
+    ]);
   }
 
   function getLocalizedDuaName(item) {
     if (!isObject(item)) return "";
 
-    return getNestedText(item, [
+    return getLocalizedValue(item, language, [
       "title",
       "name",
       "dua_name",
+      "duaName",
+      "heading",
       "translation"
-    ]) || cleanText(item.title || item.name);
+    ]);
   }
 
   function getArabic(item) {
     if (!isObject(item)) return "";
 
-    return cleanText(
-      item.arabic ??
-      item.ar ??
-      item.arabic_text ??
-      item.arabicText ??
-      item.text_ar ??
-      item.textArabic ??
-      item.dua_ar ??
-      item.dua
-    );
+    return firstText(item, [
+      "arabic",
+      "ar",
+      "arabic_text",
+      "arabicText",
+      "text_ar",
+      "textArabic",
+      "dua_ar",
+      "dua",
+      "text"
+    ]);
   }
 
   function getMeaning(item, lang) {
     if (!isObject(item)) return "";
 
-    const possibleKeys = {
+    const keys = {
       bn: [
-        "bn", "bengali", "bangla",
-        "translation_bn", "meaning_bn",
-        "translation", "meaning", "text"
+        "bn",
+        "bengali",
+        "bangla",
+        "translation_bn",
+        "meaning_bn",
+        "translation",
+        "meaning",
+        "text"
       ],
+
       en: [
-        "en", "english",
-        "translation_en", "meaning_en",
-        "translation", "meaning", "text"
+        "en",
+        "english",
+        "translation_en",
+        "meaning_en",
+        "translation",
+        "meaning",
+        "text"
       ],
+
       hi: [
-        "hi", "hindi",
-        "translation_hi", "meaning_hi",
-        "translation", "meaning", "text"
+        "hi",
+        "hindi",
+        "translation_hi",
+        "meaning_hi",
+        "translation",
+        "meaning",
+        "text"
       ]
     };
 
-    for (const key of possibleKeys[lang]) {
-      const value = item[key];
-
-      if (typeof value === "string" && value.trim()) {
-        return value.trim();
-      }
-
-      if (isObject(value)) {
-        const nested =
-          value[lang] ||
-          value.text ||
-          value.translation ||
-          value.meaning;
-
-        if (typeof nested === "string" && nested.trim()) {
-          return nested.trim();
-        }
-      }
-    }
-
-    return "";
+    return getLocalizedValue(item, lang, keys[lang] || []);
   }
 
   function getReference(item) {
@@ -422,13 +510,20 @@
       item.footnote ??
       "";
 
-    if (typeof value === "string") return value.trim();
+    if (typeof value === "string") {
+      return value.trim();
+    }
 
     if (Array.isArray(value)) {
       return value
-        .map(x => typeof x === "string" ? x : (
-          x?.text || x?.name || x?.reference || ""
-        ))
+        .map(item => {
+          if (typeof item === "string") return item;
+
+          return item?.text ||
+            item?.name ||
+            item?.reference ||
+            "";
+        })
         .filter(Boolean)
         .join(" • ");
     }
@@ -444,24 +539,23 @@
     return "";
   }
 
-  function makeElement(tag, className, text) {
-    const node = document.createElement(tag);
+  function getPronunciation(records) {
+    for (const item of records) {
+      if (!isObject(item)) continue;
 
-    if (className) node.className = className;
-    if (text !== undefined) node.textContent = String(text);
+      const value = firstText(item, [
+        "transliteration",
+        "pronunciation",
+        "transliteration_bn",
+        "pronunciation_bn",
+        "latin",
+        "phonetic"
+      ]);
 
-    return node;
-  }
+      if (value) return value;
+    }
 
-  function clear(node) {
-    if (node) node.replaceChildren();
-  }
-
-  function showEmpty(container, message) {
-    clear(container);
-    container.appendChild(
-      makeElement("div", "empty-message", message)
-    );
+    return "";
   }
 
   /* =======================================================
@@ -477,7 +571,9 @@
   function showLoading(message) {
     hideAllPages();
 
-    if (el.errorBox) el.errorBox.classList.add("hidden");
+    if (el.errorBox) {
+      el.errorBox.classList.add("hidden");
+    }
 
     if (el.loadingBox) {
       el.loadingBox.textContent = message || t("loading");
@@ -486,7 +582,9 @@
   }
 
   function hideLoading() {
-    if (el.loadingBox) el.loadingBox.classList.add("hidden");
+    if (el.loadingBox) {
+      el.loadingBox.classList.add("hidden");
+    }
   }
 
   function showError(message) {
@@ -503,16 +601,22 @@
   }
 
   function hideError() {
-    if (el.errorBox) el.errorBox.classList.add("hidden");
+    if (el.errorBox) {
+      el.errorBox.classList.add("hidden");
+    }
   }
 
   /* =======================================================
      NETWORK
   ======================================================= */
 
-  async function fetchJSON(url, timeoutMs = 20000) {
+  async function fetchJSON(url, timeoutMs = 25000) {
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+    const timer = setTimeout(
+      () => controller.abort(),
+      timeoutMs
+    );
 
     try {
       const response = await fetch(url, {
@@ -526,10 +630,11 @@
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
+        throw new Error(`HTTP ${response.status}: ${url}`);
       }
 
       return await response.json();
+
     } finally {
       clearTimeout(timer);
     }
@@ -557,36 +662,67 @@
     }
   }
 
-  function findLanguageFile(folder, lang) {
+  async function fetchLanguageFile(path) {
+    if (!path) {
+      throw new Error("Required language file was not found");
+    }
+
+    const encodedPath = path
+      .split("/")
+      .map(encodeURIComponent)
+      .join("/");
+
+    return fetchJSON(RAW_BASE + encodedPath);
+  }
+
+  /* =======================================================
+     EXACT LANGUAGE FILE DISCOVERY
+  ======================================================= */
+
+  function findExactLanguageFile(folder, lang) {
+    const normalizedFolder = folder.toLowerCase();
+    const normalizedLang = lang.toLowerCase();
+
     const candidates = fileTree.filter(path => {
-      const p = path.toLowerCase();
-      const parts = p.split("/");
-
-      if (!p.startsWith(`${folder}/`)) return false;
-
+      const parts = path.toLowerCase().split("/");
       const fileName = parts[parts.length - 1];
       const baseName = fileName.replace(/\.json$/i, "");
 
       return (
-        baseName === lang ||
-        parts.includes(lang)
+        parts.length === 2 &&
+        parts[0] === normalizedFolder &&
+        baseName === normalizedLang
       );
     });
 
-    const exact = candidates.find(path =>
-      path.toLowerCase() === `${folder}/${lang}.json`
-    );
-
-    return exact || candidates[0] || null;
+    return candidates[0] || null;
   }
 
-  async function fetchLanguageFile(path) {
-    if (!path) {
-      throw new Error("Required language JSON file was not found");
-    }
+  function findTranslationFiles(lang) {
+    const normalizedLang = lang.toLowerCase();
 
-    return fetchJSON(RAW_BASE + path.split("/").map(encodeURIComponent).join("/"));
+    return fileTree.filter(path => {
+      const parts = path.toLowerCase().split("/");
+
+      if (parts[0] !== "translation") return false;
+
+      const fileName = parts[parts.length - 1];
+      const baseName = fileName.replace(/\.json$/i, "");
+
+      /*
+       * Only select a file explicitly belonging to the
+       * requested language. Never use files[0] as fallback.
+       */
+      return (
+        baseName === normalizedLang ||
+        parts.slice(1, -1).includes(normalizedLang)
+      );
+    });
   }
+
+  /* =======================================================
+     JSON NORMALIZATION
+  ======================================================= */
 
   function unwrapArray(data, keys = []) {
     if (Array.isArray(data)) return data;
@@ -594,183 +730,207 @@
     if (!isObject(data)) return [];
 
     for (const key of keys) {
-      if (Array.isArray(data[key])) return data[key];
+      if (Array.isArray(data[key])) {
+        return data[key];
+      }
     }
 
     if (isObject(data.data)) {
       for (const key of keys) {
-        if (Array.isArray(data.data[key])) return data.data[key];
+        if (Array.isArray(data.data[key])) {
+          return data.data[key];
+        }
       }
-      if (Array.isArray(data.data.items)) return data.data.items;
+
+      if (Array.isArray(data.data.items)) {
+        return data.data.items;
+      }
     }
 
-    if (Array.isArray(data.data)) return data.data;
+    if (Array.isArray(data.data)) {
+      return data.data;
+    }
 
     return [];
   }
 
-  /* =======================================================
-     TRANSLATION FILE DISCOVERY
-  ======================================================= */
+  function getRecordId(item, fallbackKey = "") {
+    if (!isObject(item)) {
+      return fallbackKey ? String(fallbackKey) : "";
+    }
 
-  function findTranslationFile(lang) {
-    const files = fileTree.filter(path => {
-      const p = path.toLowerCase();
-
-      if (!p.startsWith("translation/")) return false;
-
-      const parts = p.split("/");
-      const fileName = parts[parts.length - 1];
-      const baseName = fileName.replace(/\.json$/i, "");
-
-      return baseName === lang || parts.includes(lang);
-    });
-
-    const exact = files.find(path =>
-      path.toLowerCase() === `translation/${lang}.json`
-    );
-
-    return exact || files[0] || null;
-  }
-
-  /* =======================================================
-     DATA INDEXING
-  ======================================================= */
-
-  function getPossibleRecordId(item) {
-    if (!isObject(item)) return null;
-
-    const values = [
+    const possible = [
       item.id,
       item.dua_id,
       item.duaId,
       item.global_id,
       item.globalId,
-      item.number
+      item.number,
+      item.dua_number,
+      item.duaNumber,
+      item.key
     ];
 
-    for (const value of values) {
-      if (value !== undefined && value !== null) {
+    for (const value of possible) {
+      if (value !== undefined && value !== null && value !== "") {
         return String(value);
       }
     }
 
-    return null;
+    if (fallbackKey && /^\d+$/.test(String(fallbackKey))) {
+      return String(fallbackKey);
+    }
+
+    return "";
   }
 
-  function collectRecords(value, output, depth = 0) {
-    if (depth > 12 || value == null) return;
+  function addRecordToMap(map, record, fallbackKey = "") {
+    if (!isObject(record)) return;
+
+    const id = getRecordId(record, fallbackKey);
+
+    if (!id) return;
+
+    if (!map.has(id)) {
+      map.set(id, record);
+    }
+  }
+
+  function collectRecords(value, map, depth = 0, fallbackKey = "") {
+    if (depth > 15 || value == null) return;
 
     if (Array.isArray(value)) {
-      value.forEach(item => collectRecords(item, output, depth + 1));
+      value.forEach(item => {
+        collectRecords(item, map, depth + 1);
+      });
+
       return;
     }
 
     if (!isObject(value)) return;
 
-    const id = getPossibleRecordId(value);
+    const id = getRecordId(value, fallbackKey);
 
-    if (id !== null) {
-      output.push(value);
+    if (id) {
+      addRecordToMap(map, value, fallbackKey);
     }
 
-    Object.values(value).forEach(child => {
+    Object.entries(value).forEach(([key, child]) => {
       if (Array.isArray(child) || isObject(child)) {
-        collectRecords(child, output, depth + 1);
+        collectRecords(child, map, depth + 1, key);
       }
     });
   }
 
   function indexRecords(data) {
-    const records = [];
-    collectRecords(data, records);
-
     const map = new Map();
 
-    records.forEach(record => {
-      const id = getPossibleRecordId(record);
-      if (id === null) return;
+    if (Array.isArray(data)) {
+      data.forEach(record => addRecordToMap(map, record));
+      return map;
+    }
 
-      if (!map.has(id)) {
-        map.set(id, record);
+    if (!isObject(data)) return map;
+
+    const directArrays = [
+      data.data,
+      data.items,
+      data.results,
+      data.duas,
+      data.translations
+    ];
+
+    for (const value of directArrays) {
+      if (Array.isArray(value)) {
+        value.forEach(record => addRecordToMap(map, record));
       }
-    });
+    }
+
+    collectRecords(data, map);
 
     return map;
   }
 
-  function mergeRecords(id) {
-    const key = String(id);
+  function mergeTranslationMaps(target, source) {
+    source.forEach((record, id) => {
+      if (!target.has(id)) {
+        target.set(id, record);
+      }
+    });
+  }
 
-    const arabic = duaIndex.get(key) || {};
-    const bn = allTranslations.bn.get(key) || {};
-    const en = allTranslations.en.get(key) || {};
-    const hi = allTranslations.hi.get(key) || {};
+  async function loadTranslationLanguage(lang) {
+    const paths = findTranslationFiles(lang);
 
-    return {
-      id: key,
-      arabic: getArabic(arabic) || getArabic(bn) || getArabic(en) || getArabic(hi),
+    if (!paths.length) {
+      console.warn(
+        `IBADAT: No explicitly named translation file found for ${lang}`
+      );
 
-      bn: getMeaning(bn, "bn") || getMeaning(arabic, "bn"),
-      en: getMeaning(en, "en") || getMeaning(arabic, "en"),
-      hi: getMeaning(hi, "hi") || getMeaning(arabic, "hi"),
+      return new Map();
+    }
 
-      reference:
-        getReference(arabic) ||
-        getReference(bn) ||
-        getReference(en) ||
-        getReference(hi),
+    const result = new Map();
 
-      pronunciation:
-        bn.transliteration ||
-        bn.pronunciation ||
-        en.transliteration ||
-        en.pronunciation ||
-        ""
-    };
+    /*
+     * Multiple matching files are supported. This also
+     * handles repositories that split translations into
+     * language subfolders.
+     */
+    const batchSize = 8;
+
+    for (let i = 0; i < paths.length; i += batchSize) {
+      const batch = paths.slice(i, i + batchSize);
+
+      const datasets = await Promise.all(
+        batch.map(path => fetchLanguageFile(path))
+      );
+
+      datasets.forEach(data => {
+        mergeTranslationMaps(result, indexRecords(data));
+      });
+    }
+
+    return result;
   }
 
   /* =======================================================
-     LOAD SOURCE FILES
+     DATA SOURCE
   ======================================================= */
 
   async function loadSource() {
     await fetchRepositoryTree();
 
-    const categoryPath = findLanguageFile("categories", language);
-    const subcategoryPath = findLanguageFile("sub-categories", language);
+    const categoryPath = findExactLanguageFile(
+      "categories",
+      language
+    );
+
+    const subcategoryPath = findExactLanguageFile(
+      "sub-categories",
+      language
+    );
 
     if (!categoryPath || !subcategoryPath) {
       throw new Error(
-        "Category or sub-category language file is missing"
-      );
-    }
-
-    const arabicPath = findTranslationFile("ar");
-    const bnPath = findTranslationFile("bn");
-    const enPath = findTranslationFile("en");
-    const hiPath = findTranslationFile("hi");
-
-    if (!arabicPath || !bnPath || !enPath || !hiPath) {
-      throw new Error(
-        "Arabic / Bengali / English / Hindi translation files could not all be located"
+        `Category files for ${language} were not found`
       );
     }
 
     const [
       categoryData,
       subcategoryData,
-      arabicData,
-      bnData,
-      enData,
-      hiData
+      arabicMap,
+      bengaliMap,
+      englishMap,
+      hindiMap
     ] = await Promise.all([
       fetchLanguageFile(categoryPath),
       fetchLanguageFile(subcategoryPath),
-      fetchLanguageFile(arabicPath),
-      fetchLanguageFile(bnPath),
-      fetchLanguageFile(enPath),
-      fetchLanguageFile(hiPath)
+      loadTranslationLanguage("ar"),
+      loadTranslationLanguage("bn"),
+      loadTranslationLanguage("en"),
+      loadTranslationLanguage("hi")
     ]);
 
     categories = unwrapArray(categoryData, [
@@ -786,32 +946,39 @@
       "results"
     ]);
 
-    if (!categories.length || !subcategories.length) {
+    if (!categories.length) {
       throw new Error("Category dataset is empty");
     }
 
-    duaIndex = indexRecords(arabicData);
-
-    allTranslations.ar = duaIndex;
-    allTranslations.bn = indexRecords(bnData);
-    allTranslations.en = indexRecords(enData);
-    allTranslations.hi = indexRecords(hiData);
-
-    if (
-      !allTranslations.bn.size ||
-      !allTranslations.en.size ||
-      !allTranslations.hi.size
-    ) {
-      throw new Error("One or more translation datasets are empty");
+    if (!subcategories.length) {
+      throw new Error("Subcategory dataset is empty");
     }
+
+    allTranslations = {
+      ar: arabicMap,
+      bn: bengaliMap,
+      en: englishMap,
+      hi: hindiMap
+    };
+
+    sourceReady = true;
+
+    console.info("IBADAT Dua data loaded:", {
+      categories: categories.length,
+      subcategories: subcategories.length,
+      arabic: arabicMap.size,
+      bengali: bengaliMap.size,
+      english: englishMap.size,
+      hindi: hindiMap.size
+    });
   }
 
   /* =======================================================
-     CATEGORY / DUA RELATION
+     CATEGORY / SUBCATEGORY RELATION
   ======================================================= */
 
   function getCategorySlug(category) {
-    return String(
+    return normalizeSlug(
       category?.url ??
       category?.slug ??
       category?.id ??
@@ -820,10 +987,11 @@
   }
 
   function getSubcategoryCategory(subcategory) {
-    return String(
+    return normalizeSlug(
       subcategory?.category ??
       subcategory?.category_url ??
       subcategory?.category_slug ??
+      subcategory?.categoryUrl ??
       ""
     );
   }
@@ -840,58 +1008,158 @@
 
     return ids.map(item => {
       if (isObject(item)) {
-        return item.id ?? item.dua_id ?? item.global_id;
+        return (
+          item.id ??
+          item.dua_id ??
+          item.global_id ??
+          item.globalId
+        );
       }
+
       return item;
-    }).filter(value => value !== undefined && value !== null);
+    }).filter(value =>
+      value !== undefined &&
+      value !== null &&
+      value !== ""
+    );
   }
 
-  function getDuasForCategory(category) {
+  function getSubcategoriesForCategory(category) {
     const slug = getCategorySlug(category);
 
-    const relevant = subcategories.filter(subcategory =>
+    if (!slug) return [];
+
+    return subcategories.filter(subcategory =>
       getSubcategoryCategory(subcategory) === slug
     );
+  }
+
+  /* =======================================================
+     DUA RECORD MERGING
+  ======================================================= */
+
+  function getRecordFromMap(map, id) {
+    if (!map || !(map instanceof Map)) return null;
+
+    const key = normalizeId(id);
+
+    if (map.has(key)) return map.get(key);
+
+    /*
+     * Numeric IDs can sometimes be stored with different
+     * string representations.
+     */
+    const numeric = Number(key);
+
+    if (Number.isFinite(numeric)) {
+      if (map.has(String(numeric))) {
+        return map.get(String(numeric));
+      }
+    }
+
+    return null;
+  }
+
+  function mergeRecords(id) {
+    const key = normalizeId(id);
+
+    const arabic = getRecordFromMap(allTranslations.ar, key);
+    const bn = getRecordFromMap(allTranslations.bn, key);
+    const en = getRecordFromMap(allTranslations.en, key);
+    const hi = getRecordFromMap(allTranslations.hi, key);
+
+    const records = [arabic, bn, en, hi].filter(Boolean);
+
+    const arabicText =
+      getArabic(arabic) ||
+      getArabic(bn) ||
+      getArabic(en) ||
+      getArabic(hi);
+
+    const bengaliText =
+      getMeaning(bn, "bn") ||
+      getMeaning(arabic, "bn") ||
+      getMeaning(en, "bn") ||
+      getMeaning(hi, "bn");
+
+    const englishText =
+      getMeaning(en, "en") ||
+      getMeaning(arabic, "en") ||
+      getMeaning(bn, "en") ||
+      getMeaning(hi, "en");
+
+    const hindiText =
+      getMeaning(hi, "hi") ||
+      getMeaning(arabic, "hi") ||
+      getMeaning(bn, "hi") ||
+      getMeaning(en, "hi");
+
+    const name =
+      getLocalizedDuaName(
+        getRecordFromMap(
+          allTranslations[language],
+          key
+        )
+      ) ||
+      getLocalizedDuaName(arabic) ||
+      getLocalizedDuaName(bn) ||
+      getLocalizedDuaName(en) ||
+      getLocalizedDuaName(hi);
+
+    return {
+      id: key,
+      title: name,
+      arabic: arabicText,
+      bn: bengaliText,
+      en: englishText,
+      hi: hindiText,
+      reference:
+        records.map(getReference).find(Boolean) || "",
+      pronunciation: getPronunciation(records)
+    };
+  }
+
+  /* =======================================================
+     CATEGORY DUA LOOKUP
+  ======================================================= */
+
+  function getDuasForCategory(category) {
+    const relevantSubcategories =
+      getSubcategoriesForCategory(category);
 
     const ids = [];
+    const seen = new Set();
 
-    relevant.forEach(subcategory => {
+    relevantSubcategories.forEach(subcategory => {
       getSubcategoryDuaIds(subcategory).forEach(id => {
-        if (!ids.some(existing => String(existing) === String(id))) {
-          ids.push(id);
-        }
+        const key = normalizeId(id);
+
+        if (!key || seen.has(key)) return;
+
+        seen.add(key);
+        ids.push(key);
       });
     });
 
     return ids.map(id => mergeRecords(id));
   }
 
-  /* =======================================================
-     VALIDATION
-  ======================================================= */
-
-  function hasAllThreeMeanings(dua) {
-    return Boolean(
-      dua &&
-      dua.arabic &&
-      dua.bn &&
-      dua.en &&
-      dua.hi
+  function getVisibleDuas(category) {
+    /*
+     * Do not remove a Dua merely because one translation
+     * is missing. The available verified fields are shown.
+     */
+    return getDuasForCategory(category).filter(dua =>
+      dua.arabic ||
+      dua.bn ||
+      dua.en ||
+      dua.hi ||
+      dua.title
     );
   }
 
-  function getVisibleDuas(category) {
-    const list = getDuasForCategory(category);
-
-    /*
-     * Do not show a record if one of the required languages
-     * is missing. No fallback translation is substituted.
-     */
-    return list.filter(hasAllThreeMeanings);
-  }
-
   /* =======================================================
-     PAGE NAVIGATION
+     PAGE VISIBILITY
   ======================================================= */
 
   function showPage(page) {
@@ -912,10 +1180,6 @@
       el.duaPage.classList.toggle("hidden", page !== "dua");
     }
 
-    if (el.backButton) {
-      el.backButton.classList.toggle("hidden", page === "home");
-    }
-
     updateHeader();
     updateFooter();
 
@@ -932,25 +1196,103 @@
     }
   }
 
-  function goBack() {
-    if (currentPage === "dua") {
+  /* =======================================================
+     DEVICE / BROWSER BACK NAVIGATION
+  ======================================================= */
+
+  function makeHistoryState(page) {
+    return {
+      ibadatDua: true,
+      page
+    };
+  }
+
+  function initializeHistory() {
+    if (historyReady) return;
+
+    historyReady = true;
+
+    /*
+     * Create an entry for the Dua page so that Android's
+     * Back button can return to the app's previous page.
+     */
+    history.replaceState(
+      makeHistoryState("home"),
+      "",
+      location.href
+    );
+
+    history.pushState(
+      makeHistoryState("home"),
+      "",
+      location.href
+    );
+  }
+
+  function navigateTo(page) {
+    if (page === currentPage) return;
+
+    history.pushState(
+      makeHistoryState(page),
+      "",
+      location.href
+    );
+
+    showPage(page);
+  }
+
+  function openCategory(category) {
+    selectedCategory = category;
+    selectedDua = null;
+
+    renderDuasForCategory(category);
+    navigateTo("entries");
+  }
+
+  function openDua(dua) {
+    selectedDua = dua;
+
+    renderDua(dua);
+    navigateTo("dua");
+  }
+
+  function handleBrowserBack(event) {
+    const state = event.state;
+
+    if (!state || state.ibadatDua !== true) {
+      /*
+       * The user has left the Dua section. The app's
+       * previous page can now be displayed normally.
+       */
+      return;
+    }
+
+    if (state.page === "dua") {
+      currentPage = "dua";
+      updateHeader();
+      return;
+    }
+
+    if (state.page === "entries") {
       selectedDua = null;
       showPage("entries");
       return;
     }
 
-    if (currentPage === "entries") {
-      selectedCategory = null;
-      showPage("home");
-    }
+    selectedDua = null;
+    selectedCategory = null;
+    showPage("home");
   }
 
+  window.addEventListener("popstate", handleBrowserBack);
+
   /* =======================================================
-     RENDER CATEGORIES
+     CATEGORY RENDERING
   ======================================================= */
 
   function renderCategories() {
     const box = el.chapterList;
+
     if (!box) return;
 
     clear(box);
@@ -967,16 +1309,22 @@
       const number = makeElement(
         "span",
         "chapter-number",
-        index + 1
+        formatNumber(index + 1)
       );
 
       const name = makeElement(
         "span",
         "chapter-name",
-        getLocalizedCategoryName(category) || `${t("category")} ${index + 1}`
+        getLocalizedCategoryName(category) ||
+          `${t("category")} ${formatNumber(index + 1)}`
       );
 
-      const arrow = makeElement("span", "chapter-arrow", "›");
+      const arrow = makeElement(
+        "span",
+        "chapter-arrow",
+        "›"
+      );
+
       arrow.setAttribute("aria-hidden", "true");
 
       button.append(number, name, arrow);
@@ -990,26 +1338,23 @@
   }
 
   /* =======================================================
-     OPEN CATEGORY
-  ======================================================= */
-
-  function openCategory(category) {
-    selectedCategory = category;
-    selectedDua = null;
-
-    showPage("entries");
-    renderDuasForCategory(category);
-  }
-
-  /* =======================================================
-     RENDER DUA LIST
+     DUA LIST RENDERING
   ======================================================= */
 
   function renderDuasForCategory(category) {
     const box = el.entryList;
+
     if (!box) return;
 
     clear(box);
+
+    const subcategoryGroups =
+      getSubcategoriesForCategory(category);
+
+    if (!subcategoryGroups.length) {
+      showEmpty(box, t("noEntries"));
+      return;
+    }
 
     const duas = getVisibleDuas(category);
 
@@ -1025,16 +1370,22 @@
       const number = makeElement(
         "span",
         "entry-number",
-        index + 1
+        formatNumber(index + 1)
       );
 
       const name = makeElement(
         "span",
         "entry-name",
-        getLocalizedDuaName(dua) || `${t("number")} ${index + 1}`
+        dua.title ||
+          `${t("number")} ${formatNumber(index + 1)}`
       );
 
-      const arrow = makeElement("span", "entry-arrow", "›");
+      const arrow = makeElement(
+        "span",
+        "entry-arrow",
+        "›"
+      );
+
       arrow.setAttribute("aria-hidden", "true");
 
       button.append(number, name, arrow);
@@ -1048,26 +1399,31 @@
   }
 
   /* =======================================================
-     OPEN DUA
+     DUA DETAIL RENDERING
   ======================================================= */
 
-  function openDua(dua) {
-    selectedDua = dua;
-    showPage("dua");
-    renderDua(dua);
-  }
-
-  /* =======================================================
-     RENDER DUA DETAIL
-  ======================================================= */
-
-  function addDuaField(card, label, value, className, direction) {
+  function addDuaField(
+    card,
+    label,
+    value,
+    className,
+    direction
+  ) {
     if (!value) return;
 
     const section = makeElement("section", "dua-section");
 
-    const heading = makeElement("div", "dua-label", label);
-    const paragraph = makeElement("p", className, value);
+    const heading = makeElement(
+      "div",
+      "dua-label",
+      label
+    );
+
+    const paragraph = makeElement(
+      "p",
+      className,
+      value
+    );
 
     if (direction === "rtl") {
       paragraph.dir = "rtl";
@@ -1078,7 +1434,12 @@
     card.appendChild(section);
   }
 
-  function addTranslation(card, languageCode, label, value) {
+  function addTranslation(
+    card,
+    languageCode,
+    label,
+    value
+  ) {
     if (!value) return;
 
     const section = makeElement("section", "dua-section");
@@ -1103,16 +1464,27 @@
 
   function renderDua(dua) {
     const box = el.duaContent;
+
     if (!box) return;
 
     clear(box);
 
-    if (!dua || !hasAllThreeMeanings(dua)) {
-      showEmpty(box, t("missingLanguage"));
+    if (!dua) {
+      showEmpty(box, t("noDetails"));
       return;
     }
 
     const card = makeElement("article", "dua-card");
+
+    if (dua.title) {
+      const heading = makeElement(
+        "h2",
+        "dua-heading",
+        dua.title
+      );
+
+      card.appendChild(heading);
+    }
 
     addDuaField(
       card,
@@ -1122,30 +1494,163 @@
       "rtl"
     );
 
-    if (dua.pronunciation) {
-      addDuaField(
-        card,
-        t("pronunciation"),
-        dua.pronunciation,
-        "dua-pronunciation"
-      );
-    }
+    addDuaField(
+      card,
+      t("pronunciation"),
+      dua.pronunciation,
+      "dua-pronunciation"
+    );
 
-    addTranslation(card, "bn", "বাংলা", dua.bn);
-    addTranslation(card, "en", "English", dua.en);
-    addTranslation(card, "hi", "हिन्दी", dua.hi);
+    addTranslation(
+      card,
+      "bn",
+      t("bengali"),
+      dua.bn
+    );
 
-    if (dua.reference) {
-      addDuaField(
-        card,
-        t("reference"),
-        dua.reference,
-        "dua-reference"
-      );
+    addTranslation(
+      card,
+      "en",
+      t("english"),
+      dua.en
+    );
+
+    addTranslation(
+      card,
+      "hi",
+      t("hindi"),
+      dua.hi
+    );
+
+    addDuaField(
+      card,
+      t("reference"),
+      dua.reference,
+      "dua-reference"
+    );
+
+    if (!card.children.length) {
+      showEmpty(box, t("noDetails"));
+      return;
     }
 
     box.appendChild(card);
   }
+
+  /* =======================================================
+     SETTINGS CHANGE
+  ======================================================= */
+
+  async function refreshSettings() {
+    if (settingsReloading) return;
+
+    const oldLanguage = language;
+    const oldTheme = colorTheme;
+    const oldDark = darkMode;
+
+    readSettings();
+
+    const languageChanged = oldLanguage !== language;
+    const appearanceChanged =
+      oldTheme !== colorTheme ||
+      oldDark !== darkMode;
+
+    if (languageChanged && sourceReady) {
+      settingsReloading = true;
+
+      const previousPage = currentPage;
+      const previousCategorySlug =
+        selectedCategory
+          ? getCategorySlug(selectedCategory)
+          : "";
+
+      const previousDuaId =
+        selectedDua?.id || "";
+
+      try {
+        await loadSource();
+
+        selectedCategory =
+          categories.find(category =>
+            getCategorySlug(category) === previousCategorySlug
+          ) || null;
+
+        selectedDua = null;
+
+        if (previousPage === "entries" && selectedCategory) {
+          renderDuasForCategory(selectedCategory);
+          showPage("entries");
+
+        } else if (
+          previousPage === "dua" &&
+          selectedCategory
+        ) {
+          const updatedDuas =
+            getVisibleDuas(selectedCategory);
+
+          selectedDua =
+            updatedDuas.find(dua =>
+              String(dua.id) === String(previousDuaId)
+            ) || null;
+
+          if (selectedDua) {
+            renderDua(selectedDua);
+            showPage("dua");
+          } else {
+            renderDuasForCategory(selectedCategory);
+            showPage("entries");
+          }
+
+        } else {
+          renderCategories();
+          showPage("home");
+        }
+
+      } catch (error) {
+        console.error("Language refresh error:", error);
+        showError(t("dataError"));
+
+      } finally {
+        settingsReloading = false;
+      }
+
+      return;
+    }
+
+    if (appearanceChanged) {
+      applyTheme();
+    }
+
+    applyLabels();
+
+    if (currentPage === "home") {
+      renderCategories();
+
+    } else if (currentPage === "entries" && selectedCategory) {
+      renderDuasForCategory(selectedCategory);
+
+    } else if (currentPage === "dua" && selectedDua) {
+      renderDua(selectedDua);
+    }
+  }
+
+  window.addEventListener("storage", event => {
+    if (event.key && !SETTINGS_KEYS.includes(event.key)) {
+      return;
+    }
+
+    refreshSettings();
+  });
+
+  window.addEventListener("pageshow", () => {
+    refreshSettings();
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") {
+      refreshSettings();
+    }
+  });
 
   /* =======================================================
      RETRY
@@ -1156,51 +1661,6 @@
   }
 
   /* =======================================================
-     SETTINGS CHANGE
-  ======================================================= */
-
-  function refreshSettings() {
-    const oldLanguage = language;
-    const oldTheme = colorTheme;
-    const oldDark = darkMode;
-
-    readSettings();
-
-    if (
-      oldLanguage !== language ||
-      oldTheme !== colorTheme ||
-      oldDark !== darkMode
-    ) {
-      renderCurrentPage();
-    }
-  }
-
-  function renderCurrentPage() {
-    applyLabels();
-
-    if (currentPage === "home") {
-      renderCategories();
-    } else if (currentPage === "entries" && selectedCategory) {
-      renderDuasForCategory(selectedCategory);
-    } else if (currentPage === "dua" && selectedDua) {
-      renderDua(selectedDua);
-    }
-  }
-
-  window.addEventListener("storage", event => {
-    if (event.key && !SETTINGS_KEYS.includes(event.key)) return;
-    refreshSettings();
-  });
-
-  window.addEventListener("pageshow", refreshSettings);
-
-  document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible") {
-      refreshSettings();
-    }
-  });
-
-  /* =======================================================
      INITIALIZATION
   ======================================================= */
 
@@ -1208,17 +1668,21 @@
     const version = ++requestVersion;
 
     readSettings();
+    initializeHistory();
 
     if (isRetry) {
+      sourceReady = false;
+
       categories = [];
       subcategories = [];
+
       allTranslations = {
-        ar: [],
-        bn: [],
-        en: [],
-        hi: []
+        ar: new Map(),
+        bn: new Map(),
+        en: new Map(),
+        hi: new Map()
       };
-      duaIndex = new Map();
+
       fileTree = [];
     }
 
@@ -1235,8 +1699,8 @@
       selectedCategory = null;
       selectedDua = null;
 
-      showPage("home");
       renderCategories();
+      showPage("home");
 
     } catch (error) {
       if (version !== requestVersion) return;
@@ -1245,11 +1709,16 @@
 
       let message = t("sourceError");
 
-      if (error.name === "AbortError" || error instanceof TypeError) {
+      if (
+        error.name === "AbortError" ||
+        error instanceof TypeError
+      ) {
         message = t("networkError");
+
       } else if (
         String(error.message || "").includes("language") ||
-        String(error.message || "").includes("translation")
+        String(error.message || "").includes("translation") ||
+        String(error.message || "").includes("dataset")
       ) {
         message = t("dataError");
       }
@@ -1258,13 +1727,13 @@
     }
   }
 
+  /* =======================================================
+     EVENTS
+  ======================================================= */
+
   function bindEvents() {
     if (el.retryButton) {
       el.retryButton.addEventListener("click", retry);
-    }
-
-    if (el.backButton) {
-      el.backButton.addEventListener("click", goBack);
     }
   }
 
