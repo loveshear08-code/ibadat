@@ -1,3 +1,4 @@
+
 "use strict";
 
 (() => {
@@ -36,7 +37,7 @@
         dua: "দোয়া",
         hadith: "হাদিস",
         qibla: "কিবলা",
-        tasbih: "তসবিহ",
+        tasbih: "তসবিহ"
       },
 
       quotes: [
@@ -153,6 +154,27 @@
   };
 
   /* =========================================
+     AZAN CONFIGURATION
+     MATCHES SETTINGS.JS
+     ========================================= */
+
+  const AZAN_FILES = {
+    alaska: "assets/azan/alaska.mp3",
+    bangladesh: "assets/azan/bangladesh.mp3",
+    kuwait: "assets/azan/kuwait.mp3",
+    madina: "assets/azan/madina.mp3",
+    makkah: "assets/azan/makkah.mp3"
+  };
+
+  const AZAN_PRAYERS = [
+    "Fajr",
+    "Dhuhr",
+    "Asr",
+    "Maghrib",
+    "Isha"
+  ];
+
+  /* =========================================
      APPLICATION STATE
      ========================================= */
 
@@ -181,6 +203,17 @@
   let locationRequestId = 0;
   let prayerRequestId = 0;
   let weatherRequestId = 0;
+
+  /* =========================================
+     AZAN STATE
+     ========================================= */
+
+  let azanAudio = null;
+  let azanCheckTimer = null;
+  let azanUnlocked = false;
+  let activeAzanPrayer = null;
+
+  const azanAttempted = new Set();
 
   /* =========================================
      SETTINGS
@@ -217,6 +250,30 @@
     };
 
     return aliases[raw] || "classic";
+  }
+
+  function getAzanSoundEnabled(settings = readSettings()) {
+    return typeof settings.azanSound === "boolean"
+      ? settings.azanSound
+      : true;
+  }
+
+  function getSelectedAzan(prayer, settings = readSettings()) {
+    const selection = settings.azan;
+
+    let type = "makkah";
+
+    if (typeof selection === "string") {
+      type = selection;
+    } else if (
+      selection &&
+      typeof selection === "object" &&
+      typeof selection[prayer.toLowerCase()] === "string"
+    ) {
+      type = selection[prayer.toLowerCase()];
+    }
+
+    return AZAN_FILES[type] ? type : "makkah";
   }
 
   function t() {
@@ -301,7 +358,6 @@
 
   /* =========================================
      LOCALITY SELECTION
-     Never use street or road as location
      ========================================= */
 
   function getLocationFromAddress(address) {
@@ -516,10 +572,6 @@
         hi: hindiName
       };
 
-      /*
-       * If OSM has not provided the selected language,
-       * try transliterating the best available name.
-       */
       if (!locationNames[language]) {
         const sourceName =
           language === "en"
@@ -574,7 +626,8 @@
 
     document.documentElement.lang = language;
 
-    document.body.dataset.themeColor = getTheme(settings);
+    /* MATCH SETTINGS PAGE ATTRIBUTE */
+    document.body.dataset.colorTheme = getTheme(settings);
 
     document.body.classList.toggle(
       "dark-mode",
@@ -584,7 +637,9 @@
     const snapshot = JSON.stringify({
       language,
       theme: getTheme(settings),
-      dark
+      dark,
+      azanSound: getAzanSoundEnabled(settings),
+      azan: settings.azan || null
     });
 
     if (snapshot === settingsSnapshot) return;
@@ -609,6 +664,11 @@
       } else {
         updateLocationDisplay();
       }
+    }
+
+    /* STOP FUTURE PLAYBACK IF AZAN SOUND IS OFF */
+    if (!getAzanSoundEnabled(settings)) {
+      stopAutomaticAzan();
     }
   }
 
@@ -905,6 +965,285 @@
   }
 
   /* =========================================
+     AUTOMATIC AZAN
+     ========================================= */
+
+  function createAzanAudio() {
+    if (azanAudio) return azanAudio;
+
+    azanAudio = new Audio();
+    azanAudio.preload = "auto";
+    azanAudio.volume = 1;
+
+    azanAudio.addEventListener("ended", () => {
+      activeAzanPrayer = null;
+    });
+
+    azanAudio.addEventListener("error", () => {
+      console.error(
+        "IBADAT: Azan audio file could not be loaded.",
+        azanAudio.currentSrc
+      );
+
+      activeAzanPrayer = null;
+    });
+
+    return azanAudio;
+  }
+
+  /*
+   * Browser audio permission:
+   * A first user interaction is used to unlock audio.
+   * This does not play an audible Azan.
+   */
+
+  function unlockAzanAudio() {
+    if (azanUnlocked) return;
+
+    const audio = createAzanAudio();
+
+    const silentAudio =
+      "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=";
+
+    const previousSource = audio.src;
+
+    audio.src = silentAudio;
+    audio.muted = true;
+
+    const unlockPromise = audio.play();
+
+    if (unlockPromise && typeof unlockPromise.then === "function") {
+      unlockPromise.then(() => {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.muted = false;
+
+        if (previousSource) {
+          audio.src = previousSource;
+        }
+
+        azanUnlocked = true;
+
+        checkAutomaticAzan();
+
+      }).catch(() => {
+        audio.muted = false;
+      });
+    }
+  }
+
+  /*
+   * The browser must receive a user interaction
+   * before automatic audio playback can be allowed.
+   */
+
+  function setupAzanUnlock() {
+    const events = [
+      "pointerdown",
+      "touchstart",
+      "click",
+      "keydown"
+    ];
+
+    const unlockHandler = () => {
+      unlockAzanAudio();
+
+      if (azanUnlocked) {
+        events.forEach(eventName => {
+          document.removeEventListener(
+            eventName,
+            unlockHandler
+          );
+        });
+      }
+    };
+
+    events.forEach(eventName => {
+      document.addEventListener(
+        eventName,
+        unlockHandler,
+        { passive: true }
+      );
+    });
+  }
+
+  function azanPlayedStorageKey(dateKey, prayer) {
+    return `ibadatAzanPlayed_${dateKey}_${prayer.toLowerCase()}`;
+  }
+
+  function hasAzanAlreadyPlayed(dateKey, prayer) {
+    try {
+      return (
+        localStorage.getItem(
+          azanPlayedStorageKey(dateKey, prayer)
+        ) === "true"
+      );
+    } catch (error) {
+      return azanAttempted.has(
+        `${dateKey}_${prayer}`
+      );
+    }
+  }
+
+  function markAzanPlayed(dateKey, prayer) {
+    const key = `${dateKey}_${prayer}`;
+
+    azanAttempted.add(key);
+
+    try {
+      localStorage.setItem(
+        azanPlayedStorageKey(dateKey, prayer),
+        "true"
+      );
+    } catch (error) {
+      console.warn(
+        "IBADAT: Azan playback state could not be saved.",
+        error
+      );
+    }
+  }
+
+  function stopAutomaticAzan() {
+    if (azanAudio && !azanAudio.paused) {
+      azanAudio.pause();
+      azanAudio.currentTime = 0;
+    }
+
+    activeAzanPrayer = null;
+  }
+
+  async function playAutomaticAzan(prayer, dateKey) {
+    const settings = readSettings();
+
+    if (!getAzanSoundEnabled(settings)) return;
+
+    if (!azanUnlocked) {
+      return;
+    }
+
+    const type = getSelectedAzan(prayer, settings);
+    const file = AZAN_FILES[type];
+
+    if (!file) return;
+
+    const audio = createAzanAudio();
+
+    const audioUrl = new URL(
+      file,
+      document.baseURI
+    ).href;
+
+    /*
+     * Avoid restarting the same Azan.
+     */
+
+    if (
+      activeAzanPrayer === prayer &&
+      !audio.paused &&
+      !audio.ended
+    ) {
+      return;
+    }
+
+    /*
+     * Stop any previous Azan before playing the next.
+     */
+
+    stopAutomaticAzan();
+
+    audio.src = audioUrl;
+    audio.currentTime = 0;
+    audio.muted = false;
+
+    try {
+      await audio.play();
+
+      activeAzanPrayer = prayer;
+
+      /*
+       * Save only after successful playback starts.
+       * This prevents duplicate playback.
+       */
+
+      markAzanPlayed(dateKey, prayer);
+
+      console.info(
+        `IBADAT: ${prayer} Azan started using ${type}.`
+      );
+
+    } catch (error) {
+      console.warn(
+        `IBADAT: ${prayer} Azan playback failed.`,
+        error
+      );
+
+      /*
+       * Do not mark as played on failure.
+       * It can retry during the same prayer minute.
+       */
+
+      activeAzanPrayer = null;
+    }
+  }
+
+  function checkAutomaticAzan() {
+    if (!prayerTimes) return;
+
+    const settings = readSettings();
+
+    if (!getAzanSoundEnabled(settings)) return;
+
+    const now = new Date();
+
+    const dateKey = todayKey();
+
+    const currentMinutes =
+      now.getHours() * 60 + now.getMinutes();
+
+    /*
+     * Only five actual prayer times are used.
+     * Sunrise is intentionally excluded.
+     */
+
+    for (const prayer of AZAN_PRAYERS) {
+      const prayerTime = parseTime(prayerTimes[prayer]);
+
+      if (prayerTime === null) continue;
+
+      /*
+       * Check the entire matching minute.
+       * This avoids depending on an exact second.
+       */
+
+      if (currentMinutes !== prayerTime) continue;
+
+      if (hasAzanAlreadyPlayed(dateKey, prayer)) {
+        continue;
+      }
+
+      playAutomaticAzan(prayer, dateKey);
+
+      /*
+       * Only one prayer can match a particular minute.
+       */
+
+      break;
+    }
+  }
+
+  function startAzanScheduler() {
+    if (azanCheckTimer) {
+      clearInterval(azanCheckTimer);
+    }
+
+    checkAutomaticAzan();
+
+    azanCheckTimer = window.setInterval(() => {
+      checkAutomaticAzan();
+    }, 1000);
+  }
+
+  /* =========================================
      WEATHER
      ========================================= */
 
@@ -1050,10 +1389,10 @@
         );
 
         /*
-         * Kolkata is used only as a fallback for
-         * prayer times and weather. It is never
-         * displayed as the detected location.
+         * Kolkata is used only as a fallback
+         * for prayer times and weather.
          */
+
         loadAll(22.5726, 88.3639, false);
       },
 
@@ -1173,13 +1512,22 @@
     showQuote();
 
     /*
+     * Prepare automatic Azan.
+     */
+
+    setupAzanUnlock();
+    startAzanScheduler();
+
+    /*
      * Ask for GPS once when Home opens.
      */
+
     loadLocation();
 
     window.setInterval(() => {
       updateClockAndDate();
       updatePrayerStatus();
+      checkAutomaticAzan();
 
       if (
         lastDate &&
@@ -1197,12 +1545,14 @@
     window.addEventListener("storage", (event) => {
       if (!event.key || event.key === "appSettings") {
         applySettings();
+        checkAutomaticAzan();
       }
     });
 
     window.addEventListener("pageshow", () => {
       applySettings();
       updateClockAndDate();
+      checkAutomaticAzan();
     });
 
     document.addEventListener("visibilitychange", () => {
@@ -1210,6 +1560,7 @@
         applySettings();
         updateClockAndDate();
         updatePrayerStatus();
+        checkAutomaticAzan();
       }
     });
 
