@@ -3,63 +3,57 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#123d2c">
-
+    <meta name="description" content="IBADAT — বাংলা, English ও हिन्दी ভাষায় দোয়া">
     <title>IBADAT - দোয়া</title>
 
     <link rel="stylesheet" href="../css/dua.css">
+    <script src="../js/dua.js" defer></script>
 </head>
 
 <body>
     <div class="dua-app">
 
-        <!-- Header -->
         <header class="dua-hero board">
             <div class="dua-hero-content">
-                <h1 id="heroTitle" class="hero-title">দোয়া</h1>
+                <button id="backButton" class="back-button hidden"
+                        type="button" aria-label="Go back">‹</button>
 
-                <p id="heroSubtitle" class="hero-subtitle">
-                    দোয়া শিখুন, পড়ুন ও প্রশান্তি অনুভব করুন
-                </p>
+                <div class="hero-text">
+                    <h1 id="heroTitle" class="hero-title">দোয়া</h1>
+                    <p id="heroSubtitle" class="hero-subtitle">
+                        দোয়া শিখুন, পড়ুন ও প্রশান্তি অনুভব করুন
+                    </p>
+                </div>
             </div>
         </header>
 
-        <!-- Main content area -->
         <main class="dua-main-board board">
 
-            <!-- Loading -->
             <div id="loadingBox" class="status-box">
                 দোয়া লোড হচ্ছে...
             </div>
 
-            <!-- Error -->
-            <div id="errorBox" class="status-box error-box hidden">
+            <div id="errorBox" class="status-box error-box hidden" role="alert">
                 <div id="errorText"></div>
-
-                <button id="retryButton" type="button">
-                    আবার চেষ্টা করুন
-                </button>
+                <button id="retryButton" type="button">আবার চেষ্টা করুন</button>
             </div>
 
-            <!-- First page: Chapter list -->
             <section id="duaHome" class="dua-page hidden">
                 <div id="chapterList" class="chapter-list"></div>
             </section>
 
-            <!-- Second page: Entry list -->
             <section id="entryPage" class="dua-page hidden">
                 <div id="entryList" class="entry-list"></div>
             </section>
 
-            <!-- Third page: Selected dua -->
             <section id="duaPage" class="dua-page hidden">
                 <div id="duaContent"></div>
             </section>
 
         </main>
 
-        <!-- Footer -->
         <footer class="dua-footer board">
             <div class="dua-footer-content">
                 <p id="footerText" class="dua-footer-message">
@@ -69,7 +63,5 @@
         </footer>
 
     </div>
-
-    <script src="../js/dua.js?v=4"></script>
 </body>
 </html>
