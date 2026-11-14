@@ -1,9 +1,17 @@
 "use strict";
 
+/* =====================================================
+   IBADAT SETTINGS
+   Four Themes | Dark Mode | BN / EN / HI
+   Azan Selection | Azan Sound Preference
+   ===================================================== */
+
 const DEFAULT_SETTINGS = {
     lang: "bn",
     dark: false,
     themeColor: "classic",
+    azanSound: true,
+
     azan: {
         fajr: "makkah",
         dhuhr: "makkah",
@@ -14,6 +22,7 @@ const DEFAULT_SETTINGS = {
 };
 
 const PRAYERS = ["fajr", "dhuhr", "asr", "maghrib", "isha"];
+
 const VALID_LANGUAGES = ["bn", "en", "hi"];
 const VALID_THEMES = ["classic", "royal", "rose", "pista"];
 
@@ -25,6 +34,10 @@ const AZAN_FILES = {
     makkah: "../assets/azan/makkah.mp3"
 };
 
+/* =====================================================
+   TRANSLATIONS
+   ===================================================== */
+
 const TEXT = {
     bn: {
         title: "সেটিংস",
@@ -32,21 +45,30 @@ const TEXT = {
         language: "ভাষা",
         theme: "থিম",
         dark: "ডার্ক মোড",
-        themeColorDesc: "আপনার পছন্দের রঙ নির্বাচন করুন",
+        azanSound: "আজান সাউন্ড",
+
+        themeColorDesc: "থিম নির্বাচন করুন",
+
         themes: {
             classic: "ক্লাসিক সবুজ",
             royal: "রয়্যাল নীল",
             rose: "রোজ ও শ্যাম্পেন",
             pista: "ফ্রেশ পিস্তা"
         },
+
         save: "সংরক্ষণ",
         saved: "সেটিংস সংরক্ষিত হয়েছে",
         saveError: "সেটিংস সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন।",
-        footer: "আল্লাহকে স্মরণ করুন",
-        azanFor: "কোন ওয়াক্তে কোন আজান বাজবে",
+
+        footer: "আপনার ইবাদত, আপনার নিয়ন্ত্রণে।",
+
+        azanFor: "আজান নির্বাচন করুন",
+
         play: "আজান চালান",
         pause: "আজান থামান",
+
         audioError: "আজানের অডিও চালানো যায়নি। ফাইলের পাথ পরীক্ষা করে আবার চেষ্টা করুন।",
+
         prayers: {
             fajr: "ফজর",
             dhuhr: "জোহর",
@@ -54,6 +76,7 @@ const TEXT = {
             maghrib: "মাগরিব",
             isha: "এশা"
         },
+
         azans: {
             makkah: "মক্কা",
             madina: "মদিনা",
@@ -69,21 +92,30 @@ const TEXT = {
         language: "Language",
         theme: "Theme",
         dark: "Dark Mode",
-        themeColorDesc: "Choose your preferred color",
+        azanSound: "Azan Sound",
+
+        themeColorDesc: "Choose Theme",
+
         themes: {
             classic: "Classic Green",
             royal: "Royal Blue",
             rose: "Rose Champagne",
             pista: "Fresh Pista"
         },
+
         save: "Save",
         saved: "Settings saved",
         saveError: "Could not save settings. Please try again.",
-        footer: "Remember Allah",
-        azanFor: "Choose which Azan plays for each prayer",
+
+        footer: "Your Worship, Under Your Control.",
+
+        azanFor: "Choose Azan",
+
         play: "Play Azan",
         pause: "Pause Azan",
+
         audioError: "The audio could not be played. Check the file path and try again.",
+
         prayers: {
             fajr: "Fajr",
             dhuhr: "Dhuhr",
@@ -91,6 +123,7 @@ const TEXT = {
             maghrib: "Maghrib",
             isha: "Isha"
         },
+
         azans: {
             makkah: "Makkah",
             madina: "Madina",
@@ -106,21 +139,30 @@ const TEXT = {
         language: "भाषा",
         theme: "थीम",
         dark: "डार्क मोड",
-        themeColorDesc: "अपनी पसंद का रंग चुनें",
+        azanSound: "अज़ान की आवाज़",
+
+        themeColorDesc: "थीम चुनें",
+
         themes: {
             classic: "क्लासिक हरा",
             royal: "रॉयल नीला",
             rose: "रोज़ शैम्पेन",
             pista: "फ्रेश पिस्ता"
         },
+
         save: "सहेजें",
         saved: "सेटिंग्स सहेजी गईं",
         saveError: "सेटिंग्स सहेजी नहीं जा सकीं। फिर कोशिश करें।",
-        footer: "अल्लाह को याद करें",
-        azanFor: "हर नमाज़ के लिए अज़ान चुनें",
+
+        footer: "आपकी इबादत, आपके नियंत्रण में।",
+
+        azanFor: "अज़ान चुनें",
+
         play: "अज़ान चलाएँ",
         pause: "अज़ान रोकें",
+
         audioError: "ऑडियो नहीं चल सका। फ़ाइल का पथ जाँचकर फिर कोशिश करें।",
+
         prayers: {
             fajr: "फ़ज्र",
             dhuhr: "ज़ुहर",
@@ -128,6 +170,7 @@ const TEXT = {
             maghrib: "मग़रिब",
             isha: "इशा"
         },
+
         azans: {
             makkah: "मक्का",
             madina: "मदीना",
@@ -138,11 +181,16 @@ const TEXT = {
     }
 };
 
+/* =====================================================
+   SETTINGS STORAGE
+   ===================================================== */
+
 function getDefaultSettings() {
     return {
         lang: DEFAULT_SETTINGS.lang,
         dark: DEFAULT_SETTINGS.dark,
         themeColor: DEFAULT_SETTINGS.themeColor,
+        azanSound: DEFAULT_SETTINGS.azanSound,
         azan: { ...DEFAULT_SETTINGS.azan }
     };
 }
@@ -150,7 +198,10 @@ function getDefaultSettings() {
 function getSettings() {
     try {
         const raw = localStorage.getItem("appSettings");
-        if (!raw) return getDefaultSettings();
+
+        if (!raw) {
+            return getDefaultSettings();
+        }
 
         const saved = JSON.parse(raw);
 
@@ -160,13 +211,19 @@ function getSettings() {
 
         const settings = getDefaultSettings();
 
+        /* LANGUAGE */
+
         if (VALID_LANGUAGES.includes(saved.lang)) {
             settings.lang = saved.lang;
         } else if (VALID_LANGUAGES.includes(saved.language)) {
             settings.lang = saved.language;
         }
 
+        /* DARK MODE */
+
         settings.dark = saved.dark === true;
+
+        /* THEME */
 
         if (VALID_THEMES.includes(saved.themeColor)) {
             settings.themeColor = saved.themeColor;
@@ -174,10 +231,22 @@ function getSettings() {
             settings.themeColor = saved.theme;
         }
 
+        /* AZAN SOUND
+           Old settings without this property default to ON.
+        */
+
+        settings.azanSound =
+            typeof saved.azanSound === "boolean"
+                ? saved.azanSound
+                : true;
+
+        /* AZAN SELECTION */
+
         if (typeof saved.azan === "string" && AZAN_FILES[saved.azan]) {
             PRAYERS.forEach(prayer => {
                 settings.azan[prayer] = saved.azan;
             });
+
         } else if (saved.azan && typeof saved.azan === "object") {
             PRAYERS.forEach(prayer => {
                 if (
@@ -190,6 +259,7 @@ function getSettings() {
         }
 
         return settings;
+
     } catch (error) {
         console.error("Could not read settings:", error);
         return getDefaultSettings();
@@ -200,18 +270,37 @@ function saveSettingsToStorage(settings) {
     localStorage.setItem("appSettings", JSON.stringify(settings));
 }
 
+/* =====================================================
+   COMMON HELPERS
+   ===================================================== */
+
 function setText(id, value) {
     const element = document.getElementById(id);
-    if (element) element.textContent = value;
+
+    if (element) {
+        element.textContent = value;
+    }
 }
 
 function currentLanguage() {
-    const selected = document.getElementById("langSelect")?.value || getSettings().lang;
-    return VALID_LANGUAGES.includes(selected) ? selected : "bn";
+    const selected =
+        document.getElementById("langSelect")?.value ||
+        getSettings().lang;
+
+    return VALID_LANGUAGES.includes(selected)
+        ? selected
+        : "bn";
 }
 
+/* =====================================================
+   LANGUAGE APPLICATION
+   ===================================================== */
+
 function applyLanguage(language) {
-    const safeLang = VALID_LANGUAGES.includes(language) ? language : "bn";
+    const safeLang = VALID_LANGUAGES.includes(language)
+        ? language
+        : "bn";
+
     const t = TEXT[safeLang];
 
     document.documentElement.lang = safeLang;
@@ -219,44 +308,74 @@ function applyLanguage(language) {
     setText("settingsTitle", t.title);
     setText("azanTitle", t.azan);
     setText("azanDesc", t.azanFor);
+
     setText("langTitle", t.language);
     setText("themeTitle", t.theme);
     setText("darkLabel", t.dark);
+
+    setText("azanSoundLabel", t.azanSound);
+
     setText("themeColorDesc", t.themeColorDesc);
+
     setText("saveBtn", t.save);
     setText("settingsFooter", t.footer);
 
+    /* THEME NAMES */
+
     document.querySelectorAll("[data-theme-name]").forEach(element => {
         const themeName = element.dataset.themeName;
+
         if (t.themes[themeName]) {
             element.textContent = t.themes[themeName];
         }
     });
 
+    /* THEME ACCESSIBILITY LABELS */
+
     document.querySelectorAll(".theme-option").forEach(button => {
         const themeName = button.dataset.theme;
-        button.setAttribute("aria-label", t.themes[themeName] || themeName);
+
+        button.setAttribute(
+            "aria-label",
+            t.themes[themeName] || themeName
+        );
     });
+
+    /* PLAY BUTTON LABELS */
 
     document.querySelectorAll(".play-button").forEach(button => {
         const prayer = button.dataset.prayer;
         const playing = button.classList.contains("is-playing");
-        button.setAttribute("aria-label", playing ? t.pause : t.play);
+
+        button.setAttribute(
+            "aria-label",
+            playing
+                ? `${t.pause} - ${t.prayers[prayer]}`
+                : `${t.play} - ${t.prayers[prayer]}`
+        );
     });
+
+    /* PRAYER NAMES AND AZAN OPTIONS */
 
     PRAYERS.forEach(prayer => {
         setText("prayer_" + prayer, t.prayers[prayer]);
 
         const select = document.getElementById("azan_" + prayer);
+
         if (!select) return;
 
-        const oldValue = select.value || getSettings().azan[prayer];
+        const oldValue =
+            select.value ||
+            getSettings().azan[prayer];
+
         select.replaceChildren();
 
         Object.entries(t.azans).forEach(([value, label]) => {
             const option = document.createElement("option");
+
             option.value = value;
             option.textContent = label;
+
             select.appendChild(option);
         });
 
@@ -265,6 +384,10 @@ function applyLanguage(language) {
             : DEFAULT_SETTINGS.azan[prayer];
     });
 }
+
+/* =====================================================
+   COLOR THEME
+   ===================================================== */
 
 function applyColorTheme(themeName) {
     const safeTheme = VALID_THEMES.includes(themeName)
@@ -275,11 +398,14 @@ function applyColorTheme(themeName) {
 
     document.querySelectorAll(".theme-option").forEach(button => {
         const selected = button.dataset.theme === safeTheme;
+
         button.setAttribute("aria-checked", String(selected));
         button.classList.toggle("selected", selected);
     });
 
-    const themeMeta = document.querySelector('meta[name="theme-color"]');
+    const themeMeta = document.querySelector(
+        'meta[name="theme-color"]'
+    );
 
     if (themeMeta) {
         const colors = {
@@ -300,30 +426,50 @@ function selectColorTheme(themeName) {
 
     try {
         const settings = getSettings();
+
         settings.themeColor = themeName;
+
         saveSettingsToStorage(settings);
+
     } catch (error) {
         console.error("Could not save color theme:", error);
     }
 }
 
+/* =====================================================
+   DARK MODE
+   ===================================================== */
+
 function applyTheme() {
     const checkbox = document.getElementById("darkMode");
 
-    if (checkbox) {
-        document.body.classList.toggle("dark-mode", checkbox.checked);
-    }
+    if (!checkbox) return;
+
+    document.body.classList.toggle(
+        "dark-mode",
+        checkbox.checked
+    );
 }
+
+/* =====================================================
+   APPLY SAVED SETTINGS
+   ===================================================== */
 
 function applySettings() {
     const settings = getSettings();
 
     document.getElementById("langSelect").value = settings.lang;
+
     document.getElementById("darkMode").checked = settings.dark;
+
+    document.getElementById("azanSound").checked = settings.azanSound;
 
     PRAYERS.forEach(prayer => {
         const select = document.getElementById("azan_" + prayer);
-        if (select) select.value = settings.azan[prayer];
+
+        if (select) {
+            select.value = settings.azan[prayer];
+        }
     });
 
     applyColorTheme(settings.themeColor);
@@ -331,7 +477,9 @@ function applySettings() {
     applyTheme();
 }
 
-/* AUDIO PREVIEW */
+/* =====================================================
+   AUDIO PREVIEW
+   ===================================================== */
 
 let azanAudio = null;
 let activePrayer = null;
@@ -344,13 +492,22 @@ function getPlayButton(prayer) {
 
 function updatePlayButton(prayer, playing) {
     const button = getPlayButton(prayer);
+
     if (!button) return;
 
     const t = TEXT[currentLanguage()];
 
     button.textContent = playing ? "Ⅱ" : "▶";
+
     button.classList.toggle("is-playing", playing);
-    button.setAttribute("aria-label", playing ? t.pause : t.play);
+
+    button.setAttribute(
+        "aria-label",
+        playing
+            ? `${t.pause} - ${t.prayers[prayer]}`
+            : `${t.play} - ${t.prayers[prayer]}`
+    );
+
     button.setAttribute("aria-pressed", String(playing));
 }
 
@@ -394,10 +551,14 @@ async function playAzan(type, prayer) {
 
     if (!azanAudio) {
         azanAudio = new Audio();
+
         azanAudio.preload = "none";
 
         azanAudio.addEventListener("ended", () => {
-            if (activePrayer) updatePlayButton(activePrayer, false);
+            if (activePrayer) {
+                updatePlayButton(activePrayer, false);
+            }
+
             activePrayer = null;
         });
     }
@@ -414,33 +575,48 @@ async function playAzan(type, prayer) {
         azanAudio.src === selectedSource
     ) {
         azanAudio.pause();
+
         updatePlayButton(prayer, false);
+
         return;
     }
 
     stopAzanPreview();
 
     activePrayer = prayer;
+
     azanAudio.src = AZAN_FILES[type];
+
     azanAudio.load();
 
     try {
         await azanAudio.play();
+
         updateAllPlayButtons();
+
     } catch (error) {
         console.error("Azan playback failed:", error);
+
         updatePlayButton(prayer, false);
+
         activePrayer = null;
 
         alert(TEXT[currentLanguage()].audioError);
     }
 }
 
+/* =====================================================
+   SAVE SETTINGS
+   ===================================================== */
+
 function saveSettings() {
     const settings = getSettings();
 
     settings.lang = currentLanguage();
+
     settings.dark = document.getElementById("darkMode").checked;
+
+    settings.azanSound = document.getElementById("azanSound").checked;
 
     const selectedTheme = document.body.dataset.colorTheme;
 
@@ -458,22 +634,47 @@ function saveSettings() {
 
     try {
         saveSettingsToStorage(settings);
+
         alert(TEXT[settings.lang].saved);
+
         window.location.href = "../index.html";
+
     } catch (error) {
         console.error("Could not save settings:", error);
+
         alert(TEXT[settings.lang].saveError);
     }
 }
 
+/* =====================================================
+   INITIALIZATION
+   ===================================================== */
+
 document.addEventListener("DOMContentLoaded", () => {
+
+    /* APPLY SAVED SETTINGS */
+
     applySettings();
 
-    document.getElementById("langSelect").addEventListener("change", event => {
-        applyLanguage(event.target.value);
-    });
+    /* LANGUAGE CHANGE */
 
-    document.getElementById("darkMode").addEventListener("change", applyTheme);
+    document.getElementById("langSelect").addEventListener(
+        "change",
+        event => {
+            applyLanguage(event.target.value);
+        }
+    );
+
+    /* DARK MODE CHANGE */
+
+    document.getElementById("darkMode").addEventListener(
+        "change",
+        () => {
+            applyTheme();
+        }
+    );
+
+    /* THEME SELECTION */
 
     document.querySelectorAll(".theme-option").forEach(button => {
         button.addEventListener("click", () => {
@@ -481,13 +682,26 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    /* AZAN PREVIEW */
+
     document.querySelectorAll(".play-button").forEach(button => {
         button.addEventListener("click", () => {
             const prayer = button.dataset.prayer;
-            const select = document.getElementById("azan_" + prayer);
-            playAzan(select.value, prayer);
+
+            const select = document.getElementById(
+                "azan_" + prayer
+            );
+
+            if (select) {
+                playAzan(select.value, prayer);
+            }
         });
     });
 
-    document.getElementById("saveBtn").addEventListener("click", saveSettings);
+    /* SAVE */
+
+    document.getElementById("saveBtn").addEventListener(
+        "click",
+        saveSettings
+    );
 });
