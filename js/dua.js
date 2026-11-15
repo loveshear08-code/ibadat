@@ -6,22 +6,19 @@
    IBADAT — DUA.JS
    Complete Dua Page Controller
 
-   Existing HTML IDs and CSS classes preserved.
-   Existing theme / Settings system respected.
-
    Pages:
-   1. Main page — 20 categories
-   2. Category page — maximum 8 valid duas
-   3. Dua details — Arabic, pronunciation, meaning, audio
+   1. Main categories
+   2. Category dua list
+   3. Dua details
 
    Languages: Bengali / English / Hindi
    Themes: Classic / Royal / Rose / Pista
-   Modes: Light / Dark
+   Light + Dark mode
 ========================================================= */
 
 (() => {
     /* =====================================================
-       CONFIG
+       CONFIGURATION
     ===================================================== */
 
     const SOURCE_BASE =
@@ -59,7 +56,7 @@
     };
 
     /* =====================================================
-       UI TRANSLATIONS
+       LANGUAGE TEXT
     ===================================================== */
 
     const TEXT = {
@@ -152,7 +149,7 @@
     };
 
     /* =====================================================
-       MAIN CATEGORIES
+       20 MAIN CATEGORIES
     ===================================================== */
 
     const CATEGORIES = [
@@ -344,17 +341,16 @@
     ];
 
     /* =====================================================
-       RECORD RULES
+       RECORD FILTERS AND CORRECTIONS
     ===================================================== */
 
-    /* These entries are information, not standalone duas,
-       or do not contain usable Arabic supplication text. */
+    /* Informational records or records without usable Arabic. */
     const EXCLUDED_IDS = new Set([
         "1", "77", "184", "185", "277",
         "311", "317"
     ]);
 
-    /* Correct known misclassified records. */
+    /* Correct records placed under the wrong source category. */
     const ID_OVERRIDES = {
         "396": "life-family",
         "397": "life-family",
@@ -407,7 +403,9 @@
     ===================================================== */
 
     function normalizeLanguage(value) {
-        const v = String(value || "bn").toLowerCase().trim();
+        const v = String(value || "bn")
+            .toLowerCase()
+            .trim();
 
         if (["en", "eng", "english"].includes(v)) return "en";
         if (["hi", "hin", "hindi"].includes(v)) return "hi";
@@ -470,29 +468,33 @@
             .join("/");
     }
 
-    function getAudioURL(path) {
-        if (!path) return "";
-
-        try {
-            return new URL(
-                String(path).replace(/^\/+/, ""),
-                SOURCE_BASE
-            ).href;
-        } catch {
-            return "";
-        }
-    }
-
+    /*
+       Hindi digits are explicitly requested with the
+       Devanagari numbering system. This avoids devices
+       showing English digits for Hindi language.
+    */
     function formatNumber(number) {
         const locales = {
-            bn: "bn-BD",
-            en: "en-IN",
-            hi: "hi-IN"
+            bn: "bn-BD-u-nu-beng",
+            en: "en-IN-u-nu-latn",
+            hi: "hi-IN-u-nu-deva"
         };
 
-        return new Intl.NumberFormat(
-            locales[language] || "bn-BD"
-        ).format(number);
+        try {
+            return new Intl.NumberFormat(
+                locales[language]
+            ).format(number);
+        } catch {
+            const fallback = {
+                bn: "০১২৩৪৫৬৭৮৯",
+                en: "0123456789",
+                hi: "०१२३४५६७८९"
+            };
+
+            return String(number).replace(/\d/g, digit =>
+                fallback[language][Number(digit)]
+            );
+        }
     }
 
     function getIdsFromSubcategory(item) {
@@ -501,7 +503,9 @@
         return item["dua-ids"]
             .map(entry => {
                 if (isObject(entry)) {
-                    return normalizeId(entry.dua_id || entry.id);
+                    return normalizeId(
+                        entry.dua_id || entry.id
+                    );
                 }
 
                 return normalizeId(entry);
@@ -668,13 +672,17 @@
     ===================================================== */
 
     function findCategoryById(id) {
-        return CATEGORIES.find(category => category.id === id);
+        return CATEGORIES.find(category =>
+            category.id === id
+        );
     }
 
     function findCategoryForRecord(group, duaId) {
         const override = ID_OVERRIDES[duaId];
 
-        if (override) return findCategoryById(override);
+        if (override) {
+            return findCategoryById(override);
+        }
 
         const slug = normalizeSlug(group.category);
 
@@ -692,7 +700,6 @@
             map.set(category.id, []);
         });
 
-        /* A source ID is assigned only once. */
         const claimedIds = new Set();
 
         sourceSubcategories.forEach(group => {
@@ -701,14 +708,17 @@
             ids.forEach(id => {
                 if (claimedIds.has(id)) return;
 
-                claimedIds.add(id);
-
-                if (EXCLUDED_IDS.has(id)) return;
+                if (EXCLUDED_IDS.has(id)) {
+                    claimedIds.add(id);
+                    return;
+                }
 
                 const category =
                     findCategoryForRecord(group, id);
 
                 if (!category) return;
+
+                claimedIds.add(id);
 
                 map.get(category.id).push({
                     id,
@@ -720,6 +730,45 @@
         });
 
         return map;
+    }
+
+    /* =====================================================
+       AUDIO URL
+    ===================================================== */
+
+    /*
+       IMPORTANT:
+       The source JSON may contain:
+       /audio/dua/146.mp3
+
+       But the actual repository audio folder stores:
+       /audio/146.mp3
+
+       Therefore only the numeric MP3 filename is used.
+    */
+
+    function getAudioURL(path, duaId) {
+        const sourcePath = cleanText(path);
+
+        if (!sourcePath) return "";
+
+        const filename =
+            sourcePath.split("/").filter(Boolean).pop();
+
+        const match = filename?.match(/^(\d+)\.mp3$/i);
+
+        const audioId = match
+            ? match[1]
+            : normalizeId(duaId);
+
+        if (!/^\d+$/.test(audioId)) return "";
+
+        return (
+            SOURCE_BASE +
+            "audio/" +
+            encodeURIComponent(audioId) +
+            ".mp3"
+        );
     }
 
     /* =====================================================
@@ -737,7 +786,9 @@
             const [arabicData, languageData] =
                 await Promise.all([
                     fetchJSON(
-                        getRawURL(`translation/ar/dua_${id}.json`)
+                        getRawURL(
+                            `translation/ar/dua_${id}.json`
+                        )
                     ),
                     fetchJSON(
                         getRawURL(
@@ -746,13 +797,16 @@
                     )
                 ]);
 
-            if (!isObject(arabicData) || !isObject(languageData)) {
+            if (
+                !isObject(arabicData) ||
+                !isObject(languageData)
+            ) {
                 return null;
             }
 
             if (
-                normalizeId(arabicData.dua_id) !== normalizeId(id) ||
-                normalizeId(languageData.dua_id) !== normalizeId(id)
+                normalizeId(arabicData.dua_id) !== id ||
+                normalizeId(languageData.dua_id) !== id
             ) {
                 return null;
             }
@@ -762,24 +816,32 @@
             );
 
             const title = cleanText(languageData.title);
-            const translation = cleanText(languageData.translation);
+
+            const translation =
+                cleanText(languageData.translation);
+
             const transliteration =
                 cleanText(languageData.transliteration);
 
             const reference = cleanText(
-                languageData.reference || arabicData.reference
+                languageData.reference ||
+                arabicData.reference
             );
 
-            /* A title and Arabic text are required. */
-            if (!title || !hasArabic(arabic)) return null;
+            if (!title || !hasArabic(arabic)) {
+                return null;
+            }
 
             const audioPath =
-                arabicData.audio || languageData.audio || "";
+                arabicData.audio ||
+                languageData.audio ||
+                "";
 
-            const whenObject = languageData.when_to_recite;
+            const whenObject =
+                languageData.when_to_recite;
 
             return {
-                id: normalizeId(id),
+                id,
                 title,
                 arabic,
                 transliteration,
@@ -794,9 +856,8 @@
                     whenObject?.description
                 ),
 
-                audioURL: getAudioURL(audioPath),
+                audioURL: getAudioURL(audioPath, id),
 
-                /* Keep original source record for later review. */
                 source: languageData
             };
         })();
@@ -808,7 +869,12 @@
         } catch (error) {
             duaCache.delete(cacheKey);
 
-            console.warn("Dua record unavailable:", id, error);
+            console.warn(
+                "Dua record unavailable:",
+                id,
+                error
+            );
+
             return null;
         }
     }
@@ -828,10 +894,15 @@
                 if (index >= items.length) return;
 
                 try {
-                    results[index] = await worker(items[index]);
+                    results[index] =
+                        await worker(items[index]);
                 } catch (error) {
                     results[index] = null;
-                    console.warn("Dua worker failed:", error);
+
+                    console.warn(
+                        "Dua worker failed:",
+                        error
+                    );
                 }
             }
         }
@@ -880,8 +951,6 @@
 
         const valid = loaded.filter(Boolean);
 
-        /* Remove identical Arabic text within this category.
-           Different authentic wordings are kept. */
         const seenArabic = new Set();
         const unique = [];
 
@@ -915,7 +984,9 @@
             UI.home,
             UI.entryPage,
             UI.duaPage
-        ].forEach(page => page?.classList.add("hidden"));
+        ].forEach(page =>
+            page?.classList.add("hidden")
+        );
     }
 
     function hideLoading() {
@@ -931,7 +1002,9 @@
         hideError();
 
         if (UI.loadingBox) {
-            UI.loadingBox.textContent = message || t("loading");
+            UI.loadingBox.textContent =
+                message || t("loading");
+
             UI.loadingBox.classList.remove("hidden");
         }
     }
@@ -941,7 +1014,8 @@
         hideAllPages();
 
         if (UI.errorText) {
-            UI.errorText.textContent = message || t("sourceError");
+            UI.errorText.textContent =
+                message || t("sourceError");
         }
 
         UI.errorBox?.classList.remove("hidden");
@@ -953,9 +1027,20 @@
         hideLoading();
         hideError();
 
-        UI.home?.classList.toggle("hidden", page !== "home");
-        UI.entryPage?.classList.toggle("hidden", page !== "entries");
-        UI.duaPage?.classList.toggle("hidden", page !== "dua");
+        UI.home?.classList.toggle(
+            "hidden",
+            page !== "home"
+        );
+
+        UI.entryPage?.classList.toggle(
+            "hidden",
+            page !== "entries"
+        );
+
+        UI.duaPage?.classList.toggle(
+            "hidden",
+            page !== "dua"
+        );
 
         updateHeader();
 
@@ -1007,6 +1092,7 @@
 
         selectedCategory = null;
         selectedDua = null;
+
         showPage("home");
     });
 
@@ -1050,7 +1136,10 @@
                     "›"
                 );
 
-                arrow.setAttribute("aria-hidden", "true");
+                arrow.setAttribute(
+                    "aria-hidden",
+                    "true"
+                );
 
                 button.append(number, name, arrow);
 
@@ -1085,18 +1174,24 @@
         showLoading(t("loadingDuas"));
 
         try {
-            const duas = await loadCategoryDuas(category);
+            const duas =
+                await loadCategoryDuas(category);
 
             if (token !== requestToken) return;
 
             renderDuaList(duas);
             showPage("entries");
+
         } catch (error) {
-            console.error("Category loading error:", error);
+            console.error(
+                "Category loading error:",
+                error
+            );
 
             if (token === requestToken) {
                 showError(t("sourceError"));
             }
+
         } finally {
             if (token === requestToken) {
                 isLoading = false;
@@ -1146,7 +1241,10 @@
                 "›"
             );
 
-            arrow.setAttribute("aria-hidden", "true");
+            arrow.setAttribute(
+                "aria-hidden",
+                "true"
+            );
 
             button.append(number, name, arrow);
 
@@ -1212,7 +1310,9 @@
         if (!activeAudioButton || !activeAudio) return;
 
         activeAudioButton.textContent =
-            activeAudio.paused ? t("resume") : t("pause");
+            activeAudio.paused
+                ? t("resume")
+                : t("pause");
     }
 
     function showAudioMessage(message, isError = false) {
@@ -1220,6 +1320,7 @@
 
         activeAudioMessage.textContent = message;
         activeAudioMessage.style.display = "block";
+
         activeAudioMessage.style.color = isError
             ? "#b33b32"
             : "var(--muted)";
@@ -1248,6 +1349,7 @@
 
         if (activeAudioButton) {
             activeAudioButton.textContent = t("play");
+            activeAudioButton.disabled = false;
         }
 
         activeAudio = null;
@@ -1258,7 +1360,10 @@
     function createAudioControls(dua) {
         if (!dua.audioURL) return null;
 
-        const wrapper = createElement("section", "dua-section");
+        const wrapper = createElement(
+            "section",
+            "dua-section"
+        );
 
         const label = createElement(
             "div",
@@ -1281,7 +1386,6 @@
         button.type = "button";
         button.setAttribute("aria-label", t("audio"));
 
-        /* Button appearance follows the current theme variables. */
         button.style.display = "inline-flex";
         button.style.alignItems = "center";
         button.style.justifyContent = "center";
@@ -1303,7 +1407,6 @@
         wrapper.append(label, button, message);
 
         button.addEventListener("click", async () => {
-            /* Pause or resume the currently selected audio. */
             if (
                 activeAudio &&
                 activeAudioButton === button
@@ -1311,12 +1414,20 @@
                 if (activeAudio.paused) {
                     try {
                         await activeAudio.play();
+
                         clearAudioMessage();
                         updateAudioButton();
+
                     } catch (error) {
-                        console.warn("Audio resume failed:", error);
-                        showAudioMessage(t("audioError"), true);
-                        button.textContent = t("play");
+                        console.warn(
+                            "Audio resume failed:",
+                            error
+                        );
+
+                        showAudioMessage(
+                            t("audioError"),
+                            true
+                        );
                     }
                 } else {
                     activeAudio.pause();
@@ -1329,7 +1440,8 @@
             stopAudio();
 
             const audio = new Audio();
-            audio.preload = "auto";
+
+            audio.preload = "none";
             audio.src = dua.audioURL;
 
             activeAudio = audio;
@@ -1338,6 +1450,7 @@
 
             button.textContent = t("audioLoading");
             button.disabled = true;
+
             showAudioMessage(t("audioLoading"));
 
             audio.addEventListener("canplay", () => {
@@ -1345,12 +1458,15 @@
 
                 button.disabled = false;
                 clearAudioMessage();
+
             }, { once: true });
 
             audio.addEventListener("ended", () => {
                 if (activeAudio !== audio) return;
 
                 button.textContent = t("play");
+                button.disabled = false;
+
                 activeAudio = null;
                 activeAudioButton = null;
                 activeAudioMessage = null;
@@ -1361,11 +1477,16 @@
 
                 button.disabled = false;
                 button.textContent = t("play");
-                showAudioMessage(t("audioError"), true);
+
+                showAudioMessage(
+                    t("audioError"),
+                    true
+                );
 
                 activeAudio = null;
                 activeAudioButton = null;
                 activeAudioMessage = null;
+
             }, { once: true });
 
             try {
@@ -1376,13 +1497,23 @@
                     button.textContent = t("pause");
                     clearAudioMessage();
                 }
+
             } catch (error) {
-                console.warn("Audio playback failed:", dua.id, error);
+                console.warn(
+                    "Audio playback failed:",
+                    dua.id,
+                    dua.audioURL,
+                    error
+                );
 
                 if (activeAudio === audio) {
                     button.disabled = false;
                     button.textContent = t("play");
-                    showAudioMessage(t("audioError"), true);
+
+                    showAudioMessage(
+                        t("audioError"),
+                        true
+                    );
 
                     activeAudio = null;
                     activeAudioButton = null;
@@ -1449,8 +1580,8 @@
             true
         );
 
-        /* No audio button is created if the source has no audio path. */
-        const audioControls = createAudioControls(dua);
+        const audioControls =
+            createAudioControls(dua);
 
         if (audioControls) {
             card.appendChild(audioControls);
@@ -1492,6 +1623,24 @@
     }
 
     /* =====================================================
+       EMPTY STATE
+    ===================================================== */
+
+    function showEmpty(container, message) {
+        if (!container) return;
+
+        clear(container);
+
+        container.appendChild(
+            createElement(
+                "div",
+                "empty-message",
+                message
+            )
+        );
+    }
+
+    /* =====================================================
        SETTINGS REFRESH
     ===================================================== */
 
@@ -1518,7 +1667,9 @@
             previousDark !== darkMode;
 
         if (!languageChanged) {
-            if (appearanceChanged) applyTheme();
+            if (appearanceChanged) {
+                applyTheme();
+            }
 
             applyStaticText();
             updateAudioButton();
@@ -1593,9 +1744,15 @@
                 renderCategories();
                 showPage("home");
             }
+
         } catch (error) {
-            console.error("Settings refresh failed:", error);
+            console.error(
+                "Settings refresh failed:",
+                error
+            );
+
             showError(t("sourceError"));
+
         } finally {
             if (token === requestToken) {
                 isLoading = false;
@@ -1610,33 +1767,19 @@
     ===================================================== */
 
     window.addEventListener("storage", event => {
-        if (event.key && event.key !== SETTINGS_KEY) return;
+        if (
+            event.key &&
+            event.key !== SETTINGS_KEY
+        ) {
+            return;
+        }
+
         refreshSettings();
     });
 
-    /* Re-read settings when returning to this page.
-       Avoid repeatedly reloading the entire page on visibility changes. */
     window.addEventListener("pageshow", () => {
         refreshSettings();
     });
-
-    /* =====================================================
-       EMPTY STATE
-    ===================================================== */
-
-    function showEmpty(container, message) {
-        if (!container) return;
-
-        clear(container);
-
-        container.appendChild(
-            createElement(
-                "div",
-                "empty-message",
-                message
-            )
-        );
-    }
 
     /* =====================================================
        RETRY
@@ -1679,7 +1822,10 @@
             showPage("home");
 
         } catch (error) {
-            console.error("IBADAT Dua initialization failed:", error);
+            console.error(
+                "IBADAT Dua initialization failed:",
+                error
+            );
 
             if (token !== requestToken) return;
 
@@ -1692,14 +1838,13 @@
     }
 
     /* =====================================================
-       EVENTS
+       EVENTS AND START
     ===================================================== */
 
-    UI.retryButton?.addEventListener("click", retry);
-
-    /* =====================================================
-       START
-    ===================================================== */
+    UI.retryButton?.addEventListener(
+        "click",
+        retry
+    );
 
     initialize();
 
