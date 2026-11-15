@@ -4,15 +4,15 @@
 
 /* =========================================================
    IBADAT — DUA.JS
-   Fresh Dua Page Controller
+   Complete Dua Page Controller
 
-   HTML IDs and existing CSS classes preserved.
-   Existing theme and settings system respected.
+   Existing HTML IDs and CSS classes preserved.
+   Existing theme / Settings system respected.
 
    Pages:
-   1. Dua Main Page — 20 categories
-   2. Category Page — maximum 8 duas
-   3. Dua Details — Arabic, pronunciation, meaning, audio
+   1. Main page — 20 categories
+   2. Category page — maximum 8 valid duas
+   3. Dua details — Arabic, pronunciation, meaning, audio
 
    Languages: Bengali / English / Hindi
    Themes: Classic / Royal / Rose / Pista
@@ -21,23 +21,19 @@
 
 (() => {
     /* =====================================================
-       CONFIGURATION
+       CONFIG
     ===================================================== */
 
     const SOURCE_BASE =
         "https://raw.githubusercontent.com/islamicapi/masnun-dua/main/";
 
     const SETTINGS_KEY = "appSettings";
-    const CATEGORY_SOURCE_LANGUAGE = "bn";
     const MAX_DUAS_PER_CATEGORY = 8;
-
-    const SUPPORTED_LANGUAGES = ["bn", "en", "hi"];
+    const REQUEST_TIMEOUT = 20000;
+    const PARALLEL_LIMIT = 7;
 
     const SUPPORTED_THEMES = [
-        "classic",
-        "royal",
-        "rose",
-        "pista"
+        "classic", "royal", "rose", "pista"
     ];
 
     const $ = id => document.getElementById(id);
@@ -63,21 +59,18 @@
     };
 
     /* =====================================================
-       LANGUAGE TEXT
+       UI TRANSLATIONS
     ===================================================== */
 
-    const UI_TEXT = {
+    const TEXT = {
         bn: {
             mainTitle: "দোয়া সমূহ",
             subtitle: "দোয়া শিখুন, পড়ুন ও প্রশান্তি অনুভব করুন",
             footer: "আল্লাহর স্মরণেই অন্তর প্রশান্তি লাভ করে।",
-
             loading: "দোয়ার বিভাগ লোড হচ্ছে...",
             loadingDuas: "দোয়াসমূহ লোড হচ্ছে...",
             loadingDetails: "দোয়ার বিস্তারিত লোড হচ্ছে...",
-
             retry: "আবার চেষ্টা করুন",
-
             arabic: "আরবি",
             pronunciation: "বাংলা উচ্চারণ",
             meaning: "বাংলা অর্থ",
@@ -86,15 +79,15 @@
             reference: "সূত্র",
             audio: "দোয়া শুনুন",
             play: "▶ অডিও চালান",
-            pause: "⏸ অডিও বন্ধ করুন",
-
+            pause: "⏸ অডিও বিরতি দিন",
+            resume: "▶ আবার চালান",
+            audioLoading: "অডিও লোড হচ্ছে...",
+            audioError: "এই দোয়ার অডিও চালানো যাচ্ছে না।",
             noCategories: "কোনো বিভাগ পাওয়া যায়নি।",
-            noDuas: "এই বিভাগে কোনো দোয়া পাওয়া যায়নি।",
+            noDuas: "এই বিভাগে যাচাইকৃত দোয়া পাওয়া যায়নি।",
             noDetails: "দোয়ার বিস্তারিত তথ্য পাওয়া যায়নি।",
-
             missingTranslation: "এই ভাষায় অনুবাদ পাওয়া যায়নি।",
             missingPronunciation: "উচ্চারণ পাওয়া যায়নি।",
-
             networkError: "ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।",
             sourceError: "দোয়ার তথ্য লোড করা যায়নি।"
         },
@@ -103,13 +96,10 @@
             mainTitle: "Supplications",
             subtitle: "Learn, recite and find peace through supplication",
             footer: "Peace comes through the remembrance of Allah.",
-
             loading: "Loading categories...",
             loadingDuas: "Loading supplications...",
             loadingDetails: "Loading supplication details...",
-
             retry: "Try again",
-
             arabic: "Arabic",
             pronunciation: "Pronunciation",
             meaning: "English Meaning",
@@ -119,14 +109,14 @@
             audio: "Listen to the Du'a",
             play: "▶ Play Audio",
             pause: "⏸ Pause Audio",
-
+            resume: "▶ Resume Audio",
+            audioLoading: "Loading audio...",
+            audioError: "The audio for this supplication could not be played.",
             noCategories: "No categories were found.",
-            noDuas: "No supplications were found in this category.",
+            noDuas: "No verified supplications were found in this category.",
             noDetails: "Details for this supplication could not be found.",
-
             missingTranslation: "Translation is not available in this language.",
             missingPronunciation: "Pronunciation is not available.",
-
             networkError: "Check your internet connection and try again.",
             sourceError: "Could not load supplication data."
         },
@@ -135,13 +125,10 @@
             mainTitle: "दुआएँ",
             subtitle: "दुआ सीखें, पढ़ें और सुकून पाएँ",
             footer: "अल्लाह के ज़िक्र से दिलों को सुकून मिलता है।",
-
             loading: "श्रेणियाँ लोड हो रही हैं...",
             loadingDuas: "दुआएँ लोड हो रही हैं...",
             loadingDetails: "दुआ की जानकारी लोड हो रही है...",
-
             retry: "फिर कोशिश करें",
-
             arabic: "अरबी",
             pronunciation: "उच्चारण",
             meaning: "हिंदी अर्थ",
@@ -151,21 +138,21 @@
             audio: "दुआ सुनें",
             play: "▶ ऑडियो चलाएँ",
             pause: "⏸ ऑडियो रोकें",
-
+            resume: "▶ फिर से चलाएँ",
+            audioLoading: "ऑडियो लोड हो रहा है...",
+            audioError: "इस दुआ का ऑडियो नहीं चल सका।",
             noCategories: "कोई श्रेणी नहीं मिली।",
-            noDuas: "इस श्रेणी में कोई दुआ नहीं मिली।",
+            noDuas: "इस श्रेणी में कोई प्रमाणित दुआ नहीं मिली।",
             noDetails: "इस दुआ की जानकारी नहीं मिली।",
-
             missingTranslation: "इस भाषा में अनुवाद उपलब्ध नहीं है।",
             missingPronunciation: "उच्चारण उपलब्ध नहीं है।",
-
             networkError: "इंटरनेट कनेक्शन जाँचकर फिर कोशिश करें।",
             sourceError: "दुआ की जानकारी लोड नहीं हो सकी।"
         }
     };
 
     /* =====================================================
-       20 MAIN CATEGORIES
+       MAIN CATEGORIES
     ===================================================== */
 
     const CATEGORIES = [
@@ -319,7 +306,11 @@
             bn: "কুরআন ও নবীদের দোয়া",
             en: "Quranic & Prophetic Du'as",
             hi: "क़ुरआन और पैग़म्बरों की दुआएँ",
-            slugs: ["40-rabbana-duas", "prophets-dua"],
+            slugs: [
+                "40-rabbana-duas",
+                "prophets-dua",
+                "quranic-dua"
+            ],
             order: 18
         },
         {
@@ -333,7 +324,12 @@
                 "duas-excellence",
                 "time-of-dua",
                 "dua-acceptance",
-                "greatest-name-of-allah"
+                "greatest-name-of-allah",
+                "duas-of-hadith",
+                "duas-of-sahaba",
+                "masnun-duas",
+                "other-duas",
+                "when-to-say-what"
             ],
             order: 19
         },
@@ -348,18 +344,17 @@
     ];
 
     /* =====================================================
-       RECORD EXCLUSIONS AND CATEGORY CORRECTIONS
+       RECORD RULES
     ===================================================== */
 
-    const INFORMATION_ONLY_IDS = new Set([
-        "1",
-        "77",
-        "311",
-        "184",
-        "185",
-        "277"
+    /* These entries are information, not standalone duas,
+       or do not contain usable Arabic supplication text. */
+    const EXCLUDED_IDS = new Set([
+        "1", "77", "184", "185", "277",
+        "311", "317"
     ]);
 
+    /* Correct known misclassified records. */
     const ID_OVERRIDES = {
         "396": "life-family",
         "397": "life-family",
@@ -381,79 +376,70 @@
     ===================================================== */
 
     let language = "bn";
-    let darkMode = false;
     let colorTheme = "classic";
+    let darkMode = false;
 
     let currentPage = "home";
-
-    let sourceSubcategories = [];
-
     let selectedCategory = null;
     let selectedDua = null;
 
+    let sourceSubcategories = [];
     let categoryDuaMap = new Map();
 
     let isLoading = false;
     let requestToken = 0;
+    let settingsRefreshRunning = false;
 
     let activeAudio = null;
     let activeAudioButton = null;
+    let activeAudioMessage = null;
 
     const duaCache = new Map();
     const categoryCache = new Map();
 
     const t = key =>
-        UI_TEXT[language]?.[key] ||
-        UI_TEXT.bn[key] ||
+        TEXT[language]?.[key] ||
+        TEXT.bn[key] ||
         key;
 
     /* =====================================================
-       HELPERS
+       GENERAL HELPERS
     ===================================================== */
 
     function normalizeLanguage(value) {
-        const v = String(value || "bn")
-            .toLowerCase()
-            .trim();
+        const v = String(value || "bn").toLowerCase().trim();
 
-        if (["en", "eng", "english"].includes(v)) {
-            return "en";
-        }
-
-        if (["hi", "hin", "hindi"].includes(v)) {
-            return "hi";
-        }
+        if (["en", "eng", "english"].includes(v)) return "en";
+        if (["hi", "hin", "hindi"].includes(v)) return "hi";
 
         return "bn";
     }
 
     function normalizeId(value) {
-        if (value === undefined || value === null) {
-            return "";
-        }
-
-        return String(value).trim();
+        return value === undefined || value === null
+            ? ""
+            : String(value).trim();
     }
 
     function normalizeSlug(value) {
-        return String(value || "")
-            .trim()
-            .toLowerCase();
+        return String(value || "").trim().toLowerCase();
     }
 
     function isObject(value) {
-        return (
-            value !== null &&
+        return value !== null &&
             typeof value === "object" &&
-            !Array.isArray(value)
-        );
+            !Array.isArray(value);
     }
 
     function hasArabic(value) {
-        return (
-            typeof value === "string" &&
-            /[\u0600-\u06FF]/.test(value)
-        );
+        return typeof value === "string" &&
+            /[\u0600-\u06FF]/.test(value);
+    }
+
+    function cleanText(value) {
+        return typeof value === "string"
+            ? value.trim()
+            : "";
     }
 
     function clear(node) {
@@ -463,9 +449,7 @@
     function createElement(tag, className, value) {
         const node = document.createElement(tag);
 
-        if (className) {
-            node.className = className;
-        }
+        if (className) node.className = className;
 
         if (value !== undefined && value !== null) {
             node.textContent = String(value);
@@ -479,7 +463,8 @@
     }
 
     function getRawURL(path) {
-        return SOURCE_BASE + path
+        return SOURCE_BASE + String(path)
+            .replace(/^\/+/, "")
             .split("/")
             .map(encodeURIComponent)
             .join("/");
@@ -511,21 +496,26 @@
     }
 
     function getIdsFromSubcategory(item) {
-        if (!Array.isArray(item?.["dua-ids"])) {
-            return [];
-        }
+        if (!Array.isArray(item?.["dua-ids"])) return [];
 
         return item["dua-ids"]
             .map(entry => {
                 if (isObject(entry)) {
-                    return normalizeId(
-                        entry.dua_id || entry.id
-                    );
+                    return normalizeId(entry.dua_id || entry.id);
                 }
 
                 return normalizeId(entry);
             })
             .filter(Boolean);
+    }
+
+    function normalizeArabicForComparison(value) {
+        return String(value || "")
+            .normalize("NFKC")
+            .replace(/[\u064B-\u065F\u0670\u06D6-\u06ED]/g, "")
+            .replace(/[ـ۞۩]/g, "")
+            .replace(/[^\u0600-\u06FF]/g, "")
+            .trim();
     }
 
     /* =====================================================
@@ -537,19 +527,11 @@
 
         try {
             const raw = localStorage.getItem(SETTINGS_KEY);
+            const parsed = raw ? JSON.parse(raw) : {};
 
-            if (raw) {
-                const parsed = JSON.parse(raw);
-
-                if (isObject(parsed)) {
-                    settings = parsed;
-                }
-            }
+            if (isObject(parsed)) settings = parsed;
         } catch (error) {
-            console.warn(
-                "IBADAT settings read error:",
-                error
-            );
+            console.warn("IBADAT settings read error:", error);
         }
 
         language = normalizeLanguage(
@@ -558,13 +540,13 @@
 
         darkMode = settings.dark === true;
 
-        const savedTheme =
+        const theme =
             settings.themeColor ||
             settings.theme ||
             "classic";
 
-        colorTheme = SUPPORTED_THEMES.includes(savedTheme)
-            ? savedTheme
+        colorTheme = SUPPORTED_THEMES.includes(theme)
+            ? theme
             : "classic";
 
         applyTheme();
@@ -618,30 +600,18 @@
         updateHeader();
     }
 
-    /* =====================================================
-       HEADER
-    ===================================================== */
-
     function updateHeader() {
         if (!UI.heroTitle) return;
 
-        if (
-            currentPage === "entries" &&
-            selectedCategory
-        ) {
+        if (currentPage === "entries" && selectedCategory) {
             UI.heroTitle.textContent =
                 getCategoryName(selectedCategory);
-
             return;
         }
 
-        if (
-            currentPage === "dua" &&
-            selectedDua
-        ) {
+        if (currentPage === "dua" && selectedDua) {
             UI.heroTitle.textContent =
                 selectedDua.title || t("mainTitle");
-
             return;
         }
 
@@ -652,7 +622,7 @@
        NETWORK
     ===================================================== */
 
-    async function fetchJSON(url, timeout = 20000) {
+    async function fetchJSON(url, timeout = REQUEST_TIMEOUT) {
         const controller = new AbortController();
 
         const timer = setTimeout(
@@ -664,7 +634,7 @@
             const response = await fetch(url, {
                 method: "GET",
                 mode: "cors",
-                cache: "force-cache",
+                cache: "no-cache",
                 headers: {
                     Accept: "application/json"
                 },
@@ -676,19 +646,14 @@
             }
 
             return await response.json();
-
         } finally {
             clearTimeout(timer);
         }
     }
 
     async function loadSubcategories() {
-        /* Source index is loaded from Bengali JSON for all
-           three interface languages. */
         const data = await fetchJSON(
-            getRawURL(
-                `sub-categories/${CATEGORY_SOURCE_LANGUAGE}.json`
-            )
+            getRawURL("sub-categories/bn.json")
         );
 
         if (!Array.isArray(data)) {
@@ -702,25 +667,20 @@
        CATEGORY CLASSIFICATION
     ===================================================== */
 
-    function findCategoryById(categoryId) {
-        return CATEGORIES.find(
-            category => category.id === categoryId
-        );
+    function findCategoryById(id) {
+        return CATEGORIES.find(category => category.id === id);
     }
 
     function findCategoryForRecord(group, duaId) {
         const override = ID_OVERRIDES[duaId];
 
-        if (override) {
-            return findCategoryById(override);
-        }
+        if (override) return findCategoryById(override);
 
         const slug = normalizeSlug(group.category);
 
         return CATEGORIES.find(category =>
             category.slugs.some(
-                allowed =>
-                    normalizeSlug(allowed) === slug
+                allowed => normalizeSlug(allowed) === slug
             )
         ) || null;
     }
@@ -732,25 +692,23 @@
             map.set(category.id, []);
         });
 
-        const claimed = new Set();
+        /* A source ID is assigned only once. */
+        const claimedIds = new Set();
 
         sourceSubcategories.forEach(group => {
             const ids = getIdsFromSubcategory(group);
 
             ids.forEach(id => {
-                if (claimed.has(id)) return;
+                if (claimedIds.has(id)) return;
 
-                if (INFORMATION_ONLY_IDS.has(id)) {
-                    claimed.add(id);
-                    return;
-                }
+                claimedIds.add(id);
+
+                if (EXCLUDED_IDS.has(id)) return;
 
                 const category =
                     findCategoryForRecord(group, id);
 
                 if (!category) return;
-
-                claimed.add(id);
 
                 map.get(category.id).push({
                     id,
@@ -766,10 +724,6 @@
 
     /* =====================================================
        LOAD DUA RECORD
-
-       Arabic: Arabic source record
-       Translation + transliteration: selected language
-       Audio: source audio field
     ===================================================== */
 
     async function loadDua(id) {
@@ -783,11 +737,8 @@
             const [arabicData, languageData] =
                 await Promise.all([
                     fetchJSON(
-                        getRawURL(
-                            `translation/ar/dua_${id}.json`
-                        )
+                        getRawURL(`translation/ar/dua_${id}.json`)
                     ),
-
                     fetchJSON(
                         getRawURL(
                             `translation/${language}/dua_${id}.json`
@@ -795,71 +746,57 @@
                     )
                 ]);
 
-            if (
-                !isObject(arabicData) ||
-                !isObject(languageData)
-            ) {
+            if (!isObject(arabicData) || !isObject(languageData)) {
                 return null;
             }
 
             if (
-                String(arabicData.dua_id) !== String(id) ||
-                String(languageData.dua_id) !== String(id)
+                normalizeId(arabicData.dua_id) !== normalizeId(id) ||
+                normalizeId(languageData.dua_id) !== normalizeId(id)
             ) {
                 return null;
             }
 
-            const arabic = String(
-                arabicData.arabic ||
-                languageData.arabic ||
-                ""
-            ).trim();
+            const arabic = cleanText(
+                arabicData.arabic || languageData.arabic
+            );
 
-            const title = String(
-                languageData.title || ""
-            ).trim();
+            const title = cleanText(languageData.title);
+            const translation = cleanText(languageData.translation);
+            const transliteration =
+                cleanText(languageData.transliteration);
 
-            const transliteration = String(
-                languageData.transliteration || ""
-            ).trim();
+            const reference = cleanText(
+                languageData.reference || arabicData.reference
+            );
 
-            const translation = String(
-                languageData.translation || ""
-            ).trim();
-
-            const reference = String(
-                languageData.reference ||
-                arabicData.reference ||
-                ""
-            ).trim();
-
-            if (!title || !hasArabic(arabic)) {
-                return null;
-            }
+            /* A title and Arabic text are required. */
+            if (!title || !hasArabic(arabic)) return null;
 
             const audioPath =
-                arabicData.audio ||
-                languageData.audio ||
-                "";
+                arabicData.audio || languageData.audio || "";
+
+            const whenObject = languageData.when_to_recite;
 
             return {
-                id: String(id),
+                id: normalizeId(id),
                 title,
                 arabic,
                 transliteration,
                 translation,
                 reference,
 
-                introduction: String(
-                    languageData.introduction || ""
-                ).trim(),
+                introduction: cleanText(
+                    languageData.introduction
+                ),
 
-                whenToRecite: String(
-                    languageData.when_to_recite?.description || ""
-                ).trim(),
+                whenToRecite: cleanText(
+                    whenObject?.description
+                ),
 
                 audioURL: getAudioURL(audioPath),
 
+                /* Keep original source record for later review. */
                 source: languageData
             };
         })();
@@ -871,18 +808,13 @@
         } catch (error) {
             duaCache.delete(cacheKey);
 
-            console.warn(
-                "Dua load failed:",
-                id,
-                error
-            );
-
+            console.warn("Dua record unavailable:", id, error);
             return null;
         }
     }
 
     /* =====================================================
-       LIMITED PARALLEL LOADING
+       LIMITED PARALLEL TASKS
     ===================================================== */
 
     async function runLimited(items, limit, worker) {
@@ -895,7 +827,12 @@
 
                 if (index >= items.length) return;
 
-                results[index] = await worker(items[index]);
+                try {
+                    results[index] = await worker(items[index]);
+                } catch (error) {
+                    results[index] = null;
+                    console.warn("Dua worker failed:", error);
+                }
             }
         }
 
@@ -914,6 +851,10 @@
         return results;
     }
 
+    /* =====================================================
+       CATEGORY DUA LOADING
+    ===================================================== */
+
     async function loadCategoryDuas(category) {
         const cacheKey = `${language}:${category.id}`;
 
@@ -924,32 +865,45 @@
         const records =
             categoryDuaMap.get(category.id) || [];
 
-        const ids = records.map(record => record.id);
-
-        if (!ids.length) {
+        if (!records.length) {
             categoryCache.set(cacheKey, []);
             return [];
         }
 
+        const ids = records.map(record => record.id);
+
         const loaded = await runLimited(
             ids,
-            7,
+            PARALLEL_LIMIT,
             id => loadDua(id)
         );
 
         const valid = loaded.filter(Boolean);
 
-        /* Display maximum 8 records.
-           Final editorial priority selection requires a
-           separately verified ID list for each category. */
-        const limited = valid.slice(
-            0,
-            MAX_DUAS_PER_CATEGORY
-        );
+        /* Remove identical Arabic text within this category.
+           Different authentic wordings are kept. */
+        const seenArabic = new Set();
+        const unique = [];
 
-        categoryCache.set(cacheKey, limited);
+        for (const dua of valid) {
+            const normalized =
+                normalizeArabicForComparison(dua.arabic);
 
-        return limited;
+            if (!normalized || seenArabic.has(normalized)) {
+                continue;
+            }
+
+            seenArabic.add(normalized);
+            unique.push(dua);
+
+            if (unique.length >= MAX_DUAS_PER_CATEGORY) {
+                break;
+            }
+        }
+
+        categoryCache.set(cacheKey, unique);
+
+        return unique;
     }
 
     /* =====================================================
@@ -961,9 +915,7 @@
             UI.home,
             UI.entryPage,
             UI.duaPage
-        ].forEach(page => {
-            page?.classList.add("hidden");
-        });
+        ].forEach(page => page?.classList.add("hidden"));
     }
 
     function hideLoading() {
@@ -979,9 +931,7 @@
         hideError();
 
         if (UI.loadingBox) {
-            UI.loadingBox.textContent =
-                message || t("loading");
-
+            UI.loadingBox.textContent = message || t("loading");
             UI.loadingBox.classList.remove("hidden");
         }
     }
@@ -991,8 +941,7 @@
         hideAllPages();
 
         if (UI.errorText) {
-            UI.errorText.textContent =
-                message || t("sourceError");
+            UI.errorText.textContent = message || t("sourceError");
         }
 
         UI.errorBox?.classList.remove("hidden");
@@ -1004,20 +953,9 @@
         hideLoading();
         hideError();
 
-        UI.home?.classList.toggle(
-            "hidden",
-            page !== "home"
-        );
-
-        UI.entryPage?.classList.toggle(
-            "hidden",
-            page !== "entries"
-        );
-
-        UI.duaPage?.classList.toggle(
-            "hidden",
-            page !== "dua"
-        );
+        UI.home?.classList.toggle("hidden", page !== "home");
+        UI.entryPage?.classList.toggle("hidden", page !== "entries");
+        UI.duaPage?.classList.toggle("hidden", page !== "dua");
 
         updateHeader();
 
@@ -1035,13 +973,11 @@
     }
 
     /* =====================================================
-       HISTORY / PHONE BACK BUTTON
+       NAVIGATION / PHONE BACK BUTTON
     ===================================================== */
 
     function initializeHistory() {
-        if (history.state?.ibadatDuaPage) {
-            return;
-        }
+        if (history.state?.ibadatDuaPage) return;
 
         history.replaceState(
             { ibadatDuaPage: "home" },
@@ -1063,10 +999,7 @@
 
         const page = event.state?.ibadatDuaPage;
 
-        if (
-            page === "entries" &&
-            selectedCategory
-        ) {
+        if (page === "entries" && selectedCategory) {
             selectedDua = null;
             showPage("entries");
             return;
@@ -1074,7 +1007,6 @@
 
         selectedCategory = null;
         selectedDua = null;
-
         showPage("home");
     });
 
@@ -1088,11 +1020,6 @@
         if (!box) return;
 
         clear(box);
-
-        if (!CATEGORIES.length) {
-            showEmpty(box, t("noCategories"));
-            return;
-        }
 
         CATEGORIES
             .slice()
@@ -1123,10 +1050,7 @@
                     "›"
                 );
 
-                arrow.setAttribute(
-                    "aria-hidden",
-                    "true"
-                );
+                arrow.setAttribute("aria-hidden", "true");
 
                 button.append(number, name, arrow);
 
@@ -1136,6 +1060,10 @@
 
                 box.appendChild(button);
             });
+
+        if (!CATEGORIES.length) {
+            showEmpty(box, t("noCategories"));
+        }
     }
 
     /* =====================================================
@@ -1151,28 +1079,24 @@
         selectedDua = null;
 
         const token = ++requestToken;
-
         isLoading = true;
 
         pushPage("entries");
         showLoading(t("loadingDuas"));
 
         try {
-            const duas =
-                await loadCategoryDuas(category);
+            const duas = await loadCategoryDuas(category);
 
             if (token !== requestToken) return;
 
             renderDuaList(duas);
             showPage("entries");
-
         } catch (error) {
-            console.error("Category error:", error);
+            console.error("Category loading error:", error);
 
             if (token === requestToken) {
                 showError(t("sourceError"));
             }
-
         } finally {
             if (token === requestToken) {
                 isLoading = false;
@@ -1222,10 +1146,7 @@
                 "›"
             );
 
-            arrow.setAttribute(
-                "aria-hidden",
-                "true"
-            );
+            arrow.setAttribute("aria-hidden", "true");
 
             button.append(number, name, arrow);
 
@@ -1238,7 +1159,7 @@
     }
 
     /* =====================================================
-       DUA DETAIL FIELD
+       DETAIL FIELDS
     ===================================================== */
 
     function addDuaField(
@@ -1246,9 +1167,13 @@
         label,
         value,
         className,
-        direction = "ltr"
+        direction = "ltr",
+        showMissing = false
     ) {
-        if (!value) return;
+        const content = cleanText(value) ||
+            (showMissing ? t("missingTranslation") : "");
+
+        if (!content) return;
 
         const section = createElement(
             "section",
@@ -1264,7 +1189,7 @@
         const paragraph = createElement(
             "p",
             className,
-            value
+            content
         );
 
         if (direction === "rtl") {
@@ -1280,25 +1205,66 @@
     }
 
     /* =====================================================
-       AUDIO
+       AUDIO CONTROLLER
     ===================================================== */
+
+    function updateAudioButton() {
+        if (!activeAudioButton || !activeAudio) return;
+
+        activeAudioButton.textContent =
+            activeAudio.paused ? t("resume") : t("pause");
+    }
+
+    function showAudioMessage(message, isError = false) {
+        if (!activeAudioMessage) return;
+
+        activeAudioMessage.textContent = message;
+        activeAudioMessage.style.display = "block";
+        activeAudioMessage.style.color = isError
+            ? "#b33b32"
+            : "var(--muted)";
+    }
+
+    function clearAudioMessage() {
+        if (!activeAudioMessage) return;
+
+        activeAudioMessage.textContent = "";
+        activeAudioMessage.style.display = "none";
+    }
 
     function stopAudio() {
         if (activeAudio) {
             activeAudio.pause();
 
-            activeAudio.currentTime = 0;
-            activeAudio = null;
+            try {
+                activeAudio.currentTime = 0;
+            } catch {
+                /* Ignore if media is not seekable yet. */
+            }
+
+            activeAudio.removeAttribute("src");
+            activeAudio.load();
         }
 
         if (activeAudioButton) {
             activeAudioButton.textContent = t("play");
-            activeAudioButton = null;
         }
+
+        activeAudio = null;
+        activeAudioButton = null;
+        activeAudioMessage = null;
     }
 
-    function createAudioButton(dua) {
+    function createAudioControls(dua) {
         if (!dua.audioURL) return null;
+
+        const wrapper = createElement("section", "dua-section");
+
+        const label = createElement(
+            "div",
+            "dua-label",
+            t("audio")
+        );
 
         const button = createElement(
             "button",
@@ -1306,11 +1272,16 @@
             t("play")
         );
 
+        const message = createElement(
+            "p",
+            "dua-audio-message",
+            ""
+        );
+
         button.type = "button";
         button.setAttribute("aria-label", t("audio"));
 
-        /* Inline styling preserves the existing page layout
-           without requiring changes to dua.css. */
+        /* Button appearance follows the current theme variables. */
         button.style.display = "inline-flex";
         button.style.alignItems = "center";
         button.style.justifyContent = "center";
@@ -1324,7 +1295,15 @@
         button.style.font = "inherit";
         button.style.fontWeight = "700";
 
+        message.style.display = "none";
+        message.style.margin = "8px 0 0";
+        message.style.fontSize = "13px";
+        message.style.lineHeight = "1.6";
+
+        wrapper.append(label, button, message);
+
         button.addEventListener("click", async () => {
+            /* Pause or resume the currently selected audio. */
             if (
                 activeAudio &&
                 activeAudioButton === button
@@ -1332,14 +1311,16 @@
                 if (activeAudio.paused) {
                     try {
                         await activeAudio.play();
-                        button.textContent = t("pause");
+                        clearAudioMessage();
+                        updateAudioButton();
                     } catch (error) {
-                        console.warn("Audio play error:", error);
+                        console.warn("Audio resume failed:", error);
+                        showAudioMessage(t("audioError"), true);
                         button.textContent = t("play");
                     }
                 } else {
                     activeAudio.pause();
-                    button.textContent = t("play");
+                    updateAudioButton();
                 }
 
                 return;
@@ -1347,39 +1328,70 @@
 
             stopAudio();
 
-            const audio = new Audio(dua.audioURL);
+            const audio = new Audio();
+            audio.preload = "auto";
+            audio.src = dua.audioURL;
 
             activeAudio = audio;
             activeAudioButton = button;
+            activeAudioMessage = message;
+
+            button.textContent = t("audioLoading");
+            button.disabled = true;
+            showAudioMessage(t("audioLoading"));
+
+            audio.addEventListener("canplay", () => {
+                if (activeAudio !== audio) return;
+
+                button.disabled = false;
+                clearAudioMessage();
+            }, { once: true });
 
             audio.addEventListener("ended", () => {
-                if (activeAudio === audio) {
-                    button.textContent = t("play");
-                    activeAudio = null;
-                    activeAudioButton = null;
-                }
-            });
+                if (activeAudio !== audio) return;
 
-            audio.addEventListener("error", () => {
-                if (activeAudio === audio) {
-                    button.textContent = t("play");
-                    activeAudio = null;
-                    activeAudioButton = null;
-                }
-            });
-
-            try {
-                await audio.play();
-                button.textContent = t("pause");
-            } catch (error) {
-                console.warn("Audio play error:", error);
                 button.textContent = t("play");
                 activeAudio = null;
                 activeAudioButton = null;
+                activeAudioMessage = null;
+            });
+
+            audio.addEventListener("error", () => {
+                if (activeAudio !== audio) return;
+
+                button.disabled = false;
+                button.textContent = t("play");
+                showAudioMessage(t("audioError"), true);
+
+                activeAudio = null;
+                activeAudioButton = null;
+                activeAudioMessage = null;
+            }, { once: true });
+
+            try {
+                await audio.play();
+
+                if (activeAudio === audio) {
+                    button.disabled = false;
+                    button.textContent = t("pause");
+                    clearAudioMessage();
+                }
+            } catch (error) {
+                console.warn("Audio playback failed:", dua.id, error);
+
+                if (activeAudio === audio) {
+                    button.disabled = false;
+                    button.textContent = t("play");
+                    showAudioMessage(t("audioError"), true);
+
+                    activeAudio = null;
+                    activeAudioButton = null;
+                    activeAudioMessage = null;
+                }
             }
         });
 
-        return button;
+        return wrapper;
     }
 
     /* =====================================================
@@ -1422,33 +1434,26 @@
         addDuaField(
             card,
             t("pronunciation"),
-            dua.transliteration || t("missingPronunciation"),
-            "dua-pronunciation"
+            dua.transliteration,
+            "dua-pronunciation",
+            "ltr",
+            true
         );
 
         addDuaField(
             card,
             t("meaning"),
-            dua.translation || t("missingTranslation"),
-            "dua-translation"
+            dua.translation,
+            "dua-translation",
+            "ltr",
+            true
         );
 
-        const audioButton = createAudioButton(dua);
+        /* No audio button is created if the source has no audio path. */
+        const audioControls = createAudioControls(dua);
 
-        if (audioButton) {
-            const section = createElement(
-                "section",
-                "dua-section"
-            );
-
-            const label = createElement(
-                "div",
-                "dua-label",
-                t("audio")
-            );
-
-            section.append(label, audioButton);
-            card.appendChild(section);
+        if (audioControls) {
+            card.appendChild(audioControls);
         }
 
         addDuaField(
@@ -1487,10 +1492,14 @@
     }
 
     /* =====================================================
-       LANGUAGE / SETTINGS REFRESH
+       SETTINGS REFRESH
     ===================================================== */
 
     async function refreshSettings() {
+        if (settingsRefreshRunning) return;
+
+        settingsRefreshRunning = true;
+
         const previousLanguage = language;
         const previousTheme = colorTheme;
         const previousDark = darkMode;
@@ -1504,38 +1513,26 @@
         const languageChanged =
             previousLanguage !== language;
 
-        const themeChanged =
+        const appearanceChanged =
             previousTheme !== colorTheme ||
             previousDark !== darkMode;
 
         if (!languageChanged) {
-            if (themeChanged) {
-                applyTheme();
-            }
+            if (appearanceChanged) applyTheme();
 
             applyStaticText();
+            updateAudioButton();
 
-            if (
-                currentPage === "dua" &&
-                activeAudioButton
-            ) {
-                activeAudioButton.textContent =
-                    activeAudio?.paused
-                        ? t("play")
-                        : t("pause");
-            }
-
+            settingsRefreshRunning = false;
             return;
         }
 
         stopAudio();
 
         const token = ++requestToken;
-
         isLoading = true;
 
         sourceSubcategories = [];
-
         categoryCache.clear();
         duaCache.clear();
 
@@ -1581,8 +1578,7 @@
                 if (token !== requestToken) return;
 
                 selectedDua = duas.find(
-                    dua =>
-                        String(dua.id) === String(oldDuaId)
+                    dua => dua.id === oldDuaId
                 ) || null;
 
                 if (selectedDua) {
@@ -1597,51 +1593,32 @@
                 renderCategories();
                 showPage("home");
             }
-
         } catch (error) {
-            console.error(
-                "Settings refresh error:",
-                error
-            );
-
+            console.error("Settings refresh failed:", error);
             showError(t("sourceError"));
-
         } finally {
             if (token === requestToken) {
                 isLoading = false;
             }
+
+            settingsRefreshRunning = false;
         }
     }
 
     /* =====================================================
-       SETTINGS CHANGE EVENTS
+       SETTINGS EVENTS
     ===================================================== */
 
     window.addEventListener("storage", event => {
-        if (
-            event.key &&
-            event.key !== SETTINGS_KEY
-        ) {
-            return;
-        }
-
+        if (event.key && event.key !== SETTINGS_KEY) return;
         refreshSettings();
     });
 
+    /* Re-read settings when returning to this page.
+       Avoid repeatedly reloading the entire page on visibility changes. */
     window.addEventListener("pageshow", () => {
         refreshSettings();
     });
-
-    document.addEventListener(
-        "visibilitychange",
-        () => {
-            if (
-                document.visibilityState === "visible"
-            ) {
-                refreshSettings();
-            }
-        }
-    );
 
     /* =====================================================
        EMPTY STATE
@@ -1667,13 +1644,11 @@
 
     async function retry() {
         requestToken++;
-
         isLoading = false;
 
         stopAudio();
 
         sourceSubcategories = [];
-
         categoryDuaMap.clear();
         categoryCache.clear();
         duaCache.clear();
@@ -1701,14 +1676,10 @@
             categoryDuaMap = buildCategoryMap();
 
             renderCategories();
-
             showPage("home");
 
         } catch (error) {
-            console.error(
-                "IBADAT Dua initialization:",
-                error
-            );
+            console.error("IBADAT Dua initialization failed:", error);
 
             if (token !== requestToken) return;
 
@@ -1724,10 +1695,7 @@
        EVENTS
     ===================================================== */
 
-    UI.retryButton?.addEventListener(
-        "click",
-        retry
-    );
+    UI.retryButton?.addEventListener("click", retry);
 
     /* =====================================================
        START
