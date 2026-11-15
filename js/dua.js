@@ -3,28 +3,18 @@
 /* =========================================================
    IBADAT — DUA.JS
    IslamicAPI / Masnun Dua Dataset
-   30 Curated Categories
+   20 Curated Categories
    Bengali / English / Hindi
    Lazy Loading + Arabic Validation
+   Global Dua-ID de-duplication
 ========================================================= */
 
 (() => {
   const BASE =
     "https://raw.githubusercontent.com/islamicapi/masnun-dua/main/";
 
-  const SETTINGS_KEYS = [
-    "appSettings",
-    "ibadatSettings"
-  ];
-
-  const LANGUAGES = ["bn", "en", "hi"];
-
-  const THEMES = [
-    "classic",
-    "royal",
-    "rose",
-    "pista"
-  ];
+  const SETTINGS_KEYS = ["appSettings", "ibadatSettings"];
+  const THEMES = ["classic", "royal", "rose", "pista"];
 
   const $ = id => document.getElementById(id);
 
@@ -32,18 +22,14 @@
     heroTitle: $("heroTitle"),
     heroSubtitle: $("heroSubtitle"),
     footerText: $("footerText"),
-
     loadingBox: $("loadingBox"),
     errorBox: $("errorBox"),
     errorText: $("errorText"),
     retryButton: $("retryButton"),
-
     home: $("duaHome"),
     chapterList: $("chapterList"),
-
     entryPage: $("entryPage"),
     entryList: $("entryList"),
-
     duaPage: $("duaPage"),
     duaContent: $("duaContent")
   };
@@ -67,13 +53,12 @@
       meaning: "অর্থ",
       reference: "সূত্র",
       noCategories: "কোনো বিভাগ পাওয়া যায়নি।",
-      noDuas: "এই বিভাগে কোনো যাচাইকৃত দোয়া পাওয়া যায়নি।",
+      noDuas: "এই বিভাগে কোনো দোয়া পাওয়া যায়নি।",
       noDetails: "এই দোয়ার বিস্তারিত তথ্য পাওয়া যায়নি।",
       missingMeaning: "এই ভাষায় অর্থ পাওয়া যায়নি।",
       networkError: "ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।",
       dataError: "ডেটা সঠিকভাবে পড়া যায়নি।",
-      sourceError: "দোয়ার তথ্য লোড করা যায়নি।",
-      number: "দোয়া"
+      sourceError: "দোয়ার তথ্য লোড করা যায়নি।"
     },
 
     en: {
@@ -90,13 +75,12 @@
       meaning: "Meaning",
       reference: "Reference",
       noCategories: "No categories were found.",
-      noDuas: "No verified Du'as were found in this category.",
+      noDuas: "No Du'as were found in this category.",
       noDetails: "Details for this Du'a could not be found.",
       missingMeaning: "Meaning is not available in this language.",
       networkError: "Check your internet connection and try again.",
       dataError: "The data could not be read correctly.",
-      sourceError: "Could not load Du'a data.",
-      number: "Du'a"
+      sourceError: "Could not load Du'a data."
     },
 
     hi: {
@@ -113,31 +97,26 @@
       meaning: "अर्थ",
       reference: "संदर्भ",
       noCategories: "कोई श्रेणी नहीं मिली।",
-      noDuas: "इस श्रेणी में कोई प्रमाणित दुआ नहीं मिली।",
+      noDuas: "इस श्रेणी में कोई दुआ नहीं मिली।",
       noDetails: "इस दुआ की जानकारी नहीं मिली।",
       missingMeaning: "इस भाषा में अर्थ उपलब्ध नहीं है।",
       networkError: "इंटरनेट कनेक्शन जाँचकर फिर कोशिश करें।",
       dataError: "डेटा सही ढंग से पढ़ा नहीं जा सका।",
-      sourceError: "दुआ की जानकारी लोड नहीं हो सकी।",
-      number: "दुआ"
+      sourceError: "दुआ की जानकारी लोड नहीं हो सकी।"
     }
   };
 
   let language = "bn";
   let darkMode = false;
   let colorTheme = "classic";
-
   let currentPage = "home";
 
   let subcategories = [];
-
   let selectedCategory = null;
   let selectedDua = null;
 
-  let sourceReady = false;
   let loadingCategory = false;
   let settingsReloading = false;
-
   let requestVersion = 0;
 
   const duaCache = new Map();
@@ -147,73 +126,60 @@
     TEXT[language]?.[key] || TEXT.bn[key] || key;
 
   /* =======================================================
-     30 FINAL CATEGORIES
-     Source slugs are grouped without changing original IDs.
+     20 APPROVED MAIN CATEGORIES
+
+     Source subcategory slugs are assigned to one primary
+     category only. Broad, unspecific source collections are
+     deliberately not dumped into a miscellaneous category.
   ======================================================= */
 
   const CATEGORY_DEFINITIONS = [
     {
-      id: "morning",
-      bn: "সকাল ও সন্ধ্যার যিকির",
-      en: "Morning & Evening Adhkar",
-      hi: "सुबह और शाम के अज़कार",
-      slugs: ["morning-and-evening"]
+      id: "life-family",
+      bn: "জীবন ও পরিবার",
+      en: "Life & Family",
+      hi: "जीवन और परिवार",
+      slugs: ["family"]
     },
     {
-      id: "sleep",
-      bn: "ঘুম ও বিশ্রাম",
-      en: "Sleep & Rest",
-      hi: "नींद और आराम",
-      slugs: ["sleep"]
+      id: "marriage",
+      bn: "বিবাহ ও দাম্পত্য",
+      en: "Marriage & Married Life",
+      hi: "विवाह और दांपत्य जीवन",
+      slugs: ["marriage"]
+    },
+    {
+      id: "daily-life",
+      bn: "দৈনন্দিন জীবন",
+      en: "Daily Life",
+      hi: "दैनिक जीवन",
+      slugs: ["sleep", "cloths", "home"]
     },
     {
       id: "purity",
-      bn: "পবিত্রতা ও অজু",
-      en: "Purification & Wudu",
-      hi: "पवित्रता और वुज़ू",
-      slugs: ["ablution-and-bath"]
+      bn: "পবিত্রতা ও পরিচ্ছন্নতা",
+      en: "Purity & Cleanliness",
+      hi: "पवित्रता और स्वच्छता",
+      slugs: ["ablution-and-bath", "toilet"]
     },
     {
-      id: "toilet",
-      bn: "টয়লেট ও প্রাকৃতিক প্রয়োজন",
-      en: "Toilet & Natural Needs",
-      hi: "शौचालय और प्राकृतिक ज़रूरतें",
-      slugs: ["toilet"]
+      id: "food-drink",
+      bn: "খাদ্য ও পানীয়",
+      en: "Food & Drink",
+      hi: "भोजन और पेय",
+      slugs: ["food"]
     },
     {
-      id: "clothing",
-      bn: "পোশাক ও সাজসজ্জা",
-      en: "Clothing & Dressing",
-      hi: "कपड़े और पहनावा",
-      slugs: ["cloths"]
-    },
-    {
-      id: "home",
-      bn: "ঘর ও বাসস্থান",
-      en: "Home & Residence",
-      hi: "घर और निवास",
-      slugs: ["home"]
-    },
-    {
-      id: "mosque",
-      bn: "মসজিদ ও আজান",
-      en: "Mosque & Adhan",
-      hi: "मस्जिद और अज़ान",
-      slugs: ["mosque", "adhaan-and-iqamah"]
-    },
-    {
-      id: "salah",
-      bn: "নামাজ",
-      en: "Salah / Prayer",
-      hi: "नमाज़",
-      slugs: ["salah"]
-    },
-    {
-      id: "special-prayer",
-      bn: "বিশেষ নামাজ ও কুনুত",
-      en: "Special Prayers & Qunut",
-      hi: "विशेष नमाज़ और क़ुनूत",
-      slugs: ["witr-and-other"]
+      id: "salah-mosque",
+      bn: "নামাজ ও মসজিদ",
+      en: "Salah & Mosque",
+      hi: "नमाज़ और मस्जिद",
+      slugs: [
+        "adhaan-and-iqamah",
+        "mosque",
+        "salah",
+        "witr-and-other"
+      ]
     },
     {
       id: "fasting",
@@ -223,67 +189,71 @@
       slugs: ["fasting"]
     },
     {
-      id: "eid",
-      bn: "ঈদ",
-      en: "Eid",
-      hi: "ईद",
-      slugs: ["eid"]
+      id: "eid-sacrifice",
+      bn: "ঈদ ও কুরবানি",
+      en: "Eid & Sacrifice",
+      hi: "ईद और क़ुर्बानी",
+      slugs: ["eid", "sacrifice"]
     },
     {
-      id: "hajj",
+      id: "hajj-umrah",
       bn: "হজ ও ওমরাহ",
       en: "Hajj & Umrah",
       hi: "हज और उमराह",
-      slugs: ["hajj-and-umrah", "sacrifice"]
+      slugs: ["hajj-and-umrah"]
     },
     {
       id: "travel",
-      bn: "সফর ও যানবাহন",
+      bn: "সফর ও যাতায়াত",
       en: "Travel & Transportation",
-      hi: "सफ़र और वाहन",
+      hi: "सफ़र और यातायात",
       slugs: ["travel"]
     },
     {
-      id: "food",
-      bn: "খাবার ও পানীয়",
-      en: "Food & Drink",
-      hi: "खाना और पेय",
-      slugs: ["food"]
+      id: "society-manners",
+      bn: "সমাজ ও শিষ্টাচার",
+      en: "Society & Manners",
+      hi: "समाज और शिष्टाचार",
+      slugs: [
+        "manners",
+        "gathering",
+        "condemnationpraise"
+      ]
     },
     {
-      id: "nature",
-      bn: "বৃষ্টি ও প্রকৃতি",
-      en: "Rain & Nature",
-      hi: "बारिश और प्रकृति",
-      slugs: ["rainnature"]
+      id: "nature-animals",
+      bn: "প্রকৃতি ও প্রাণিজগৎ",
+      en: "Nature & Animals",
+      hi: "प्रकृति और जीव-जगत",
+      slugs: ["rainnature", "animals"]
     },
     {
-      id: "sickness",
-      bn: "অসুস্থতা ও আরোগ্য",
-      en: "Illness & Healing",
-      hi: "बीमारी और शिफ़ा",
+      id: "health-healing",
+      bn: "স্বাস্থ্য ও আরোগ্য",
+      en: "Health & Healing",
+      hi: "स्वास्थ्य और शिफ़ा",
       slugs: ["sickness"]
     },
     {
       id: "protection",
-      bn: "রুকইয়াহ ও আত্মরক্ষা",
-      en: "Ruqyah & Protection",
-      hi: "रुक़्या और सुरक्षा",
+      bn: "সুরক্ষা ও আশ্রয়",
+      en: "Protection & Refuge",
+      hi: "सुरक्षा और पनाह",
       slugs: ["evil-protection", "jinndiseases"]
     },
     {
-      id: "anxiety",
-      bn: "ভয় ও দুশ্চিন্তা",
-      en: "Fear & Anxiety",
-      hi: "डर और चिंता",
-      slugs: ["anxiety"]
+      id: "hardship",
+      bn: "বিপদ ও দুশ্চিন্তা",
+      en: "Hardship & Anxiety",
+      hi: "मुसीबत और चिंता",
+      slugs: ["anxiety", "danger"]
     },
     {
-      id: "danger",
-      bn: "বিপদ ও কঠিন পরিস্থিতি",
-      en: "Danger & Difficult Situations",
-      hi: "मुसीबत और कठिन परिस्थितियाँ",
-      slugs: ["danger"]
+      id: "provision",
+      bn: "রিজিক ও প্রয়োজন",
+      en: "Provision & Needs",
+      hi: "रिज़्क़ और ज़रूरतें",
+      slugs: ["debt"]
     },
     {
       id: "forgiveness",
@@ -293,89 +263,48 @@
       slugs: ["forgiveness"]
     },
     {
-      id: "debt",
-      bn: "রিজিক ও ঋণমুক্তি",
-      en: "Provision & Debt Relief",
-      hi: "रिज़्क़ और कर्ज़ से मुक्ति",
-      slugs: ["debt"]
-    },
-    {
-      id: "marriage",
-      bn: "বিবাহ ও দাম্পত্য জীবন",
-      en: "Marriage & Married Life",
-      hi: "विवाह और वैवाहिक जीवन",
-      slugs: ["marriage"]
-    },
-    {
-      id: "family",
-      bn: "সন্তান ও পিতামাতা",
-      en: "Children & Parents",
-      hi: "बच्चे और माता-पिता",
-      slugs: ["family"]
-    },
-    {
-      id: "death",
-      bn: "মৃত্যু, কবর ও জানাজা",
-      en: "Death, Grave & Funeral",
-      hi: "मृत्यु, क़ब्र और जनाज़ा",
-      slugs: ["grave-funeral"]
-    },
-    {
-      id: "quran",
-      bn: "কুরআনের দোয়া",
-      en: "Quranic Du'as",
-      hi: "क़ुरआनी दुआएँ",
-      slugs: ["quranic-dua", "40-rabbana-duas"]
-    },
-    {
-      id: "prophets",
-      bn: "নবীদের দোয়া",
-      en: "Prophets' Du'as",
-      hi: "अंबिया की दुआएँ",
-      slugs: ["prophets-dua"]
-    },
-    {
-      id: "praise",
-      bn: "আল্লাহর নাম ও প্রশংসা",
-      en: "Names of Allah & Praise",
-      hi: "अल्लाह के नाम और प्रशंसा",
+      id: "quran-prophets",
+      bn: "কুরআন ও নবীদের দোয়া",
+      en: "Quranic & Prophetic Du'as",
+      hi: "क़ुरआन और पैग़म्बरों की दुआएँ",
       slugs: [
-        "greatest-name-of-allah",
-        "duas-excellence",
-        "condemnationpraise"
+        "quranic-dua",
+        "40-rabbana-duas",
+        "prophets-dua"
       ]
     },
     {
-      id: "manners",
-      bn: "সামাজিক আদব ও সম্পর্ক",
-      en: "Social Manners & Relations",
-      hi: "सामाजिक शिष्टाचार और संबंध",
-      slugs: ["manners", "gathering"]
-    },
-    {
-      id: "animals",
-      bn: "পশুপাখি ও জীবজন্তু",
-      en: "Animals",
-      hi: "जानवर और पक्षी",
-      slugs: ["animals"]
-    },
-    {
-      id: "other",
-      bn: "অন্যান্য প্রামাণ্য মাসনুন দোয়া",
-      en: "Other Authentic Masnun Du'as",
-      hi: "अन्य प्रमाणित मसनून दुआएँ",
+      id: "dhikr-etiquette",
+      bn: "যিকির ও দোয়ার আদব",
+      en: "Dhikr & Etiquette of Du'a",
+      hi: "ज़िक्र और दुआ के आदाब",
       slugs: [
+        "morning-and-evening",
         "duas-importance",
+        "duas-excellence",
         "time-of-dua",
         "dua-acceptance",
-        "duas-of-hadith",
-        "duas-of-sahaba",
-        "masnun-duas",
-        "other-duas",
-        "when-to-say-what"
+        "greatest-name-of-allah"
       ]
+    },
+    {
+      id: "death-afterlife",
+      bn: "মৃত্যু ও আখিরাত",
+      en: "Death & Hereafter",
+      hi: "मृत्यु और आख़िरत",
+      slugs: ["grave-funeral"]
     }
   ];
+
+  /* Broad source collections are not assigned wholesale.
+     Their individual Dua IDs need content-level classification. */
+  const UNMAPPED_BROAD_SLUGS = new Set([
+    "duas-of-hadith",
+    "duas-of-sahaba",
+    "masnun-duas",
+    "other-duas",
+    "when-to-say-what"
+  ]);
 
   /* =======================================================
      SETTINGS
@@ -399,13 +328,12 @@
       }
     }
 
-    const langValue =
+    language = normalizeLanguage(
       settings.lang ||
       settings.language ||
       settings.locale ||
-      "bn";
-
-    language = normalizeLanguage(langValue);
+      "bn"
+    );
 
     const darkValue =
       settings.dark ??
@@ -435,10 +363,17 @@
   }
 
   function normalizeLanguage(value) {
-    const v = String(value || "bn").toLowerCase().trim();
+    const normalized = String(value || "bn")
+      .toLowerCase()
+      .trim();
 
-    if (["en", "eng", "english"].includes(v)) return "en";
-    if (["hi", "hin", "hindi"].includes(v)) return "hi";
+    if (["en", "eng", "english"].includes(normalized)) {
+      return "en";
+    }
+
+    if (["hi", "hin", "hindi"].includes(normalized)) {
+      return "hi";
+    }
 
     return "bn";
   }
@@ -462,14 +397,8 @@
         pista: "#2F7135"
       };
 
-      meta.content = darkMode
-        ? "#081b13"
-        : colors[colorTheme];
+      meta.content = darkMode ? "#081b13" : colors[colorTheme];
     }
-  }
-
-  function getCategoryName(category) {
-    return category[language] || category.bn;
   }
 
   function applyLabels() {
@@ -491,18 +420,28 @@
     if (!el.heroTitle) return;
 
     if (currentPage === "entries") {
-      el.heroTitle.textContent = t("entries");
-    } else if (currentPage === "dua" && selectedDua) {
-      el.heroTitle.textContent = selectedDua.title || t("title");
-    } else {
-      el.heroTitle.textContent = t("title");
+      el.heroTitle.textContent = selectedCategory
+        ? getCategoryName(selectedCategory)
+        : t("entries");
+      return;
     }
+
+    if (currentPage === "dua" && selectedDua) {
+      el.heroTitle.textContent = selectedDua.title || t("title");
+      return;
+    }
+
+    el.heroTitle.textContent = t("title");
   }
 
   function updateFooter() {
     if (el.footerText) {
       el.footerText.textContent = t("footer");
     }
+  }
+
+  function getCategoryName(category) {
+    return category?.[language] || category?.bn || "";
   }
 
   /* =======================================================
@@ -512,7 +451,9 @@
   function makeElement(tag, className, text) {
     const node = document.createElement(tag);
 
-    if (className) node.className = className;
+    if (className) {
+      node.className = className;
+    }
 
     if (text !== undefined && text !== null) {
       node.textContent = String(text);
@@ -522,13 +463,15 @@
   }
 
   function clear(node) {
-    if (node) node.replaceChildren();
+    if (node) {
+      node.replaceChildren();
+    }
   }
 
   function showEmpty(container, message) {
-    clear(container);
-
     if (!container) return;
+
+    clear(container);
 
     container.appendChild(
       makeElement("div", "empty-message", message)
@@ -543,7 +486,10 @@
   }
 
   function normalizeId(value) {
-    if (value === undefined || value === null) return "";
+    if (value === undefined || value === null) {
+      return "";
+    }
+
     return String(value).trim();
   }
 
@@ -568,6 +514,20 @@
     return new Intl.NumberFormat(
       locales[language] || "bn-BD"
     ).format(value);
+  }
+
+  function extractDuaIds(group) {
+    const values = Array.isArray(group?.["dua-ids"])
+      ? group["dua-ids"]
+      : [];
+
+    return values
+      .map(value => normalizeId(
+        isObject(value)
+          ? value.dua_id || value.id
+          : value
+      ))
+      .filter(Boolean);
   }
 
   /* =======================================================
@@ -611,11 +571,6 @@
       .join("/");
   }
 
-  /* =======================================================
-     LOAD SUBCATEGORIES
-     Only one language file is needed initially.
-  ======================================================= */
-
   async function loadSubcategories() {
     const data = await fetchJSON(
       getRawURL(`sub-categories/${language}.json`)
@@ -626,51 +581,56 @@
     }
 
     subcategories = data;
-    sourceReady = true;
   }
 
   /* =======================================================
-     CATEGORY RELATION
+     CATEGORY / ID OWNERSHIP
+
+     A Dua ID is allowed to appear in one main category only.
+     Repeated IDs are kept only in their first mapped category.
   ======================================================= */
 
   function getCategorySubcategories(category) {
-    const slugs = new Set(category.slugs);
+    const slugs = new Set(
+      category.slugs.map(normalizeSlug)
+    );
 
     return subcategories.filter(item =>
       slugs.has(normalizeSlug(item.category))
     );
   }
 
-  function getCategoryDuaIds(category) {
-    const groups = getCategorySubcategories(category);
-    const ids = [];
-    const seen = new Set();
+  function buildCategoryIdMap() {
+    const map = new Map();
+    const claimedIds = new Set();
 
-    groups.forEach(group => {
-      const values = Array.isArray(group["dua-ids"])
-        ? group["dua-ids"]
-        : [];
+    CATEGORY_DEFINITIONS.forEach(category => {
+      const categoryIds = [];
+      const localSeen = new Set();
 
-      values.forEach(value => {
-        const id = normalizeId(
-          isObject(value)
-            ? value.dua_id || value.id
-            : value
-        );
+      getCategorySubcategories(category).forEach(group => {
+        extractDuaIds(group).forEach(id => {
+          if (localSeen.has(id) || claimedIds.has(id)) {
+            return;
+          }
 
-        if (!id || seen.has(id)) return;
-
-        seen.add(id);
-        ids.push(id);
+          localSeen.add(id);
+          claimedIds.add(id);
+          categoryIds.push(id);
+        });
       });
+
+      map.set(category.id, categoryIds);
     });
 
-    return ids;
+    return map;
   }
+
+  let categoryIdMap = new Map();
 
   /* =======================================================
      LOAD ONE DUA
-     Same ID is used for Arabic and selected language.
+     Arabic and selected translation use the same source ID.
   ======================================================= */
 
   async function loadOneDua(id) {
@@ -680,7 +640,7 @@
       return duaCache.get(key);
     }
 
-    const result = (async () => {
+    const task = (async () => {
       const [arabicRecord, translatedRecord] =
         await Promise.all([
           fetchJSON(
@@ -691,12 +651,13 @@
           )
         ]);
 
-      if (!isObject(arabicRecord) ||
-          !isObject(translatedRecord)) {
+      if (
+        !isObject(arabicRecord) ||
+        !isObject(translatedRecord)
+      ) {
         return null;
       }
 
-      /* Strict ID check prevents accidental mismatching. */
       if (
         String(arabicRecord.dua_id) !== String(id) ||
         String(translatedRecord.dua_id) !== String(id)
@@ -705,13 +666,11 @@
       }
 
       const arabic = String(
-        arabicRecord.arabic || translatedRecord.arabic || ""
+        arabicRecord.arabic ||
+        translatedRecord.arabic ||
+        ""
       ).trim();
 
-      /*
-       * A record without genuine Arabic supplication text
-       * must not appear in the Du'a list.
-       */
       if (!hasArabicText(arabic)) {
         return null;
       }
@@ -734,6 +693,10 @@
         ""
       ).trim();
 
+      if (!title) {
+        return null;
+      }
+
       return {
         id: String(id),
         title,
@@ -744,10 +707,10 @@
       };
     })();
 
-    duaCache.set(key, result);
+    duaCache.set(key, task);
 
     try {
-      return await result;
+      return await task;
     } catch (error) {
       duaCache.delete(key);
       console.warn("Du'a load failed:", id, error);
@@ -756,8 +719,7 @@
   }
 
   /* =======================================================
-     CONCURRENT TASK RUNNER
-     Prevents too many simultaneous requests.
+     LIMITED CONCURRENCY
   ======================================================= */
 
   async function runLimited(items, limit, worker) {
@@ -768,7 +730,9 @@
       while (true) {
         const index = nextIndex++;
 
-        if (index >= items.length) return;
+        if (index >= items.length) {
+          return;
+        }
 
         output[index] = await worker(items[index], index);
       }
@@ -789,10 +753,6 @@
     return output;
   }
 
-  /* =======================================================
-     LOAD CATEGORY DUAS
-  ======================================================= */
-
   async function loadCategoryDuas(category) {
     const cacheKey = `${language}:${category.id}`;
 
@@ -800,7 +760,7 @@
       return categoryCache.get(cacheKey);
     }
 
-    const ids = getCategoryDuaIds(category);
+    const ids = categoryIdMap.get(category.id) || [];
 
     if (!ids.length) {
       categoryCache.set(cacheKey, []);
@@ -815,6 +775,7 @@
 
     const valid = loaded.filter(dua =>
       dua &&
+      dua.id &&
       dua.arabic &&
       dua.title
     );
@@ -834,20 +795,16 @@
       el.entryPage,
       el.duaPage
     ].forEach(node => {
-      if (node) node.classList.add("hidden");
+      node?.classList.add("hidden");
     });
   }
 
   function hideLoading() {
-    if (el.loadingBox) {
-      el.loadingBox.classList.add("hidden");
-    }
+    el.loadingBox?.classList.add("hidden");
   }
 
   function hideError() {
-    if (el.errorBox) {
-      el.errorBox.classList.add("hidden");
-    }
+    el.errorBox?.classList.add("hidden");
   }
 
   function showLoading(message) {
@@ -868,9 +825,7 @@
       el.errorText.textContent = message || t("sourceError");
     }
 
-    if (el.errorBox) {
-      el.errorBox.classList.remove("hidden");
-    }
+    el.errorBox?.classList.remove("hidden");
   }
 
   function showPage(page) {
@@ -935,22 +890,22 @@
       location.href
     );
 
-    showPage(page);
+    currentPage = page;
   }
 
   function handleBack(event) {
     const state = event.state;
 
-    if (!state?.ibadatDua) return;
+    if (!state?.ibadatDua) {
+      selectedCategory = null;
+      selectedDua = null;
+      showPage("home");
+      return;
+    }
 
     if (state.page === "entries") {
       selectedDua = null;
       showPage("entries");
-      return;
-    }
-
-    if (state.page === "dua") {
-      updateHeader();
       return;
     }
 
@@ -971,6 +926,11 @@
     if (!box) return;
 
     clear(box);
+
+    if (!CATEGORY_DEFINITIONS.length) {
+      showEmpty(box, t("noCategories"));
+      return;
+    }
 
     CATEGORY_DEFINITIONS.forEach((category, index) => {
       const button = makeElement("button", "chapter-item");
@@ -1011,17 +971,14 @@
   ======================================================= */
 
   async function openCategory(category) {
-    if (loadingCategory) return;
+    if (loadingCategory || settingsReloading) return;
 
     selectedCategory = category;
     selectedDua = null;
 
     const version = ++requestVersion;
 
-    showLoading(t("loadingDuas"));
-
     navigateTo("entries");
-
     showLoading(t("loadingDuas"));
 
     loadingCategory = true;
@@ -1036,10 +993,15 @@
 
     } catch (error) {
       console.error("Category loading error:", error);
-      showError(t("sourceError"));
+
+      if (version === requestVersion) {
+        showError(t("sourceError"));
+      }
 
     } finally {
-      loadingCategory = false;
+      if (version === requestVersion) {
+        loadingCategory = false;
+      }
     }
   }
 
@@ -1097,7 +1059,13 @@
      DUA DETAILS
   ======================================================= */
 
-  function addDuaField(card, label, value, className, dir) {
+  function addDuaField(
+    card,
+    label,
+    value,
+    className,
+    direction
+  ) {
     if (!value) return;
 
     const section = makeElement("section", "dua-section");
@@ -1114,7 +1082,7 @@
       value
     );
 
-    if (dir === "rtl") {
+    if (direction === "rtl") {
       paragraph.dir = "rtl";
       paragraph.lang = "ar";
     }
@@ -1180,8 +1148,9 @@
   function openDua(dua) {
     selectedDua = dua;
 
-    renderDua(dua);
     navigateTo("dua");
+    renderDua(dua);
+    showPage("dua");
   }
 
   /* =======================================================
@@ -1191,93 +1160,106 @@
   async function refreshSettings() {
     if (settingsReloading) return;
 
-    const oldLanguage = language;
-    const oldTheme = colorTheme;
-    const oldDark = darkMode;
+    const previousLanguage = language;
+    const previousTheme = colorTheme;
+    const previousDark = darkMode;
+    const previousPage = currentPage;
+    const previousCategoryId = selectedCategory?.id;
+    const previousDuaId = selectedDua?.id;
 
     readSettings();
 
-    const languageChanged = oldLanguage !== language;
+    const languageChanged =
+      previousLanguage !== language;
 
     const appearanceChanged =
-      oldTheme !== colorTheme ||
-      oldDark !== darkMode;
+      previousTheme !== colorTheme ||
+      previousDark !== darkMode;
 
     if (appearanceChanged) {
       applyTheme();
     }
 
-    if (languageChanged) {
-      settingsReloading = true;
-
-      const previousPage = currentPage;
-      const previousCategoryId = selectedCategory?.id;
-      const previousDuaId = selectedDua?.id;
-
-      try {
-        subcategories = [];
-        categoryCache.clear();
-
-        await loadSubcategories();
-
-        selectedCategory =
-          CATEGORY_DEFINITIONS.find(
-            item => item.id === previousCategoryId
-          ) || null;
-
-        selectedDua = null;
-
-        if (
-          previousPage === "entries" &&
-          selectedCategory
-        ) {
-          showLoading(t("loadingDuas"));
-
-          const duas =
-            await loadCategoryDuas(selectedCategory);
-
-          renderDuaList(duas);
-          showPage("entries");
-
-        } else if (
-          previousPage === "dua" &&
-          selectedCategory
-        ) {
-          showLoading(t("loadingDetails"));
-
-          const duas =
-            await loadCategoryDuas(selectedCategory);
-
-          selectedDua =
-            duas.find(dua =>
-              String(dua.id) === String(previousDuaId)
-            ) || null;
-
-          if (selectedDua) {
-            renderDua(selectedDua);
-            showPage("dua");
-          } else {
-            renderDuaList(duas);
-            showPage("entries");
-          }
-
-        } else {
-          renderCategories();
-          showPage("home");
-        }
-
-      } catch (error) {
-        console.error("Language refresh:", error);
-        showError(t("dataError"));
-
-      } finally {
-        settingsReloading = false;
-      }
-
+    if (!languageChanged) {
+      applyLabels();
       return;
     }
 
-    applyLabels();
+    settingsReloading = true;
+
+    const version = ++requestVersion;
+
+    try {
+      subcategories = [];
+      categoryCache.clear();
+
+      await loadSubcategories();
+
+      if (version !== requestVersion) return;
+
+      categoryIdMap = buildCategoryIdMap();
+
+      selectedCategory =
+        CATEGORY_DEFINITIONS.find(
+          item => item.id === previousCategoryId
+        ) || null;
+
+      selectedDua = null;
+
+      if (
+        previousPage === "entries" &&
+        selectedCategory
+      ) {
+        showLoading(t("loadingDuas"));
+
+        const duas =
+          await loadCategoryDuas(selectedCategory);
+
+        if (version !== requestVersion) return;
+
+        renderDuaList(duas);
+        showPage("entries");
+
+      } else if (
+        previousPage === "dua" &&
+        selectedCategory
+      ) {
+        showLoading(t("loadingDetails"));
+
+        const duas =
+          await loadCategoryDuas(selectedCategory);
+
+        if (version !== requestVersion) return;
+
+        selectedDua = duas.find(
+          dua => String(dua.id) === String(previousDuaId)
+        ) || null;
+
+        if (selectedDua) {
+          renderDua(selectedDua);
+          showPage("dua");
+        } else {
+          renderDuaList(duas);
+          showPage("entries");
+        }
+
+      } else {
+        renderCategories();
+        showPage("home");
+      }
+
+    } catch (error) {
+      console.error("Language refresh:", error);
+
+      if (version === requestVersion) {
+        showError(t("dataError"));
+      }
+
+    } finally {
+      if (version === requestVersion) {
+        settingsReloading = false;
+      }
+    }
   }
 
   window.addEventListener("storage", event => {
@@ -1308,11 +1290,10 @@
   async function retry() {
     requestVersion++;
 
-    sourceReady = false;
     loadingCategory = false;
-
     subcategories = [];
 
+    categoryIdMap.clear();
     duaCache.clear();
     categoryCache.clear();
 
@@ -1336,17 +1317,21 @@
 
       if (version !== requestVersion) return;
 
+      categoryIdMap = buildCategoryIdMap();
+
       renderCategories();
       showPage("home");
 
     } catch (error) {
       console.error("IBADAT Dua initialization:", error);
 
-      if (error.name === "AbortError") {
-        showError(t("networkError"));
-      } else {
-        showError(t("sourceError"));
-      }
+      if (version !== requestVersion) return;
+
+      showError(
+        error.name === "AbortError"
+          ? t("networkError")
+          : t("sourceError")
+      );
     }
   }
 
