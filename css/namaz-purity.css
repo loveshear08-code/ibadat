@@ -1,143 +1,99 @@
 
-/* ==========================================================
-   IBADAT — PAK-PABITRATA
-   File: css/namaz-purity.css
-
-   Main background : ../assets/main-bg.jpg
-   Hero background : ../assets/hero-bg.jpg
-   Lesson images   : ../assets/images/
-
-   One page:
-   1 Main board
-   8 Topics with separate lesson boards
-   1 Final footer board
-   ========================================================== */
-
-
-/* ==========================================================
-   1. DESIGN VARIABLES
-   ========================================================== */
+/* কপি শুরু ✓ */
+/* =====================================================
+   IBADAT — NAMAZ PURITY
+   Quran Page Design System
+   Header: 48px | Footer: 48px
+   Themes: Classic, Royal, Rose, Pista
+   ===================================================== */
 
 :root {
-  color-scheme: light;
+  --header-height: 48px;
+  --footer-height: 48px;
+  --page-padding: 7px;
+  --page-gap: 6px;
+  --board-radius: 20px;
 
-  --green: #0f5132;
-  --green-dark: #093b26;
-  --green-mid: #17613d;
-  --green-light: #26784d;
+  --primary: #1B7F4B;
+  --soft: #E8F5E9;
+  --accent: #F2C94C;
+  --deep: #0F5132;
+  --text: #17452F;
+  --muted: #68796B;
 
-  --gold: #d5b45b;
-  --gold-light: #f0d98b;
-  --gold-border: #b9953e;
+  --card: rgba(255,255,255,.94);
+  --border: #D5E3D1;
 
-  --page-text: #24382b;
-  --muted-text: #586557;
+  --header-bg: var(--deep);
+  --header-text: #F5E5A7;
+  --footer-bg: var(--deep);
+  --footer-text: #F5E5A7;
 
-  --board-bg: rgba(255, 253, 246, 0.96);
-  --board-bg-soft: rgba(255, 251, 237, 0.95);
-  --board-border: rgba(176, 142, 56, 0.78);
+  --page-overlay:
+    linear-gradient(
+      135deg,
+      rgba(235,245,226,.56),
+      rgba(255,253,245,.62),
+      rgba(232,244,222,.58)
+    );
 
-  --page-overlay: rgba(255, 252, 240, 0.77);
-  --hero-overlay: rgba(255, 252, 239, 0.80);
+  --content-overlay: rgba(255,253,245,.48);
+  --shadow: 0 3px 10px rgba(30,49,28,.12);
 
-  --shadow:
-    0 4px 14px rgba(25, 47, 31, 0.15);
-
-  --shadow-light:
-    0 2px 7px rgba(25, 47, 31, 0.10);
-
-  --radius-large: 19px;
-  --radius-medium: 14px;
-  --radius-small: 11px;
-
-  --page-gap: 14px;
-  --page-padding: clamp(9px, 2.5vw, 18px);
-
-  --main-bg: url("../assets/main-bg.jpg");
-  --hero-bg: url("../assets/hero-bg.jpg");
-
-  --footer-text: #fff8e4;
-
-  --font-bengali:
-    "Noto Sans Bengali",
-    "Nirmala UI",
-    "Vrinda",
-    "Hind Siliguri",
-    sans-serif;
-
-  --font-english:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  --font-hindi:
-    "Noto Sans Devanagari",
-    "Nirmala UI",
-    Mangal,
-    sans-serif;
+  --body-size: 14px;
+  --heading-size: 18px;
 }
 
-
-/* ==========================================================
-   2. RESET
-   ========================================================== */
+/* RESET */
 
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
 }
 
-html {
+html,
+body {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
+  min-height: 0;
   margin: 0;
-  padding: 0;
-
-  scroll-behavior: smooth;
-
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
+  overflow: hidden;
 }
 
 body {
-  position: relative;
+  padding:
+    max(5px, env(safe-area-inset-top, 0px))
+    var(--page-padding)
+    max(5px, env(safe-area-inset-bottom, 0px));
 
-  width: 100%;
-  min-width: 280px;
-  min-height: 100vh;
-  min-height: 100dvh;
+  color: var(--text);
 
-  margin: 0;
-  padding: 0;
+  font-family:
+    "Noto Sans Bengali",
+    "Hind Siliguri",
+    "Noto Sans Devanagari",
+    Arial,
+    sans-serif;
 
-  color: var(--page-text);
-  background-color: #f5f0df;
+  font-size: var(--body-size);
+  line-height: 1.8;
 
-  background-image:
-    linear-gradient(
-      var(--page-overlay),
-      var(--page-overlay)
-    ),
-    var(--main-bg);
-
-  background-position: center top;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-
-  font-family: var(--font-bengali);
-  font-size: 16px;
-  line-height: 1.65;
-
-  overflow-x: hidden;
+  background:
+    var(--page-overlay),
+    url("../assets/images/content-bg.png")
+    center/cover no-repeat;
 }
 
-body,
 button,
 input,
 textarea,
 select {
-  font-family: inherit;
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  touch-action: manipulation;
 }
 
 img {
@@ -146,239 +102,187 @@ img {
   height: auto;
 }
 
-h1,
-h2,
-h3,
-h4,
-p {
-  margin-top: 0;
-}
-
-button {
-  font: inherit;
-}
-
 [hidden] {
   display: none !important;
 }
 
-::selection {
-  color: #fff;
-  background: var(--green);
-}
+/* MAIN APP */
 
-
-/* ==========================================================
-   3. MAIN PAGE
-   ========================================================== */
-
-.purity-page,
-#purityPage {
+#purityPage,
+.purity-app {
   width: 100%;
-  max-width: 900px;
-
-  min-height: 100vh;
-  min-height: 100dvh;
-
-  margin-inline: auto;
-  padding: var(--page-padding);
-
+  height: 100%;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-
   gap: var(--page-gap);
+  overflow: hidden;
 }
 
+/* COMMON BOARD */
 
-/* ==========================================================
-   4. MAIN HERO BOARD
-   Heading + exactly two-line-style introduction
-   ========================================================== */
+.board {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--board-radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+/* HEADER */
 
 .purity-hero,
 #purityHero {
-  position: relative;
-  isolation: isolate;
+  flex: 0 0 var(--header-height);
+  width: 100%;
+  height: var(--header-height);
+  min-height: var(--header-height);
+  max-height: var(--header-height);
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: 100%;
-  min-height: 190px;
+  padding: 3px 10px;
 
-  padding: clamp(18px, 5vw, 38px);
+  color: var(--header-text);
+  background: var(--header-bg);
 
-  overflow: hidden;
-
-  border: 2px solid var(--gold);
-  border-radius: var(--radius-large);
-
-  color: #fff;
-
-  background-color: var(--green);
-
-  background-image:
-    linear-gradient(
-      rgba(12, 76, 46, 0.86),
-      rgba(12, 76, 46, 0.86)
-    ),
-    var(--hero-bg);
-
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-
-  box-shadow: var(--shadow);
-
-  text-align: center;
-}
-
-.purity-hero::before {
-  content: "";
-
-  position: absolute;
-  z-index: -1;
-  inset: 7px;
-
-  border: 1px solid rgba(213, 180, 91, 0.64);
-  border-radius: calc(var(--radius-large) - 6px);
-
-  pointer-events: none;
-}
-
-.purity-hero-overlay {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  max-width: 760px;
-
-  gap: 12px;
+  border: 2px solid var(--accent);
+  border-radius: 20px;
 }
 
 #pageTitle {
+  width: 100%;
   margin: 0;
 
-  color: var(--gold-light);
-
-  font-size: clamp(28px, 6.5vw, 43px);
+  color: var(--header-text);
+  font-size: clamp(16px, 4vw, 20px);
   font-weight: 800;
-  line-height: 1.4;
+  line-height: 1.3;
 
   text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-  text-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.30);
+/* MAIN CONTENT BOARD */
+
+.purity-main {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 8px;
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      var(--content-overlay),
+      var(--content-overlay)
+    ),
+    url("../assets/images/content-bg2.png")
+    center/cover no-repeat;
+
+  overflow: hidden;
+}
+
+/* INTRO */
+
+.purity-intro {
+  flex: 0 0 auto;
+  margin-bottom: 8px;
+  padding: 10px;
+
+  border: 1px solid var(--border);
+  border-radius: 13px;
+
+  background: var(--card);
+  box-shadow: var(--shadow);
 }
 
 #pageIntro {
-  max-width: 680px;
-
   margin: 0;
-
-  color: #fff9e9;
-
-  font-size: clamp(14px, 3.5vw, 17px);
-  font-weight: 400;
-  line-height: 1.9;
-
+  color: var(--text);
+  font-size: var(--body-size);
+  line-height: 1.8;
   text-align: center;
-
-  overflow-wrap: anywhere;
 }
 
-
-/* ==========================================================
-   5. ALL EIGHT TOPICS CONTAINER
-   ========================================================== */
+/* SCROLLABLE LESSON AREA */
 
 .purity-lessons,
 #purityLessons {
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  gap: 14px;
 
-  width: 100%;
-  min-width: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
 
-  gap: clamp(22px, 4vw, 34px);
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+
+  padding: 2px 2px 8px;
 }
 
-
-/* ==========================================================
-   6. TOPIC SECTION
-   No cards grid; each topic flows down the same page.
-   ========================================================== */
+/* TOPIC SECTION */
 
 .purity-topic {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-
   width: 100%;
   min-width: 0;
 
-  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
 
-  scroll-margin-top: 12px;
+  scroll-margin-top: 8px;
 }
 
 .topic-heading {
+  flex: 0 0 auto;
   width: 100%;
 
   margin: 0;
-  padding: 13px 14px;
+  padding: 9px 10px;
 
-  color: var(--gold-light);
-  background:
-    linear-gradient(
-      135deg,
-      var(--green-dark),
-      var(--green),
-      var(--green-mid)
-    );
+  border: 1px solid var(--accent);
+  border-radius: 13px;
 
-  border: 1.5px solid var(--gold);
-  border-radius: var(--radius-medium);
+  color: var(--header-text);
+  background: var(--header-bg);
 
-  box-shadow: var(--shadow-light);
-
-  font-size: clamp(21px, 5vw, 29px);
+  font-size: clamp(17px, 4.5vw, 21px);
   font-weight: 800;
   line-height: 1.5;
-
   text-align: center;
 
   overflow-wrap: anywhere;
 }
 
-
-/* ==========================================================
-   7. TOPIC CONTENT
-   JavaScript inserts separate boards into this container.
-   ========================================================== */
+/* TOPIC CONTENT */
 
 .topic-content {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  gap: 7px;
 
   width: 100%;
   min-width: 0;
-
-  gap: var(--page-gap);
 }
 
-
-/* ==========================================================
-   8. INDIVIDUAL LESSON BOARDS
-   Every lesson is one separate board.
-   Never nest a board inside another board.
-   ========================================================== */
+/* LESSON CARDS */
 
 .lesson-board {
   position: relative;
@@ -390,13 +294,13 @@ button {
   width: 100%;
   min-width: 0;
 
-  padding: clamp(14px, 3.5vw, 23px);
+  padding: 13px;
 
-  border: 1.5px solid var(--board-border);
-  border-radius: var(--radius-large);
+  color: var(--text);
+  background: var(--card);
 
-  color: var(--page-text);
-  background: var(--board-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
 
   box-shadow: var(--shadow);
 
@@ -407,45 +311,38 @@ button {
   margin-bottom: 0;
 }
 
-
-/* Lesson board headings */
+/* LESSON HEADINGS */
 
 .lesson-board h2,
 .lesson-board h3,
 .lesson-board h4 {
-  margin: 0 0 11px;
-
-  color: var(--green-dark);
-
+  margin: 0 0 9px;
+  color: var(--deep);
   font-weight: 800;
-  line-height: 1.55;
-
+  line-height: 1.6;
   overflow-wrap: anywhere;
 }
 
 .lesson-board h2 {
-  font-size: clamp(20px, 4.8vw, 27px);
+  font-size: clamp(19px, 4.8vw, 23px);
 }
 
 .lesson-board h3 {
-  font-size: clamp(17px, 4vw, 22px);
+  font-size: clamp(16px, 4vw, 19px);
 }
 
 .lesson-board h4 {
-  font-size: clamp(15px, 3.7vw, 19px);
+  font-size: 15px;
 }
 
-
-/* Lesson paragraphs */
+/* PARAGRAPHS */
 
 .lesson-board p {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
 
-  color: var(--page-text);
-
-  font-size: clamp(14px, 3.5vw, 17px);
-  font-weight: 400;
-  line-height: 1.95;
+  color: var(--text);
+  font-size: var(--body-size);
+  line-height: 1.9;
 
   overflow-wrap: anywhere;
 }
@@ -454,210 +351,97 @@ button {
   margin-bottom: 0;
 }
 
-
-/* Lesson lists */
+/* LISTS */
 
 .lesson-board ul,
 .lesson-board ol {
-  margin: 7px 0 12px;
-
-  padding-inline-start: 25px;
+  margin: 7px 0 10px;
+  padding-inline-start: 24px;
 }
 
 .lesson-board li {
-  margin: 0 0 9px;
-
+  margin-bottom: 7px;
   padding-inline-start: 3px;
 
-  color: var(--page-text);
-
-  font-size: clamp(14px, 3.5vw, 17px);
+  color: var(--text);
+  font-size: var(--body-size);
   line-height: 1.85;
-
-  overflow-wrap: anywhere;
 }
 
 .lesson-board li:last-child {
   margin-bottom: 0;
 }
 
-
-/* ==========================================================
-   9. INTRODUCTION BOARDS
-   Topic image + introduction + importance.
-   ========================================================== */
+/* INTRO BOARD */
 
 .lesson-intro {
-  border-top: 3px solid var(--green);
-  background: var(--board-bg);
+  border-top: 3px solid var(--primary);
 }
 
-.lesson-intro h3,
-.lesson-intro h2 {
-  color: var(--green-dark);
+.lesson-intro h3 {
+  color: var(--deep);
 }
 
-.lesson-intro .lesson-image {
-  margin-bottom: 15px;
-}
-
-
-/* ==========================================================
-   10. LESSON STEP BOARDS
-   ========================================================== */
+/* STEP BOARD */
 
 .lesson-step {
-  border-inline-start: 4px solid var(--green);
+  border-inline-start: 3px solid var(--primary);
 }
 
-.lesson-step > h3:first-child {
-  display: flex;
-  align-items: flex-start;
-
-  gap: 9px;
-
-  margin-bottom: 12px;
-}
-
-
-/* Optional number badge */
-
-.lesson-step-number {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  flex: 0 0 32px;
-
-  width: 32px;
-  height: 32px;
-
-  margin-top: 1px;
-
-  border: 1px solid var(--gold);
-  border-radius: 50%;
-
-  color: #fff8e4;
-  background: var(--green);
-
-  font-size: 15px;
-  font-weight: 800;
-  line-height: 1;
-}
-
-
-/* ==========================================================
-   11. LESSON IMAGES
-   ========================================================== */
+/* IMAGES */
 
 .lesson-image {
   display: block;
 
   width: 100%;
   max-width: 560px;
-  height: auto;
+  max-height: 330px;
 
-  margin: 12px auto 16px;
+  height: auto;
+  margin: 10px auto 13px;
 
   object-fit: contain;
   object-position: center;
 
-  border: 1px solid rgba(183, 145, 54, 0.60);
-  border-radius: var(--radius-medium);
+  border: 1px solid var(--border);
+  border-radius: 13px;
 
-  background: #f3ecda;
+  background: var(--soft);
 }
 
-.lesson-intro .lesson-image {
-  max-height: 360px;
+.lesson-image[hidden] {
+  display: none !important;
 }
 
-.lesson-step .lesson-image {
-  max-height: 330px;
-}
-
-
-/* Keep images responsive */
-
-.lesson-image[src=""],
-.lesson-image:not([src]) {
-  display: none;
-}
-
-
-/* ==========================================================
-   12. REMEMBER BOARDS
-   ========================================================== */
+/* REMINDER BOARD */
 
 .lesson-reminder {
-  border: 2px solid var(--gold);
-  border-top: 4px solid var(--green);
+  border: 2px solid var(--accent);
+  border-top: 3px solid var(--primary);
 
   background:
     linear-gradient(
       145deg,
-      rgba(255, 253, 245, 0.98),
-      rgba(248, 242, 224, 0.98)
+      var(--card),
+      var(--soft)
     );
 }
 
 .lesson-reminder h2,
 .lesson-reminder h3 {
-  color: var(--green-dark);
+  color: var(--deep);
 }
 
-.lesson-reminder strong {
-  color: var(--green-dark);
-}
-
-
-/* ==========================================================
-   13. QUOTATIONS AND REFERENCES
-   ========================================================== */
-
-.lesson-quote {
-  display: flex;
-  flex-direction: column;
-
-  gap: 8px;
-
-  margin-top: 14px;
-  padding: 13px;
-
-  border-inline-start: 3px solid var(--gold);
-  border-radius: 8px;
-
-  color: var(--page-text);
-  background: rgba(213, 180, 91, 0.13);
-}
-
-.lesson-quote h3,
-.lesson-quote h4 {
-  margin: 0;
-
-  color: var(--green-dark);
-}
-
-.lesson-quote p {
-  margin: 0;
-}
-
-.lesson-translation {
-  color: var(--muted-text) !important;
-  font-size: 0.94em !important;
-}
+/* REFERENCES */
 
 .lesson-source {
   margin-top: 10px !important;
-
-  color: var(--muted-text) !important;
-
+  color: var(--muted) !important;
   font-size: 12px !important;
   line-height: 1.7 !important;
 }
 
-
-/* Arabic content */
+/* ARABIC */
 
 .arabic-text {
   direction: rtl;
@@ -665,415 +449,296 @@ button {
   margin-block: 10px;
 
   font-family:
-    "Noto Naskh Arabic",
     "Amiri",
+    "Noto Naskh Arabic",
     "Traditional Arabic",
     serif;
 
-  font-size: clamp(21px, 5vw, 29px);
+  font-size: clamp(22px, 5vw, 30px);
   line-height: 2.1;
-
   text-align: right;
 }
 
+/* QUOTATIONS */
 
-/* ==========================================================
-   14. IMPORTANT NOTES / HIGHLIGHTS
-   These are text treatments, not nested boards.
-   ========================================================== */
+.lesson-quote {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  margin-top: 12px;
+  padding: 12px;
+
+  border-inline-start: 3px solid var(--accent);
+  border-radius: 9px;
+
+  color: var(--text);
+  background: var(--soft);
+}
+
+.lesson-quote p {
+  margin: 0;
+}
+
+.lesson-translation {
+  color: var(--muted) !important;
+  font-size: .94em !important;
+}
+
+/* NOTES */
 
 .lesson-note {
-  margin: 10px 0;
+  margin: 9px 0;
+  padding-inline-start: 10px;
 
-  padding: 0 12px;
+  border-inline-start: 3px solid var(--primary);
 
-  border-inline-start: 3px solid var(--green);
-
-  color: var(--muted-text);
-
-  font-size: 14px;
+  color: var(--muted);
+  font-size: 13px;
   line-height: 1.8;
 }
 
 .lesson-board strong {
-  font-weight: 750;
+  color: var(--deep);
+  font-weight: 800;
 }
 
-.lesson-board a {
-  color: var(--green);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-}
-
-.lesson-board a:focus-visible {
-  outline: 2px solid var(--green);
-  outline-offset: 3px;
-}
-
-
-/* ==========================================================
-   15. FINAL FOOTER BOARD
-   ========================================================== */
+/* FOOTER */
 
 .purity-footer,
 #homeFooter {
+  flex: 0 0 var(--footer-height);
+
+  width: 100%;
+  height: var(--footer-height);
+  min-height: var(--footer-height);
+  max-height: var(--footer-height);
+
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: 100%;
-  min-height: 58px;
-
-  margin-top: 2px;
-  padding: 12px 15px;
-
-  border: 1.5px solid var(--gold);
-  border-radius: var(--radius-medium);
+  padding: 3px 10px;
 
   color: var(--footer-text);
+  background: var(--footer-bg);
 
-  background:
-    linear-gradient(
-      135deg,
-      #0b452b,
-      #145b39 52%,
-      #0b432a
-    );
-
-  box-shadow: var(--shadow);
-
-  text-align: center;
+  border: 2px solid var(--accent);
+  border-radius: 20px;
 }
 
 .purity-footer p {
+  width: 100%;
   margin: 0;
 
   color: var(--footer-text);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
 
-  font-size: clamp(12px, 3vw, 16px);
-  font-weight: 600;
-  line-height: 1.7;
-
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+/* LANGUAGE */
 
-/* ==========================================================
-   16. LANGUAGE SUPPORT
-   ========================================================== */
-
-html[lang="bn"] body,
-html[lang="bn"] button,
-html[lang="bn"] input,
-html[lang="bn"] textarea,
-html[lang="bn"] select {
-  font-family: var(--font-bengali);
+html[lang="bn"] body {
+  font-family:
+    "Noto Sans Bengali",
+    "Hind Siliguri",
+    Arial,
+    sans-serif;
 }
 
-html[lang="en"] body,
-html[lang="en"] button,
-html[lang="en"] input,
-html[lang="en"] textarea,
-html[lang="en"] select {
-  font-family: var(--font-english);
+html[lang="en"] body {
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-html[lang="hi"] body,
-html[lang="hi"] button,
-html[lang="hi"] input,
-html[lang="hi"] textarea,
-html[lang="hi"] select {
-  font-family: var(--font-hindi);
+html[lang="hi"] body {
+  font-family:
+    "Noto Sans Devanagari",
+    "Nirmala UI",
+    Mangal,
+    sans-serif;
 }
 
-html[lang="en"] .lesson-board p,
-html[lang="en"] .lesson-board li,
-html[lang="hi"] .lesson-board p,
-html[lang="hi"] .lesson-board li {
-  line-height: 1.8;
+/* CLASSIC THEME */
+
+body[data-color-theme="classic"] {
 }
 
+/* ROYAL THEME */
 
-/* ==========================================================
-   17. DARK MODE
-   Supports the site's data-theme and common dark classes.
-   ========================================================== */
+body[data-color-theme="royal"] {
+  --primary: #285A8E;
+  --soft: #E5EFF9;
+  --accent: #E8BD55;
+  --deep: #173A60;
+  --text: #1B3652;
+  --muted: #65798E;
+  --border: #C8D9EB;
 
-html[data-theme="dark"],
-body[data-theme="dark"],
-html.dark,
-body.dark,
+  --header-bg: #173A60;
+  --footer-bg: #173A60;
+}
+
+/* ROSE THEME */
+
+body[data-color-theme="rose"] {
+  --primary: #B96F79;
+  --soft: #F8E9E7;
+  --accent: #D9B875;
+  --deep: #7D414B;
+  --text: #633B42;
+  --muted: #846D70;
+  --border: #E8CBC8;
+
+  --header-bg: #7D414B;
+  --footer-bg: #7D414B;
+}
+
+/* PISTA THEME */
+
+body[data-color-theme="pista"] {
+  --primary: #4CAF50;
+  --soft: #DFF5E1;
+  --accent: #A7D129;
+  --deep: #2F7135;
+  --text: #254D2A;
+  --muted: #6D806D;
+  --border: #CDE3C8;
+
+  --header-bg: #2F7135;
+  --footer-bg: #2F7135;
+}
+
+/* DARK MODE */
+
 body.dark-mode {
-  color-scheme: dark;
+  --text: #E5EDE7;
+  --muted: #BECBBF;
 
-  --page-text: #edf1e8;
-  --muted-text: #c2cdbf;
+  --card: rgba(25,38,29,.96);
+  --border: #405746;
+  --soft: #263B2C;
 
-  --board-bg: rgba(26, 43, 31, 0.97);
-  --board-bg-soft: rgba(29, 47, 33, 0.97);
-
-  --board-border: rgba(213, 180, 91, 0.72);
-
-  --page-overlay: rgba(8, 23, 14, 0.78);
-  --hero-overlay: rgba(8, 46, 28, 0.84);
-
-  --shadow:
-    0 5px 16px rgba(0, 0, 0, 0.28);
-
-  --shadow-light:
-    0 3px 9px rgba(0, 0, 0, 0.23);
-}
-
-html[data-theme="dark"] body,
-body[data-theme="dark"],
-html.dark body,
-body.dark,
-body.dark-mode {
-  color: var(--page-text);
-
-  background-color: #132319;
-
-  background-image:
+  --page-overlay:
     linear-gradient(
-      var(--page-overlay),
-      var(--page-overlay)
-    ),
-    var(--main-bg);
+      rgba(8,15,10,.80),
+      rgba(8,15,10,.80)
+    );
+
+  --content-overlay: rgba(12,20,14,.60);
 }
 
-html[data-theme="dark"] .purity-hero,
-body[data-theme="dark"] .purity-hero,
-html.dark .purity-hero,
-body.dark .purity-hero,
-body.dark-mode .purity-hero {
-  background-image:
-    linear-gradient(
-      rgba(7, 46, 27, 0.88),
-      rgba(7, 46, 27, 0.88)
-    ),
-    var(--hero-bg);
-}
-
-html[data-theme="dark"] .topic-heading,
-body[data-theme="dark"] .topic-heading,
-html.dark .topic-heading,
-body.dark .topic-heading,
-body.dark-mode .topic-heading {
-  color: var(--gold-light);
-
+body.dark-mode .purity-main {
   background:
     linear-gradient(
-      135deg,
-      #082f1e,
-      #10482d,
-      #155638
-    );
+      var(--content-overlay),
+      var(--content-overlay)
+    ),
+    url("../assets/images/content-bg2.png")
+    center/cover no-repeat;
 }
 
-html[data-theme="dark"] .lesson-board,
-body[data-theme="dark"] .lesson-board,
-html.dark .lesson-board,
-body.dark .lesson-board,
 body.dark-mode .lesson-board {
-  color: var(--page-text);
-  background: var(--board-bg);
-  border-color: var(--board-border);
+  color: var(--text);
+  background: var(--card);
+  border-color: var(--border);
 }
 
-html[data-theme="dark"] .lesson-board h2,
-html[data-theme="dark"] .lesson-board h3,
-html[data-theme="dark"] .lesson-board h4,
-html[data-theme="dark"] .lesson-board strong,
-body[data-theme="dark"] .lesson-board h2,
-body[data-theme="dark"] .lesson-board h3,
-body[data-theme="dark"] .lesson-board h4,
-body[data-theme="dark"] .lesson-board strong,
-html.dark .lesson-board h2,
-html.dark .lesson-board h3,
-html.dark .lesson-board h4,
-html.dark .lesson-board strong,
-body.dark .lesson-board h2,
-body.dark .lesson-board h3,
-body.dark .lesson-board h4,
-body.dark .lesson-board strong,
 body.dark-mode .lesson-board h2,
 body.dark-mode .lesson-board h3,
 body.dark-mode .lesson-board h4,
 body.dark-mode .lesson-board strong {
-  color: var(--gold-light);
+  color: var(--accent);
 }
 
-html[data-theme="dark"] .lesson-board p,
-html[data-theme="dark"] .lesson-board li,
-body[data-theme="dark"] .lesson-board p,
-body[data-theme="dark"] .lesson-board li,
-html.dark .lesson-board p,
-html.dark .lesson-board li,
-body.dark .lesson-board p,
-body.dark .lesson-board li,
 body.dark-mode .lesson-board p,
 body.dark-mode .lesson-board li {
-  color: var(--page-text);
+  color: var(--text);
 }
 
-html[data-theme="dark"] .lesson-reminder,
-body[data-theme="dark"] .lesson-reminder,
-html.dark .lesson-reminder,
-body.dark .lesson-reminder,
 body.dark-mode .lesson-reminder {
-  background: var(--board-bg-soft);
+  background: var(--card);
 }
 
-html[data-theme="dark"] .lesson-quote,
-body[data-theme="dark"] .lesson-quote,
-html.dark .lesson-quote,
-body.dark .lesson-quote,
-body.dark-mode .lesson-quote {
-  color: var(--page-text);
-  background: rgba(213, 180, 91, 0.09);
-}
-
-html[data-theme="dark"] .lesson-quote h3,
-html[data-theme="dark"] .lesson-quote h4,
-body[data-theme="dark"] .lesson-quote h3,
-body[data-theme="dark"] .lesson-quote h4,
-html.dark .lesson-quote h3,
-html.dark .lesson-quote h4,
-body.dark .lesson-quote h3,
-body.dark .lesson-quote h4,
-body.dark-mode .lesson-quote h3,
-body.dark-mode .lesson-quote h4 {
-  color: var(--gold-light);
-}
-
-html[data-theme="dark"] .lesson-image,
-body[data-theme="dark"] .lesson-image,
-html.dark .lesson-image,
-body.dark .lesson-image,
 body.dark-mode .lesson-image {
-  background: #26382a;
-  border-color: rgba(213, 180, 91, 0.55);
+  background: #26382A;
+  border-color: var(--border);
 }
 
-html[data-theme="dark"] .lesson-board a,
-body[data-theme="dark"] .lesson-board a,
-html.dark .lesson-board a,
-body.dark .lesson-board a,
-body.dark-mode .lesson-board a {
-  color: var(--gold-light);
+body.dark-mode[data-color-theme="classic"] {
+  --header-bg: #0F5132;
+  --footer-bg: #0F5132;
 }
 
+body.dark-mode[data-color-theme="royal"] {
+  --header-bg: #142D49;
+  --footer-bg: #142D49;
+}
 
-/* ==========================================================
-   18. RESPONSIVE: SMALL MOBILE
-   ========================================================== */
+body.dark-mode[data-color-theme="rose"] {
+  --header-bg: #592F36;
+  --footer-bg: #592F36;
+}
 
-@media (max-width: 360px) {
+body.dark-mode[data-color-theme="pista"] {
+  --header-bg: #244C28;
+  --footer-bg: #244C28;
+}
+
+/* SMALL MOBILE */
+
+@media (max-width: 380px) {
   :root {
-    --page-padding: 7px;
-    --page-gap: 10px;
-
-    --radius-large: 14px;
-    --radius-medium: 11px;
-    --radius-small: 9px;
+    --page-padding: 5px;
+    --page-gap: 5px;
+    --board-radius: 17px;
   }
 
-  .purity-hero,
-  #purityHero {
-    min-height: 155px;
-    padding: 17px 12px;
+  .purity-main {
+    padding: 6px;
   }
 
-  #pageTitle {
-    font-size: 25px;
-  }
-
-  #pageIntro {
-    font-size: 13px;
-    line-height: 1.8;
-  }
-
-  .purity-lessons {
-    gap: 22px;
-  }
-
-  .purity-topic {
-    gap: 9px;
-  }
-
-  .topic-heading {
-    padding: 10px;
-    font-size: 21px;
-  }
-
-  .topic-content {
-    gap: 10px;
+  .purity-intro {
+    padding: 8px;
   }
 
   .lesson-board {
-    padding: 12px;
-  }
-
-  .lesson-board h2 {
-    font-size: 20px;
-  }
-
-  .lesson-board h3 {
-    font-size: 17px;
+    padding: 11px;
   }
 
   .lesson-board p,
   .lesson-board li {
-    font-size: 14px;
-    line-height: 1.85;
+    font-size: 13px;
   }
 
-  .lesson-image {
-    margin-block: 9px 12px;
-  }
-
-  .purity-footer,
-  #homeFooter {
-    min-height: 49px;
-    padding: 9px;
-  }
-
-  .purity-footer p {
-    font-size: 11px;
+  .topic-heading {
+    font-size: 17px;
   }
 }
 
-
-/* ==========================================================
-   19. RESPONSIVE: TABLETS
-   ========================================================== */
+/* TABLET AND DESKTOP */
 
 @media (min-width: 600px) {
-  .purity-page,
-  #purityPage {
-    padding: 16px;
-    gap: 17px;
+  :root {
+    --page-padding: 12px;
+    --page-gap: 8px;
   }
 
-  .purity-hero,
-  #purityHero {
-    min-height: 220px;
+  .purity-main {
+    padding: 12px;
   }
 
   .purity-lessons {
-    gap: 32px;
-  }
-
-  .purity-topic {
-    gap: 14px;
-  }
-
-  .topic-content {
-    gap: 16px;
+    gap: 12px;
   }
 
   .lesson-board {
-    padding: 22px;
+    padding: 18px;
   }
 
   .lesson-image {
@@ -1081,65 +746,28 @@ body.dark-mode .lesson-board a {
   }
 }
 
+/* SHORT LANDSCAPE SCREEN */
 
-/* ==========================================================
-   20. RESPONSIVE: DESKTOP
-   ========================================================== */
-
-@media (min-width: 900px) {
-  .purity-page,
-  #purityPage {
-    padding: 18px;
-  }
-
-  .purity-hero,
-  #purityHero {
-    min-height: 250px;
-  }
-
-  #pageTitle {
-    font-size: 43px;
+@media (max-height: 520px) and (orientation: landscape) {
+  .purity-intro {
+    padding: 6px;
   }
 
   #pageIntro {
-    font-size: 17px;
+    font-size: 12px;
+    line-height: 1.5;
   }
 
   .lesson-board {
-    padding: 24px;
+    padding: 10px;
   }
 }
 
-
-/* ==========================================================
-   21. SHORT SCREEN AND LANDSCAPE PHONE
-   This page is intentionally scrollable.
-   ========================================================== */
-
-@media (max-height: 520px) and (orientation: landscape) {
-  .purity-hero,
-  #purityHero {
-    min-height: 130px;
-    padding-block: 14px;
-  }
-
-  #pageTitle {
-    font-size: 26px;
-  }
-
-  #pageIntro {
-    font-size: 13px;
-  }
-}
-
-
-/* ==========================================================
-   22. ACCESSIBILITY
-   ========================================================== */
+/* ACCESSIBILITY */
 
 :focus-visible {
-  outline: 3px solid var(--green-light);
-  outline-offset: 3px;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1147,26 +775,9 @@ body.dark-mode .lesson-board a {
   *::before,
   *::after {
     scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
   }
 }
 
-
-/* ==========================================================
-   23. MOBILE SAFE AREA
-   ========================================================== */
-
-@supports (padding: env(safe-area-inset-bottom)) {
-  .purity-page,
-  #purityPage {
-    padding-bottom:
-      max(var(--page-padding), env(safe-area-inset-bottom));
-  }
-}
-
-
-/* ==========================================================
-   END OF FILE
-   ========================================================== */
+/* কপি শেষ ✓ */
