@@ -11,7 +11,7 @@
     <script src="../js/dua.js" defer></script>
 </head>
 
-<body>
+<body data-color-theme="classic">
     <div class="dua-app">
 
         <header class="dua-hero board">
@@ -25,9 +25,9 @@
             </div>
         </header>
 
-        <main class="dua-main-board board">
+        <main class="dua-main-board board" id="duaMain" aria-live="polite">
 
-            <div id="loadingBox" class="status-box">
+            <div id="loadingBox" class="status-box" role="status" aria-live="polite">
                 দোয়ার বিভাগ লোড হচ্ছে...
             </div>
 
@@ -38,15 +38,15 @@
                 </button>
             </div>
 
-            <section id="duaHome" class="dua-page hidden">
+            <section id="duaHome" class="dua-page hidden" aria-label="দোয়ার বিভাগসমূহ">
                 <div id="chapterList" class="chapter-list"></div>
             </section>
 
-            <section id="entryPage" class="dua-page hidden">
+            <section id="entryPage" class="dua-page hidden" aria-label="নির্বাচিত বিভাগের দোয়া">
                 <div id="entryList" class="entry-list"></div>
             </section>
 
-            <section id="duaPage" class="dua-page hidden">
+            <section id="duaPage" class="dua-page hidden" aria-label="দোয়ার বিস্তারিত">
                 <div id="duaContent"></div>
             </section>
 
