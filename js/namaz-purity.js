@@ -1,3 +1,4 @@
+
 "use strict";
 
 /* =========================================================
@@ -13,6 +14,7 @@
   const IMAGE_DIR = "../assets/images/";
   const SETTINGS_KEY = "appSettings";
   const SUPPORTED_LANGUAGES = ["bn", "en", "hi"];
+  const ALLOWED_COLOR_THEMES = ["classic", "royal", "rose", "pista"];
 
   const UI = {
     bn: {
@@ -67,10 +69,9 @@
     }
   };
 
-  /*
-   * Every object in boards becomes one independent board.
-   * Image filenames match the assets/images directory.
-   */
+  /* =========================================================
+     LESSON DATA
+     ========================================================= */
 
   const LESSONS = {
     wudu: {
@@ -469,7 +470,12 @@
     }
   };
 
-  const $ = (selector, root = document) => root.querySelector(selector);
+  /* =========================================================
+     STATE
+     ========================================================= */
+
+  const $ = (selector, root = document) =>
+    root.querySelector(selector);
 
   let currentLanguage = "bn";
   let currentTheme = "light";
@@ -477,13 +483,16 @@
   let settingsObserver = null;
 
   /* =========================================================
-     SETTINGS — READ THE PARENT APP SETTINGS
+     SETTINGS HELPERS
      ========================================================= */
 
   function getAppSettings() {
     try {
       const raw = localStorage.getItem(SETTINGS_KEY);
-      if (!raw) return {};
+
+      if (!raw) {
+        return {};
+      }
 
       const settings = JSON.parse(raw);
 
@@ -491,15 +500,24 @@
         ? settings
         : {};
     } catch (error) {
-      console.warn("IBADAT: could not read appSettings.", error);
+      console.warn(
+        "IBADAT: could not read appSettings.",
+        error
+      );
+
       return {};
     }
   }
 
   function normalizeLanguage(value) {
-    if (!value) return null;
+    if (!value) {
+      return null;
+    }
 
-    const code = String(value).trim().toLowerCase().slice(0, 2);
+    const code = String(value)
+      .trim()
+      .toLowerCase()
+      .slice(0, 2);
 
     return SUPPORTED_LANGUAGES.includes(code)
       ? code
@@ -509,10 +527,6 @@
   function readLanguage() {
     const settings = getAppSettings();
 
-    /*
-     * appSettings.lang is the primary source.
-     * This is the same key used by the parent Settings page.
-     */
     const savedLanguage = normalizeLanguage(
       settings.lang ||
       settings.language ||
@@ -556,15 +570,20 @@
   function readTheme() {
     const settings = getAppSettings();
 
-    /*
-     * appSettings.dark is the primary source.
-     * An explicit false must also be respected.
-     */
-    if (Object.prototype.hasOwnProperty.call(settings, "dark")) {
+    // appSettings.dark is the main source.
+    // Explicit false means light mode.
+    if (
+      Object.prototype.hasOwnProperty.call(
+        settings,
+        "dark"
+      )
+    ) {
       return (
         settings.dark === true ||
         settings.dark === "true"
-      ) ? "dark" : "light";
+      )
+        ? "dark"
+        : "light";
     }
 
     const root = document.documentElement;
@@ -575,7 +594,10 @@
       body.dataset.theme,
       root.dataset.mode,
       body.dataset.mode
-    ].filter(Boolean).join(" ").toLowerCase();
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
 
     if (
       values.includes("dark") ||
@@ -600,19 +622,19 @@
     return "light";
   }
 
-  /*
-   * Keep the selected color palette from appSettings.themeColor.
-   * This page must not replace classic / royal / rose / pista.
-   */
   function applyColorTheme() {
     const settings = getAppSettings();
-    const allowedThemes = ["classic", "royal", "rose", "pista"];
 
-    const selectedTheme = allowedThemes.includes(settings.themeColor)
+    const selectedTheme = ALLOWED_COLOR_THEMES.includes(
+      settings.themeColor
+    )
       ? settings.themeColor
       : null;
 
-    if (selectedTheme) {
+    if (
+      selectedTheme &&
+      document.body.dataset.colorTheme !== selectedTheme
+    ) {
       document.body.dataset.colorTheme = selectedTheme;
     }
   }
@@ -626,7 +648,7 @@
       return value;
     }
 
-    if (!value) {
+    if (!value || typeof value !== "object") {
       return "";
     }
 
@@ -654,7 +676,9 @@
   }
 
   function appendImage(board, filename, alt) {
-    if (!filename) return;
+    if (!filename) {
+      return;
+    }
 
     const img = makeElement("img", "lesson-image");
 
@@ -663,16 +687,26 @@
     img.loading = "lazy";
     img.decoding = "async";
 
-    img.addEventListener("error", () => {
-      img.hidden = true;
-      console.warn("IBADAT: image not found:", img.src);
-    }, { once: true });
+    img.addEventListener(
+      "error",
+      () => {
+        img.hidden = true;
+
+        console.warn(
+          "IBADAT: image not found:",
+          img.src
+        );
+      },
+      { once: true }
+    );
 
     board.appendChild(img);
   }
 
   function appendText(board, textList) {
-    if (!textList) return;
+    if (!textList) {
+      return;
+    }
 
     const paragraphs =
       textList[currentLanguage] ||
@@ -693,7 +727,10 @@
      ========================================================= */
 
   function makeBoard(topicId, data, index, intro = false) {
-    const board = makeElement("article", "lesson-board");
+    const board = makeElement(
+      "article",
+      "lesson-board"
+    );
 
     board.dataset.topic = topicId;
     board.dataset.part = String(index + 1);
@@ -704,9 +741,11 @@
       titleText === UI[currentLanguage].remember;
 
     board.classList.add(
-      intro ? "lesson-intro" :
-      reminder ? "lesson-reminder" :
-      "lesson-step"
+      intro
+        ? "lesson-intro"
+        : reminder
+          ? "lesson-reminder"
+          : "lesson-step"
     );
 
     board.appendChild(
@@ -714,15 +753,25 @@
     );
 
     if (data.image) {
-      appendImage(board, data.image, titleText);
+      appendImage(
+        board,
+        data.image,
+        titleText
+      );
     }
 
     if (data.text) {
-      appendText(board, data.text);
+      appendText(
+        board,
+        data.text
+      );
     }
 
     if (data.reference) {
-      const source = makeElement("p", "lesson-source");
+      const source = makeElement(
+        "p",
+        "lesson-source"
+      );
 
       source.textContent = pickText(data.reference);
 
@@ -756,19 +805,22 @@
       return;
     }
 
-    // Update topic heading according to the selected language.
-    const heading = section.querySelector(".topic-heading");
+    // Update topic heading.
+    const heading = section.querySelector(
+      ".topic-heading"
+    );
 
-    const topicTitle = UI[currentLanguage].topics[topicId];
+    const topicTitle =
+      UI[currentLanguage].topics[topicId];
 
     if (heading) {
       heading.textContent = topicTitle;
     }
 
-    // Remove previously rendered boards.
+    // Clear previously rendered content.
     container.replaceChildren();
 
-    // First board: actual topic name in the selected language.
+    // Intro board.
     const introBoard = makeBoard(
       topicId,
       {
@@ -777,7 +829,9 @@
           en: UI.en.topics[topicId],
           hi: UI.hi.topics[topicId]
         },
+
         image: topic.image,
+
         text: {
           bn: [topic.intro.bn],
           en: [topic.intro.en],
@@ -790,9 +844,13 @@
 
     container.appendChild(introBoard);
 
-    // Render all remaining lesson boards in their original order.
+    // Remaining lesson boards.
     topic.boards.forEach((data, index) => {
-      const board = makeBoard(topicId, data, index);
+      const board = makeBoard(
+        topicId,
+        data,
+        index
+      );
 
       const reminderTitle = {
         bn: "মনে রাখুন",
@@ -800,7 +858,10 @@
         hi: "याद रखें"
       };
 
-      if (pickText(data.title) === reminderTitle[currentLanguage]) {
+      if (
+        pickText(data.title) ===
+        reminderTitle[currentLanguage]
+      ) {
         board.classList.remove("lesson-step");
         board.classList.add("lesson-reminder");
       }
@@ -810,7 +871,21 @@
   }
 
   /* =========================================================
-     LANGUAGE
+     RENDER ALL TOPICS
+     ========================================================= */
+
+  function renderAllTopics() {
+    rendering = true;
+
+    try {
+      Object.keys(LESSONS).forEach(renderTopic);
+    } finally {
+      rendering = false;
+    }
+  }
+
+  /* =========================================================
+     LANGUAGE MANAGEMENT
      ========================================================= */
 
   function setLanguage(language) {
@@ -820,17 +895,22 @@
       return false;
     }
 
-    if (lang === currentLanguage) {
-      // Keep the page and parent document language synchronized.
-      document.documentElement.lang = lang;
-      document.documentElement.dataset.language = lang;
-      return true;
-    }
-
+    // Always update and render, even if the language is unchanged.
     currentLanguage = lang;
 
     document.documentElement.lang = lang;
-    document.documentElement.dataset.language = lang;
+
+    if (
+      document.documentElement.dataset.language !== lang
+    ) {
+      document.documentElement.dataset.language = lang;
+    }
+
+    if (
+      document.documentElement.dataset.lang !== lang
+    ) {
+      document.documentElement.dataset.lang = lang;
+    }
 
     const title = $("#pageTitle");
     const footer = $("#footerText");
@@ -843,15 +923,10 @@
       footer.textContent = UI[lang].footer;
     }
 
-    rendering = true;
+    renderAllTopics();
 
-    try {
-      Object.keys(LESSONS).forEach(renderTopic);
-    } finally {
-      rendering = false;
-    }
-
-    document.title = UI[lang].pageTitle + " | IBADAT";
+    document.title =
+      UI[lang].pageTitle + " | IBADAT";
 
     window.dispatchEvent(
       new CustomEvent("ibadat:purity-ready", {
@@ -870,33 +945,37 @@
      ========================================================= */
 
   function setTheme(theme) {
-    const value =
-      /dark|night/i.test(String(theme))
-        ? "dark"
-        : "light";
+    const value = /dark|night/i.test(
+      String(theme)
+    )
+      ? "dark"
+      : "light";
 
     currentTheme = value;
 
-    /*
-     * Parent CSS uses body.dark-mode.
-     * Keep that class in sync with appSettings.dark.
-     *
-     * Do not overwrite data-color-theme here.
-     * Color palette and light/dark mode are separate settings.
-     */
+    // Parent site uses body.dark-mode.
     document.body.classList.toggle(
       "dark-mode",
       value === "dark"
     );
 
-    document.documentElement.dataset.theme = value;
-    document.body.dataset.theme = value;
+    if (
+      document.documentElement.dataset.theme !== value
+    ) {
+      document.documentElement.dataset.theme = value;
+    }
+
+    if (
+      document.body.dataset.theme !== value
+    ) {
+      document.body.dataset.theme = value;
+    }
 
     return value;
   }
 
   /* =========================================================
-     APPLY ALL SETTINGS
+     SYNCHRONIZE PARENT SETTINGS
      ========================================================= */
 
   function syncSettings() {
@@ -905,10 +984,14 @@
 
     applyColorTheme();
 
-    if (language !== currentLanguage) {
+    // Render all boards if the language is different.
+    // Also ensure content exists if the language is the same.
+    if (
+      language !== currentLanguage ||
+      !document.getElementById("content-wudu")?.children.length
+    ) {
       setLanguage(language);
     } else {
-      // Ensure visible labels are initialized even on first load.
       const title = $("#pageTitle");
       const footer = $("#footerText");
 
@@ -924,7 +1007,6 @@
     if (theme !== currentTheme) {
       setTheme(theme);
     } else {
-      // Also apply the current mode to the body on initial load.
       document.body.classList.toggle(
         "dark-mode",
         theme === "dark"
@@ -933,24 +1015,11 @@
   }
 
   /* =========================================================
-     CONNECT TO THE PARENT SETTINGS PAGE
+     CONNECT TO PARENT SITE SETTINGS
      ========================================================= */
 
   function connectSiteSettings() {
-    /*
-     * Supported custom language event:
-     *
-     * window.dispatchEvent(new CustomEvent("ibadat:language-changed", {
-     *   detail: { language: "en" }
-     * }));
-     *
-     * Supported custom theme event:
-     *
-     * window.dispatchEvent(new CustomEvent("ibadat:theme-changed", {
-     *   detail: { theme: "dark" }
-     * }));
-     */
-
+    // Language change event.
     window.addEventListener(
       "ibadat:language-changed",
       (event) => {
@@ -964,6 +1033,7 @@
       }
     );
 
+    // Theme change event.
     window.addEventListener(
       "ibadat:theme-changed",
       (event) => {
@@ -977,76 +1047,60 @@
       }
     );
 
-    /*
-     * If the parent settings script dispatches this event
-     * after saving settings, update the page immediately.
-     */
+    // General settings change event.
     window.addEventListener(
       "ibadat:settings-changed",
-      () => {
-        syncSettings();
-      }
+      syncSettings
     );
 
     window.addEventListener(
       "settings:changed",
-      () => {
-        syncSettings();
+      syncSettings
+    );
+
+    // Storage changes from another tab or window.
+    window.addEventListener(
+      "storage",
+      (event) => {
+        if (
+          event.key === SETTINGS_KEY ||
+          event.key === null
+        ) {
+          syncSettings();
+          return;
+        }
+
+        if (
+          [
+            "ibadat-language",
+            "selectedLanguage",
+            "language"
+          ].includes(event.key)
+        ) {
+          setLanguage(readLanguage());
+        }
+
+        if (
+          [
+            "ibadat-theme",
+            "theme",
+            "color-theme"
+          ].includes(event.key)
+        ) {
+          syncSettings();
+        }
       }
     );
 
-    /*
-     * Storage event:
-     * appSettings is the main settings object.
-     */
-    window.addEventListener("storage", (event) => {
-      if (
-        event.key === SETTINGS_KEY ||
-        event.key === null
-      ) {
-        syncSettings();
-        return;
-      }
-
-      if (
-        [
-          "ibadat-language",
-          "selectedLanguage",
-          "language"
-        ].includes(event.key)
-      ) {
-        const language = readLanguage();
-        setLanguage(language);
-      }
-
-      if (
-        [
-          "ibadat-theme",
-          "theme",
-          "color-theme"
-        ].includes(event.key)
-      ) {
-        const theme = readTheme();
-        setTheme(theme);
-      }
-    });
-
-    /*
-     * Observe parent site changes.
-     * This keeps the page synchronized with:
-     * - document language
-     * - dark-mode class
-     * - data-color-theme palette
-     * - data-theme / data-mode
-     *
-     * The palette itself is not treated as dark/light mode.
-     */
+    // Observe parent document and body settings.
     if (settingsObserver) {
       settingsObserver.disconnect();
     }
 
     settingsObserver = new MutationObserver(() => {
-      if (rendering) return;
+      if (rendering) {
+        return;
+      }
 
       const language = readLanguage();
       const theme = readTheme();
@@ -1098,7 +1152,10 @@
      ========================================================= */
 
   function init() {
-    if (!$("#purityPage") || !$("#purityLessons")) {
+    const page = $("#purityPage");
+    const lessonsContainer = $("#purityLessons");
+
+    if (!page || !lessonsContainer) {
       console.error(
         "IBADAT Purity: expected #purityPage and #purityLessons in the HTML."
       );
@@ -1106,37 +1163,26 @@
       return;
     }
 
-    /*
-     * Read the actual parent app settings before rendering.
-     */
-    currentLanguage = readLanguage();
+    // Start with a safe default.
+    currentLanguage = "bn";
+
+    // Read saved parent settings.
     currentTheme = readTheme();
 
-    /*
-     * Apply palette and appearance separately.
-     */
+    // Apply palette and appearance separately.
     applyColorTheme();
     setTheme(currentTheme);
 
-    /*
-     * Render all eight topics in the selected language.
-     */
-    currentLanguage = "bn";
-
+    // Always render using the saved language.
     setLanguage(readLanguage());
 
-    /*
-     * Connect future parent settings changes.
-     */
+    // Connect future settings changes.
     connectSiteSettings();
 
-    /*
-     * Public page API.
-     */
+    // Public API for the parent website.
     window.IBADATPurity = Object.freeze({
       setLanguage,
       setTheme,
-
       syncSettings,
 
       getLanguage: () => currentLanguage,
@@ -1146,6 +1192,10 @@
       getTopics: () => Object.keys(LESSONS)
     });
   }
+
+  /* =========================================================
+     START
+     ========================================================= */
 
   if (document.readyState === "loading") {
     document.addEventListener(
