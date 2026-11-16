@@ -64,14 +64,14 @@
 
   const NAMAZ_ROUTES = {
     "purity": "namaz-purity.html",
-    "iman-aqidah": "namaz-kalima-aqeedah.html",
+    "iman-aqidah": "namaz-iman-aqidah.html",
     "conditions": "namaz-conditions.html",
     "times-rakats": "namaz-waqt-rakat.html",
     "complete": "namaz-complete.html",
     "special-prayers": "namaz-special-prayers.html",
-    "jamaat": "namaz-jamaat-jumuah.html",
-    "arabic-learning": "namaz-qaida-arabic.html",
+    "jamaat": "namaz-mosjid-jamaat.html",
     "islamic-rulings": "namaz-islamic-rulings.html",
+    "arabic-learning":"namaz-language-introduction.html",
     "daily-amal": "namaz-daily-amal.html"
   };
 
