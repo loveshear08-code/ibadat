@@ -2,7 +2,7 @@
 
 /* =========================================================
    IBADAT — IMAN & AQIDAH
-   File: js/iman-aqidah.js
+   File: js/namaz-iman-aqidah.js
 
    10 Main Topics
    Languages: Bengali, English, Hindi
