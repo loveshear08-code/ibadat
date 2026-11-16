@@ -1,8 +1,11 @@
 /* =====================================================
    IBADAT — IMAN & AQIDAH
-   Design reference: NAMAZ PURITY
+   Design Reference: NAMAZ PURITY
    Themes: Classic, Royal, Rose, Pista
+   Responsive: Mobile, Tablet, Desktop
    ===================================================== */
+
+/* ROOT VARIABLES */
 
 :root {
   --header-height: 48px;
@@ -23,6 +26,7 @@
 
   --header-bg: var(--deep);
   --header-text: #F5E5A7;
+
   --footer-bg: var(--deep);
   --footer-text: #F5E5A7;
 
@@ -35,6 +39,7 @@
     );
 
   --content-overlay: rgba(255,253,245,.48);
+
   --shadow: 0 3px 10px rgba(30,49,28,.12);
 
   --body-size: 14px;
@@ -117,10 +122,13 @@ img {
 
 .board {
   min-width: 0;
+
   border: 1px solid var(--border);
   border-radius: var(--board-radius);
+
   background: var(--card);
   box-shadow: var(--shadow);
+
   overflow: hidden;
 }
 
@@ -165,7 +173,7 @@ img {
   text-overflow: ellipsis;
 }
 
-/* MAIN CONTENT */
+/* MAIN CONTENT BOARD */
 
 .purity-main {
   position: relative;
@@ -239,9 +247,13 @@ img {
   min-width: 0;
 }
 
-/* LESSON BOARDS */
+/* COMMON LESSON BOARD */
 
-.lesson-board {
+.lesson-board,
+.iman-content-board,
+.iman-intro-board,
+.iman-quote-board,
+.iman-note-board {
   position: relative;
 
   display: flex;
@@ -264,13 +276,18 @@ img {
   overflow-wrap: anywhere;
 }
 
-.lesson-board > :last-child {
+.lesson-board > :last-child,
+.iman-content-board > :last-child,
+.iman-intro-board > :last-child,
+.iman-quote-board > :last-child,
+.iman-note-board > :last-child {
   margin-bottom: 0;
 }
 
 /* TOPIC INTRO */
 
-.lesson-intro {
+.lesson-intro,
+.iman-intro-board {
   border: 1px solid var(--border);
   border-top: 3px solid var(--primary);
 
@@ -304,7 +321,13 @@ img {
 
 .lesson-board h2,
 .lesson-board h3,
-.lesson-board h4 {
+.lesson-board h4,
+.iman-content-board h2,
+.iman-content-board h3,
+.iman-content-board h4,
+.iman-intro-board h2,
+.iman-intro-board h3,
+.iman-intro-board h4 {
   margin: 0 0 9px;
 
   color: var(--deep);
@@ -314,21 +337,56 @@ img {
   overflow-wrap: anywhere;
 }
 
-.lesson-board h2 {
+.lesson-board h2,
+.iman-content-board h2,
+.iman-intro-board h2 {
   font-size: clamp(19px, 4.8vw, 23px);
 }
 
-.lesson-board h3 {
+.lesson-board h3,
+.iman-content-board h3,
+.iman-intro-board h3 {
   font-size: clamp(16px, 4vw, 19px);
 }
 
-.lesson-board h4 {
+.lesson-board h4,
+.iman-content-board h4,
+.iman-intro-board h4 {
   font-size: 15px;
+}
+
+/* IMAN SECTION HEADINGS */
+
+.iman-section-heading,
+.iman-topic-title {
+  width: 100%;
+
+  margin: 0 0 9px;
+
+  color: var(--deep);
+
+  font-size: clamp(19px, 4.8vw, 23px);
+  font-weight: 800;
+  line-height: 1.6;
+
+  overflow-wrap: anywhere;
+}
+
+.iman-topic-subtitle {
+  margin: 0 0 9px;
+
+  color: var(--muted);
+
+  font-size: 13px;
+  line-height: 1.8;
 }
 
 /* PARAGRAPHS */
 
-.lesson-board p {
+.lesson-board p,
+.iman-paragraph,
+.iman-content-board p,
+.iman-intro-board p {
   margin: 0 0 10px;
 
   color: var(--text);
@@ -338,19 +396,22 @@ img {
   overflow-wrap: anywhere;
 }
 
-.lesson-board p:last-child {
+.lesson-board p:last-child,
+.iman-paragraph:last-child {
   margin-bottom: 0;
 }
 
 /* LISTS */
 
 .lesson-board ul,
-.lesson-board ol {
+.lesson-board ol,
+.iman-list {
   margin: 7px 0 10px;
   padding-inline-start: 24px;
 }
 
-.lesson-board li {
+.lesson-board li,
+.iman-list li {
   margin-bottom: 7px;
   padding-inline-start: 3px;
 
@@ -359,7 +420,8 @@ img {
   line-height: 1.85;
 }
 
-.lesson-board li:last-child {
+.lesson-board li:last-child,
+.iman-list li:last-child {
   margin-bottom: 0;
 }
 
@@ -411,7 +473,8 @@ img {
 
 /* REFERENCES */
 
-.lesson-source {
+.lesson-source,
+.iman-reference {
   margin-top: 10px !important;
 
   color: var(--muted) !important;
@@ -419,10 +482,13 @@ img {
   line-height: 1.7 !important;
 }
 
-/* ARABIC */
+/* ARABIC TEXT */
 
-.arabic-text {
+.arabic-text,
+.iman-arabic-text {
   direction: rtl;
+
+  width: 100%;
 
   margin-block: 10px;
 
@@ -436,11 +502,13 @@ img {
   line-height: 2.1;
 
   text-align: right;
+  overflow-wrap: anywhere;
 }
 
 /* QUOTATIONS */
 
-.lesson-quote {
+.lesson-quote,
+.iman-quote-board {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -459,14 +527,47 @@ img {
   margin: 0;
 }
 
-.lesson-translation {
+/* QUOTE LABEL */
+
+.iman-quote-label {
+  margin: 0 0 5px;
+
+  color: var(--deep);
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+/* PRONUNCIATION */
+
+.iman-pronunciation {
+  margin: 5px 0 9px;
+
+  color: var(--primary);
+
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.9;
+
+  overflow-wrap: anywhere;
+}
+
+/* TRANSLATION AND MEANING */
+
+.lesson-translation,
+.iman-meaning {
   color: var(--muted) !important;
+
   font-size: .94em !important;
+  line-height: 1.9;
+
+  overflow-wrap: anywhere;
 }
 
 /* NOTES */
 
-.lesson-note {
+.lesson-note,
+.iman-note {
   margin: 9px 0;
   padding-inline-start: 10px;
 
@@ -477,7 +578,24 @@ img {
   line-height: 1.8;
 }
 
-.lesson-board strong {
+.iman-note-board {
+  margin: 9px 0;
+
+  border-inline-start: 3px solid var(--primary);
+
+  background:
+    linear-gradient(
+      145deg,
+      var(--card),
+      var(--soft)
+    );
+}
+
+/* STRONG TEXT */
+
+.lesson-board strong,
+.iman-content-board strong,
+.iman-intro-board strong {
   color: var(--deep);
   font-weight: 800;
 }
@@ -523,7 +641,7 @@ img {
   text-overflow: ellipsis;
 }
 
-/* LANGUAGE */
+/* LANGUAGE — BENGALI */
 
 html[lang="bn"] body {
   font-family:
@@ -533,9 +651,16 @@ html[lang="bn"] body {
     sans-serif;
 }
 
+/* LANGUAGE — ENGLISH */
+
 html[lang="en"] body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
 }
+
+/* LANGUAGE — HINDI */
 
 html[lang="hi"] body {
   font-family:
@@ -545,14 +670,24 @@ html[lang="hi"] body {
     sans-serif;
 }
 
-/* CLASSIC */
+/* CLASSIC THEME */
 
 body[data-color-theme="classic"] {
+  --primary: #1B7F4B;
+  --soft: #E8F5E9;
+  --accent: #F2C94C;
+  --deep: #0F5132;
+  --text: #17452F;
+  --muted: #68796B;
+
   --card: rgba(250,255,250,.96);
   --border: #D5E3D1;
+
+  --header-bg: #0F5132;
+  --footer-bg: #0F5132;
 }
 
-/* ROYAL */
+/* ROYAL THEME */
 
 body[data-color-theme="royal"] {
   --primary: #285A8E;
@@ -561,6 +696,7 @@ body[data-color-theme="royal"] {
   --deep: #173A60;
   --text: #1B3652;
   --muted: #65798E;
+
   --border: #C8D9EB;
   --card: rgba(247,251,255,.97);
 
@@ -568,7 +704,7 @@ body[data-color-theme="royal"] {
   --footer-bg: #173A60;
 }
 
-/* ROSE */
+/* ROSE THEME */
 
 body[data-color-theme="rose"] {
   --primary: #B96F79;
@@ -577,6 +713,7 @@ body[data-color-theme="rose"] {
   --deep: #7D414B;
   --text: #633B42;
   --muted: #846D70;
+
   --border: #E8CBC8;
   --card: rgba(255,249,249,.97);
 
@@ -584,7 +721,7 @@ body[data-color-theme="rose"] {
   --footer-bg: #7D414B;
 }
 
-/* PISTA */
+/* PISTA THEME */
 
 body[data-color-theme="pista"] {
   --primary: #4CAF50;
@@ -593,6 +730,7 @@ body[data-color-theme="pista"] {
   --deep: #2F7135;
   --text: #254D2A;
   --muted: #6D806D;
+
   --border: #CDE3C8;
   --card: rgba(249,255,247,.97);
 
@@ -619,6 +757,8 @@ body.dark-mode {
   --content-overlay: rgba(12,20,14,.60);
 }
 
+/* DARK MAIN BOARD */
+
 body.dark-mode .purity-main {
   background:
     linear-gradient(
@@ -629,25 +769,47 @@ body.dark-mode .purity-main {
     center/cover no-repeat;
 }
 
-body.dark-mode .lesson-board {
+/* DARK LESSON BOARDS */
+
+body.dark-mode .lesson-board,
+body.dark-mode .iman-content-board,
+body.dark-mode .iman-quote-board,
+body.dark-mode .iman-intro-board,
+body.dark-mode .iman-note-board {
   color: var(--text);
   background: var(--card);
   border-color: var(--border);
 }
 
+/* DARK HEADINGS */
+
 body.dark-mode .lesson-board h2,
 body.dark-mode .lesson-board h3,
 body.dark-mode .lesson-board h4,
-body.dark-mode .lesson-board strong {
+body.dark-mode .lesson-board strong,
+body.dark-mode .iman-section-heading,
+body.dark-mode .iman-topic-title,
+body.dark-mode .iman-quote-label,
+body.dark-mode .iman-content-board strong,
+body.dark-mode .iman-intro-board strong {
   color: var(--accent);
 }
 
+/* DARK PARAGRAPHS */
+
 body.dark-mode .lesson-board p,
-body.dark-mode .lesson-board li {
+body.dark-mode .lesson-board li,
+body.dark-mode .iman-paragraph,
+body.dark-mode .iman-list,
+body.dark-mode .iman-content-board p,
+body.dark-mode .iman-intro-board p {
   color: var(--text);
 }
 
-body.dark-mode .lesson-intro {
+/* DARK INTRO */
+
+body.dark-mode .lesson-intro,
+body.dark-mode .iman-intro-board {
   background:
     linear-gradient(
       145deg,
@@ -661,24 +823,41 @@ body.dark-mode .lesson-intro .lesson-title {
   border-color: var(--border);
 }
 
+/* DARK REMINDER */
+
 body.dark-mode .lesson-reminder {
   background: var(--card);
 }
+
+/* DARK IMAGE */
 
 body.dark-mode .lesson-image {
   background: #26382A;
   border-color: var(--border);
 }
 
-body.dark-mode .lesson-quote {
+/* DARK QUOTATIONS */
+
+body.dark-mode .lesson-quote,
+body.dark-mode .iman-quote-board {
   color: var(--text);
   background: var(--soft);
 }
 
+/* DARK SECONDARY TEXT */
+
 body.dark-mode .lesson-translation,
 body.dark-mode .lesson-source,
-body.dark-mode .lesson-note {
+body.dark-mode .lesson-note,
+body.dark-mode .iman-meaning,
+body.dark-mode .iman-reference,
+body.dark-mode .iman-topic-subtitle,
+body.dark-mode .iman-note {
   color: var(--muted) !important;
+}
+
+body.dark-mode .iman-pronunciation {
+  color: var(--accent);
 }
 
 /* DARK CLASSIC */
@@ -725,17 +904,28 @@ body.dark-mode[data-color-theme="pista"] {
     padding: 6px;
   }
 
-  .lesson-board {
+  .lesson-board,
+  .iman-content-board,
+  .iman-intro-board,
+  .iman-quote-board,
+  .iman-note-board {
     padding: 11px;
   }
 
   .lesson-board p,
-  .lesson-board li {
+  .lesson-board li,
+  .iman-paragraph,
+  .iman-list {
     font-size: 13px;
   }
 
   .lesson-intro .lesson-title {
     font-size: 19px;
+  }
+
+  .iman-arabic-text,
+  .arabic-text {
+    font-size: 24px;
   }
 }
 
@@ -755,7 +945,11 @@ body.dark-mode[data-color-theme="pista"] {
     gap: 12px;
   }
 
-  .lesson-board {
+  .lesson-board,
+  .iman-content-board,
+  .iman-intro-board,
+  .iman-quote-board,
+  .iman-note-board {
     padding: 18px;
   }
 
@@ -767,7 +961,11 @@ body.dark-mode[data-color-theme="pista"] {
 /* SHORT LANDSCAPE */
 
 @media (max-height: 520px) and (orientation: landscape) {
-  .lesson-board {
+  .lesson-board,
+  .iman-content-board,
+  .iman-intro-board,
+  .iman-quote-board,
+  .iman-note-board {
     padding: 10px;
   }
 
