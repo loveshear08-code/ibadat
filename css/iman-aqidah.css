@@ -1,0 +1,794 @@
+/* =====================================================
+   IBADAT — IMAN & AQIDAH
+   Design reference: NAMAZ PURITY
+   Themes: Classic, Royal, Rose, Pista
+   ===================================================== */
+
+:root {
+  --header-height: 48px;
+  --footer-height: 48px;
+  --page-padding: 7px;
+  --page-gap: 6px;
+  --board-radius: 20px;
+
+  --primary: #1B7F4B;
+  --soft: #E8F5E9;
+  --accent: #F2C94C;
+  --deep: #0F5132;
+  --text: #17452F;
+  --muted: #68796B;
+
+  --card: rgba(250,255,250,.96);
+  --border: #D5E3D1;
+
+  --header-bg: var(--deep);
+  --header-text: #F5E5A7;
+  --footer-bg: var(--deep);
+  --footer-text: #F5E5A7;
+
+  --page-overlay:
+    linear-gradient(
+      135deg,
+      rgba(235,245,226,.56),
+      rgba(255,253,245,.62),
+      rgba(232,244,222,.58)
+    );
+
+  --content-overlay: rgba(255,253,245,.48);
+  --shadow: 0 3px 10px rgba(30,49,28,.12);
+
+  --body-size: 14px;
+  --heading-size: 18px;
+}
+
+/* RESET */
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  padding:
+    max(5px, env(safe-area-inset-top, 0px))
+    var(--page-padding)
+    max(5px, env(safe-area-inset-bottom, 0px));
+
+  color: var(--text);
+
+  font-family:
+    "Noto Sans Bengali",
+    "Hind Siliguri",
+    "Noto Sans Devanagari",
+    Arial,
+    sans-serif;
+
+  font-size: var(--body-size);
+  line-height: 1.8;
+
+  background:
+    var(--page-overlay),
+    url("../assets/images/content-bg.png")
+    center/cover no-repeat;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* MAIN APP */
+
+#imanPage,
+.purity-app {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-gap);
+
+  overflow: hidden;
+}
+
+/* COMMON BOARD */
+
+.board {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--board-radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+/* HEADER */
+
+.purity-hero,
+#imanHero {
+  flex: 0 0 var(--header-height);
+
+  width: 100%;
+  height: var(--header-height);
+  min-height: var(--header-height);
+  max-height: var(--header-height);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 3px 10px;
+
+  color: var(--header-text);
+  background: var(--header-bg);
+
+  border: 2px solid var(--accent);
+  border-radius: 20px;
+}
+
+#pageTitle {
+  width: 100%;
+  margin: 0;
+
+  color: var(--header-text);
+
+  font-size: clamp(16px, 4vw, 20px);
+  font-weight: 800;
+  line-height: 1.3;
+
+  text-align: center;
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* MAIN CONTENT */
+
+.purity-main {
+  position: relative;
+
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 8px;
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      var(--content-overlay),
+      var(--content-overlay)
+    ),
+    url("../assets/images/content-bg2.png")
+    center/cover no-repeat;
+
+  overflow: hidden;
+}
+
+/* SCROLL AREA */
+
+.purity-lessons,
+#purityLessons {
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+
+  padding: 2px 2px 8px;
+}
+
+/* TOPIC */
+
+.purity-topic {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  scroll-margin-top: 8px;
+}
+
+.topic-heading {
+  display: none !important;
+}
+
+.topic-content {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+
+  width: 100%;
+  min-width: 0;
+}
+
+/* LESSON BOARDS */
+
+.lesson-board {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  width: 100%;
+  min-width: 0;
+
+  padding: 13px;
+
+  color: var(--text);
+  background: var(--card);
+
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  box-shadow: var(--shadow);
+
+  overflow-wrap: anywhere;
+}
+
+.lesson-board > :last-child {
+  margin-bottom: 0;
+}
+
+/* TOPIC INTRO */
+
+.lesson-intro {
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--primary);
+
+  background:
+    linear-gradient(
+      145deg,
+      var(--card),
+      var(--soft)
+    );
+}
+
+.lesson-intro .lesson-title {
+  width: 100%;
+
+  margin: 0 0 10px;
+  padding: 7px 9px;
+
+  color: var(--deep);
+
+  font-size: clamp(19px, 4.8vw, 23px);
+  font-weight: 800;
+  line-height: 1.6;
+
+  text-align: center;
+
+  border-bottom: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}
+
+/* HEADINGS */
+
+.lesson-board h2,
+.lesson-board h3,
+.lesson-board h4 {
+  margin: 0 0 9px;
+
+  color: var(--deep);
+  font-weight: 800;
+  line-height: 1.6;
+
+  overflow-wrap: anywhere;
+}
+
+.lesson-board h2 {
+  font-size: clamp(19px, 4.8vw, 23px);
+}
+
+.lesson-board h3 {
+  font-size: clamp(16px, 4vw, 19px);
+}
+
+.lesson-board h4 {
+  font-size: 15px;
+}
+
+/* PARAGRAPHS */
+
+.lesson-board p {
+  margin: 0 0 10px;
+
+  color: var(--text);
+  font-size: var(--body-size);
+  line-height: 1.9;
+
+  overflow-wrap: anywhere;
+}
+
+.lesson-board p:last-child {
+  margin-bottom: 0;
+}
+
+/* LISTS */
+
+.lesson-board ul,
+.lesson-board ol {
+  margin: 7px 0 10px;
+  padding-inline-start: 24px;
+}
+
+.lesson-board li {
+  margin-bottom: 7px;
+  padding-inline-start: 3px;
+
+  color: var(--text);
+  font-size: var(--body-size);
+  line-height: 1.85;
+}
+
+.lesson-board li:last-child {
+  margin-bottom: 0;
+}
+
+/* STEP */
+
+.lesson-step {
+  border-inline-start: 3px solid var(--primary);
+}
+
+/* IMAGES */
+
+.lesson-image {
+  display: block;
+
+  width: 100%;
+  max-width: 560px;
+  max-height: 330px;
+
+  height: auto;
+
+  margin: 10px auto 13px;
+
+  object-fit: contain;
+  object-position: center;
+
+  border: 1px solid var(--border);
+  border-radius: 13px;
+
+  background: var(--soft);
+}
+
+.lesson-image[hidden] {
+  display: none !important;
+}
+
+/* REMINDER */
+
+.lesson-reminder {
+  border: 2px solid var(--accent);
+  border-top: 3px solid var(--primary);
+
+  background:
+    linear-gradient(
+      145deg,
+      var(--card),
+      var(--soft)
+    );
+}
+
+/* REFERENCES */
+
+.lesson-source {
+  margin-top: 10px !important;
+
+  color: var(--muted) !important;
+  font-size: 12px !important;
+  line-height: 1.7 !important;
+}
+
+/* ARABIC */
+
+.arabic-text {
+  direction: rtl;
+
+  margin-block: 10px;
+
+  font-family:
+    "Amiri",
+    "Noto Naskh Arabic",
+    "Traditional Arabic",
+    serif;
+
+  font-size: clamp(22px, 5vw, 30px);
+  line-height: 2.1;
+
+  text-align: right;
+}
+
+/* QUOTATIONS */
+
+.lesson-quote {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  margin-top: 12px;
+  padding: 12px;
+
+  border-inline-start: 3px solid var(--accent);
+  border-radius: 9px;
+
+  color: var(--text);
+  background: var(--soft);
+}
+
+.lesson-quote p {
+  margin: 0;
+}
+
+.lesson-translation {
+  color: var(--muted) !important;
+  font-size: .94em !important;
+}
+
+/* NOTES */
+
+.lesson-note {
+  margin: 9px 0;
+  padding-inline-start: 10px;
+
+  border-inline-start: 3px solid var(--primary);
+
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.lesson-board strong {
+  color: var(--deep);
+  font-weight: 800;
+}
+
+/* FOOTER */
+
+.purity-footer,
+#homeFooter {
+  flex: 0 0 var(--footer-height);
+
+  width: 100%;
+  height: var(--footer-height);
+  min-height: var(--footer-height);
+  max-height: var(--footer-height);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 3px 10px;
+
+  color: var(--footer-text);
+  background: var(--footer-bg);
+
+  border: 2px solid var(--accent);
+  border-radius: 20px;
+}
+
+.purity-footer p {
+  width: 100%;
+  margin: 0;
+
+  color: var(--footer-text);
+
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+
+  text-align: center;
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* LANGUAGE */
+
+html[lang="bn"] body {
+  font-family:
+    "Noto Sans Bengali",
+    "Hind Siliguri",
+    Arial,
+    sans-serif;
+}
+
+html[lang="en"] body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html[lang="hi"] body {
+  font-family:
+    "Noto Sans Devanagari",
+    "Nirmala UI",
+    Mangal,
+    sans-serif;
+}
+
+/* CLASSIC */
+
+body[data-color-theme="classic"] {
+  --card: rgba(250,255,250,.96);
+  --border: #D5E3D1;
+}
+
+/* ROYAL */
+
+body[data-color-theme="royal"] {
+  --primary: #285A8E;
+  --soft: #EAF2FB;
+  --accent: #E8BD55;
+  --deep: #173A60;
+  --text: #1B3652;
+  --muted: #65798E;
+  --border: #C8D9EB;
+  --card: rgba(247,251,255,.97);
+
+  --header-bg: #173A60;
+  --footer-bg: #173A60;
+}
+
+/* ROSE */
+
+body[data-color-theme="rose"] {
+  --primary: #B96F79;
+  --soft: #F8E9E7;
+  --accent: #D9B875;
+  --deep: #7D414B;
+  --text: #633B42;
+  --muted: #846D70;
+  --border: #E8CBC8;
+  --card: rgba(255,249,249,.97);
+
+  --header-bg: #7D414B;
+  --footer-bg: #7D414B;
+}
+
+/* PISTA */
+
+body[data-color-theme="pista"] {
+  --primary: #4CAF50;
+  --soft: #EAF6E7;
+  --accent: #A7D129;
+  --deep: #2F7135;
+  --text: #254D2A;
+  --muted: #6D806D;
+  --border: #CDE3C8;
+  --card: rgba(249,255,247,.97);
+
+  --header-bg: #2F7135;
+  --footer-bg: #2F7135;
+}
+
+/* DARK MODE */
+
+body.dark-mode {
+  --text: #E5EDE7;
+  --muted: #BECBBF;
+
+  --card: rgba(25,38,29,.97);
+  --border: #405746;
+  --soft: #263B2C;
+
+  --page-overlay:
+    linear-gradient(
+      rgba(8,15,10,.80),
+      rgba(8,15,10,.80)
+    );
+
+  --content-overlay: rgba(12,20,14,.60);
+}
+
+body.dark-mode .purity-main {
+  background:
+    linear-gradient(
+      var(--content-overlay),
+      var(--content-overlay)
+    ),
+    url("../assets/images/content-bg2.png")
+    center/cover no-repeat;
+}
+
+body.dark-mode .lesson-board {
+  color: var(--text);
+  background: var(--card);
+  border-color: var(--border);
+}
+
+body.dark-mode .lesson-board h2,
+body.dark-mode .lesson-board h3,
+body.dark-mode .lesson-board h4,
+body.dark-mode .lesson-board strong {
+  color: var(--accent);
+}
+
+body.dark-mode .lesson-board p,
+body.dark-mode .lesson-board li {
+  color: var(--text);
+}
+
+body.dark-mode .lesson-intro {
+  background:
+    linear-gradient(
+      145deg,
+      var(--card),
+      var(--soft)
+    );
+}
+
+body.dark-mode .lesson-intro .lesson-title {
+  color: var(--accent);
+  border-color: var(--border);
+}
+
+body.dark-mode .lesson-reminder {
+  background: var(--card);
+}
+
+body.dark-mode .lesson-image {
+  background: #26382A;
+  border-color: var(--border);
+}
+
+body.dark-mode .lesson-quote {
+  color: var(--text);
+  background: var(--soft);
+}
+
+body.dark-mode .lesson-translation,
+body.dark-mode .lesson-source,
+body.dark-mode .lesson-note {
+  color: var(--muted) !important;
+}
+
+/* DARK CLASSIC */
+
+body.dark-mode[data-color-theme="classic"] {
+  --header-bg: #0F5132;
+  --footer-bg: #0F5132;
+}
+
+/* DARK ROYAL */
+
+body.dark-mode[data-color-theme="royal"] {
+  --header-bg: #142D49;
+  --footer-bg: #142D49;
+  --border: #425B78;
+}
+
+/* DARK ROSE */
+
+body.dark-mode[data-color-theme="rose"] {
+  --header-bg: #592F36;
+  --footer-bg: #592F36;
+  --border: #69464C;
+}
+
+/* DARK PISTA */
+
+body.dark-mode[data-color-theme="pista"] {
+  --header-bg: #244C28;
+  --footer-bg: #244C28;
+  --border: #46684A;
+}
+
+/* SMALL MOBILE */
+
+@media (max-width: 380px) {
+  :root {
+    --page-padding: 5px;
+    --page-gap: 5px;
+    --board-radius: 17px;
+  }
+
+  .purity-main {
+    padding: 6px;
+  }
+
+  .lesson-board {
+    padding: 11px;
+  }
+
+  .lesson-board p,
+  .lesson-board li {
+    font-size: 13px;
+  }
+
+  .lesson-intro .lesson-title {
+    font-size: 19px;
+  }
+}
+
+/* TABLET AND DESKTOP */
+
+@media (min-width: 600px) {
+  :root {
+    --page-padding: 12px;
+    --page-gap: 8px;
+  }
+
+  .purity-main {
+    padding: 12px;
+  }
+
+  .purity-lessons {
+    gap: 12px;
+  }
+
+  .lesson-board {
+    padding: 18px;
+  }
+
+  .lesson-image {
+    max-width: 600px;
+  }
+}
+
+/* SHORT LANDSCAPE */
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .lesson-board {
+    padding: 10px;
+  }
+
+  .lesson-intro .lesson-title {
+    padding: 4px 7px;
+  }
+}
+
+/* ACCESSIBILITY */
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
