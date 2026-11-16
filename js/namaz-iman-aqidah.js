@@ -5,10 +5,12 @@
    IBADAT — IMAN & AQIDAH
    File: js/namaz-iman-aqidah.js
 
-   Complete fresh JavaScript
+   Complete revised JavaScript
    Languages: Bengali, English, Hindi
    Settings: Parent appSettings
+   Themes: Classic, Royal, Rose, Pista
    Topics: 10
+   Display: All topics visible
    ========================================================= */
 
 (() => {
@@ -25,6 +27,7 @@
   let isDark = false;
   let observer = null;
   let renderLock = false;
+  let initialized = false;
 
   /* ---------------------------------------------------------
      LANGUAGE HELPERS
@@ -40,6 +43,7 @@
 
   function localizeDigits(value) {
     const text = String(value ?? "");
+
     if (currentLanguage === "en") return text;
 
     return text.replace(/[0-9]/g, digit =>
@@ -49,13 +53,16 @@
 
   function t(value) {
     if (value && typeof value === "object" && !Array.isArray(value)) {
-      return value[currentLanguage] ?? value.bn ?? "";
+      return value[currentLanguage] ?? value.bn ?? value.en ?? value.hi ?? "";
     }
+
     return value ?? "";
   }
 
   function safeText(element, value) {
-    if (element) element.textContent = localizeDigits(t(value));
+    if (element) {
+      element.textContent = localizeDigits(t(value));
+    }
   }
 
   function normalizeLanguage(value) {
@@ -70,6 +77,7 @@
 
   function normalizeTheme(value) {
     const theme = String(value || "").toLowerCase().trim();
+
     return THEMES.includes(theme) ? theme : "classic";
   }
 
@@ -80,9 +88,17 @@
   function readSettings() {
     try {
       const raw = localStorage.getItem(SETTINGS_KEY);
-      return raw ? JSON.parse(raw) : {};
+
+      if (!raw) return {};
+
+      const settings = JSON.parse(raw);
+
+      return settings && typeof settings === "object"
+        ? settings
+        : {};
+
     } catch (error) {
-      console.warn("IBADAT: Could not read appSettings.", error);
+      console.warn("IBADAT Iman: Could not read appSettings.", error);
       return {};
     }
   }
@@ -140,15 +156,7 @@
       document.documentElement.classList.contains("dark-mode");
   }
 
-  function applySettings() {
-    if (renderLock) return;
-
-    currentLanguage = readLanguage();
-    readTheme();
-
-    document.documentElement.lang = currentLanguage;
-
-    // Keep the existing parent theme system.
+  function applyThemeToDocument() {
     document.documentElement.dataset.colorTheme = currentTheme;
     document.body.dataset.colorTheme = currentTheme;
 
@@ -157,29 +165,51 @@
 
     document.body.classList.toggle("dark-mode", isDark);
     document.documentElement.classList.toggle("dark-mode", isDark);
+  }
 
-    renderPage();
+  function applySettings() {
+    if (renderLock) return;
+
+    const previousLanguage = currentLanguage;
+    const previousTheme = currentTheme;
+    const previousDark = isDark;
+
+    currentLanguage = readLanguage();
+    readTheme();
+
+    document.documentElement.lang = currentLanguage;
+
+    applyThemeToDocument();
+
+    if (
+      previousLanguage !== currentLanguage ||
+      previousTheme !== currentTheme ||
+      previousDark !== isDark
+    ) {
+      renderPage();
+    }
   }
 
   /* ---------------------------------------------------------
      ARABIC QUOTE HELPER
-     Pronunciation is a learning aid, not a replacement
-     for listening to correct Arabic recitation.
   --------------------------------------------------------- */
 
   const AR = (arabic, pronunciation, meaning, reference = "") => ({
     type: "quote",
     arabic,
+
     pronunciation: L(
       pronunciation.bn,
       pronunciation.en,
       pronunciation.hi
     ),
+
     meaning: L(
       meaning.bn,
       meaning.en,
       meaning.hi
     ),
+
     reference: reference
       ? L(reference.bn, reference.en, reference.hi)
       : ""
@@ -189,19 +219,51 @@
 
   /* ---------------------------------------------------------
      LESSON CONTENT — 10 TOPICS
-  --------------------------------------------------------- */
+
+     তোমার বর্তমান ১০টি LESSONS-এর সমস্ত Content এখানে
+     অপরিবর্তিত রাখবে।
+
+     নিচের DATA STRUCTURE-ই ব্যবহার করতে হবে:
+
+     {
+       id: "topic-id",
+       title: L("বাংলা", "English", "हिन्दी"),
+       subtitle: L("বাংলা", "English", "हिन्दी"),
+       sections: [
+         {
+           title: L("বাংলা", "English", "हिन्दी"),
+           paragraphs: [
+             L("বাংলা", "English", "हिन्दी")
+           ],
+           bullets: [
+             L("বাংলা", "English", "हिन्दी")
+           ],
+           quote: AR(
+             "আরবি",
+             {
+               bn: "বাংলা উচ্চারণ",
+               en: "English pronunciation",
+               hi: "हिंदी उच्चारण"
+             },
+             {
+               bn: "বাংলা অর্থ",
+               en: "English meaning",
+               hi: "हिंदी अर्थ"
+             }
+           )
+         }
+       ]
+     }
+
+     IMPORTANT:
+     নিচে তোমার আগের LESSONS ARRAY বসাতে হবে।
+     --------------------------------------------------------- */
 
   const LESSONS = [
-
-    /* 1. IMAN BASICS */
     {
       id: "basics",
       title: L("ঈমানের মৌলিক বিষয়", "Fundamentals of Iman", "ईमान की बुनियादी बातें"),
-      subtitle: L(
-        "ঈমান কী এবং একজন মুসলিমের বিশ্বাসের ভিত্তি",
-        "What Iman means and the foundation of Muslim belief",
-        "ईमान का अर्थ और मुस्लिम विश्वास की बुनियाद"
-      ),
+      subtitle: L("ঈমান কী এবং একজন মুসলিমের বিশ্বাসের ভিত্তি", "What Iman means and the foundation of Muslim belief", "ईमान का अर्थ और मुस्लिम विश्वास की बुनियाद"),
       sections: [
         {
           title: L("ঈমান কী?", "What Is Iman?", "ईमान क्या है?"),
@@ -258,15 +320,10 @@
       ]
     },
 
-    /* 2. KALIMAS */
     {
       id: "kalimas",
       title: L("পাঁচ কালেমা", "The Five Kalimas", "पाँच कलिमे"),
-      subtitle: L(
-        "কালেমার পরিচয়, আরবি পাঠ ও অর্থ",
-        "The Kalimas: Arabic text, pronunciation and meaning",
-        "कलिमों का परिचय, अरबी पाठ और अर्थ"
-      ),
+      subtitle: L("কালেমার পরিচয়, আরবি পাঠ ও অর্থ", "The Kalimas: Arabic text, pronunciation and meaning", "कलिमों का परिचय, अरबी पाठ और अर्थ"),
       sections: [
         {
           title: L("প্রথম কালেমা — তাইয়্যেবা", "First Kalima — Tayyibah", "पहला कलिमा — तैय्यबा"),
@@ -361,7 +418,6 @@
       ]
     },
 
-    /* 3. ALLAH */
     {
       id: "allah",
       title: L("আল্লাহর প্রতি ঈমান", "Belief in Allah", "अल्लाह पर ईमान"),
@@ -419,7 +475,6 @@
       ]
     },
 
-    /* 4. ANGELS */
     {
       id: "angels",
       title: L("ফেরেশতাদের প্রতি ঈমান", "Belief in Angels", "फ़रिश्तों पर ईमान"),
@@ -458,7 +513,6 @@
       ]
     },
 
-    /* 5. BOOKS */
     {
       id: "books",
       title: L("আসমানি কিতাবসমূহ", "The Revealed Books", "आसमानी किताबें"),
@@ -517,7 +571,6 @@
       ]
     },
 
-    /* 6. MESSENGERS */
     {
       id: "messengers",
       title: L("নবী ও রাসূলগণ", "Prophets and Messengers", "नबी और रसूल"),
@@ -596,7 +649,6 @@
       ]
     },
 
-    /* 7. AFTERLIFE */
     {
       id: "afterlife",
       title: L("আখিরাত ও পরকাল", "The Hereafter", "आख़िरत"),
@@ -657,7 +709,6 @@
       ]
     },
 
-    /* 8. QADAR */
     {
       id: "qadar",
       title: L("তাকদিরের প্রতি ঈমান", "Belief in Qadar", "तक़दीर पर ईमान"),
@@ -717,7 +768,6 @@
       ]
     },
 
-    /* 9. COMPANIONS */
     {
       id: "companions",
       title: L("সাহাবায়ে কেরাম", "The Companions", "सहाबा-ए-किराम"),
@@ -769,7 +819,6 @@
       ]
     },
 
-    /* 10. PRACTICE */
     {
       id: "practice",
       title: L("ঈমান ও আকিদার অনুশীলন", "Practising Iman and Aqidah", "ईमान और अक़ीदे पर अमल"),
@@ -889,10 +938,13 @@
 
   function makeElement(tag, className, text) {
     const element = document.createElement(tag);
+
     if (className) element.className = className;
+
     if (text !== undefined && text !== null) {
       element.textContent = localizeDigits(text);
     }
+
     return element;
   }
 
@@ -900,46 +952,53 @@
     const board = makeElement("article", "iman-quote-board");
 
     const arabic = makeElement("p", "iman-arabic-text", item.arabic);
+
     arabic.setAttribute("dir", "rtl");
     arabic.setAttribute("lang", "ar");
     arabic.setAttribute("translate", "no");
+
     board.appendChild(arabic);
 
-    const pronunciationTitle = makeElement(
-      "h4",
-      "iman-quote-label",
-      UI[currentLanguage].pronunciation
+    board.appendChild(
+      makeElement(
+        "h4",
+        "iman-quote-label",
+        UI[currentLanguage].pronunciation
+      )
     );
-    board.appendChild(pronunciationTitle);
 
-    const pronunciation = makeElement(
-      "p",
-      "iman-pronunciation",
-      t(item.pronunciation)
+    board.appendChild(
+      makeElement(
+        "p",
+        "iman-pronunciation",
+        t(item.pronunciation)
+      )
     );
-    board.appendChild(pronunciation);
 
-    const meaningTitle = makeElement(
-      "h4",
-      "iman-quote-label",
-      UI[currentLanguage].meaning
+    board.appendChild(
+      makeElement(
+        "h4",
+        "iman-quote-label",
+        UI[currentLanguage].meaning
+      )
     );
-    board.appendChild(meaningTitle);
 
-    const meaning = makeElement(
-      "p",
-      "iman-meaning",
-      t(item.meaning)
+    board.appendChild(
+      makeElement(
+        "p",
+        "iman-meaning",
+        t(item.meaning)
+      )
     );
-    board.appendChild(meaning);
 
     if (item.reference) {
-      const reference = makeElement(
-        "p",
-        "iman-reference",
-        `${UI[currentLanguage].reference}: ${t(item.reference)}`
+      board.appendChild(
+        makeElement(
+          "p",
+          "iman-reference",
+          `${UI[currentLanguage].reference}: ${t(item.reference)}`
+        )
       );
-      board.appendChild(reference);
     }
 
     return board;
@@ -948,14 +1007,15 @@
   function renderSection(section, index) {
     const board = makeElement("article", "iman-content-board");
 
-    const heading = makeElement(
-      "h3",
-      "iman-section-heading",
-      `${localizeDigits(index + 1)}. ${t(section.title)}`
+    board.appendChild(
+      makeElement(
+        "h3",
+        "iman-section-heading",
+        `${index + 1}. ${t(section.title)}`
+      )
     );
-    board.appendChild(heading);
 
-    if (section.paragraphs) {
+    if (Array.isArray(section.paragraphs)) {
       section.paragraphs.forEach(paragraph => {
         board.appendChild(
           makeElement("p", "iman-paragraph", t(paragraph))
@@ -963,12 +1023,13 @@
       });
     }
 
-    if (section.bullets) {
+    if (Array.isArray(section.bullets)) {
       const list = makeElement("ul", "iman-list");
 
       section.bullets.forEach(item => {
-        const li = makeElement("li", "", t(item));
-        list.appendChild(li);
+        list.appendChild(
+          makeElement("li", "", t(item))
+        );
       });
 
       board.appendChild(list);
@@ -979,24 +1040,38 @@
     }
 
     if (section.note) {
-      const note = makeElement("p", "iman-note", t(section.note));
-      board.appendChild(note);
+      board.appendChild(
+        makeElement("p", "iman-note", t(section.note))
+      );
     }
 
     return board;
   }
 
+  /* ---------------------------------------------------------
+     TOPIC RENDERING
+
+     IMPORTANT:
+     Every topic is rendered independently.
+     No topic is hidden when another topic is opened.
+  --------------------------------------------------------- */
+
   function renderTopic(topicId) {
     const lesson = LESSONS.find(item => item.id === topicId);
-    if (!lesson) return;
+
+    if (!lesson) return false;
 
     const target = document.getElementById(`content-${topicId}`);
+
     if (!target) {
-      console.warn(`IBADAT Iman: #content-${topicId} was not found.`);
-      return;
+      console.warn(
+        `IBADAT Iman: HTML container #content-${topicId} was not found.`
+      );
+
+      return false;
     }
 
-    target.replaceChildren();
+    const fragment = document.createDocumentFragment();
 
     const introBoard = makeElement("article", "iman-intro-board");
 
@@ -1008,29 +1083,51 @@
       makeElement("p", "iman-topic-subtitle", t(lesson.subtitle))
     );
 
-    target.appendChild(introBoard);
+    fragment.appendChild(introBoard);
 
     lesson.sections.forEach((section, index) => {
-      target.appendChild(renderSection(section, index));
+      fragment.appendChild(
+        renderSection(section, index)
+      );
     });
 
     const noteBoard = makeElement("article", "iman-note-board");
+
     noteBoard.appendChild(
       makeElement("h3", "", UI[currentLanguage].note)
     );
+
     noteBoard.appendChild(
       makeElement("p", "", UI[currentLanguage].noteText)
     );
-    target.appendChild(noteBoard);
 
+    fragment.appendChild(noteBoard);
+
+    target.replaceChildren(fragment);
+
+    // Always keep every topic visible.
     target.hidden = false;
+    target.removeAttribute("aria-hidden");
+
+    return true;
   }
 
-  function hideAllTopicContents() {
+  function renderAllTopics() {
+    let rendered = 0;
+
     LESSONS.forEach(lesson => {
-      const content = document.getElementById(`content-${lesson.id}`);
-      if (content) content.hidden = true;
+      if (renderTopic(lesson.id)) {
+        rendered++;
+      }
     });
+
+    if (rendered !== LESSONS.length) {
+      console.warn(
+        `IBADAT Iman: Rendered ${rendered} of ${LESSONS.length} topics. Check the HTML content container IDs.`
+      );
+    }
+
+    return rendered;
   }
 
   /* ---------------------------------------------------------
@@ -1045,57 +1142,97 @@
 
       cards.forEach(card => {
         const title = $(".topic-heading", card);
-        if (title) safeText(title, lesson.title);
+
+        if (title) {
+          safeText(title, lesson.title);
+        }
 
         card.setAttribute("aria-label", t(lesson.title));
-        card.setAttribute("aria-expanded", String(currentTopic === lesson.id));
+
+        card.setAttribute(
+          "aria-expanded",
+          String(currentTopic === lesson.id)
+        );
+
+        card.classList.toggle(
+          "active",
+          currentTopic === lesson.id
+        );
       });
     });
   }
 
+  /* ---------------------------------------------------------
+     OPEN TOPIC
+
+     Clicking a topic scrolls to it.
+     Other topics remain visible.
+  --------------------------------------------------------- */
+
   function openTopic(topicId) {
     const lesson = LESSONS.find(item => item.id === topicId);
+
     if (!lesson) return;
+
+    const target = document.getElementById(`content-${topicId}`);
+
+    if (!target) {
+      console.warn(
+        `IBADAT Iman: Cannot open ${topicId}; its HTML container is missing.`
+      );
+      return;
+    }
 
     currentTopic = topicId;
 
-    const page = $("#imanPage");
-    const lessons = $("#purityLessons");
-
-    hideAllTopicContents();
-    renderTopic(topicId);
-
-    if (page) page.dataset.activeTopic = topicId;
-    if (lessons) lessons.dataset.activeTopic = topicId;
-
     updateTopicCards();
 
-    const target = document.getElementById(`content-${topicId}`);
-    if (target) {
-      target.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    }
+    target.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
 
     window.dispatchEvent(
       new CustomEvent("ibadat:iman-topic-opened", {
-        detail: { topic: topicId }
+        detail: {
+          topic: topicId,
+          language: currentLanguage
+        }
       })
     );
   }
 
+  /* ---------------------------------------------------------
+     CLOSE TOPIC
+
+     Closing selection does not hide lesson content.
+  --------------------------------------------------------- */
+
   function closeTopic() {
     currentTopic = null;
-    hideAllTopicContents();
+
+    updateTopicCards();
 
     const page = $("#imanPage");
     const lessons = $("#purityLessons");
 
-    if (page) delete page.dataset.activeTopic;
-    if (lessons) delete lessons.dataset.activeTopic;
+    if (page) {
+      delete page.dataset.activeTopic;
+    }
 
-    updateTopicCards();
+    if (lessons) {
+      delete lessons.dataset.activeTopic;
+    }
+
+    // Keep all lessons visible.
+    LESSONS.forEach(lesson => {
+      const target = document.getElementById(`content-${lesson.id}`);
+
+      if (target) {
+        target.hidden = false;
+        target.removeAttribute("aria-hidden");
+      }
+    });
   }
 
   /* ---------------------------------------------------------
@@ -1107,30 +1244,43 @@
 
     safeText($("#pageTitle"), ui.pageTitle);
     safeText($("#footerText"), ui.footer);
-
-    const intro = $("#imanIntro");
-    if (intro) safeText(intro, ui.intro);
-
-    const subtitle = $("#pageSubtitle");
-    if (subtitle) safeText(subtitle, ui.subtitle);
+    safeText($("#imanIntro"), ui.intro);
+    safeText($("#pageSubtitle"), ui.subtitle);
   }
 
   /* ---------------------------------------------------------
      FULL PAGE RENDER
+
+     Always renders all ten topics.
   --------------------------------------------------------- */
 
   function renderPage() {
     if (renderLock) return;
+
     renderLock = true;
 
     try {
+      document.documentElement.lang = currentLanguage;
+
       updatePageText();
+
       updateTopicCards();
 
-      if (currentTopic) {
-        renderTopic(currentTopic);
-      } else {
-        hideAllTopicContents();
+      renderAllTopics();
+
+      const page = $("#imanPage");
+      const lessons = $("#purityLessons");
+
+      if (page && currentTopic) {
+        page.dataset.activeTopic = currentTopic;
+      } else if (page) {
+        delete page.dataset.activeTopic;
+      }
+
+      if (lessons && currentTopic) {
+        lessons.dataset.activeTopic = currentTopic;
+      } else if (lessons) {
+        delete lessons.dataset.activeTopic;
       }
 
       window.dispatchEvent(
@@ -1138,10 +1288,16 @@
           detail: {
             language: currentLanguage,
             theme: currentTheme,
-            topic: currentTopic
+            darkMode: isDark,
+            topic: currentTopic,
+            topics: LESSONS.length
           }
         })
       );
+
+    } catch (error) {
+      console.error("IBADAT Iman: Page rendering failed.", error);
+
     } finally {
       renderLock = false;
     }
@@ -1152,7 +1308,14 @@
   --------------------------------------------------------- */
 
   function setLanguage(language) {
-    currentLanguage = normalizeLanguage(language);
+    const nextLanguage = normalizeLanguage(language);
+
+    if (nextLanguage === currentLanguage) return;
+
+    currentLanguage = nextLanguage;
+
+    document.documentElement.lang = currentLanguage;
+
     renderPage();
   }
 
@@ -1163,14 +1326,7 @@
       isDark = darkMode;
     }
 
-    document.documentElement.dataset.colorTheme = currentTheme;
-    document.body.dataset.colorTheme = currentTheme;
-
-    document.documentElement.dataset.mode = isDark ? "dark" : "light";
-    document.body.dataset.mode = isDark ? "dark" : "light";
-
-    document.body.classList.toggle("dark-mode", isDark);
-    document.documentElement.classList.toggle("dark-mode", isDark);
+    applyThemeToDocument();
 
     renderPage();
   }
@@ -1187,43 +1343,82 @@
     }));
   }
 
+  function getLanguage() {
+    return currentLanguage;
+  }
+
+  function getTheme() {
+    return currentTheme;
+  }
+
+  function getDarkMode() {
+    return isDark;
+  }
+
+  function getCurrentTopic() {
+    return currentTopic;
+  }
+
   window.IBADATIman = {
     setLanguage,
     setTheme,
     syncSettings,
-    getLanguage: () => currentLanguage,
-    getTheme: () => currentTheme,
+    getLanguage,
+    getTheme,
+    getDarkMode,
+    getCurrentTopic,
     getTopics,
     openTopic,
-    closeTopic
+    closeTopic,
+    render: renderPage
   };
 
   /* ---------------------------------------------------------
-     EVENTS
+     CLICK EVENTS
   --------------------------------------------------------- */
 
   document.addEventListener("click", event => {
-    const card = event.target.closest(".purity-topic[data-topic]");
+    const target = event.target;
+
+    if (!(target instanceof Element)) return;
+
+    const card = target.closest(".purity-topic[data-topic]");
+
     if (!card) return;
 
     const topicId = card.dataset.topic;
+
     if (LESSONS.some(lesson => lesson.id === topicId)) {
       openTopic(topicId);
     }
   });
 
   document.addEventListener("click", event => {
-    const closeButton = event.target.closest("[data-iman-close]");
-    if (closeButton) closeTopic();
+    const target = event.target;
+
+    if (!(target instanceof Element)) return;
+
+    const closeButton = target.closest("[data-iman-close]");
+
+    if (closeButton) {
+      closeTopic();
+    }
   });
+
+  /* ---------------------------------------------------------
+     PARENT APP EVENTS
+  --------------------------------------------------------- */
 
   window.addEventListener("ibadat:language-changed", event => {
     const language =
       event.detail?.language ||
       event.detail?.lang;
 
-    if (language) setLanguage(language);
-    else syncSettings();
+    if (language) {
+      setLanguage(language);
+    } else {
+      syncSettings();
+    }
   });
 
   window.addEventListener("ibadat:theme-changed", event => {
@@ -1235,8 +1430,14 @@
       event.detail?.darkMode ??
       event.detail?.dark;
 
-    if (theme) setTheme(theme, typeof dark === "boolean" ? dark : undefined);
-    else syncSettings();
+    if (theme) {
+      setTheme(
+        theme,
+        typeof dark === "boolean" ? dark : undefined
+      );
+    } else {
+      syncSettings();
+    }
   });
 
   window.addEventListener("ibadat:settings-changed", syncSettings);
@@ -1250,65 +1451,68 @@
 
   /* ---------------------------------------------------------
      WATCH PARENT SETTINGS
+
+     Observe only relevant attributes.
+     Prevent unnecessary rendering loops.
   --------------------------------------------------------- */
 
   function setupSettingsObserver() {
-    if (observer) observer.disconnect();
+    if (observer) {
+      observer.disconnect();
+    }
 
-    observer = new MutationObserver(mutations => {
-      const relevant = mutations.some(mutation => {
-        if (mutation.type === "attributes") {
-          return [
-            "data-lang",
-            "data-language",
-            "data-color-theme",
-            "data-mode",
-            "class"
-          ].includes(mutation.attributeName);
-        }
-        return false;
-      });
+    observer = new MutationObserver(() => {
+      if (renderLock) return;
 
-      if (relevant) {
-        const newLanguage = readLanguage();
-        const newThemeBefore = currentTheme;
-        const newDarkBefore = isDark;
+      const newLanguage = readLanguage();
 
-        readTheme();
+      const previousTheme = currentTheme;
+      const previousDark = isDark;
 
-        if (
-          newLanguage !== currentLanguage ||
-          currentTheme !== newThemeBefore ||
-          isDark !== newDarkBefore
-        ) {
-          currentLanguage = newLanguage;
-          renderPage();
-        }
+      readTheme();
+
+      const languageChanged =
+        newLanguage !== currentLanguage;
+
+      const themeChanged =
+        previousTheme !== currentTheme;
+
+      const darkChanged =
+        previousDark !== isDark;
+
+      if (
+        languageChanged ||
+        themeChanged ||
+        darkChanged
+      ) {
+        currentLanguage = newLanguage;
+
+        document.documentElement.lang = currentLanguage;
+
+        applyThemeToDocument();
+
+        renderPage();
       }
     });
 
+    const observedAttributes = [
+      "lang",
+      "class",
+      "data-lang",
+      "data-language",
+      "data-color-theme",
+      "data-mode"
+    ];
+
     observer.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: [
-        "lang",
-        "class",
-        "data-lang",
-        "data-language",
-        "data-color-theme",
-        "data-mode"
-      ]
+      attributeFilter: observedAttributes
     });
 
     if (document.body) {
       observer.observe(document.body, {
         attributes: true,
-        attributeFilter: [
-          "class",
-          "data-lang",
-          "data-language",
-          "data-color-theme",
-          "data-mode"
-        ]
+        attributeFilter: observedAttributes
       });
     }
   }
@@ -1318,26 +1522,45 @@
   --------------------------------------------------------- */
 
   function initialize() {
+    if (initialized) return;
+
+    initialized = true;
+
     currentLanguage = readLanguage();
+
     readTheme();
 
-    // Render only into existing page containers.
+    document.documentElement.lang = currentLanguage;
+
+    applyThemeToDocument();
+
     const page = $("#imanPage");
     const lessons = $("#purityLessons");
 
     if (!page || !lessons) {
-      console.warn(
-        "IBADAT Iman: #imanPage or #purityLessons was not found. Check the HTML IDs."
+      console.error(
+        "IBADAT Iman: Required HTML containers #imanPage and #purityLessons were not found."
       );
     }
 
     updatePageText();
+
     updateTopicCards();
-    hideAllTopicContents();
 
-    const initialTopic = new URLSearchParams(location.search).get("topic");
+    // Render all ten lessons immediately.
+    renderAllTopics();
 
-    if (initialTopic && LESSONS.some(item => item.id === initialTopic)) {
+    currentTopic = null;
+
+    // Support direct topic links.
+    const initialTopic = new URLSearchParams(
+      location.search
+    ).get("topic");
+
+    if (
+      initialTopic &&
+      LESSONS.some(item => item.id === initialTopic)
+    ) {
       openTopic(initialTopic);
     }
 
@@ -1348,14 +1571,23 @@
         detail: {
           language: currentLanguage,
           theme: currentTheme,
+          darkMode: isDark,
           topics: LESSONS.length
         }
       })
     );
   }
 
+  /* ---------------------------------------------------------
+     START
+  --------------------------------------------------------- */
+
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initialize, { once: true });
+    document.addEventListener(
+      "DOMContentLoaded",
+      initialize,
+      { once: true }
+    );
   } else {
     initialize();
   }
