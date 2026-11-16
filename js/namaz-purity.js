@@ -1,4 +1,3 @@
-
 "use strict";
 
 /* =========================================================
@@ -7,11 +6,13 @@
 
    One page, eight topics, separate lesson boards.
    Languages: Bengali, English, Hindi.
-   Theme: follows the parent site's light/dark preference.
+   Theme: follows the parent site's appSettings.
    ========================================================= */
 
 (() => {
   const IMAGE_DIR = "../assets/images/";
+  const SETTINGS_KEY = "appSettings";
+  const SUPPORTED_LANGUAGES = ["bn", "en", "hi"];
 
   const UI = {
     bn: {
@@ -473,14 +474,55 @@
   let currentLanguage = "bn";
   let currentTheme = "light";
   let rendering = false;
+  let settingsObserver = null;
 
-  function pickText(value) {
-    if (typeof value === "string") return value;
-    if (!value) return "";
-    return value[currentLanguage] || value.bn || value.en || value.hi || "";
+  /* =========================================================
+     SETTINGS — READ THE PARENT APP SETTINGS
+     ========================================================= */
+
+  function getAppSettings() {
+    try {
+      const raw = localStorage.getItem(SETTINGS_KEY);
+      if (!raw) return {};
+
+      const settings = JSON.parse(raw);
+
+      return settings && typeof settings === "object"
+        ? settings
+        : {};
+    } catch (error) {
+      console.warn("IBADAT: could not read appSettings.", error);
+      return {};
+    }
+  }
+
+  function normalizeLanguage(value) {
+    if (!value) return null;
+
+    const code = String(value).trim().toLowerCase().slice(0, 2);
+
+    return SUPPORTED_LANGUAGES.includes(code)
+      ? code
+      : null;
   }
 
   function readLanguage() {
+    const settings = getAppSettings();
+
+    /*
+     * appSettings.lang is the primary source.
+     * This is the same key used by the parent Settings page.
+     */
+    const savedLanguage = normalizeLanguage(
+      settings.lang ||
+      settings.language ||
+      settings.selectedLanguage
+    );
+
+    if (savedLanguage) {
+      return savedLanguage;
+    }
+
     const root = document.documentElement;
     const body = document.body;
 
@@ -501,15 +543,30 @@
     } catch (_) {}
 
     for (const candidate of candidates) {
-      if (!candidate) continue;
-      const code = String(candidate).toLowerCase().slice(0, 2);
-      if (UI[code]) return code;
+      const language = normalizeLanguage(candidate);
+
+      if (language) {
+        return language;
+      }
     }
 
     return "bn";
   }
 
   function readTheme() {
+    const settings = getAppSettings();
+
+    /*
+     * appSettings.dark is the primary source.
+     * An explicit false must also be respected.
+     */
+    if (Object.prototype.hasOwnProperty.call(settings, "dark")) {
+      return (
+        settings.dark === true ||
+        settings.dark === "true"
+      ) ? "dark" : "light";
+    }
+
     const root = document.documentElement;
     const body = document.body;
 
@@ -535,10 +592,51 @@
         localStorage.getItem("theme") ||
         localStorage.getItem("color-theme");
 
-      if (saved && /dark|night/i.test(saved)) return "dark";
+      if (saved && /dark|night/i.test(saved)) {
+        return "dark";
+      }
     } catch (_) {}
 
     return "light";
+  }
+
+  /*
+   * Keep the selected color palette from appSettings.themeColor.
+   * This page must not replace classic / royal / rose / pista.
+   */
+  function applyColorTheme() {
+    const settings = getAppSettings();
+    const allowedThemes = ["classic", "royal", "rose", "pista"];
+
+    const selectedTheme = allowedThemes.includes(settings.themeColor)
+      ? settings.themeColor
+      : null;
+
+    if (selectedTheme) {
+      document.body.dataset.colorTheme = selectedTheme;
+    }
+  }
+
+  /* =========================================================
+     DOM HELPERS
+     ========================================================= */
+
+  function pickText(value) {
+    if (typeof value === "string") {
+      return value;
+    }
+
+    if (!value) {
+      return "";
+    }
+
+    return (
+      value[currentLanguage] ||
+      value.bn ||
+      value.en ||
+      value.hi ||
+      ""
+    );
   }
 
   function makeElement(tag, className, text) {
@@ -568,22 +666,31 @@
     img.addEventListener("error", () => {
       img.hidden = true;
       console.warn("IBADAT: image not found:", img.src);
-    });
+    }, { once: true });
 
     board.appendChild(img);
   }
 
   function appendText(board, textList) {
+    if (!textList) return;
+
     const paragraphs =
       textList[currentLanguage] ||
       textList.bn ||
       textList.en ||
+      textList.hi ||
       [];
 
     paragraphs.forEach((text) => {
-      board.appendChild(makeElement("p", "", text));
+      board.appendChild(
+        makeElement("p", "", text)
+      );
     });
   }
+
+  /* =========================================================
+     BOARD CREATION
+     ========================================================= */
 
   function makeBoard(topicId, data, index, intro = false) {
     const board = makeElement("article", "lesson-board");
@@ -592,6 +699,7 @@
     board.dataset.part = String(index + 1);
 
     const titleText = pickText(data.title);
+
     const reminder =
       titleText === UI[currentLanguage].remember;
 
@@ -615,18 +723,19 @@
 
     if (data.reference) {
       const source = makeElement("p", "lesson-source");
+
       source.textContent = pickText(data.reference);
+
       board.appendChild(source);
     }
 
     return board;
   }
 
-  /*
-   * Render one topic.
-   * The first white lesson board uses the actual topic name,
-   * not "Introduction".
-   */
+  /* =========================================================
+     RENDER ONE TOPIC
+     ========================================================= */
+
   function renderTopic(topicId) {
     const topic = LESSONS[topicId];
 
@@ -639,11 +748,15 @@
     );
 
     if (!topic || !section || !container) {
-      console.error("IBADAT: missing topic container:", topicId);
+      console.error(
+        "IBADAT: missing topic container:",
+        topicId
+      );
+
       return;
     }
 
-    // Update the topic heading according to the selected language.
+    // Update topic heading according to the selected language.
     const heading = section.querySelector(".topic-heading");
 
     const topicTitle = UI[currentLanguage].topics[topicId];
@@ -696,10 +809,23 @@
     });
   }
 
-  function setLanguage(language) {
-    const lang = String(language || "").toLowerCase().slice(0, 2);
+  /* =========================================================
+     LANGUAGE
+     ========================================================= */
 
-    if (!UI[lang]) return false;
+  function setLanguage(language) {
+    const lang = normalizeLanguage(language);
+
+    if (!lang) {
+      return false;
+    }
+
+    if (lang === currentLanguage) {
+      // Keep the page and parent document language synchronized.
+      document.documentElement.lang = lang;
+      document.documentElement.dataset.language = lang;
+      return true;
+    }
 
     currentLanguage = lang;
 
@@ -719,148 +845,314 @@
 
     rendering = true;
 
-    Object.keys(LESSONS).forEach(renderTopic);
-
-    rendering = false;
+    try {
+      Object.keys(LESSONS).forEach(renderTopic);
+    } finally {
+      rendering = false;
+    }
 
     document.title = UI[lang].pageTitle + " | IBADAT";
 
-    window.dispatchEvent(new CustomEvent("ibadat:purity-ready", {
-      detail: {
-        language: currentLanguage,
-        theme: currentTheme
-      }
-    }));
+    window.dispatchEvent(
+      new CustomEvent("ibadat:purity-ready", {
+        detail: {
+          language: currentLanguage,
+          theme: currentTheme
+        }
+      })
+    );
 
     return true;
   }
 
+  /* =========================================================
+     LIGHT / DARK MODE
+     ========================================================= */
+
   function setTheme(theme) {
-    const value = /dark|night/i.test(String(theme)) ? "dark" : "light";
+    const value =
+      /dark|night/i.test(String(theme))
+        ? "dark"
+        : "light";
 
     currentTheme = value;
 
+    /*
+     * Parent CSS uses body.dark-mode.
+     * Keep that class in sync with appSettings.dark.
+     *
+     * Do not overwrite data-color-theme here.
+     * Color palette and light/dark mode are separate settings.
+     */
+    document.body.classList.toggle(
+      "dark-mode",
+      value === "dark"
+    );
+
     document.documentElement.dataset.theme = value;
     document.body.dataset.theme = value;
-    document.body.classList.toggle("dark-mode", value === "dark");
 
     return value;
   }
 
+  /* =========================================================
+     APPLY ALL SETTINGS
+     ========================================================= */
+
+  function syncSettings() {
+    const language = readLanguage();
+    const theme = readTheme();
+
+    applyColorTheme();
+
+    if (language !== currentLanguage) {
+      setLanguage(language);
+    } else {
+      // Ensure visible labels are initialized even on first load.
+      const title = $("#pageTitle");
+      const footer = $("#footerText");
+
+      if (title) {
+        title.textContent = UI[language].pageTitle;
+      }
+
+      if (footer) {
+        footer.textContent = UI[language].footer;
+      }
+    }
+
+    if (theme !== currentTheme) {
+      setTheme(theme);
+    } else {
+      // Also apply the current mode to the body on initial load.
+      document.body.classList.toggle(
+        "dark-mode",
+        theme === "dark"
+      );
+    }
+  }
+
+  /* =========================================================
+     CONNECT TO THE PARENT SETTINGS PAGE
+     ========================================================= */
+
   function connectSiteSettings() {
     /*
-     * Parent site language event:
+     * Supported custom language event:
      *
      * window.dispatchEvent(new CustomEvent("ibadat:language-changed", {
      *   detail: { language: "en" }
      * }));
      *
-     * Parent site theme event:
+     * Supported custom theme event:
      *
      * window.dispatchEvent(new CustomEvent("ibadat:theme-changed", {
      *   detail: { theme: "dark" }
      * }));
      */
 
-    window.addEventListener("ibadat:language-changed", (event) => {
-      const language = event.detail?.language || event.detail?.lang;
+    window.addEventListener(
+      "ibadat:language-changed",
+      (event) => {
+        const language =
+          event.detail?.language ||
+          event.detail?.lang;
 
-      if (language) {
+        if (language) {
+          setLanguage(language);
+        }
+      }
+    );
+
+    window.addEventListener(
+      "ibadat:theme-changed",
+      (event) => {
+        const theme =
+          event.detail?.theme ||
+          event.detail?.mode;
+
+        if (theme) {
+          setTheme(theme);
+        }
+      }
+    );
+
+    /*
+     * If the parent settings script dispatches this event
+     * after saving settings, update the page immediately.
+     */
+    window.addEventListener(
+      "ibadat:settings-changed",
+      () => {
+        syncSettings();
+      }
+    );
+
+    window.addEventListener(
+      "settings:changed",
+      () => {
+        syncSettings();
+      }
+    );
+
+    /*
+     * Storage event:
+     * appSettings is the main settings object.
+     */
+    window.addEventListener("storage", (event) => {
+      if (
+        event.key === SETTINGS_KEY ||
+        event.key === null
+      ) {
+        syncSettings();
+        return;
+      }
+
+      if (
+        [
+          "ibadat-language",
+          "selectedLanguage",
+          "language"
+        ].includes(event.key)
+      ) {
+        const language = readLanguage();
         setLanguage(language);
       }
-    });
 
-    window.addEventListener("ibadat:theme-changed", (event) => {
-      const theme = event.detail?.theme || event.detail?.mode;
-
-      if (theme) {
+      if (
+        [
+          "ibadat-theme",
+          "theme",
+          "color-theme"
+        ].includes(event.key)
+      ) {
+        const theme = readTheme();
         setTheme(theme);
       }
     });
 
-    window.addEventListener("storage", (event) => {
-      if (
-        ["ibadat-language", "selectedLanguage", "language"].includes(event.key)
-      ) {
-        setLanguage(event.newValue || "bn");
-      }
-
-      if (
-        ["ibadat-theme", "theme", "color-theme"].includes(event.key)
-      ) {
-        setTheme(event.newValue || "light");
-      }
-    });
-
     /*
-     * Observe common site-wide HTML attributes and classes.
-     * No extra language or theme controls are added here.
+     * Observe parent site changes.
+     * This keeps the page synchronized with:
+     * - document language
+     * - dark-mode class
+     * - data-color-theme palette
+     * - data-theme / data-mode
+     *
+     * The palette itself is not treated as dark/light mode.
      */
-    const observer = new MutationObserver(() => {
+    if (settingsObserver) {
+      settingsObserver.disconnect();
+    }
+
+    settingsObserver = new MutationObserver(() => {
       if (rendering) return;
 
-      const lang = readLanguage();
+      const language = readLanguage();
       const theme = readTheme();
 
-      if (lang !== currentLanguage) {
-        setLanguage(lang);
+      if (language !== currentLanguage) {
+        setLanguage(language);
       }
 
       if (theme !== currentTheme) {
         setTheme(theme);
       }
+
+      applyColorTheme();
     });
 
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: [
-        "lang",
-        "class",
-        "data-theme",
-        "data-language",
-        "data-lang",
-        "data-mode"
-      ]
-    });
+    settingsObserver.observe(
+      document.documentElement,
+      {
+        attributes: true,
+        attributeFilter: [
+          "lang",
+          "class",
+          "data-theme",
+          "data-language",
+          "data-lang",
+          "data-mode"
+        ]
+      }
+    );
 
-    observer.observe(document.body, {
-      attributes: true,
-      attributeFilter: [
-        "class",
-        "data-theme",
-        "data-language",
-        "data-lang",
-        "data-mode"
-      ]
-    });
+    settingsObserver.observe(
+      document.body,
+      {
+        attributes: true,
+        attributeFilter: [
+          "class",
+          "data-theme",
+          "data-color-theme",
+          "data-language",
+          "data-lang",
+          "data-mode"
+        ]
+      }
+    );
   }
+
+  /* =========================================================
+     INITIALIZATION
+     ========================================================= */
 
   function init() {
     if (!$("#purityPage") || !$("#purityLessons")) {
       console.error(
         "IBADAT Purity: expected #purityPage and #purityLessons in the HTML."
       );
+
       return;
     }
 
+    /*
+     * Read the actual parent app settings before rendering.
+     */
     currentLanguage = readLanguage();
     currentTheme = readTheme();
 
+    /*
+     * Apply palette and appearance separately.
+     */
+    applyColorTheme();
     setTheme(currentTheme);
-    setLanguage(currentLanguage);
+
+    /*
+     * Render all eight topics in the selected language.
+     */
+    currentLanguage = "bn";
+
+    setLanguage(readLanguage());
+
+    /*
+     * Connect future parent settings changes.
+     */
     connectSiteSettings();
 
+    /*
+     * Public page API.
+     */
     window.IBADATPurity = Object.freeze({
       setLanguage,
       setTheme,
+
+      syncSettings,
+
       getLanguage: () => currentLanguage,
+
       getTheme: () => currentTheme,
+
       getTopics: () => Object.keys(LESSONS)
     });
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init, { once: true });
+    document.addEventListener(
+      "DOMContentLoaded",
+      init,
+      { once: true }
+    );
   } else {
     init();
   }
