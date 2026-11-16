@@ -16,9 +16,7 @@
   const UI = {
     bn: {
       pageTitle: "পাক-পবিত্রতা",
-      intro: "পাক-পবিত্রতা মানুষের পরিচ্ছন্নতা ও ইবাদতের প্রস্তুতির গুরুত্বপূর্ণ অংশ। সঠিক নিয়মে পবিত্রতা অর্জন করে আমরা নামাজসহ বিভিন্ন ইবাদতের জন্য প্রস্তুত হই।",
       footer: "পবিত্রতা রক্ষা করো, ইবাদতে প্রশান্তি খুঁজে নাও।",
-      introduction: "পরিচয় ও গুরুত্ব",
       remember: "মনে রাখুন",
       imageAlt: "শিক্ষামূলক ছবি",
       topics: {
@@ -35,9 +33,7 @@
 
     en: {
       pageTitle: "Purification",
-      intro: "Purity and cleanliness are important parts of preparing for worship. By observing the proper rules of purification, we prepare ourselves for prayer and other acts of worship.",
       footer: "Maintain purity and find peace in worship.",
-      introduction: "Introduction and importance",
       remember: "Remember",
       imageAlt: "Educational illustration",
       topics: {
@@ -54,9 +50,7 @@
 
     hi: {
       pageTitle: "पाक-सफ़ाई",
-      intro: "पाकी और स्वच्छता इबादत की तैयारी का महत्वपूर्ण हिस्सा हैं। सही तरीक़े से पाकी हासिल करके हम नमाज़ और दूसरी इबादतों के लिए तैयार होते हैं।",
       footer: "पाकी बनाए रखें और इबादत में सुकून पाएँ।",
-      introduction: "परिचय और महत्व",
       remember: "याद रखें",
       imageAlt: "शैक्षिक चित्र",
       topics: {
@@ -549,10 +543,15 @@
 
   function makeElement(tag, className, text) {
     const node = document.createElement(tag);
-    if (className) node.className = className;
+
+    if (className) {
+      node.className = className;
+    }
+
     if (text !== undefined && text !== null) {
       node.textContent = text;
     }
+
     return node;
   }
 
@@ -560,6 +559,7 @@
     if (!filename) return;
 
     const img = makeElement("img", "lesson-image");
+
     img.src = IMAGE_DIR + filename;
     img.alt = alt || UI[currentLanguage].imageAlt;
     img.loading = "lazy";
@@ -622,11 +622,18 @@
     return board;
   }
 
+  /*
+   * Render one topic.
+   * The first white lesson board uses the actual topic name,
+   * not "Introduction".
+   */
   function renderTopic(topicId) {
     const topic = LESSONS[topicId];
+
     const section = document.querySelector(
       '.purity-topic[data-topic="' + topicId + '"]'
     );
+
     const container = document.getElementById(
       "content-" + topicId
     );
@@ -636,20 +643,26 @@
       return;
     }
 
+    // Update the topic heading according to the selected language.
     const heading = section.querySelector(".topic-heading");
+
+    const topicTitle = UI[currentLanguage].topics[topicId];
+
     if (heading) {
-      heading.textContent = UI[currentLanguage].topics[topicId];
+      heading.textContent = topicTitle;
     }
 
+    // Remove previously rendered boards.
     container.replaceChildren();
 
+    // First board: actual topic name in the selected language.
     const introBoard = makeBoard(
       topicId,
       {
         title: {
-          bn: UI.bn.introduction,
-          en: UI.en.introduction,
-          hi: UI.hi.introduction
+          bn: UI.bn.topics[topicId],
+          en: UI.en.topics[topicId],
+          hi: UI.hi.topics[topicId]
         },
         image: topic.image,
         text: {
@@ -664,13 +677,9 @@
 
     container.appendChild(introBoard);
 
+    // Render all remaining lesson boards in their original order.
     topic.boards.forEach((data, index) => {
-      const boardData = {
-        ...data,
-        title: data.title
-      };
-
-      const board = makeBoard(topicId, boardData, index);
+      const board = makeBoard(topicId, data, index);
 
       const reminderTitle = {
         bn: "মনে রাখুন",
@@ -689,22 +698,29 @@
 
   function setLanguage(language) {
     const lang = String(language || "").toLowerCase().slice(0, 2);
+
     if (!UI[lang]) return false;
 
     currentLanguage = lang;
+
     document.documentElement.lang = lang;
     document.documentElement.dataset.language = lang;
 
     const title = $("#pageTitle");
-    const intro = $("#pageIntro");
     const footer = $("#footerText");
 
-    if (title) title.textContent = UI[lang].pageTitle;
-    if (intro) intro.textContent = UI[lang].intro;
-    if (footer) footer.textContent = UI[lang].footer;
+    if (title) {
+      title.textContent = UI[lang].pageTitle;
+    }
+
+    if (footer) {
+      footer.textContent = UI[lang].footer;
+    }
 
     rendering = true;
+
     Object.keys(LESSONS).forEach(renderTopic);
+
     rendering = false;
 
     document.title = UI[lang].pageTitle + " | IBADAT";
@@ -721,6 +737,7 @@
 
   function setTheme(theme) {
     const value = /dark|night/i.test(String(theme)) ? "dark" : "light";
+
     currentTheme = value;
 
     document.documentElement.dataset.theme = value;
@@ -732,11 +749,13 @@
 
   function connectSiteSettings() {
     /*
-     * The parent site can notify this page when settings change:
+     * Parent site language event:
      *
      * window.dispatchEvent(new CustomEvent("ibadat:language-changed", {
      *   detail: { language: "en" }
      * }));
+     *
+     * Parent site theme event:
      *
      * window.dispatchEvent(new CustomEvent("ibadat:theme-changed", {
      *   detail: { theme: "dark" }
@@ -745,12 +764,18 @@
 
     window.addEventListener("ibadat:language-changed", (event) => {
       const language = event.detail?.language || event.detail?.lang;
-      if (language) setLanguage(language);
+
+      if (language) {
+        setLanguage(language);
+      }
     });
 
     window.addEventListener("ibadat:theme-changed", (event) => {
       const theme = event.detail?.theme || event.detail?.mode;
-      if (theme) setTheme(theme);
+
+      if (theme) {
+        setTheme(theme);
+      }
     });
 
     window.addEventListener("storage", (event) => {
@@ -768,8 +793,8 @@
     });
 
     /*
-     * Follow changes to common site-wide HTML attributes/classes.
-     * No language or theme controls are added to this page.
+     * Observe common site-wide HTML attributes and classes.
+     * No extra language or theme controls are added here.
      */
     const observer = new MutationObserver(() => {
       if (rendering) return;
@@ -777,8 +802,13 @@
       const lang = readLanguage();
       const theme = readTheme();
 
-      if (lang !== currentLanguage) setLanguage(lang);
-      if (theme !== currentTheme) setTheme(theme);
+      if (lang !== currentLanguage) {
+        setLanguage(lang);
+      }
+
+      if (theme !== currentTheme) {
+        setTheme(theme);
+      }
     });
 
     observer.observe(document.documentElement, {
